@@ -1,0 +1,212 @@
+<h2 class="text-primary">
+	ProxyMust
+</h2>
+<p>
+	<em>ProxyMust là một nhánh (fork) của tiện ích SmartProxy. Chúng tôi tôn trọng và cảm ơn tác giả gốc <strong>Salar Khalilzadeh</strong> vì công việc xuất sắc của ông.
+	SmartProxy gốc có thể được tìm thấy tại <a href="https://github.com/salarcode/SmartProxy" target="_blank">https://github.com/salarcode/SmartProxy</a>.</em>
+</p>
+<p data-localize="settingsTabAboutDescription">
+	Sử dụng proxy chưa bao giờ dễ dàng hơn với ProxyMust. Hãy coi nó như một giải pháp cấu hình một lần và quên đi.
+	Với ProxyMust, bạn không cần phải thay đổi proxy theo cách thủ công hoặc bật tắt nó.
+	Tất cả những gì bạn cần làm là yêu cầu ProxyMust kích hoạt proxy cho trang web mong muốn chỉ bằng một cú nhấp chuột.
+	Sau đó, khi bạn truy cập trang web cụ thể đó, ProxyMust sẽ hoạt động và tất cả dữ liệu của bạn cho trang web đó sẽ được chuyển qua proxy mà không cần bạn làm gì cả.
+</p>
+<p>
+	ProxyMust cung cấp nhiều tính năng phù hợp cho cả người mới bắt đầu và người dùng nâng cao, bao gồm:
+</p>
+<ul>
+	<li>Kích hoạt proxy cho một trang web duy nhất trong một tab – mọi thứ trong tab đó sẽ tự động sử dụng proxy. Tính năng này được gọi là proxy-theo-tab.</li>
+	<li>Tự động phát hiện khi nào bật hoặc tắt proxy cho các trang web nhất định dựa trên các mẫu quy tắc.</li>
+	<li>Dễ dàng chuyển đổi giữa nhiều máy chủ proxy làm cài đặt máy chủ proxy đang hoạt động của bạn.</li>
+	<li>Kích hoạt proxy cho trang web hiện tại bạn đang ở chỉ bằng một cú nhấp chuột.</li>
+	<li>Xem các tài nguyên và yêu cầu của trang web hiện tại và quyết định có bật proxy cho chúng hay không chỉ bằng một cú nhấp chuột.</li>
+	<li>Dễ dàng chuyển đổi giữa các chế độ proxy hoặc bật proxy cho tất cả các miền.</li>
+	<li>Sao lưu và phục hồi cài đặt và quy tắc.</li>
+</ul>
+<br />
+
+<h3>Xin lưu ý:</h3>
+<p>
+<div class="text-info">
+	<i class="fas fa-info-circle" aria-hidden="true"></i>
+	ProxyMust không cung cấp bất kỳ loại máy chủ proxy nào.
+</div>
+<div class="text-danger">
+	<i class="fas fa-eye-slash" aria-hidden="true"></i>
+	ProxyMust không theo dõi bạn dưới bất kỳ hình thức nào.
+</div>
+<div class="text-warning">
+	<i class="fas fa-eye-slash" aria-hidden="true"></i>
+	ProxyMust không có quảng cáo và không can thiệp vào nội dung trang web.
+</div>
+</p>
+<br />
+
+<h3>Phản hồi của bạn rất quan trọng</h3>
+<p>
+<div>
+	<i class="fas fa-star text-warning"></i>
+	Nếu bạn <i class="fas fa-heart text-danger"></i> thích ProxyMust, vui lòng đánh giá nó trên trang
+	<a id="linkAddonsMarket" href="#" target="_blank">Tiện ích</a>.
+</div>
+<div>
+	<i class="fas fa-question-circle text-primary"></i>
+	Nếu bạn có câu hỏi hoặc vấn đề, vui lòng truy cập trang theo dõi vấn đề và mở một vé để
+	<a href="https://github.com/nana-xakep/ProxyMust/issues" target="_blank">báo cáo vấn đề</a>.
+</div>
+</p>
+<br />
+
+<h3>Các tính năng mới của ProxyMust</h3>
+
+<h4>📊 Hệ thống xếp hạng và trạng thái</h4>
+<ul>
+	<li>Đối với mỗi proxy và mỗi trang web đã kiểm tra, trạng thái được hiển thị:
+		<ul>
+			<li>✅ – chắc chắn hoạt động cho trang web này (thành công gần đây)</li>
+			<li>☑️ – có thể hoạt động (thành công đã cũ hoặc đạt được cho trang web khác)</li>
+			<li>❓ – không có dữ liệu (proxy chưa được kiểm tra cho trang web này)</li>
+			<li>⛔ – không hoạt động (thất bại gần đây)</li>
+		</ul>
+	</li>
+	<li>Xếp hạng của mỗi proxy tự động thay đổi dựa trên kết quả kiểm tra: <strong>+1 nếu thành công</strong>, <strong>-1 nếu thất bại</strong>.</li>
+	<li>Bạn cũng có thể thay đổi xếp hạng theo cách thủ công thông qua menu ngữ cảnh (nhấp chuột phải vào một hàng proxy trong bảng hoặc vào proxy đang hoạt động trong cửa sổ bật lên trên thanh công cụ).</li>
+	<li>Trạng thái được coi là "mới" trong một số giờ có thể cấu hình (mặc định là 6). Nếu dữ liệu đã cũ, trạng thái gián tiếp (☑️) được sử dụng.</li>
+</ul>
+
+<h4>📋 Quản lý danh sách proxy</h4>
+<ul>
+	<li><strong>Menu ngữ cảnh trong bảng proxy (nhấp chuột phải)</strong> – thay đổi nhanh xếp hạng, ưu tiên (ghim, gắn dấu sao), xuất các mục đã chọn, sao chép địa chỉ, xóa, xóa trạng thái và xếp hạng, chạy kiểm tra cho các proxy đã chọn.</li>
+	<li><strong>Sắp xếp trong cửa sổ bật lên trên thanh công cụ</strong> – theo xếp hạng và ưu tiên (📌 các mục được ghim ở trên cùng, ⭐ yêu thích).</li>
+	<li><strong>Sắp xếp trong bảng cài đặt</strong> – theo quốc gia, giao thức, xếp hạng.</li>
+</ul>
+
+<h4>🚀 Kiểm tra proxy</h4>
+<ul>
+	<li><strong>Kiểm tra theo chu kỳ</strong> – chuyển đổi tuần tự hồ sơ đang hoạt động và proxy, kiểm tra tải trang. Đáng tin cậy nhưng chậm.</li>
+	<li><strong>Kiểm tra chu kỳ nhanh</strong> – kiểm tra tăng tốc dừng lại ở lần thành công đầu tiên. Tốt để đánh giá nhanh.</li>
+	<li><strong>Kiểm tra chính xác (chậm)</strong> – kỹ lưỡng hơn, mất nhiều thời gian hơn, cho kết quả đáng tin cậy hơn (không hoạt động trong Firefox).</li>
+	<li><strong>Kiểm tra nhanh</strong> – nhanh nhưng có thể bỏ qua một số proxy hoạt động. Tốt để có cái nhìn tổng quan nhanh (không hoạt động trong Firefox).</li>
+	<li><strong>Kiểm tra nhanh từ cửa sổ bật lên trên thanh công cụ</strong> – kiểm tra trang web hiện tại cho tất cả proxy hoặc chỉ cho proxy đăng ký.</li>
+</ul>
+
+<p>
+	<strong>⚠️ Quan trọng đối với người dùng:</strong> Trong quá trình kiểm tra, hồ sơ đang hoạt động và proxy thực sự được chuyển đổi.
+	Điều này có thể can thiệp vào hoạt động duyệt web bình thường. Hãy chạy kiểm tra khi trình duyệt không được sử dụng cho các hoạt động khác.
+</p>
+
+<br />
+<h3>Chú giải biểu tượng thanh công cụ</h3>
+<p>
+	Biểu tượng trên thanh công cụ trình duyệt của bạn thay đổi để thể hiện trạng thái của ProxyMust. Đây là ý nghĩa của các biểu tượng khác nhau:
+	<br />
+
+<div class="table-responsive">
+	<table class="table table-sm table-striped caption-top table-borderless align-middle">
+		<caption><b>Chú giải biểu tượng (tất cả trình duyệt):</b></caption>
+		<thead>
+			<tr>
+				<th style="width: 70px;">Biểu tượng</th>
+				<th>Ý nghĩa</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td class="p-2"><img src="../icons/profile-disabled.svg" class="">顶}
+			<td>Các yêu cầu sẽ không sử dụng proxy。顶}
+			</tr>
+			<tr>
+				<td class="p-2"><img src="../icons/smartproxy.svg" class="">顶}
+			<td>
+				Proxy đã được hoặc sẽ được áp dụng cho các yêu cầu khớp với các quy tắc đã xác định.
+				<br /> Hoặc không có quy tắc nào khớp với tab hiện tại.
+				<br />
+				Hồ sơ: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i>
+				Quy tắc chọn lọc
+			顶}
+			</tr>
+			<tr>
+				<td class="p-2"><img src="../icons/profile-always.svg" class="">顶}
+			<td>
+				Proxy được áp dụng cho tất cả các yêu cầu trong tab hiện tại. (Trong các trình duyệt dựa trên Chrome, các miền trong danh sách trắng được hiển thị riêng.)
+				<br />
+				Hồ sơ: <i class="icon fa-sm fas fa-globe-americas text-success" aria-hidden="true"></i>
+				Luôn bật
+			顶}
+			</tr>
+			<tr>
+				<td class="p-2"><img src="../icons/profile-system.svg" class="">顶}
+			<td>
+				Quyết định sử dụng proxy được chuyển giao cho hệ điều hành.
+				<br/> Hồ sơ: Hệ thống
+			顶}
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+<div class="table-responsive">
+	<table class="table table-sm table-striped caption-top table-borderless align-middle">
+		<caption><b>Chú giải biểu tượng (chỉ dành cho Firefox):</b></caption>
+		<thead>
+			<tr>
+				<th style="width: 70px;">Biểu tượng</th>
+				<th>Ý nghĩa</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td class="p-2"><img src="../icons/profile-smartrules-green.svg" class="">顶}
+			<td>
+				Một quy tắc khớp với tab hiện tại. Tất cả các yêu cầu tiếp theo đều đi qua proxy.
+				<br />
+				Hồ sơ: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> Quy tắc chọn lọc
+			顶}
+			</tr>
+			<tr>
+				<td class="p-2"><img src="../icons/profile-smartrules-has-failed.svg" class="">顶}
+			<td>
+				Một quy tắc khớp với tab hiện tại. Có ít nhất một yêu cầu không phản hồi / thất bại.
+				<br />
+				Hồ sơ: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> Quy tắc chọn lọc
+			顶}
+			</tr>
+			<tr>
+				<td class="p-2"><img src="../icons/profile-smartrules-has-bypassed.svg" class="">顶}
+			<td>
+				Một quy tắc khớp với tab hiện tại. Ít nhất một yêu cầu tiếp theo đã bỏ qua proxy thông qua một quy tắc.
+				<br />
+				Hồ sơ: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> Quy tắc chọn lọc
+			顶}
+			</table>
+			<tr>
+				<td class="p-2"><img src="../icons/profile-smartrules-has-unmatched.svg" class="">顶}
+			<td>
+				Một quy tắc khớp với tab hiện tại. Ít nhất một yêu cầu tiếp theo không khớp với bất kỳ quy tắc nào và không đi qua proxy.
+				<br />
+				Hồ sơ: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> Quy tắc chọn lọc
+			顶}
+			<tr>
+			<tr>
+				<td class="p-2"><img src="../icons/profile-smartrules-noproxy-has-matched.svg" class="">顶}
+			<td>
+				Không có quy tắc nào khớp với tab hiện tại. Ít nhất một yêu cầu tiếp theo đã khớp với một quy tắc và đang đi qua proxy.
+				<br />
+				Hồ sơ: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> Quy tắc chọn lọc
+			顶}
+			</tr>
+			<tr>
+				<td class="p-2"><img src="../icons/profile-always-bypassed.svg" class="">顶}
+			<td>
+				Proxy được áp dụng cho tất cả các yêu cầu trong tab hiện tại. Ít nhất một yêu cầu tiếp theo đã bỏ qua proxy thông qua một quy tắc.
+				<br />
+				Hồ sơ: <i class="icon fa-sm fas fa-globe-americas text-success" aria-hidden="true"></i> Luôn bật
+			顶}
+			</tr>
+		</tbody>
+	</table>
+</div>
+</p>>
+	</table>
+</div>
+</p>

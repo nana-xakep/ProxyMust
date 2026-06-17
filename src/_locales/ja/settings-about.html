@@ -1,0 +1,209 @@
+<h2 class="text-primary">
+	ProxyMust
+</h2>
+<p>
+	<em>ProxyMust は SmartProxy 拡張機能のフォークです。私たちは原作者 <strong>Salar Khalilzadeh</strong> の優れた業績を尊重し、感謝しています。
+	オリジナルの SmartProxy は <a href="https://github.com/salarcode/SmartProxy" target="_blank">https://github.com/salarcode/SmartProxy</a> で見つけることができます。</em>
+</p>
+<p data-localize="settingsTabAboutDescription">
+	ProxyMust を使えば、プロキシの使用はこれ以上ないほど簡単になります。一度設定して忘れるソリューションと考えてください。
+	ProxyMust を使えば、プロキシを手動で変更したり、オン/オフを切り替えたりする必要はありません。
+	ワンクリックで、希望のウェブサイトのプロキシを有効にするように ProxyMust に指示するだけです。
+	その後、その特定のウェブサイトにアクセスすると、ProxyMust が動作し、そのウェブサイトのすべてのデータがプロキシを介して転送されます。あなたは何もする必要はありません。
+</p>
+<p>
+	ProxyMust は、初心者から上級ユーザーまで適した様々な機能を提供します:
+</p>
+<ul>
+	<li>1つのタブで単一のサイトに対してプロキシを有効にすると、そのタブ内のすべてが自動的にプロキシを使用します。この機能は「タブごとのプロキシ」と呼ばれます。</li>
+	<li>ルールパターンに基づいて、特定のウェブサイトに対してプロキシをいつ有効または無効にするかを自動的に検出します。</li>
+	<li>アクティブなプロキシサーバー設定として、複数のプロキシサーバーを簡単に切り替えられます。</li>
+	<li>現在いるサイトに対してワンクリックでプロキシを有効にします。</li>
+	<li>現在のウェブサイトのリソースとリクエストを表示し、ワンクリックでそれらに対してプロキシを有効にするかどうかを決定します。</li>
+	<li>プロキシモードを簡単に切り替えたり、すべてのドメインに対してプロキシを有効にしたりできます。</li>
+	<li>設定とルールのバックアップと復元。</li>
+</ul>
+<br />
+
+<h3>注意事項:</h3>
+<p>
+<div class="text-info">
+	<i class="fas fa-info-circle" aria-hidden="true"></i>
+	ProxyMust は、いかなる種類のプロキシサーバーも提供しません。
+</div>
+<div class="text-danger">
+	<i class="fas fa-eye-slash" aria-hidden="true"></i>
+	ProxyMust は、いかなる方法でもユーザーを追跡しません。
+</div>
+<div class="text-warning">
+	<i class="fas fa-eye-slash" aria-hidden="true"></i>
+	ProxyMust は広告なしで、ウェブページやコンテンツに干渉しません。
+</div>
+</p>
+<br />
+
+<h3>フィードバックは重要です</h3>
+<p>
+<div>
+	<i class="fas fa-star text-warning"></i>
+	ProxyMust を <i class="fas fa-heart text-danger"></i> 気に入っていただけましたら、
+	<a id="linkAddonsMarket" href="#" target="_blank">拡張機能</a> ページで評価してください。
+</div>
+<div>
+	<i class="fas fa-question-circle text-primary"></i>
+	ご質問や問題がある場合は、イシューページにアクセスしてチケットを開き、
+	<a href="https://github.com/nana-xakep/ProxyMust/issues" target="_blank">問題を報告</a> してください。
+</div>
+</p>
+<br />
+
+<h3>ProxyMust の新機能</h3>
+
+<h4>📊 評価およびステータスシステム</h4>
+<ul>
+	<li>各プロキシとテストされた各サイトについて、ステータスが表示されます:
+		<ul>
+			<li>✅ – このサイトで確実に機能する（新しい成功）</li>
+			<li>☑️ – おそらく機能する（成功が以前であったか、別のサイトで得られたもの）</li>
+			<li>❓ – データなし（このサイトに対してプロキシがテストされていない）</li>
+			<li>⛔ – 機能しない（新しい失敗）</li>
+		</ul>
+	</li>
+	<li>各プロキシの評価はテスト結果に基づいて自動的に変化します: <strong>成功時 +1</strong>、<strong>失敗時 -1</strong>。</li>
+	<li>コンテキストメニュー（テーブルのプロキシ行、またはツールバーポップアップのアクティブプロキシを右クリック）から手動で評価を変更することもできます。</li>
+	<li>ステータスは設定可能な時間（デフォルト6時間）の間「新しい」と見なされます。データが古い場合は、間接的なステータス（☑️）が使用されます。</li>
+</ul>
+
+<h4>📋 プロキシリストの管理</h4>
+<ul>
+	<li><strong>プロキシテーブルのコンテキストメニュー（右クリック）</strong> – 評価、優先度（ピン留め、お気に入り）をすばやく変更、選択項目のエクスポート、アドレスのコピー、削除、ステータスと評価のクリア、選択したプロキシのテストの実行。</li>
+	<li><strong>ツールバーポップアップでのソート</strong> – 評価と優先度でソート（📌 ピン留めされたものが上、⭐ お気に入り）。</li>
+	<li><strong>設定テーブルでのソート</strong> – 国、プロトコル、評価でソート。</li>
+</ul>
+
+<h4>🚀 プロキシテスト</h4>
+<ul>
+	<li><strong>循環テスト</strong> – アクティブなプロファイルとプロキシを順次切り替え、サイトの読み込みをテストします。信頼性は高いが遅い。</li>
+	<li><strong>エクスプレス循環テスト</strong> – 最初の成功で停止する加速テスト。迅速な評価に適しています。</li>
+	<li><strong>精密（遅い）テスト</strong> – より徹底的で時間がかかり、より信頼性の高い結果を提供します（Firefox では動作しません）。</li>
+	<li><strong>エクスプレステスト</strong> – 高速ですが、一部の動作するプロキシを見逃す可能性があります。迅速な概要把握に適しています（Firefox では動作しません）。</li>
+	<li><strong>ツールバーポップアップからのクイックテスト</strong> – すべてのプロキシ、またはサブスクリプションプロキシのみに対して現在のサイトをテストします。</li>
+</ul>
+
+<p>
+	<strong>⚠️ ユーザーへの重要な注意:</strong> テスト中は、アクティブなプロファイルとプロキシが実際に切り替えられます。
+	これは通常のブラウジングに干渉する可能性があります。ブラウザが他のアクティビティに使用されていないときにテストを実行してください。
+</p>
+
+<br />
+<h3>ツールバーアイコンの凡例</h3>
+<p>
+	ブラウザのツールバーアイコンは、ProxyMust の状態を表すために変化します。異なるアイコンの意味は次のとおりです:
+	<br />
+
+<div class="table-responsive">
+	<table class="table table-sm table-striped caption-top table-borderless align-middle">
+		<caption><b>アイコン凡例（すべてのブラウザ）:</b></caption>
+		<thead>
+			<tr>
+				<th style="width: 70px;">アイコン</th>
+				<th>意味</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td class="p-2"><img src="../icons/profile-disabled.svg" class="">頂}
+			<td>リクエストはプロキシを使用しません。頂}
+			</tr>
+			<tr>
+				<td class="p-2"><img src="../icons/smartproxy.svg" class="">頂}
+			<td>
+				定義されたルールに一致するリクエストにプロキシが適用されているか、適用されます。
+				<br /> または、タブに一致するルールがありません。
+				<br />
+				プロファイル: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i>
+				選択的ルール
+			頂}
+			</tr>
+			<tr>
+				<td class="p-2"><img src="../icons/profile-always.svg" class="">頂}
+			<td>
+				プロキシが現在のタブ内のすべてのリクエストに適用されます。（Chrome ベースのブラウザでは、ホワイトリスト化されたドメインは別に表示されます。）
+				<br />
+				プロファイル: <i class="icon fa-sm fas fa-globe-americas text-success" aria-hidden="true"></i>
+				常に有効
+			頂}
+			</td>
+			<tr>
+				<td class="p-2"><img src="../icons/profile-system.svg" class="">頂}
+			<td>
+				プロキシを使用するかどうかの決定はオペレーティングシステムに委ねられます。
+				<br/> プロファイル: システム
+			頂}
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+<div class="table-responsive">
+	<table class="table table-sm table-striped caption-top table-borderless align-middle">
+		<caption><b>アイコン凡例（Firefox のみ）:</b></caption>
+		<thead>
+			<tr>
+				<th style="width: 70px;">アイコン</th>
+				<th>意味</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td class="p-2"><img src="../icons/profile-smartrules-green.svg" class="">頂}
+			<td>
+				現在のタブに対してルールが一致しました。後続のすべてのリクエストはプロキシを経由します。
+				<br />
+				プロファイル: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> 選択的ルール
+			頂}
+			</tr>
+			<tr>
+				<td class="p-2"><img src="../icons/profile-smartrules-has-failed.svg" class="">頂}
+			<td>
+				現在のタブに対してルールが一致しました。応答しない/失敗したリクエストが少なくとも1つあります。
+				<br />
+				プロファイル: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> 選択的ルール
+			頂}
+			</tr>
+			<tr>
+				<td class="p-2"><img src="../icons/profile-smartrules-has-bypassed.svg" class="">頂}
+			<td>
+				現在のタブに対してルールが一致しました。少なくとも1つの後続リクエストがルールによってプロキシをバイパスしました。
+				<br />
+				プロファイル: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> 選択的ルール
+			頂}
+			</tr>
+			<tr>
+				<td class="p-2"><img src="../icons/profile-smartrules-has-unmatched.svg" class="">頂}
+			<td>
+				現在のタブに対してルールが一致しました。少なくとも1つの後続リクエストがどのルールにも一致せず、プロキシを経由しません。
+				<br />
+				プロファイル: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> 選択的ルール
+			頂}
+			</tr>
+			<tr>
+				<td class="p-2"><img src="../icons/profile-smartrules-noproxy-has-matched.svg" class="">頂}
+			<td>
+				現在のタブに対して一致するルールがありません。少なくとも1つの後続リクエストがルールに一致し、プロキシを経由しています。
+				<br />
+				プロファイル: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> 選択的ルール
+			頂}
+			</tr>
+			<tr>
+				<td class="p-2"><img src="../icons/profile-always-bypassed.svg" class="">頂}
+			<td>
+				プロキシが現在のタブ内のすべてのリクエストに適用されます。少なくとも1つの後続リクエストがルールによってプロキシをバイパスしました。
+				<br />
+				プロファイル: <i class="icon fa-sm fas fa-globe-americas text-success" aria-hidden="true"></i> 常に有効
+			頂}
+			</tr>
+		</tbody>
+	</table>
+</div>
+</p>

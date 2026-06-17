@@ -1,0 +1,1626 @@
+{
+	"uiDirection": {
+		"message": "ltr"
+	},
+	"languageCode": {
+		"message": "tr",
+		"description": "We need to know the code which might not match what browser UI has"
+	},
+	"extensionName": {
+		"message": "ProxyMust"
+	},
+	"extensionDescription": {
+		"message": "ProxyMust – seçici proxy yöneticisi (SmartProxy çatalı). Ziyaret ettiğiniz siteler için özelleştirilebilir kalıplara dayalı olarak proxy'yi otomatik olarak etkinleştirir/devre dışı bırakır."
+	},
+	"toolbarTooltipEffectiveRule": {
+		"message": "Eşleşen kural kaynağı:"
+	},
+	"toolbarTooltipEffectiveRuleNone": {
+		"message": "Eşleşen kural yok"
+	},
+	"toolbarTooltipEffectiveRulePattern": {
+		"message": "Kural deseni:"
+	},
+	"popupTitle": {
+		"message": "ProxyMust Etkinleştirme"
+	},
+	"popupPrivateBrowsingMode": {
+		"message": "Özel Tarama Modu"
+	},
+	"popupNoProxy": {
+		"message": "Doğrudan (Proxy Yok)"
+	},
+	"popupSmartProxy": {
+		"message": "Seçici Proxy"
+	},
+	"popupAlwaysEnable": {
+		"message": "Her Zaman Etkin"
+	},
+	"popupSystemProxy": {
+		"message": "Sistem Proxy'si"
+	},
+	"popupActiveProxy": {
+		"message": "Etkin Proxy (bu profil):"
+	},
+	"popupActiveProxyDefault": {
+		"message": "Etkin Proxy (Varsayılan Ayar):"
+	},
+	"popupEnableProxyOn": {
+		"message": "Proxy'yi şunun için etkinleştir"
+	},
+	"popupIgnoreTheseDomains": {
+		"message": "Bu alan adlarını yoksay"
+	},
+	"popupRuleIsFromSubscription": {
+		"message": "(Abonelikten)"
+	},
+	"popupProxyableResources": {
+		"message": "Proxy'lenebilir Kaynaklar"
+	},
+	"popupSettings": {
+		"message": "Ayarlar"
+	},
+	"popupSubscriptions": {
+		"message": "-Abonelikler-"
+	},
+	"popupUpdateText": {
+		"message": "{0} güncellemesi mevcut"
+	},
+	"popupFailedRequestsMenu": {
+		"message": "Başarısız İstekler"
+	},
+	"popupFailedRequestsTitle": {
+		"message": "Başarısız İstek Listesi"
+	},
+	"popupFailedRequestsDesc": {
+		"message": "Bunlar zaman aşımına uğrayan veya başarısız olan alan adlarıdır.<br />Bu alan adlarının engellendiğini düşünüyorsanız, bunları proxy kural listesine buradan ekleyebilirsiniz."
+	},
+	"popupAddFailedRequests": {
+		"message": "Kural Listesine Ekle"
+	},
+	"popupProfileTypeDoesNotSupportsRules": {
+		"message": "Seçili profil '{0}' kuralları desteklemiyor, lütfen başka bir profil seçin."
+	},
+	"popupAddIgnoredFailures": {
+		"message": "Yoksay"
+	},
+	"popupAddIgnoredFailuresConfirm": {
+		"message": "Seçili hataları yoksaymak istediğinizden emin misiniz? Yaparsanız, bunlardan bir daha hata almayacaksınız. Bunu daha sonra ayarlardan değiştirebilirsiniz."
+	},
+	"popupNotAllowedSetProxySettingsChrome": {
+		"message": "Maalesef tarayıcı ayarlarını Sistem Proxy'si kullanacak şekilde değiştirmek `incognito` izni gerektirir. Lütfen tarayıcıdaki ProxyMust eklenti ayarlarına gidin ve `Gizli modda izin ver` iznini işaretleyin. <a href='https://support.google.com/chrome_webstore/answer/2664769'>Nasıl yapılacağını öğrenin</a>."
+	},
+	"popupNotAllowedSetProxySettingsFirefox": {
+		"message": "Firefox 67'den bu yana, tarayıcı ayarlarını Sistem Proxy'si kullanacak şekilde değiştirmek `Özel Tarama` izni gerektirir. Lütfen tarayıcıdaki ProxyMust eklenti ayarlarına gidin ve `Özel Pencerelerde Çalıştır` iznine izin verin. <a href='https://support.mozilla.org/en-US/kb/extensions-private-browsing'>Nasıl yapılacağını öğrenin</a>."
+	},
+	"proxyableTitle": {
+		"message": "Proxy'lenebilir Kaynaklar"
+	},
+	"proxyableHeader": {
+		"message": "Bu sayfadaki proxy'lenebilir öğeler"
+	},
+	"proxyableReload": {
+		"message": "Yenile"
+	},
+	"proxyableClose": {
+		"message": "Kapat"
+	},
+	"proxyableHeaderDesc": {
+		"message": "Bu sayfada kullanılan veya çağrılan kaynakların listesi aşağıdadır. Bu kaynakları proxy etkinleştirme kurallarına eklemek için bu listeyi kullanın.<br />Burada bir şey görmüyorsanız, kaynakları görmek için sayfayı yeniden yükleyin."
+	},
+	"proxyableErrNoSourceTab": {
+		"message": "Kaynak sekmesi bulunamadı!"
+	},
+	"proxyableCreateRuleConfirm": {
+		"message": "Seçilen alan adı için bir kural oluşturmak istediğinize emin misiniz?"
+	},
+	"proxyableDisableButton": {
+		"message": "Devre Dışı Bırak"
+	},
+	"proxyableEnableButton": {
+		"message": "Etkinleştir"
+	},
+	"proxyableEnableButtonDomain": {
+		"message": "Şunun için etkinleştir: "
+	},
+	"proxyableSubscriptionRule": {
+		"message": "(Abonelik Kuralı)"
+	},
+	"proxyableDeleteRuleConfirm": {
+		"message": "Seçilen kuralı silmek istediğinize emin misiniz:"
+	},
+	"proxyableGridNoDataContent": {
+		"message": "İstek yok"
+	},
+	"proxyableGridColUrl": {
+		"message": "İstek URL'si"
+	},
+	"proxyableGridColRuleStatus": {
+		"message": "Kural durumu"
+	},
+	"proxyableGridColProxifiedStatus": {
+		"message": "Proxy durumu"
+	},
+	"proxyableGridColRuleHost": {
+		"message": "Kural alan adı"
+	},
+	"proxyableGridColRulePattern": {
+		"message": "Kural deseni"
+	},
+	"proxyableGridCol_ProxifiedStatus_NoProxy": {
+		"message": "Proxy Yok"
+	},
+	"proxyableGridCol_ProxifiedStatus_Special": {
+		"message": "Özel"
+	},
+	"proxyableGridCol_ProxifiedStatus_ProxyPerOrigin": {
+		"message": "Üst sekmeden"
+	},
+	"proxyableGridCol_ProxifiedStatus_MatchedRule": {
+		"message": "Eşleşti"
+	},
+	"proxyableGridCol_ProxifiedStatus_AlwaysEnabled": {
+		"message": "Her Zaman Etkin"
+	},
+	"proxyableGridCol_ProxifiedStatus_SystemProxyApplied": {
+		"message": "Sistem Proxy'si Uygulandı"
+	},
+	"proxyableGridCol_RuleStatus_NoneMatched": {
+		"message": "Eşleşme Yok"
+	},
+	"proxyableGridCol_RuleStatus_Special": {
+		"message": "Özel"
+	},
+	"proxyableGridCol_RuleStatus_ProxyPerOrigin": {
+		"message": "Üst sekmeden"
+	},
+	"proxyableGridCol_RuleStatus_MatchedRule": {
+		"message": "Eşleşti"
+	},
+	"proxyableGridCol_RuleStatus_Whitelisted": {
+		"message": "Beyaz listede"
+	},
+	"proxyableGridCol_RuleStatus_AlwaysEnabledByPassed": {
+		"message": "Her Zaman Etkin <br> Atlandı"
+	},
+	"proxyableGridCol_RuleStatus_AlwaysEnabledForcedByRules": {
+		"message": "Her Zaman Etkin <br> Kurallar Tarafından Zorlandı"
+	},
+	"settingsTitle": {
+		"message": "ProxyMust Ayarları"
+	},
+	"settingsTabAbout": {
+		"message": "Hakkında"
+	},
+	"settingsTabGeneral": {
+		"message": "Genel Seçenekler"
+	},
+	"settingsTabSmartProfiles": {
+		"message": "Seçici Profiller"
+	},
+	"settingsTabAddSmartProfile": {
+		"message": "Yeni Seçici Profil Ekle"
+	},
+	"settingsTabProxyServers": {
+		"message": "Proxy Sunucuları"
+	},
+	"settingsTabProxyServerSubscriptions": {
+		"message": "Proxy Sunucu Abonelikleri"
+	},
+	"settingsTabBackupRestore": {
+		"message": "Yedekleme / Geri Yükleme"
+	},
+	"settingsTabUpdateText": {
+		"message": "{0} sürümüne güncelle"
+	},
+	"settingsTabAboutDescription": {
+		"message": "Proxy kullanmak ProxyMust ile hiç bu kadar kolay olmamıştı. Bunu bir kere yapılandır ve unut çözümü olarak düşünün. ProxyMust ile proxy'nizi manuel olarak değiştirmenize veya açıp kapatmanıza gerek yok. Tek yapmanız gereken, istediğiniz web sitesi için proxy'yi etkinleştirmesini ProxyMust'e tek bir tıklamayla söylemektir. Bundan sonra, o siteyi ziyaret ettiğinizde ProxyMust devreye girer ve tüm verileriniz proxy üzerinden aktarılır, sizin hiçbir şey yapmanıza gerek kalmaz."
+	},
+	"settingsGeneralSmartFeatures": {
+		"message": "Akıllı Özellikler"
+	},
+	"settingsGeneralSmartFeaturesNoChrome": {
+		"message": "<strong><a href='https://www.getfirefox.com/' target='_blank' rel='noopener'>Yalnızca Firefox</a>!</strong> Maalesef bu özellik Chrome tarafından desteklenmiyor."
+	},
+	"settingsGeneralProxyPerOrigin": {
+		"message": "Sekme/kaynak başına proxy etkinleştir"
+	},
+	"settingsGeneralProxyPerOriginDesc": {
+		"message": "Bir kural bir sekmenin URL'siyle eşleşirse, proxy o sekmenin bağlantısına uygulanır. Normalde her sayfada başka istekler olacaktır ve bunların eşleşen bir kuralı olmayabilir, bu nedenle bağlantılarına proxy uygulanmaz. `Sekme/kaynak başına proxy etkinleştir` seçeneği, tüm sayfanın (farklı alan adları ve kaynaklardan gelen tüm bağlantılar dahil) sekmenin kaynağına uygulanan aynı proxy'yi kullanmasını sağlar. Ayrıca bu seçenek, her bir alan adı için ayrı bir kurala sahip olma ihtiyacını ortadan kaldırır. Lütfen sekmede hiçbir proxy uygulanmamışsa, proxy kurallarının çalışmaya devam edeceğini ve sayfadaki diğer bağlantılara ayrı ayrı proxy uygulayacağını unutmayın."
+	},
+	"settingsGeneralProxyPerOriginEnabled": {
+		"message": "Sekme/kaynak başına proxy etkinleştirildi"
+	},
+	"settingsGeneralProxyPerOriginDisabled": {
+		"message": "Sekme/kaynak başına proxy devre dışı bırakıldı"
+	},
+	"settingsGeneralSyncing": {
+		"message": "Senkronizasyon"
+	},
+	"settingsGeneralIncognitoProfile": {
+		"message": "Özel Tarama Profili"
+	},
+	"settingsGeneralIncognitoProfileDisabled": {
+		"message": "(Devre Dışı)"
+	},
+	"settingsGeneralIncognitoProfileDesc": {
+		"message": "Sekme/pencere Özel Tarama modundayken kullanılmasını zorlamak istiyorsanız bir özel tarama profili seçin. Bu seçenek etkin profili geçersiz kılacaktır."
+	},
+	"settingsGeneralEnableSyncing": {
+		"message": "Ayarlar senkronizasyonunu etkinleştir"
+	},
+	"settingsGeneralEnableSyncingDesc": {
+		"message": "Senkronizasyonu etkinleştirerek, kurallar, sunucular ve abonelikler dahil tüm ayarlarınız tüm tarayıcılarda kullanılabilir olacaktır."
+	},
+	"settingsSaveGeneralOptionsButton": {
+		"message": "Değişiklikleri Kaydet"
+	},
+	"settingsRejectGeneralOptionsButton": {
+		"message": "Değişiklikleri Reddet"
+	},
+	"settingsGeneralSyncProxyMode": {
+		"message": "Etkin profilin senkronizasyonunu etkinleştir"
+	},
+	"settingsGeneralSyncProxyModeDesc": {
+		"message": "Etkin profilin senkronize edilmesini istiyorsanız işaretleyin."
+	},
+	"settingsGeneralSyncActiveProxy": {
+		"message": "Etkin proxy'nin senkronizasyonunu etkinleştir"
+	},
+	"settingsGeneralSyncActiveProxyDesc": {
+		"message": "Seçilen proxy sunucusunun senkronize edilmesini istiyorsanız işaretleyin."
+	},
+	"settingsGeneralSyncToBrowser": {
+		"message": "Tarayıcının senkronizasyon sunucularını kullan"
+	},
+	"settingsGeneralSyncToWebDAV": {
+		"message": "Bir WebDAV sunucusuna senkronize et"
+	},
+	"settingsGeneralWebDavServerUrl": {
+		"message": "WebDAV Sunucu URL'si:"
+	},
+	"settingsGeneralWebDavBackupFilename": {
+		"message": "Yedek Dosya Adı:"
+	},
+	"settingsGeneralWebDavServerUser": {
+		"message": "WebDAV Sunucu Kullanıcı Adı:"
+	},
+	"settingsGeneralWebDavServerPassword": {
+		"message": "WebDAV Sunucu Şifresi:"
+	},
+	"settingsGeneralWebDavBehaviourDesc": {
+		"message": "Lütfen dikkat: ayarlarda her değişiklik yapıldığında yedekleme yapılır, geri yükleme ise yalnızca tarayıcı başlatıldığında yapılır."
+	},
+	"settingsGeneralWebDavServerBackupNow": {
+		"message": "Şimdi Yedekle"
+	},
+	"settingsGeneralWebDavServerRestoreNow": {
+		"message": "Şimdi Geri Yükle"
+	},
+	"settingsGeneralWebDavRestoreNowConfirm": {
+		"message": "Bu, mevcut ayarlarınızı WebDAV sunucusundakilerle değiştirecektir. Bu işlem geri alınamaz, dikkatli olun. Devam edilsin mi?"
+	},
+	"settingsGeneralWebDavRestoreNowSuccess": {
+		"message": "WebDAV geri yükleme başarıyla tamamlandı!"
+	},
+	"settingsGeneralWebDavRestoreNowFailed": {
+		"message": "WebDAV geri yükleme başarısız oldu:"
+	},
+	"settingsGeneralWebDav_ErrorValidUrl": {
+		"message": "Lütfen geçerli bir WebDAV Sunucu URL'si girin"
+	},
+	"settingsGeneralWebDav_ErrorEmptyFilename": {
+		"message": "WebDAV Yedek Dosya Adı boş olamaz"
+	},
+	"settingsGeneralWebDav_ErrorRequiredFields": {
+		"message": "Lütfen gerekli tüm WebDAV alanlarını doldurun."
+	},
+	"settingsGeneralWebDavBackupNowSuccess": {
+		"message": "WebDAV yedeklemesi başarıyla tamamlandı!"
+	},
+	"settingsGeneralWebDavBackupNowFailed": {
+		"message": "WebDAV yedeklemesi başarısız oldu:"
+	},
+	"settingsGeneralErrorDetection": {
+		"message": "Hata Tespiti"
+	},
+	"settingsGeneralDetectFailures": {
+		"message": "İstek hatalarını tespit et"
+	},
+	"settingsGeneralDetectFailuresDesc": {
+		"message": "İstek hatası tespiti, hangi alan adlarının proxy'ye ihtiyaç duyduğunu belirlemenize yardımcı olur."
+	},
+	"settingsGeneralSelectIgnoredDomains": {
+		"message": "Kuralları Girin"
+	},
+	"settingsGeneralIgnoreRequestFailuresForDomains": {
+		"message": "Bu kurallara göre hata tespitini yoksay"
+	},
+	"settingsGeneralIgnoreRequestFailuresForDomainsDesc": {
+		"message": "Hata tespitini devre dışı bırakmak için kurallar ekleyin."
+	},
+	"settingsGeneralDisplayFailedOnBadge": {
+		"message": "Araç çubuğu simgesi rozetinde başarısız istek sayısını göster"
+	},
+	"settingsGeneralThemes": {
+		"message": "Temalar"
+	},
+	"settingsGeneralThemesAutoSwitch": {
+		"message": "Tarayıcı temasına göre otomatik değiştir"
+	},
+	"settingsGeneralThemesAutoSwitchDesc": {
+		"message": "Aşağıda seçilen temalar arasında otomatik geçiş yapar. Bu, tarayıcınızın temasını takip eder ve işletim sisteminizin temasını da takip edebilir."
+	},
+	"settingsGeneralThemesLight": {
+		"message": "Açık Tema"
+	},
+	"settingsGeneralThemes_Default": {
+		"message": "(Varsayılan)"
+	},
+	"settingsGeneralThemes_Custom": {
+		"message": "(Özel)"
+	},
+	"settingsGeneralThemes_CustomUrl": {
+		"message": "Özel Stiller (CSS) URL'si:"
+	},
+	"settingsGeneralThemes_CustomUrlDesc": {
+		"message": "URL 'https' olmalıdır. Özel stil içinde içe aktarılan yazı tipleri ve diğer stillere dikkat edin; bunlar tarayıcınızdaki açılır pencereleri engelleyebilir/yavaşlatabilir. bootswatch.com'dan temalar deneyebilirsiniz, ancak Google yazı tipi bağımlılıklarına dikkat edin."
+	},
+	"settingsGeneralThemesDark": {
+		"message": "Koyu Tema"
+	},
+	"settingsGeneralThemesLight_ErrorValidUrl": {
+		"message": "Açık Tema için geçerli bir CSS URL'si girin; URL 'https' olmalıdır."
+	},
+	"settingsGeneralThemesDark_ErrorValidUrl": {
+		"message": "Koyu Tema için geçerli bir CSS URL'si girin; URL 'https' olmalıdır."
+	},
+	"settingsGeneralOtherSettings": {
+		"message": "Diğer Ayarlar"
+	},
+	"settingsGeneralEnableShortcuts": {
+		"message": "Kısayolları Etkinleştir"
+	},
+	"settingsGeneralEnableShortcutsDesc": {
+		"message": "Kısayolları tarayıcı eklenti ayarları sayfasından yapılandırabilirsiniz."
+	},
+	"settingsGeneralViewShortcuts": {
+		"message": "Kısayolları görüntüle"
+	},
+	"settingsGeneralConfigureShortcuts": {
+		"message": "Kısayolları yapılandır"
+	},
+	"settingsGeneralShortcutNotification": {
+		"message": "Kısayol bildirimini etkinleştir"
+	},
+	"settingsGeneralViewShortcutKeys": {
+		"message": "Kısayol Tuşları"
+	},
+	"settingsGeneralDisplayAppliedProxyOnBadge": {
+		"message": "Rozette uygulanan kural kaynağını göster"
+	},
+	"settingsGeneralDisplayAppliedRulePatternOnBadge": {
+		"message": "Rozette uygulanan kural desenini göster"
+	},
+	"settingsGeneralRefreshTabOnConfigChanges": {
+		"message": "Profil veya proxy değiştiğinde etkin sekmeyi yenile"
+	},
+	"settingsGeneralCancelButton": {
+		"message": "İptal"
+	},
+	"settingsGeneralSaveChanges": {
+		"message": "Değişiklikleri Kaydet"
+	},
+	"settingsGeneralKeyboardShortcutsTitle": {
+		"message": "Klavye kısayolları"
+	},
+	"settingsGeneralCloseButton": {
+		"message": "Kapat"
+	},
+	"settingsGeneralKeyboardShortcutsNotSupported": {
+		"message": "Klavye kısayolları mobil cihazlarda desteklenmez."
+	},
+	"settingsTabProxyServersTitle": {
+		"message": "Proxy sunucularınızı yönetin:"
+	},
+	"settingsTabProxyServersDescription": {
+		"message": "İşte proxy sunucularının listesi. İstediğiniz kadar proxy tanımlayabilir ve araç çubuğundan aralarında geçiş yapabilirsiniz."
+	},
+	"settingsTabBackupRestoreDescription": {
+		"message": "Ayarlarınızın tam veya kısmi yedeğini alabilirsiniz."
+	},
+	"settingsErrNoServersTitle": {
+		"message": "Sunucu Yok!"
+	},
+	"settingsErrNoServersDescription": {
+		"message": "Her şeyden önce proxy sunucularını tanımlamalısınız."
+	},
+	"settingsActiveProxyServer": {
+		"message": "Varsayılan Proxy Sunucusu:"
+	},
+	"settingsAddServerButton": {
+		"message": "Sunucu Ekle"
+	},
+	"settingsRemoveMultipleServerButton": {
+		"message": "Çoklu Sil"
+	},
+	"settingsSaveChangesButton": {
+		"message": "Değişiklikleri Kaydet"
+	},
+	"settingsRejectChangesButton": {
+		"message": "Değişiklikleri Reddet"
+	},
+	"settingsEditButton": {
+		"message": "Düzenle"
+	},
+	"settingsFullBackupButton": {
+		"message": "Tam yedek oluştur"
+	},
+	"settingsFullBackupButtonDesc": {
+		"message": "Seçeneklerin tam yedeğini alın (proxy sunucuları ve kurallar dahil)."
+	},
+	"settingsRestoreBackupButton": {
+		"message": "Yedeği geri yükle"
+	},
+	"settingsRestoreBackupButtonDesc": {
+		"message": "Daha önce alınan yedeğinizi yerel bir dosyadan geri yükleyin"
+	},
+	"settingsDangerZoneDesc": {
+		"message": "Tehlike bölgesi"
+	},
+	"settingsFactoryResetButton": {
+		"message": "Fabrika Ayarlarına Sıfırla"
+	},
+	"settingsFactoryResetDesc": {
+		"message": "Her şeyi sıfırla. Bu, tüm kuralları ve proxy sunucularını kalıcı olarak kaldıracak ve seçenekleri sıfırlayacaktır."
+	},
+	"settingsFactoryResetConfirm": {
+		"message": "HER ŞEYİ sıfırlamak istediğinize emin misiniz? Gerçekten mi? Geri dönüş yok!"
+	},
+	"settingsFactoryResetSuccess": {
+		"message": "Fabrika ayarlarına sıfırlama başarıyla tamamlandı"
+	},
+	"settingsImportExportProxiesDesc": {
+		"message": "Proxy sunucularının bireysel listelerini içe/dışa aktarın."
+	},
+	"settingsImportProxiesButtonBackup": {
+		"message": "Proxy Sunucularını İçe Aktar"
+	},
+	"settingsExportProxiesButtonBackup": {
+		"message": "Proxy Sunucularını Dışa Aktar"
+	},
+	"settingsAddRuleButton": {
+		"message": "Kural Ekle"
+	},
+	"settingsImportRulesButton": {
+		"message": "Kuralları İçe Aktar"
+	},
+	"settingsImportRulesTitle": {
+		"message": "Kuralları İçe Aktar"
+	},
+	"settingsImportRulesSelectButton": {
+		"message": "Kural Yedekleme Dosyası"
+	},
+	"settingsImportRulesText": {
+		"message": "Kural Yedekleme Metni"
+	},
+	"settingsImportRulesFrom": {
+		"message": "Kaynak"
+	},
+	"settingsImportRulesOptionAppend": {
+		"message": "Mevcut kurallara ekle"
+	},
+	"settingsImportRulesOptionOverride": {
+		"message": "Mevcut kuralları değiştir (dikkatli kullanın)"
+	},
+	"settingsImportRulesCancelButton": {
+		"message": "İptal"
+	},
+	"settingsImportRulesImportButton": {
+		"message": "İçe Aktar"
+	},
+	"settingsImportProxiesButton": {
+		"message": "Proxy'leri İçe Aktar"
+	},
+	"settingsExportProxiesButton": {
+		"message": "Proxy'leri Dışa Aktar"
+	},
+	"settingsImportProxiesTitle": {
+		"message": "Proxy Listesini İçe Aktar"
+	},
+	"settingsImportProxiesSelectFileButton": {
+		"message": "Proxy listesi dosyası"
+	},
+	"settingsImportProxiesSelectTextButton": {
+		"message": "Proxy listesi metni"
+	},
+	"settingsImportProxiesOptionAppend": {
+		"message": "Mevcut proxy'lere ekle"
+	},
+	"settingsImportProxiesOptionOverride": {
+		"message": "Mevcut proxy'leri değiştir (dikkatli kullanın)"
+	},
+	"settingsImportProxiesCancelButton": {
+		"message": "İptal"
+	},
+	"settingsImportProxiesImportButton": {
+		"message": "İçe Aktar"
+	},
+	"settingsConfirmRemoveProxyServer": {
+		"message": "Seçili proxy sunucusunu kaldırmak istediğinize emin misiniz?"
+	},
+	"settingsConfirmRemoveMultipleProxyServer": {
+		"message": "Seçili proxy sunucularını kaldırmak istediğinize emin misiniz?"
+	},
+	"settingsRemoveAllProxyServers": {
+		"message": "Tüm proxy sunucularını kaldırmak istediğinize emin misiniz?"
+	},
+	"settingsRemoveAllProxyServersSuccess": {
+		"message": "Tüm proxy sunucuları kaldırıldı.<br/>Değişiklikleri uygulamak için kaydetmelisiniz."
+	},
+	"settingsImportProxiesFileNotSelected": {
+		"message": "Lütfen bir proxy listesi dosyası seçin"
+	},
+	"settingsImportProxyListTextIsEmpty": {
+		"message": "Lütfen proxy listesini girin"
+	},
+	"settingsImportProxyServersFailed": {
+		"message": "Proxy sunucuları içe aktarılamadı"
+	},
+	"importerImportProxySuccess": {
+		"message": "Toplam {1} proxy'den {0} tanesi içe aktarıldı.<br>Değişiklikleri kaydetmeyi unutmayın."
+	},
+	"settingsErrorFailedToSaveServers": {
+		"message": "Sunucular kaydedilemedi."
+	},
+	"settingsChangesReverted": {
+		"message": "Değişiklikler başarıyla geri alındı."
+	},
+	"settingsConfirmSaveAllChanged": {
+		"message": "Kaydedilmemiş tüm değişiklikleri kaydetmek istiyor musunuz?"
+	},
+	"settingsConfirmRemoveProxyRule": {
+		"message": "Seçili kuralı kaldırmak istediğinize emin misiniz?"
+	},
+	"settingsConfirmRemoveMultipleProxyRule": {
+		"message": "Seçili kuralları kaldırmak istediğinize emin misiniz?"
+	},
+	"settingsRemoveAllRules": {
+		"message": "Tüm kuralları kaldırmak istediğinize emin misiniz?"
+	},
+	"settingsRemoveAllRulesSuccess": {
+		"message": "Tüm kurallar kaldırıldı.<br/>Değişiklikleri uygulamak için kaydetmelisiniz."
+	},
+	"settingsRestoreBackupFailed": {
+		"message": "Yedeği geri yüklerken bir hata oluştu"
+	},
+	"settingsRestoreBackupFileError": {
+		"message": "Seçilen dosya okunamadı"
+	},
+	"settingsRulesFileNotSelected": {
+		"message": "Lütfen bir kural dosyası seçin"
+	},
+	"settingsSourceTypeNotSelected": {
+		"message": "Lütfen kaynak türünü seçin"
+	},
+	"settingsImportRulesFailed": {
+		"message": "Dosya içe aktarılamadı."
+	},
+	"settingsImportRulesTextIsEmpty": {
+		"message": "Lütfen kuralları kutuya girin"
+	},
+	"settingsServerNameRequired": {
+		"message": "Sunucunun adını belirtin!"
+	},
+	"settingsServerNameExists": {
+		"message": "Aynı ada sahip bir sunucu zaten var!"
+	},
+	"settingsServerServerAddressIsEmpty": {
+		"message": "Sunucu adresi boş olamaz"
+	},
+	"settingsServerPortNoInvalid": {
+		"message": "Lütfen geçerli bir bağlantı noktası numarası girin"
+	},
+	"settingsServerAuthenticationInvalid": {
+		"message": "Kimlik doğrulaması için hem kullanıcı adı hem de şifre gereklidir"
+	},
+	"settingsServersGridNoDataContent": {
+		"message": "Hiçbir sunucu tanımlanmamış"
+	},
+	"settingsServersGridColName": {
+		"message": "Ad"
+	},
+	"settingsServersGridColProtocol": {
+		"message": "Protokol"
+	},
+	"settingsServersGridColServer": {
+		"message": "Sunucu"
+	},
+	"settingsServersGridColPort": {
+		"message": "Bağlantı Noktası"
+	},
+	"settingsServersGridColCountry": {
+		"message": "Ülke"
+	},
+	"settingsServersGridColRating": {
+		"message": "Puan"
+	},
+	"settingsServersModalTitle": {
+		"message": "Proxy Sunucu Detayları"
+	},
+	"settingsServersServerName": {
+		"message": "Sunucu Adı"
+	},
+	"settingsServersSeverAddress": {
+		"message": "Sunucu Adresi"
+	},
+	"settingsServersProtocol": {
+		"message": "Proxy Protokolü"
+	},
+	"settingsServersPort": {
+		"message": "Bağlantı Noktası"
+	},
+	"settingsServersProxyDNS": {
+		"message": "SOCKS 5 kullanırken DNS üzerinden proxy"
+	},
+	"settingsServersUsername": {
+		"message": "Kullanıcı Adı"
+	},
+	"settingsServersPassword": {
+		"message": "Şifre"
+	},
+	"settingsServersAuthChromeMv3Limitation": {
+		"message": "(Maalesef proxy sunucusu kimlik doğrulaması Chrome tarafından eklenti API'si aracılığıyla desteklenmiyor. Bu &quot;kasıtlı&quot; bir durumdur.)"
+	},
+	"settingsServersCancel": {
+		"message": "İptal"
+	},
+	"settingsServersSave": {
+		"message": "Kaydet"
+	},
+	"settingsServersImport": {
+		"message": "İçe Aktar"
+	},
+	"settingsProfilesNameTitle": {
+		"message": "Seçici Profil:"
+	},
+	"settingsProfilesEnabled": {
+		"message": "Etkin"
+	},
+	"settingsProfilesTypeTitle": {
+		"message": "Profil Türü:"
+	},
+	"settingsProfilesTypeDesc_SmartRules": {
+		"message": "Bu profilde, seçici kurallar tanımlamadığınız sürece proxy uygulanmaz. Proxy uygulamak için kara liste kuralları, diğer bir deyişle kurallar tanımlayacaksınız."
+	},
+	"settingsProfilesTypeDesc_AlwaysEnabledBypassRules": {
+		"message": "Bu profilde proxy sunucuları her zaman uygulanır; bunları atlamak için seçici kurallar tanımlayın. Proxy'yi atlamak ve uygulamamak için beyaz liste kuralları tanımlayacaksınız."
+	},
+	"settingsProfilesTypeDesc_IgnoreFailureRules": {
+		"message": "Kural ekleyerek bu alan adları için hata tespitini yoksayın."
+	},
+	"settingsProfilesProfileProxyServer": {
+		"message": "Profil Proxy Sunucusu:"
+	},
+	"settingsProfilesDefaultProfileProxyServer": {
+		"message": "(Varsayılan Proxy Sunucusunu Kullan)"
+	},
+	"settingsProfilesProfileProxyServerDesc": {
+		"message": "(Bu profili kullanırken, bu etkin proxy sunucusu olacaktır)"
+	},
+	"settingsProfilesRulesSection": {
+		"message": "Kurallar"
+	},
+	"settingsProfilesDelete": {
+		"message": "Sil"
+	},
+	"settingsProfilesAddNewLabel": {
+		"message": "Yeni Seçici Profil Ekle"
+	},
+	"settingsProfilesAddNewTypeLead": {
+		"message": "Eklemek istediğiniz <b>profil türünü</b> seçin:"
+	},
+	"settingsProfilesAddNewType_SmartRules": {
+		"message": "Seçici Kurallar"
+	},
+	"settingsProfilesAddNewType_SmartRulesDesc": {
+		"message": "Bu profil türünde proxy, tanımlamanız gereken bazı <em>seçici kurallara</em> göre isteklere uygulanacaktır. Bu kuralları tanımlamak için menü çubuğundaki açılır menüyü kullanabilir, ayarlardan ekleyebilir ve <em>Proxy'lenebilir Kaynaklar</em> penceresinden de yapabilirsiniz.<br>Ayrıca Gfwlist gibi farklı kural listelerine abone olma yeteneğiniz de vardır."
+	},
+	"settingsProfilesAddNewType_AlwaysEnabled": {
+		"message": "Her Zaman Etkin"
+	},
+	"settingsProfilesAddNewType_AlwaysEnabledDesc": {
+		"message": "Bu profil türünde, atlama kuralları tanımlamadığınız sürece proxy her zaman isteklere uygulanır. Kural tanımlama adımları, Seçici Kurallar profil türüyle aynıdır."
+	},
+	"settingsProfilesAddNewBtnContinue": {
+		"message": "Devam"
+	},
+	"settingsProfilesAddNewBtnCancel": {
+		"message": "İptal"
+	},
+	"settingsProfilesAddErrorTypeRequired": {
+		"message": "Lütfen bir profil türü seçin"
+	},
+	"settingsProfilesAddErrorNameRequired": {
+		"message": "Profil adı zorunludur"
+	},
+	"settingsProfilesAddErrorNameExists": {
+		"message": "Profil adı zaten var, lütfen başka bir ad girin"
+	},
+	"settingsProfilesDeleteConfirm": {
+		"message": "Bu profili silmek istediğinize emin misiniz? Uyarı: bu işlem geri alınamaz!"
+	},
+	"settingsProfilesDeleteFailed": {
+		"message": "Seçilen profil silinemedi."
+	},
+	"settingsProfilesDeleteDone": {
+		"message": "Profil başarıyla silindi"
+	},
+	"settingsProfilesDeleteBuiltinFail": {
+		"message": "Yerleşik profiller silinemez"
+	},
+	"settingsProfilesProxyServer": {
+		"message": "[Varsayılan Proxy Sunucusunu Kullan]"
+	},
+	"settingsProfilesRulesSubscriptionsTitle": {
+		"message": "Kural Abonelikleri"
+	},
+	"settingsProfilesRulesSubscriptionsDesc": {
+		"message": "Buradan kural listelerine abone olabilirsiniz."
+	},
+	"settingsSaveSmartProfileSuccess": {
+		"message": "Seçici Profil başarıyla kaydedildi."
+	},
+	"settingsErrorFailedToSaveSmartProfile": {
+		"message": "Seçici profil kaydedilemedi."
+	},
+	"settingsRuleSourceRequired": {
+		"message": "Lütfen kuralın kaynak alan adını belirtin!"
+	},
+	"settingsRuleSourceInvalid": {
+		"message": "Kaynak alan adı geçersiz, 'google.com' gibi bir şey olmalıdır"
+	},
+	"settingsRuleSourceInvalidFormat": {
+		"message": "'kaynak alan adı' geçerli değil '{0}'"
+	},
+	"settingsRuleSourceAlreadyExists": {
+		"message": "Aynı kaynağa sahip bir kural zaten var!"
+	},
+	"settingsRuleHostInvalid": {
+		"message": "'{0}' ana bilgisayar adı geçersiz, 'google.com' gibi bir şey olmalıdır"
+	},
+	"settingsRuleRegexNotMatchDomain": {
+		"message": "Regex kuralı '{0}' kaynak alan adıyla eşleşmiyor"
+	},
+	"settingsRuleDoesntIncludeDomain": {
+		"message": "Kural, '{0}' kaynak alan adıyla eşleşmiyor"
+	},
+	"settingsRuleRegexInvalid": {
+		"message": "Regex kuralı '{0}' geçerli değil"
+	},
+	"settingsRuleExactUrlInvalid": {
+		"message": "URL '{0}' geçerli değil"
+	},
+	"settingsRuleUrlInvalid": {
+		"message": "URL '{0}' geçerli değil"
+	},
+	"settingsRulesGridNoDataContent": {
+		"message": "Hiçbir kural tanımlanmamış"
+	},
+	"settingsRulesGridColRuleType": {
+		"message": "Kural Türü"
+	},
+	"settingsRulesGridColSource": {
+		"message": "Kaynak"
+	},
+	"settingsRulesGridColRule": {
+		"message": "Kural"
+	},
+	"settingsRulesGridColEnabled": {
+		"message": "Etkin"
+	},
+	"settingsRulesGridColProxy": {
+		"message": "Proxy Sunucusu"
+	},
+	"settingsRulesProxyDefault": {
+		"message": "[Etkin Proxy'yi Kullan]"
+	},
+	"settingsRulesProxyFromProfile": {
+		"message": "[Profil Proxy'sini Kullan]"
+	},
+	"settingsRulesModalTitle": {
+		"message": "Kural Detayları"
+	},
+	"settingsRulesRuleType": {
+		"message": "Kural Türü"
+	},
+	"settingsRulesSourceDomain": {
+		"message": "Kural Kaynak Alan Adı"
+	},
+	"settingsRulesSourceDomainDesc": {
+		"message": "(ör. google.com)"
+	},
+	"settingsRulesPattern": {
+		"message": "Eşleşme Deseni"
+	},
+	"settingsRulesGeneratePattern": {
+		"message": "Deseni otomatik oluştur"
+	},
+	"settingsRulesRegex": {
+		"message": "URL Regex"
+	},
+	"settingsRulesHostRegex": {
+		"message": "Ana Bilgisayar Regex"
+	},
+	"settingsRulesExactUrl": {
+		"message": "Tam URL (küçük harfle)"
+	},
+	"settingsRulesProxyServer": {
+		"message": "Proxy Sunucusu"
+	},
+	"settingsRulesProxyServerNotAuth": {
+		"message": "(Kimlik doğrulaması olan sunucular Chrome'da desteklenmez)"
+	},
+	"settingsRulesEnabled": {
+		"message": "Etkin"
+	},
+	"settingsRulesModalCancel": {
+		"message": "İptal"
+	},
+	"settingsRulesModalSave": {
+		"message": "Kaydet"
+	},
+	"settingsRulesActionType": {
+		"message": "Eylem"
+	},
+	"settingsRuleActionApplyProxy": {
+		"message": "Proxy Uygula"
+	},
+	"settingsRuleActionWhitelist": {
+		"message": "Beyaz Liste (Proxy yok)"
+	},
+	"settingsRuleActionWhitelistDesc": {
+		"message": "(Beyaz liste kuralları, yerleşimlerinden bağımsız olarak proxy kurallarından daha yüksek önceliğe sahiptir)"
+	},
+	"settingsServerPortInvalid": {
+		"message": "Sunucu bağlantı noktası '{0}' geçersiz"
+	},
+	"settingsServerHostInvalid": {
+		"message": "Sunucu ana bilgisayarı '{0}' geçersiz"
+	},
+	"settingsRestoreSettingsSuccess": {
+		"message": "Ayarlar başarıyla geri yüklendi"
+	},
+	"settingsRestoreSettingsFailed": {
+		"message": "Ayarlar geri yüklenirken bir hata oluştu"
+	},
+	"settingsRestoreSettingsFailedInvalid": {
+		"message": "Yedek verileri geçersiz veya bozuk"
+	},
+	"settingsRestoreSettingsFailedInvalidActiveProfile": {
+		"message": "Etkin profil için geçersiz veri sağlandı"
+	},
+	"settingsRestoreSettingsFailedInvalidDefaultProxyServer": {
+		"message": "Varsayılan proxy sunucusu için geçersiz veri sağlandı"
+	},
+	"settingsEnableByDomainInvalid": {
+		"message": "Seçilen alan adı geçersiz"
+	},
+	"settingsEnableByDomainExists": {
+		"message": "Bu alan adı için zaten bir kural var"
+	},
+	"settingsEnableByDomainSmartProfileNonEditable": {
+		"message": "Mevcut profil '{0}' kurallarla güncellenemez"
+	},
+	"settingsNoRuleFoundForDomain": {
+		"message": "'{0}' için herhangi bir kural yok"
+	},
+	"importerImportSuccess": {
+		"message": "Toplam {1} kuraldan {0} tanesi eklendi.<br>Değişiklikleri kaydetmeyi unutmayın."
+	},
+	"settingsRemoveMultipleProxyRuleButton": {
+		"message": "Çoklu Sil"
+	},
+	"settingsAddMultipleRulesButton": {
+		"message": "Çoklu Kural Ekle"
+	},
+	"settingsAddMultipleRuleTitle": {
+		"message": "Çoklu Kural Ekle"
+	},
+	"settingsMultipleRuleList": {
+		"message": "Ana Bilgisayar/Kural listesi:"
+	},
+	"settingsMultipleRuleInvalidHost": {
+		"message": "Ana bilgisayar adı '{0}' geçersiz"
+	},
+	"settingsMultipleRuleNoNewRuleAdded": {
+		"message": "Yeni kural eklenmedi"
+	},
+	"settingsTabProxyServerSubscriptionsTitle": {
+		"message": "Proxy sunucu aboneliklerini yönetin:"
+	},
+	"settingsTabProxyServerSubscriptionsDescription": {
+		"message": "Burada proxy listelerine abone olabilir ve daha sonra proxy'ler arasında geçiş yapabilirsiniz. Uzun listelerin cihazlar arasında veri senkronizasyonunda başarısızlığa neden olabileceğini lütfen unutmayın."
+	},
+	"settingsErrorFailedToSaveGeneral": {
+		"message": "Seçenek ayarları kaydedilemedi."
+	},
+	"settingsSaveOptionsSuccess": {
+		"message": "Genel seçenekler başarıyla kaydedildi."
+	},
+	"settingsAddServerSubscriptionButton": {
+		"message": "Bir listeye abone ol"
+	},
+	"settingsServerSubscriptionModalTitle": {
+		"message": "Bir proxy sunucusu listesine abone ol"
+	},
+	"settingsRemoveMultipleServerSubscriptionButton": {
+		"message": "Çoklu Sil"
+	},
+	"settingsServerSubscriptionName": {
+		"message": "Ad:"
+	},
+	"settingsServerSubscriptionUrl": {
+		"message": "URL:"
+	},
+	"settingsServerSubscriptionRefreshRate": {
+		"message": "Yenileme Sıklığı:"
+	},
+	"settingsServerSubscriptionRefreshRateHelp": {
+		"message": "(dakika cinsinden, 0 yenileme yok anlamına gelir)"
+	},
+	"settingsServerSubscriptionEnabled": {
+		"message": "Etkin"
+	},
+	"settingsServerSubscriptionProtocol": {
+		"message": "Protokol:"
+	},
+	"settingsServerSubscriptionObfuscation": {
+		"message": "Karartma:"
+	},
+	"settingsServerSubscriptionFormat": {
+		"message": "Biçim:"
+	},
+	"settingsServerSubscriptionApplyProxy": {
+		"message": "Proxy üzerinden geçir:"
+	},
+	"settingsServerSubscriptionApplyProxyHelpFirefox": {
+		"message": "(Sunucuya erişiminize göre karar verin)"
+	},
+	"settingsServerSubscriptionApplyProxyHelpChrome": {
+		"message": "(Maalesef bu özellik Chrome'da mevcut değil. Mevcut proxy uygulanacaktır)"
+	},
+	"settingsServerSubscriptionApplyProxy_NoProxy": {
+		"message": "Proxy Yok"
+	},
+	"settingsServerSubscriptionApplyProxy_CurrentProxy": {
+		"message": "Mevcut Proxy"
+	},
+	"settingsServerSubscriptionApplyProxy_SelectedProxy": {
+		"message": "Seçili Proxy"
+	},
+	"settingsServerSubscriptionUsername": {
+		"message": "Kullanıcı Adı:"
+	},
+	"settingsServerSubscriptionPassword": {
+		"message": "Şifre:"
+	},
+	"settingsServerSubscriptionAuthenticationHelp": {
+		"message": "(liste kimlik doğrulaması gerektiriyorsa)"
+	},
+	"settingsServerSubscriptionCancelButton": {
+		"message": "İptal"
+	},
+	"settingsServerSubscriptionSaveButton": {
+		"message": "Kaydet"
+	},
+	"settingsServerSubscriptionSavingButton": {
+		"message": "Kaydediliyor..."
+	},
+	"settingsServerSubscriptionTestButton": {
+		"message": "Test Et"
+	},
+	"settingsProxyTestStopButton": {
+		"message": "Durdur"
+	},
+	"settingsProxyTestCancelled": {
+		"message": "Test kullanıcı tarafından durduruldu"
+	},
+	"settingsProxyTestResumeDialogTitle": {
+		"message": "Proxy Testi"
+	},
+	"settingsProxyTestResumeDialogMessage": {
+		"message": "Test edilmemiş proxy'ler var. Ne yapmak istiyorsunuz?"
+	},
+	"settingsProxyTestResumeContinue": {
+		"message": "Kaldığım yerden devam et"
+	},
+	"settingsProxyTestResumeRestart": {
+		"message": "Baştan başlat"
+	},
+	"settingsServerSubscriptionTestingButton": {
+		"message": "Test Ediliyor..."
+	},
+	"settingsConfirmRemoveServerSubscription": {
+		"message": "Seçili aboneliği kaldırmak istediğinize emin misiniz?"
+	},
+	"settingsRemoveAllProxyServerSubscriptions": {
+		"message": "Tüm proxy sunucu aboneliklerini kaldırmak istediğinize emin misiniz?"
+	},
+	"settingsConfirmRemoveMultipleServerSubscription": {
+		"message": "Seçili abonelikleri kaldırmak istediğinize emin misiniz?"
+	},
+	"settingsRemoveAllProxyServerSubscriptionsSuccess": {
+		"message": "Tüm proxy sunucu abonelikleri kaldırıldı.<br/>Değişiklikleri uygulamak için kaydetmelisiniz."
+	},
+	"settingsServerSubscriptionProtocolDefault": {
+		"message": "(HTTP geri dönüşlü otomatik algılama)"
+	},
+	"settingsInitializeFailed": {
+		"message": "Yapılandırmalar okunamadı. Lütfen ayarlar sayfasını kapatın ve tekrar deneyin."
+	},
+	"settingsActiveProxyServerSubscriptions": {
+		"message": "-Abonelikler-"
+	},
+	"settingsServerSubscriptionsGridNoDataContent": {
+		"message": "Abonelik yok"
+	},
+	"settingsServerSubscriptionsGridColName": {
+		"message": "Ad"
+	},
+	"settingsServerSubscriptionsGridColUrl": {
+		"message": "URL"
+	},
+	"settingsServerSubscriptionsGridColCount": {
+		"message": "Sayı"
+	},
+	"settingsServerSubscriptionsGridColEnabled": {
+		"message": "Etkin"
+	},
+	"settingsServerSubscriptionIncompleteForm": {
+		"message": "Lütfen gerekli alanları doğru biçimde doldurun"
+	},
+	"settingsServerSubscriptionInvalidForm": {
+		"message": "Geçersiz proxy sunucu abonelik ayrıntıları"
+	},
+	"settingsServerSubscriptionDuplicateName": {
+		"message": "Girilen ad zaten kullanılıyor, lütfen başka bir ad girin."
+	},
+	"settingsServerSubscriptionSaveUpdated": {
+		"message": "Abonelik, içinde {0} proxy ile güncellendi.<br/>Değişiklikleri kaydetmeyi unutmayın."
+	},
+	"settingsServerSubscriptionSaveAdded": {
+		"message": "Abonelik, içinde {0} proxy ile eklendi.<br/>Değişiklikleri kaydetmeyi unutmayın."
+	},
+	"settingsServerSubscriptionSaveFailedGet": {
+		"message": "Proxy'ler alınamadı."
+	},
+	"settingsServerSubscriptionTestSuccess": {
+		"message": "Test başarılı. Liste {0} proxy döndürdü."
+	},
+	"settingsServerSubscriptionTestFailed": {
+		"message": "Test başarısız"
+	},
+	"settingsSaveProxyServerSubscriptionsSuccess": {
+		"message": "Proxy sunucu abonelikleri başarıyla kaydedildi."
+	},
+	"settingsFailedToSaveProxySubscriptions": {
+		"message": "Proxy sunucu abonelikleri kaydedilemedi"
+	},
+	"settingsAddRulesSubscriptionButton": {
+		"message": "Bir kural listesine abone ol"
+	},
+	"settingsRemoveMultipleRulesSubscriptionButton": {
+		"message": "Çoklu Sil"
+	},
+	"settingsRulesSubscriptionsModalTitle": {
+		"message": "Bir kural listesine abone ol"
+	},
+	"settingsRulesSubscriptionsGridColName": {
+		"message": "Ad"
+	},
+	"settingsRulesSubscriptionsGridColUrl": {
+		"message": "URL"
+	},
+	"settingsRulesSubscriptionsGridColCount": {
+		"message": "Sayı"
+	},
+	"settingsRulesSubscriptionsGridColEnabled": {
+		"message": "Etkin"
+	},
+	"settingsRulesSubscriptionsName": {
+		"message": "Ad:"
+	},
+	"settingsRulesSubscriptionsUrl": {
+		"message": "URL:"
+	},
+	"settingsRulesSubscriptionsRefreshRate": {
+		"message": "Yenileme Sıklığı:"
+	},
+	"settingsRulesSubscriptionsRefreshRateHelp": {
+		"message": "(dakika cinsinden, 0 yenileme yok anlamına gelir)"
+	},
+	"settingsRulesSubscriptionEnabled": {
+		"message": "Etkin"
+	},
+	"settingsRulesSubscriptionsObfuscation": {
+		"message": "Karartma:"
+	},
+	"settingsRulesSubscriptionsFormat": {
+		"message": "Biçim:"
+	},
+	"settingsRulesSubscriptionsApplyProxy": {
+		"message": "Proxy üzerinden geçir:"
+	},
+	"settingsRulesSubscriptionsApplyProxyHelpFirefox": {
+		"message": "(Sunucuya erişiminize göre karar verin)"
+	},
+	"settingsRulesSubscriptionsApplyProxyHelpChrome": {
+		"message": "(Maalesef bu özellik Chrome'da mevcut değil. Mevcut proxy uygulanacaktır)"
+	},
+	"settingsRulesSubscriptionsUsername": {
+		"message": "Kullanıcı Adı:"
+	},
+	"settingsRulesSubscriptionsAuthenticationHelp": {
+		"message": "(liste kimlik doğrulaması gerektiriyorsa)"
+	},
+	"settingsRulesSubscriptionsPassword": {
+		"message": "Şifre:"
+	},
+	"settingsRulesSubscriptionsTestButton": {
+		"message": "Test Et"
+	},
+	"settingsRulesSubscriptionsSaveButton": {
+		"message": "Kaydet"
+	},
+	"settingsRulesSubscriptionsCancelButton": {
+		"message": "İptal"
+	},
+	"settingsConfirmRemoveRulesSubscription": {
+		"message": "Seçili kural aboneliğini kaldırmak istediğinize emin misiniz?"
+	},
+	"settingsConfirmRemoveMultipleRulesSubscription": {
+		"message": "Seçili kural aboneliklerini kaldırmak istediğinize emin misiniz?"
+	},
+	"settingsRulesSubscriptionIncompleteForm": {
+		"message": "Lütfen gerekli alanları doğru biçimde doldurun"
+	},
+	"settingsRulesSubscriptionInvalidForm": {
+		"message": "Geçersiz proxy sunucu abonelik ayrıntıları"
+	},
+	"settingsRulesSubscriptionDuplicateName": {
+		"message": "Girilen ad zaten kullanılıyor, lütfen başka bir ad girin."
+	},
+	"settingsRulesSubscriptionSavingButton": {
+		"message": "Kaydediliyor..."
+	},
+	"settingsRulesSubscriptionTestButton": {
+		"message": "Test Et"
+	},
+	"settingsRulesSubscriptionTestingButton": {
+		"message": "Test Ediliyor..."
+	},
+	"settingsRulesSubscriptionSaveUpdated": {
+		"message": "Abonelik, {0} proxy kuralı ve {1} beyaz liste kuralı ile güncellendi.<br/>Değişiklikleri kaydetmeyi unutmayın."
+	},
+	"settingsRulesSubscriptionSaveAdded": {
+		"message": "Abonelik, {0} proxy kuralı ve {1} beyaz liste kuralı ile eklendi.<br/>Değişiklikleri kaydetmeyi unutmayın."
+	},
+	"settingsRulesSubscriptionSaveFailedGet": {
+		"message": "Kurallar alınamadı."
+	},
+	"settingsRulesSubscriptionRefreshOnDisabled": {
+		"message": "Devre dışı bırakılmış bir abonelik yenilenemez"
+	},
+	"settingsRulesSubscriptionTestSuccess": {
+		"message": "Test başarılı. Liste {0} proxy kuralı ve {1} beyaz liste kuralı döndürdü."
+	},
+	"settingsRulesSubscriptionTestFailed": {
+		"message": "Test başarısız"
+	},
+	"settingsFailedToSaveRulesSubscriptions": {
+		"message": "Kural abonelikleri kaydedilemedi"
+	},
+	"settingsRemoveAllProxyRulesSubscriptions": {
+		"message": "Tüm proxy kural aboneliklerini kaldırmak istediğinize emin misiniz?"
+	},
+	"settingsRemoveAllProxyRulesSubscriptionsSuccess": {
+		"message": "Tüm proxy kural abonelikleri kaldırıldı.<br/>Değişiklikleri uygulamak için kaydetmelisiniz."
+	},
+	"importerImportRulesSuccess": {
+		"message": "Toplam {0} proxy kuralı ve {1} beyaz liste kuralı döndürüldü.<br>Değişiklikleri kaydetmeyi unutmayın."
+	},
+	"settingsRulePatternIsEmpty": {
+		"message": "Kuralda tanımlanmış bir desen yok"
+	},
+	"settingsWelcomeTitle": {
+		"message": "ProxyMust'e Hoş Geldiniz"
+	},
+	"settingsWelcomeMessage": {
+		"message": "<p>\n\tProxyMust, proxy test yeteneklerine sahip seçici proxy yöneticisi.<br>\n\tBaşlamak için lütfen şu adımları izleyin:\n</p>\n<ol>\n\t<li>\n\t\tBir proxy sunucusu veya proxy listesi ekleyin\n\t\t<br>\n\t\t<small>(Proxy Sunucuları sekmesine gidin ve oraya ekleyin)</small>\n\t</li>\n\t<li>\n\t\tModu Seçici Proxy olarak ayarlayın\n\t\t<br>\n\t\t<small>(Aktif modu Seçici Proxy olarak değiştirmek için araç çubuğu açılır menüsünü kullanın)</small>\n\t</li>\n\t<li>\n\t\tProxy kurallarını tanımlayın\n\t\t<br>\n\t\t<small>(Kural eklemek için araç çubuğu açılır menüsünü veya kural eklemek/değiştirmek için Proxy Kuralları sekmesini kullanın)</small>\n\t</li>\n\t<li>\n\t\tHazırsınız.\n\t</li>\n</ol>"
+	},
+	"settingsWelcomeSkipButton": {
+		"message": "Anladım"
+	},
+	"settingsSubscriptionStatsStatusSuccess": {
+		"message": "Durum: Başarılı"
+	},
+	"settingsSubscriptionStatsStatusFail": {
+		"message": "Durum: Başarısız"
+	},
+	"settingsSubscriptionStatsLastTry": {
+		"message": "Son Deneme:"
+	},
+	"settingsSubscriptionStatsMessage": {
+		"message": "Mesaj:"
+	},
+	"settingsSubscriptionStatsLastSuccess": {
+		"message": "Son Başarı:"
+	},
+	"settings_SmartProfileType_Direct": {
+		"message": "Doğrudan"
+	},
+	"settings_SmartProfileType_SystemProxy": {
+		"message": "Sistem Proxy'si"
+	},
+	"settings_SmartProfileType_SmartRules": {
+		"message": "Seçici Kurallar"
+	},
+	"settings_SmartProfileType_AlwaysEnabledBypassRules": {
+		"message": "Atlama Kuralları ile Her Zaman Etkin"
+	},
+	"settings_SmartProfileType_IgnoreFailureRules": {
+		"message": "Hataları Yoksayma Kuralları"
+	},
+	"settingsRuleCidrIPAddress": {
+		"message": "IP Adresi"
+	},
+	"settingsRuleCidrPrefixLength": {
+		"message": "Ön Ek Uzunluğu"
+	},
+	"settingsRuleCidrNotationDesc": {
+		"message": "(Lütfen bu kuralın ana bilgisayar adını IP'lere çözümlemeyeceğini unutmayın.)"
+	},
+	"settingsRuleCidrIPInvalid": {
+		"message": "Lütfen geçerli bir IP adresi girin"
+	},
+	"settingsRuleCidrPrefixLengthInvalid": {
+		"message": "Lütfen geçerli bir ön ek uzunluğu girin"
+	},
+	"settingsRuleCidrNotationInvalid": {
+		"message": "CIDR gösterimi '{0}' geçerli değil"
+	},
+	"settingsRuleCidrNotationInvalidMatch": {
+		"message": "CIDR kuralı '{0}' ile eşleşmiyor"
+	},
+	"notificationNoNextProxyServer": {
+		"message": "Daha sonraki bir proxy sunucusu yok"
+	},
+	"notificationNoPreviousProxyServer": {
+		"message": "Önceki bir proxy sunucusu yok"
+	},
+	"notificationShortcutTitle": {
+		"message": "ProxyMust kısayol bildirimi"
+	},
+	"notificationShortcutProxyModeMessage": {
+		"message": "Proxy modu {0} olarak değiştirildi"
+	},
+	"notificationShortcutProxyServerChanged": {
+		"message": "Proxy sunucusu {0} olarak değiştirildi"
+	},
+	"popupRatingDialogTitle": {
+		"message": "Adres çalışıyor mu?"
+	},
+	"popupRatingWorksButton": {
+		"message": "Evet (+1)"
+	},
+	"popupRatingFailsButton": {
+		"message": "Hayır (-1)"
+	},
+	"popupRatingCancelButton": {
+		"message": "İptal"
+	},
+	"settingsProxyTestTitle": {
+		"message": "Proxy Erişilebilirlik Kontrolü"
+	},
+	"settingsProxyTestEnable": {
+		"message": "Proxy kontrolü için test siteleri ekle"
+	},
+	"settingsProxyTestNote": {
+		"message": "En fazla 5 adres girin. En fazla 3 adres belirtirseniz kontrol daha hızlı olacaktır."
+	},
+	"settingsProxyTestUrlsTitle": {
+		"message": "Erişim testi için ziyaret edilecek adresler"
+	},
+	"settingsProxyTestUrlsWarning": {
+		"message": "⚠️ Buraya ziyaret ettiğiniz web sitelerini girin (ör. youtube.com, telegram.org), proxy adreslerini değil."
+	},
+	"settingsProxyTestClear": {
+		"message": "Test sitelerini temizle"
+	},
+	"settingsProxyTestStop": {
+		"message": "⏹ Testi durdur"
+	},
+	"proxyTestCompleted": {
+		"message": "Kontrol tamamlandı. {0} proxy test edildi."
+	},
+	"settingsProxyTestRatingAutoEnabled": {
+		"message": "Test sonuçlarını göstermek için puanlama otomatik olarak etkinleştirildi."
+	},
+	"settingsProxyTestNoTestUrls": {
+		"message": "Test sitesi belirtilmedi. Lütfen en az bir web sitesi ekleyin."
+	},
+	"settingsProxyMustTestTitle": {
+		"message": "Proxy Testi"
+	},
+	"settingsProxyMustSiteLabel": {
+		"message": "Test edilecek site:"
+	},
+	"settingsProxyMustTestRun": {
+		"message": "▶ Test Et"
+	},
+	"settingsProxyMustAddSite": {
+		"message": "Site ekle"
+	},
+	"settingsProxyMustTestCondition": {
+		"message": "Hiçbir şey seçilmezse, test tablodaki tüm proxy'ler için çalıştırılır."
+	},
+	"settingsProxyMustTestResults": {
+		"message": "Sonuçlar: ✅ = bu site için kesinlikle çalışıyor, ☑️ = muhtemelen çalışıyor (eski veri veya diğer sitelerde başarı), ❓ = veri yok, ⛔ = çalışmıyor."
+	},
+	"settingsServersRatingPriority": {
+		"message": "Puan + Öncelik"
+	},
+	"settingsContextMenuChangeRating": {
+		"message": "Manuel puanı değiştir"
+	},
+	"settingsContextMenuPlus1": {
+		"message": "(+1)"
+	},
+	"settingsContextMenuMinus1": {
+		"message": "(-1)"
+	},
+	"settingsContextMenuRatingTitle": {
+		"message": "Manuel puan"
+	},
+	"settingsContextMenuPlus1Desc": {
+		"message": "Listede yukarı taşı"
+	},
+	"settingsContextMenuMinus1Desc": {
+		"message": "Listede aşağı taşı"
+	},
+	"settingsContextMenuResetRating": {
+		"message": "Puanı sıfırla"
+	},
+	"settingsContextMenuSetFavorite": {
+		"message": "Favori olarak işaretle"
+	},
+	"settingsContextMenuSetPin": {
+		"message": "Sabitle"
+	},
+	"settingsContextMenuRemoveFavorite": {
+		"message": "Favorilerden çıkar"
+	},
+	"settingsContextMenuUnpin": {
+		"message": "Sabitlemeyi kaldır"
+	},
+	"settingsContextMenuRemovePriority": {
+		"message": "Önceliği kaldır"
+	},
+	"settingsContextMenuExportSelected": {
+		"message": "Seçilileri dışa aktar"
+	},
+	"settingsContextMenuCopyAddresses": {
+		"message": "Adresleri kopyala"
+	},
+	"settingsContextMenuDelete": {
+		"message": "Sil"
+	},
+	"settingsContextMenuTestForSite": {
+		"message": "Seçilileri site için test et"
+	},
+	"settingsProxyMustTestProgress": {
+		"message": "{0} için proxy'ler test ediliyor... ({1}/{2})"
+	},
+	"settingsProxyMustTestComplete": {
+		"message": "Test tamamlandı"
+	},
+	"settingsProxyMustAddSitePrompt": {
+		"message": "Site alan adını girin (ör. youtube.com):"
+	},
+	"settingsProxyMustSiteAlreadyExists": {
+		"message": "Site zaten listede mevcut."
+	},
+	"settingsProxyMustInvalidDomain": {
+		"message": "Geçersiz alan adı. Lütfen geçerli bir alan adı girin (ör. youtube.com)."
+	},
+	"popupCurrentSite": {
+		"message": "Geçerli site:"
+	},
+	"settingsProxyMustRemoveSite": {
+		"message": "Siteyi kaldır"
+	},
+	"settingsContextMenuMoveToTop": {
+		"message": "Yukarı taşı"
+	},
+	"settingsContextMenuMoveToDown": {
+		"message": "Aşağı taşı"
+	},
+	"settingsProxyMustCannotRemoveAutoSite": {
+		"message": "Bu site kurallardan geliyor ve manuel olarak kaldırılamaz."
+	},
+	"settingsProxyMustConfirmRemoveSite": {
+		"message": "\"{0}\" test sitelerinden kaldırılsın mı?"
+	},
+	"settingsProxyMustSiteRemoved": {
+		"message": "\"{0}\" sitesi kaldırıldı."
+	},
+	"settingsProxyMustStaleHours": {
+		"message": "Eskime saati:"
+	},
+	"settingsContextMenuPreciseTest": {
+		"message": "Kesin test (daha yavaş, daha doğru)"
+	},
+	"settingsContextMenuExpressTest": {
+		"message": "Ekspres test (hızlı, daha az doğru)"
+	},
+	"popupQuickTestButton": {
+		"message": "Test Et"
+	},
+	"popupQuickTestStopButton": {
+		"message": "Durdur"
+	},
+	"settingsChooseTestTypeTitle": {
+		"message": "Test tipini seç"
+	},
+	"settingsChooseTestTypeDescription": {
+		"message": "Hangi testin çalıştırılacağını seçin:"
+	},
+	"settingsPreciseTestDesc": {
+		"message": "Tam kontrol, daha doğru ancak daha uzun sürer."
+	},
+	"settingsExpressTestDesc": {
+		"message": "Ekspres test, bazı çalışan proxy'leri atlayabilir ancak en az birini hızlıca bulur."
+	},
+	"settingsCancelButton": {
+		"message": "İptal"
+	},
+	"popupAddAllSuccessfulSubs": {
+		"message": "Çalışanları ekle"
+	},
+	"settingsContextMenuClearStatuses": {
+		"message": "Durumları temizle"
+	},
+	"settingsContextMenuClearStatusesSelected": {
+		"message": "Seçili proxy'ler"
+	},
+	"settingsContextMenuClearStatusesAll": {
+		"message": "Tüm proxy'ler"
+	},
+	"settingsContextMenuClearStatusesConfirmSelected": {
+		"message": "Seçili proxy'ler için test durumları temizlensin mi?"
+	},
+	"settingsContextMenuClearStatusesConfirmAll": {
+		"message": "TÜM proxy'ler için test durumları temizlensin mi? Bu işlem geri alınamaz."
+	},
+	"settingsContextMenuClearStatusesSuccess": {
+		"message": "Test durumları başarıyla temizlendi."
+	},
+	"popupQuickTestTooltip": {
+		"message": "Geçerli site için çalışan proxy'leri bulmak için hızlı test"
+	},
+	"popupAddAllSuccessfulSubsTooltip": {
+		"message": "Testi geçen abonelik proxy'lerini manuel listenize ekler"
+	},
+	"popupTestMenuTitle": {
+		"message": "Test tipini seç"
+	},
+	"popupTestMenuAllProxies": {
+		"message": "Tüm proxy'ler için ekspres test"
+	},
+	"popupTestMenuSubscriptionsOnly": {
+		"message": "Yalnızca abonelikler için ekspres test"
+	},
+	"popupTestMenuAllProxiesDesc": {
+		"message": "Manuel + abonelik proxy'leri"
+	},
+	"popupTestMenuSubscriptionsOnlyDesc": {
+		"message": "Ardından çalışanları manuel listeye ekleyin"
+	},
+	"popupTestMenuCycleTest": {
+		"message": "Döngüsel proxy testi (tam geçiş)"
+	},
+	"popupTestMenuCycleTestDesc": {
+		"message": "Proxy'leri sırayla değiştirir, site yüklenmesini test eder"
+	},
+	"settingsContextMenuCycleTest": {
+		"message": "Döngüsel test (tam geçiş)"
+	},
+	"settingsCycleTestDesc": {
+		"message": "Proxy'leri sırayla değiştirir, site yüklenmesini test eder. Daha kapsamlı ancak daha yavaştır."
+	},
+	"popupTestMenuExpressCycleTest": {
+		"message": "Ekspres döngüsel test (hızlı geçiş)"
+	},
+	"popupTestMenuExpressCycleTestDesc": {
+		"message": "Hızlı sıralı proxy geçişi, 10 saniye zaman aşımı, ilk başarıda durur"
+	},
+	"popupTestMenuExpressCycleAll": {
+		"message": "Ekspres döngüsel test (tüm proxy'ler)"
+	},
+	"popupTestMenuExpressCycleAllDesc": {
+		"message": "Manuel + abonelik proxy'leri"
+	},
+	"popupTestMenuExpressCycleSubsOnly": {
+		"message": "Ekspres döngüsel test (yalnızca abonelikler)"
+	},
+	"popupTestMenuExpressCycleSubsOnlyDesc": {
+		"message": "Ardından çalışanları manuel listeye ekleyin"
+	},
+	"popupNoSubscriptionProxies": {
+		"message": "Test edilecek abonelik proxy'si yok."
+	},
+	"settingsCopiedAddresses": {
+		"message": "Adresler kopyalandı"
+	},
+	"settingsCopyFailed": {
+		"message": "Kopyalama başarısız"
+	},
+	"settingsAnotherTestRunning": {
+		"message": "Başka bir test zaten çalışıyor. Takıldığını düşünüyorsanız, lütfen ayarlar sayfasını yenileyin (F5) ve tekrar deneyin."
+	},
+	"settingsProxyTestTimeout": {
+		"message": "Test 10 dakika sonra zaman aşımına uğradı ve zorla durduruldu. Lütfen tekrar deneyin."
+	},
+	"settingsProxyMustNoSiteSelected": {
+		"message": "Lütfen bir site seçin."
+	},
+	"settingsProxyMustSiteAdded": {
+		"message": "\"{0}\" sitesi eklendi."
+	},
+	"testingExplanationTitle": {
+		"message": "Proxy testi nasıl çalışır"
+	},
+	"testingExplanationText": {
+		"message": "Test sırasında, geçici sekmeler otomatik olarak açılır ve kapanır, proxy IP'sini ve bu proxy üzerinden girilen test sitesi adresine bağlantıyı kontrol eder. Test sekmeleri, karışıklığı önlemek için tarayıcı geçmişinizden hemen kaldırılır. Testler çalışırken tarayıcıyı güvenle simge durumuna küçültebilirsiniz, çünkü testler test edilen proxy'leri değiştirerek web gezintinize müdahale eder."
+	},
+	"settingsGeneralEnableRating": {
+		"message": "Proxy'ler için puanlamayı etkinleştir"
+	},
+	"settingsGeneralEnableRatingDesc": {
+		"message": "Proxy'leri puanlamaya (çalışıyor/çalışmıyor) ve puana göre sıralamaya izin verir."
+	},
+	"settingsProxyMustStaleHoursDesc": {
+		"message": "Test sonuçlarının eski sayılacağı saat sayısı (1-168)."
+	},
+	"datatablesSearch": {
+		"message": "Ara:"
+	},
+	"datatablesShow": {
+		"message": "Göster"
+	},
+	"datatablesEntries": {
+		"message": "kayıt"
+	},
+	"datatablesPrevious": {
+		"message": "Önceki"
+	},
+	"datatablesNext": {
+		"message": "Sonraki"
+	},
+	"datatablesInfo": {
+		"message": "_START_ - _END_ arası, toplam _TOTAL_ kayıt"
+	},
+	"datatablesInfoEmpty": {
+		"message": "0 - 0 arası, toplam 0 kayıt"
+	},
+	"datatablesEmptyTable": {
+		"message": "Tabloda veri yok"
+	},
+	"datatablesAll": {
+		"message": "Tümü"
+	},
+	"popupAddCurrentSiteTooltip": {
+		"message": "Geçerli siteyi test listesine ekle"
+	}
+}

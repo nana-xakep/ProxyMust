@@ -1,0 +1,1626 @@
+{
+	"uiDirection": {
+		"message": "ltr"
+	},
+	"languageCode": {
+		"message": "zh-TW",
+		"description": "We need to know the code which might not match what browser UI has"
+	},
+	"extensionName": {
+		"message": "ProxyMust"
+	},
+	"extensionDescription": {
+		"message": "ProxyMust – 選擇性代理管理員（SmartProxy 的分支）。根據可自訂的模式自動為造訪的網站啟用/停用代理。"
+	},
+	"toolbarTooltipEffectiveRule": {
+		"message": "匹配的規則來源："
+	},
+	"toolbarTooltipEffectiveRuleNone": {
+		"message": "無匹配的規則"
+	},
+	"toolbarTooltipEffectiveRulePattern": {
+		"message": "規則模式："
+	},
+	"popupTitle": {
+		"message": "ProxyMust 模式"
+	},
+	"popupPrivateBrowsingMode": {
+		"message": "隱私瀏覽模式"
+	},
+	"popupNoProxy": {
+		"message": "直接連線（無代理）"
+	},
+	"popupSmartProxy": {
+		"message": "選擇性代理"
+	},
+	"popupAlwaysEnable": {
+		"message": "總是啟用"
+	},
+	"popupSystemProxy": {
+		"message": "系統代理"
+	},
+	"popupActiveProxy": {
+		"message": "此方案的代理："
+	},
+	"popupActiveProxyDefault": {
+		"message": "預設設定的代理："
+	},
+	"popupEnableProxyOn": {
+		"message": "以下頁面使用代理"
+	},
+	"popupIgnoreTheseDomains": {
+		"message": "忽略這些網域"
+	},
+	"popupRuleIsFromSubscription": {
+		"message": "（來自訂閱）"
+	},
+	"popupProxyableResources": {
+		"message": "可代理的資源"
+	},
+	"popupSettings": {
+		"message": "設定"
+	},
+	"popupSubscriptions": {
+		"message": "-訂閱-"
+	},
+	"popupUpdateText": {
+		"message": "新版本 {0} 可用"
+	},
+	"popupFailedRequestsMenu": {
+		"message": "載入失敗"
+	},
+	"popupFailedRequestsTitle": {
+		"message": "載入失敗的資源"
+	},
+	"popupFailedRequestsDesc": {
+		"message": "下列爲連線逾時或失敗的網域。<br />如認爲被屏蔽，請在此處新增到代理規則清單中。"
+	},
+	"popupAddFailedRequests": {
+		"message": "新增到代理規則"
+	},
+	"popupProfileTypeDoesNotSupportsRules": {
+		"message": "所選方案「{0}」不支援規則，請選擇其他方案。"
+	},
+	"popupAddIgnoredFailures": {
+		"message": "略過"
+	},
+	"popupAddIgnoredFailuresConfirm": {
+		"message": "確定要忽略所選的失敗項目嗎？忽略後將不會再收到相關錯誤。之後可在設定中變更。"
+	},
+	"popupNotAllowedSetProxySettingsChrome": {
+		"message": "修改瀏覽器使用系統代理需要 `incognito` 權限。請開啟 ProxyMust 擴充功能的設定，並允許 `Allow in incognito` 權限。<a href='https://support.google.com/chrome_webstore/answer/2664769'>點擊瞭解如何操作</a>。"
+	},
+	"popupNotAllowedSetProxySettingsFirefox": {
+		"message": "自 Firefox 67 開始，修改瀏覽器使用系統代理需要 `Private Browsing` 權限。請在瀏覽器附加元件管理中允許 ProxyMust 元件的 `在隱私視窗中執行` 權限。<a href='https://support.mozilla.org/en-US/kb/extensions-private-browsing'>點擊瞭解如何操作</a>。"
+	},
+	"proxyableTitle": {
+		"message": "可代理的資源"
+	},
+	"proxyableHeader": {
+		"message": "此頁面上可代理的項目"
+	},
+	"proxyableReload": {
+		"message": "重新載入"
+	},
+	"proxyableClose": {
+		"message": "關閉"
+	},
+	"proxyableHeaderDesc": {
+		"message": "以下爲當前頁面在使用或可供調用的資源清單。該清單用於向代理激活判定規則新增條目。<br />如果此處爲空，請重新載入頁面以重新整理資源。"
+	},
+	"proxyableErrNoSourceTab": {
+		"message": "未找到來源分頁！"
+	},
+	"proxyableCreateRuleConfirm": {
+		"message": "你確定對選定的網域新增規則？"
+	},
+	"proxyableDisableButton": {
+		"message": "停用"
+	},
+	"proxyableEnableButton": {
+		"message": "啟用"
+	},
+	"proxyableEnableButtonDomain": {
+		"message": "已啟用的網域："
+	},
+	"proxyableSubscriptionRule": {
+		"message": "（訂閱的規則）"
+	},
+	"proxyableDeleteRuleConfirm": {
+		"message": "你確定希望刪除以下網域的規則："
+	},
+	"proxyableGridNoDataContent": {
+		"message": "沒有請求"
+	},
+	"proxyableGridColUrl": {
+		"message": "請求 URL"
+	},
+	"proxyableGridColRuleStatus": {
+		"message": "規則狀態"
+	},
+	"proxyableGridColProxifiedStatus": {
+		"message": "代理狀態"
+	},
+	"proxyableGridColRuleHost": {
+		"message": "規則網域"
+	},
+	"proxyableGridColRulePattern": {
+		"message": "規則模式"
+	},
+	"proxyableGridCol_ProxifiedStatus_NoProxy": {
+		"message": "無代理"
+	},
+	"proxyableGridCol_ProxifiedStatus_Special": {
+		"message": "特殊"
+	},
+	"proxyableGridCol_ProxifiedStatus_ProxyPerOrigin": {
+		"message": "遵循父分頁"
+	},
+	"proxyableGridCol_ProxifiedStatus_MatchedRule": {
+		"message": "已匹配"
+	},
+	"proxyableGridCol_ProxifiedStatus_AlwaysEnabled": {
+		"message": "總是啟用"
+	},
+	"proxyableGridCol_ProxifiedStatus_SystemProxyApplied": {
+		"message": "已套用系統代理"
+	},
+	"proxyableGridCol_RuleStatus_NoneMatched": {
+		"message": "無匹配"
+	},
+	"proxyableGridCol_RuleStatus_Special": {
+		"message": "特殊"
+	},
+	"proxyableGridCol_RuleStatus_ProxyPerOrigin": {
+		"message": "遵循父分頁"
+	},
+	"proxyableGridCol_RuleStatus_MatchedRule": {
+		"message": "已匹配"
+	},
+	"proxyableGridCol_RuleStatus_Whitelisted": {
+		"message": "白名單"
+	},
+	"proxyableGridCol_RuleStatus_AlwaysEnabledByPassed": {
+		"message": "總是啟用 <br> 已被繞過"
+	},
+	"proxyableGridCol_RuleStatus_AlwaysEnabledForcedByRules": {
+		"message": "總是啟用 <br> 被規則強制套用"
+	},
+	"settingsTitle": {
+		"message": "ProxyMust 設定"
+	},
+	"settingsTabAbout": {
+		"message": "關於"
+	},
+	"settingsTabGeneral": {
+		"message": "一般"
+	},
+	"settingsTabSmartProfiles": {
+		"message": "選擇性方案"
+	},
+	"settingsTabAddSmartProfile": {
+		"message": "新增選擇性方案"
+	},
+	"settingsTabProxyServers": {
+		"message": "代理伺服器"
+	},
+	"settingsTabProxyServerSubscriptions": {
+		"message": "代理伺服器訂閱"
+	},
+	"settingsTabBackupRestore": {
+		"message": "備份/還原"
+	},
+	"settingsTabUpdateText": {
+		"message": "更新至版本 {0}"
+	},
+	"settingsTabAboutDescription": {
+		"message": "使用模式來自動化定義用於代理你的網頁的規則。ProxyMust 將讓你無需手動改變和開關代理。你可以將所需頁面新增到規則，之後，當你造訪這些特定頁面，ProxyMust 就會為頁面自動啟動代理。"
+	},
+	"settingsGeneralSmartFeatures": {
+		"message": "智能功能"
+	},
+	"settingsGeneralSmartFeaturesNoChrome": {
+		"message": "<strong><a href='https://www.getfirefox.com/' target='_blank' rel='noopener'>Firefox</a> 獨享！</strong> 很遺憾，Chrome 不支援此功能。"
+	},
+	"settingsGeneralProxyPerOrigin": {
+		"message": "為每個分頁/來源啟用代理"
+	},
+	"settingsGeneralProxyPerOriginDesc": {
+		"message": "若某條規則匹配分頁的網址，該分頁的連線將套用該代理。一般情況下，頁面內的其他請求可能不會有匹配規則，因此不會套用代理。啟用「按分頁/來源套用代理」後，整個頁面（包含從不同網域或來源的連線）都會使用與分頁來源相同的代理，亦可避免需為每個網域建立規則。請注意：若分頁未套用任何代理，規則仍會對該頁面的其他連線個別生效。"
+	},
+	"settingsGeneralProxyPerOriginEnabled": {
+		"message": "已為每個分頁/來源啟用代理"
+	},
+	"settingsGeneralProxyPerOriginDisabled": {
+		"message": "已為每個分頁/來源停用代理"
+	},
+	"settingsGeneralSyncing": {
+		"message": "同步"
+	},
+	"settingsGeneralIncognitoProfile": {
+		"message": "隱私瀏覽方案"
+	},
+	"settingsGeneralIncognitoProfileDisabled": {
+		"message": "（已停用）"
+	},
+	"settingsGeneralIncognitoProfileDesc": {
+		"message": "選擇要在隱私視窗中強制使用的方案，該設定將覆蓋當前啟用的方案。"
+	},
+	"settingsGeneralEnableSyncing": {
+		"message": "開啟選項同步"
+	},
+	"settingsGeneralEnableSyncingDesc": {
+		"message": "如果選擇同步，你所有的設定（代理規則、代理伺服器設定，訂閱的代理伺服器）將被同步到所有瀏覽器。"
+	},
+	"settingsSaveGeneralOptionsButton": {
+		"message": "儲存變更"
+	},
+	"settingsRejectGeneralOptionsButton": {
+		"message": "放棄變更"
+	},
+	"settingsGeneralSyncProxyMode": {
+		"message": "同步當前方案"
+	},
+	"settingsGeneralSyncProxyModeDesc": {
+		"message": "啟用後將同步目前啟用的方案。"
+	},
+	"settingsGeneralSyncActiveProxy": {
+		"message": "同步預設代理伺服器"
+	},
+	"settingsGeneralSyncActiveProxyDesc": {
+		"message": "啟用後將同步目前選擇的預設代理伺服器。"
+	},
+	"settingsGeneralSyncToBrowser": {
+		"message": "使用瀏覽器的同步伺服器"
+	},
+	"settingsGeneralSyncToWebDAV": {
+		"message": "同步至 WebDAV 伺服器"
+	},
+	"settingsGeneralWebDavServerUrl": {
+		"message": "WebDAV 伺服器 URL："
+	},
+	"settingsGeneralWebDavBackupFilename": {
+		"message": "備份檔名："
+	},
+	"settingsGeneralWebDavServerUser": {
+		"message": "WebDAV 伺服器使用者："
+	},
+	"settingsGeneralWebDavServerPassword": {
+		"message": "WebDAV 伺服器密碼："
+	},
+	"settingsGeneralWebDavBehaviourDesc": {
+		"message": "請注意，每次設定變更都會備份，還原僅會在瀏覽器啟動時發生。"
+	},
+	"settingsGeneralWebDavServerBackupNow": {
+		"message": "立即備份"
+	},
+	"settingsGeneralWebDavServerRestoreNow": {
+		"message": "立即還原"
+	},
+	"settingsGeneralWebDavRestoreNowConfirm": {
+		"message": "這將覆蓋您當前來自 WebDAV 伺服器的設定。此操作不可撤銷，請謹慎操作。是否繼續？"
+	},
+	"settingsGeneralWebDavRestoreNowSuccess": {
+		"message": "WebDAV 還原已成功完成！"
+	},
+	"settingsGeneralWebDavRestoreNowFailed": {
+		"message": "WebDAV 還原失敗："
+	},
+	"settingsGeneralWebDav_ErrorValidUrl": {
+		"message": "請輸入有效的 WebDAV 伺服器 URL"
+	},
+	"settingsGeneralWebDav_ErrorEmptyFilename": {
+		"message": "WebDAV 備份檔名不可為空"
+	},
+	"settingsGeneralWebDav_ErrorRequiredFields": {
+		"message": "請填寫所有必需的 WebDAV 欄位。"
+	},
+	"settingsGeneralWebDavBackupNowSuccess": {
+		"message": "WebDav 備份成功完成！"
+	},
+	"settingsGeneralWebDavBackupNowFailed": {
+		"message": "WebDav 備份失敗："
+	},
+	"settingsGeneralErrorDetection": {
+		"message": "偵測出錯"
+	},
+	"settingsGeneralDetectFailures": {
+		"message": "偵測請求失敗"
+	},
+	"settingsGeneralDetectFailuresDesc": {
+		"message": "請求失敗偵測將幫助您識別需要代理的網域。"
+	},
+	"settingsGeneralSelectIgnoredDomains": {
+		"message": "輸入規則"
+	},
+	"settingsGeneralIgnoreRequestFailuresForDomains": {
+		"message": "根據這些規則忽略失敗偵測"
+	},
+	"settingsGeneralIgnoreRequestFailuresForDomainsDesc": {
+		"message": "新增規則以停用失敗偵測。"
+	},
+	"settingsGeneralDisplayFailedOnBadge": {
+		"message": "在工具列圖示徽章上顯示請求失敗的次數"
+	},
+	"settingsGeneralThemes": {
+		"message": "主題"
+	},
+	"settingsGeneralThemesAutoSwitch": {
+		"message": "根據瀏覽器主題自動切換"
+	},
+	"settingsGeneralThemesAutoSwitchDesc": {
+		"message": "在以下選擇的主題間自動切換。這會跟隨您的瀏覽器主題，而瀏覽器主題也可以跟隨您作業系統的主題。"
+	},
+	"settingsGeneralThemesLight": {
+		"message": "淺色主題"
+	},
+	"settingsGeneralThemes_Default": {
+		"message": "（預設）"
+	},
+	"settingsGeneralThemes_Custom": {
+		"message": "（自訂）"
+	},
+	"settingsGeneralThemes_CustomUrl": {
+		"message": "自訂樣式 (CSS) 網址："
+	},
+	"settingsGeneralThemes_CustomUrlDesc": {
+		"message": "網址必須是 'Https'。請注意自訂樣式中的匯入字型和其他樣式，它們可能會阻塞或拖慢瀏覽器中的彈出視窗。您可以嘗試 bootswatch.com 的主題，但請注意它們對 Google 字型的依賴性。"
+	},
+	"settingsGeneralThemesDark": {
+		"message": "深色主題"
+	},
+	"settingsGeneralThemesLight_ErrorValidUrl": {
+		"message": "請為淺色主題輸入有效的 CSS 網址，且網址應為 'https'。"
+	},
+	"settingsGeneralThemesDark_ErrorValidUrl": {
+		"message": "請為深色主題輸入有效的 CSS 網址，且網址應為 'https'。"
+	},
+	"settingsGeneralOtherSettings": {
+		"message": "其它設定"
+	},
+	"settingsGeneralEnableShortcuts": {
+		"message": "啟用快速鍵"
+	},
+	"settingsGeneralEnableShortcutsDesc": {
+		"message": "您可以從瀏覽器附加元件設定頁面設定快速鍵。"
+	},
+	"settingsGeneralViewShortcuts": {
+		"message": "查看快速鍵"
+	},
+	"settingsGeneralConfigureShortcuts": {
+		"message": "設定快速鍵"
+	},
+	"settingsGeneralShortcutNotification": {
+		"message": "啟用快鍵鍵提示"
+	},
+	"settingsGeneralViewShortcutKeys": {
+		"message": "快速鍵"
+	},
+	"settingsGeneralDisplayAppliedProxyOnBadge": {
+		"message": "在徽章上顯示已套用的規則來源"
+	},
+	"settingsGeneralDisplayAppliedRulePatternOnBadge": {
+		"message": "在徽章上顯示已套用的規則模式"
+	},
+	"settingsGeneralRefreshTabOnConfigChanges": {
+		"message": "當設定檔或代理伺服器變更時重新整理活動分頁"
+	},
+	"settingsGeneralCancelButton": {
+		"message": "取消"
+	},
+	"settingsGeneralSaveChanges": {
+		"message": "儲存變更"
+	},
+	"settingsGeneralKeyboardShortcutsTitle": {
+		"message": "鍵盤快速鍵"
+	},
+	"settingsGeneralCloseButton": {
+		"message": "關閉"
+	},
+	"settingsGeneralKeyboardShortcutsNotSupported": {
+		"message": "行動裝置不支援鍵盤快速鍵。"
+	},
+	"settingsTabProxyServersTitle": {
+		"message": "管理您的代理伺服器："
+	},
+	"settingsTabProxyServersDescription": {
+		"message": "此處爲代理伺服器清單。可定義任意數量的代理，透過工具列按鈕即可切換。"
+	},
+	"settingsTabBackupRestoreDescription": {
+		"message": "您可以備份您的部分或全部設定。"
+	},
+	"settingsErrNoServersTitle": {
+		"message": "沒有伺服器！"
+	},
+	"settingsErrNoServersDescription": {
+		"message": "您必須先定義代理伺服器。"
+	},
+	"settingsActiveProxyServer": {
+		"message": "預設代理伺服器："
+	},
+	"settingsAddServerButton": {
+		"message": "新增伺服器"
+	},
+	"settingsRemoveMultipleServerButton": {
+		"message": "刪除多個"
+	},
+	"settingsSaveChangesButton": {
+		"message": "儲存變更"
+	},
+	"settingsRejectChangesButton": {
+		"message": "放棄變更"
+	},
+	"settingsEditButton": {
+		"message": "編輯"
+	},
+	"settingsFullBackupButton": {
+		"message": "建立完整備份"
+	},
+	"settingsFullBackupButtonDesc": {
+		"message": "完整備份你的偏好設定（包含代理伺服器與規則）"
+	},
+	"settingsRestoreBackupButton": {
+		"message": "從備份還原"
+	},
+	"settingsRestoreBackupButtonDesc": {
+		"message": "從本地備份檔案還原"
+	},
+	"settingsDangerZoneDesc": {
+		"message": "危險區域"
+	},
+	"settingsFactoryResetButton": {
+		"message": "恢復原廠設定"
+	},
+	"settingsFactoryResetDesc": {
+		"message": "重設所有內容。這將移除所有規則和代理伺服器並重設選項。此操作無法復原。"
+	},
+	"settingsFactoryResetConfirm": {
+		"message": "您確定要重設所有內容嗎？確定嗎？沒有辦法復原！"
+	},
+	"settingsFactoryResetSuccess": {
+		"message": "恢復原廠設定已成功完成"
+	},
+	"settingsImportExportProxiesDesc": {
+		"message": "匯入/匯出個別的代理伺服器清單。"
+	},
+	"settingsImportProxiesButtonBackup": {
+		"message": "匯入代理伺服器設定"
+	},
+	"settingsExportProxiesButtonBackup": {
+		"message": "匯出代理伺服器設定"
+	},
+	"settingsAddRuleButton": {
+		"message": "新增規則"
+	},
+	"settingsImportRulesButton": {
+		"message": "匯入規則"
+	},
+	"settingsImportRulesTitle": {
+		"message": "匯入規則"
+	},
+	"settingsImportRulesSelectButton": {
+		"message": "規則備份檔案"
+	},
+	"settingsImportRulesText": {
+		"message": "規則備份文字"
+	},
+	"settingsImportRulesFrom": {
+		"message": "規則匯入來源"
+	},
+	"settingsImportRulesOptionAppend": {
+		"message": "新增到當前規則"
+	},
+	"settingsImportRulesOptionOverride": {
+		"message": "替換當前規則（謹慎操作）"
+	},
+	"settingsImportRulesCancelButton": {
+		"message": "取消"
+	},
+	"settingsImportRulesImportButton": {
+		"message": "匯入"
+	},
+	"settingsImportProxiesButton": {
+		"message": "匯入代理"
+	},
+	"settingsExportProxiesButton": {
+		"message": "匯出代理"
+	},
+	"settingsImportProxiesTitle": {
+		"message": "匯入代理清單"
+	},
+	"settingsImportProxiesSelectFileButton": {
+		"message": "代理清單檔案"
+	},
+	"settingsImportProxiesSelectTextButton": {
+		"message": "代理清單文字"
+	},
+	"settingsImportProxiesOptionAppend": {
+		"message": "增量新增到代理清單"
+	},
+	"settingsImportProxiesOptionOverride": {
+		"message": "覆蓋當前清單（謹慎操作）"
+	},
+	"settingsImportProxiesCancelButton": {
+		"message": "取消"
+	},
+	"settingsImportProxiesImportButton": {
+		"message": "匯入"
+	},
+	"settingsConfirmRemoveProxyServer": {
+		"message": "確定移除所選代理伺服器？"
+	},
+	"settingsConfirmRemoveMultipleProxyServer": {
+		"message": "確定移除所選的代理伺服器？"
+	},
+	"settingsRemoveAllProxyServers": {
+		"message": "你確定移除所有代理伺服器？"
+	},
+	"settingsRemoveAllProxyServersSuccess": {
+		"message": "所有代理伺服器已移除。<br/>你必須儲存才能套用變更。"
+	},
+	"settingsImportProxiesFileNotSelected": {
+		"message": "請選擇一個代理清單檔案"
+	},
+	"settingsImportProxyListTextIsEmpty": {
+		"message": "請輸入代理清單"
+	},
+	"settingsImportProxyServersFailed": {
+		"message": "匯入代理伺服器失敗"
+	},
+	"importerImportProxySuccess": {
+		"message": "總計匯入 {0} 個代理伺服器當中的 {1} 個。<br>請注意儲存變更。"
+	},
+	"settingsErrorFailedToSaveServers": {
+		"message": "儲存伺服器失敗。"
+	},
+	"settingsChangesReverted": {
+		"message": "成功復原變更。"
+	},
+	"settingsConfirmSaveAllChanged": {
+		"message": "您要儲存所有未儲存的變更嗎？"
+	},
+	"settingsConfirmRemoveProxyRule": {
+		"message": "確定移除所選規則？"
+	},
+	"settingsConfirmRemoveMultipleProxyRule": {
+		"message": "確定移除所選的規則？"
+	},
+	"settingsRemoveAllRules": {
+		"message": "確定移除所有規則？"
+	},
+	"settingsRemoveAllRulesSuccess": {
+		"message": "所有規則已移除。<br/>你必須儲存以套用變更。"
+	},
+	"settingsRestoreBackupFailed": {
+		"message": "還原備份時出錯"
+	},
+	"settingsRestoreBackupFileError": {
+		"message": "無法讀取選定的檔案"
+	},
+	"settingsRulesFileNotSelected": {
+		"message": "請選擇一個規則檔案"
+	},
+	"settingsSourceTypeNotSelected": {
+		"message": "請選擇來源類型"
+	},
+	"settingsImportRulesFailed": {
+		"message": "匯入檔案失敗。"
+	},
+	"settingsImportRulesTextIsEmpty": {
+		"message": "請在框中輸入規則"
+	},
+	"settingsServerNameRequired": {
+		"message": "請指定伺服器名稱！"
+	},
+	"settingsServerNameExists": {
+		"message": "已有重名的伺服器！"
+	},
+	"settingsServerServerAddressIsEmpty": {
+		"message": "伺服器位址不能爲空"
+	},
+	"settingsServerPortNoInvalid": {
+		"message": "請輸入合法的連接埠位址（1-65535）"
+	},
+	"settingsServerAuthenticationInvalid": {
+		"message": "需要使用者名稱和密碼來進行身份驗證"
+	},
+	"settingsServersGridNoDataContent": {
+		"message": "沒有已定義的伺服器"
+	},
+	"settingsServersGridColName": {
+		"message": "名稱"
+	},
+	"settingsServersGridColProtocol": {
+		"message": "協定"
+	},
+	"settingsServersGridColServer": {
+		"message": "伺服器"
+	},
+	"settingsServersGridColPort": {
+		"message": "連接埠"
+	},
+	"settingsServersGridColCountry": {
+		"message": "國家/地區"
+	},
+	"settingsServersGridColRating": {
+		"message": "評分"
+	},
+	"settingsServersModalTitle": {
+		"message": "代理伺服器詳情"
+	},
+	"settingsServersServerName": {
+		"message": "伺服器名稱"
+	},
+	"settingsServersSeverAddress": {
+		"message": "伺服器位址"
+	},
+	"settingsServersProtocol": {
+		"message": "代理協定"
+	},
+	"settingsServersPort": {
+		"message": "連接埠"
+	},
+	"settingsServersProxyDNS": {
+		"message": "使用 SOCKS 5 時代理 DNS"
+	},
+	"settingsServersUsername": {
+		"message": "使用者名稱"
+	},
+	"settingsServersPassword": {
+		"message": "密碼"
+	},
+	"settingsServersAuthChromeMv3Limitation": {
+		"message": "（很抱歉，Chrome 擴充功能 API 不支援代理伺服器驗證，這是刻意設計的。）"
+	},
+	"settingsServersCancel": {
+		"message": "取消"
+	},
+	"settingsServersSave": {
+		"message": "儲存"
+	},
+	"settingsServersImport": {
+		"message": "匯入"
+	},
+	"settingsProfilesNameTitle": {
+		"message": "選擇性方案："
+	},
+	"settingsProfilesEnabled": {
+		"message": "已啟用"
+	},
+	"settingsProfilesTypeTitle": {
+		"message": "方案類型："
+	},
+	"settingsProfilesTypeDesc_SmartRules": {
+		"message": "在此方案中，除非您定義選擇性規則，否則不套用代理。您將定義黑名單規則，或換言之，用來套用代理的規則。"
+	},
+	"settingsProfilesTypeDesc_AlwaysEnabledBypassRules": {
+		"message": "在此方案中，代理伺服器總是會被套用，除非您定義選擇性規則來跳過它們。您將定義白名單規則，或換言之，用來跳過代理而不套用代理的規則。"
+	},
+	"settingsProfilesTypeDesc_IgnoreFailureRules": {
+		"message": "透過新增規則來忽略這些網域的失敗偵測。"
+	},
+	"settingsProfilesProfileProxyServer": {
+		"message": "方案代理伺服器："
+	},
+	"settingsProfilesDefaultProfileProxyServer": {
+		"message": "（使用預設代理伺服器）"
+	},
+	"settingsProfilesProfileProxyServerDesc": {
+		"message": "（使用此方案時，這將是作用中的代理伺服器）"
+	},
+	"settingsProfilesRulesSection": {
+		"message": "規則"
+	},
+	"settingsProfilesDelete": {
+		"message": "刪除"
+	},
+	"settingsProfilesAddNewLabel": {
+		"message": "新增選擇性方案"
+	},
+	"settingsProfilesAddNewTypeLead": {
+		"message": "請選擇您要新增的<b>方案類型</b>："
+	},
+	"settingsProfilesAddNewType_SmartRules": {
+		"message": "選擇性規則"
+	},
+	"settingsProfilesAddNewType_SmartRulesDesc": {
+		"message": "在此類型的方案中，代理會根據您定義的<em>規則</em>套用到請求。您可以透過工具列彈出選單、設定頁面，或從<em>可代理資源</em>視窗新增規則。<br>此外，您也可以訂閱不同的規則清單，例如 Gfwlist。"
+	},
+	"settingsProfilesAddNewType_AlwaysEnabled": {
+		"message": "總是啟用"
+	},
+	"settingsProfilesAddNewType_AlwaysEnabledDesc": {
+		"message": "在此類型的方案中，除非您定義規則來繞過它，否則代理將總是套用到請求。定義規則的步驟與選擇性規則方案類型相同。"
+	},
+	"settingsProfilesAddNewBtnContinue": {
+		"message": "繼續"
+	},
+	"settingsProfilesAddNewBtnCancel": {
+		"message": "取消"
+	},
+	"settingsProfilesAddErrorTypeRequired": {
+		"message": "請選擇方案類型"
+	},
+	"settingsProfilesAddErrorNameRequired": {
+		"message": "方案名稱為必填"
+	},
+	"settingsProfilesAddErrorNameExists": {
+		"message": "方案名稱已存在，請輸入另一個"
+	},
+	"settingsProfilesDeleteConfirm": {
+		"message": "確定要刪除此方案嗎？警告，此操作無法復原！"
+	},
+	"settingsProfilesDeleteFailed": {
+		"message": "刪除所選方案失敗。"
+	},
+	"settingsProfilesDeleteDone": {
+		"message": "方案已成功刪除"
+	},
+	"settingsProfilesDeleteBuiltinFail": {
+		"message": "無法刪除內建方案"
+	},
+	"settingsProfilesProxyServer": {
+		"message": "[使用預設代理伺服器]"
+	},
+	"settingsProfilesRulesSubscriptionsTitle": {
+		"message": "規則訂閱"
+	},
+	"settingsProfilesRulesSubscriptionsDesc": {
+		"message": "您可以在此訂閱規則清單。"
+	},
+	"settingsSaveSmartProfileSuccess": {
+		"message": "選擇性方案已成功儲存。"
+	},
+	"settingsErrorFailedToSaveSmartProfile": {
+		"message": "儲存選擇性方案失敗。"
+	},
+	"settingsRuleSourceRequired": {
+		"message": "請指定代理規則源網域！"
+	},
+	"settingsRuleSourceInvalid": {
+		"message": "源網域無效，有效例子如：“google.com”"
+	},
+	"settingsRuleSourceInvalidFormat": {
+		"message": "'{0}' 源網域無效"
+	},
+	"settingsRuleSourceAlreadyExists": {
+		"message": "已有相同設定的規則！"
+	},
+	"settingsRuleHostInvalid": {
+		"message": "主機名 '{0}' 無效，主機名應類似於 'google.com'"
+	},
+	"settingsRuleRegexNotMatchDomain": {
+		"message": "正則表達式規則與源網域 '{0}' 不符"
+	},
+	"settingsRuleDoesntIncludeDomain": {
+		"message": "該規則與源網域 '{0}' 不匹配"
+	},
+	"settingsRuleRegexInvalid": {
+		"message": "正則表達式規則 '{0}' 無效"
+	},
+	"settingsRuleExactUrlInvalid": {
+		"message": "'{0}' URL 無效"
+	},
+	"settingsRuleUrlInvalid": {
+		"message": "'{0}' URL 無效"
+	},
+	"settingsRulesGridNoDataContent": {
+		"message": "沒有已定義的規則"
+	},
+	"settingsRulesGridColRuleType": {
+		"message": "規則類型"
+	},
+	"settingsRulesGridColSource": {
+		"message": "設定"
+	},
+	"settingsRulesGridColRule": {
+		"message": "規則"
+	},
+	"settingsRulesGridColEnabled": {
+		"message": "啟用"
+	},
+	"settingsRulesGridColProxy": {
+		"message": "代理伺服器"
+	},
+	"settingsRulesProxyDefault": {
+		"message": "[使用作用中的代理]"
+	},
+	"settingsRulesProxyFromProfile": {
+		"message": "[使用方案代理]"
+	},
+	"settingsRulesModalTitle": {
+		"message": "規則詳情"
+	},
+	"settingsRulesRuleType": {
+		"message": "規則類型"
+	},
+	"settingsRulesSourceDomain": {
+		"message": "要代理的網域"
+	},
+	"settingsRulesSourceDomainDesc": {
+		"message": "（比如：google.com）"
+	},
+	"settingsRulesPattern": {
+		"message": "匹配模式"
+	},
+	"settingsRulesGeneratePattern": {
+		"message": "自動生成模式"
+	},
+	"settingsRulesRegex": {
+		"message": "URL 正則表達式"
+	},
+	"settingsRulesHostRegex": {
+		"message": "主機名稱正則表達式"
+	},
+	"settingsRulesExactUrl": {
+		"message": "精確的 URL"
+	},
+	"settingsRulesProxyServer": {
+		"message": "代理伺服器"
+	},
+	"settingsRulesProxyServerNotAuth": {
+		"message": "（Chrome 不支援經過身份驗證的伺服器）"
+	},
+	"settingsRulesEnabled": {
+		"message": "開啟"
+	},
+	"settingsRulesModalCancel": {
+		"message": "取消"
+	},
+	"settingsRulesModalSave": {
+		"message": "儲存"
+	},
+	"settingsRulesActionType": {
+		"message": "動作"
+	},
+	"settingsRuleActionApplyProxy": {
+		"message": "套用代理"
+	},
+	"settingsRuleActionWhitelist": {
+		"message": "白名單（無代理）"
+	},
+	"settingsRuleActionWhitelistDesc": {
+		"message": "（白名單規則優先於代理規則，無論其位置如何）"
+	},
+	"settingsServerPortInvalid": {
+		"message": "伺服器連接埠 '{0}' 無效"
+	},
+	"settingsServerHostInvalid": {
+		"message": "伺服器主機名 '{0}' 無效"
+	},
+	"settingsRestoreSettingsSuccess": {
+		"message": "成功還原設定"
+	},
+	"settingsRestoreSettingsFailed": {
+		"message": "還原設定時出錯"
+	},
+	"settingsRestoreSettingsFailedInvalid": {
+		"message": "備份資料無效或已損壞"
+	},
+	"settingsRestoreSettingsFailedInvalidActiveProfile": {
+		"message": "為作用中方案提供的資料無效"
+	},
+	"settingsRestoreSettingsFailedInvalidDefaultProxyServer": {
+		"message": "為預設代理伺服器提供的資料無效"
+	},
+	"settingsEnableByDomainInvalid": {
+		"message": "所選網域無效"
+	},
+	"settingsEnableByDomainExists": {
+		"message": "該網域的規則已經存在"
+	},
+	"settingsEnableByDomainSmartProfileNonEditable": {
+		"message": "目前的方案「{0}」無法新增或修改規則"
+	},
+	"settingsNoRuleFoundForDomain": {
+		"message": "沒有對網域 '{0}' 的規則"
+	},
+	"importerImportSuccess": {
+		"message": "{0} / {1} 條規則已新增。<br>注意儲存變更。"
+	},
+	"settingsRemoveMultipleProxyRuleButton": {
+		"message": "刪除多個"
+	},
+	"settingsAddMultipleRulesButton": {
+		"message": "新增多條規則"
+	},
+	"settingsAddMultipleRuleTitle": {
+		"message": "新增多條規則"
+	},
+	"settingsMultipleRuleList": {
+		"message": "主機/規則列表："
+	},
+	"settingsMultipleRuleInvalidHost": {
+		"message": "主機名 '{0}' 無效"
+	},
+	"settingsMultipleRuleNoNewRuleAdded": {
+		"message": "沒有新增新規則"
+	},
+	"settingsTabProxyServerSubscriptionsTitle": {
+		"message": "管理代理伺服器訂閱："
+	},
+	"settingsTabProxyServerSubscriptionsDescription": {
+		"message": "此處可以訂閱代理清單並在稍後用於切換代理。請注意在不同裝置間同步長列表時可能失敗。"
+	},
+	"settingsErrorFailedToSaveGeneral": {
+		"message": "儲存選項失敗"
+	},
+	"settingsSaveOptionsSuccess": {
+		"message": "儲存成功"
+	},
+	"settingsAddServerSubscriptionButton": {
+		"message": "訂閱一個列表"
+	},
+	"settingsServerSubscriptionModalTitle": {
+		"message": "訂閱一個代理伺服器列表"
+	},
+	"settingsRemoveMultipleServerSubscriptionButton": {
+		"message": "刪除多個"
+	},
+	"settingsServerSubscriptionName": {
+		"message": "名稱："
+	},
+	"settingsServerSubscriptionUrl": {
+		"message": "URL："
+	},
+	"settingsServerSubscriptionRefreshRate": {
+		"message": "重新整理頻率："
+	},
+	"settingsServerSubscriptionRefreshRateHelp": {
+		"message": "（分鐘，0 表示不重新整理）"
+	},
+	"settingsServerSubscriptionEnabled": {
+		"message": "啟用"
+	},
+	"settingsServerSubscriptionProtocol": {
+		"message": "協定："
+	},
+	"settingsServerSubscriptionObfuscation": {
+		"message": "混淆："
+	},
+	"settingsServerSubscriptionFormat": {
+		"message": "格式："
+	},
+	"settingsServerSubscriptionApplyProxy": {
+		"message": "透過代理"
+	},
+	"settingsServerSubscriptionApplyProxyHelpFirefox": {
+		"message": "（決定您如何存取訂閱服務）"
+	},
+	"settingsServerSubscriptionApplyProxyHelpChrome": {
+		"message": "（抱歉，當前功能不可用。當前代理將會生效。）"
+	},
+	"settingsServerSubscriptionApplyProxy_NoProxy": {
+		"message": "直接連線"
+	},
+	"settingsServerSubscriptionApplyProxy_CurrentProxy": {
+		"message": "當前代理"
+	},
+	"settingsServerSubscriptionApplyProxy_SelectedProxy": {
+		"message": "已選代理"
+	},
+	"settingsServerSubscriptionUsername": {
+		"message": "使用者名稱："
+	},
+	"settingsServerSubscriptionPassword": {
+		"message": "密碼："
+	},
+	"settingsServerSubscriptionAuthenticationHelp": {
+		"message": "（存取清單如需驗證身份請填入）"
+	},
+	"settingsServerSubscriptionCancelButton": {
+		"message": "取消"
+	},
+	"settingsServerSubscriptionSaveButton": {
+		"message": "儲存"
+	},
+	"settingsServerSubscriptionSavingButton": {
+		"message": "正在儲存..."
+	},
+	"settingsServerSubscriptionTestButton": {
+		"message": "測試"
+	},
+	"settingsProxyTestStopButton": {
+		"message": "停止"
+	},
+	"settingsProxyTestCancelled": {
+		"message": "測試已被使用者停止"
+	},
+	"settingsProxyTestResumeDialogTitle": {
+		"message": "代理測試"
+	},
+	"settingsProxyTestResumeDialogMessage": {
+		"message": "還有未測試的代理。您想要怎麼做？"
+	},
+	"settingsProxyTestResumeContinue": {
+		"message": "從停止處繼續"
+	},
+	"settingsProxyTestResumeRestart": {
+		"message": "從頭開始"
+	},
+	"settingsServerSubscriptionTestingButton": {
+		"message": "正在測試…"
+	},
+	"settingsConfirmRemoveServerSubscription": {
+		"message": "確定要刪除所選訂閱嗎？"
+	},
+	"settingsRemoveAllProxyServerSubscriptions": {
+		"message": "你希望移除所有代理伺服器訂閱？"
+	},
+	"settingsConfirmRemoveMultipleServerSubscription": {
+		"message": "您確定要移除所選的訂閱嗎？"
+	},
+	"settingsRemoveAllProxyServerSubscriptionsSuccess": {
+		"message": "所有代理伺服器訂閱已移除。<br/>你必須儲存以套用變更。"
+	},
+	"settingsServerSubscriptionProtocolDefault": {
+		"message": "（自動偵測與回退到 HTTP 代理）"
+	},
+	"settingsInitializeFailed": {
+		"message": "讀取設定失敗。請關閉設定頁然後重試。"
+	},
+	"settingsActiveProxyServerSubscriptions": {
+		"message": "-訂閱-"
+	},
+	"settingsServerSubscriptionsGridNoDataContent": {
+		"message": "沒有訂閱"
+	},
+	"settingsServerSubscriptionsGridColName": {
+		"message": "名稱"
+	},
+	"settingsServerSubscriptionsGridColUrl": {
+		"message": "網址"
+	},
+	"settingsServerSubscriptionsGridColCount": {
+		"message": "計數"
+	},
+	"settingsServerSubscriptionsGridColEnabled": {
+		"message": "啟用"
+	},
+	"settingsServerSubscriptionIncompleteForm": {
+		"message": "請使用正確格式在必要的區域填入資訊。"
+	},
+	"settingsServerSubscriptionInvalidForm": {
+		"message": "無效的代理伺服器訂閱資訊"
+	},
+	"settingsServerSubscriptionDuplicateName": {
+		"message": "該名稱已被使用，請換一個。"
+	},
+	"settingsServerSubscriptionSaveUpdated": {
+		"message": "訂閱已更新，包含 {0} 個代理。<br/>請注意儲存變更。"
+	},
+	"settingsServerSubscriptionSaveAdded": {
+		"message": "訂閱已新增，包含 {0} 個代理。<br/>請注意儲存變更。"
+	},
+	"settingsServerSubscriptionSaveFailedGet": {
+		"message": "無法拉取代理"
+	},
+	"settingsServerSubscriptionTestSuccess": {
+		"message": "測試成功。列表返回 {0} 個代理。"
+	},
+	"settingsServerSubscriptionTestFailed": {
+		"message": "測試失敗"
+	},
+	"settingsSaveProxyServerSubscriptionsSuccess": {
+		"message": "代理伺服器訂閱成功。"
+	},
+	"settingsFailedToSaveProxySubscriptions": {
+		"message": "儲存代理伺服器訂閱失敗"
+	},
+	"settingsAddRulesSubscriptionButton": {
+		"message": "訂閱規則列表"
+	},
+	"settingsRemoveMultipleRulesSubscriptionButton": {
+		"message": "刪除多個"
+	},
+	"settingsRulesSubscriptionsModalTitle": {
+		"message": "訂閱規則列表"
+	},
+	"settingsRulesSubscriptionsGridColName": {
+		"message": "名稱"
+	},
+	"settingsRulesSubscriptionsGridColUrl": {
+		"message": "網址"
+	},
+	"settingsRulesSubscriptionsGridColCount": {
+		"message": "數量"
+	},
+	"settingsRulesSubscriptionsGridColEnabled": {
+		"message": "啟用"
+	},
+	"settingsRulesSubscriptionsName": {
+		"message": "名稱："
+	},
+	"settingsRulesSubscriptionsUrl": {
+		"message": "Url："
+	},
+	"settingsRulesSubscriptionsRefreshRate": {
+		"message": "重新整理週期："
+	},
+	"settingsRulesSubscriptionsRefreshRateHelp": {
+		"message": "（以分鐘計算，0 表示不重新整理）"
+	},
+	"settingsRulesSubscriptionEnabled": {
+		"message": "啟用"
+	},
+	"settingsRulesSubscriptionsObfuscation": {
+		"message": "混淆："
+	},
+	"settingsRulesSubscriptionsFormat": {
+		"message": "格式："
+	},
+	"settingsRulesSubscriptionsApplyProxy": {
+		"message": "透過代理："
+	},
+	"settingsRulesSubscriptionsApplyProxyHelpFirefox": {
+		"message": "（取決於你跟伺服器的連線）"
+	},
+	"settingsRulesSubscriptionsApplyProxyHelpChrome": {
+		"message": "（抱歉，此功能在 chrome 中不可用。當前代理將套用）"
+	},
+	"settingsRulesSubscriptionsUsername": {
+		"message": "使用者名稱："
+	},
+	"settingsRulesSubscriptionsAuthenticationHelp": {
+		"message": "（如果列表需要身份驗證）"
+	},
+	"settingsRulesSubscriptionsPassword": {
+		"message": "密碼："
+	},
+	"settingsRulesSubscriptionsTestButton": {
+		"message": "測試"
+	},
+	"settingsRulesSubscriptionsSaveButton": {
+		"message": "儲存"
+	},
+	"settingsRulesSubscriptionsCancelButton": {
+		"message": "取消"
+	},
+	"settingsConfirmRemoveRulesSubscription": {
+		"message": "確定要移除所選的規則訂閱嗎？"
+	},
+	"settingsConfirmRemoveMultipleRulesSubscription": {
+		"message": "您確定要移除所選的規則訂閱嗎？"
+	},
+	"settingsRulesSubscriptionIncompleteForm": {
+		"message": "請以正確格式填寫必需項"
+	},
+	"settingsRulesSubscriptionInvalidForm": {
+		"message": "無效的代理伺服器訂閱資訊"
+	},
+	"settingsRulesSubscriptionDuplicateName": {
+		"message": "該名稱已被使用，請換一個。"
+	},
+	"settingsRulesSubscriptionSavingButton": {
+		"message": "正在儲存……"
+	},
+	"settingsRulesSubscriptionTestButton": {
+		"message": "測試"
+	},
+	"settingsRulesSubscriptionTestingButton": {
+		"message": "正在測試……"
+	},
+	"settingsRulesSubscriptionSaveUpdated": {
+		"message": "訂閱此次更新了 {0} 條代理規則，{1} 條白名單規則。<br/>請注意儲存變更。"
+	},
+	"settingsRulesSubscriptionSaveAdded": {
+		"message": "訂閱此次新增了 {0} 條代理規則，{1} 條白名單規則。<br/>請注意儲存變更。"
+	},
+	"settingsRulesSubscriptionSaveFailedGet": {
+		"message": "無法取得規則。"
+	},
+	"settingsRulesSubscriptionRefreshOnDisabled": {
+		"message": "無法重新整理已停用的訂閱"
+	},
+	"settingsRulesSubscriptionTestSuccess": {
+		"message": "測試成功。返回的列表包含 {0} 條代理規則和 {1} 條白名單規則。"
+	},
+	"settingsRulesSubscriptionTestFailed": {
+		"message": "測試失敗"
+	},
+	"settingsFailedToSaveRulesSubscriptions": {
+		"message": "儲存規則訂閱失敗"
+	},
+	"settingsRemoveAllProxyRulesSubscriptions": {
+		"message": "確定要移除所有代理規則訂閱嗎？"
+	},
+	"settingsRemoveAllProxyRulesSubscriptionsSuccess": {
+		"message": "全部代理規則訂閱都已移除。<br/>你必須儲存以套用變更。"
+	},
+	"importerImportRulesSuccess": {
+		"message": "總共返回了 {0} 條代理規則和 {1} 條白名單規則。<br>別忘了儲存變更。"
+	},
+	"settingsRulePatternIsEmpty": {
+		"message": "規則未定義樣板"
+	},
+	"settingsWelcomeTitle": {
+		"message": "歡迎使用 ProxyMust"
+	},
+	"settingsWelcomeMessage": {
+		"message": "<p>\n\t歡迎！很高興您選擇了 ProxyMust，一款具有代理測試功能的選擇性代理管理器。<br>\n\t請按照以下步驟開始：\n</p>\n<ol>\n\t<li>\n\t\t新增代理伺服器或代理清單\n\t\t<br>\n\t\t<small>（轉到「代理伺服器」頁並在其中新增）</small>\n\t</li>\n\t<li>\n\t\t設定代理模式為「選擇性代理」模式\n\t\t<br>\n\t\t<small>（使用工具列彈出選單來更改激活模式為「選擇性代理」）</small>\n\t</li>\n\t<li>\n\t\t定義代理規則\n\t\t<br>\n\t\t<small>（使用工具列彈出選單來新增規則或是從「代理規則」頁中新增/修改規則）</small>\n\t</li>\n\t<li>\n\t\t設定完畢。\n\t</li>\n</ol>"
+	},
+	"settingsWelcomeSkipButton": {
+		"message": "明白"
+	},
+	"settingsSubscriptionStatsStatusSuccess": {
+		"message": "狀態：成功"
+	},
+	"settingsSubscriptionStatsStatusFail": {
+		"message": "狀態：失敗"
+	},
+	"settingsSubscriptionStatsLastTry": {
+		"message": "最後嘗試："
+	},
+	"settingsSubscriptionStatsMessage": {
+		"message": "訊息："
+	},
+	"settingsSubscriptionStatsLastSuccess": {
+		"message": "上次成功："
+	},
+	"settings_SmartProfileType_Direct": {
+		"message": "直接連線"
+	},
+	"settings_SmartProfileType_SystemProxy": {
+		"message": "系統代理"
+	},
+	"settings_SmartProfileType_SmartRules": {
+		"message": "選擇性規則"
+	},
+	"settings_SmartProfileType_AlwaysEnabledBypassRules": {
+		"message": "總是啟用（可繞過規則）"
+	},
+	"settings_SmartProfileType_IgnoreFailureRules": {
+		"message": "忽略失敗規則"
+	},
+	"settingsRuleCidrIPAddress": {
+		"message": "IP 位址"
+	},
+	"settingsRuleCidrPrefixLength": {
+		"message": "前綴長度"
+	},
+	"settingsRuleCidrNotationDesc": {
+		"message": "（請注意，此規則不會將主機名稱解析為 IP 位址。）"
+	},
+	"settingsRuleCidrIPInvalid": {
+		"message": "請輸入有效的 IP 位址"
+	},
+	"settingsRuleCidrPrefixLengthInvalid": {
+		"message": "請輸入有效的前綴長度"
+	},
+	"settingsRuleCidrNotationInvalid": {
+		"message": "CIDR 表示法 “{0}” 無效"
+	},
+	"settingsRuleCidrNotationInvalidMatch": {
+		"message": "CIDR 規則與 “{0}” 不匹配"
+	},
+	"notificationNoNextProxyServer": {
+		"message": "沒有下一個代理伺服器"
+	},
+	"notificationNoPreviousProxyServer": {
+		"message": "沒有其他之前的代理伺服器"
+	},
+	"notificationShortcutTitle": {
+		"message": "ProxyMust 快速鍵提示"
+	},
+	"notificationShortcutProxyModeMessage": {
+		"message": "代理模式更改為 {0}"
+	},
+	"notificationShortcutProxyServerChanged": {
+		"message": "代理伺服器更改為 {0}"
+	},
+	"popupRatingDialogTitle": {
+		"message": "位址可用嗎？"
+	},
+	"popupRatingWorksButton": {
+		"message": "是（+1）"
+	},
+	"popupRatingFailsButton": {
+		"message": "否（-1）"
+	},
+	"popupRatingCancelButton": {
+		"message": "取消"
+	},
+	"settingsProxyTestTitle": {
+		"message": "代理可用性檢查"
+	},
+	"settingsProxyTestEnable": {
+		"message": "新增測試網站以檢查代理"
+	},
+	"settingsProxyTestNote": {
+		"message": "最多輸入 5 個位址。如果不超過 3 個位址，檢查速度會更快。"
+	},
+	"settingsProxyTestUrlsTitle": {
+		"message": "用於存取測試的位址"
+	},
+	"settingsProxyTestUrlsWarning": {
+		"message": "⚠️ 請在此處輸入您造訪的網站（例如 youtube.com、telegram.org），而不是代理位址。"
+	},
+	"settingsProxyTestClear": {
+		"message": "清除測試站點"
+	},
+	"settingsProxyTestStop": {
+		"message": "⏹ 停止測試"
+	},
+	"proxyTestCompleted": {
+		"message": "檢查完成。已測試 {0} 個代理。"
+	},
+	"settingsProxyTestRatingAutoEnabled": {
+		"message": "已自動啟用評分以顯示測試結果。"
+	},
+	"settingsProxyTestNoTestUrls": {
+		"message": "未指定測試網站。請至少新增一個網站。"
+	},
+	"settingsProxyMustTestTitle": {
+		"message": "代理測試"
+	},
+	"settingsProxyMustSiteLabel": {
+		"message": "要測試的網站："
+	},
+	"settingsProxyMustTestRun": {
+		"message": "▶ 測試"
+	},
+	"settingsProxyMustAddSite": {
+		"message": "新增網站"
+	},
+	"settingsProxyMustTestCondition": {
+		"message": "如果未選擇任何內容，將對表中的所有代理執行測試。"
+	},
+	"settingsProxyMustTestResults": {
+		"message": "結果：✅ = 對這個網站肯定有效，☑️ = 可能有效（資料陳舊或在其他網站上成功），❓ = 無資料，⛔ = 無效。"
+	},
+	"settingsServersRatingPriority": {
+		"message": "評分 + 優先級"
+	},
+	"settingsContextMenuChangeRating": {
+		"message": "更改手動評分"
+	},
+	"settingsContextMenuPlus1": {
+		"message": "（+1）"
+	},
+	"settingsContextMenuMinus1": {
+		"message": "（-1）"
+	},
+	"settingsContextMenuRatingTitle": {
+		"message": "手動評分"
+	},
+	"settingsContextMenuPlus1Desc": {
+		"message": "在清單中上移"
+	},
+	"settingsContextMenuMinus1Desc": {
+		"message": "在清單中下移"
+	},
+	"settingsContextMenuResetRating": {
+		"message": "重設評分"
+	},
+	"settingsContextMenuSetFavorite": {
+		"message": "設為最愛"
+	},
+	"settingsContextMenuSetPin": {
+		"message": "釘選"
+	},
+	"settingsContextMenuRemoveFavorite": {
+		"message": "取消最愛"
+	},
+	"settingsContextMenuUnpin": {
+		"message": "取消釘選"
+	},
+	"settingsContextMenuRemovePriority": {
+		"message": "移除優先級"
+	},
+	"settingsContextMenuExportSelected": {
+		"message": "匯出所選"
+	},
+	"settingsContextMenuCopyAddresses": {
+		"message": "複製位址"
+	},
+	"settingsContextMenuDelete": {
+		"message": "刪除"
+	},
+	"settingsContextMenuTestForSite": {
+		"message": "測試所選代理對該網站"
+	},
+	"settingsProxyMustTestProgress": {
+		"message": "正在為 {0} 測試代理...（{1}/{2}）"
+	},
+	"settingsProxyMustTestComplete": {
+		"message": "測試完成"
+	},
+	"settingsProxyMustAddSitePrompt": {
+		"message": "輸入網站網域（例如 youtube.com）："
+	},
+	"settingsProxyMustSiteAlreadyExists": {
+		"message": "網站已存在於清單中。"
+	},
+	"settingsProxyMustInvalidDomain": {
+		"message": "無效的網域。請輸入有效的網域（例如 youtube.com）。"
+	},
+	"popupCurrentSite": {
+		"message": "目前網站："
+	},
+	"settingsProxyMustRemoveSite": {
+		"message": "移除網站"
+	},
+	"settingsContextMenuMoveToTop": {
+		"message": "移到頂部"
+	},
+	"settingsContextMenuMoveToDown": {
+		"message": "移到底部"
+	},
+	"settingsProxyMustCannotRemoveAutoSite": {
+		"message": "此網站來自規則，無法手動刪除。"
+	},
+	"settingsProxyMustConfirmRemoveSite": {
+		"message": "確定從測試網站中刪除「{0}」嗎？"
+	},
+	"settingsProxyMustSiteRemoved": {
+		"message": "網站「{0}」已刪除。"
+	},
+	"settingsProxyMustStaleHours": {
+		"message": "資料過期時間（小時）："
+	},
+	"settingsContextMenuPreciseTest": {
+		"message": "精確測試（較慢，更準確）"
+	},
+	"settingsContextMenuExpressTest": {
+		"message": "快速測試（較快，準確性較低）"
+	},
+	"popupQuickTestButton": {
+		"message": "測試"
+	},
+	"popupQuickTestStopButton": {
+		"message": "停止"
+	},
+	"settingsChooseTestTypeTitle": {
+		"message": "選擇測試類型"
+	},
+	"settingsChooseTestTypeDescription": {
+		"message": "選擇要執行的測試："
+	},
+	"settingsPreciseTestDesc": {
+		"message": "完整檢查，更準確但耗時更長。"
+	},
+	"settingsExpressTestDesc": {
+		"message": "快速測試，可能會略過一些有效的代理，但能快速找到至少一個。"
+	},
+	"settingsCancelButton": {
+		"message": "取消"
+	},
+	"popupAddAllSuccessfulSubs": {
+		"message": "新增有效的代理"
+	},
+	"settingsContextMenuClearStatuses": {
+		"message": "清除狀態"
+	},
+	"settingsContextMenuClearStatusesSelected": {
+		"message": "選中的代理"
+	},
+	"settingsContextMenuClearStatusesAll": {
+		"message": "所有代理"
+	},
+	"settingsContextMenuClearStatusesConfirmSelected": {
+		"message": "清除所選代理的測試狀態？"
+	},
+	"settingsContextMenuClearStatusesConfirmAll": {
+		"message": "清除所有代理的測試狀態？此操作無法撤銷。"
+	},
+	"settingsContextMenuClearStatusesSuccess": {
+		"message": "測試狀態已清除。"
+	},
+	"popupQuickTestTooltip": {
+		"message": "快速測試以尋找當前網站的有效代理"
+	},
+	"popupAddAllSuccessfulSubsTooltip": {
+		"message": "將通過測試的訂閱代理新增到您的手動列表中"
+	},
+	"popupTestMenuTitle": {
+		"message": "選擇測試類型"
+	},
+	"popupTestMenuAllProxies": {
+		"message": "對所有代理進行快速測試"
+	},
+	"popupTestMenuSubscriptionsOnly": {
+		"message": "僅對訂閱進行快速測試"
+	},
+	"popupTestMenuAllProxiesDesc": {
+		"message": "手動 + 訂閱代理"
+	},
+	"popupTestMenuSubscriptionsOnlyDesc": {
+		"message": "然後將有效的新增到手動清單"
+	},
+	"popupTestMenuCycleTest": {
+		"message": "循環代理測試（完整切換）"
+	},
+	"popupTestMenuCycleTestDesc": {
+		"message": "依次切換代理，測試網站載入"
+	},
+	"settingsContextMenuCycleTest": {
+		"message": "循環測試（完整切換）"
+	},
+	"settingsCycleTestDesc": {
+		"message": "依次切換代理，測試網站載入。更徹底但速度較慢。"
+	},
+	"popupTestMenuExpressCycleTest": {
+		"message": "快速循環測試（快速切換）"
+	},
+	"popupTestMenuExpressCycleTestDesc": {
+		"message": "快速順序切換代理，10秒超時，在第一次成功時停止"
+	},
+	"popupTestMenuExpressCycleAll": {
+		"message": "快速循環測試（所有代理）"
+	},
+	"popupTestMenuExpressCycleAllDesc": {
+		"message": "手動 + 訂閱代理"
+	},
+	"popupTestMenuExpressCycleSubsOnly": {
+		"message": "快速循環測試（僅訂閱）"
+	},
+	"popupTestMenuExpressCycleSubsOnlyDesc": {
+		"message": "然後將有效的新增到手動清單"
+	},
+	"popupNoSubscriptionProxies": {
+		"message": "沒有可供測試的訂閱代理。"
+	},
+	"settingsCopiedAddresses": {
+		"message": "位址已複製"
+	},
+	"settingsCopyFailed": {
+		"message": "複製失敗"
+	},
+	"settingsAnotherTestRunning": {
+		"message": "另一個測試已在執行中。如果您認為它卡住了，請重新載入設定頁面（F5）並重試。"
+	},
+	"settingsProxyTestTimeout": {
+		"message": "測試在 10 分鐘後超時並被強制停止。請重試。"
+	},
+	"settingsProxyMustNoSiteSelected": {
+		"message": "請選擇一個網站。"
+	},
+	"settingsProxyMustSiteAdded": {
+		"message": "網站「{0}」已新增。"
+	},
+	"testingExplanationTitle": {
+		"message": "代理測試的工作原理"
+	},
+	"testingExplanationText": {
+		"message": "在測試期間，臨時分頁會自動開啟和關閉，檢查代理 IP 以及透過該代理連接到輸入的測試網站位址。測試分頁會立即從您的瀏覽器歷史記錄中刪除，以免造成混亂。測試執行時，您可以安全地最小化瀏覽器，因為測試會透過切換正在測試的代理來干擾您的網頁瀏覽。"
+	},
+	"settingsGeneralEnableRating": {
+		"message": "啟用代理評分"
+	},
+	"settingsGeneralEnableRatingDesc": {
+		"message": "允許對代理進行評分（有效/無效）並按評分排序。"
+	},
+	"settingsProxyMustStaleHoursDesc": {
+		"message": "測試結果被視為過期的小時數（1-168）。"
+	},
+	"datatablesSearch": {
+		"message": "搜尋："
+	},
+	"datatablesShow": {
+		"message": "顯示"
+	},
+	"datatablesEntries": {
+		"message": "筆"
+	},
+	"datatablesPrevious": {
+		"message": "上一頁"
+	},
+	"datatablesNext": {
+		"message": "下一頁"
+	},
+	"datatablesInfo": {
+		"message": "顯示第 _START_ 至 _END_ 筆，共 _TOTAL_ 筆"
+	},
+	"datatablesInfoEmpty": {
+		"message": "顯示第 0 至 0 筆，共 0 筆"
+	},
+	"datatablesEmptyTable": {
+		"message": "表中無資料"
+	},
+	"datatablesAll": {
+		"message": "全部"
+	},
+	"popupAddCurrentSiteTooltip": {
+		"message": "將目前網站新增到測試清單"
+	}
+}

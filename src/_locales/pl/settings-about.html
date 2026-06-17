@@ -1,0 +1,209 @@
+<h2 class="text-primary">
+	ProxyMust
+</h2>
+<p>
+	<em>ProxyMust jest forkiem rozszerzenia SmartProxy. Szanujemy i dziękujemy oryginalnemu autorowi <strong>Salar Khalilzadeh</strong> za jego doskonałą pracę.
+	Oryginalny SmartProxy znajduje się na <a href="https://github.com/salarcode/SmartProxy" target="_blank">https://github.com/salarcode/SmartProxy</a>.</em>
+</p>
+<p data-localize="settingsTabAboutDescription">
+	Korzystanie z proxy nie może być łatwiejsze dzięki ProxyMust. Pomyśl o tym jako o rozwiązaniu „skonfiguruj raz i zapomnij”.
+	Dzięki ProxyMust nie musisz ręcznie zmieniać ustawień proxy ani go włączać i wyłączać.
+	Po prostu powiedz ProxyMust, aby włączył proxy dla wybranej strony jednym kliknięciem.
+	Potem, gdy odwiedzisz tę konkretną stronę, ProxyMust automatycznie przekieruje wszystkie twoje dane przez proxy bez potrzeby podejmowania dalszych działań.
+</p>
+<p>
+	ProxyMust oferuje różnorodne funkcje odpowiednie zarówno dla początkujących, jak i zaawansowanych użytkowników, w tym:
+</p>
+<ul>
+	<li>Włącz proxy dla pojedynczej strony na karcie – wszystko na tej karcie będzie automatycznie używać proxy. Ta funkcja nazywa się „proxy na kartę”.</li>
+	<li>Automatycznie wykrywaj, kiedy włączyć lub wyłączyć proxy dla określonych stron na podstawie reguł.</li>
+	<li>Łatwo przełączaj się między wieloma serwerami proxy jako aktywny serwer proxy.</li>
+	<li>Włącz proxy dla bieżącej strony jednym kliknięciem.</li>
+	<li>Przeglądaj zasoby i żądania bieżącej strony i zdecyduj, czy włączyć dla nich proxy jednym kliknięciem.</li>
+	<li>Łatwo przełączaj się między trybami proxy lub włącz proxy dla wszystkich domen.</li>
+	<li>Twórz kopie zapasowe i przywracaj ustawienia oraz reguły.</li>
+</ul>
+<br />
+
+<h3>Proszę zwrócić uwagę, że:</h3>
+<p>
+<div class="text-info">
+	<i class="fas fa-info-circle" aria-hidden="true"></i>
+	ProxyMust nie dostarcza żadnego typu serwerów proxy.
+</div>
+<div class="text-danger">
+	<i class="fas fa-eye-slash" aria-hidden="true"></i>
+	ProxyMust nie śledzi Cię w żaden sposób.
+</div>
+<div class="text-warning">
+	<i class="fas fa-eye-slash" aria-hidden="true"></i>
+	ProxyMust jest wolny od reklam i nie ingeruje w strony internetowe i treści.
+</div>
+</p>
+<br />
+
+<h3>Twoja opinia jest ważna</h3>
+<p>
+<div>
+	<i class="fas fa-star text-warning"></i>
+	Jeśli <i class="fas fa-heart text-danger"></i> lubisz ProxyMust, oceń go na stronie
+	<a id="linkAddonsMarket" href="#" target="_blank">Rozszerzenia</a>.
+</div>
+<div>
+	<i class="fas fa-question-circle text-primary"></i>
+	Jeśli masz pytania lub problemy, odwiedź stronę zgłoszeń i otwórz ticket, aby
+	<a href="https://github.com/nana-xakep/ProxyMust/issues" target="_blank">zgłosić problemy</a>.
+</div>
+</p>
+<br />
+
+<h3>Nowe funkcje ProxyMust</h3>
+
+<h4>📊 System ocen i statusów</h4>
+<ul>
+	<li>Dla każdego proxy i każdej testowanej strony wyświetlany jest status:
+		<ul>
+			<li>✅ – zdecydowanie działa dla tej strony (świeży sukces)</li>
+			<li>☑️ – prawdopodobnie działa (sukces był wcześniejszy lub uzyskany dla innej strony)</li>
+			<li>❓ – brak danych (proxy nie testowane dla tej strony)</li>
+			<li>⛔ – nie działa (świeża porażka)</li>
+		</ul>
+	</li>
+	<li>Ocena każdego proxy zmienia się automatycznie na podstawie wyników testów: <strong>+1 w przypadku sukcesu</strong>, <strong>-1 w przypadku porażki</strong>.</li>
+	<li>Możesz również ręcznie zmieniać ocenę za pomocą menu kontekstowego (kliknij prawym przyciskiem myszy na wiersz proxy w tabeli lub na aktywne proxy w wyskakującym okienku paska narzędzi).</li>
+	<li>Statusy są uważane za „świeże” przez konfigurowalną liczbę godzin (domyślnie 6). Jeśli dane są nieaktualne, używany jest status pośredni (☑️).</li>
+</ul>
+
+<h4>📋 Zarządzanie listą proxy</h4>
+<ul>
+	<li><strong>Menu kontekstowe w tabeli proxy (kliknij prawym przyciskiem)</strong> – szybka zmiana oceny, priorytetu (przypnij, gwiazdka), eksport zaznaczonych, kopiowanie adresów, usuwanie, czyszczenie statusów i ocen, uruchamianie testów dla wybranych proxy.</li>
+	<li><strong>Sortowanie w wyskakującym okienku paska narzędzi</strong> – według oceny i priorytetu (📌 przypięte na górze, ⭐ ulubione).</li>
+	<li><strong>Sortowanie w tabeli ustawień</strong> – według kraju, protokołu, oceny.</li>
+</ul>
+
+<h4>🚀 Testowanie proxy</h4>
+<ul>
+	<li><strong>Test cykliczny</strong> – sekwencyjnie przełącza aktywny profil i proxy, testując ładowanie strony. Niezawodny, ale wolny.</li>
+	<li><strong>Test cykliczny ekspresowy</strong> – przyspieszony test zatrzymujący się przy pierwszym sukcesie. Dobry do szybkiej oceny.</li>
+	<li><strong>Test precyzyjny (wolny)</strong> – bardziej dokładny, trwa dłużej, daje bardziej wiarygodne wyniki (nie działa w Firefoksie).</li>
+	<li><strong>Test ekspresowy</strong> – szybki, ale może pominąć niektóre działające proxy. Dobry do szybkiego przeglądu (nie działa w Firefoksie).</li>
+	<li><strong>Szybkie testy z wyskakującego okienka paska narzędzi</strong> – test bieżącej strony dla wszystkich proxy lub tylko dla proxy subskrypcyjnych.</li>
+</ul>
+
+<p>
+	<strong>⚠️ Ważne dla użytkowników:</strong> Podczas testów aktywny profil i proxy są faktycznie przełączane.
+	Może to zakłócać normalne przeglądanie. Uruchamiaj testy, gdy przeglądarka nie jest używana do innych czynności.
+</p>
+
+<br />
+<h3>Legenda ikon paska narzędzi</h3>
+<p>
+	Ikona na pasku narzędzi przeglądarki zmienia się, aby reprezentować stan ProxyMust. Oto co oznaczają różne ikony:
+	<br />
+
+<div class="table-responsive">
+	<table class="table table-sm table-striped caption-top table-borderless align-middle">
+		<caption><b>Legenda ikon (wszystkie przeglądarki):</b></caption>
+		<thead>
+			<tr>
+				<th style="width: 70px;">Ikona</th>
+				<th>Znaczenie</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td class="p-2"><img src="../icons/profile-disabled.svg" class=""></td>
+				<td>Żądania nie będą używać proxy.</td>
+			</tr>
+			<tr>
+				<td class="p-2"><img src="../icons/smartproxy.svg" class=""></td>
+				<td>
+					Proxy zostało zastosowane lub zostanie zastosowane do żądań pasujących do zdefiniowanych reguł.
+					<br /> Lub żadna reguła nie pasuje do bieżącej karty.
+					<br />
+					Profil: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i>
+					Reguły selektywne
+				</td>
+			</tr>
+			<tr>
+				<td class="p-2"><img src="../icons/profile-always.svg" class=""></td>
+				<td>
+					Proxy jest stosowane do wszystkich żądań w bieżącej karcie. (Domeny z białej listy są wyświetlane oddzielnie w przeglądarkach opartych na Chrome.)
+					<br />
+					Profil: <i class="icon fa-sm fas fa-globe-americas text-success" aria-hidden="true"></i>
+					Zawsze włączone
+				</td>
+			</tr>
+			<tr>
+				<td class="p-2"><img src="../icons/profile-system.svg" class=""></td>
+				<td>
+					Decyzja o użyciu proxy jest przekazywana systemowi operacyjnemu.
+					<br/> Profil: System
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+<div class="table-responsive">
+	<table class="table table-sm table-striped caption-top table-borderless align-middle">
+		<caption><b>Legenda ikon (tylko Firefox):</b></caption>
+		<thead>
+			<tr>
+				<th style="width: 70px;">Ikona</th>
+				<th>Znaczenie</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td class="p-2"><img src="../icons/profile-smartrules-green.svg" class=""></td>
+				<td>
+					Reguła pasuje do bieżącej karty. Wszystkie kolejne żądania przechodzą przez proxy.
+					<br />
+					Profil: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> Reguły selektywne
+				</td>
+			</tr>
+			<tr>
+				<td class="p-2"><img src="../icons/profile-smartrules-has-failed.svg" class=""></td>
+				<td>
+					Reguła pasuje do bieżącej karty. Istnieje co najmniej jedno nieodpowiadające / nieudane żądanie.
+					<br />
+					Profil: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> Reguły selektywne
+				</td>
+			</td>
+			<tr>
+				<td class="p-2"><img src="../icons/profile-smartrules-has-bypassed.svg" class=""></td>
+				<td>
+					Reguła pasuje do bieżącej karty. Co najmniej jedno kolejne żądanie ominęło proxy za pomocą reguły.
+					<br />
+					Profil: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> Reguły selektywne
+				</td>
+			</tr>
+			<tr>
+				<td class="p-2"><img src="../icons/profile-smartrules-has-unmatched.svg" class=""></td>
+				<td>
+					Reguła pasuje do bieżącej karty. Co najmniej jedno kolejne żądanie nie pasuje do żadnej reguły i nie przechodzi przez proxy.
+					<br />
+					Profil: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> Reguły selektywne
+				</td>
+			</td>
+			<tr>
+				<td class="p-2"><img src="../icons/profile-smartrules-noproxy-has-matched.svg" class=""></td>
+				<td>
+					Żadna reguła nie pasuje do bieżącej karty. Co najmniej jedno kolejne żądanie pasuje do reguły i przechodzi przez proxy.
+					<br />
+					Profil: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> Reguły selektywne
+				</td>
+			</tr>
+			<tr>
+				<td class="p-2"><img src="../icons/profile-always-bypassed.svg" class=""></td>
+				<td>
+					Proxy jest stosowane do wszystkich żądań w bieżącej karcie. Co najmniej jedno kolejne żądanie ominęło proxy za pomocą reguły.
+					<br />
+					Profil: <i class="icon fa-sm fas fa-globe-americas text-success" aria-hidden="true"></i> Zawsze włączone
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+</p>

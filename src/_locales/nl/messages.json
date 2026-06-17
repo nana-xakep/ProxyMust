@@ -1,0 +1,1626 @@
+{
+	"uiDirection": {
+		"message": "ltr"
+	},
+	"languageCode": {
+		"message": "nl",
+		"description": "We need to know the code which might not match what browser UI has"
+	},
+	"extensionName": {
+		"message": "ProxyMust"
+	},
+	"extensionDescription": {
+		"message": "ProxyMust – selectieve proxymanager (fork van SmartProxy). Schakelt automatisch de proxy in/uit voor bezochte websites op basis van aanpasbare patronen."
+	},
+	"toolbarTooltipEffectiveRule": {
+		"message": "Bron van overeenkomende regel:"
+	},
+	"toolbarTooltipEffectiveRuleNone": {
+		"message": "Geen overeenkomende regel"
+	},
+	"toolbarTooltipEffectiveRulePattern": {
+		"message": "Regelpatroon:"
+	},
+	"popupTitle": {
+		"message": "ProxyMust Activering"
+	},
+	"popupPrivateBrowsingMode": {
+		"message": "Privé Browsermodus"
+	},
+	"popupNoProxy": {
+		"message": "Direct (geen Proxy)"
+	},
+	"popupSmartProxy": {
+		"message": "Selectieve Proxy"
+	},
+	"popupAlwaysEnable": {
+		"message": "Altijd Ingeschakeld"
+	},
+	"popupSystemProxy": {
+		"message": "Systeem Proxy"
+	},
+	"popupActiveProxy": {
+		"message": "Actieve Proxy (dit profiel):"
+	},
+	"popupActiveProxyDefault": {
+		"message": "Actieve Proxy (Standaardinstelling):"
+	},
+	"popupEnableProxyOn": {
+		"message": "Proxy inschakelen op"
+	},
+	"popupIgnoreTheseDomains": {
+		"message": "Deze domeinen negeren"
+	},
+	"popupRuleIsFromSubscription": {
+		"message": "(Van abonnement)"
+	},
+	"popupProxyableResources": {
+		"message": "Proxybare Bronnen"
+	},
+	"popupSettings": {
+		"message": "Instellingen"
+	},
+	"popupSubscriptions": {
+		"message": "-Abonnementen-"
+	},
+	"popupUpdateText": {
+		"message": "Update naar {0} is beschikbaar"
+	},
+	"popupFailedRequestsMenu": {
+		"message": "Mislukte aanvragen"
+	},
+	"popupFailedRequestsTitle": {
+		"message": "Lijst met mislukte aanvragen"
+	},
+	"popupFailedRequestsDesc": {
+		"message": "Dit zijn de domeinen die een time-out hebben gehad of zijn mislukt.<br />Als u denkt dat deze domeinen geblokkeerd zijn, kunt u ze hier toevoegen aan de proxyregellijst."
+	},
+	"popupAddFailedRequests": {
+		"message": "Toevoegen aan regellijst"
+	},
+	"popupProfileTypeDoesNotSupportsRules": {
+		"message": "Geselecteerd profiel '{0}' ondersteunt geen regels, selecteer een ander profiel."
+	},
+	"popupAddIgnoredFailures": {
+		"message": "Negeren"
+	},
+	"popupAddIgnoredFailuresConfirm": {
+		"message": "Weet u zeker dat u de geselecteerde fouten wilt negeren? Als u dat doet, ontvangt u geen fouten meer van hen. U kunt dit later wijzigen in de instellingen."
+	},
+	"popupNotAllowedSetProxySettingsChrome": {
+		"message": "Helaas vereist het wijzigen van browserinstellingen om de systeemproxy te gebruiken de `incognito`-toestemming. Ga naar de extensie-instellingen van ProxyMust in de browser en vink de toestemming `Toestaan in incognito` aan. <a href='https://support.google.com/chrome_webstore/answer/2664769'>Leer hoe</a>."
+	},
+	"popupNotAllowedSetProxySettingsFirefox": {
+		"message": "Sinds Firefox 67 vereist het wijzigen van browserinstellingen om de systeemproxy te gebruiken de `Privé Browsen`-toestemming. Ga naar de add-on-instellingen van ProxyMust in de browser en sta `Uitvoeren in privévensters` toe. <a href='https://support.mozilla.org/en-US/kb/extensions-private-browsing'>Leer hoe</a>."
+	},
+	"proxyableTitle": {
+		"message": "Proxybare Bronnen"
+	},
+	"proxyableHeader": {
+		"message": "Proxybare items op deze pagina"
+	},
+	"proxyableReload": {
+		"message": "Vernieuwen"
+	},
+	"proxyableClose": {
+		"message": "Sluiten"
+	},
+	"proxyableHeaderDesc": {
+		"message": "Hieronder staat een lijst met bronnen die vanaf deze pagina worden gebruikt of aangeroepen. Gebruik deze lijst om deze bronnen toe te voegen aan de proxy-activeringsregels.<br />Als u hier niets ziet, laad de pagina dan opnieuw om de bronnen te bekijken."
+	},
+	"proxyableErrNoSourceTab": {
+		"message": "Brontabblad niet gevonden!"
+	},
+	"proxyableCreateRuleConfirm": {
+		"message": "Weet u zeker dat u een regel wilt maken voor het geselecteerde domein?"
+	},
+	"proxyableDisableButton": {
+		"message": "Uitschakelen"
+	},
+	"proxyableEnableButton": {
+		"message": "Inschakelen"
+	},
+	"proxyableEnableButtonDomain": {
+		"message": "Inschakelen voor: "
+	},
+	"proxyableSubscriptionRule": {
+		"message": "(Abonnementsregel)"
+	},
+	"proxyableDeleteRuleConfirm": {
+		"message": "Weet u zeker dat u de geselecteerde regel wilt verwijderen voor:"
+	},
+	"proxyableGridNoDataContent": {
+		"message": "Geen aanvragen"
+	},
+	"proxyableGridColUrl": {
+		"message": "Aanvraag-URL"
+	},
+	"proxyableGridColRuleStatus": {
+		"message": "Regelstatus"
+	},
+	"proxyableGridColProxifiedStatus": {
+		"message": "Proxystatus"
+	},
+	"proxyableGridColRuleHost": {
+		"message": "Regeldomein"
+	},
+	"proxyableGridColRulePattern": {
+		"message": "Regelpatroon"
+	},
+	"proxyableGridCol_ProxifiedStatus_NoProxy": {
+		"message": "Geen Proxy"
+	},
+	"proxyableGridCol_ProxifiedStatus_Special": {
+		"message": "Speciaal"
+	},
+	"proxyableGridCol_ProxifiedStatus_ProxyPerOrigin": {
+		"message": "Van bovenliggende tab"
+	},
+	"proxyableGridCol_ProxifiedStatus_MatchedRule": {
+		"message": "Overeenkomend"
+	},
+	"proxyableGridCol_ProxifiedStatus_AlwaysEnabled": {
+		"message": "Altijd Ingeschakeld"
+	},
+	"proxyableGridCol_ProxifiedStatus_SystemProxyApplied": {
+		"message": "Systeemproxy toegepast"
+	},
+	"proxyableGridCol_RuleStatus_NoneMatched": {
+		"message": "Geen overeenkomst"
+	},
+	"proxyableGridCol_RuleStatus_Special": {
+		"message": "Speciaal"
+	},
+	"proxyableGridCol_RuleStatus_ProxyPerOrigin": {
+		"message": "Van bovenliggende tab"
+	},
+	"proxyableGridCol_RuleStatus_MatchedRule": {
+		"message": "Overeenkomend"
+	},
+	"proxyableGridCol_RuleStatus_Whitelisted": {
+		"message": "Witgelijst"
+	},
+	"proxyableGridCol_RuleStatus_AlwaysEnabledByPassed": {
+		"message": "Altijd ingeschakeld <br> Omzeild"
+	},
+	"proxyableGridCol_RuleStatus_AlwaysEnabledForcedByRules": {
+		"message": "Altijd ingeschakeld <br> Gedwongen door regels"
+	},
+	"settingsTitle": {
+		"message": "ProxyMust Instellingen"
+	},
+	"settingsTabAbout": {
+		"message": "Over"
+	},
+	"settingsTabGeneral": {
+		"message": "Algemene Opties"
+	},
+	"settingsTabSmartProfiles": {
+		"message": "Selectieve Profielen"
+	},
+	"settingsTabAddSmartProfile": {
+		"message": "Nieuw selectief profiel toevoegen"
+	},
+	"settingsTabProxyServers": {
+		"message": "Proxyservers"
+	},
+	"settingsTabProxyServerSubscriptions": {
+		"message": "Proxyserver Abonnementen"
+	},
+	"settingsTabBackupRestore": {
+		"message": "Back-up / Herstel"
+	},
+	"settingsTabUpdateText": {
+		"message": "Update naar {0}"
+	},
+	"settingsTabAboutDescription": {
+		"message": "Proxy's gebruiken kan niet eenvoudiger met ProxyMust. Beschouw het als een configureer-eens-en-vergeet-oplossing. Met ProxyMust hoef je je proxy niet handmatig te wijzigen of aan en uit te zetten. Alles wat je hoeft te doen is ProxyMust vertellen dat je de proxy voor je gewenste website wilt inschakelen met slechts één klik. Daarna, wanneer je die specifieke website bezoekt, zal ProxyMust al je gegevens via de proxy leiden zonder dat je iets hoeft te doen."
+	},
+	"settingsGeneralSmartFeatures": {
+		"message": "Slimme functies"
+	},
+	"settingsGeneralSmartFeaturesNoChrome": {
+		"message": "<strong>Alleen <a href='https://www.getfirefox.com/' target='_blank' rel='noopener'>Firefox</a>!</strong> Helaas wordt deze functie niet ondersteund door Chrome."
+	},
+	"settingsGeneralProxyPerOrigin": {
+		"message": "Proxy per tabblad/oorsprong inschakelen"
+	},
+	"settingsGeneralProxyPerOriginDesc": {
+		"message": "Als een regel overeenkomt met de URL van een tabblad, wordt de proxy toegepast op de verbinding van dat tabblad. Normaal gesproken zijn er andere verzoeken op elke pagina die mogelijk geen overeenkomende regel hebben en dus geen proxy krijgen. De optie `Proxy per tabblad/oorsprong inschakelen` zorgt ervoor dat de hele pagina, inclusief alle verbindingen van verschillende domeinen en oorsprongen, dezelfde proxy gebruikt die op de oorsprong van het tabblad wordt toegepast. Deze optie elimineert ook de noodzaak voor een regel voor elk afzonderlijk domein. Houd er rekening mee dat als er geen proxy op het tabblad wordt toegepast, proxyregels blijven werken en de proxy individueel toepassen op andere verbindingen op de pagina."
+	},
+	"settingsGeneralProxyPerOriginEnabled": {
+		"message": "Proxy per tabblad/oorsprong ingeschakeld"
+	},
+	"settingsGeneralProxyPerOriginDisabled": {
+		"message": "Proxy per tabblad/oorsprong uitgeschakeld"
+	},
+	"settingsGeneralSyncing": {
+		"message": "Synchronisatie"
+	},
+	"settingsGeneralIncognitoProfile": {
+		"message": "Privé Browsen Profiel"
+	},
+	"settingsGeneralIncognitoProfileDisabled": {
+		"message": "(Uitgeschakeld)"
+	},
+	"settingsGeneralIncognitoProfileDesc": {
+		"message": "Selecteer een privé-browserprofiel als u wilt afdwingen dat het wordt gebruikt wanneer het tabblad/venster in de privé-modus staat. Deze optie overschrijft het actieve profiel."
+	},
+	"settingsGeneralEnableSyncing": {
+		"message": "Instellingssynchronisatie inschakelen"
+	},
+	"settingsGeneralEnableSyncingDesc": {
+		"message": "Door synchronisatie in te schakelen, zijn al uw instellingen, inclusief regels, servers en abonnementen, beschikbaar op alle browsers."
+	},
+	"settingsSaveGeneralOptionsButton": {
+		"message": "Wijzigingen opslaan"
+	},
+	"settingsRejectGeneralOptionsButton": {
+		"message": "Wijzigingen verwerpen"
+	},
+	"settingsGeneralSyncProxyMode": {
+		"message": "Synchronisatie van actief profiel inschakelen"
+	},
+	"settingsGeneralSyncProxyModeDesc": {
+		"message": "Vink aan als u wilt dat het actieve profiel wordt gesynchroniseerd."
+	},
+	"settingsGeneralSyncActiveProxy": {
+		"message": "Synchronisatie van actieve proxy inschakelen"
+	},
+	"settingsGeneralSyncActiveProxyDesc": {
+		"message": "Vink aan als u wilt dat de geselecteerde proxyserver wordt gesynchroniseerd."
+	},
+	"settingsGeneralSyncToBrowser": {
+		"message": "Browser-synchronisatieservers gebruiken"
+	},
+	"settingsGeneralSyncToWebDAV": {
+		"message": "Synchroniseren naar een WebDAV-server"
+	},
+	"settingsGeneralWebDavServerUrl": {
+		"message": "WebDAV-server-URL:"
+	},
+	"settingsGeneralWebDavBackupFilename": {
+		"message": "Back-upbestandsnaam:"
+	},
+	"settingsGeneralWebDavServerUser": {
+		"message": "WebDAV-server gebruikersnaam:"
+	},
+	"settingsGeneralWebDavServerPassword": {
+		"message": "WebDAV-server wachtwoord:"
+	},
+	"settingsGeneralWebDavBehaviourDesc": {
+		"message": "Houd er rekening mee dat back-ups plaatsvinden bij elke wijziging van de instellingen, terwijl herstel alleen plaatsvindt wanneer de browser start."
+	},
+	"settingsGeneralWebDavServerBackupNow": {
+		"message": "Nu back-up maken"
+	},
+	"settingsGeneralWebDavServerRestoreNow": {
+		"message": "Nu herstellen"
+	},
+	"settingsGeneralWebDavRestoreNowConfirm": {
+		"message": "Dit zal uw huidige instellingen van de WebDAV-server overschrijven. Deze actie kan niet ongedaan worden gemaakt, wees voorzichtig. Doorgaan?"
+	},
+	"settingsGeneralWebDavRestoreNowSuccess": {
+		"message": "WebDAV-herstel succesvol voltooid!"
+	},
+	"settingsGeneralWebDavRestoreNowFailed": {
+		"message": "WebDAV-herstel mislukt:"
+	},
+	"settingsGeneralWebDav_ErrorValidUrl": {
+		"message": "Voer een geldige WebDAV-server-URL in"
+	},
+	"settingsGeneralWebDav_ErrorEmptyFilename": {
+		"message": "De back-upbestandsnaam van de WebDAV-server mag niet leeg zijn"
+	},
+	"settingsGeneralWebDav_ErrorRequiredFields": {
+		"message": "Vul alle vereiste WebDAV-velden in."
+	},
+	"settingsGeneralWebDavBackupNowSuccess": {
+		"message": "WebDAV-back-up succesvol voltooid!"
+	},
+	"settingsGeneralWebDavBackupNowFailed": {
+		"message": "WebDAV-back-up mislukt:"
+	},
+	"settingsGeneralErrorDetection": {
+		"message": "Foutdetectie"
+	},
+	"settingsGeneralDetectFailures": {
+		"message": "Aanvraagfouten detecteren"
+	},
+	"settingsGeneralDetectFailuresDesc": {
+		"message": "Detectie van aanvraagfouten helpt u bij het identificeren van domeinen die een proxy nodig hebben."
+	},
+	"settingsGeneralSelectIgnoredDomains": {
+		"message": "Regels invoeren"
+	},
+	"settingsGeneralIgnoreRequestFailuresForDomains": {
+		"message": "Foutdetectie negeren op basis van deze regels"
+	},
+	"settingsGeneralIgnoreRequestFailuresForDomainsDesc": {
+		"message": "Voeg regels toe om foutdetectie uit te schakelen."
+	},
+	"settingsGeneralDisplayFailedOnBadge": {
+		"message": "Toon aantal mislukte aanvragen op het badge-pictogram van de werkbalk"
+	},
+	"settingsGeneralThemes": {
+		"message": "Thema's"
+	},
+	"settingsGeneralThemesAutoSwitch": {
+		"message": "Automatisch schakelen op basis van browserthema"
+	},
+	"settingsGeneralThemesAutoSwitchDesc": {
+		"message": "Schakelt automatisch tussen de hieronder geselecteerde thema's. Dit volgt het thema van uw browser, dat op zijn beurt het thema van uw besturingssysteem kan volgen."
+	},
+	"settingsGeneralThemesLight": {
+		"message": "Licht thema"
+	},
+	"settingsGeneralThemes_Default": {
+		"message": "(Standaard)"
+	},
+	"settingsGeneralThemes_Custom": {
+		"message": "(Aangepast)"
+	},
+	"settingsGeneralThemes_CustomUrl": {
+		"message": "Aangepaste stijlen (CSS) URL:"
+	},
+	"settingsGeneralThemes_CustomUrlDesc": {
+		"message": "De URL moet 'https' zijn. Let op geïmporteerde lettertypen en andere stijlen in de aangepaste stijl; deze kunnen pop-ups blokkeren of vertragen. U kunt thema's van bootswatch.com proberen, maar let op hun afhankelijkheid van Google-lettertypen."
+	},
+	"settingsGeneralThemesDark": {
+		"message": "Donker thema"
+	},
+	"settingsGeneralThemesLight_ErrorValidUrl": {
+		"message": "Voer een geldige CSS-URL in voor het lichte thema; de URL moet 'https' zijn."
+	},
+	"settingsGeneralThemesDark_ErrorValidUrl": {
+		"message": "Voer een geldige CSS-URL in voor het donkere thema; de URL moet 'https' zijn."
+	},
+	"settingsGeneralOtherSettings": {
+		"message": "Andere instellingen"
+	},
+	"settingsGeneralEnableShortcuts": {
+		"message": "Sneltoetsen inschakelen"
+	},
+	"settingsGeneralEnableShortcutsDesc": {
+		"message": "U kunt sneltoetsen configureren op de instellingenpagina van de browser-add-on."
+	},
+	"settingsGeneralViewShortcuts": {
+		"message": "Sneltoetsen bekijken"
+	},
+	"settingsGeneralConfigureShortcuts": {
+		"message": "Sneltoetsen configureren"
+	},
+	"settingsGeneralShortcutNotification": {
+		"message": "Sneltoetsmelding inschakelen"
+	},
+	"settingsGeneralViewShortcutKeys": {
+		"message": "Sneltoetsen"
+	},
+	"settingsGeneralDisplayAppliedProxyOnBadge": {
+		"message": "Toon bron van toegepaste regel op badge"
+	},
+	"settingsGeneralDisplayAppliedRulePatternOnBadge": {
+		"message": "Toon patroon van toegepaste regel op badge"
+	},
+	"settingsGeneralRefreshTabOnConfigChanges": {
+		"message": "Actieve tab vernieuwen wanneer profiel of proxy verandert"
+	},
+	"settingsGeneralCancelButton": {
+		"message": "Annuleren"
+	},
+	"settingsGeneralSaveChanges": {
+		"message": "Wijzigingen opslaan"
+	},
+	"settingsGeneralKeyboardShortcutsTitle": {
+		"message": "Toetsenbordsneltoetsen"
+	},
+	"settingsGeneralCloseButton": {
+		"message": "Sluiten"
+	},
+	"settingsGeneralKeyboardShortcutsNotSupported": {
+		"message": "Toetsenbordsneltoetsen worden niet ondersteund op mobiele apparaten."
+	},
+	"settingsTabProxyServersTitle": {
+		"message": "Beheer uw proxyservers:"
+	},
+	"settingsTabProxyServersDescription": {
+		"message": "Hier is de lijst met proxyservers. U kunt zoveel proxyservers definiëren als u wilt en ertussen schakelen via de werkbalk."
+	},
+	"settingsTabBackupRestoreDescription": {
+		"message": "U kunt een volledige of gedeeltelijke back-up van uw instellingen maken."
+	},
+	"settingsErrNoServersTitle": {
+		"message": "Geen Servers!"
+	},
+	"settingsErrNoServersDescription": {
+		"message": "Allereerst moet u proxyservers definiëren."
+	},
+	"settingsActiveProxyServer": {
+		"message": "Standaard proxyserver:"
+	},
+	"settingsAddServerButton": {
+		"message": "Server toevoegen"
+	},
+	"settingsRemoveMultipleServerButton": {
+		"message": "Meerdere verwijderen"
+	},
+	"settingsSaveChangesButton": {
+		"message": "Wijzigingen opslaan"
+	},
+	"settingsRejectChangesButton": {
+		"message": "Wijzigingen verwerpen"
+	},
+	"settingsEditButton": {
+		"message": "Bewerken"
+	},
+	"settingsFullBackupButton": {
+		"message": "Volledige back-up maken"
+	},
+	"settingsFullBackupButtonDesc": {
+		"message": "Maak een volledige back-up van de opties (inclusief proxyservers en regels)."
+	},
+	"settingsRestoreBackupButton": {
+		"message": "Back-up herstellen"
+	},
+	"settingsRestoreBackupButtonDesc": {
+		"message": "Herstel een eerder gemaakte back-up van een lokaal bestand"
+	},
+	"settingsDangerZoneDesc": {
+		"message": "Gevarenzone"
+	},
+	"settingsFactoryResetButton": {
+		"message": "Fabrieksinstellingen herstellen"
+	},
+	"settingsFactoryResetDesc": {
+		"message": "Alles resetten. Dit zal alle regels en proxyservers permanent verwijderen en de opties terugzetten."
+	},
+	"settingsFactoryResetConfirm": {
+		"message": "Weet u zeker dat u ALLES wilt resetten? Echt waar? Er is geen weg terug!"
+	},
+	"settingsFactoryResetSuccess": {
+		"message": "Fabrieksreset succesvol voltooid"
+	},
+	"settingsImportExportProxiesDesc": {
+		"message": "Individuele lijsten met proxyservers importeren/exporteren."
+	},
+	"settingsImportProxiesButtonBackup": {
+		"message": "Proxyservers importeren"
+	},
+	"settingsExportProxiesButtonBackup": {
+		"message": "Proxyservers exporteren"
+	},
+	"settingsAddRuleButton": {
+		"message": "Regel toevoegen"
+	},
+	"settingsImportRulesButton": {
+		"message": "Regels importeren"
+	},
+	"settingsImportRulesTitle": {
+		"message": "Regels importeren"
+	},
+	"settingsImportRulesSelectButton": {
+		"message": "Regel-back-upbestand"
+	},
+	"settingsImportRulesText": {
+		"message": "Regel-back-uptekst"
+	},
+	"settingsImportRulesFrom": {
+		"message": "Van"
+	},
+	"settingsImportRulesOptionAppend": {
+		"message": "Toevoegen aan bestaande regels"
+	},
+	"settingsImportRulesOptionOverride": {
+		"message": "Huidige regels vervangen (voorzichtig gebruiken)"
+	},
+	"settingsImportRulesCancelButton": {
+		"message": "Annuleren"
+	},
+	"settingsImportRulesImportButton": {
+		"message": "Importeren"
+	},
+	"settingsImportProxiesButton": {
+		"message": "Proxies importeren"
+	},
+	"settingsExportProxiesButton": {
+		"message": "Proxies exporteren"
+	},
+	"settingsImportProxiesTitle": {
+		"message": "Proxylijst importeren"
+	},
+	"settingsImportProxiesSelectFileButton": {
+		"message": "Proxylijstbestand"
+	},
+	"settingsImportProxiesSelectTextButton": {
+		"message": "Proxylijsttekst"
+	},
+	"settingsImportProxiesOptionAppend": {
+		"message": "Toevoegen aan bestaande proxy's"
+	},
+	"settingsImportProxiesOptionOverride": {
+		"message": "Huidige proxy's vervangen (voorzichtig gebruiken)"
+	},
+	"settingsImportProxiesCancelButton": {
+		"message": "Annuleren"
+	},
+	"settingsImportProxiesImportButton": {
+		"message": "Importeren"
+	},
+	"settingsConfirmRemoveProxyServer": {
+		"message": "Weet u zeker dat u de geselecteerde proxyserver wilt verwijderen?"
+	},
+	"settingsConfirmRemoveMultipleProxyServer": {
+		"message": "Weet u zeker dat u de geselecteerde proxyservers wilt verwijderen?"
+	},
+	"settingsRemoveAllProxyServers": {
+		"message": "Weet u zeker dat u alle proxyservers wilt verwijderen?"
+	},
+	"settingsRemoveAllProxyServersSuccess": {
+		"message": "Alle proxyservers zijn verwijderd.<br/>U moet opslaan om de wijzigingen toe te passen."
+	},
+	"settingsImportProxiesFileNotSelected": {
+		"message": "Selecteer een proxylijstbestand"
+	},
+	"settingsImportProxyListTextIsEmpty": {
+		"message": "Voer de proxylijst in"
+	},
+	"settingsImportProxyServersFailed": {
+		"message": "Importeren van proxyservers mislukt"
+	},
+	"importerImportProxySuccess": {
+		"message": "Totaal {0} van {1} proxy's zijn geïmporteerd.<br>Vergeet niet de wijzigingen op te slaan."
+	},
+	"settingsErrorFailedToSaveServers": {
+		"message": "Opslaan van servers mislukt."
+	},
+	"settingsChangesReverted": {
+		"message": "Wijzigingen succesvol teruggedraaid."
+	},
+	"settingsConfirmSaveAllChanged": {
+		"message": "Wilt u alle niet-opgeslagen wijzigingen opslaan?"
+	},
+	"settingsConfirmRemoveProxyRule": {
+		"message": "Weet u zeker dat u de geselecteerde regel wilt verwijderen?"
+	},
+	"settingsConfirmRemoveMultipleProxyRule": {
+		"message": "Weet u zeker dat u de geselecteerde regels wilt verwijderen?"
+	},
+	"settingsRemoveAllRules": {
+		"message": "Weet u zeker dat u alle regels wilt verwijderen?"
+	},
+	"settingsRemoveAllRulesSuccess": {
+		"message": "Alle regels zijn verwijderd.<br/>U moet opslaan om de wijzigingen toe te passen."
+	},
+	"settingsRestoreBackupFailed": {
+		"message": "Er is een fout opgetreden bij het herstellen van de back-up"
+	},
+	"settingsRestoreBackupFileError": {
+		"message": "Lezen van het geselecteerde bestand mislukt"
+	},
+	"settingsRulesFileNotSelected": {
+		"message": "Selecteer een regelsbestand"
+	},
+	"settingsSourceTypeNotSelected": {
+		"message": "Selecteer brontype"
+	},
+	"settingsImportRulesFailed": {
+		"message": "Importeren van het bestand mislukt."
+	},
+	"settingsImportRulesTextIsEmpty": {
+		"message": "Voer regels in het vak in"
+	},
+	"settingsServerNameRequired": {
+		"message": "Specificeer de naam van de server!"
+	},
+	"settingsServerNameExists": {
+		"message": "Een server met dezelfde naam bestaat al!"
+	},
+	"settingsServerServerAddressIsEmpty": {
+		"message": "Serveradres mag niet leeg zijn"
+	},
+	"settingsServerPortNoInvalid": {
+		"message": "Voer een geldig poortnummer in"
+	},
+	"settingsServerAuthenticationInvalid": {
+		"message": "Zowel gebruikersnaam als wachtwoord zijn vereist voor authenticatie"
+	},
+	"settingsServersGridNoDataContent": {
+		"message": "Geen server gedefinieerd"
+	},
+	"settingsServersGridColName": {
+		"message": "Naam"
+	},
+	"settingsServersGridColProtocol": {
+		"message": "Protocol"
+	},
+	"settingsServersGridColServer": {
+		"message": "Server"
+	},
+	"settingsServersGridColPort": {
+		"message": "Poort"
+	},
+	"settingsServersGridColCountry": {
+		"message": "Land"
+	},
+	"settingsServersGridColRating": {
+		"message": "Beoordeling"
+	},
+	"settingsServersModalTitle": {
+		"message": "Proxyserver Details"
+	},
+	"settingsServersServerName": {
+		"message": "Servernaam"
+	},
+	"settingsServersSeverAddress": {
+		"message": "Serveradres"
+	},
+	"settingsServersProtocol": {
+		"message": "Proxyprotocol"
+	},
+	"settingsServersPort": {
+		"message": "Poort"
+	},
+	"settingsServersProxyDNS": {
+		"message": "Proxy-DNS bij gebruik van SOCKS 5"
+	},
+	"settingsServersUsername": {
+		"message": "Gebruikersnaam"
+	},
+	"settingsServersPassword": {
+		"message": "Wachtwoord"
+	},
+	"settingsServersAuthChromeMv3Limitation": {
+		"message": "(Helaas wordt proxyserverauthenticatie door Chrome niet ondersteund via de extensie-API. Dit is 'met opzet'.)"
+	},
+	"settingsServersCancel": {
+		"message": "Annuleren"
+	},
+	"settingsServersSave": {
+		"message": "Opslaan"
+	},
+	"settingsServersImport": {
+		"message": "Importeren"
+	},
+	"settingsProfilesNameTitle": {
+		"message": "Selectief Profiel:"
+	},
+	"settingsProfilesEnabled": {
+		"message": "Ingeschakeld"
+	},
+	"settingsProfilesTypeTitle": {
+		"message": "Profieltype:"
+	},
+	"settingsProfilesTypeDesc_SmartRules": {
+		"message": "In dit profiel wordt geen proxy toegepast, tenzij u selectieve regels definieert. U definieert blacklist-regels, oftewel regels om de proxy toe te passen."
+	},
+	"settingsProfilesTypeDesc_AlwaysEnabledBypassRules": {
+		"message": "In dit profiel worden proxyservers altijd toegepast; definieer selectieve regels om ze te omzeilen. U definieert witlijst-regels, oftewel regels om de proxy over te slaan en niet toe te passen."
+	},
+	"settingsProfilesTypeDesc_IgnoreFailureRules": {
+		"message": "Negeer foutdetectie voor deze domeinen door regels toe te voegen."
+	},
+	"settingsProfilesProfileProxyServer": {
+		"message": "Profiel Proxyserver:"
+	},
+	"settingsProfilesDefaultProfileProxyServer": {
+		"message": "(Standaard proxyserver gebruiken)"
+	},
+	"settingsProfilesProfileProxyServerDesc": {
+		"message": "(Bij gebruik van dit profiel wordt dit de actieve proxyserver)"
+	},
+	"settingsProfilesRulesSection": {
+		"message": "Regels"
+	},
+	"settingsProfilesDelete": {
+		"message": "Verwijderen"
+	},
+	"settingsProfilesAddNewLabel": {
+		"message": "Nieuw selectief profiel toevoegen"
+	},
+	"settingsProfilesAddNewTypeLead": {
+		"message": "Selecteer het <b>type profiel</b> dat u wilt toevoegen:"
+	},
+	"settingsProfilesAddNewType_SmartRules": {
+		"message": "Selectieve Regels"
+	},
+	"settingsProfilesAddNewType_SmartRulesDesc": {
+		"message": "In dit type profiel wordt de proxy toegepast op verzoeken op basis van <em>selectieve regels</em> die u moet definiëren. Om deze regels te definiëren kunt u het pop-upmenu in de menubalk gebruiken, of ze toevoegen via de instellingen, en ook via het venster <em>Proxybare Bronnen</em>.<br>U kunt zich ook abonneren op verschillende regellijsten, zoals Gfwlist."
+	},
+	"settingsProfilesAddNewType_AlwaysEnabled": {
+		"message": "Altijd Ingeschakeld"
+	},
+	"settingsProfilesAddNewType_AlwaysEnabledDesc": {
+		"message": "In dit type profiel wordt de proxy altijd toegepast op verzoeken, tenzij u omzeilingsregels definieert. De stappen voor het definiëren van regels zijn hetzelfde als bij het profieltype Selectieve Regels."
+	},
+	"settingsProfilesAddNewBtnContinue": {
+		"message": "Doorgaan"
+	},
+	"settingsProfilesAddNewBtnCancel": {
+		"message": "Annuleren"
+	},
+	"settingsProfilesAddErrorTypeRequired": {
+		"message": "Selecteer een profieltype"
+	},
+	"settingsProfilesAddErrorNameRequired": {
+		"message": "Profielnaam is verplicht"
+	},
+	"settingsProfilesAddErrorNameExists": {
+		"message": "Profielnaam bestaat al, voer een andere naam in"
+	},
+	"settingsProfilesDeleteConfirm": {
+		"message": "Weet u zeker dat u dit profiel wilt verwijderen? Waarschuwing: deze actie kan niet ongedaan worden gemaakt!"
+	},
+	"settingsProfilesDeleteFailed": {
+		"message": "Verwijderen van het geselecteerde profiel mislukt."
+	},
+	"settingsProfilesDeleteDone": {
+		"message": "Het profiel is succesvol verwijderd"
+	},
+	"settingsProfilesDeleteBuiltinFail": {
+		"message": "Kan ingebouwde profielen niet verwijderen"
+	},
+	"settingsProfilesProxyServer": {
+		"message": "[Standaard proxyserver gebruiken]"
+	},
+	"settingsProfilesRulesSubscriptionsTitle": {
+		"message": "Regelabonnementen"
+	},
+	"settingsProfilesRulesSubscriptionsDesc": {
+		"message": "Hier kunt u zich abonneren op regellijsten."
+	},
+	"settingsSaveSmartProfileSuccess": {
+		"message": "Selectief profiel succesvol opgeslagen."
+	},
+	"settingsErrorFailedToSaveSmartProfile": {
+		"message": "Opslaan van selectief profiel mislukt."
+	},
+	"settingsRuleSourceRequired": {
+		"message": "Specificeer het brondomein van de regel!"
+	},
+	"settingsRuleSourceInvalid": {
+		"message": "Brondomein is ongeldig, brondomein moet zoiets zijn als 'google.com'"
+	},
+	"settingsRuleSourceInvalidFormat": {
+		"message": "'brondomein' is niet geldig '{0}'"
+	},
+	"settingsRuleSourceAlreadyExists": {
+		"message": "Een regel met dezelfde bron bestaat al!"
+	},
+	"settingsRuleHostInvalid": {
+		"message": "Hostnaam '{0}' is ongeldig, hostnaam moet zoiets zijn als 'google.com'"
+	},
+	"settingsRuleRegexNotMatchDomain": {
+		"message": "Regex-regel komt niet overeen met het brondomein '{0}'"
+	},
+	"settingsRuleDoesntIncludeDomain": {
+		"message": "De regel komt niet overeen met het brondomein '{0}'"
+	},
+	"settingsRuleRegexInvalid": {
+		"message": "Regex-regel '{0}' is niet geldig"
+	},
+	"settingsRuleExactUrlInvalid": {
+		"message": "URL '{0}' is niet geldig"
+	},
+	"settingsRuleUrlInvalid": {
+		"message": "URL '{0}' is niet geldig"
+	},
+	"settingsRulesGridNoDataContent": {
+		"message": "Geen regel gedefinieerd"
+	},
+	"settingsRulesGridColRuleType": {
+		"message": "Regeltype"
+	},
+	"settingsRulesGridColSource": {
+		"message": "Bron"
+	},
+	"settingsRulesGridColRule": {
+		"message": "Regel"
+	},
+	"settingsRulesGridColEnabled": {
+		"message": "Ingeschakeld"
+	},
+	"settingsRulesGridColProxy": {
+		"message": "Proxyserver"
+	},
+	"settingsRulesProxyDefault": {
+		"message": "[Actieve proxy gebruiken]"
+	},
+	"settingsRulesProxyFromProfile": {
+		"message": "[Profielproxy gebruiken]"
+	},
+	"settingsRulesModalTitle": {
+		"message": "Regeldetails"
+	},
+	"settingsRulesRuleType": {
+		"message": "Regeltype"
+	},
+	"settingsRulesSourceDomain": {
+		"message": "Brondomein van de regel"
+	},
+	"settingsRulesSourceDomainDesc": {
+		"message": "(bijv. google.com)"
+	},
+	"settingsRulesPattern": {
+		"message": "Overeenkomstpatroon"
+	},
+	"settingsRulesGeneratePattern": {
+		"message": "Patroon automatisch genereren"
+	},
+	"settingsRulesRegex": {
+		"message": "URL-regex"
+	},
+	"settingsRulesHostRegex": {
+		"message": "Host-regex"
+	},
+	"settingsRulesExactUrl": {
+		"message": "Exacte URL (in kleine letters)"
+	},
+	"settingsRulesProxyServer": {
+		"message": "Proxyserver"
+	},
+	"settingsRulesProxyServerNotAuth": {
+		"message": "(Servers met authenticatie worden niet ondersteund in Chrome)"
+	},
+	"settingsRulesEnabled": {
+		"message": "Ingeschakeld"
+	},
+	"settingsRulesModalCancel": {
+		"message": "Annuleren"
+	},
+	"settingsRulesModalSave": {
+		"message": "Opslaan"
+	},
+	"settingsRulesActionType": {
+		"message": "Actie"
+	},
+	"settingsRuleActionApplyProxy": {
+		"message": "Proxy toepassen"
+	},
+	"settingsRuleActionWhitelist": {
+		"message": "Witlijst (geen proxy)"
+	},
+	"settingsRuleActionWhitelistDesc": {
+		"message": "(Witlijstregels hebben hogere prioriteit dan proxyregels, ongeacht hun plaatsing)"
+	},
+	"settingsServerPortInvalid": {
+		"message": "Serverpoort '{0}' is ongeldig"
+	},
+	"settingsServerHostInvalid": {
+		"message": "Serverhost '{0}' is ongeldig"
+	},
+	"settingsRestoreSettingsSuccess": {
+		"message": "Instellingen zijn succesvol hersteld"
+	},
+	"settingsRestoreSettingsFailed": {
+		"message": "Er is een fout opgetreden bij het herstellen van de instellingen"
+	},
+	"settingsRestoreSettingsFailedInvalid": {
+		"message": "Back-upgegevens zijn ongeldig of beschadigd"
+	},
+	"settingsRestoreSettingsFailedInvalidActiveProfile": {
+		"message": "Ongeldige gegevens voor actief profiel"
+	},
+	"settingsRestoreSettingsFailedInvalidDefaultProxyServer": {
+		"message": "Ongeldige gegevens voor standaard proxyserver"
+	},
+	"settingsEnableByDomainInvalid": {
+		"message": "Het geselecteerde domein is ongeldig"
+	},
+	"settingsEnableByDomainExists": {
+		"message": "Er bestaat al een regel voor het domein"
+	},
+	"settingsEnableByDomainSmartProfileNonEditable": {
+		"message": "Het huidige profiel '{0}' kan niet worden bijgewerkt met regels"
+	},
+	"settingsNoRuleFoundForDomain": {
+		"message": "Er is geen regel voor '{0}'"
+	},
+	"importerImportSuccess": {
+		"message": "Totaal {0} van {1} regels zijn toegevoegd.<br>Vergeet niet de wijzigingen op te slaan."
+	},
+	"settingsRemoveMultipleProxyRuleButton": {
+		"message": "Meerdere verwijderen"
+	},
+	"settingsAddMultipleRulesButton": {
+		"message": "Meerdere regels toevoegen"
+	},
+	"settingsAddMultipleRuleTitle": {
+		"message": "Meerdere regels toevoegen"
+	},
+	"settingsMultipleRuleList": {
+		"message": "Host-/regellijst:"
+	},
+	"settingsMultipleRuleInvalidHost": {
+		"message": "Hostnaam '{0}' is ongeldig"
+	},
+	"settingsMultipleRuleNoNewRuleAdded": {
+		"message": "Geen nieuwe regel toegevoegd"
+	},
+	"settingsTabProxyServerSubscriptionsTitle": {
+		"message": "Beheer proxyserver-abonnementen:"
+	},
+	"settingsTabProxyServerSubscriptionsDescription": {
+		"message": "Hier kunt u zich abonneren op proxylijsten en later schakelen tussen de proxy's. Houd er rekening mee dat lange lijsten kunnen leiden tot fouten bij het synchroniseren van gegevens tussen apparaten."
+	},
+	"settingsErrorFailedToSaveGeneral": {
+		"message": "Opslaan van optie-instellingen mislukt."
+	},
+	"settingsSaveOptionsSuccess": {
+		"message": "Algemene opties succesvol opgeslagen."
+	},
+	"settingsAddServerSubscriptionButton": {
+		"message": "Abonneren op een lijst"
+	},
+	"settingsServerSubscriptionModalTitle": {
+		"message": "Abonneren op een proxyserverlijst"
+	},
+	"settingsRemoveMultipleServerSubscriptionButton": {
+		"message": "Meerdere verwijderen"
+	},
+	"settingsServerSubscriptionName": {
+		"message": "Naam:"
+	},
+	"settingsServerSubscriptionUrl": {
+		"message": "URL:"
+	},
+	"settingsServerSubscriptionRefreshRate": {
+		"message": "Vernieuwingsfrequentie:"
+	},
+	"settingsServerSubscriptionRefreshRateHelp": {
+		"message": "(in minuten, 0 betekent geen verversing)"
+	},
+	"settingsServerSubscriptionEnabled": {
+		"message": "Ingeschakeld"
+	},
+	"settingsServerSubscriptionProtocol": {
+		"message": "Protocol:"
+	},
+	"settingsServerSubscriptionObfuscation": {
+		"message": "Verduistering:"
+	},
+	"settingsServerSubscriptionFormat": {
+		"message": "Formaat:"
+	},
+	"settingsServerSubscriptionApplyProxy": {
+		"message": "Via proxy doorsturen:"
+	},
+	"settingsServerSubscriptionApplyProxyHelpFirefox": {
+		"message": "(Beslis op basis van uw toegang tot de server)"
+	},
+	"settingsServerSubscriptionApplyProxyHelpChrome": {
+		"message": "(Helaas is deze functie niet beschikbaar in Chrome. De huidige proxy wordt toegepast)"
+	},
+	"settingsServerSubscriptionApplyProxy_NoProxy": {
+		"message": "Geen proxy"
+	},
+	"settingsServerSubscriptionApplyProxy_CurrentProxy": {
+		"message": "Huidige proxy"
+	},
+	"settingsServerSubscriptionApplyProxy_SelectedProxy": {
+		"message": "Geselecteerde proxy"
+	},
+	"settingsServerSubscriptionUsername": {
+		"message": "Gebruikersnaam:"
+	},
+	"settingsServerSubscriptionPassword": {
+		"message": "Wachtwoord:"
+	},
+	"settingsServerSubscriptionAuthenticationHelp": {
+		"message": "(als de lijst authenticatie vereist)"
+	},
+	"settingsServerSubscriptionCancelButton": {
+		"message": "Annuleren"
+	},
+	"settingsServerSubscriptionSaveButton": {
+		"message": "Opslaan"
+	},
+	"settingsServerSubscriptionSavingButton": {
+		"message": "Bezig met opslaan..."
+	},
+	"settingsServerSubscriptionTestButton": {
+		"message": "Testen"
+	},
+	"settingsProxyTestStopButton": {
+		"message": "Stoppen"
+	},
+	"settingsProxyTestCancelled": {
+		"message": "Test gestopt door gebruiker"
+	},
+	"settingsProxyTestResumeDialogTitle": {
+		"message": "Proxy-test"
+	},
+	"settingsProxyTestResumeDialogMessage": {
+		"message": "Er zijn niet-geteste proxy's. Wat wilt u doen?"
+	},
+	"settingsProxyTestResumeContinue": {
+		"message": "Doorgaan waar gestopt"
+	},
+	"settingsProxyTestResumeRestart": {
+		"message": "Opnieuw beginnen"
+	},
+	"settingsServerSubscriptionTestingButton": {
+		"message": "Bezig met testen..."
+	},
+	"settingsConfirmRemoveServerSubscription": {
+		"message": "Weet u zeker dat u het geselecteerde abonnement wilt verwijderen?"
+	},
+	"settingsRemoveAllProxyServerSubscriptions": {
+		"message": "Weet u zeker dat u alle proxyserver-abonnementen wilt verwijderen?"
+	},
+	"settingsConfirmRemoveMultipleServerSubscription": {
+		"message": "Weet u zeker dat u de geselecteerde abonnementen wilt verwijderen?"
+	},
+	"settingsRemoveAllProxyServerSubscriptionsSuccess": {
+		"message": "Alle proxyserver-abonnementen zijn verwijderd.<br/>U moet opslaan om de wijzigingen toe te passen."
+	},
+	"settingsServerSubscriptionProtocolDefault": {
+		"message": "(Automatische detectie met HTTP-fallback)"
+	},
+	"settingsInitializeFailed": {
+		"message": "Lezen van de configuraties mislukt. Sluit de instellingenpagina en probeer het opnieuw."
+	},
+	"settingsActiveProxyServerSubscriptions": {
+		"message": "-Abonnementen-"
+	},
+	"settingsServerSubscriptionsGridNoDataContent": {
+		"message": "Geen abonnementen"
+	},
+	"settingsServerSubscriptionsGridColName": {
+		"message": "Naam"
+	},
+	"settingsServerSubscriptionsGridColUrl": {
+		"message": "URL"
+	},
+	"settingsServerSubscriptionsGridColCount": {
+		"message": "Aantal"
+	},
+	"settingsServerSubscriptionsGridColEnabled": {
+		"message": "Ingeschakeld"
+	},
+	"settingsServerSubscriptionIncompleteForm": {
+		"message": "Vul de vereiste velden in het juiste formaat in"
+	},
+	"settingsServerSubscriptionInvalidForm": {
+		"message": "Ongeldige proxyserver-abonnementsgegevens"
+	},
+	"settingsServerSubscriptionDuplicateName": {
+		"message": "De ingevoerde naam is al in gebruik, voer een andere naam in."
+	},
+	"settingsServerSubscriptionSaveUpdated": {
+		"message": "Het abonnement is bijgewerkt met {0} proxy('s).<br/>Vergeet niet de wijzigingen op te slaan."
+	},
+	"settingsServerSubscriptionSaveAdded": {
+		"message": "Het abonnement is toegevoegd met {0} proxy('s).<br/>Vergeet niet de wijzigingen op te slaan."
+	},
+	"settingsServerSubscriptionSaveFailedGet": {
+		"message": "Ophalen van proxy's mislukt."
+	},
+	"settingsServerSubscriptionTestSuccess": {
+		"message": "Test geslaagd. De lijst gaf {0} proxy('s) terug."
+	},
+	"settingsServerSubscriptionTestFailed": {
+		"message": "Test mislukt"
+	},
+	"settingsSaveProxyServerSubscriptionsSuccess": {
+		"message": "Proxyserver-abonnementen succesvol opgeslagen."
+	},
+	"settingsFailedToSaveProxySubscriptions": {
+		"message": "Opslaan van proxyserver-abonnementen mislukt"
+	},
+	"settingsAddRulesSubscriptionButton": {
+		"message": "Abonneren op een regellijst"
+	},
+	"settingsRemoveMultipleRulesSubscriptionButton": {
+		"message": "Meerdere verwijderen"
+	},
+	"settingsRulesSubscriptionsModalTitle": {
+		"message": "Abonneren op een regellijst"
+	},
+	"settingsRulesSubscriptionsGridColName": {
+		"message": "Naam"
+	},
+	"settingsRulesSubscriptionsGridColUrl": {
+		"message": "URL"
+	},
+	"settingsRulesSubscriptionsGridColCount": {
+		"message": "Aantal"
+	},
+	"settingsRulesSubscriptionsGridColEnabled": {
+		"message": "Ingeschakeld"
+	},
+	"settingsRulesSubscriptionsName": {
+		"message": "Naam:"
+	},
+	"settingsRulesSubscriptionsUrl": {
+		"message": "URL:"
+	},
+	"settingsRulesSubscriptionsRefreshRate": {
+		"message": "Vernieuwingsfrequentie:"
+	},
+	"settingsRulesSubscriptionsRefreshRateHelp": {
+		"message": "(in minuten, 0 betekent geen verversing)"
+	},
+	"settingsRulesSubscriptionEnabled": {
+		"message": "Ingeschakeld"
+	},
+	"settingsRulesSubscriptionsObfuscation": {
+		"message": "Verduistering:"
+	},
+	"settingsRulesSubscriptionsFormat": {
+		"message": "Formaat:"
+	},
+	"settingsRulesSubscriptionsApplyProxy": {
+		"message": "Via proxy doorsturen:"
+	},
+	"settingsRulesSubscriptionsApplyProxyHelpFirefox": {
+		"message": "(Beslis op basis van uw toegang tot de server)"
+	},
+	"settingsRulesSubscriptionsApplyProxyHelpChrome": {
+		"message": "(Helaas is deze functie niet beschikbaar in Chrome. De huidige proxy wordt toegepast)"
+	},
+	"settingsRulesSubscriptionsUsername": {
+		"message": "Gebruikersnaam:"
+	},
+	"settingsRulesSubscriptionsAuthenticationHelp": {
+		"message": "(als de lijst authenticatie vereist)"
+	},
+	"settingsRulesSubscriptionsPassword": {
+		"message": "Wachtwoord:"
+	},
+	"settingsRulesSubscriptionsTestButton": {
+		"message": "Testen"
+	},
+	"settingsRulesSubscriptionsSaveButton": {
+		"message": "Opslaan"
+	},
+	"settingsRulesSubscriptionsCancelButton": {
+		"message": "Annuleren"
+	},
+	"settingsConfirmRemoveRulesSubscription": {
+		"message": "Weet u zeker dat u het geselecteerde regels-abonnement wilt verwijderen?"
+	},
+	"settingsConfirmRemoveMultipleRulesSubscription": {
+		"message": "Weet u zeker dat u de geselecteerde regels-abonnementen wilt verwijderen?"
+	},
+	"settingsRulesSubscriptionIncompleteForm": {
+		"message": "Vul de vereiste velden in het juiste formaat in"
+	},
+	"settingsRulesSubscriptionInvalidForm": {
+		"message": "Ongeldige proxyserver-abonnementsgegevens"
+	},
+	"settingsRulesSubscriptionDuplicateName": {
+		"message": "De ingevoerde naam is al in gebruik, voer een andere naam in."
+	},
+	"settingsRulesSubscriptionSavingButton": {
+		"message": "Bezig met opslaan..."
+	},
+	"settingsRulesSubscriptionTestButton": {
+		"message": "Testen"
+	},
+	"settingsRulesSubscriptionTestingButton": {
+		"message": "Bezig met testen..."
+	},
+	"settingsRulesSubscriptionSaveUpdated": {
+		"message": "Het abonnement is bijgewerkt met {0} proxyregels en {1} witgelijste regels.<br/>Vergeet niet de wijzigingen op te slaan."
+	},
+	"settingsRulesSubscriptionSaveAdded": {
+		"message": "Het abonnement is toegevoegd met {0} proxyregels en {1} witgelijste regels.<br/>Vergeet niet de wijzigingen op te slaan."
+	},
+	"settingsRulesSubscriptionSaveFailedGet": {
+		"message": "Ophalen van regels mislukt."
+	},
+	"settingsRulesSubscriptionRefreshOnDisabled": {
+		"message": "Kan een uitgeschakeld abonnement niet vernieuwen"
+	},
+	"settingsRulesSubscriptionTestSuccess": {
+		"message": "Test geslaagd. De lijst gaf {0} proxyregels en {1} witgelijste regels terug."
+	},
+	"settingsRulesSubscriptionTestFailed": {
+		"message": "Test mislukt"
+	},
+	"settingsFailedToSaveRulesSubscriptions": {
+		"message": "Opslaan van regels-abonnementen mislukt"
+	},
+	"settingsRemoveAllProxyRulesSubscriptions": {
+		"message": "Weet u zeker dat u alle proxyregels-abonnementen wilt verwijderen?"
+	},
+	"settingsRemoveAllProxyRulesSubscriptionsSuccess": {
+		"message": "Alle proxyregels-abonnementen zijn verwijderd.<br/>U moet opslaan om de wijzigingen toe te passen."
+	},
+	"importerImportRulesSuccess": {
+		"message": "Totaal {0} proxyregels en {1} witgelijste regels zijn teruggegeven.<br>Vergeet niet de wijzigingen op te slaan."
+	},
+	"settingsRulePatternIsEmpty": {
+		"message": "Regel heeft geen patroon gedefinieerd"
+	},
+	"settingsWelcomeTitle": {
+		"message": "Welkom bij ProxyMust"
+	},
+	"settingsWelcomeMessage": {
+		"message": "<p>\n\tProxyMust, selectieve proxymanager met proxytestmogelijkheden.<br>\n\tVolg deze stappen om te beginnen:\n</p>\n<ol>\n\t<li>\n\t\tVoeg een proxyserver of een lijst met proxy's toe\n\t\t<br>\n\t\t<small>(Ga naar het tabblad Proxyservers en voeg daar toe)</small>\n\t</li>\n\t<li>\n\t\tStel de modus in op Selectieve Proxy\n\t\t<br>\n\t\t<small>(Gebruik het pop-upmenu op de werkbalk om de actieve modus te wijzigen naar Selectieve Proxy)</small>\n\t</li>\n\t<li>\n\t\tDefinieer proxyregels\n\t\t<br>\n\t\t<small>(Gebruik het pop-upmenu op de werkbalk om regels toe te voegen, of het tabblad Proxyregels om regels toe te voegen/wijzigen)</small>\n\t</li>\n\t<li>\n\t\tU bent klaar.\n\t</li>\n</ol>"
+	},
+	"settingsWelcomeSkipButton": {
+		"message": "Begrepen"
+	},
+	"settingsSubscriptionStatsStatusSuccess": {
+		"message": "Status: Succes"
+	},
+	"settingsSubscriptionStatsStatusFail": {
+		"message": "Status: Mislukt"
+	},
+	"settingsSubscriptionStatsLastTry": {
+		"message": "Laatste poging:"
+	},
+	"settingsSubscriptionStatsMessage": {
+		"message": "Bericht:"
+	},
+	"settingsSubscriptionStatsLastSuccess": {
+		"message": "Laatste succes:"
+	},
+	"settings_SmartProfileType_Direct": {
+		"message": "Direct"
+	},
+	"settings_SmartProfileType_SystemProxy": {
+		"message": "Systeemproxy"
+	},
+	"settings_SmartProfileType_SmartRules": {
+		"message": "Selectieve Regels"
+	},
+	"settings_SmartProfileType_AlwaysEnabledBypassRules": {
+		"message": "Altijd ingeschakeld met omzeilingsregels"
+	},
+	"settings_SmartProfileType_IgnoreFailureRules": {
+		"message": "Negeer foutregels"
+	},
+	"settingsRuleCidrIPAddress": {
+		"message": "IP-adres"
+	},
+	"settingsRuleCidrPrefixLength": {
+		"message": "Prefixlengte"
+	},
+	"settingsRuleCidrNotationDesc": {
+		"message": "(Houd er rekening mee dat deze regel hostnamen niet omzet naar IP-adressen.)"
+	},
+	"settingsRuleCidrIPInvalid": {
+		"message": "Voer een geldig IP-adres in"
+	},
+	"settingsRuleCidrPrefixLengthInvalid": {
+		"message": "Voer een geldige prefixlengte in"
+	},
+	"settingsRuleCidrNotationInvalid": {
+		"message": "CIDR-notatie '{0}' is niet geldig"
+	},
+	"settingsRuleCidrNotationInvalidMatch": {
+		"message": "CIDR-regel komt niet overeen met '{0}'"
+	},
+	"notificationNoNextProxyServer": {
+		"message": "Er is geen volgende proxyserver"
+	},
+	"notificationNoPreviousProxyServer": {
+		"message": "Er is geen vorige proxyserver"
+	},
+	"notificationShortcutTitle": {
+		"message": "ProxyMust sneltoetsmelding"
+	},
+	"notificationShortcutProxyModeMessage": {
+		"message": "Proxymodus gewijzigd naar {0}"
+	},
+	"notificationShortcutProxyServerChanged": {
+		"message": "Proxyserver gewijzigd naar {0}"
+	},
+	"popupRatingDialogTitle": {
+		"message": "Werkt het adres?"
+	},
+	"popupRatingWorksButton": {
+		"message": "Ja (+1)"
+	},
+	"popupRatingFailsButton": {
+		"message": "Nee (-1)"
+	},
+	"popupRatingCancelButton": {
+		"message": "Annuleren"
+	},
+	"settingsProxyTestTitle": {
+		"message": "Controle van proxy-toegankelijkheid"
+	},
+	"settingsProxyTestEnable": {
+		"message": "Testsites toevoegen voor proxycontrole"
+	},
+	"settingsProxyTestNote": {
+		"message": "Voer maximaal 5 adressen in. De controle is sneller als u niet meer dan 3 adressen opgeeft."
+	},
+	"settingsProxyTestUrlsTitle": {
+		"message": "Te bezoeken adressen voor toegangstest"
+	},
+	"settingsProxyTestUrlsWarning": {
+		"message": "⚠️ Voer hier de websites in die u bezoekt (bijv. youtube.com, telegram.org), niet de proxy-adressen."
+	},
+	"settingsProxyTestClear": {
+		"message": "Testsites wissen"
+	},
+	"settingsProxyTestStop": {
+		"message": "⏹ Test stoppen"
+	},
+	"proxyTestCompleted": {
+		"message": "Controle voltooid. {0} proxy('s) getest."
+	},
+	"settingsProxyTestRatingAutoEnabled": {
+		"message": "Beoordeling is automatisch ingeschakeld om testresultaten weer te geven."
+	},
+	"settingsProxyTestNoTestUrls": {
+		"message": "Geen testsites opgegeven. Voeg ten minste één website toe."
+	},
+	"settingsProxyMustTestTitle": {
+		"message": "Proxy-test"
+	},
+	"settingsProxyMustSiteLabel": {
+		"message": "Te testen site:"
+	},
+	"settingsProxyMustTestRun": {
+		"message": "▶ Testen"
+	},
+	"settingsProxyMustAddSite": {
+		"message": "Site toevoegen"
+	},
+	"settingsProxyMustTestCondition": {
+		"message": "Als er niets is geselecteerd, wordt de test uitgevoerd voor alle proxy's in de tabel."
+	},
+	"settingsProxyMustTestResults": {
+		"message": "Resultaten: ✅ = werkt zeker voor deze site, ☑️ = werkt waarschijnlijk (verouderde gegevens of succes op andere sites), ❓ = geen gegevens, ⛔ = werkt niet."
+	},
+	"settingsServersRatingPriority": {
+		"message": "Beoordeling + Prioriteit"
+	},
+	"settingsContextMenuChangeRating": {
+		"message": "Handmatige beoordeling wijzigen"
+	},
+	"settingsContextMenuPlus1": {
+		"message": "(+1)"
+	},
+	"settingsContextMenuMinus1": {
+		"message": "(-1)"
+	},
+	"settingsContextMenuRatingTitle": {
+		"message": "Handmatige beoordeling"
+	},
+	"settingsContextMenuPlus1Desc": {
+		"message": "Omhoog in lijst"
+	},
+	"settingsContextMenuMinus1Desc": {
+		"message": "Omlaag in lijst"
+	},
+	"settingsContextMenuResetRating": {
+		"message": "Beoordeling resetten"
+	},
+	"settingsContextMenuSetFavorite": {
+		"message": "Als favoriet markeren"
+	},
+	"settingsContextMenuSetPin": {
+		"message": "Vastzetten"
+	},
+	"settingsContextMenuRemoveFavorite": {
+		"message": "Verwijderen uit favorieten"
+	},
+	"settingsContextMenuUnpin": {
+		"message": "Losmaken"
+	},
+	"settingsContextMenuRemovePriority": {
+		"message": "Prioriteit verwijderen"
+	},
+	"settingsContextMenuExportSelected": {
+		"message": "Geselecteerde exporteren"
+	},
+	"settingsContextMenuCopyAddresses": {
+		"message": "Adressen kopiëren"
+	},
+	"settingsContextMenuDelete": {
+		"message": "Verwijderen"
+	},
+	"settingsContextMenuTestForSite": {
+		"message": "Geselecteerde testen voor site"
+	},
+	"settingsProxyMustTestProgress": {
+		"message": "Proxy's testen voor {0}... ({1}/{2})"
+	},
+	"settingsProxyMustTestComplete": {
+		"message": "Test voltooid"
+	},
+	"settingsProxyMustAddSitePrompt": {
+		"message": "Voer het domein van de site in (bijv. youtube.com):"
+	},
+	"settingsProxyMustSiteAlreadyExists": {
+		"message": "Site bestaat al in de lijst."
+	},
+	"settingsProxyMustInvalidDomain": {
+		"message": "Ongeldig domein. Voer een geldig domein in (bijv. youtube.com)."
+	},
+	"popupCurrentSite": {
+		"message": "Huidige site:"
+	},
+	"settingsProxyMustRemoveSite": {
+		"message": "Site verwijderen"
+	},
+	"settingsContextMenuMoveToTop": {
+		"message": "Naar boven verplaatsen"
+	},
+	"settingsContextMenuMoveToDown": {
+		"message": "Naar beneden verplaatsen"
+	},
+	"settingsProxyMustCannotRemoveAutoSite": {
+		"message": "Deze site komt uit regels en kan niet handmatig worden verwijderd."
+	},
+	"settingsProxyMustConfirmRemoveSite": {
+		"message": "\"{0}\" verwijderen uit testsites?"
+	},
+	"settingsProxyMustSiteRemoved": {
+		"message": "Site \"{0}\" verwijderd."
+	},
+	"settingsProxyMustStaleHours": {
+		"message": "Vervaluren:"
+	},
+	"settingsContextMenuPreciseTest": {
+		"message": "Precieze test (langzamer, nauwkeuriger)"
+	},
+	"settingsContextMenuExpressTest": {
+		"message": "Express-test (snel, minder nauwkeurig)"
+	},
+	"popupQuickTestButton": {
+		"message": "Testen"
+	},
+	"popupQuickTestStopButton": {
+		"message": "Stoppen"
+	},
+	"settingsChooseTestTypeTitle": {
+		"message": "Kies testtype"
+	},
+	"settingsChooseTestTypeDescription": {
+		"message": "Kies welke test u wilt uitvoeren:"
+	},
+	"settingsPreciseTestDesc": {
+		"message": "Volledige controle, nauwkeuriger maar duurt langer."
+	},
+	"settingsExpressTestDesc": {
+		"message": "Express-test, kan enkele werkende proxy's overslaan, maar vindt er snel ten minste één."
+	},
+	"settingsCancelButton": {
+		"message": "Annuleren"
+	},
+	"popupAddAllSuccessfulSubs": {
+		"message": "Werkende toevoegen"
+	},
+	"settingsContextMenuClearStatuses": {
+		"message": "Statussen wissen"
+	},
+	"settingsContextMenuClearStatusesSelected": {
+		"message": "Geselecteerde proxy's"
+	},
+	"settingsContextMenuClearStatusesAll": {
+		"message": "Alle proxy's"
+	},
+	"settingsContextMenuClearStatusesConfirmSelected": {
+		"message": "Teststatussen wissen voor de geselecteerde proxy's?"
+	},
+	"settingsContextMenuClearStatusesConfirmAll": {
+		"message": "Teststatussen wissen voor ALLE proxy's? Deze actie kan niet ongedaan worden gemaakt."
+	},
+	"settingsContextMenuClearStatusesSuccess": {
+		"message": "Teststatussen succesvol gewist."
+	},
+	"popupQuickTestTooltip": {
+		"message": "Snelle test om werkende proxy's te vinden voor de huidige site"
+	},
+	"popupAddAllSuccessfulSubsTooltip": {
+		"message": "Voegt abonnementsproxy's die de test hebben doorstaan toe aan uw handmatige lijst"
+	},
+	"popupTestMenuTitle": {
+		"message": "Kies testtype"
+	},
+	"popupTestMenuAllProxies": {
+		"message": "Express-test voor alle proxy's"
+	},
+	"popupTestMenuSubscriptionsOnly": {
+		"message": "Express-test alleen voor abonnementen"
+	},
+	"popupTestMenuAllProxiesDesc": {
+		"message": "Handmatige + abonnementsproxy's"
+	},
+	"popupTestMenuSubscriptionsOnlyDesc": {
+		"message": "Voeg vervolgens werkende toe aan handmatige lijst"
+	},
+	"popupTestMenuCycleTest": {
+		"message": "Cyclische proxy-test (volledig schakelen)"
+	},
+	"popupTestMenuCycleTestDesc": {
+		"message": "Schakelt proxy's sequentieel, test het laden van de site"
+	},
+	"settingsContextMenuCycleTest": {
+		"message": "Cyclische test (volledig schakelen)"
+	},
+	"settingsCycleTestDesc": {
+		"message": "Schakelt proxy's sequentieel, test het laden van de site. Grondiger maar langzamer."
+	},
+	"popupTestMenuExpressCycleTest": {
+		"message": "Express-cyclische test (snel schakelen)"
+	},
+	"popupTestMenuExpressCycleTestDesc": {
+		"message": "Snel sequentieel schakelen van proxy's, timeout 10s, stopt bij eerste succes"
+	},
+	"popupTestMenuExpressCycleAll": {
+		"message": "Express-cyclische test (alle proxy's)"
+	},
+	"popupTestMenuExpressCycleAllDesc": {
+		"message": "Handmatige + abonnementsproxy's"
+	},
+	"popupTestMenuExpressCycleSubsOnly": {
+		"message": "Express-cyclische test (alleen abonnementen)"
+	},
+	"popupTestMenuExpressCycleSubsOnlyDesc": {
+		"message": "Voeg vervolgens werkende toe aan handmatige lijst"
+	},
+	"popupNoSubscriptionProxies": {
+		"message": "Geen abonnementsproxy's om te testen."
+	},
+	"settingsCopiedAddresses": {
+		"message": "Adressen gekopieerd"
+	},
+	"settingsCopyFailed": {
+		"message": "Kopiëren mislukt"
+	},
+	"settingsAnotherTestRunning": {
+		"message": "Er wordt al een andere test uitgevoerd. Als u denkt dat deze vastzit, herlaadt u de instellingenpagina (F5) en probeert u het opnieuw."
+	},
+	"settingsProxyTestTimeout": {
+		"message": "Test na 10 minuten verlopen en geforceerd gestopt. Probeer het opnieuw."
+	},
+	"settingsProxyMustNoSiteSelected": {
+		"message": "Selecteer een site."
+	},
+	"settingsProxyMustSiteAdded": {
+		"message": "Site \"{0}\" toegevoegd."
+	},
+	"testingExplanationTitle": {
+		"message": "Hoe proxytests werken"
+	},
+	"testingExplanationText": {
+		"message": "Tijdens het testen worden tijdelijke tabbladen automatisch geopend en gesloten, waarbij het proxy-IP en de verbinding via die proxy met het ingevoerde testadres worden gecontroleerd. Testtabbladen worden onmiddellijk uit uw browserhistorie verwijderd om rommel te voorkomen. U kunt de browser veilig minimaliseren terwijl de tests worden uitgevoerd, omdat tests uw webbrowsing verstoren door de te testen proxy's te schakelen."
+	},
+	"settingsGeneralEnableRating": {
+		"message": "Beoordeling voor proxy's inschakelen"
+	},
+	"settingsGeneralEnableRatingDesc": {
+		"message": "Maakt het mogelijk proxy's te beoordelen (werkt/werkt niet) en te sorteren op beoordeling."
+	},
+	"settingsProxyMustStaleHoursDesc": {
+		"message": "Aantal uren waarna testresultaten als verouderd worden beschouwd (1-168)."
+	},
+	"datatablesSearch": {
+		"message": "Zoeken:"
+	},
+	"datatablesShow": {
+		"message": "Weergeven"
+	},
+	"datatablesEntries": {
+		"message": "vermeldingen"
+	},
+	"datatablesPrevious": {
+		"message": "Vorige"
+	},
+	"datatablesNext": {
+		"message": "Volgende"
+	},
+	"datatablesInfo": {
+		"message": "Toon _START_ tot _END_ van _TOTAL_ vermeldingen"
+	},
+	"datatablesInfoEmpty": {
+		"message": "Toon 0 tot 0 van 0 vermeldingen"
+	},
+	"datatablesEmptyTable": {
+		"message": "Geen gegevens beschikbaar in tabel"
+	},
+	"datatablesAll": {
+		"message": "Alles"
+	},
+	"popupAddCurrentSiteTooltip": {
+		"message": "Huidige site toevoegen aan testlijst"
+	}
+}

@@ -1,0 +1,728 @@
+﻿/*
+ * Original SmartProxy copyright:
+ * This file is part of SmartProxy <https://github.com/salarcode/SmartProxy>,
+ * Copyright (C) 2023 Salar Khalilzadeh <salar2k@gmail.com>
+ *
+ * SmartProxy is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 3 as
+ * published by the Free Software Foundation.
+ *
+ * SmartProxy is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with SmartProxy.  If not, see <http://www.gnu.org/licenses/>.
+ */
+/*
+ * Modifications for ProxyMust:
+ * Copyright (C) 2026 nana-xakep <xakep.nana@gmail.com>
+ * - Added rating system, proxy testing, country flags, etc.
+ */
+import { PolyFill } from '../lib/PolyFill';
+import {
+	ProxyRuleType,
+	proxyServerProtocols,
+	ProxyServer,
+	GeneralOptions,
+	UIOptions,
+	SettingsConfig,
+	SmartProfileTypeBuiltinIds,
+	getBuiltinSmartProfiles,
+	SettingsActive,
+	SmartProfileCompiled,
+	SmartProfile,
+	SmartProfileType,
+	getSmartProfileTypeConfig,
+	ProxyServerSubscription,
+	ProxyRule,
+	ProxyRulesSubscription,
+	ThemeType
+} from './definitions';
+import { Debug } from '../lib/Debug';
+import { SettingsOperation } from './SettingsOperation';
+import { api } from '../lib/environment';
+import { Utils } from '../lib/Utils';
+import { ProfileOperations } from './ProfileOperations';
+
+const sop = SettingsOperation;
+
+export class Settings {
+	public static current: SettingsConfig;
+
+	public static active: SettingsActive;
+
+	public static onInitializedLocally: Function = null;
+	public static onInitializedRemoteSync: Function = null;
+
+	private static onInitializedCompleted: EventTarget = new EventTarget();
+
+	public static initialize() {
+		me.current = new SettingsConfig();
+
+		PolyFill.storageLocalGet(null, me.onInitializeGetLocalData, me.onInitializeGetLocalError);
+
+		// handle synced settings changes
+		api.storage.onChanged.addListener(SettingsOperation.syncOnChanged);
+
+		// English: Listen to local storage changes for userPrefs to keep Settings.current in sync
+		// Russian: Слушаем изменения локального хранилища для userPrefs, чтобы синхронизировать Settings.current
+		api.storage.onChanged.addListener((changes, area) => {
+			if (area === 'local' && changes.userPrefs) {
+				const newPrefs = changes.userPrefs.newValue;
+				if (newPrefs && typeof newPrefs === 'object') {
+					if (!me.current.userPrefs) me.current.userPrefs = { staleHours: 6, manualSites: [] };
+					if (typeof newPrefs.staleHours === 'number') me.current.userPrefs.staleHours = newPrefs.staleHours;
+					if (Array.isArray(newPrefs.manualSites)) me.current.userPrefs.manualSites = newPrefs.manualSites;
+					Debug.log("[Settings] userPrefs updated from local storage", me.current.userPrefs);
+				}
+			}
+		});
+	}
+
+	/** Register for a one time event of when all settings are loaded */
+	public static addInitializeCompletedEventListener(listener: EventListenerOrEventListenerObject) {
+		me.onInitializedCompleted.addEventListener('onInitializedCompleted', listener,
+			{
+				passive: true,
+				once: true
+			});
+	}
+	public static removeInitializeCompletedEventListener(listener: EventListenerOrEventListenerObject) {
+		me.onInitializedCompleted.removeEventListener('onInitializedCompleted', listener);
+	}
+	private static raiseInitializeCompletedEvent() {
+		me.onInitializedCompleted.dispatchEvent(new Event('onInitializedCompleted'));
+	}
+
+	private static async onInitializeGetLocalData(data: any) {
+		Debug.log("onInitializeGetLocalData, local data:", JSON.stringify(data));
+
+		data = me.getRestorableSettings(data);
+		// Debug raw autoStatus before any modifications
+		// console.log("[DEBUG] onInitializeGetLocalData: raw autoStatus from storage =", JSON.stringify(data.autoStatus));
+		//sop.copyNonSyncableSettings(data, me.current);
+		me.current = data;
+		me.updateActiveSettings();
+       // console.log("[DEBUG] onInitializeGetLocalData: after copyNonSyncableSettings, autoStatus =", JSON.stringify(me.current.autoStatus));
+		// English: load user preferences from local storage (wait for completion)
+		// Russian: загружаем пользовательские настройки из локального хранилища (ждём завершения)
+		await SettingsOperation.loadUserPreferences();
+		SettingsOperation.saveAllLocal(true);
+      //  console.log("[DEBUG] onInitializeGetLocalData: autoStatus after loadUserPreferences", JSON.stringify(Settings.current.autoStatus));		
+		me.cleanupLocalOldVersionResidueFromStorage();
+
+		if (me.onInitializedLocally)
+			me.onInitializedLocally();
+
+		if (me.current.options.syncSettings) {
+			// If sync is enabled
+
+			if (me.current.options.syncWebDavServerEnabled) {
+				me.readWebDavSyncData();
+			}
+			else {
+				// Reading from browser sync servers
+				// Read all the synced data along with synced ones
+				PolyFill.storageSyncGet(null, me.onInitializeGetSyncData, me.onInitializeGetSyncError);
+			}
+		}
+		else {
+			// Sync is disabled, so we just finish the initialization
+
+			me.raiseInitializeCompletedEvent();
+		}
+	}
+
+	private static onInitializeGetLocalError(error: any) {
+		Debug.error(`settingsOperation.initialize error: ${error.message}`);
+
+		if (me.onInitializedLocally)
+			me.onInitializedLocally();
+
+		me.raiseInitializeCompletedEvent();
+	}
+
+	private static readWebDavSyncData() {
+		SettingsOperation.readFromWebDavServer(
+			me.current.options.syncWebDavServerUrl,
+			me.current.options.syncWebDavBackupFilename,
+			me.current.options.syncWebDavServerUser,
+			me.current.options.syncWebDavServerPassword,
+			(restoredSettings: SettingsConfig) => {
+
+				if (!restoredSettings) {
+					Debug.error(`settingsOperation.readWebDavSyncData error: No data returned from WebDav server`);
+					me.onInitializeGetSyncError(new Error("No data returned from WebDav server"));
+					return;
+				}
+				if (Debug.isEnabled())
+					Debug.log("readWebDavSyncData, sync data: ", JSON.stringify(restoredSettings));
+
+				// ---------
+				sop.applySyncSettings(restoredSettings);
+
+				if (me.onInitializedRemoteSync)
+					me.onInitializedRemoteSync();
+
+				me.raiseInitializeCompletedEvent();
+			},
+			(error: Error) => {
+				Debug.error(`settingsOperation.readWebDavSyncData error: ${error.message}`);
+				me.onInitializeGetSyncError(error);
+			});
+	}
+
+	private static onInitializeGetSyncData(data: any) {
+		try {
+			let syncedSettings = Utils.decodeSyncData(data);
+
+			if (Debug.isEnabled())
+				Debug.log("onInitializeGetSyncData, sync data: ", JSON.stringify(syncedSettings));
+
+			// ---------
+			sop.applySyncSettings(syncedSettings);
+		} catch (e) {
+			Debug.error(`settingsOperation.readSyncedSettings> onGetSyncData error: ${e} \r\n`, JSON.stringify(data));
+		}
+
+		if (me.onInitializedRemoteSync)
+			me.onInitializedRemoteSync();
+
+		me.raiseInitializeCompletedEvent();
+	}
+
+	private static onInitializeGetSyncError(error: Error) {
+		Debug.error(`settingsOperation reading synced settings has failed error: ${error.message}`);
+
+		me.raiseInitializeCompletedEvent();
+	}
+
+	public static getRestorableSettings(config: any): SettingsConfig {
+
+		me.setDefaultSettings(config);
+		me.migrateFromOldVersions(config);
+		me.ensureIntegrityOfSettings(config);
+
+		return config;
+	}
+
+	public static setDefaultSettings(config: SettingsConfig) {
+		config.product = 'SmartProxy';
+		config.version = null;
+		if (config['activeProfileId'] == null) {
+			config.activeProfileId = SmartProfileTypeBuiltinIds.Direct;
+		}
+		if (config['defaultProxyServerId'] == null) {
+			config.defaultProxyServerId = null;
+		}
+		if (config['options'] == null) {
+			config.options = new GeneralOptions();
+		}
+		if (config['uiOptions'] == null) {
+			config.uiOptions = new UIOptions();
+		}
+		if (config.options.themeType == null) {
+			config.options.themeType = ThemeType.Auto;
+		}
+		if (!config.options.themesDark) {
+			config.options.themesDark = GeneralOptions.defaultDarkThemeName;
+		}
+		if (config['firstEverInstallNotified'] == null) {
+			config.firstEverInstallNotified = false;
+		}
+		if (config['proxyServers'] == null || !Array.isArray(config.proxyServers)) {
+			config.proxyServers = [];
+		}
+		if (config['proxyProfiles'] == null || !Array.isArray(config.proxyProfiles)) {
+			config.proxyProfiles = getBuiltinSmartProfiles();
+		}
+		else
+			config.proxyProfiles = me.setDefaultSettingsSmartProfiles(config.proxyProfiles);
+
+		if (config['proxyServerSubscriptions'] == null || !Array.isArray(config.proxyServerSubscriptions)) {
+			config.proxyServerSubscriptions = [];
+		}
+
+		// ProxyMust: initialize extension-specific fields if missing
+		// Russian: инициализация полей расширения ProxyMust, если отсутствуют
+		// English: proxyMustSettings and manualSites are deprecated, use userPrefs instead
+		// Russian: proxyMustSettings и manualSites устарели, используйте userPrefs
+		/*
+		if (config['proxyMustSettings'] == null) {
+			config.proxyMustSettings = { staleHours: 6 };
+		}
+		*/
+		if (config['autoStatus'] == null) {
+			config.autoStatus = {};
+		}
+		/*
+		if (config['manualSites'] == null) {
+			config.manualSites = [];
+		}
+		*/
+		if (config['proxyPriority'] == null) {
+			config.proxyPriority = {};
+		}
+
+		// English: initialize userPrefs (staleHours, manualSites) if missing
+		// Russian: инициализируем userPrefs (staleHours, manualSites), если отсутствуют
+		if (config['userPrefs'] == null) {
+			config.userPrefs = { staleHours: 6, manualSites: [] };
+		} else {
+			if (config.userPrefs.staleHours == null) config.userPrefs.staleHours = 6;
+			if (config.userPrefs.manualSites == null) config.userPrefs.manualSites = [];
+		}
+
+		PolyFill.getExtensionVersion((version: string) => {
+			config.version = version;
+		});
+	}
+
+	public static ensureIntegrityOfSettings(config: SettingsConfig) {
+		// proxyServers
+		if (config.proxyServers && config.proxyServers.length) {
+			let proxyServers: ProxyServer[] = [];
+
+			SettingsOperation.sortProxyServers(config.proxyServers);
+
+			let order = 0;
+			for (const oldServer of config.proxyServers) {
+				let newServer = new ProxyServer();
+				newServer.CopyFrom(oldServer);
+
+				if (newServer.isValid()) {
+					newServer.order = order;
+					proxyServers.push(newServer);
+
+					order++;
+				}
+			}
+			config.proxyServers = proxyServers;
+		}
+
+		if (!config.defaultProxyServerId && config.proxyServers?.length) {
+			// reset to the first proxy if it is not found
+			config.defaultProxyServerId = config.proxyServers[0].id;
+		}
+	}
+
+	/** Migrates settings from all old versions */
+	public static migrateFromOldVersions(config: any) {
+		// ----------
+		// forcing to use new options
+
+		let forceValidation = config.version <= '0.9.9999';
+		if (forceValidation) {
+
+			let newOptions = new GeneralOptions();
+			if (config.options) {
+				newOptions.CopyFrom(config.options);
+			}
+			config.options = newOptions;
+
+			// proxyServers
+			if (config.proxyServers && config.proxyServers.length) {
+				let proxyServers = [];
+
+				for (const oldServer of config.proxyServers) {
+					let newServer = new ProxyServer();
+					newServer.CopyFrom(oldServer);
+
+					if (newServer.isValid())
+						proxyServers.push(newServer);
+				}
+				config.proxyServers = proxyServers;
+			}
+
+			// proxyServerSubscriptions
+			if (config.proxyServerSubscriptions && config.proxyServerSubscriptions.length) {
+
+				let proxyServerSubscriptions = [];
+
+				for (const oldSub of config.proxyServerSubscriptions) {
+					let newSub = new ProxyServerSubscription();
+					newSub.CopyFrom(oldSub);
+
+					if (newSub.isValid())
+						proxyServerSubscriptions.push(newSub);
+				}
+				config.proxyServerSubscriptions = proxyServerSubscriptions;
+			}
+		}
+
+		if (config.proxyProfiles) {
+			let profiles = config.proxyProfiles as SmartProfile[];
+
+			for (const smartProfile of profiles) {
+				// making sure all profiles have ID
+				if (!smartProfile.profileId) {
+					Debug.warn("Found and fixed a profile without id> ", smartProfile.profileName);
+					ProfileOperations.ensureProfileId(smartProfile);
+				}
+
+				// making sure all names are unique
+				if (profiles.find(x => x.profileName == smartProfile.profileName &&
+					x.profileId != smartProfile.profileId)) {
+
+					Debug.warn("Found and fixed a profile with same name> ", smartProfile.profileName);
+					smartProfile.profileName += " - " + smartProfile.profileId;
+				}
+			}
+		}
+
+
+		// ----------
+		// migrating old properties if they exists
+
+		// proxyRules
+		if (config.proxyRules && config.proxyRules.length &&
+			config.proxyProfiles) {
+
+			let newSmartRules = config.proxyProfiles.find((f: SmartProfile) => f.profileType == SmartProfileType.SmartRules);
+			if (newSmartRules) {
+				for (const oldRule of config.proxyRules) {
+					let newRule = new ProxyRule();
+					newRule.CopyFrom(oldRule);
+
+					if (newRule.isValid())
+						newSmartRules.proxyRules.push(newRule);
+				}
+				delete config.proxyRules;
+
+				let oldProxyRulesSubs = config.proxyRulesSubscriptions;
+				if (oldProxyRulesSubs && oldProxyRulesSubs.length) {
+					newSmartRules.rulesSubscriptions = newSmartRules.rulesSubscriptions || [];
+
+					for (const oldRuleSub of oldProxyRulesSubs) {
+						let newRuleSub = new ProxyRulesSubscription();
+						newRuleSub.CopyFrom(oldRuleSub);
+
+						if (newRuleSub.isValid())
+							newSmartRules.rulesSubscriptions.push(newRuleSub);
+					}
+				}
+				delete config.proxyRulesSubscriptions;
+			}
+			else {
+				Debug.warn(`Migrate has failed for SmartRules because no SmartRules is found in the new configuration`);
+			}
+		}
+
+		// bypassList
+		if (config.bypass && config.bypass.bypassList && config.bypass.bypassList.length &&
+			config.proxyProfiles) {
+
+			let newAlwaysEnabledRules = config.proxyProfiles.find((f: SmartProfile) => f.profileType == SmartProfileType.AlwaysEnabledBypassRules);
+			if (newAlwaysEnabledRules) {
+				let enabledForAlways = config.bypass.enableForAlways != null ? config.bypass.enableForAlways : true;
+
+				for (const bypass of config.bypass.bypassList) {
+					if (!bypass)
+						continue;
+
+					let newRule = new ProxyRule();
+					newRule.ruleType = ProxyRuleType.DomainSubdomain;
+					newRule.ruleSearch = bypass;
+					newRule.hostName = bypass;
+					newRule.enabled = enabledForAlways;
+					newRule.whiteList = true;
+
+					newAlwaysEnabledRules.proxyRules.push(newRule);
+				}
+			}
+			else {
+				Debug.warn(`Migrate has failed for AlwaysEnabledRules because no AlwaysEnabledRules is found in the new configuration`);
+			}
+
+			delete config.bypass;
+		}
+
+		// proxyMode
+		if (config.proxyMode != null && config.proxyProfiles) {
+			let activeProfileType: SmartProfileType | number = -1;
+
+			switch (+config.proxyMode) {
+				case 0 /** Direct */:
+					activeProfileType = SmartProfileType.Direct;
+					break;
+
+				case 1 /** SmartProxy */:
+					activeProfileType = SmartProfileType.SmartRules;
+					break;
+
+				case 2 /** Always */:
+					activeProfileType = SmartProfileType.AlwaysEnabledBypassRules;
+					break;
+
+				case 3 /** SystemProxy */:
+					activeProfileType = SmartProfileType.SystemProxy;
+					break;
+			}
+			if (activeProfileType >= 0) {
+				let activeProfile = config.proxyProfiles.find((f: SmartProfile) => f.profileType == activeProfileType);
+				if (activeProfile) {
+					config.activeProfileId = activeProfile.profileId;
+				}
+			}
+
+			delete config.proxyMode;
+		}
+
+		// activeProxyServer
+		if (config.activeProxyServer && config.activeProxyServer.name && config.proxyServers.length &&
+			config.proxyServers) {
+
+			let activeProxyServerName = config.activeProxyServer.name;
+
+			let activeProxyServer = config.proxyServers.find(a => a.name == activeProxyServerName);
+			if (activeProxyServer) {
+				config.defaultProxyServerId = activeProxyServer.id;
+			}
+
+			delete config.activeProxyServer;
+		}
+
+		// English: migrate old user preferences (staleHours, manualSites) to userPrefs
+		// Russian: мигрируем старые пользовательские настройки (staleHours, manualSites) в userPrefs
+		if (!config.userPrefs) {
+			config.userPrefs = { staleHours: 6, manualSites: [] };
+		}
+
+		// migrate from proxyMustSettings.staleHours
+		if (config.proxyMustSettings && typeof config.proxyMustSettings.staleHours === 'number') {
+			config.userPrefs.staleHours = config.proxyMustSettings.staleHours;
+			// English: delete old proxyMustSettings to avoid confusion (will be removed later)
+			// Russian: удаляем старый proxyMustSettings во избежание путаницы (будет удалён позже)
+			delete config.proxyMustSettings;
+		}
+
+		// migrate from manualSites array (old location)
+		if (config.manualSites && Array.isArray(config.manualSites) && config.manualSites.length > 0) {
+			config.userPrefs.manualSites = config.manualSites;
+			delete config.manualSites;
+		}
+	}
+
+
+	/** Properties of old versions need to be removed specificity otherwise they will stay and not go away, causing repeat of migration process. */
+	public static cleanupLocalOldVersionResidueFromStorage() {
+		PolyFill.storageLocalGet(null,
+			function (config: any) {
+				// ----------
+				let removeKeys: string[] = [
+					'proxyRules',
+					'proxyRulesSubscriptions',
+					'bypass',
+					'proxyMode',
+					'activeProxyServer'
+				];
+				PolyFill.storageLocalRemove(removeKeys);
+			});
+	}
+
+	/** Validates SmartProfiles and adds missing profile and properties */
+	static setDefaultSettingsSmartProfiles(proxyProfiles: SmartProfile[]): SmartProfile[] {
+
+		let hasDirect = false;
+		let hasSmartRule = false;
+		let hasSmartAlwaysEnabled = false;
+		let hasSystem = false;
+
+		let result: SmartProfile[] = [];
+
+		for (const profile of proxyProfiles) {
+			if (profile.profileType == null)
+				continue;
+
+			let profileTypeConfig = getSmartProfileTypeConfig(profile.profileType)
+			if (profileTypeConfig == null)
+				continue;
+
+			// checking for important profiles
+			if (profile.profileType == SmartProfileType.Direct)
+				hasDirect = true;
+			else if (profile.profileType == SmartProfileType.SmartRules)
+				hasSmartRule = true;
+			else if (profile.profileType == SmartProfileType.AlwaysEnabledBypassRules)
+				hasSmartAlwaysEnabled = true;
+			else if (profile.profileType == SmartProfileType.SystemProxy)
+				hasSystem = true;
+
+			let isBuiltin = profile.profileTypeConfig?.builtin || false;
+			let newProfile = new SmartProfile();
+			Object.assign(newProfile, profile);
+			newProfile.profileTypeConfig = profileTypeConfig;
+
+			if (!isBuiltin && profileTypeConfig.builtin) {
+				// trying to detect builtin vs user profiles
+				let existingTypeProfile = proxyProfiles.find(x => x.profileType == profile.profileType && x.profileId != profile.profileId);
+				if (!existingTypeProfile ||
+					!existingTypeProfile.profileTypeConfig?.builtin) {
+					// there is no existing one so this one needs to be marked builtin
+					// or the other is not built in, so this needs to be built in
+					newProfile.profileTypeConfig.builtin = true;
+					profile.profileTypeConfig.builtin = true;
+				}
+				else {
+					// unmark as builtin
+					newProfile.profileTypeConfig.builtin = false;
+					profile.profileTypeConfig.builtin = false;
+				}
+			}
+
+			if (!newProfile.profileName) {
+				// set name if missing
+				newProfile.profileName = `${SmartProfileType[newProfile.profileType]} - ${Utils.getNewUniqueIdNumber()}`;
+			}
+
+			result.push(newProfile);
+		}
+		let missingBuiltin = !hasDirect || !hasSmartRule || !hasSmartAlwaysEnabled || !hasSystem;
+
+		let builtinProfile: SmartProfile[];
+		if (missingBuiltin) {
+			builtinProfile = getBuiltinSmartProfiles();
+
+			if (!hasDirect)
+				result.push(builtinProfile.find(a => a.profileType == SmartProfileType.Direct));
+
+			if (!hasSmartRule)
+				result.push(builtinProfile.find(a => a.profileType == SmartProfileType.SmartRules));
+
+			if (!hasSmartAlwaysEnabled)
+				result.push(builtinProfile.find(a => a.profileType == SmartProfileType.AlwaysEnabledBypassRules));
+
+			if (!hasSystem)
+				result.push(builtinProfile.find(a => a.profileType == SmartProfileType.SystemProxy));
+
+			result.sort((a, b) => {
+				if (a.profileType < b.profileType)
+					return -1;
+				if (a.profileType > b.profileType)
+					return 1;
+				return 0;
+			})
+		}
+
+		return result;
+	}
+
+	public static validateProxyServer(
+		server: ProxyServer,
+		nameShouldNotExist: boolean = true,
+		nameShouldExist: boolean = false
+	): {
+		success: boolean;
+		exist?: boolean;
+		message?: string;
+		result?: any;
+	} {
+		if (server.port <= 0 || server.port > 65535) {
+			return {
+				success: false,
+				message: api.i18n.getMessage('settingsServerPortInvalid').replace('{0}', `${server.host}:${server.port}`),
+			};
+		}
+
+		if (!server.host || !Utils.isNotInternalHostName(server.host)) {
+			return {
+				success: false,
+				message: api.i18n.getMessage('settingsServerHostInvalid').replace('{0}', `${server.host}:${server.port}`),
+			};
+		}
+
+		if (!server.name) {
+			return { success: false, message: api.i18n.getMessage('settingsServerNameRequired') };
+		} else if (me.current) {
+			if (nameShouldNotExist || nameShouldExist) {
+				const currentServers = me.current.proxyServers;
+
+				var found = false;
+				for (let srv of currentServers) {
+					if (srv.name == server.name) {
+						if (nameShouldNotExist) {
+							return { success: false, exist: true, message: `Server name ${server.name} already exists` };
+						}
+						else {
+							found = true;
+							break;
+						}
+					}
+				}
+
+				if (!found && nameShouldExist) {
+					return { success: false, exist: false, message: `Server name ${server.name} does not exist` };
+				}
+			}
+		}
+
+		// ИСПРАВЛЕНИЕ: нормализуем протокол и проверяем валидность
+		if (!server.protocol) {
+			server.protocol = 'HTTP';
+		} else {
+			server.protocol = server.protocol.toUpperCase();
+			// Используем импортированный массив протоколов
+			if (proxyServerProtocols.indexOf(server.protocol) === -1) {
+				// not valid protocol, resetting
+				Debug.warn(`Invalid protocol detected: ${server.protocol}, resetting to HTTP`);
+				server.protocol = 'HTTP';
+			}
+		}
+
+		return { success: true };
+	}
+
+	public static updateActiveSettings(fallback: boolean = true) {
+		/** Updating `Settings.active` */
+		let settings = me.current;
+		if (!settings)
+			return;
+
+		let active = me.active ?? (me.active = new SettingsActive());
+
+		let foundActiveProfile = ProfileOperations.findSmartProfileById(settings.activeProfileId, settings.proxyProfiles);
+		if (!foundActiveProfile && fallback) {
+			foundActiveProfile = ProfileOperations.findSmartProfileById(SmartProfileTypeBuiltinIds.Direct, settings.proxyProfiles);
+		}
+
+		let activeProfile: SmartProfileCompiled = null;
+		if (foundActiveProfile) {
+			active.activeProfile = ProfileOperations.compileSmartProfile(foundActiveProfile);
+			activeProfile = active.activeProfile;
+		}
+
+		active.currentProxyServer = null;
+		if (activeProfile?.profileProxyServer) {
+			active.currentProxyServer = active.activeProfile.profileProxyServer;
+		}
+
+		if (!active.currentProxyServer) {
+			let foundProxy = SettingsOperation.findProxyServerById(settings.defaultProxyServerId);
+			if (foundProxy) {
+				active.currentProxyServer = foundProxy;
+			}
+		}
+
+		let activeIncognitoProfile: SmartProfileCompiled = null;
+		if (settings.options.activeIncognitoProfileId) {
+			if (foundActiveProfile.profileId == settings.options.activeIncognitoProfileId) {
+				activeIncognitoProfile = activeProfile;
+			}
+			else {
+				const incognitoProfile = ProfileOperations.findSmartProfileById(settings.options.activeIncognitoProfileId, settings.proxyProfiles);
+				if (incognitoProfile) {
+					activeIncognitoProfile = ProfileOperations.compileSmartProfile(incognitoProfile);
+				}
+			}
+		}
+		active.activeIncognitoProfile = activeIncognitoProfile;
+
+		let profileIgnoreFailureRules = ProfileOperations.getIgnoreFailureRulesProfile();
+		if (profileIgnoreFailureRules)
+			active.currentIgnoreFailureProfile = ProfileOperations.compileSmartProfile(profileIgnoreFailureRules);
+	}
+}
+
+let me = Settings;

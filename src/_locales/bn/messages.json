@@ -1,0 +1,1626 @@
+{
+	"uiDirection": {
+		"message": "ltr"
+	},
+	"languageCode": {
+		"message": "bn",
+		"description": "We need to know the code which might not match what browser UI has"
+	},
+	"extensionName": {
+		"message": "ProxyMust"
+	},
+	"extensionDescription": {
+		"message": "ProxyMust – নির্বাচনী প্রক্সি ব্যবস্থাপক (SmartProxy-এর একটি শাখা)। কাস্টমাইজযোগ্য প্যাটার্নের ভিত্তিতে আপনি যে সাইটগুলি দেখেন সেগুলির জন্য স্বয়ংক্রিয়ভাবে প্রক্সি সক্রিয়/নিষ্ক্রিয় করে।"
+	},
+	"toolbarTooltipEffectiveRule": {
+		"message": "মেলে এমন নিয়মের উৎস:"
+	},
+	"toolbarTooltipEffectiveRuleNone": {
+		"message": "কোন মেলে এমন নিয়ম নেই"
+	},
+	"toolbarTooltipEffectiveRulePattern": {
+		"message": "নিয়মের প্যাটার্ন:"
+	},
+	"popupTitle": {
+		"message": "ProxyMust সক্রিয়করণ"
+	},
+	"popupPrivateBrowsingMode": {
+		"message": "ব্যক্তিগত ব্রাউজিং মোড"
+	},
+	"popupNoProxy": {
+		"message": "সরাসরি (কোন প্রক্সি নেই)"
+	},
+	"popupSmartProxy": {
+		"message": "নির্বাচনী প্রক্সি"
+	},
+	"popupAlwaysEnable": {
+		"message": "সর্বদা সক্রিয়"
+	},
+	"popupSystemProxy": {
+		"message": "সিস্টেম প্রক্সি"
+	},
+	"popupActiveProxy": {
+		"message": "সক্রিয় প্রক্সি (এই প্রোফাইল):"
+	},
+	"popupActiveProxyDefault": {
+		"message": "সক্রিয় প্রক্সি (পূর্বনির্ধারিত সেটিং):"
+	},
+	"popupEnableProxyOn": {
+		"message": "এতে প্রক্সি সক্রিয় করুন"
+	},
+	"popupIgnoreTheseDomains": {
+		"message": "এই ডোমেইনগুলি উপেক্ষা করুন"
+	},
+	"popupRuleIsFromSubscription": {
+		"message": "(সাবস্ক্রিপশন থেকে)"
+	},
+	"popupProxyableResources": {
+		"message": "প্রক্সি-যোগ্য সম্পদ"
+	},
+	"popupSettings": {
+		"message": "সেটিংস"
+	},
+	"popupSubscriptions": {
+		"message": "-সাবস্ক্রিপশন-"
+	},
+	"popupUpdateText": {
+		"message": "{0} এ আপডেট উপলব্ধ"
+	},
+	"popupFailedRequestsMenu": {
+		"message": "ব্যর্থ অনুরোধ"
+	},
+	"popupFailedRequestsTitle": {
+		"message": "ব্যর্থ অনুরোধের তালিকা"
+	},
+	"popupFailedRequestsDesc": {
+		"message": "এগুলি হল ডোমেইন যাদের সময় শেষ হয়েছে বা ব্যর্থ হয়েছে।<br />আপনি যদি মনে করেন যে এই ডোমেইনগুলি ব্লক করা হয়েছে, তাহলে আপনি এখানে এগুলিকে প্রক্সি নিয়ম তালিকায় যোগ করতে পারেন।"
+	},
+	"popupAddFailedRequests": {
+		"message": "নিয়ম তালিকায় যোগ করুন"
+	},
+	"popupProfileTypeDoesNotSupportsRules": {
+		"message": "নির্বাচিত প্রোফাইল '{0}' নিয়ম সমর্থন করে না, দয়া করে অন্য একটি প্রোফাইল নির্বাচন করুন।"
+	},
+	"popupAddIgnoredFailures": {
+		"message": "এগুলি উপেক্ষা করুন"
+	},
+	"popupAddIgnoredFailuresConfirm": {
+		"message": "আপনি কি নিশ্চিত যে নির্বাচিত ব্যর্থতাগুলি উপেক্ষা করতে চান? যদি আপনি করেন, তাহলে আপনি তাদের থেকে আর কোনো ত্রুটি পাবেন না। আপনি পরে সেটিংস থেকে এটি পরিবর্তন করতে পারেন।"
+	},
+	"popupNotAllowedSetProxySettingsChrome": {
+		"message": "দুর্ভাগ্যবশত, সিস্টেম প্রক্সি ব্যবহার করতে ব্রাউজার সেটিংস পরিবর্তন করতে `incognito` অনুমতির প্রয়োজন। অনুগ্রহ করে ব্রাউজারে ProxyMust এক্সটেনশন সেটিংসে যান এবং `Allow in incognito` অনুমতিটি চেক করুন। <a href='https://support.google.com/chrome_webstore/answer/2664769'>কীভাবে শিখুন</a>।"
+	},
+	"popupNotAllowedSetProxySettingsFirefox": {
+		"message": "Firefox 67 থেকে, সিস্টেম প্রক্সি ব্যবহার করতে ব্রাউজার সেটিংস পরিবর্তন করার জন্য `Private Browsing` অনুমতির প্রয়োজন। অনুগ্রহ করে ব্রাউজারে ProxyMust অ্যাড-অন সেটিংসে যান এবং `Run in Private Windows` অনুমতিটি অনুমতি দিন। <a href='https://support.mozilla.org/en-US/kb/extensions-private-browsing'>কীভাবে শিখুন</a>।"
+	},
+	"proxyableTitle": {
+		"message": "প্রক্সি-যোগ্য সম্পদ"
+	},
+	"proxyableHeader": {
+		"message": "এই পৃষ্ঠায় প্রক্সি-যোগ্য আইটেম"
+	},
+	"proxyableReload": {
+		"message": "পুনরায় লোড করুন"
+	},
+	"proxyableClose": {
+		"message": "বন্ধ করুন"
+	},
+	"proxyableHeaderDesc": {
+		"message": "এই পৃষ্ঠা থেকে ব্যবহৃত বা আহ্বান করা সম্পদের তালিকা এখানে দেওয়া হল। প্রক্সি সক্রিয়করণ নিয়মে এই সম্পদগুলি যোগ করতে এই তালিকাটি ব্যবহার করুন।<br />আপনি যদি এখানে কিছু না দেখেন, তাহলে সম্পদগুলি দেখতে পৃষ্ঠাটি পুনরায় লোড করুন।"
+	},
+	"proxyableErrNoSourceTab": {
+		"message": "উৎস ট্যাব পাওয়া যায়নি!"
+	},
+	"proxyableCreateRuleConfirm": {
+		"message": "আপনি কি নিশ্চিত যে নির্বাচিত ডোমেনের জন্য একটি নিয়ম তৈরি করতে চান?"
+	},
+	"proxyableDisableButton": {
+		"message": "নিষ্ক্রিয় করুন"
+	},
+	"proxyableEnableButton": {
+		"message": "সক্রিয় করুন"
+	},
+	"proxyableEnableButtonDomain": {
+		"message": "এর জন্য সক্রিয় করুন: "
+	},
+	"proxyableSubscriptionRule": {
+		"message": "(সাবস্ক্রিপশন নিয়ম)"
+	},
+	"proxyableDeleteRuleConfirm": {
+		"message": "আপনি কি নিশ্চিত যে আপনি নির্বাচিত নিয়মটি মুছতে চান:"
+	},
+	"proxyableGridNoDataContent": {
+		"message": "কোন অনুরোধ নেই"
+	},
+	"proxyableGridColUrl": {
+		"message": "অনুরোধ URL"
+	},
+	"proxyableGridColRuleStatus": {
+		"message": "নিয়মের অবস্থা"
+	},
+	"proxyableGridColProxifiedStatus": {
+		"message": "প্রক্সির অবস্থা"
+	},
+	"proxyableGridColRuleHost": {
+		"message": "নিয়ম ডোমেইন"
+	},
+	"proxyableGridColRulePattern": {
+		"message": "নিয়মের প্যাটার্ন"
+	},
+	"proxyableGridCol_ProxifiedStatus_NoProxy": {
+		"message": "কোন প্রক্সি নেই"
+	},
+	"proxyableGridCol_ProxifiedStatus_Special": {
+		"message": "বিশেষ"
+	},
+	"proxyableGridCol_ProxifiedStatus_ProxyPerOrigin": {
+		"message": "মূল ট্যাব থেকে"
+	},
+	"proxyableGridCol_ProxifiedStatus_MatchedRule": {
+		"message": "মিলেছে"
+	},
+	"proxyableGridCol_ProxifiedStatus_AlwaysEnabled": {
+		"message": "সর্বদা সক্রিয়"
+	},
+	"proxyableGridCol_ProxifiedStatus_SystemProxyApplied": {
+		"message": "সিস্টেম প্রক্সি প্রয়োগ করা হয়েছে"
+	},
+	"proxyableGridCol_RuleStatus_NoneMatched": {
+		"message": "কোন মিল নেই"
+	},
+	"proxyableGridCol_RuleStatus_Special": {
+		"message": "বিশেষ"
+	},
+	"proxyableGridCol_RuleStatus_ProxyPerOrigin": {
+		"message": "মূল ট্যাব থেকে"
+	},
+	"proxyableGridCol_RuleStatus_MatchedRule": {
+		"message": "মিলেছে"
+	},
+	"proxyableGridCol_RuleStatus_Whitelisted": {
+		"message": "সাদাতালিকাভুক্ত"
+	},
+	"proxyableGridCol_RuleStatus_AlwaysEnabledByPassed": {
+		"message": "সর্বদা সক্রিয় <br> বাইপাস করা হয়েছে"
+	},
+	"proxyableGridCol_RuleStatus_AlwaysEnabledForcedByRules": {
+		"message": "সর্বদা সক্রিয় <br> নিয়ম দ্বারা বাধ্য করা হয়েছে"
+	},
+	"settingsTitle": {
+		"message": "ProxyMust সেটিংস"
+	},
+	"settingsTabAbout": {
+		"message": "পরিচিতি"
+	},
+	"settingsTabGeneral": {
+		"message": "সাধারণ বিকল্প"
+	},
+	"settingsTabSmartProfiles": {
+		"message": "নির্বাচনী প্রোফাইল"
+	},
+	"settingsTabAddSmartProfile": {
+		"message": "নতুন নির্বাচনী প্রোফাইল যোগ করুন"
+	},
+	"settingsTabProxyServers": {
+		"message": "প্রক্সি সার্ভার"
+	},
+	"settingsTabProxyServerSubscriptions": {
+		"message": "প্রক্সি সার্ভার সাবস্ক্রিপশন"
+	},
+	"settingsTabBackupRestore": {
+		"message": "ব্যাকআপ / পুনরুদ্ধার"
+	},
+	"settingsTabUpdateText": {
+		"message": "{0} এ আপডেট করুন"
+	},
+	"settingsTabAboutDescription": {
+		"message": "ProxyMust এর সাথে প্রক্সি ব্যবহার করা আরও সহজ। এটিকে একবার কনফিগার করুন এবং ভুলে যান সমাধান হিসাবে ভাবুন। ProxyMust এর সাথে আপনাকে ম্যানুয়ালি আপনার প্রক্সি পরিবর্তন করতে বা এটি চালু এবং বন্ধ করতে হবে না। আপনাকে যা করতে হবে তা হল একটি ক্লিকের মাধ্যমে আপনার কাঙ্খিত ওয়েবসাইটের জন্য প্রক্সি সক্রিয় করতে ProxyMust-কে বলা। তার পরে, যখন আপনি সেই নির্দিষ্ট ওয়েবসাইটটি দেখেন, তখন ProxyMust কাজ করবে এবং আপনার সেই ওয়েবসাইটের সমস্ত ডেটা প্রক্সির মাধ্যমে স্থানান্তরিত হবে, আপনাকে কিছু না করেই।"
+	},
+	"settingsGeneralSmartFeatures": {
+		"message": "স্মার্ট বৈশিষ্ট্য"
+	},
+	"settingsGeneralSmartFeaturesNoChrome": {
+		"message": "<strong><a href='https://www.getfirefox.com/' target='_blank' rel='noopener'>শুধু Firefox</a>!</strong> দুর্ভাগ্যবশত এই বৈশিষ্ট্যটি Chrome দ্বারা সমর্থিত নয়।"
+	},
+	"settingsGeneralProxyPerOrigin": {
+		"message": "প্রতি ট্যাব/উৎসে প্রক্সি সক্রিয় করুন"
+	},
+	"settingsGeneralProxyPerOriginDesc": {
+		"message": "যদি একটি নিয়ম একটি ট্যাবের URL-এর সাথে মেলে, তাহলে ফলস্বরূপ প্রক্সি ট্যাবের সংযোগে প্রয়োগ করা হবে। সাধারণত প্রতিটি পৃষ্ঠায় অন্যান্য অনুরোধ থাকবে এবং সেগুলির একটি মেলে এমন নিয়ম নাও থাকতে পারে এবং তাই তাদের সংযোগে প্রক্সি প্রয়োগ করা হবে না। `প্রতি ট্যাব/উৎসে প্রক্সি সক্রিয় করুন` বিকল্পটি যা করে তা হল পুরো পৃষ্ঠাটি, বিভিন্ন ডোমেইন এবং উৎসের সমস্ত সংযোগ সহ, ট্যাবের উৎসে প্রয়োগ করা একই প্রক্সি ব্যবহার করে তা নিশ্চিত করা। এছাড়াও, এই বিকল্পটি প্রতিটি ডোমেনের জন্য একটি নিয়ম রাখার প্রয়োজনীয়তা দূর করে। অনুগ্রহ করে মনে রাখবেন যে ট্যাবে কোনো প্রক্সি প্রয়োগ না করা হলে, প্রক্সি নিয়মগুলি কাজ করতে থাকবে এবং পৃষ্ঠার অন্যান্য সংযোগগুলিতে পৃথকভাবে প্রক্সি প্রয়োগ করবে।"
+	},
+	"settingsGeneralProxyPerOriginEnabled": {
+		"message": "প্রতি ট্যাব/উৎসে প্রক্সি সক্রিয় করা হয়েছে"
+	},
+	"settingsGeneralProxyPerOriginDisabled": {
+		"message": "প্রতি ট্যাব/উৎসে প্রক্সি নিষ্ক্রিয় করা হয়েছে"
+	},
+	"settingsGeneralSyncing": {
+		"message": "সিঙ্ক্রোনাইজেশন"
+	},
+	"settingsGeneralIncognitoProfile": {
+		"message": "ব্যক্তিগত ব্রাউজিং প্রোফাইল"
+	},
+	"settingsGeneralIncognitoProfileDisabled": {
+		"message": "(নিষ্ক্রিয়)"
+	},
+	"settingsGeneralIncognitoProfileDesc": {
+		"message": "যদি আপনি চান যে ট্যাব/উইন্ডো ব্যক্তিগত ব্রাউজিং মোডে থাকলে এটি ব্যবহার করতে বাধ্য করা হোক, তাহলে একটি ব্যক্তিগত ব্রাউজিং প্রোফাইল নির্বাচন করুন। এই বিকল্পটি সক্রিয় প্রোফাইলকে ওভাররাইড করবে।"
+	},
+	"settingsGeneralEnableSyncing": {
+		"message": "সেটিংস সিঙ্ক্রোনাইজেশন সক্রিয় করুন"
+	},
+	"settingsGeneralEnableSyncingDesc": {
+		"message": "সিঙ্ক্রোনাইজেশন সক্রিয় করে, আপনার সমস্ত সেটিংস নিয়ম, সার্ভার এবং সাবস্ক্রিপশন সহ সমস্ত ব্রাউজারে উপলব্ধ হবে।"
+	},
+	"settingsSaveGeneralOptionsButton": {
+		"message": "পরিবর্তন সংরক্ষণ করুন"
+	},
+	"settingsRejectGeneralOptionsButton": {
+		"message": "পরিবর্তন প্রত্যাখ্যান করুন"
+	},
+	"settingsGeneralSyncProxyMode": {
+		"message": "সক্রিয় প্রোফাইল সিঙ্ক্রোনাইজেশন সক্রিয় করুন"
+	},
+	"settingsGeneralSyncProxyModeDesc": {
+		"message": "আপনি যদি চান যে সক্রিয় প্রোফাইলটি সিঙ্ক্রোনাইজ করা হোক তাহলে চেক করুন।"
+	},
+	"settingsGeneralSyncActiveProxy": {
+		"message": "সক্রিয় প্রক্সি সিঙ্ক্রোনাইজেশন সক্রিয় করুন"
+	},
+	"settingsGeneralSyncActiveProxyDesc": {
+		"message": "আপনি যদি চান যে নির্বাচিত প্রক্সি সার্ভারটি সিঙ্ক্রোনাইজ করা হোক তাহলে চেক করুন।"
+	},
+	"settingsGeneralSyncToBrowser": {
+		"message": "ব্রাউজারের সিঙ্ক্রোনাইজেশন সার্ভার ব্যবহার করুন"
+	},
+	"settingsGeneralSyncToWebDAV": {
+		"message": "একটি WebDAV সার্ভারে সিঙ্ক্রোনাইজ করুন"
+	},
+	"settingsGeneralWebDavServerUrl": {
+		"message": "WebDAV সার্ভার URL:"
+	},
+	"settingsGeneralWebDavBackupFilename": {
+		"message": "ব্যাকআপ ফাইলের নাম:"
+	},
+	"settingsGeneralWebDavServerUser": {
+		"message": "WebDAV সার্ভার ব্যবহারকারীর নাম:"
+	},
+	"settingsGeneralWebDavServerPassword": {
+		"message": "WebDAV সার্ভার পাসওয়ার্ড:"
+	},
+	"settingsGeneralWebDavBehaviourDesc": {
+		"message": "দয়া করে মনে রাখবেন যে সেটিংসের প্রতিটি পরিবর্তনে ব্যাকআপ হবে, যখন পুনরুদ্ধার শুধুমাত্র ব্রাউজার শুরু হলে হয়।"
+	},
+	"settingsGeneralWebDavServerBackupNow": {
+		"message": "এখন ব্যাকআপ নিন"
+	},
+	"settingsGeneralWebDavServerRestoreNow": {
+		"message": "এখন পুনরুদ্ধার করুন"
+	},
+	"settingsGeneralWebDavRestoreNowConfirm": {
+		"message": "এটি WebDAV সার্ভার থেকে আপনার বর্তমান সেটিংস ওভাররাইড করবে। এই ক্রিয়াটি অপরিবর্তনীয়, সতর্ক থাকুন। এগিয়ে যাবেন?"
+	},
+	"settingsGeneralWebDavRestoreNowSuccess": {
+		"message": "WebDAV পুনরুদ্ধার সফলভাবে সম্পন্ন হয়েছে!"
+	},
+	"settingsGeneralWebDavRestoreNowFailed": {
+		"message": "WebDAV পুনরুদ্ধার ব্যর্থ হয়েছে:"
+	},
+	"settingsGeneralWebDav_ErrorValidUrl": {
+		"message": "একটি বৈধ WebDAV সার্ভার URL লিখুন"
+	},
+	"settingsGeneralWebDav_ErrorEmptyFilename": {
+		"message": "WebDAV সার্ভার ব্যাকআপ ফাইলের নাম খালি হতে পারে না"
+	},
+	"settingsGeneralWebDav_ErrorRequiredFields": {
+		"message": "অনুগ্রহ করে প্রয়োজনীয় সমস্ত WebDAV ক্ষেত্র পূরণ করুন।"
+	},
+	"settingsGeneralWebDavBackupNowSuccess": {
+		"message": "WebDAV ব্যাকআপ সফলভাবে সম্পন্ন হয়েছে!"
+	},
+	"settingsGeneralWebDavBackupNowFailed": {
+		"message": "WebDAV ব্যাকআপ ব্যর্থ হয়েছে:"
+	},
+	"settingsGeneralErrorDetection": {
+		"message": "ত্রুটি সনাক্তকরণ"
+	},
+	"settingsGeneralDetectFailures": {
+		"message": "অনুরোধ ব্যর্থতা সনাক্ত করুন"
+	},
+	"settingsGeneralDetectFailuresDesc": {
+		"message": "অনুরোধ ব্যর্থতা সনাক্তকরণ আপনাকে কোন ডোমেইনগুলির প্রক্সি প্রয়োজন তা সনাক্ত করতে সাহায্য করবে।"
+	},
+	"settingsGeneralSelectIgnoredDomains": {
+		"message": "নিয়ম লিখুন"
+	},
+	"settingsGeneralIgnoreRequestFailuresForDomains": {
+		"message": "এই নিয়মগুলির উপর ভিত্তি করে ব্যর্থতা সনাক্তকরণ উপেক্ষা করুন"
+	},
+	"settingsGeneralIgnoreRequestFailuresForDomainsDesc": {
+		"message": "ব্যর্থতা সনাক্তকরণ নিষ্ক্রিয় করতে নিয়ম যোগ করুন।"
+	},
+	"settingsGeneralDisplayFailedOnBadge": {
+		"message": "টুলবার আইকন ব্যাজে ব্যর্থ অনুরোধের সংখ্যা প্রদর্শন করুন"
+	},
+	"settingsGeneralThemes": {
+		"message": "থিম"
+	},
+	"settingsGeneralThemesAutoSwitch": {
+		"message": "ব্রাউজার থিম দ্বারা স্বয়ংক্রিয় স্যুইচ"
+	},
+	"settingsGeneralThemesAutoSwitchDesc": {
+		"message": "নীচে নির্বাচিত থিমগুলির মধ্যে স্বয়ংক্রিয়ভাবে স্যুইচ করুন। এটি আপনার ব্রাউজারের থিম অনুসরণ করে যা আপনার অপারেটিং সিস্টেমের থিমও অনুসরণ করতে পারে।"
+	},
+	"settingsGeneralThemesLight": {
+		"message": "হালকা থিম"
+	},
+	"settingsGeneralThemes_Default": {
+		"message": "(পূর্বনির্ধারিত)"
+	},
+	"settingsGeneralThemes_Custom": {
+		"message": "(কাস্টম)"
+	},
+	"settingsGeneralThemes_CustomUrl": {
+		"message": "কাস্টম স্টাইল (CSS) URL:"
+	},
+	"settingsGeneralThemes_CustomUrlDesc": {
+		"message": "URL অবশ্যই 'Https' হতে হবে। নিচের কাস্টম স্টাইলে আমদানি করা ফন্ট এবং অন্যান্য স্টাইল সম্পর্কে সচেতন থাকুন, তারা আপনার ব্রাউজারে পপআপগুলিকে ব্লক/ধীর করতে পারে। আপনি bootswatch.com থেকে থিম চেষ্টা করতে পারেন কিন্তু তাদের Google ফন্ট নির্ভরতা সম্পর্কে সচেতন থাকুন।"
+	},
+	"settingsGeneralThemesDark": {
+		"message": "গাঢ় থিম"
+	},
+	"settingsGeneralThemesLight_ErrorValidUrl": {
+		"message": "হালকা থিমের জন্য একটি বৈধ css URL লিখুন এবং URL টি 'https' হতে হবে।"
+	},
+	"settingsGeneralThemesDark_ErrorValidUrl": {
+		"message": "গাঢ় থিমের জন্য একটি বৈধ css URL লিখুন এবং URL টি 'https' হতে হবে।"
+	},
+	"settingsGeneralOtherSettings": {
+		"message": "অন্যান্য সেটিংস"
+	},
+	"settingsGeneralEnableShortcuts": {
+		"message": "শর্টকাট সক্রিয় করুন"
+	},
+	"settingsGeneralEnableShortcutsDesc": {
+		"message": "আপনি ব্রাউজার অ্যাড-অন সেটিংস পৃষ্ঠা থেকে শর্টকাট কনফিগার করতে পারেন।"
+	},
+	"settingsGeneralViewShortcuts": {
+		"message": "শর্টকাট দেখুন"
+	},
+	"settingsGeneralConfigureShortcuts": {
+		"message": "শর্টকাট কনফিগার করুন"
+	},
+	"settingsGeneralShortcutNotification": {
+		"message": "শর্টকাট বিজ্ঞপ্তি সক্রিয় করুন"
+	},
+	"settingsGeneralViewShortcutKeys": {
+		"message": "শর্টকাট কী"
+	},
+	"settingsGeneralDisplayAppliedProxyOnBadge": {
+		"message": "ব্যাজে প্রয়োগ করা নিয়মের উৎস প্রদর্শন করুন"
+	},
+	"settingsGeneralDisplayAppliedRulePatternOnBadge": {
+		"message": "ব্যাজে প্রয়োগ করা নিয়মের প্যাটার্ন প্রদর্শন করুন"
+	},
+	"settingsGeneralRefreshTabOnConfigChanges": {
+		"message": "প্রোফাইল বা প্রক্সি পরিবর্তিত হলে সক্রিয় ট্যাব রিফ্রেশ করুন"
+	},
+	"settingsGeneralCancelButton": {
+		"message": "বাতিল করুন"
+	},
+	"settingsGeneralSaveChanges": {
+		"message": "পরিবর্তন সংরক্ষণ করুন"
+	},
+	"settingsGeneralKeyboardShortcutsTitle": {
+		"message": "কীবোর্ড শর্টকাট"
+	},
+	"settingsGeneralCloseButton": {
+		"message": "বন্ধ করুন"
+	},
+	"settingsGeneralKeyboardShortcutsNotSupported": {
+		"message": "মোবাইল ডিভাইসে কীবোর্ড শর্টকাট সমর্থিত নয়।"
+	},
+	"settingsTabProxyServersTitle": {
+		"message": "আপনার প্রক্সি সার্ভারগুলি পরিচালনা করুন:"
+	},
+	"settingsTabProxyServersDescription": {
+		"message": "এখানে প্রক্সি সার্ভারের তালিকা। আপনি যত খুশি প্রক্সি সংজ্ঞায়িত করতে পারেন এবং টুলবার থেকে তাদের মধ্যে স্যুইচ করতে পারেন।"
+	},
+	"settingsTabBackupRestoreDescription": {
+		"message": "আপনি আপনার সেটিংসের সম্পূর্ণ বা আংশিক ব্যাকআপ নিতে পারেন।"
+	},
+	"settingsErrNoServersTitle": {
+		"message": "কোন সার্ভার নেই!"
+	},
+	"settingsErrNoServersDescription": {
+		"message": "কিছু করার আগে আপনাকে প্রক্সি সার্ভার সংজ্ঞায়িত করতে হবে।"
+	},
+	"settingsActiveProxyServer": {
+		"message": "পূর্বনির্ধারিত প্রক্সি সার্ভার:"
+	},
+	"settingsAddServerButton": {
+		"message": "সার্ভার যোগ করুন"
+	},
+	"settingsRemoveMultipleServerButton": {
+		"message": "একাধিক মুছুন"
+	},
+	"settingsSaveChangesButton": {
+		"message": "পরিবর্তন সংরক্ষণ করুন"
+	},
+	"settingsRejectChangesButton": {
+		"message": "পরিবর্তন প্রত্যাখ্যান করুন"
+	},
+	"settingsEditButton": {
+		"message": "সম্পাদনা করুন"
+	},
+	"settingsFullBackupButton": {
+		"message": "সম্পূর্ণ ব্যাকআপ তৈরি করুন"
+	},
+	"settingsFullBackupButtonDesc": {
+		"message": "বিকল্পগুলির একটি সম্পূর্ণ ব্যাকআপ তৈরি করুন (প্রক্সি সার্ভার এবং নিয়ম সহ)।"
+	},
+	"settingsRestoreBackupButton": {
+		"message": "ব্যাকআপ পুনরুদ্ধার করুন"
+	},
+	"settingsRestoreBackupButtonDesc": {
+		"message": "একটি স্থানীয় ফাইল থেকে আপনার পূর্বে নেওয়া ব্যাকআপ পুনরুদ্ধার করুন"
+	},
+	"settingsDangerZoneDesc": {
+		"message": "বিপদ অঞ্চল"
+	},
+	"settingsFactoryResetButton": {
+		"message": "ফ্যাক্টরি রিসেট"
+	},
+	"settingsFactoryResetDesc": {
+		"message": "সবকিছু রিসেট করুন। এটি সমস্ত নিয়ম এবং প্রক্সি সার্ভার সরিয়ে দেবে এবং বিকল্পগুলি রিসেট করবে। স্থায়ীভাবে।"
+	},
+	"settingsFactoryResetConfirm": {
+		"message": "আপনি কি নিশ্চিত যে সবকিছু রিসেট করতে চান? নিশ্চিত? ফিরে যাওয়ার কোন উপায় নেই!"
+	},
+	"settingsFactoryResetSuccess": {
+		"message": "ফ্যাক্টরি রিসেট সফলভাবে সম্পন্ন হয়েছে"
+	},
+	"settingsImportExportProxiesDesc": {
+		"message": "প্রক্সি সার্ভারের পৃথক তালিকা আমদানি/রপ্তানি করুন।"
+	},
+	"settingsImportProxiesButtonBackup": {
+		"message": "প্রক্সি সার্ভার আমদানি করুন"
+	},
+	"settingsExportProxiesButtonBackup": {
+		"message": "প্রক্সি সার্ভার রপ্তানি করুন"
+	},
+	"settingsAddRuleButton": {
+		"message": "নিয়ম যোগ করুন"
+	},
+	"settingsImportRulesButton": {
+		"message": "নিয়ম আমদানি করুন"
+	},
+	"settingsImportRulesTitle": {
+		"message": "নিয়ম আমদানি করুন"
+	},
+	"settingsImportRulesSelectButton": {
+		"message": "নিয়ম ব্যাকআপ ফাইল"
+	},
+	"settingsImportRulesText": {
+		"message": "নিয়ম ব্যাকআপ পাঠ্য"
+	},
+	"settingsImportRulesFrom": {
+		"message": "উৎস"
+	},
+	"settingsImportRulesOptionAppend": {
+		"message": "বিদ্যমান নিয়মের সাথে যুক্ত করুন"
+	},
+	"settingsImportRulesOptionOverride": {
+		"message": "বর্তমান নিয়ম প্রতিস্থাপন করুন (সতর্কতার সাথে ব্যবহার করুন)"
+	},
+	"settingsImportRulesCancelButton": {
+		"message": "বাতিল করুন"
+	},
+	"settingsImportRulesImportButton": {
+		"message": "আমদানি করুন"
+	},
+	"settingsImportProxiesButton": {
+		"message": "প্রক্সি আমদানি করুন"
+	},
+	"settingsExportProxiesButton": {
+		"message": "প্রক্সি রপ্তানি করুন"
+	},
+	"settingsImportProxiesTitle": {
+		"message": "প্রক্সি তালিকা আমদানি করুন"
+	},
+	"settingsImportProxiesSelectFileButton": {
+		"message": "প্রক্সি তালিকা ফাইল"
+	},
+	"settingsImportProxiesSelectTextButton": {
+		"message": "প্রক্সি তালিকা পাঠ্য"
+	},
+	"settingsImportProxiesOptionAppend": {
+		"message": "বিদ্যমান প্রক্সিতে যুক্ত করুন"
+	},
+	"settingsImportProxiesOptionOverride": {
+		"message": "বর্তমান প্রক্সি প্রতিস্থাপন করুন (সতর্কতার সাথে ব্যবহার করুন)"
+	},
+	"settingsImportProxiesCancelButton": {
+		"message": "বাতিল করুন"
+	},
+	"settingsImportProxiesImportButton": {
+		"message": "আমদানি করুন"
+	},
+	"settingsConfirmRemoveProxyServer": {
+		"message": "আপনি কি নিশ্চিত যে নির্বাচিত প্রক্সি সার্ভারটি সরাতে চান?"
+	},
+	"settingsConfirmRemoveMultipleProxyServer": {
+		"message": "আপনি কি নিশ্চিত যে নির্বাচিত প্রক্সি সার্ভারগুলি সরাতে চান?"
+	},
+	"settingsRemoveAllProxyServers": {
+		"message": "আপনি কি নিশ্চিত যে সমস্ত প্রক্সি সার্ভার সরাতে চান?"
+	},
+	"settingsRemoveAllProxyServersSuccess": {
+		"message": "সমস্ত প্রক্সি সার্ভার সরানো হয়েছে।<br/>পরিবর্তনগুলি প্রয়োগ করতে আপনাকে সংরক্ষণ করতে হবে।"
+	},
+	"settingsImportProxiesFileNotSelected": {
+		"message": "অনুগ্রহ করে একটি প্রক্সি তালিকা ফাইল নির্বাচন করুন"
+	},
+	"settingsImportProxyListTextIsEmpty": {
+		"message": "অনুগ্রহ করে প্রক্সি তালিকা লিখুন"
+	},
+	"settingsImportProxyServersFailed": {
+		"message": "প্রক্সি সার্ভার আমদানি করতে ব্যর্থ"
+	},
+	"importerImportProxySuccess": {
+		"message": "মোট {1}টির মধ্যে {0}টি প্রক্সি আমদানি করা হয়েছে।<br>পরিবর্তনগুলি সংরক্ষণ করতে ভুলবেন না।"
+	},
+	"settingsErrorFailedToSaveServers": {
+		"message": "সার্ভার সংরক্ষণ করতে ব্যর্থ।"
+	},
+	"settingsChangesReverted": {
+		"message": "পরিবর্তনগুলি সফলভাবে পূর্বাবস্থায় ফিরিয়ে আনা হয়েছে।"
+	},
+	"settingsConfirmSaveAllChanged": {
+		"message": "আপনি কি সমস্ত অসংরক্ষিত পরিবর্তন সংরক্ষণ করতে চান?"
+	},
+	"settingsConfirmRemoveProxyRule": {
+		"message": "আপনি কি নিশ্চিত যে নির্বাচিত নিয়মটি সরাতে চান?"
+	},
+	"settingsConfirmRemoveMultipleProxyRule": {
+		"message": "আপনি কি নিশ্চিত যে নির্বাচিত নিয়মগুলি সরাতে চান?"
+	},
+	"settingsRemoveAllRules": {
+		"message": "আপনি কি নিশ্চিত যে সমস্ত নিয়ম সরাতে চান?"
+	},
+	"settingsRemoveAllRulesSuccess": {
+		"message": "সমস্ত নিয়ম সরানো হয়েছে।<br/>পরিবর্তনগুলি প্রয়োগ করতে আপনাকে সংরক্ষণ করতে হবে।"
+	},
+	"settingsRestoreBackupFailed": {
+		"message": "ব্যাকআপ পুনরুদ্ধার করতে একটি ত্রুটি হয়েছে"
+	},
+	"settingsRestoreBackupFileError": {
+		"message": "নির্বাচিত ফাইল পড়তে ব্যর্থ"
+	},
+	"settingsRulesFileNotSelected": {
+		"message": "অনুগ্রহ করে একটি নিয়ম ফাইল নির্বাচন করুন"
+	},
+	"settingsSourceTypeNotSelected": {
+		"message": "অনুগ্রহ করে উৎসের ধরন নির্বাচন করুন"
+	},
+	"settingsImportRulesFailed": {
+		"message": "ফাইল আমদানি করতে ব্যর্থ।"
+	},
+	"settingsImportRulesTextIsEmpty": {
+		"message": "অনুগ্রহ করে বক্সে নিয়ম লিখুন"
+	},
+	"settingsServerNameRequired": {
+		"message": "সার্ভারের নাম নির্দিষ্ট করুন!"
+	},
+	"settingsServerNameExists": {
+		"message": "একই নামের একটি সার্ভার ইতিমধ্যেই বিদ্যমান!"
+	},
+	"settingsServerServerAddressIsEmpty": {
+		"message": "সার্ভার ঠিকানা খালি হতে পারে না"
+	},
+	"settingsServerPortNoInvalid": {
+		"message": "অনুগ্রহ করে একটি বৈধ পোর্ট নম্বর লিখুন"
+	},
+	"settingsServerAuthenticationInvalid": {
+		"message": "প্রমাণীকরণের জন্য ব্যবহারকারীর নাম এবং পাসওয়ার্ড উভয়ই প্রয়োজন"
+	},
+	"settingsServersGridNoDataContent": {
+		"message": "কোন সার্ভার সংজ্ঞায়িত করা হয়নি"
+	},
+	"settingsServersGridColName": {
+		"message": "নাম"
+	},
+	"settingsServersGridColProtocol": {
+		"message": "প্রোটোকল"
+	},
+	"settingsServersGridColServer": {
+		"message": "সার্ভার"
+	},
+	"settingsServersGridColPort": {
+		"message": "পোর্ট"
+	},
+	"settingsServersGridColCountry": {
+		"message": "দেশ"
+	},
+	"settingsServersGridColRating": {
+		"message": "রেটিং"
+	},
+	"settingsServersModalTitle": {
+		"message": "প্রক্সি সার্ভার বিবরণ"
+	},
+	"settingsServersServerName": {
+		"message": "সার্ভারের নাম"
+	},
+	"settingsServersSeverAddress": {
+		"message": "সার্ভার ঠিকানা"
+	},
+	"settingsServersProtocol": {
+		"message": "প্রক্সি প্রোটোকল"
+	},
+	"settingsServersPort": {
+		"message": "পোর্ট"
+	},
+	"settingsServersProxyDNS": {
+		"message": "SOCKS 5 ব্যবহার করার সময় DNS প্রক্সি"
+	},
+	"settingsServersUsername": {
+		"message": "ব্যবহারকারীর নাম"
+	},
+	"settingsServersPassword": {
+		"message": "পাসওয়ার্ড"
+	},
+	"settingsServersAuthChromeMv3Limitation": {
+		"message": "(দুর্ভাগ্যবশত প্রক্সি সার্ভার প্রমাণীকরণ Chrome দ্বারা এক্সটেনশন API-এর মাধ্যমে সমর্থিত নয়। এটি 'উদ্দেশ্যমূলক'।)"
+	},
+	"settingsServersCancel": {
+		"message": "বাতিল করুন"
+	},
+	"settingsServersSave": {
+		"message": "সংরক্ষণ করুন"
+	},
+	"settingsServersImport": {
+		"message": "আমদানি করুন"
+	},
+	"settingsProfilesNameTitle": {
+		"message": "নির্বাচনী প্রোফাইল:"
+	},
+	"settingsProfilesEnabled": {
+		"message": "সক্রিয়"
+	},
+	"settingsProfilesTypeTitle": {
+		"message": "প্রোফাইলের ধরন:"
+	},
+	"settingsProfilesTypeDesc_SmartRules": {
+		"message": "এই প্রোফাইলে, যতক্ষণ না আপনি নির্বাচনী নিয়ম সংজ্ঞায়িত করেন ততক্ষণ পর্যন্ত কোন প্রক্সি প্রয়োগ করা হয় না। আপনি ব্ল্যাকলিস্ট নিয়ম, বা অন্য কথায় প্রক্সি প্রয়োগ করার জন্য নিয়ম সংজ্ঞায়িত করবেন।"
+	},
+	"settingsProfilesTypeDesc_AlwaysEnabledBypassRules": {
+		"message": "এই প্রোফাইলে, প্রক্সি সার্ভার সর্বদা প্রয়োগ করা হয়; নির্বাচনী নিয়ম সংজ্ঞায়িত করুন এবং সেগুলি এড়িয়ে যান। আপনি হোয়াইটলিস্ট নিয়ম, বা অন্য কথায় প্রক্সি এড়িয়ে যাওয়ার এবং প্রক্সি প্রয়োগ না করার জন্য নিয়ম সংজ্ঞায়িত করবেন।"
+	},
+	"settingsProfilesTypeDesc_IgnoreFailureRules": {
+		"message": "নিয়ম যোগ করে এই ডোমেইনগুলির জন্য ব্যর্থতা সনাক্তকরণ উপেক্ষা করুন।"
+	},
+	"settingsProfilesProfileProxyServer": {
+		"message": "প্রোফাইল প্রক্সি সার্ভার:"
+	},
+	"settingsProfilesDefaultProfileProxyServer": {
+		"message": "(পূর্বনির্ধারিত প্রক্সি সার্ভার ব্যবহার করুন)"
+	},
+	"settingsProfilesProfileProxyServerDesc": {
+		"message": "(এই প্রোফাইল ব্যবহার করার সময়, এটি সক্রিয় প্রক্সি সার্ভার হবে)"
+	},
+	"settingsProfilesRulesSection": {
+		"message": "নিয়ম"
+	},
+	"settingsProfilesDelete": {
+		"message": "মুছুন"
+	},
+	"settingsProfilesAddNewLabel": {
+		"message": "নতুন নির্বাচনী প্রোফাইল যোগ করুন"
+	},
+	"settingsProfilesAddNewTypeLead": {
+		"message": "আপনি যে <b>প্রোফাইলের ধরন</b> যোগ করতে চান তা নির্বাচন করুন:"
+	},
+	"settingsProfilesAddNewType_SmartRules": {
+		"message": "নির্বাচনী নিয়ম"
+	},
+	"settingsProfilesAddNewType_SmartRulesDesc": {
+		"message": "এই ধরণের প্রোফাইলে, প্রক্সি কিছু <em>নিয়মের</em> উপর ভিত্তি করে অনুরোধে প্রয়োগ করা হবে যা আপনাকে সংজ্ঞায়িত করতে হবে। এই নিয়মগুলি সংজ্ঞায়িত করতে আপনি মেনু বারের পপআপ মেনু ব্যবহার করতে পারেন, অথবা আপনি সেটিংস থেকে সেগুলি যোগ করতে পারেন এবং <em>প্রক্সি-যোগ্য সম্পদ</em> উইন্ডো থেকেও করতে পারেন।<br>এছাড়াও আপনার কাছে Gfwlist-এর মতো বিভিন্ন নিয়ম তালিকার সাবস্ক্রিপশন নেওয়ার ক্ষমতা রয়েছে।"
+	},
+	"settingsProfilesAddNewType_AlwaysEnabled": {
+		"message": "সর্বদা সক্রিয়"
+	},
+	"settingsProfilesAddNewType_AlwaysEnabledDesc": {
+		"message": "এই ধরণের প্রোফাইলে, আপনি বাইপাস নিয়ম সংজ্ঞায়িত না করা পর্যন্ত প্রক্সি সর্বদা অনুরোধে প্রয়োগ করা হবে। নিয়ম সংজ্ঞায়িত করার ধাপগুলি নির্বাচনী নিয়ম প্রোফাইলের ধরণের মতোই।"
+	},
+	"settingsProfilesAddNewBtnContinue": {
+		"message": "চালিয়ে যান"
+	},
+	"settingsProfilesAddNewBtnCancel": {
+		"message": "বাতিল করুন"
+	},
+	"settingsProfilesAddErrorTypeRequired": {
+		"message": "অনুগ্রহ করে একটি প্রোফাইলের ধরন নির্বাচন করুন"
+	},
+	"settingsProfilesAddErrorNameRequired": {
+		"message": "প্রোফাইলের নাম আবশ্যক"
+	},
+	"settingsProfilesAddErrorNameExists": {
+		"message": "প্রোফাইলের নাম ইতিমধ্যেই বিদ্যমান, অনুগ্রহ করে অন্য একটি লিখুন"
+	},
+	"settingsProfilesDeleteConfirm": {
+		"message": "আপনি কি নিশ্চিত যে এই প্রোফাইলটি মুছতে চান? সতর্কতা, এই ক্রিয়াটি পূর্বাবস্থায় ফেরানো যাবে না!"
+	},
+	"settingsProfilesDeleteFailed": {
+		"message": "নির্বাচিত প্রোফাইল মুছতে ব্যর্থ।"
+	},
+	"settingsProfilesDeleteDone": {
+		"message": "প্রোফাইলটি সফলভাবে মুছে ফেলা হয়েছে"
+	},
+	"settingsProfilesDeleteBuiltinFail": {
+		"message": "অন্তর্নির্মিত প্রোফাইল মুছতে পারেন না"
+	},
+	"settingsProfilesProxyServer": {
+		"message": "[পূর্বনির্ধারিত প্রক্সি সার্ভার ব্যবহার করুন]"
+	},
+	"settingsProfilesRulesSubscriptionsTitle": {
+		"message": "নিয়ম সাবস্ক্রিপশন"
+	},
+	"settingsProfilesRulesSubscriptionsDesc": {
+		"message": "এখানে আপনি নিয়ম তালিকার সাবস্ক্রিপশন নিতে পারেন।"
+	},
+	"settingsSaveSmartProfileSuccess": {
+		"message": "নির্বাচনী প্রোফাইল সফলভাবে সংরক্ষিত হয়েছে।"
+	},
+	"settingsErrorFailedToSaveSmartProfile": {
+		"message": "নির্বাচনী প্রোফাইল সংরক্ষণ করতে ব্যর্থ।"
+	},
+	"settingsRuleSourceRequired": {
+		"message": "অনুগ্রহ করে নিয়মের উৎস ডোমেইন নির্দিষ্ট করুন!"
+	},
+	"settingsRuleSourceInvalid": {
+		"message": "উৎস ডোমেইন অবৈধ, উৎস ডোমেইনটি 'google.com'-এর মতো কিছু হওয়া উচিত"
+	},
+	"settingsRuleSourceInvalidFormat": {
+		"message": "'উৎস ডোমেইন' বৈধ নয় '{0}'"
+	},
+	"settingsRuleSourceAlreadyExists": {
+		"message": "একই উৎস সহ একটি নিয়ম ইতিমধ্যেই বিদ্যমান!"
+	},
+	"settingsRuleHostInvalid": {
+		"message": "হোস্ট নাম '{0}' অবৈধ, হোস্ট নামটি 'google.com'-এর মতো কিছু হওয়া উচিত"
+	},
+	"settingsRuleRegexNotMatchDomain": {
+		"message": "রেজেক্স নিয়মটি উৎস ডোমেইন '{0}' এর সাথে মেলে না"
+	},
+	"settingsRuleDoesntIncludeDomain": {
+		"message": "নিয়মটি উৎস ডোমেইন '{0}' এর সাথে মেলে না"
+	},
+	"settingsRuleRegexInvalid": {
+		"message": "রেজেক্স নিয়ম '{0}' বৈধ নয়"
+	},
+	"settingsRuleExactUrlInvalid": {
+		"message": "URL '{0}' বৈধ নয়"
+	},
+	"settingsRuleUrlInvalid": {
+		"message": "URL '{0}' বৈধ নয়"
+	},
+	"settingsRulesGridNoDataContent": {
+		"message": "কোন নিয়ম সংজ্ঞায়িত করা হয়নি"
+	},
+	"settingsRulesGridColRuleType": {
+		"message": "নিয়মের ধরন"
+	},
+	"settingsRulesGridColSource": {
+		"message": "উৎস"
+	},
+	"settingsRulesGridColRule": {
+		"message": "নিয়ম"
+	},
+	"settingsRulesGridColEnabled": {
+		"message": "সক্রিয়"
+	},
+	"settingsRulesGridColProxy": {
+		"message": "প্রক্সি সার্ভার"
+	},
+	"settingsRulesProxyDefault": {
+		"message": "[সক্রিয় প্রক্সি ব্যবহার করুন]"
+	},
+	"settingsRulesProxyFromProfile": {
+		"message": "[প্রোফাইল প্রক্সি ব্যবহার করুন]"
+	},
+	"settingsRulesModalTitle": {
+		"message": "নিয়মের বিবরণ"
+	},
+	"settingsRulesRuleType": {
+		"message": "নিয়মের ধরন"
+	},
+	"settingsRulesSourceDomain": {
+		"message": "নিয়ম উৎস ডোমেইন"
+	},
+	"settingsRulesSourceDomainDesc": {
+		"message": "(যেমন google.com)"
+	},
+	"settingsRulesPattern": {
+		"message": "মিলান প্যাটার্ন"
+	},
+	"settingsRulesGeneratePattern": {
+		"message": "স্বয়ংক্রিয়ভাবে প্যাটার্ন তৈরি করুন"
+	},
+	"settingsRulesRegex": {
+		"message": "URL রেজেক্স"
+	},
+	"settingsRulesHostRegex": {
+		"message": "হোস্ট রেজেক্স"
+	},
+	"settingsRulesExactUrl": {
+		"message": "সঠিক URL (ছোট হাতের অক্ষরে)"
+	},
+	"settingsRulesProxyServer": {
+		"message": "প্রক্সি সার্ভার"
+	},
+	"settingsRulesProxyServerNotAuth": {
+		"message": "(প্রমাণীকরণ সহ সার্ভারগুলি Chrome-এ সমর্থিত নয়)"
+	},
+	"settingsRulesEnabled": {
+		"message": "সক্রিয়"
+	},
+	"settingsRulesModalCancel": {
+		"message": "বাতিল করুন"
+	},
+	"settingsRulesModalSave": {
+		"message": "সংরক্ষণ করুন"
+	},
+	"settingsRulesActionType": {
+		"message": "ক্রিয়া"
+	},
+	"settingsRuleActionApplyProxy": {
+		"message": "প্রক্সি প্রয়োগ করুন"
+	},
+	"settingsRuleActionWhitelist": {
+		"message": "সাদাতালিকা (কোন প্রক্সি নেই)"
+	},
+	"settingsRuleActionWhitelistDesc": {
+		"message": "(সাদাতালিকার নিয়মগুলির প্রক্সি নিয়মের চেয়ে উচ্চতর অগ্রাধিকার রয়েছে, তাদের অবস্থান নির্বিশেষে)"
+	},
+	"settingsServerPortInvalid": {
+		"message": "সার্ভার পোর্ট '{0}' অবৈধ"
+	},
+	"settingsServerHostInvalid": {
+		"message": "সার্ভার হোস্ট '{0}' অবৈধ"
+	},
+	"settingsRestoreSettingsSuccess": {
+		"message": "সেটিংস সফলভাবে পুনরুদ্ধার করা হয়েছে"
+	},
+	"settingsRestoreSettingsFailed": {
+		"message": "সেটিংস পুনরুদ্ধার করতে একটি ত্রুটি হয়েছে"
+	},
+	"settingsRestoreSettingsFailedInvalid": {
+		"message": "ব্যাকআপ ডেটা অবৈধ বা দূষিত"
+	},
+	"settingsRestoreSettingsFailedInvalidActiveProfile": {
+		"message": "সক্রিয় প্রোফাইলের জন্য অবৈধ ডেটা সরবরাহ করা হয়েছে"
+	},
+	"settingsRestoreSettingsFailedInvalidDefaultProxyServer": {
+		"message": "পূর্বনির্ধারিত প্রক্সি সার্ভারের জন্য অবৈধ ডেটা সরবরাহ করা হয়েছে"
+	},
+	"settingsEnableByDomainInvalid": {
+		"message": "নির্বাচিত ডোমেইনটি বৈধ নয়"
+	},
+	"settingsEnableByDomainExists": {
+		"message": "ডোমেইনের জন্য একটি নিয়ম ইতিমধ্যেই বিদ্যমান"
+	},
+	"settingsEnableByDomainSmartProfileNonEditable": {
+		"message": "বর্তমান প্রোফাইল '{0}' নিয়মের সাথে আপডেট করা যাবে না"
+	},
+	"settingsNoRuleFoundForDomain": {
+		"message": "'{0}' এর জন্য কোন নিয়ম নেই"
+	},
+	"importerImportSuccess": {
+		"message": "মোট {1}টির মধ্যে {0}টি নিয়ম যুক্ত করা হয়েছে।<br>পরিবর্তনগুলি সংরক্ষণ করতে ভুলবেন না।"
+	},
+	"settingsRemoveMultipleProxyRuleButton": {
+		"message": "একাধিক মুছুন"
+	},
+	"settingsAddMultipleRulesButton": {
+		"message": "একাধিক নিয়ম যোগ করুন"
+	},
+	"settingsAddMultipleRuleTitle": {
+		"message": "একাধিক নিয়ম যোগ করুন"
+	},
+	"settingsMultipleRuleList": {
+		"message": "হোস্ট/নিয়ম তালিকা:"
+	},
+	"settingsMultipleRuleInvalidHost": {
+		"message": "হোস্ট নাম '{0}' অবৈধ"
+	},
+	"settingsMultipleRuleNoNewRuleAdded": {
+		"message": "কোন নতুন নিয়ম যোগ করা হয়নি"
+	},
+	"settingsTabProxyServerSubscriptionsTitle": {
+		"message": "প্রক্সি সার্ভার সাবস্ক্রিপশন পরিচালনা করুন:"
+	},
+	"settingsTabProxyServerSubscriptionsDescription": {
+		"message": "এখানে আপনি প্রক্সি তালিকার সাবস্ক্রিপশন নিতে পারেন এবং পরে প্রক্সিগুলির মধ্যে স্যুইচ করতে পারেন। দয়া করে মনে রাখবেন যে দীর্ঘ তালিকাগুলি ডিভাইসগুলির মধ্যে ডেটা সিঙ্ক্রোনাইজ করতে ব্যর্থতার কারণ হতে পারে।"
+	},
+	"settingsErrorFailedToSaveGeneral": {
+		"message": "বিকল্প সেটিংস সংরক্ষণ করতে ব্যর্থ।"
+	},
+	"settingsSaveOptionsSuccess": {
+		"message": "সাধারণ বিকল্পগুলি সফলভাবে সংরক্ষিত হয়েছে।"
+	},
+	"settingsAddServerSubscriptionButton": {
+		"message": "একটি তালিকার সাবস্ক্রিপশন নিন"
+	},
+	"settingsServerSubscriptionModalTitle": {
+		"message": "একটি প্রক্সি সার্ভার তালিকার সাবস্ক্রিপশন নিন"
+	},
+	"settingsRemoveMultipleServerSubscriptionButton": {
+		"message": "একাধিক মুছুন"
+	},
+	"settingsServerSubscriptionName": {
+		"message": "নাম:"
+	},
+	"settingsServerSubscriptionUrl": {
+		"message": "URL:"
+	},
+	"settingsServerSubscriptionRefreshRate": {
+		"message": "রিফ্রেশের হার:"
+	},
+	"settingsServerSubscriptionRefreshRateHelp": {
+		"message": "(মিনিটে, 0 মানে কোন রিফ্রেশ নেই)"
+	},
+	"settingsServerSubscriptionEnabled": {
+		"message": "সক্রিয়"
+	},
+	"settingsServerSubscriptionProtocol": {
+		"message": "প্রোটোকল:"
+	},
+	"settingsServerSubscriptionObfuscation": {
+		"message": "অবফাস্কেশন:"
+	},
+	"settingsServerSubscriptionFormat": {
+		"message": "বিন্যাস:"
+	},
+	"settingsServerSubscriptionApplyProxy": {
+		"message": "প্রক্সির মাধ্যমে পাস করুন:"
+	},
+	"settingsServerSubscriptionApplyProxyHelpFirefox": {
+		"message": "(সার্ভারে আপনার অ্যাক্সেসের ভিত্তিতে সিদ্ধান্ত নিন)"
+	},
+	"settingsServerSubscriptionApplyProxyHelpChrome": {
+		"message": "(দুর্ভাগ্যবশত এই বৈশিষ্ট্যটি Chrome-এ উপলব্ধ নয়। বর্তমান প্রক্সি প্রয়োগ করা হবে)"
+	},
+	"settingsServerSubscriptionApplyProxy_NoProxy": {
+		"message": "কোন প্রক্সি নেই"
+	},
+	"settingsServerSubscriptionApplyProxy_CurrentProxy": {
+		"message": "বর্তমান প্রক্সি"
+	},
+	"settingsServerSubscriptionApplyProxy_SelectedProxy": {
+		"message": "নির্বাচিত প্রক্সি"
+	},
+	"settingsServerSubscriptionUsername": {
+		"message": "ব্যবহারকারীর নাম:"
+	},
+	"settingsServerSubscriptionPassword": {
+		"message": "পাসওয়ার্ড:"
+	},
+	"settingsServerSubscriptionAuthenticationHelp": {
+		"message": "(যদি তালিকার প্রমাণীকরণের প্রয়োজন হয়)"
+	},
+	"settingsServerSubscriptionCancelButton": {
+		"message": "বাতিল করুন"
+	},
+	"settingsServerSubscriptionSaveButton": {
+		"message": "সংরক্ষণ করুন"
+	},
+	"settingsServerSubscriptionSavingButton": {
+		"message": "সংরক্ষণ করা হচ্ছে..."
+	},
+	"settingsServerSubscriptionTestButton": {
+		"message": "পরীক্ষা করুন"
+	},
+	"settingsProxyTestStopButton": {
+		"message": "থামান"
+	},
+	"settingsProxyTestCancelled": {
+		"message": "পরীক্ষা ব্যবহারকারী দ্বারা বন্ধ করা হয়েছে"
+	},
+	"settingsProxyTestResumeDialogTitle": {
+		"message": "প্রক্সি পরীক্ষা"
+	},
+	"settingsProxyTestResumeDialogMessage": {
+		"message": "অপরীক্ষিত প্রক্সি আছে। আপনি কি করতে চান?"
+	},
+	"settingsProxyTestResumeContinue": {
+		"message": "যেখানে বন্ধ ছিল সেখান থেকে চালিয়ে যান"
+	},
+	"settingsProxyTestResumeRestart": {
+		"message": "শুরু থেকে পুনরায় আরম্ভ করুন"
+	},
+	"settingsServerSubscriptionTestingButton": {
+		"message": "পরীক্ষা করা হচ্ছে..."
+	},
+	"settingsConfirmRemoveServerSubscription": {
+		"message": "আপনি কি নিশ্চিত যে নির্বাচিত সাবস্ক্রিপশনটি সরাতে চান?"
+	},
+	"settingsRemoveAllProxyServerSubscriptions": {
+		"message": "আপনি কি নিশ্চিত যে সমস্ত প্রক্সি সার্ভার সাবস্ক্রিপশন সরাতে চান?"
+	},
+	"settingsConfirmRemoveMultipleServerSubscription": {
+		"message": "আপনি কি নিশ্চিত যে নির্বাচিত সাবস্ক্রিপশনগুলি সরাতে চান?"
+	},
+	"settingsRemoveAllProxyServerSubscriptionsSuccess": {
+		"message": "সমস্ত প্রক্সি সার্ভার সাবস্ক্রিপশন সরানো হয়েছে।<br/>পরিবর্তনগুলি প্রয়োগ করতে আপনাকে সংরক্ষণ করতে হবে।"
+	},
+	"settingsServerSubscriptionProtocolDefault": {
+		"message": "(HTTP ফলব্যাক সহ স্বয়ংক্রিয় সনাক্তকরণ)"
+	},
+	"settingsInitializeFailed": {
+		"message": "কনফিগারেশন পড়তে ব্যর্থ। অনুগ্রহ করে সেটিংস পৃষ্ঠাটি বন্ধ করুন এবং আবার চেষ্টা করুন।"
+	},
+	"settingsActiveProxyServerSubscriptions": {
+		"message": "-সাবস্ক্রিপশন-"
+	},
+	"settingsServerSubscriptionsGridNoDataContent": {
+		"message": "কোন সাবস্ক্রিপশন নেই"
+	},
+	"settingsServerSubscriptionsGridColName": {
+		"message": "নাম"
+	},
+	"settingsServerSubscriptionsGridColUrl": {
+		"message": "URL"
+	},
+	"settingsServerSubscriptionsGridColCount": {
+		"message": "গণনা"
+	},
+	"settingsServerSubscriptionsGridColEnabled": {
+		"message": "সক্রিয়"
+	},
+	"settingsServerSubscriptionIncompleteForm": {
+		"message": "অনুগ্রহ করে প্রয়োজনীয় ক্ষেত্রগুলি সঠিক বিন্যাসে পূরণ করুন"
+	},
+	"settingsServerSubscriptionInvalidForm": {
+		"message": "অবৈধ প্রক্সি সার্ভার সাবস্ক্রিপশন বিবরণ"
+	},
+	"settingsServerSubscriptionDuplicateName": {
+		"message": "প্রবেশ করা নামটি ইতিমধ্যে ব্যবহৃত হচ্ছে, অনুগ্রহ করে অন্য একটি নাম লিখুন।"
+	},
+	"settingsServerSubscriptionSaveUpdated": {
+		"message": "সাবস্ক্রিপশনটি {0}টি প্রক্সি সহ আপডেট করা হয়েছে।<br/>পরিবর্তনগুলি সংরক্ষণ করতে ভুলবেন না।"
+	},
+	"settingsServerSubscriptionSaveAdded": {
+		"message": "সাবস্ক্রিপশনটি {0}টি প্রক্সি সহ যোগ করা হয়েছে।<br/>পরিবর্তনগুলি সংরক্ষণ করতে ভুলবেন না।"
+	},
+	"settingsServerSubscriptionSaveFailedGet": {
+		"message": "প্রক্সি পেতে ব্যর্থ।"
+	},
+	"settingsServerSubscriptionTestSuccess": {
+		"message": "পরীক্ষা সফল হয়েছে। তালিকাটি {0}টি প্রক্সি ফিরিয়েছে।"
+	},
+	"settingsServerSubscriptionTestFailed": {
+		"message": "পরীক্ষা ব্যর্থ হয়েছে"
+	},
+	"settingsSaveProxyServerSubscriptionsSuccess": {
+		"message": "প্রক্সি সার্ভার সাবস্ক্রিপশন সফলভাবে সংরক্ষিত হয়েছে।"
+	},
+	"settingsFailedToSaveProxySubscriptions": {
+		"message": "প্রক্সি সার্ভার সাবস্ক্রিপশন সংরক্ষণ করতে ব্যর্থ"
+	},
+	"settingsAddRulesSubscriptionButton": {
+		"message": "একটি নিয়ম তালিকার সাবস্ক্রিপশন নিন"
+	},
+	"settingsRemoveMultipleRulesSubscriptionButton": {
+		"message": "একাধিক মুছুন"
+	},
+	"settingsRulesSubscriptionsModalTitle": {
+		"message": "একটি নিয়ম তালিকার সাবস্ক্রিপশন নিন"
+	},
+	"settingsRulesSubscriptionsGridColName": {
+		"message": "নাম"
+	},
+	"settingsRulesSubscriptionsGridColUrl": {
+		"message": "URL"
+	},
+	"settingsRulesSubscriptionsGridColCount": {
+		"message": "গণনা"
+	},
+	"settingsRulesSubscriptionsGridColEnabled": {
+		"message": "সক্রিয়"
+	},
+	"settingsRulesSubscriptionsName": {
+		"message": "নাম:"
+	},
+	"settingsRulesSubscriptionsUrl": {
+		"message": "URL:"
+	},
+	"settingsRulesSubscriptionsRefreshRate": {
+		"message": "রিফ্রেশের হার:"
+	},
+	"settingsRulesSubscriptionsRefreshRateHelp": {
+		"message": "(মিনিটে, 0 মানে কোন রিফ্রেশ নেই)"
+	},
+	"settingsRulesSubscriptionEnabled": {
+		"message": "সক্রিয়"
+	},
+	"settingsRulesSubscriptionsObfuscation": {
+		"message": "অবফাস্কেশন:"
+	},
+	"settingsRulesSubscriptionsFormat": {
+		"message": "বিন্যাস:"
+	},
+	"settingsRulesSubscriptionsApplyProxy": {
+		"message": "প্রক্সির মাধ্যমে পাস করুন:"
+	},
+	"settingsRulesSubscriptionsApplyProxyHelpFirefox": {
+		"message": "(সার্ভারে আপনার অ্যাক্সেসের ভিত্তিতে সিদ্ধান্ত নিন)"
+	},
+	"settingsRulesSubscriptionsApplyProxyHelpChrome": {
+		"message": "(দুর্ভাগ্যবশত এই বৈশিষ্ট্যটি Chrome-এ উপলব্ধ নয়। বর্তমান প্রক্সি প্রয়োগ করা হবে)"
+	},
+	"settingsRulesSubscriptionsUsername": {
+		"message": "ব্যবহারকারীর নাম:"
+	},
+	"settingsRulesSubscriptionsAuthenticationHelp": {
+		"message": "(যদি তালিকার প্রমাণীকরণের প্রয়োজন হয়)"
+	},
+	"settingsRulesSubscriptionsPassword": {
+		"message": "পাসওয়ার্ড:"
+	},
+	"settingsRulesSubscriptionsTestButton": {
+		"message": "পরীক্ষা করুন"
+	},
+	"settingsRulesSubscriptionsSaveButton": {
+		"message": "সংরক্ষণ করুন"
+	},
+	"settingsRulesSubscriptionsCancelButton": {
+		"message": "বাতিল করুন"
+	},
+	"settingsConfirmRemoveRulesSubscription": {
+		"message": "আপনি কি নিশ্চিত যে নির্বাচিত নিয়ম সাবস্ক্রিপশনটি সরাতে চান?"
+	},
+	"settingsConfirmRemoveMultipleRulesSubscription": {
+		"message": "আপনি কি নিশ্চিত যে নির্বাচিত নিয়ম সাবস্ক্রিপশনগুলি সরাতে চান?"
+	},
+	"settingsRulesSubscriptionIncompleteForm": {
+		"message": "অনুগ্রহ করে প্রয়োজনীয় ক্ষেত্রগুলি সঠিক বিন্যাসে পূরণ করুন"
+	},
+	"settingsRulesSubscriptionInvalidForm": {
+		"message": "অবৈধ প্রক্সি সার্ভার সাবস্ক্রিপশন বিবরণ"
+	},
+	"settingsRulesSubscriptionDuplicateName": {
+		"message": "প্রবেশ করা নামটি ইতিমধ্যে ব্যবহৃত হচ্ছে, অনুগ্রহ করে অন্য একটি নাম লিখুন।"
+	},
+	"settingsRulesSubscriptionSavingButton": {
+		"message": "সংরক্ষণ করা হচ্ছে..."
+	},
+	"settingsRulesSubscriptionTestButton": {
+		"message": "পরীক্ষা করুন"
+	},
+	"settingsRulesSubscriptionTestingButton": {
+		"message": "পরীক্ষা করা হচ্ছে..."
+	},
+	"settingsRulesSubscriptionSaveUpdated": {
+		"message": "সাবস্ক্রিপশনটি {0}টি প্রক্সি নিয়ম এবং {1}টি সাদাতালিকা নিয়ম সহ আপডেট করা হয়েছে।<br/>পরিবর্তনগুলি সংরক্ষণ করতে ভুলবেন না।"
+	},
+	"settingsRulesSubscriptionSaveAdded": {
+		"message": "সাবস্ক্রিপশনটি {0}টি প্রক্সি নিয়ম এবং {1}টি সাদাতালিকা নিয়ম সহ যোগ করা হয়েছে।<br/>পরিবর্তনগুলি সংরক্ষণ করতে ভুলবেন না।"
+	},
+	"settingsRulesSubscriptionSaveFailedGet": {
+		"message": "নিয়ম পেতে ব্যর্থ।"
+	},
+	"settingsRulesSubscriptionRefreshOnDisabled": {
+		"message": "একটি নিষ্ক্রিয় সাবস্ক্রিপশন রিফ্রেশ করা যাবে না"
+	},
+	"settingsRulesSubscriptionTestSuccess": {
+		"message": "পরীক্ষা সফল হয়েছে। তালিকাটি {0}টি প্রক্সি নিয়ম এবং {1}টি সাদাতালিকা নিয়ম ফিরিয়েছে।"
+	},
+	"settingsRulesSubscriptionTestFailed": {
+		"message": "পরীক্ষা ব্যর্থ হয়েছে"
+	},
+	"settingsFailedToSaveRulesSubscriptions": {
+		"message": "নিয়ম সাবস্ক্রিপশন সংরক্ষণ করতে ব্যর্থ"
+	},
+	"settingsRemoveAllProxyRulesSubscriptions": {
+		"message": "আপনি কি নিশ্চিত যে সমস্ত প্রক্সি নিয়ম সাবস্ক্রিপশন সরাতে চান?"
+	},
+	"settingsRemoveAllProxyRulesSubscriptionsSuccess": {
+		"message": "সমস্ত প্রক্সি নিয়ম সাবস্ক্রিপশন সরানো হয়েছে।<br/>পরিবর্তনগুলি প্রয়োগ করতে আপনাকে সংরক্ষণ করতে হবে।"
+	},
+	"importerImportRulesSuccess": {
+		"message": "মোট {0}টি প্রক্সি নিয়ম এবং {1}টি সাদাতালিকা নিয়ম ফেরত দেওয়া হয়েছে।<br>পরিবর্তনগুলি সংরক্ষণ করতে ভুলবেন না।"
+	},
+	"settingsRulePatternIsEmpty": {
+		"message": "নিয়মে কোন প্যাটার্ন সংজ্ঞায়িত নেই"
+	},
+	"settingsWelcomeTitle": {
+		"message": "ProxyMust-এ স্বাগতম"
+	},
+	"settingsWelcomeMessage": {
+		"message": "<p>\n\tProxyMust, প্রক্সি পরীক্ষার ক্ষমতা সহ নির্বাচনী প্রক্সি ব্যবস্থাপক।<br>\n\tশুরু করতে অনুগ্রহ করে এই ধাপগুলি অনুসরণ করুন:\n</p>\n<ol>\n\t<li>\n\t\tএকটি প্রক্সি সার্ভার বা প্রক্সির তালিকা যোগ করুন\n\t\t<br>\n\t\t<small>(প্রক্সি সার্ভার ট্যাবে যান এবং সেখানে যোগ করুন)</small>\n\t</li>\n\t<li>\n\t\tমোডটি নির্বাচনী প্রক্সিতে সেট করুন\n\t\t<br>\n\t\t<small>(সক্রিয় মোডটি নির্বাচনী প্রক্সিতে পরিবর্তন করতে টুলবার পপআপ মেনু ব্যবহার করুন)</small>\n\t</li>\n\t<li>\n\t\tপ্রক্সি নিয়ম সংজ্ঞায়িত করুন\n\t\t<br>\n\t\t<small>(নিয়ম যোগ করতে টুলবার পপআপ মেনু ব্যবহার করুন বা প্রক্সি নিয়ম ট্যাব থেকে নিয়ম যোগ/পরিবর্তন করুন)</small>\n\t</li>\n\t<li>\n\t\tআপনি প্রস্তুত।\n\t</li>\n</ol>"
+	},
+	"settingsWelcomeSkipButton": {
+		"message": "বুঝতে পেরেছি"
+	},
+	"settingsSubscriptionStatsStatusSuccess": {
+		"message": "অবস্থা: সফল"
+	},
+	"settingsSubscriptionStatsStatusFail": {
+		"message": "অবস্থা: ব্যর্থ"
+	},
+	"settingsSubscriptionStatsLastTry": {
+		"message": "শেষ চেষ্টা:"
+	},
+	"settingsSubscriptionStatsMessage": {
+		"message": "বার্তা:"
+	},
+	"settingsSubscriptionStatsLastSuccess": {
+		"message": "শেষ সফলতা:"
+	},
+	"settings_SmartProfileType_Direct": {
+		"message": "সরাসরি"
+	},
+	"settings_SmartProfileType_SystemProxy": {
+		"message": "সিস্টেম প্রক্সি"
+	},
+	"settings_SmartProfileType_SmartRules": {
+		"message": "নির্বাচনী নিয়ম"
+	},
+	"settings_SmartProfileType_AlwaysEnabledBypassRules": {
+		"message": "বাইপাস নিয়ম সহ সর্বদা সক্রিয়"
+	},
+	"settings_SmartProfileType_IgnoreFailureRules": {
+		"message": "ব্যর্থতা উপেক্ষা করার নিয়ম"
+	},
+	"settingsRuleCidrIPAddress": {
+		"message": "IP ঠিকানা"
+	},
+	"settingsRuleCidrPrefixLength": {
+		"message": "প্রিফিক্স দৈর্ঘ্য"
+	},
+	"settingsRuleCidrNotationDesc": {
+		"message": "(অনুগ্রহ করে মনে রাখবেন যে এই নিয়মটি হোস্টনামকে IP-তে রূপান্তর করবে না।)"
+	},
+	"settingsRuleCidrIPInvalid": {
+		"message": "অনুগ্রহ করে একটি বৈধ IP ঠিকানা লিখুন"
+	},
+	"settingsRuleCidrPrefixLengthInvalid": {
+		"message": "অনুগ্রহ করে একটি বৈধ প্রিফিক্স দৈর্ঘ্য লিখুন"
+	},
+	"settingsRuleCidrNotationInvalid": {
+		"message": "CIDR নোটেশন '{0}' বৈধ নয়"
+	},
+	"settingsRuleCidrNotationInvalidMatch": {
+		"message": "CIDR নিয়মটি '{0}' এর সাথে মেলে না"
+	},
+	"notificationNoNextProxyServer": {
+		"message": "আর কোন পরবর্তী প্রক্সি সার্ভার নেই"
+	},
+	"notificationNoPreviousProxyServer": {
+		"message": "আর কোন পূর্ববর্তী প্রক্সি সার্ভার নেই"
+	},
+	"notificationShortcutTitle": {
+		"message": "ProxyMust শর্টকাট বিজ্ঞপ্তি"
+	},
+	"notificationShortcutProxyModeMessage": {
+		"message": "প্রক্সি মোড {0} এ পরিবর্তিত হয়েছে"
+	},
+	"notificationShortcutProxyServerChanged": {
+		"message": "প্রক্সি সার্ভার {0} এ পরিবর্তিত হয়েছে"
+	},
+	"popupRatingDialogTitle": {
+		"message": "ঠিকানা কি কাজ করে?"
+	},
+	"popupRatingWorksButton": {
+		"message": "হ্যাঁ (+1)"
+	},
+	"popupRatingFailsButton": {
+		"message": "না (-1)"
+	},
+	"popupRatingCancelButton": {
+		"message": "বাতিল করুন"
+	},
+	"settingsProxyTestTitle": {
+		"message": "প্রক্সি অ্যাক্সেসিবিলিটি পরীক্ষা"
+	},
+	"settingsProxyTestEnable": {
+		"message": "প্রক্সি পরীক্ষার জন্য পরীক্ষামূলক সাইট যোগ করুন"
+	},
+	"settingsProxyTestNote": {
+		"message": "সর্বাধিক 5টি ঠিকানা লিখুন। আপনি 3টির বেশি নির্দিষ্ট না করলে পরীক্ষাটি দ্রুত হবে।"
+	},
+	"settingsProxyTestUrlsTitle": {
+		"message": "অ্যাক্সেস পরীক্ষার জন্য দেখার ঠিকানা"
+	},
+	"settingsProxyTestUrlsWarning": {
+		"message": "⚠️ আপনি এখানে যে ওয়েবসাইটগুলি দেখেন সেগুলি লিখুন (যেমন youtube.com, telegram.org), প্রক্সি ঠিকানা নয়।"
+	},
+	"settingsProxyTestClear": {
+		"message": "পরীক্ষামূলক সাইটগুলি সাফ করুন"
+	},
+	"settingsProxyTestStop": {
+		"message": "⏹ পরীক্ষা বন্ধ করুন"
+	},
+	"proxyTestCompleted": {
+		"message": "পরীক্ষা সম্পূর্ণ হয়েছে। {0}টি প্রক্সি পরীক্ষা করা হয়েছে।"
+	},
+	"settingsProxyTestRatingAutoEnabled": {
+		"message": "পরীক্ষার ফলাফল দেখানোর জন্য রেটিং স্বয়ংক্রিয়ভাবে সক্রিয় করা হয়েছে।"
+	},
+	"settingsProxyTestNoTestUrls": {
+		"message": "কোন পরীক্ষামূলক সাইট নির্দিষ্ট করা হয়নি। অনুগ্রহ করে অন্তত একটি ওয়েবসাইট যোগ করুন।"
+	},
+	"settingsProxyMustTestTitle": {
+		"message": "প্রক্সি পরীক্ষা"
+	},
+	"settingsProxyMustSiteLabel": {
+		"message": "পরীক্ষার জন্য সাইট:"
+	},
+	"settingsProxyMustTestRun": {
+		"message": "▶ পরীক্ষা করুন"
+	},
+	"settingsProxyMustAddSite": {
+		"message": "সাইট যোগ করুন"
+	},
+	"settingsProxyMustTestCondition": {
+		"message": "যদি কিছুই নির্বাচিত না হয়, তাহলে টেবিলের সমস্ত প্রক্সির জন্য পরীক্ষা চালানো হয়।"
+	},
+	"settingsProxyMustTestResults": {
+		"message": "ফলাফল: ✅ = এই সাইটের জন্য নিশ্চিতভাবে কাজ করে, ☑️ = সম্ভবত কাজ করে (পুরানো ডেটা বা অন্যান্য সাইটে সাফল্য), ❓ = কোন ডেটা নেই, ⛔ = কাজ করে না।"
+	},
+	"settingsServersRatingPriority": {
+		"message": "রেটিং + অগ্রাধিকার"
+	},
+	"settingsContextMenuChangeRating": {
+		"message": "ম্যানুয়াল রেটিং পরিবর্তন করুন"
+	},
+	"settingsContextMenuPlus1": {
+		"message": "(+1)"
+	},
+	"settingsContextMenuMinus1": {
+		"message": "(-1)"
+	},
+	"settingsContextMenuRatingTitle": {
+		"message": "ম্যানুয়াল রেটিং"
+	},
+	"settingsContextMenuPlus1Desc": {
+		"message": "তালিকায় উপরে সরান"
+	},
+	"settingsContextMenuMinus1Desc": {
+		"message": "তালিকায় নিচে সরান"
+	},
+	"settingsContextMenuResetRating": {
+		"message": "রেটিং রিসেট করুন"
+	},
+	"settingsContextMenuSetFavorite": {
+		"message": "পছন্দ হিসেবে সেট করুন"
+	},
+	"settingsContextMenuSetPin": {
+		"message": "পিন করুন"
+	},
+	"settingsContextMenuRemoveFavorite": {
+		"message": "পছন্দ থেকে সরান"
+	},
+	"settingsContextMenuUnpin": {
+		"message": "আনপিন করুন"
+	},
+	"settingsContextMenuRemovePriority": {
+		"message": "অগ্রাধিকার সরান"
+	},
+	"settingsContextMenuExportSelected": {
+		"message": "নির্বাচিত রপ্তানি করুন"
+	},
+	"settingsContextMenuCopyAddresses": {
+		"message": "ঠিকানা কপি করুন"
+	},
+	"settingsContextMenuDelete": {
+		"message": "মুছুন"
+	},
+	"settingsContextMenuTestForSite": {
+		"message": "সাইটের জন্য নির্বাচিত পরীক্ষা করুন"
+	},
+	"settingsProxyMustTestProgress": {
+		"message": "{0} এর জন্য প্রক্সি পরীক্ষা করা হচ্ছে... ({1}/{2})"
+	},
+	"settingsProxyMustTestComplete": {
+		"message": "পরীক্ষা সম্পূর্ণ হয়েছে"
+	},
+	"settingsProxyMustAddSitePrompt": {
+		"message": "সাইট ডোমেইন লিখুন (যেমন youtube.com):"
+	},
+	"settingsProxyMustSiteAlreadyExists": {
+		"message": "সাইটটি ইতিমধ্যে তালিকায় বিদ্যমান।"
+	},
+	"settingsProxyMustInvalidDomain": {
+		"message": "অবৈধ ডোমেইন। অনুগ্রহ করে একটি বৈধ ডোমেইন লিখুন (যেমন youtube.com)।"
+	},
+	"popupCurrentSite": {
+		"message": "বর্তমান সাইট:"
+	},
+	"settingsProxyMustRemoveSite": {
+		"message": "সাইট সরান"
+	},
+	"settingsContextMenuMoveToTop": {
+		"message": "উপরে সরান"
+	},
+	"settingsContextMenuMoveToDown": {
+		"message": "নিচে সরান"
+	},
+	"settingsProxyMustCannotRemoveAutoSite": {
+		"message": "এই সাইটটি নিয়ম থেকে এসেছে এবং ম্যানুয়ালি সরানো যাবে না।"
+	},
+	"settingsProxyMustConfirmRemoveSite": {
+		"message": "পরীক্ষামূলক সাইটগুলি থেকে \"{0}\" সরানো হবে?"
+	},
+	"settingsProxyMustSiteRemoved": {
+		"message": "সাইট \"{0}\" সরানো হয়েছে।"
+	},
+	"settingsProxyMustStaleHours": {
+		"message": "পুরাতন হওয়ার সময় (ঘন্টা):"
+	},
+	"settingsContextMenuPreciseTest": {
+		"message": "সুনির্দিষ্ট পরীক্ষা (ধীর, আরও সঠিক)"
+	},
+	"settingsContextMenuExpressTest": {
+		"message": "এক্সপ্রেস পরীক্ষা (দ্রুত, কম সঠিক)"
+	},
+	"popupQuickTestButton": {
+		"message": "পরীক্ষা করুন"
+	},
+	"popupQuickTestStopButton": {
+		"message": "থামান"
+	},
+	"settingsChooseTestTypeTitle": {
+		"message": "পরীক্ষার ধরন নির্বাচন করুন"
+	},
+	"settingsChooseTestTypeDescription": {
+		"message": "কোন পরীক্ষা চালাতে হবে তা নির্বাচন করুন:"
+	},
+	"settingsPreciseTestDesc": {
+		"message": "সম্পূর্ণ পরীক্ষা, আরও সঠিক কিন্তু বেশি সময় নেয়।"
+	},
+	"settingsExpressTestDesc": {
+		"message": "এক্সপ্রেস পরীক্ষা, কিছু কার্যকরী প্রক্সি বাদ দিতে পারে, কিন্তু দ্রুত অন্তত একটি খুঁজে পায়।"
+	},
+	"settingsCancelButton": {
+		"message": "বাতিল করুন"
+	},
+	"popupAddAllSuccessfulSubs": {
+		"message": "কার্যকরী যোগ করুন"
+	},
+	"settingsContextMenuClearStatuses": {
+		"message": "অবস্থা সাফ করুন"
+	},
+	"settingsContextMenuClearStatusesSelected": {
+		"message": "নির্বাচিত প্রক্সি"
+	},
+	"settingsContextMenuClearStatusesAll": {
+		"message": "সমস্ত প্রক্সি"
+	},
+	"settingsContextMenuClearStatusesConfirmSelected": {
+		"message": "নির্বাচিত প্রক্সির জন্য পরীক্ষার অবস্থা সাফ করবেন?"
+	},
+	"settingsContextMenuClearStatusesConfirmAll": {
+		"message": "সমস্ত প্রক্সির জন্য পরীক্ষার অবস্থা সাফ করবেন? এই ক্রিয়াটি পূর্বাবস্থায় ফেরানো যাবে না।"
+	},
+	"settingsContextMenuClearStatusesSuccess": {
+		"message": "পরীক্ষার অবস্থা সফলভাবে সাফ করা হয়েছে।"
+	},
+	"popupQuickTestTooltip": {
+		"message": "বর্তমান সাইটের জন্য কার্যকরী প্রক্সি খুঁজতে দ্রুত পরীক্ষা"
+	},
+	"popupAddAllSuccessfulSubsTooltip": {
+		"message": "পরীক্ষায় উত্তীর্ণ সাবস্ক্রিপশন প্রক্সিগুলি আপনার ম্যানুয়াল তালিকায় যোগ করে"
+	},
+	"popupTestMenuTitle": {
+		"message": "পরীক্ষার ধরন নির্বাচন করুন"
+	},
+	"popupTestMenuAllProxies": {
+		"message": "সমস্ত প্রক্সির জন্য এক্সপ্রেস পরীক্ষা"
+	},
+	"popupTestMenuSubscriptionsOnly": {
+		"message": "শুধুমাত্র সাবস্ক্রিপশনের জন্য এক্সপ্রেস পরীক্ষা"
+	},
+	"popupTestMenuAllProxiesDesc": {
+		"message": "ম্যানুয়াল + সাবস্ক্রিপশন প্রক্সি"
+	},
+	"popupTestMenuSubscriptionsOnlyDesc": {
+		"message": "তারপর কার্যকরীগুলিকে ম্যানুয়াল তালিকায় যোগ করুন"
+	},
+	"popupTestMenuCycleTest": {
+		"message": "চক্রীয় প্রক্সি পরীক্ষা (সম্পূর্ণ স্যুইচিং)"
+	},
+	"popupTestMenuCycleTestDesc": {
+		"message": "ক্রমিকভাবে প্রক্সি স্যুইচ করে, সাইট লোডিং পরীক্ষা করে"
+	},
+	"settingsContextMenuCycleTest": {
+		"message": "চক্রীয় পরীক্ষা (সম্পূর্ণ স্যুইচিং)"
+	},
+	"settingsCycleTestDesc": {
+		"message": "ক্রমিকভাবে প্রক্সি স্যুইচ করে, সাইট লোডিং পরীক্ষা করে। আরও পুঙ্খানুপুঙ্খ কিন্তু ধীর।"
+	},
+	"popupTestMenuExpressCycleTest": {
+		"message": "এক্সপ্রেস চক্রীয় পরীক্ষা (দ্রুত স্যুইচিং)"
+	},
+	"popupTestMenuExpressCycleTestDesc": {
+		"message": "দ্রুত ক্রমিক প্রক্সি স্যুইচিং, 10 সেকেন্ড টাইমআউট, প্রথম সাফল্যে থামে"
+	},
+	"popupTestMenuExpressCycleAll": {
+		"message": "এক্সপ্রেস চক্রীয় পরীক্ষা (সমস্ত প্রক্সি)"
+	},
+	"popupTestMenuExpressCycleAllDesc": {
+		"message": "ম্যানুয়াল + সাবস্ক্রিপশন প্রক্সি"
+	},
+	"popupTestMenuExpressCycleSubsOnly": {
+		"message": "এক্সপ্রেস চক্রীয় পরীক্ষা (শুধুমাত্র সাবস্ক্রিপশন)"
+	},
+	"popupTestMenuExpressCycleSubsOnlyDesc": {
+		"message": "তারপর কার্যকরীগুলিকে ম্যানুয়াল তালিকায় যোগ করুন"
+	},
+	"popupNoSubscriptionProxies": {
+		"message": "পরীক্ষা করার জন্য কোন সাবস্ক্রিপশন প্রক্সি নেই।"
+	},
+	"settingsCopiedAddresses": {
+		"message": "ঠিকানা কপি করা হয়েছে"
+	},
+	"settingsCopyFailed": {
+		"message": "কপি করতে ব্যর্থ"
+	},
+	"settingsAnotherTestRunning": {
+		"message": "আরেকটি পরীক্ষা ইতিমধ্যে চলছে। আপনি যদি মনে করেন এটি আটকে গেছে, অনুগ্রহ করে সেটিংস পৃষ্ঠাটি পুনরায় লোড করুন (F5) এবং আবার চেষ্টা করুন।"
+	},
+	"settingsProxyTestTimeout": {
+		"message": "10 মিনিট পরে পরীক্ষার সময় শেষ হয়েছে এবং জোর করে বন্ধ করা হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।"
+	},
+	"settingsProxyMustNoSiteSelected": {
+		"message": "অনুগ্রহ করে একটি সাইট নির্বাচন করুন।"
+	},
+	"settingsProxyMustSiteAdded": {
+		"message": "সাইট \"{0}\" যোগ করা হয়েছে।"
+	},
+	"testingExplanationTitle": {
+		"message": "প্রক্সি পরীক্ষা কীভাবে কাজ করে"
+	},
+	"testingExplanationText": {
+		"message": "পরীক্ষার সময়, অস্থায়ী ট্যাবগুলি স্বয়ংক্রিয়ভাবে খোলে এবং বন্ধ হয়, প্রক্সি IP এবং সেই প্রক্সির মাধ্যমে প্রবেশ করা পরীক্ষা সাইটের ঠিকানার সাথে সংযোগ পরীক্ষা করে। পরীক্ষার ট্যাবগুলি অবিলম্বে আপনার ব্রাউজার ইতিহাস থেকে সরিয়ে দেওয়া হয় যাতে জগাখিচুড়ি এড়ানো যায়। পরীক্ষা চলাকালীন আপনি নিরাপদে ব্রাউজারটি ছোট করতে পারেন, কারণ পরীক্ষাগুলি পরীক্ষা করা প্রক্সিগুলি স্যুইচ করে আপনার ওয়েব ব্রাউজিংয়ে হস্তক্ষেপ করে।"
+	},
+	"settingsGeneralEnableRating": {
+		"message": "প্রক্সির জন্য রেটিং সক্রিয় করুন"
+	},
+	"settingsGeneralEnableRatingDesc": {
+		"message": "প্রক্সি রেটিং দেওয়ার (কাজ করে/কাজ করে না) এবং রেটিং অনুসারে সাজানোর অনুমতি দেয়।"
+	},
+	"settingsProxyMustStaleHoursDesc": {
+		"message": "কত ঘন্টা পরে পরীক্ষার ফলাফল পুরানো বলে বিবেচিত হবে (1-168)।"
+	},
+	"datatablesSearch": {
+		"message": "অনুসন্ধান করুন:"
+	},
+	"datatablesShow": {
+		"message": "দেখান"
+	},
+	"datatablesEntries": {
+		"message": "এন্ট্রি"
+	},
+	"datatablesPrevious": {
+		"message": "পূর্ববর্তী"
+	},
+	"datatablesNext": {
+		"message": "পরবর্তী"
+	},
+	"datatablesInfo": {
+		"message": "_TOTALটি এন্ট্রির মধ্যে _START_ থেকে _END_ পর্যন্ত দেখানো হচ্ছে"
+	},
+	"datatablesInfoEmpty": {
+		"message": "0টি এন্ট্রির মধ্যে 0 থেকে 0 পর্যন্ত দেখানো হচ্ছে"
+	},
+	"datatablesEmptyTable": {
+		"message": "টেবিলে কোন ডেটা উপলব্ধ নেই"
+	},
+	"datatablesAll": {
+		"message": "সব"
+	},
+	"popupAddCurrentSiteTooltip": {
+		"message": "বর্তমান সাইটটি পরীক্ষা তালিকায় যোগ করুন"
+	}
+}

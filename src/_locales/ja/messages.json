@@ -1,0 +1,1626 @@
+{
+	"uiDirection": {
+		"message": "ltr"
+	},
+	"languageCode": {
+		"message": "ja",
+		"description": "We need to know the code which might not match what browser UI has"
+	},
+	"extensionName": {
+		"message": "ProxyMust"
+	},
+	"extensionDescription": {
+		"message": "ProxyMust – 選択的プロキシマネージャー（SmartProxy のフォーク）。カスタマイズ可能なパターンに基づいて、訪問するサイトのプロキシを自動的に有効/無効にします。"
+	},
+	"toolbarTooltipEffectiveRule": {
+		"message": "一致したルールのソース:"
+	},
+	"toolbarTooltipEffectiveRuleNone": {
+		"message": "一致するルールがありません"
+	},
+	"toolbarTooltipEffectiveRulePattern": {
+		"message": "ルールパターン:"
+	},
+	"popupTitle": {
+		"message": "ProxyMust アクティベーション"
+	},
+	"popupPrivateBrowsingMode": {
+		"message": "プライベートブラウジングモード"
+	},
+	"popupNoProxy": {
+		"message": "直接接続（プロキシなし）"
+	},
+	"popupSmartProxy": {
+		"message": "選択的プロキシ"
+	},
+	"popupAlwaysEnable": {
+		"message": "常に有効"
+	},
+	"popupSystemProxy": {
+		"message": "システムプロキシ"
+	},
+	"popupActiveProxy": {
+		"message": "アクティブなプロキシ（このプロファイル）:"
+	},
+	"popupActiveProxyDefault": {
+		"message": "アクティブなプロキシ（デフォルト設定）:"
+	},
+	"popupEnableProxyOn": {
+		"message": "プロキシを有効にする"
+	},
+	"popupIgnoreTheseDomains": {
+		"message": "これらのドメインを無視"
+	},
+	"popupRuleIsFromSubscription": {
+		"message": "（サブスクリプションから）"
+	},
+	"popupProxyableResources": {
+		"message": "プロキシ可能なリソース"
+	},
+	"popupSettings": {
+		"message": "設定"
+	},
+	"popupSubscriptions": {
+		"message": "-サブスクリプション-"
+	},
+	"popupUpdateText": {
+		"message": "{0} へのアップデートが利用可能です"
+	},
+	"popupFailedRequestsMenu": {
+		"message": "失敗したリクエスト"
+	},
+	"popupFailedRequestsTitle": {
+		"message": "失敗したリクエストのリスト"
+	},
+	"popupFailedRequestsDesc": {
+		"message": "これらはタイムアウトまたは失敗したドメインです。<br />これらのドメインがブロックされていると思われる場合は、ここでプロキシルールリストに追加できます。"
+	},
+	"popupAddFailedRequests": {
+		"message": "ルールリストに追加"
+	},
+	"popupProfileTypeDoesNotSupportsRules": {
+		"message": "選択されたプロファイル '{0}' はルールをサポートしていません。別のプロファイルを選択してください。"
+	},
+	"popupAddIgnoredFailures": {
+		"message": "無視する"
+	},
+	"popupAddIgnoredFailuresConfirm": {
+		"message": "選択した失敗を無視してもよろしいですか？無視すると、それらからエラーを受け取らなくなります。後で設定から変更できます。"
+	},
+	"popupNotAllowedSetProxySettingsChrome": {
+		"message": "残念ながら、システムプロキシを使用するようにブラウザ設定を変更するには `incognito` 権限が必要です。ブラウザで ProxyMust 拡張機能の設定に移動し、`Allow in incognito` 権限をチェックしてください。<a href='https://support.google.com/chrome_webstore/answer/2664769'>方法を学ぶ</a>。"
+	},
+	"popupNotAllowedSetProxySettingsFirefox": {
+		"message": "Firefox 67 以降、システムプロキシを使用するようにブラウザ設定を変更するには `Private Browsing` 権限が必要です。ブラウザで ProxyMust アドオンの設定に移動し、`Run in Private Windows` 権限を許可してください。<a href='https://support.mozilla.org/en-US/kb/extensions-private-browsing'>方法を学ぶ</a>。"
+	},
+	"proxyableTitle": {
+		"message": "プロキシ可能なリソース"
+	},
+	"proxyableHeader": {
+		"message": "このページのプロキシ可能なアイテム"
+	},
+	"proxyableReload": {
+		"message": "再読み込み"
+	},
+	"proxyableClose": {
+		"message": "閉じる"
+	},
+	"proxyableHeaderDesc": {
+		"message": "このページから使用または呼び出されるリソースのリストです。このリストを使用して、これらのリソースをプロキシアクティベーションルールに追加してください。<br />何も表示されない場合は、ページを再読み込みしてリソースを表示してください。"
+	},
+	"proxyableErrNoSourceTab": {
+		"message": "ソースタブが見つかりません！"
+	},
+	"proxyableCreateRuleConfirm": {
+		"message": "選択したドメインのルールを作成してもよろしいですか？"
+	},
+	"proxyableDisableButton": {
+		"message": "無効化"
+	},
+	"proxyableEnableButton": {
+		"message": "有効化"
+	},
+	"proxyableEnableButtonDomain": {
+		"message": "有効にする対象: "
+	},
+	"proxyableSubscriptionRule": {
+		"message": "（サブスクリプションルール）"
+	},
+	"proxyableDeleteRuleConfirm": {
+		"message": "選択したルールを削除してもよろしいですか:"
+	},
+	"proxyableGridNoDataContent": {
+		"message": "リクエストがありません"
+	},
+	"proxyableGridColUrl": {
+		"message": "リクエスト URL"
+	},
+	"proxyableGridColRuleStatus": {
+		"message": "ルールステータス"
+	},
+	"proxyableGridColProxifiedStatus": {
+		"message": "プロキシステータス"
+	},
+	"proxyableGridColRuleHost": {
+		"message": "ルールドメイン"
+	},
+	"proxyableGridColRulePattern": {
+		"message": "ルールパターン"
+	},
+	"proxyableGridCol_ProxifiedStatus_NoProxy": {
+		"message": "プロキシなし"
+	},
+	"proxyableGridCol_ProxifiedStatus_Special": {
+		"message": "特別"
+	},
+	"proxyableGridCol_ProxifiedStatus_ProxyPerOrigin": {
+		"message": "親タブから"
+	},
+	"proxyableGridCol_ProxifiedStatus_MatchedRule": {
+		"message": "一致"
+	},
+	"proxyableGridCol_ProxifiedStatus_AlwaysEnabled": {
+		"message": "常に有効"
+	},
+	"proxyableGridCol_ProxifiedStatus_SystemProxyApplied": {
+		"message": "システムプロキシ適用済み"
+	},
+	"proxyableGridCol_RuleStatus_NoneMatched": {
+		"message": "一致なし"
+	},
+	"proxyableGridCol_RuleStatus_Special": {
+		"message": "特別"
+	},
+	"proxyableGridCol_RuleStatus_ProxyPerOrigin": {
+		"message": "親タブから"
+	},
+	"proxyableGridCol_RuleStatus_MatchedRule": {
+		"message": "一致"
+	},
+	"proxyableGridCol_RuleStatus_Whitelisted": {
+		"message": "ホワイトリスト"
+	},
+	"proxyableGridCol_RuleStatus_AlwaysEnabledByPassed": {
+		"message": "常に有効 <br> バイパス済み"
+	},
+	"proxyableGridCol_RuleStatus_AlwaysEnabledForcedByRules": {
+		"message": "常に有効 <br> ルールにより強制"
+	},
+	"settingsTitle": {
+		"message": "ProxyMust 設定"
+	},
+	"settingsTabAbout": {
+		"message": "概要"
+	},
+	"settingsTabGeneral": {
+		"message": "一般オプション"
+	},
+	"settingsTabSmartProfiles": {
+		"message": "選択的プロファイル"
+	},
+	"settingsTabAddSmartProfile": {
+		"message": "新しい選択的プロファイルを追加"
+	},
+	"settingsTabProxyServers": {
+		"message": "プロキシサーバー"
+	},
+	"settingsTabProxyServerSubscriptions": {
+		"message": "プロキシサーバーサブスクリプション"
+	},
+	"settingsTabBackupRestore": {
+		"message": "バックアップ / 復元"
+	},
+	"settingsTabUpdateText": {
+		"message": "{0} にアップデート"
+	},
+	"settingsTabAboutDescription": {
+		"message": "ProxyMust を使えば、プロキシの使用はこれ以上ないほど簡単になります。一度設定して忘れるソリューションと考えてください。ProxyMust を使えば、プロキシを手動で変更したり、オン/オフを切り替えたりする必要はありません。ワンクリックで、希望のウェブサイトのプロキシを有効にするように ProxyMust に指示するだけです。その後、その特定のウェブサイトにアクセスすると、ProxyMust が動作し、そのウェブサイトのすべてのデータがプロキシを介して転送されます。あなたは何もする必要はありません。"
+	},
+	"settingsGeneralSmartFeatures": {
+		"message": "スマート機能"
+	},
+	"settingsGeneralSmartFeaturesNoChrome": {
+		"message": "<strong><a href='https://www.getfirefox.com/' target='_blank' rel='noopener'>Firefox のみ</a>！</strong> 残念ながら、この機能は Chrome ではサポートされていません。"
+	},
+	"settingsGeneralProxyPerOrigin": {
+		"message": "タブ/オリジンごとにプロキシを有効にする"
+	},
+	"settingsGeneralProxyPerOriginDesc": {
+		"message": "ルールがタブの URL と一致する場合、そのタブの接続にプロキシが適用されます。通常、各ページには他のリクエストがあり、それらには一致するルールがない可能性があるため、それらの接続にはプロキシが適用されません。`タブ/オリジンごとにプロキシを有効にする` オプションは、異なるドメインやオリジンからのすべての接続を含むページ全体が、タブのオリジンに適用される同じプロキシを使用するようにします。また、このオプションは、すべての個々のドメインに対してルールを持つ必要性を排除します。タブにプロキシが適用されていない場合、プロキシルールは引き続き機能し、ページ内の他の接続に個別にプロキシを適用することに注意してください。"
+	},
+	"settingsGeneralProxyPerOriginEnabled": {
+		"message": "タブ/オリジンごとのプロキシが有効になりました"
+	},
+	"settingsGeneralProxyPerOriginDisabled": {
+		"message": "タブ/オリジンごとのプロキシが無効になりました"
+	},
+	"settingsGeneralSyncing": {
+		"message": "同期"
+	},
+	"settingsGeneralIncognitoProfile": {
+		"message": "プライベートブラウジングプロファイル"
+	},
+	"settingsGeneralIncognitoProfileDisabled": {
+		"message": "（無効）"
+	},
+	"settingsGeneralIncognitoProfileDesc": {
+		"message": "タブ/ウィンドウがプライベートブラウジングモードの場合に強制的に使用するプライベートブラウジングプロファイルを選択します。このオプションはアクティブなプロファイルを上書きします。"
+	},
+	"settingsGeneralEnableSyncing": {
+		"message": "設定の同期を有効にする"
+	},
+	"settingsGeneralEnableSyncingDesc": {
+		"message": "同期を有効にすると、ルール、サーバー、サブスクリプションを含むすべての設定がすべてのブラウザで利用できるようになります。"
+	},
+	"settingsSaveGeneralOptionsButton": {
+		"message": "変更を保存"
+	},
+	"settingsRejectGeneralOptionsButton": {
+		"message": "変更を拒否"
+	},
+	"settingsGeneralSyncProxyMode": {
+		"message": "アクティブプロファイルの同期を有効にする"
+	},
+	"settingsGeneralSyncProxyModeDesc": {
+		"message": "アクティブなプロファイルを同期する場合はチェックしてください。"
+	},
+	"settingsGeneralSyncActiveProxy": {
+		"message": "アクティブプロキシの同期を有効にする"
+	},
+	"settingsGeneralSyncActiveProxyDesc": {
+		"message": "選択したプロキシサーバーを同期する場合はチェックしてください。"
+	},
+	"settingsGeneralSyncToBrowser": {
+		"message": "ブラウザの同期サーバーを使用する"
+	},
+	"settingsGeneralSyncToWebDAV": {
+		"message": "WebDAV サーバーに同期する"
+	},
+	"settingsGeneralWebDavServerUrl": {
+		"message": "WebDAV サーバー URL:"
+	},
+	"settingsGeneralWebDavBackupFilename": {
+		"message": "バックアップファイル名:"
+	},
+	"settingsGeneralWebDavServerUser": {
+		"message": "WebDAV サーバー ユーザー名:"
+	},
+	"settingsGeneralWebDavServerPassword": {
+		"message": "WebDAV サーバー パスワード:"
+	},
+	"settingsGeneralWebDavBehaviourDesc": {
+		"message": "設定が変更されるたびにバックアップが行われ、復元はブラウザの起動時のみ行われることに注意してください。"
+	},
+	"settingsGeneralWebDavServerBackupNow": {
+		"message": "今すぐバックアップ"
+	},
+	"settingsGeneralWebDavServerRestoreNow": {
+		"message": "今すぐ復元"
+	},
+	"settingsGeneralWebDavRestoreNowConfirm": {
+		"message": "これにより、WebDAV サーバーから現在の設定が上書きされます。この操作は元に戻せません。注意して進めてください。続行しますか？"
+	},
+	"settingsGeneralWebDavRestoreNowSuccess": {
+		"message": "WebDAV 復元が正常に完了しました！"
+	},
+	"settingsGeneralWebDavRestoreNowFailed": {
+		"message": "WebDAV 復元に失敗しました:"
+	},
+	"settingsGeneralWebDav_ErrorValidUrl": {
+		"message": "有効な WebDAV サーバー URL を入力してください"
+	},
+	"settingsGeneralWebDav_ErrorEmptyFilename": {
+		"message": "WebDAV サーバーのバックアップファイル名は空にできません"
+	},
+	"settingsGeneralWebDav_ErrorRequiredFields": {
+		"message": "必要な WebDAV フィールドをすべて入力してください。"
+	},
+	"settingsGeneralWebDavBackupNowSuccess": {
+		"message": "WebDAV バックアップが正常に完了しました！"
+	},
+	"settingsGeneralWebDavBackupNowFailed": {
+		"message": "WebDAV バックアップに失敗しました:"
+	},
+	"settingsGeneralErrorDetection": {
+		"message": "エラー検出"
+	},
+	"settingsGeneralDetectFailures": {
+		"message": "リクエストの失敗を検出する"
+	},
+	"settingsGeneralDetectFailuresDesc": {
+		"message": "リクエストの失敗検出は、プロキシが必要なドメインを特定するのに役立ちます。"
+	},
+	"settingsGeneralSelectIgnoredDomains": {
+		"message": "ルールを入力"
+	},
+	"settingsGeneralIgnoreRequestFailuresForDomains": {
+		"message": "これらのルールに基づいて失敗検出を無視する"
+	},
+	"settingsGeneralIgnoreRequestFailuresForDomainsDesc": {
+		"message": "失敗検出を無効にするルールを追加します。"
+	},
+	"settingsGeneralDisplayFailedOnBadge": {
+		"message": "ツールバーアイコンのバッジに失敗したリクエスト数を表示する"
+	},
+	"settingsGeneralThemes": {
+		"message": "テーマ"
+	},
+	"settingsGeneralThemesAutoSwitch": {
+		"message": "ブラウザのテーマで自動切り替え"
+	},
+	"settingsGeneralThemesAutoSwitchDesc": {
+		"message": "以下で選択したテーマを自動的に切り替えます。これはブラウザのテーマに従い、さらにオペレーティングシステムのテーマにも従うことができます。"
+	},
+	"settingsGeneralThemesLight": {
+		"message": "ライトテーマ"
+	},
+	"settingsGeneralThemes_Default": {
+		"message": "（デフォルト）"
+	},
+	"settingsGeneralThemes_Custom": {
+		"message": "（カスタム）"
+	},
+	"settingsGeneralThemes_CustomUrl": {
+		"message": "カスタムスタイル (CSS) URL:"
+	},
+	"settingsGeneralThemes_CustomUrlDesc": {
+		"message": "URL は 'Https' である必要があります。以下のカスタムスタイルでインポートされたフォントやその他のスタイルに注意してください。ブラウザのポップアップをブロックしたり遅くしたりする可能性があります。bootswatch.com のテーマを試すこともできますが、Google フォントへの依存に注意してください。"
+	},
+	"settingsGeneralThemesDark": {
+		"message": "ダークテーマ"
+	},
+	"settingsGeneralThemesLight_ErrorValidUrl": {
+		"message": "ライトテーマの有効な CSS URL を入力してください。URL は 'https' である必要があります。"
+	},
+	"settingsGeneralThemesDark_ErrorValidUrl": {
+		"message": "ダークテーマの有効な CSS URL を入力してください。URL は 'https' である必要があります。"
+	},
+	"settingsGeneralOtherSettings": {
+		"message": "その他の設定"
+	},
+	"settingsGeneralEnableShortcuts": {
+		"message": "ショートカットを有効にする"
+	},
+	"settingsGeneralEnableShortcutsDesc": {
+		"message": "ブラウザのアドオン設定ページからショートカットを設定できます。"
+	},
+	"settingsGeneralViewShortcuts": {
+		"message": "ショートカットを表示"
+	},
+	"settingsGeneralConfigureShortcuts": {
+		"message": "ショートカットを設定"
+	},
+	"settingsGeneralShortcutNotification": {
+		"message": "ショートカット通知を有効にする"
+	},
+	"settingsGeneralViewShortcutKeys": {
+		"message": "ショートカットキー"
+	},
+	"settingsGeneralDisplayAppliedProxyOnBadge": {
+		"message": "バッジに適用されたルールのソースを表示する"
+	},
+	"settingsGeneralDisplayAppliedRulePatternOnBadge": {
+		"message": "バッジに適用されたルールのパターンを表示する"
+	},
+	"settingsGeneralRefreshTabOnConfigChanges": {
+		"message": "プロファイルまたはプロキシが変更されたときにアクティブなタブをリフレッシュする"
+	},
+	"settingsGeneralCancelButton": {
+		"message": "キャンセル"
+	},
+	"settingsGeneralSaveChanges": {
+		"message": "変更を保存"
+	},
+	"settingsGeneralKeyboardShortcutsTitle": {
+		"message": "キーボードショートカット"
+	},
+	"settingsGeneralCloseButton": {
+		"message": "閉じる"
+	},
+	"settingsGeneralKeyboardShortcutsNotSupported": {
+		"message": "キーボードショートカットはモバイルデバイスではサポートされていません。"
+	},
+	"settingsTabProxyServersTitle": {
+		"message": "プロキシサーバーを管理する:"
+	},
+	"settingsTabProxyServersDescription": {
+		"message": "プロキシサーバーのリストです。必要な数だけプロキシを定義し、ツールバーから切り替えることができます。"
+	},
+	"settingsTabBackupRestoreDescription": {
+		"message": "設定の完全バックアップまたは部分バックアップを作成できます。"
+	},
+	"settingsErrNoServersTitle": {
+		"message": "サーバーがありません！"
+	},
+	"settingsErrNoServersDescription": {
+		"message": "何よりもまず、プロキシサーバーを定義する必要があります。"
+	},
+	"settingsActiveProxyServer": {
+		"message": "デフォルトのプロキシサーバー:"
+	},
+	"settingsAddServerButton": {
+		"message": "サーバーを追加"
+	},
+	"settingsRemoveMultipleServerButton": {
+		"message": "複数削除"
+	},
+	"settingsSaveChangesButton": {
+		"message": "変更を保存"
+	},
+	"settingsRejectChangesButton": {
+		"message": "変更を拒否"
+	},
+	"settingsEditButton": {
+		"message": "編集"
+	},
+	"settingsFullBackupButton": {
+		"message": "完全バックアップを作成"
+	},
+	"settingsFullBackupButtonDesc": {
+		"message": "オプションの完全バックアップを作成します（プロキシサーバーとルールを含む）。"
+	},
+	"settingsRestoreBackupButton": {
+		"message": "バックアップを復元"
+	},
+	"settingsRestoreBackupButtonDesc": {
+		"message": "ローカルファイルから以前に作成したバックアップを復元します"
+	},
+	"settingsDangerZoneDesc": {
+		"message": "危険区域"
+	},
+	"settingsFactoryResetButton": {
+		"message": "工場出荷時設定にリセット"
+	},
+	"settingsFactoryResetDesc": {
+		"message": "すべてをリセットします。これにより、すべてのルールとプロキシサーバーが削除され、オプションが永続的にリセットされます。"
+	},
+	"settingsFactoryResetConfirm": {
+		"message": "本当にすべてをリセットしますか？本当ですか？戻ることはできません！"
+	},
+	"settingsFactoryResetSuccess": {
+		"message": "工場出荷時設定へのリセットが正常に完了しました"
+	},
+	"settingsImportExportProxiesDesc": {
+		"message": "個々のプロキシサーバーリストをインポート/エクスポートします。"
+	},
+	"settingsImportProxiesButtonBackup": {
+		"message": "プロキシサーバーをインポート"
+	},
+	"settingsExportProxiesButtonBackup": {
+		"message": "プロキシサーバーをエクスポート"
+	},
+	"settingsAddRuleButton": {
+		"message": "ルールを追加"
+	},
+	"settingsImportRulesButton": {
+		"message": "ルールをインポート"
+	},
+	"settingsImportRulesTitle": {
+		"message": "ルールのインポート"
+	},
+	"settingsImportRulesSelectButton": {
+		"message": "ルールバックアップファイル"
+	},
+	"settingsImportRulesText": {
+		"message": "ルールバックアップテキスト"
+	},
+	"settingsImportRulesFrom": {
+		"message": "ソース"
+	},
+	"settingsImportRulesOptionAppend": {
+		"message": "既存のルールに追加"
+	},
+	"settingsImportRulesOptionOverride": {
+		"message": "現在のルールを置き換える（注意して使用）"
+	},
+	"settingsImportRulesCancelButton": {
+		"message": "キャンセル"
+	},
+	"settingsImportRulesImportButton": {
+		"message": "インポート"
+	},
+	"settingsImportProxiesButton": {
+		"message": "プロキシをインポート"
+	},
+	"settingsExportProxiesButton": {
+		"message": "プロキシをエクスポート"
+	},
+	"settingsImportProxiesTitle": {
+		"message": "プロキシリストをインポート"
+	},
+	"settingsImportProxiesSelectFileButton": {
+		"message": "プロキシリストファイル"
+	},
+	"settingsImportProxiesSelectTextButton": {
+		"message": "プロキシリストテキスト"
+	},
+	"settingsImportProxiesOptionAppend": {
+		"message": "既存のプロキシに追加"
+	},
+	"settingsImportProxiesOptionOverride": {
+		"message": "現在のプロキシを置き換える（注意して使用）"
+	},
+	"settingsImportProxiesCancelButton": {
+		"message": "キャンセル"
+	},
+	"settingsImportProxiesImportButton": {
+		"message": "インポート"
+	},
+	"settingsConfirmRemoveProxyServer": {
+		"message": "選択したプロキシサーバーを削除してもよろしいですか？"
+	},
+	"settingsConfirmRemoveMultipleProxyServer": {
+		"message": "選択したプロキシサーバーを削除してもよろしいですか？"
+	},
+	"settingsRemoveAllProxyServers": {
+		"message": "すべてのプロキシサーバーを削除してもよろしいですか？"
+	},
+	"settingsRemoveAllProxyServersSuccess": {
+		"message": "すべてのプロキシサーバーが削除されました。<br/>変更を適用するには保存する必要があります。"
+	},
+	"settingsImportProxiesFileNotSelected": {
+		"message": "プロキシリストファイルを選択してください"
+	},
+	"settingsImportProxyListTextIsEmpty": {
+		"message": "プロキシリストを入力してください"
+	},
+	"settingsImportProxyServersFailed": {
+		"message": "プロキシサーバーのインポートに失敗しました"
+	},
+	"importerImportProxySuccess": {
+		"message": "合計 {1} 個中 {0} 個のプロキシがインポートされました。<br>変更を保存することを忘れないでください。"
+	},
+	"settingsErrorFailedToSaveServers": {
+		"message": "サーバーの保存に失敗しました。"
+	},
+	"settingsChangesReverted": {
+		"message": "変更が正常に元に戻されました。"
+	},
+	"settingsConfirmSaveAllChanged": {
+		"message": "保存されていないすべての変更を保存しますか？"
+	},
+	"settingsConfirmRemoveProxyRule": {
+		"message": "選択したルールを削除してもよろしいですか？"
+	},
+	"settingsConfirmRemoveMultipleProxyRule": {
+		"message": "選択したルールを削除してもよろしいですか？"
+	},
+	"settingsRemoveAllRules": {
+		"message": "すべてのルールを削除してもよろしいですか？"
+	},
+	"settingsRemoveAllRulesSuccess": {
+		"message": "すべてのルールが削除されました。<br/>変更を適用するには保存する必要があります。"
+	},
+	"settingsRestoreBackupFailed": {
+		"message": "バックアップの復元中にエラーが発生しました"
+	},
+	"settingsRestoreBackupFileError": {
+		"message": "選択したファイルの読み取りに失敗しました"
+	},
+	"settingsRulesFileNotSelected": {
+		"message": "ルールファイルを選択してください"
+	},
+	"settingsSourceTypeNotSelected": {
+		"message": "ソースタイプを選択してください"
+	},
+	"settingsImportRulesFailed": {
+		"message": "ファイルのインポートに失敗しました。"
+	},
+	"settingsImportRulesTextIsEmpty": {
+		"message": "ボックスにルールを入力してください"
+	},
+	"settingsServerNameRequired": {
+		"message": "サーバーの名前を指定してください！"
+	},
+	"settingsServerNameExists": {
+		"message": "同じ名前のサーバーがすでに存在します！"
+	},
+	"settingsServerServerAddressIsEmpty": {
+		"message": "サーバーアドレスは空にできません"
+	},
+	"settingsServerPortNoInvalid": {
+		"message": "有効なポート番号を入力してください"
+	},
+	"settingsServerAuthenticationInvalid": {
+		"message": "認証にはユーザー名とパスワードの両方が必要です"
+	},
+	"settingsServersGridNoDataContent": {
+		"message": "定義されたサーバーがありません"
+	},
+	"settingsServersGridColName": {
+		"message": "名前"
+	},
+	"settingsServersGridColProtocol": {
+		"message": "プロトコル"
+	},
+	"settingsServersGridColServer": {
+		"message": "サーバー"
+	},
+	"settingsServersGridColPort": {
+		"message": "ポート"
+	},
+	"settingsServersGridColCountry": {
+		"message": "国"
+	},
+	"settingsServersGridColRating": {
+		"message": "評価"
+	},
+	"settingsServersModalTitle": {
+		"message": "プロキシサーバーの詳細"
+	},
+	"settingsServersServerName": {
+		"message": "サーバー名"
+	},
+	"settingsServersSeverAddress": {
+		"message": "サーバーアドレス"
+	},
+	"settingsServersProtocol": {
+		"message": "プロキシプロトコル"
+	},
+	"settingsServersPort": {
+		"message": "ポート"
+	},
+	"settingsServersProxyDNS": {
+		"message": "SOCKS 5 使用時に DNS をプロキシする"
+	},
+	"settingsServersUsername": {
+		"message": "ユーザー名"
+	},
+	"settingsServersPassword": {
+		"message": "パスワード"
+	},
+	"settingsServersAuthChromeMv3Limitation": {
+		"message": "（残念ながら、プロキシサーバーの認証は Chrome の拡張機能 API ではサポートされていません。これは「意図的」です。）"
+	},
+	"settingsServersCancel": {
+		"message": "キャンセル"
+	},
+	"settingsServersSave": {
+		"message": "保存"
+	},
+	"settingsServersImport": {
+		"message": "インポート"
+	},
+	"settingsProfilesNameTitle": {
+		"message": "選択的プロファイル:"
+	},
+	"settingsProfilesEnabled": {
+		"message": "有効"
+	},
+	"settingsProfilesTypeTitle": {
+		"message": "プロファイルタイプ:"
+	},
+	"settingsProfilesTypeDesc_SmartRules": {
+		"message": "このプロファイルでは、選択的ルールを定義しない限り、プロキシは適用されません。ブラックリストルール、つまりプロキシを適用するルールを定義します。"
+	},
+	"settingsProfilesTypeDesc_AlwaysEnabledBypassRules": {
+		"message": "このプロファイルでは、プロキシサーバーは常に適用されます。選択的ルールを定義してそれらをバイパスします。ホワイトリストルール、つまりプロキシをスキップして適用しないルールを定義します。"
+	},
+	"settingsProfilesTypeDesc_IgnoreFailureRules": {
+		"message": "ルールを追加して、これらのドメインの失敗検出を無視します。"
+	},
+	"settingsProfilesProfileProxyServer": {
+		"message": "プロファイルプロキシサーバー:"
+	},
+	"settingsProfilesDefaultProfileProxyServer": {
+		"message": "（デフォルトのプロキシサーバーを使用）"
+	},
+	"settingsProfilesProfileProxyServerDesc": {
+		"message": "（このプロファイルを使用している間、これがアクティブなプロキシサーバーになります）"
+	},
+	"settingsProfilesRulesSection": {
+		"message": "ルール"
+	},
+	"settingsProfilesDelete": {
+		"message": "削除"
+	},
+	"settingsProfilesAddNewLabel": {
+		"message": "新しい選択的プロファイルを追加"
+	},
+	"settingsProfilesAddNewTypeLead": {
+		"message": "追加する <b>プロファイルタイプ</b> を選択してください:"
+	},
+	"settingsProfilesAddNewType_SmartRules": {
+		"message": "選択的ルール"
+	},
+	"settingsProfilesAddNewType_SmartRulesDesc": {
+		"message": "このタイプのプロファイルでは、定義する必要のあるいくつかの <em>ルール</em> に基づいて、プロキシがリクエストに適用されます。これらのルールを定義するには、メニューバーのポップアップメニューを使用するか、設定から追加するか、<em>プロキシ可能なリソース</em> ウィンドウから行うこともできます。<br>また、Gfwlist などのさまざまなルールリストを購読することもできます。"
+	},
+	"settingsProfilesAddNewType_AlwaysEnabled": {
+		"message": "常に有効"
+	},
+	"settingsProfilesAddNewType_AlwaysEnabledDesc": {
+		"message": "このタイプのプロファイルでは、バイパスルールを定義しない限り、プロキシは常にリクエストに適用されます。ルール定義の手順は、選択的ルールプロファイルタイプと同じです。"
+	},
+	"settingsProfilesAddNewBtnContinue": {
+		"message": "続行"
+	},
+	"settingsProfilesAddNewBtnCancel": {
+		"message": "キャンセル"
+	},
+	"settingsProfilesAddErrorTypeRequired": {
+		"message": "プロファイルタイプを選択してください"
+	},
+	"settingsProfilesAddErrorNameRequired": {
+		"message": "プロファイル名は必須です"
+	},
+	"settingsProfilesAddErrorNameExists": {
+		"message": "プロファイル名がすでに存在します。別の名前を入力してください"
+	},
+	"settingsProfilesDeleteConfirm": {
+		"message": "このプロファイルを削除してもよろしいですか？警告：この操作は元に戻せません！"
+	},
+	"settingsProfilesDeleteFailed": {
+		"message": "選択したプロファイルの削除に失敗しました。"
+	},
+	"settingsProfilesDeleteDone": {
+		"message": "プロファイルは正常に削除されました"
+	},
+	"settingsProfilesDeleteBuiltinFail": {
+		"message": "組み込みプロファイルは削除できません"
+	},
+	"settingsProfilesProxyServer": {
+		"message": "[デフォルトのプロキシサーバーを使用]"
+	},
+	"settingsProfilesRulesSubscriptionsTitle": {
+		"message": "ルールサブスクリプション"
+	},
+	"settingsProfilesRulesSubscriptionsDesc": {
+		"message": "ここでは、ルールリストを購読できます。"
+	},
+	"settingsSaveSmartProfileSuccess": {
+		"message": "選択的プロファイルが正常に保存されました。"
+	},
+	"settingsErrorFailedToSaveSmartProfile": {
+		"message": "選択的プロファイルの保存に失敗しました。"
+	},
+	"settingsRuleSourceRequired": {
+		"message": "ルールのソースドメインを指定してください！"
+	},
+	"settingsRuleSourceInvalid": {
+		"message": "ソースドメインが無効です。ソースドメインは 'google.com' のような形式である必要があります"
+	},
+	"settingsRuleSourceInvalidFormat": {
+		"message": "'ソースドメイン' が無効です '{0}'"
+	},
+	"settingsRuleSourceAlreadyExists": {
+		"message": "同じソースを持つルールがすでに存在します！"
+	},
+	"settingsRuleHostInvalid": {
+		"message": "ホスト名 '{0}' は無効です。ホスト名は 'google.com' のような形式である必要があります"
+	},
+	"settingsRuleRegexNotMatchDomain": {
+		"message": "正規表現ルールがソースドメイン '{0}' と一致しません"
+	},
+	"settingsRuleDoesntIncludeDomain": {
+		"message": "ルールがソースドメイン '{0}' と一致しません"
+	},
+	"settingsRuleRegexInvalid": {
+		"message": "正規表現ルール '{0}' は無効です"
+	},
+	"settingsRuleExactUrlInvalid": {
+		"message": "URL '{0}' は無効です"
+	},
+	"settingsRuleUrlInvalid": {
+		"message": "URL '{0}' は無効です"
+	},
+	"settingsRulesGridNoDataContent": {
+		"message": "定義されたルールがありません"
+	},
+	"settingsRulesGridColRuleType": {
+		"message": "ルールタイプ"
+	},
+	"settingsRulesGridColSource": {
+		"message": "ソース"
+	},
+	"settingsRulesGridColRule": {
+		"message": "ルール"
+	},
+	"settingsRulesGridColEnabled": {
+		"message": "有効"
+	},
+	"settingsRulesGridColProxy": {
+		"message": "プロキシサーバー"
+	},
+	"settingsRulesProxyDefault": {
+		"message": "[アクティブなプロキシを使用]"
+	},
+	"settingsRulesProxyFromProfile": {
+		"message": "[プロファイルプロキシを使用]"
+	},
+	"settingsRulesModalTitle": {
+		"message": "ルールの詳細"
+	},
+	"settingsRulesRuleType": {
+		"message": "ルールタイプ"
+	},
+	"settingsRulesSourceDomain": {
+		"message": "ルールソースドメイン"
+	},
+	"settingsRulesSourceDomainDesc": {
+		"message": "（例: google.com）"
+	},
+	"settingsRulesPattern": {
+		"message": "一致パターン"
+	},
+	"settingsRulesGeneratePattern": {
+		"message": "パターンを自動生成"
+	},
+	"settingsRulesRegex": {
+		"message": "URL 正規表現"
+	},
+	"settingsRulesHostRegex": {
+		"message": "ホスト正規表現"
+	},
+	"settingsRulesExactUrl": {
+		"message": "完全な URL（小文字）"
+	},
+	"settingsRulesProxyServer": {
+		"message": "プロキシサーバー"
+	},
+	"settingsRulesProxyServerNotAuth": {
+		"message": "（認証付きサーバーは Chrome ではサポートされていません）"
+	},
+	"settingsRulesEnabled": {
+		"message": "有効"
+	},
+	"settingsRulesModalCancel": {
+		"message": "キャンセル"
+	},
+	"settingsRulesModalSave": {
+		"message": "保存"
+	},
+	"settingsRulesActionType": {
+		"message": "アクション"
+	},
+	"settingsRuleActionApplyProxy": {
+		"message": "プロキシを適用"
+	},
+	"settingsRuleActionWhitelist": {
+		"message": "ホワイトリスト（プロキシなし）"
+	},
+	"settingsRuleActionWhitelistDesc": {
+		"message": "（ホワイトリストルールは、配置に関係なくプロキシルールよりも優先されます）"
+	},
+	"settingsServerPortInvalid": {
+		"message": "サーバーポート '{0}' は無効です"
+	},
+	"settingsServerHostInvalid": {
+		"message": "サーバーホスト '{0}' は無効です"
+	},
+	"settingsRestoreSettingsSuccess": {
+		"message": "設定が正常に復元されました"
+	},
+	"settingsRestoreSettingsFailed": {
+		"message": "設定の復元中にエラーが発生しました"
+	},
+	"settingsRestoreSettingsFailedInvalid": {
+		"message": "バックアップデータが無効または破損しています"
+	},
+	"settingsRestoreSettingsFailedInvalidActiveProfile": {
+		"message": "アクティブプロファイルに無効なデータが提供されました"
+	},
+	"settingsRestoreSettingsFailedInvalidDefaultProxyServer": {
+		"message": "デフォルトのプロキシサーバーに無効なデータが提供されました"
+	},
+	"settingsEnableByDomainInvalid": {
+		"message": "選択したドメインは無効です"
+	},
+	"settingsEnableByDomainExists": {
+		"message": "ドメインのルールはすでに存在します"
+	},
+	"settingsEnableByDomainSmartProfileNonEditable": {
+		"message": "現在のプロファイル '{0}' はルールで更新できません"
+	},
+	"settingsNoRuleFoundForDomain": {
+		"message": "'{0}' のルールはありません"
+	},
+	"importerImportSuccess": {
+		"message": "合計 {1} 個中 {0} 個のルールが追加されました。<br>変更を保存することを忘れないでください。"
+	},
+	"settingsRemoveMultipleProxyRuleButton": {
+		"message": "複数削除"
+	},
+	"settingsAddMultipleRulesButton": {
+		"message": "複数のルールを追加"
+	},
+	"settingsAddMultipleRuleTitle": {
+		"message": "複数のルールを追加"
+	},
+	"settingsMultipleRuleList": {
+		"message": "ホスト/ルールリスト:"
+	},
+	"settingsMultipleRuleInvalidHost": {
+		"message": "ホスト名 '{0}' は無効です"
+	},
+	"settingsMultipleRuleNoNewRuleAdded": {
+		"message": "新しいルールは追加されませんでした"
+	},
+	"settingsTabProxyServerSubscriptionsTitle": {
+		"message": "プロキシサーバーサブスクリプションを管理する:"
+	},
+	"settingsTabProxyServerSubscriptionsDescription": {
+		"message": "ここでは、プロキシリストを購読し、後でプロキシを切り替えることができます。長いリストはデバイス間のデータ同期の失敗を引き起こす可能性があることに注意してください。"
+	},
+	"settingsErrorFailedToSaveGeneral": {
+		"message": "オプション設定の保存に失敗しました。"
+	},
+	"settingsSaveOptionsSuccess": {
+		"message": "一般オプションが正常に保存されました。"
+	},
+	"settingsAddServerSubscriptionButton": {
+		"message": "リストを購読"
+	},
+	"settingsServerSubscriptionModalTitle": {
+		"message": "プロキシサーバーリストを購読"
+	},
+	"settingsRemoveMultipleServerSubscriptionButton": {
+		"message": "複数削除"
+	},
+	"settingsServerSubscriptionName": {
+		"message": "名前:"
+	},
+	"settingsServerSubscriptionUrl": {
+		"message": "URL:"
+	},
+	"settingsServerSubscriptionRefreshRate": {
+		"message": "更新頻度:"
+	},
+	"settingsServerSubscriptionRefreshRateHelp": {
+		"message": "（分単位、0 は更新なし）"
+	},
+	"settingsServerSubscriptionEnabled": {
+		"message": "有効"
+	},
+	"settingsServerSubscriptionProtocol": {
+		"message": "プロトコル:"
+	},
+	"settingsServerSubscriptionObfuscation": {
+		"message": "難読化:"
+	},
+	"settingsServerSubscriptionFormat": {
+		"message": "形式:"
+	},
+	"settingsServerSubscriptionApplyProxy": {
+		"message": "プロキシを経由する:"
+	},
+	"settingsServerSubscriptionApplyProxyHelpFirefox": {
+		"message": "（サーバーへのアクセスに基づいて決定）"
+	},
+	"settingsServerSubscriptionApplyProxyHelpChrome": {
+		"message": "（残念ながらこの機能は Chrome では利用できません。現在のプロキシが適用されます）"
+	},
+	"settingsServerSubscriptionApplyProxy_NoProxy": {
+		"message": "プロキシなし"
+	},
+	"settingsServerSubscriptionApplyProxy_CurrentProxy": {
+		"message": "現在のプロキシ"
+	},
+	"settingsServerSubscriptionApplyProxy_SelectedProxy": {
+		"message": "選択したプロキシ"
+	},
+	"settingsServerSubscriptionUsername": {
+		"message": "ユーザー名:"
+	},
+	"settingsServerSubscriptionPassword": {
+		"message": "パスワード:"
+	},
+	"settingsServerSubscriptionAuthenticationHelp": {
+		"message": "（リストが認証を必要とする場合）"
+	},
+	"settingsServerSubscriptionCancelButton": {
+		"message": "キャンセル"
+	},
+	"settingsServerSubscriptionSaveButton": {
+		"message": "保存"
+	},
+	"settingsServerSubscriptionSavingButton": {
+		"message": "保存中..."
+	},
+	"settingsServerSubscriptionTestButton": {
+		"message": "テスト"
+	},
+	"settingsProxyTestStopButton": {
+		"message": "停止"
+	},
+	"settingsProxyTestCancelled": {
+		"message": "ユーザーによりテストが停止されました"
+	},
+	"settingsProxyTestResumeDialogTitle": {
+		"message": "プロキシテスト"
+	},
+	"settingsProxyTestResumeDialogMessage": {
+		"message": "テストされていないプロキシがあります。どうしますか？"
+	},
+	"settingsProxyTestResumeContinue": {
+		"message": "中断したところから続行"
+	},
+	"settingsProxyTestResumeRestart": {
+		"message": "最初から再開"
+	},
+	"settingsServerSubscriptionTestingButton": {
+		"message": "テスト中..."
+	},
+	"settingsConfirmRemoveServerSubscription": {
+		"message": "選択したサブスクリプションを削除してもよろしいですか？"
+	},
+	"settingsRemoveAllProxyServerSubscriptions": {
+		"message": "すべてのプロキシサーバーサブスクリプションを削除してもよろしいですか？"
+	},
+	"settingsConfirmRemoveMultipleServerSubscription": {
+		"message": "選択したサブスクリプションを削除してもよろしいですか？"
+	},
+	"settingsRemoveAllProxyServerSubscriptionsSuccess": {
+		"message": "すべてのプロキシサーバーサブスクリプションが削除されました。<br/>変更を適用するには保存する必要があります。"
+	},
+	"settingsServerSubscriptionProtocolDefault": {
+		"message": "（HTTP フォールバックによる自動検出）"
+	},
+	"settingsInitializeFailed": {
+		"message": "設定の読み取りに失敗しました。設定ページを閉じて、もう一度やり直してください。"
+	},
+	"settingsActiveProxyServerSubscriptions": {
+		"message": "-サブスクリプション-"
+	},
+	"settingsServerSubscriptionsGridNoDataContent": {
+		"message": "サブスクリプションがありません"
+	},
+	"settingsServerSubscriptionsGridColName": {
+		"message": "名前"
+	},
+	"settingsServerSubscriptionsGridColUrl": {
+		"message": "URL"
+	},
+	"settingsServerSubscriptionsGridColCount": {
+		"message": "数"
+	},
+	"settingsServerSubscriptionsGridColEnabled": {
+		"message": "有効"
+	},
+	"settingsServerSubscriptionIncompleteForm": {
+		"message": "必須フィールドを正しい形式で入力してください"
+	},
+	"settingsServerSubscriptionInvalidForm": {
+		"message": "無効なプロキシサーバーサブスクリプションの詳細"
+	},
+	"settingsServerSubscriptionDuplicateName": {
+		"message": "入力された名前は既に使用されています。別の名前を入力してください。"
+	},
+	"settingsServerSubscriptionSaveUpdated": {
+		"message": "サブスクリプションが {0} 個のプロキシで更新されました。<br/>変更を保存することを忘れないでください。"
+	},
+	"settingsServerSubscriptionSaveAdded": {
+		"message": "サブスクリプションが {0} 個のプロキシで追加されました。<br/>変更を保存することを忘れないでください。"
+	},
+	"settingsServerSubscriptionSaveFailedGet": {
+		"message": "プロキシの取得に失敗しました。"
+	},
+	"settingsServerSubscriptionTestSuccess": {
+		"message": "テストは成功しました。リストは {0} 個のプロキシを返しました。"
+	},
+	"settingsServerSubscriptionTestFailed": {
+		"message": "テストに失敗しました"
+	},
+	"settingsSaveProxyServerSubscriptionsSuccess": {
+		"message": "プロキシサーバーサブスクリプションが正常に保存されました。"
+	},
+	"settingsFailedToSaveProxySubscriptions": {
+		"message": "プロキシサーバーサブスクリプションの保存に失敗しました"
+	},
+	"settingsAddRulesSubscriptionButton": {
+		"message": "ルールリストを購読"
+	},
+	"settingsRemoveMultipleRulesSubscriptionButton": {
+		"message": "複数削除"
+	},
+	"settingsRulesSubscriptionsModalTitle": {
+		"message": "ルールリストを購読"
+	},
+	"settingsRulesSubscriptionsGridColName": {
+		"message": "名前"
+	},
+	"settingsRulesSubscriptionsGridColUrl": {
+		"message": "URL"
+	},
+	"settingsRulesSubscriptionsGridColCount": {
+		"message": "数"
+	},
+	"settingsRulesSubscriptionsGridColEnabled": {
+		"message": "有効"
+	},
+	"settingsRulesSubscriptionsName": {
+		"message": "名前:"
+	},
+	"settingsRulesSubscriptionsUrl": {
+		"message": "URL:"
+	},
+	"settingsRulesSubscriptionsRefreshRate": {
+		"message": "更新頻度:"
+	},
+	"settingsRulesSubscriptionsRefreshRateHelp": {
+		"message": "（分単位、0 は更新なし）"
+	},
+	"settingsRulesSubscriptionEnabled": {
+		"message": "有効"
+	},
+	"settingsRulesSubscriptionsObfuscation": {
+		"message": "難読化:"
+	},
+	"settingsRulesSubscriptionsFormat": {
+		"message": "形式:"
+	},
+	"settingsRulesSubscriptionsApplyProxy": {
+		"message": "プロキシを経由する:"
+	},
+	"settingsRulesSubscriptionsApplyProxyHelpFirefox": {
+		"message": "（サーバーへのアクセスに基づいて決定）"
+	},
+	"settingsRulesSubscriptionsApplyProxyHelpChrome": {
+		"message": "（残念ながらこの機能は Chrome では利用できません。現在のプロキシが適用されます）"
+	},
+	"settingsRulesSubscriptionsUsername": {
+		"message": "ユーザー名:"
+	},
+	"settingsRulesSubscriptionsAuthenticationHelp": {
+		"message": "（リストが認証を必要とする場合）"
+	},
+	"settingsRulesSubscriptionsPassword": {
+		"message": "パスワード:"
+	},
+	"settingsRulesSubscriptionsTestButton": {
+		"message": "テスト"
+	},
+	"settingsRulesSubscriptionsSaveButton": {
+		"message": "保存"
+	},
+	"settingsRulesSubscriptionsCancelButton": {
+		"message": "キャンセル"
+	},
+	"settingsConfirmRemoveRulesSubscription": {
+		"message": "選択したルールサブスクリプションを削除してもよろしいですか？"
+	},
+	"settingsConfirmRemoveMultipleRulesSubscription": {
+		"message": "選択したルールサブスクリプションを削除してもよろしいですか？"
+	},
+	"settingsRulesSubscriptionIncompleteForm": {
+		"message": "必須フィールドを正しい形式で入力してください"
+	},
+	"settingsRulesSubscriptionInvalidForm": {
+		"message": "無効なプロキシサーバーサブスクリプションの詳細"
+	},
+	"settingsRulesSubscriptionDuplicateName": {
+		"message": "入力された名前は既に使用されています。別の名前を入力してください。"
+	},
+	"settingsRulesSubscriptionSavingButton": {
+		"message": "保存中..."
+	},
+	"settingsRulesSubscriptionTestButton": {
+		"message": "テスト"
+	},
+	"settingsRulesSubscriptionTestingButton": {
+		"message": "テスト中..."
+	},
+	"settingsRulesSubscriptionSaveUpdated": {
+		"message": "サブスクリプションが {0} 個のプロキシルールと {1} 個のホワイトリストルールで更新されました。<br/>変更を保存することを忘れないでください。"
+	},
+	"settingsRulesSubscriptionSaveAdded": {
+		"message": "サブスクリプションが {0} 個のプロキシルールと {1} 個のホワイトリストルールで追加されました。<br/>変更を保存することを忘れないでください。"
+	},
+	"settingsRulesSubscriptionSaveFailedGet": {
+		"message": "ルールの取得に失敗しました。"
+	},
+	"settingsRulesSubscriptionRefreshOnDisabled": {
+		"message": "無効なサブスクリプションは更新できません"
+	},
+	"settingsRulesSubscriptionTestSuccess": {
+		"message": "テストは成功しました。リストは {0} 個のプロキシルールと {1} 個のホワイトリストルールを返しました。"
+	},
+	"settingsRulesSubscriptionTestFailed": {
+		"message": "テストに失敗しました"
+	},
+	"settingsFailedToSaveRulesSubscriptions": {
+		"message": "ルールサブスクリプションの保存に失敗しました"
+	},
+	"settingsRemoveAllProxyRulesSubscriptions": {
+		"message": "すべてのプロキシルールサブスクリプションを削除してもよろしいですか？"
+	},
+	"settingsRemoveAllProxyRulesSubscriptionsSuccess": {
+		"message": "すべてのプロキシルールサブスクリプションが削除されました。<br/>変更を適用するには保存する必要があります。"
+	},
+	"importerImportRulesSuccess": {
+		"message": "合計 {0} 個のプロキシルールと {1} 個のホワイトリストルールが返されました。<br>変更を保存することを忘れないでください。"
+	},
+	"settingsRulePatternIsEmpty": {
+		"message": "ルールにパターンが定義されていません"
+	},
+	"settingsWelcomeTitle": {
+		"message": "ProxyMust へようこそ"
+	},
+	"settingsWelcomeMessage": {
+		"message": "<p>\n\tProxyMust は、プロキシテスト機能を備えた選択的プロキシマネージャーです。<br>\n\t開始するには、次の手順に従ってください:\n</p>\n<ol>\n\t<li>\n\t\tプロキシサーバーまたはプロキシリストを追加する\n\t\t<br>\n\t\t<small>（[プロキシサーバー] タブに移動して追加してください）</small>\n\t</li>\n\t<li>\n\t\tモードを [選択的プロキシ] に設定する\n\t\t<br>\n\t\t<small>（ツールバーのポップアップメニューを使用して、アクティブモードを [選択的プロキシ] に変更してください）</small>\n\t</li>\n\t<li>\n\t\tプロキシルールを定義する\n\t\t<br>\n\t\t<small>（ツールバーのポップアップメニューを使用してルールを追加するか、[プロキシルール] タブからルールを追加/変更してください）</small>\n\t</li>\n\t<li>\n\t\t準備完了です。\n\t</li>\n</ol>"
+	},
+	"settingsWelcomeSkipButton": {
+		"message": "了解"
+	},
+	"settingsSubscriptionStatsStatusSuccess": {
+		"message": "ステータス: 成功"
+	},
+	"settingsSubscriptionStatsStatusFail": {
+		"message": "ステータス: 失敗"
+	},
+	"settingsSubscriptionStatsLastTry": {
+		"message": "最終試行:"
+	},
+	"settingsSubscriptionStatsMessage": {
+		"message": "メッセージ:"
+	},
+	"settingsSubscriptionStatsLastSuccess": {
+		"message": "最終成功:"
+	},
+	"settings_SmartProfileType_Direct": {
+		"message": "直接"
+	},
+	"settings_SmartProfileType_SystemProxy": {
+		"message": "システムプロキシ"
+	},
+	"settings_SmartProfileType_SmartRules": {
+		"message": "選択的ルール"
+	},
+	"settings_SmartProfileType_AlwaysEnabledBypassRules": {
+		"message": "バイパスルールで常に有効"
+	},
+	"settings_SmartProfileType_IgnoreFailureRules": {
+		"message": "失敗を無視するルール"
+	},
+	"settingsRuleCidrIPAddress": {
+		"message": "IP アドレス"
+	},
+	"settingsRuleCidrPrefixLength": {
+		"message": "プレフィックス長"
+	},
+	"settingsRuleCidrNotationDesc": {
+		"message": "（このルールはホスト名を IP に解決しないことに注意してください。）"
+	},
+	"settingsRuleCidrIPInvalid": {
+		"message": "有効な IP アドレスを入力してください"
+	},
+	"settingsRuleCidrPrefixLengthInvalid": {
+		"message": "有効なプレフィックス長を入力してください"
+	},
+	"settingsRuleCidrNotationInvalid": {
+		"message": "CIDR 表記 '{0}' は無効です"
+	},
+	"settingsRuleCidrNotationInvalidMatch": {
+		"message": "CIDR ルールは '{0}' と一致しません"
+	},
+	"notificationNoNextProxyServer": {
+		"message": "これ以上の次のプロキシサーバーはありません"
+	},
+	"notificationNoPreviousProxyServer": {
+		"message": "これ以上の前のプロキシサーバーはありません"
+	},
+	"notificationShortcutTitle": {
+		"message": "ProxyMust ショートカット通知"
+	},
+	"notificationShortcutProxyModeMessage": {
+		"message": "プロキシモードが {0} に変更されました"
+	},
+	"notificationShortcutProxyServerChanged": {
+		"message": "プロキシサーバーが {0} に変更されました"
+	},
+	"popupRatingDialogTitle": {
+		"message": "アドレスは機能しますか？"
+	},
+	"popupRatingWorksButton": {
+		"message": "はい (+1)"
+	},
+	"popupRatingFailsButton": {
+		"message": "いいえ (-1)"
+	},
+	"popupRatingCancelButton": {
+		"message": "キャンセル"
+	},
+	"settingsProxyTestTitle": {
+		"message": "プロキシアクセシビリティチェック"
+	},
+	"settingsProxyTestEnable": {
+		"message": "プロキシチェック用のテストサイトを追加する"
+	},
+	"settingsProxyTestNote": {
+		"message": "最大 5 つのアドレスを入力します。3 つ以下に指定するとチェックが速くなります。"
+	},
+	"settingsProxyTestUrlsTitle": {
+		"message": "アクセステストのために訪問するアドレス"
+	},
+	"settingsProxyTestUrlsWarning": {
+		"message": "⚠️ ここにはプロキシアドレスではなく、訪問するウェブサイト（例: youtube.com、telegram.org）を入力してください。"
+	},
+	"settingsProxyTestClear": {
+		"message": "テストサイトをクリア"
+	},
+	"settingsProxyTestStop": {
+		"message": "⏹ テストを停止"
+	},
+	"proxyTestCompleted": {
+		"message": "チェックが完了しました。{0} 個のプロキシをテストしました。"
+	},
+	"settingsProxyTestRatingAutoEnabled": {
+		"message": "テスト結果を表示するために評価が自動的に有効になりました。"
+	},
+	"settingsProxyTestNoTestUrls": {
+		"message": "テストサイトが指定されていません。少なくとも 1 つのウェブサイトを追加してください。"
+	},
+	"settingsProxyMustTestTitle": {
+		"message": "プロキシテスト"
+	},
+	"settingsProxyMustSiteLabel": {
+		"message": "テストするサイト:"
+	},
+	"settingsProxyMustTestRun": {
+		"message": "▶ テスト"
+	},
+	"settingsProxyMustAddSite": {
+		"message": "サイトを追加"
+	},
+	"settingsProxyMustTestCondition": {
+		"message": "何も選択されていない場合、テーブル内のすべてのプロキシに対してテストが実行されます。"
+	},
+	"settingsProxyMustTestResults": {
+		"message": "結果: ✅ = このサイトで確実に機能する、☑️ = おそらく機能する（古いデータまたは他のサイトで成功）、❓ = データなし、⛔ = 機能しない。"
+	},
+	"settingsServersRatingPriority": {
+		"message": "評価 + 優先度"
+	},
+	"settingsContextMenuChangeRating": {
+		"message": "手動評価を変更"
+	},
+	"settingsContextMenuPlus1": {
+		"message": "(+1)"
+	},
+	"settingsContextMenuMinus1": {
+		"message": "(-1)"
+	},
+	"settingsContextMenuRatingTitle": {
+		"message": "手動評価"
+	},
+	"settingsContextMenuPlus1Desc": {
+		"message": "リスト内で上に移動"
+	},
+	"settingsContextMenuMinus1Desc": {
+		"message": "リスト内で下に移動"
+	},
+	"settingsContextMenuResetRating": {
+		"message": "評価をリセット"
+	},
+	"settingsContextMenuSetFavorite": {
+		"message": "お気に入りに設定"
+	},
+	"settingsContextMenuSetPin": {
+		"message": "ピン留め"
+	},
+	"settingsContextMenuRemoveFavorite": {
+		"message": "お気に入りから削除"
+	},
+	"settingsContextMenuUnpin": {
+		"message": "ピン留めを解除"
+	},
+	"settingsContextMenuRemovePriority": {
+		"message": "優先度を削除"
+	},
+	"settingsContextMenuExportSelected": {
+		"message": "選択した項目をエクスポート"
+	},
+	"settingsContextMenuCopyAddresses": {
+		"message": "アドレスをコピー"
+	},
+	"settingsContextMenuDelete": {
+		"message": "削除"
+	},
+	"settingsContextMenuTestForSite": {
+		"message": "選択したプロキシをサイトに対してテスト"
+	},
+	"settingsProxyMustTestProgress": {
+		"message": "{0} のプロキシをテスト中... ({1}/{2})"
+	},
+	"settingsProxyMustTestComplete": {
+		"message": "テスト完了"
+	},
+	"settingsProxyMustAddSitePrompt": {
+		"message": "サイトのドメインを入力してください（例: youtube.com）:"
+	},
+	"settingsProxyMustSiteAlreadyExists": {
+		"message": "サイトは既にリストに存在します。"
+	},
+	"settingsProxyMustInvalidDomain": {
+		"message": "無効なドメインです。有効なドメインを入力してください（例: youtube.com）。"
+	},
+	"popupCurrentSite": {
+		"message": "現在のサイト:"
+	},
+	"settingsProxyMustRemoveSite": {
+		"message": "サイトを削除"
+	},
+	"settingsContextMenuMoveToTop": {
+		"message": "最上部に移動"
+	},
+	"settingsContextMenuMoveToDown": {
+		"message": "最下部に移動"
+	},
+	"settingsProxyMustCannotRemoveAutoSite": {
+		"message": "このサイトはルールに由来するため、手動で削除できません。"
+	},
+	"settingsProxyMustConfirmRemoveSite": {
+		"message": "テストサイトから \"{0}\" を削除しますか？"
+	},
+	"settingsProxyMustSiteRemoved": {
+		"message": "サイト \"{0}\" を削除しました。"
+	},
+	"settingsProxyMustStaleHours": {
+		"message": "有効期限（時間）:"
+	},
+	"settingsContextMenuPreciseTest": {
+		"message": "精密テスト（遅い、より正確）"
+	},
+	"settingsContextMenuExpressTest": {
+		"message": "エクスプレステスト（速い、精度は低い）"
+	},
+	"popupQuickTestButton": {
+		"message": "テスト"
+	},
+	"popupQuickTestStopButton": {
+		"message": "停止"
+	},
+	"settingsChooseTestTypeTitle": {
+		"message": "テストタイプを選択"
+	},
+	"settingsChooseTestTypeDescription": {
+		"message": "実行するテストを選択してください:"
+	},
+	"settingsPreciseTestDesc": {
+		"message": "完全なチェック。より正確ですが時間がかかります。"
+	},
+	"settingsExpressTestDesc": {
+		"message": "エクスプレステスト。一部の動作するプロキシをスキップする可能性がありますが、少なくとも1つを迅速に見つけます。"
+	},
+	"settingsCancelButton": {
+		"message": "キャンセル"
+	},
+	"popupAddAllSuccessfulSubs": {
+		"message": "動作するプロキシを追加"
+	},
+	"settingsContextMenuClearStatuses": {
+		"message": "ステータスをクリア"
+	},
+	"settingsContextMenuClearStatusesSelected": {
+		"message": "選択したプロキシ"
+	},
+	"settingsContextMenuClearStatusesAll": {
+		"message": "すべてのプロキシ"
+	},
+	"settingsContextMenuClearStatusesConfirmSelected": {
+		"message": "選択したプロキシのテストステータスをクリアしますか？"
+	},
+	"settingsContextMenuClearStatusesConfirmAll": {
+		"message": "すべてのプロキシのテストステータスをクリアしますか？この操作は元に戻せません。"
+	},
+	"settingsContextMenuClearStatusesSuccess": {
+		"message": "テストステータスを正常にクリアしました。"
+	},
+	"popupQuickTestTooltip": {
+		"message": "現在のサイトで動作するプロキシを見つけるためのクイックテスト"
+	},
+	"popupAddAllSuccessfulSubsTooltip": {
+		"message": "テストに合格したサブスクリプションプロキシを手動リストに追加します"
+	},
+	"popupTestMenuTitle": {
+		"message": "テストタイプを選択"
+	},
+	"popupTestMenuAllProxies": {
+		"message": "すべてのプロキシのエクスプレステスト"
+	},
+	"popupTestMenuSubscriptionsOnly": {
+		"message": "サブスクリプションのみのエクスプレステスト"
+	},
+	"popupTestMenuAllProxiesDesc": {
+		"message": "手動 + サブスクリプションプロキシ"
+	},
+	"popupTestMenuSubscriptionsOnlyDesc": {
+		"message": "その後、動作するものを手動リストに追加"
+	},
+	"popupTestMenuCycleTest": {
+		"message": "循環プロキシテスト（完全切替）"
+	},
+	"popupTestMenuCycleTestDesc": {
+		"message": "プロキシを順次切り替え、サイトの読み込みをテストします"
+	},
+	"settingsContextMenuCycleTest": {
+		"message": "循環テスト（完全切替）"
+	},
+	"settingsCycleTestDesc": {
+		"message": "プロキシを順次切り替え、サイトの読み込みをテストします。より徹底的ですが遅いです。"
+	},
+	"popupTestMenuExpressCycleTest": {
+		"message": "エクスプレス循環テスト（高速切替）"
+	},
+	"popupTestMenuExpressCycleTestDesc": {
+		"message": "高速な順次プロキシ切替、10秒タイムアウト、最初の成功で停止"
+	},
+	"popupTestMenuExpressCycleAll": {
+		"message": "エクスプレス循環テスト（すべてのプロキシ）"
+	},
+	"popupTestMenuExpressCycleAllDesc": {
+		"message": "手動 + サブスクリプションプロキシ"
+	},
+	"popupTestMenuExpressCycleSubsOnly": {
+		"message": "エクスプレス循環テスト（サブスクリプションのみ）"
+	},
+	"popupTestMenuExpressCycleSubsOnlyDesc": {
+		"message": "その後、動作するものを手動リストに追加"
+	},
+	"popupNoSubscriptionProxies": {
+		"message": "テストするサブスクリプションプロキシがありません。"
+	},
+	"settingsCopiedAddresses": {
+		"message": "アドレスをコピーしました"
+	},
+	"settingsCopyFailed": {
+		"message": "コピーに失敗しました"
+	},
+	"settingsAnotherTestRunning": {
+		"message": "別のテストが既に実行されています。動かなくなったと思われる場合は、設定ページを再読み込み（F5）してから再試行してください。"
+	},
+	"settingsProxyTestTimeout": {
+		"message": "テストは10分後にタイムアウトし、強制停止されました。もう一度お試しください。"
+	},
+	"settingsProxyMustNoSiteSelected": {
+		"message": "サイトを選択してください。"
+	},
+	"settingsProxyMustSiteAdded": {
+		"message": "サイト \"{0}\" を追加しました。"
+	},
+	"testingExplanationTitle": {
+		"message": "プロキシテストの仕組み"
+	},
+	"testingExplanationText": {
+		"message": "テスト中、一時的なタブが自動的に開いたり閉じたりして、プロキシIPとそのプロキシを介して入力されたテストサイトアドレスへの接続をチェックします。テストタブは、ブラウザ履歴を乱雑にしないようにすぐに削除されます。テストはテスト中のプロキシを切り替えることでウェブブラウジングに干渉するため、テストの実行中はブラウザを安全に最小化できます。"
+	},
+	"settingsGeneralEnableRating": {
+		"message": "プロキシの評価を有効にする"
+	},
+	"settingsGeneralEnableRatingDesc": {
+		"message": "プロキシの評価（動作/非動作）と評価による並べ替えを許可します。"
+	},
+	"settingsProxyMustStaleHoursDesc": {
+		"message": "テスト結果が古いと見なされるまでの時間（時間、1-168）。"
+	},
+	"datatablesSearch": {
+		"message": "検索:"
+	},
+	"datatablesShow": {
+		"message": "表示"
+	},
+	"datatablesEntries": {
+		"message": "件"
+	},
+	"datatablesPrevious": {
+		"message": "前へ"
+	},
+	"datatablesNext": {
+		"message": "次へ"
+	},
+	"datatablesInfo": {
+		"message": "全 _TOTAL_ 件中 _START_ 〜 _END_ 件を表示"
+	},
+	"datatablesInfoEmpty": {
+		"message": "全 0 件中 0 〜 0 件を表示"
+	},
+	"datatablesEmptyTable": {
+		"message": "テーブルにデータがありません"
+	},
+	"datatablesAll": {
+		"message": "すべて"
+	},
+	"popupAddCurrentSiteTooltip": {
+		"message": "現在のサイトをテストリストに追加"
+	}
+}

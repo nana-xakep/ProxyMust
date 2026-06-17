@@ -1,0 +1,1626 @@
+{
+	"uiDirection": {
+		"message": "ltr"
+	},
+	"languageCode": {
+		"message": "it",
+		"description": "We need to know the code which might not match what browser UI has"
+	},
+	"extensionName": {
+		"message": "ProxyMust"
+	},
+	"extensionDescription": {
+		"message": "ProxyMust – gestore proxy selettivo (fork di SmartProxy). Abilita/disabilita automaticamente il proxy per i siti visitati in base a modelli personalizzabili."
+	},
+	"toolbarTooltipEffectiveRule": {
+		"message": "Origine regola corrispondente:"
+	},
+	"toolbarTooltipEffectiveRuleNone": {
+		"message": "Nessuna regola corrispondente"
+	},
+	"toolbarTooltipEffectiveRulePattern": {
+		"message": "Modello di regola:"
+	},
+	"popupTitle": {
+		"message": "Attivazione ProxyMust"
+	},
+	"popupPrivateBrowsingMode": {
+		"message": "Modalità Navigazione Privata"
+	},
+	"popupNoProxy": {
+		"message": "Diretto (Nessun Proxy)"
+	},
+	"popupSmartProxy": {
+		"message": "Proxy Selettivo"
+	},
+	"popupAlwaysEnable": {
+		"message": "Sempre Abilitato"
+	},
+	"popupSystemProxy": {
+		"message": "Proxy di Sistema"
+	},
+	"popupActiveProxy": {
+		"message": "Proxy Attivo (questo profilo):"
+	},
+	"popupActiveProxyDefault": {
+		"message": "Proxy Attivo (Impostazione Predefinita):"
+	},
+	"popupEnableProxyOn": {
+		"message": "Abilita proxy su"
+	},
+	"popupIgnoreTheseDomains": {
+		"message": "Ignora questi domini"
+	},
+	"popupRuleIsFromSubscription": {
+		"message": "(Da sottoscrizione)"
+	},
+	"popupProxyableResources": {
+		"message": "Risorse Proxyabili"
+	},
+	"popupSettings": {
+		"message": "Impostazioni"
+	},
+	"popupSubscriptions": {
+		"message": "-Sottoscrizioni-"
+	},
+	"popupUpdateText": {
+		"message": "Aggiornamento a {0} disponibile"
+	},
+	"popupFailedRequestsMenu": {
+		"message": "Richieste Fallite"
+	},
+	"popupFailedRequestsTitle": {
+		"message": "Elenco richieste fallite"
+	},
+	"popupFailedRequestsDesc": {
+		"message": "Questi sono i domini che hanno avuto un timeout o sono falliti.<br />Se ritieni che questi domini siano bloccati, puoi aggiungerli all'elenco delle regole proxy qui."
+	},
+	"popupAddFailedRequests": {
+		"message": "Aggiungi all'Elenco Regole"
+	},
+	"popupProfileTypeDoesNotSupportsRules": {
+		"message": "Il profilo selezionato '{0}' non supporta le regole, seleziona un altro profilo."
+	},
+	"popupAddIgnoredFailures": {
+		"message": "Ignorali"
+	},
+	"popupAddIgnoredFailuresConfirm": {
+		"message": "Sei sicuro di voler ignorare gli errori selezionati? Se lo fai, non riceverai più errori da questi. Puoi cambiare questa impostazione più tardi."
+	},
+	"popupNotAllowedSetProxySettingsChrome": {
+		"message": "Sfortunatamente, per modificare le impostazioni del browser per utilizzare il Proxy di Sistema è richiesta l'autorizzazione `incognito`. Vai alle impostazioni dell'estensione ProxyMust nel browser e abilita l'autorizzazione `Consenti in modalità incognito`. <a href='https://support.google.com/chrome_webstore/answer/2664769'>Scopri come</a>."
+	},
+	"popupNotAllowedSetProxySettingsFirefox": {
+		"message": "Da Firefox 67, per modificare le impostazioni del browser per utilizzare il Proxy di Sistema è richiesta l'autorizzazione `Navigazione Privata`. Vai alle impostazioni del componente aggiuntivo ProxyMust nel browser e `Consenti` l'autorizzazione `Esegui in finestre private`. <a href='https://support.mozilla.org/en-US/kb/extensions-private-browsing'>Scopri come</a>."
+	},
+	"proxyableTitle": {
+		"message": "Risorse Proxyabili"
+	},
+	"proxyableHeader": {
+		"message": "Elementi proxyabili in questa pagina"
+	},
+	"proxyableReload": {
+		"message": "Ricarica"
+	},
+	"proxyableClose": {
+		"message": "Chiudi"
+	},
+	"proxyableHeaderDesc": {
+		"message": "Ecco l'elenco delle risorse utilizzate o richiamate da questa pagina. Usa questo elenco per aggiungere queste risorse alle regole di attivazione del proxy.<br />Se non vedi nulla qui, ricarica la pagina per vedere le risorse."
+	},
+	"proxyableErrNoSourceTab": {
+		"message": "Scheda di origine non trovata!"
+	},
+	"proxyableCreateRuleConfirm": {
+		"message": "Sei sicuro di creare una regola per il dominio selezionato?"
+	},
+	"proxyableDisableButton": {
+		"message": "Disabilita"
+	},
+	"proxyableEnableButton": {
+		"message": "Abilita"
+	},
+	"proxyableEnableButtonDomain": {
+		"message": "Abilita per: "
+	},
+	"proxyableSubscriptionRule": {
+		"message": "(Regola di sottoscrizione)"
+	},
+	"proxyableDeleteRuleConfirm": {
+		"message": "Sei sicuro di voler eliminare la regola selezionata per:"
+	},
+	"proxyableGridNoDataContent": {
+		"message": "Nessuna richiesta"
+	},
+	"proxyableGridColUrl": {
+		"message": "URL Richiesta"
+	},
+	"proxyableGridColRuleStatus": {
+		"message": "Stato regola"
+	},
+	"proxyableGridColProxifiedStatus": {
+		"message": "Stato proxy"
+	},
+	"proxyableGridColRuleHost": {
+		"message": "Dominio regola"
+	},
+	"proxyableGridColRulePattern": {
+		"message": "Modello regola"
+	},
+	"proxyableGridCol_ProxifiedStatus_NoProxy": {
+		"message": "Nessun Proxy"
+	},
+	"proxyableGridCol_ProxifiedStatus_Special": {
+		"message": "Speciale"
+	},
+	"proxyableGridCol_ProxifiedStatus_ProxyPerOrigin": {
+		"message": "Dalla scheda principale"
+	},
+	"proxyableGridCol_ProxifiedStatus_MatchedRule": {
+		"message": "Corrispondente"
+	},
+	"proxyableGridCol_ProxifiedStatus_AlwaysEnabled": {
+		"message": "Sempre Abilitato"
+	},
+	"proxyableGridCol_ProxifiedStatus_SystemProxyApplied": {
+		"message": "Proxy di Sistema Applicato"
+	},
+	"proxyableGridCol_RuleStatus_NoneMatched": {
+		"message": "Nessuna Corrispondenza"
+	},
+	"proxyableGridCol_RuleStatus_Special": {
+		"message": "Speciale"
+	},
+	"proxyableGridCol_RuleStatus_ProxyPerOrigin": {
+		"message": "Dalla scheda principale"
+	},
+	"proxyableGridCol_RuleStatus_MatchedRule": {
+		"message": "Corrispondente"
+	},
+	"proxyableGridCol_RuleStatus_Whitelisted": {
+		"message": "In Whitelist"
+	},
+	"proxyableGridCol_RuleStatus_AlwaysEnabledByPassed": {
+		"message": "Sempre Abilitato <br> Bypassato"
+	},
+	"proxyableGridCol_RuleStatus_AlwaysEnabledForcedByRules": {
+		"message": "Sempre Abilitato <br> Forzato da Regole"
+	},
+	"settingsTitle": {
+		"message": "Impostazioni ProxyMust"
+	},
+	"settingsTabAbout": {
+		"message": "Informazioni"
+	},
+	"settingsTabGeneral": {
+		"message": "Opzioni Generali"
+	},
+	"settingsTabSmartProfiles": {
+		"message": "Profili Selettivi"
+	},
+	"settingsTabAddSmartProfile": {
+		"message": "Aggiungi Nuovo Profilo Selettivo"
+	},
+	"settingsTabProxyServers": {
+		"message": "Server Proxy"
+	},
+	"settingsTabProxyServerSubscriptions": {
+		"message": "Sottoscrizioni Server Proxy"
+	},
+	"settingsTabBackupRestore": {
+		"message": "Backup/Ripristino"
+	},
+	"settingsTabUpdateText": {
+		"message": "Aggiorna a {0}"
+	},
+	"settingsTabAboutDescription": {
+		"message": "Utilizzare i proxy non potrebbe essere più facile con ProxyMust. Pensalo come una soluzione \"configura una volta e dimentica\". Con ProxyMust non devi modificare manualmente il proxy o accenderlo e spegnerlo. Tutto quello che devi fare è dire a ProxyMust che vuoi abilitare il proxy per il tuo sito web desiderato con un solo clic. Dopodiché, quando visiti quel sito specifico, ProxyMust agirà e tutti i tuoi dati per quel sito web verranno trasferiti attraverso il proxy, senza che tu faccia nulla."
+	},
+	"settingsGeneralSmartFeatures": {
+		"message": "Funzionalità Smart"
+	},
+	"settingsGeneralSmartFeaturesNoChrome": {
+		"message": "<strong><a href='https://www.getfirefox.com/' target='_blank' rel='noopener'>Solo Firefox</a>!</strong> Sfortunatamente questa funzione non è supportata da Chrome."
+	},
+	"settingsGeneralProxyPerOrigin": {
+		"message": "Abilita proxy per scheda/origine"
+	},
+	"settingsGeneralProxyPerOriginDesc": {
+		"message": "Se una regola corrisponde all'URL di una scheda, il proxy verrà applicato alla connessione di quella scheda. Normalmente ci saranno altre richieste in ogni pagina che potrebbero non avere una regola corrispondente e quindi non avranno il proxy applicato alla loro connessione. L'opzione `Abilita proxy per scheda/origine` assicura che l'intera pagina, incluse tutte le connessioni da domini e origini diverse, utilizzi lo stesso proxy applicato all'origine della scheda. Inoltre, questa opzione elimina la necessità di avere una regola per ogni singolo dominio. Si prega di notare che se nessun proxy viene applicato alla scheda, le regole proxy continueranno a funzionare e applicheranno il proxy ad altre connessioni nella pagina individualmente."
+	},
+	"settingsGeneralProxyPerOriginEnabled": {
+		"message": "Proxy per scheda/origine abilitato"
+	},
+	"settingsGeneralProxyPerOriginDisabled": {
+		"message": "Proxy per scheda/origine disabilitato"
+	},
+	"settingsGeneralSyncing": {
+		"message": "Sincronizzazione"
+	},
+	"settingsGeneralIncognitoProfile": {
+		"message": "Profilo Navigazione Privata"
+	},
+	"settingsGeneralIncognitoProfileDisabled": {
+		"message": "(Disabilitato)"
+	},
+	"settingsGeneralIncognitoProfileDesc": {
+		"message": "Seleziona un profilo di navigazione privata se vuoi forzarlo ad essere utilizzato quando la scheda/finestra è in modalità Navigazione Privata. Questa opzione sovrascriverà il profilo attivo."
+	},
+	"settingsGeneralEnableSyncing": {
+		"message": "Abilita sincronizzazione impostazioni"
+	},
+	"settingsGeneralEnableSyncingDesc": {
+		"message": "Abilitando la sincronizzazione, tutte le tue impostazioni incluse regole, server e sottoscrizioni saranno disponibili su tutti i browser."
+	},
+	"settingsSaveGeneralOptionsButton": {
+		"message": "Salva Modifiche"
+	},
+	"settingsRejectGeneralOptionsButton": {
+		"message": "Rifiuta Modifiche"
+	},
+	"settingsGeneralSyncProxyMode": {
+		"message": "Abilita sincronizzazione profilo attivo"
+	},
+	"settingsGeneralSyncProxyModeDesc": {
+		"message": "Seleziona se vuoi che il profilo attivo sia sincronizzato."
+	},
+	"settingsGeneralSyncActiveProxy": {
+		"message": "Abilita sincronizzazione proxy attivo"
+	},
+	"settingsGeneralSyncActiveProxyDesc": {
+		"message": "Seleziona se vuoi che il server proxy selezionato sia sincronizzato"
+	},
+	"settingsGeneralSyncToBrowser": {
+		"message": "Usa i server di sincronizzazione del browser"
+	},
+	"settingsGeneralSyncToWebDAV": {
+		"message": "Sincronizza su un server WebDAV"
+	},
+	"settingsGeneralWebDavServerUrl": {
+		"message": "URL del server WebDAV:"
+	},
+	"settingsGeneralWebDavBackupFilename": {
+		"message": "Nome del file di backup:"
+	},
+	"settingsGeneralWebDavServerUser": {
+		"message": "Nome utente del server WebDAV:"
+	},
+	"settingsGeneralWebDavServerPassword": {
+		"message": "Password del server WebDAV:"
+	},
+	"settingsGeneralWebDavBehaviourDesc": {
+		"message": "Si noti che i backup avverranno ad ogni modifica delle impostazioni, mentre il ripristino avviene solo all'avvio del browser."
+	},
+	"settingsGeneralWebDavServerBackupNow": {
+		"message": "Esegui Backup Ora"
+	},
+	"settingsGeneralWebDavServerRestoreNow": {
+		"message": "Ripristina Ora"
+	},
+	"settingsGeneralWebDavRestoreNowConfirm": {
+		"message": "Questo sovrascriverà le impostazioni correnti dal server WebDAV. Questa azione non è reversibile, prestare attenzione. Procedere?"
+	},
+	"settingsGeneralWebDavRestoreNowSuccess": {
+		"message": "Ripristino WebDAV completato con successo!"
+	},
+	"settingsGeneralWebDavRestoreNowFailed": {
+		"message": "Ripristino WebDAV fallito:"
+	},
+	"settingsGeneralWebDav_ErrorValidUrl": {
+		"message": "Inserisci un URL del server WebDAV valido"
+	},
+	"settingsGeneralWebDav_ErrorEmptyFilename": {
+		"message": "Il nome del file di backup del server WebDAV non può essere vuoto"
+	},
+	"settingsGeneralWebDav_ErrorRequiredFields": {
+		"message": "Si prega di compilare tutti i campi WebDAV richiesti."
+	},
+	"settingsGeneralWebDavBackupNowSuccess": {
+		"message": "Backup WebDAV completato con successo!"
+	},
+	"settingsGeneralWebDavBackupNowFailed": {
+		"message": "Backup WebDAV fallito:"
+	},
+	"settingsGeneralErrorDetection": {
+		"message": "Rilevamento Errori"
+	},
+	"settingsGeneralDetectFailures": {
+		"message": "Rileva errori di richiesta"
+	},
+	"settingsGeneralDetectFailuresDesc": {
+		"message": "Il rilevamento degli errori di richiesta ti aiuterà a identificare i domini che necessitano di proxy."
+	},
+	"settingsGeneralSelectIgnoredDomains": {
+		"message": "Inserisci Regole"
+	},
+	"settingsGeneralIgnoreRequestFailuresForDomains": {
+		"message": "Ignora rilevamento errori in base a queste regole"
+	},
+	"settingsGeneralIgnoreRequestFailuresForDomainsDesc": {
+		"message": "Aggiungi regole per disabilitare il rilevamento degli errori."
+	},
+	"settingsGeneralDisplayFailedOnBadge": {
+		"message": "Mostra il conteggio delle richieste fallite sul badge dell'icona della barra degli strumenti"
+	},
+	"settingsGeneralThemes": {
+		"message": "Temi"
+	},
+	"settingsGeneralThemesAutoSwitch": {
+		"message": "Cambio automatico in base al tema del Browser"
+	},
+	"settingsGeneralThemesAutoSwitchDesc": {
+		"message": "Cambia automaticamente tra i temi selezionati di seguito. Questo segue il tema del tuo browser che può anche seguire il tema del tuo sistema operativo."
+	},
+	"settingsGeneralThemesLight": {
+		"message": "Tema Chiaro"
+	},
+	"settingsGeneralThemes_Default": {
+		"message": "(Predefinito)"
+	},
+	"settingsGeneralThemes_Custom": {
+		"message": "(Personalizzato)"
+	},
+	"settingsGeneralThemes_CustomUrl": {
+		"message": "URL stili personalizzati (CSS):"
+	},
+	"settingsGeneralThemes_CustomUrlDesc": {
+		"message": "L'URL deve essere 'https'. Fai attenzione ai font importati e ad altri stili nello stile personalizzato, possono bloccare/ rallentare i popup nel tuo browser. Puoi provare temi da bootswatch.com ma fai attenzione alla loro dipendenza dai font di Google."
+	},
+	"settingsGeneralThemesDark": {
+		"message": "Tema Scuro"
+	},
+	"settingsGeneralThemesLight_ErrorValidUrl": {
+		"message": "Inserisci un URL CSS valido per il Tema Chiaro e l'URL deve essere 'https'."
+	},
+	"settingsGeneralThemesDark_ErrorValidUrl": {
+		"message": "Inserisci un URL CSS valido per il Tema Scuro e l'URL deve essere 'https'."
+	},
+	"settingsGeneralOtherSettings": {
+		"message": "Altre Impostazioni"
+	},
+	"settingsGeneralEnableShortcuts": {
+		"message": "Abilita Scorciatoie"
+	},
+	"settingsGeneralEnableShortcutsDesc": {
+		"message": "Puoi configurare le scorciatoie dalla pagina delle impostazioni del componente aggiuntivo del browser."
+	},
+	"settingsGeneralViewShortcuts": {
+		"message": "Visualizza scorciatoie"
+	},
+	"settingsGeneralConfigureShortcuts": {
+		"message": "Configura scorciatoie"
+	},
+	"settingsGeneralShortcutNotification": {
+		"message": "Abilita notifica scorciatoia"
+	},
+	"settingsGeneralViewShortcutKeys": {
+		"message": "Tasti Scorciatoia"
+	},
+	"settingsGeneralDisplayAppliedProxyOnBadge": {
+		"message": "Mostra l'origine della regola applicata sul badge"
+	},
+	"settingsGeneralDisplayAppliedRulePatternOnBadge": {
+		"message": "Mostra il modello della regola applicata sul badge"
+	},
+	"settingsGeneralRefreshTabOnConfigChanges": {
+		"message": "Aggiorna scheda attiva quando il profilo o il proxy cambia"
+	},
+	"settingsGeneralCancelButton": {
+		"message": "Annulla"
+	},
+	"settingsGeneralSaveChanges": {
+		"message": "Salva Modifiche"
+	},
+	"settingsGeneralKeyboardShortcutsTitle": {
+		"message": "Scorciatoie da tastiera"
+	},
+	"settingsGeneralCloseButton": {
+		"message": "Chiudi"
+	},
+	"settingsGeneralKeyboardShortcutsNotSupported": {
+		"message": "Le scorciatoie da tastiera non sono supportate sui dispositivi mobili."
+	},
+	"settingsTabProxyServersTitle": {
+		"message": "Gestisci i tuoi server proxy:"
+	},
+	"settingsTabProxyServersDescription": {
+		"message": "Ecco l'elenco dei server proxy. Puoi definire tutti i proxy che vuoi e passare dall'uno all'altro dalla barra degli strumenti."
+	},
+	"settingsTabBackupRestoreDescription": {
+		"message": "Puoi effettuare un backup completo o parziale delle tue impostazioni."
+	},
+	"settingsErrNoServersTitle": {
+		"message": "Nessun Server!"
+	},
+	"settingsErrNoServersDescription": {
+		"message": "Prima di tutto devi definire i server proxy."
+	},
+	"settingsActiveProxyServer": {
+		"message": "Server Proxy Predefinito:"
+	},
+	"settingsAddServerButton": {
+		"message": "Aggiungi Server"
+	},
+	"settingsRemoveMultipleServerButton": {
+		"message": "Elimina Multipli"
+	},
+	"settingsSaveChangesButton": {
+		"message": "Salva Modifiche"
+	},
+	"settingsRejectChangesButton": {
+		"message": "Rifiuta Modifiche"
+	},
+	"settingsEditButton": {
+		"message": "Modifica"
+	},
+	"settingsFullBackupButton": {
+		"message": "Crea backup completo"
+	},
+	"settingsFullBackupButtonDesc": {
+		"message": "Esegui un backup completo delle opzioni (inclusi server proxy e regole)."
+	},
+	"settingsRestoreBackupButton": {
+		"message": "Ripristina backup"
+	},
+	"settingsRestoreBackupButtonDesc": {
+		"message": "Ripristina il backup precedentemente effettuato da un file locale"
+	},
+	"settingsDangerZoneDesc": {
+		"message": "Zona pericolosa"
+	},
+	"settingsFactoryResetButton": {
+		"message": "Ripristino Impostazioni di Fabbrica"
+	},
+	"settingsFactoryResetDesc": {
+		"message": "Ripristina tutto. Questo rimuoverà tutte le regole e i server proxy e ripristinerà le opzioni. Permanentemente."
+	},
+	"settingsFactoryResetConfirm": {
+		"message": "Sei sicuro di voler ripristinare TUTTO? Sicuro? Non si può tornare indietro!"
+	},
+	"settingsFactoryResetSuccess": {
+		"message": "Ripristino di fabbrica completato con successo"
+	},
+	"settingsImportExportProxiesDesc": {
+		"message": "Importa/Esporta elenchi individuali di server proxy."
+	},
+	"settingsImportProxiesButtonBackup": {
+		"message": "Importa Server Proxy"
+	},
+	"settingsExportProxiesButtonBackup": {
+		"message": "Esporta Server Proxy"
+	},
+	"settingsAddRuleButton": {
+		"message": "Aggiungi Regola"
+	},
+	"settingsImportRulesButton": {
+		"message": "Importa Regole"
+	},
+	"settingsImportRulesTitle": {
+		"message": "Importa Regole"
+	},
+	"settingsImportRulesSelectButton": {
+		"message": "File di backup delle regole"
+	},
+	"settingsImportRulesText": {
+		"message": "Testo di backup delle regole"
+	},
+	"settingsImportRulesFrom": {
+		"message": "Da"
+	},
+	"settingsImportRulesOptionAppend": {
+		"message": "Aggiungi alle regole esistenti"
+	},
+	"settingsImportRulesOptionOverride": {
+		"message": "Sostituisci le regole attuali (usa con cautela)"
+	},
+	"settingsImportRulesCancelButton": {
+		"message": "Annulla"
+	},
+	"settingsImportRulesImportButton": {
+		"message": "Importa"
+	},
+	"settingsImportProxiesButton": {
+		"message": "Importa Proxy"
+	},
+	"settingsExportProxiesButton": {
+		"message": "Esporta Proxy"
+	},
+	"settingsImportProxiesTitle": {
+		"message": "Importa Elenco Proxy"
+	},
+	"settingsImportProxiesSelectFileButton": {
+		"message": "File elenco proxy"
+	},
+	"settingsImportProxiesSelectTextButton": {
+		"message": "Testo elenco proxy"
+	},
+	"settingsImportProxiesOptionAppend": {
+		"message": "Aggiungi ai proxy esistenti"
+	},
+	"settingsImportProxiesOptionOverride": {
+		"message": "Sostituisci i proxy correnti (usa con cautela)"
+	},
+	"settingsImportProxiesCancelButton": {
+		"message": "Annulla"
+	},
+	"settingsImportProxiesImportButton": {
+		"message": "Importa"
+	},
+	"settingsConfirmRemoveProxyServer": {
+		"message": "Sei sicuro di voler rimuovere il server proxy selezionato?"
+	},
+	"settingsConfirmRemoveMultipleProxyServer": {
+		"message": "Sei sicuro di voler rimuovere i server proxy selezionati?"
+	},
+	"settingsRemoveAllProxyServers": {
+		"message": "Sei sicuro di voler rimuovere tutti i server proxy?"
+	},
+	"settingsRemoveAllProxyServersSuccess": {
+		"message": "Tutti i server proxy sono stati rimossi.<br/>Devi salvare per applicare le modifiche."
+	},
+	"settingsImportProxiesFileNotSelected": {
+		"message": "Seleziona un file elenco proxy"
+	},
+	"settingsImportProxyListTextIsEmpty": {
+		"message": "Inserisci l'elenco proxy"
+	},
+	"settingsImportProxyServersFailed": {
+		"message": "Impossibile importare i server proxy"
+	},
+	"importerImportProxySuccess": {
+		"message": "Importati {0} proxy su {1}.<br>Non dimenticare di salvare le modifiche."
+	},
+	"settingsErrorFailedToSaveServers": {
+		"message": "Impossibile salvare i server."
+	},
+	"settingsChangesReverted": {
+		"message": "Modifiche annullate con successo."
+	},
+	"settingsConfirmSaveAllChanged": {
+		"message": "Vuoi salvare tutte le modifiche non salvate?"
+	},
+	"settingsConfirmRemoveProxyRule": {
+		"message": "Sei sicuro di voler rimuovere la regola selezionata?"
+	},
+	"settingsConfirmRemoveMultipleProxyRule": {
+		"message": "Sei sicuro di voler rimuovere le regole selezionate?"
+	},
+	"settingsRemoveAllRules": {
+		"message": "Sei sicuro di voler rimuovere tutte le regole?"
+	},
+	"settingsRemoveAllRulesSuccess": {
+		"message": "Tutte le regole sono state rimosse.<br/>Devi salvare per applicare le modifiche."
+	},
+	"settingsRestoreBackupFailed": {
+		"message": "Si è verificato un errore durante il ripristino del backup"
+	},
+	"settingsRestoreBackupFileError": {
+		"message": "Impossibile leggere il file selezionato"
+	},
+	"settingsRulesFileNotSelected": {
+		"message": "Seleziona un file di regole"
+	},
+	"settingsSourceTypeNotSelected": {
+		"message": "Seleziona il tipo di sorgente"
+	},
+	"settingsImportRulesFailed": {
+		"message": "Impossibile importare il file."
+	},
+	"settingsImportRulesTextIsEmpty": {
+		"message": "Inserisci le regole nella casella"
+	},
+	"settingsServerNameRequired": {
+		"message": "Specifica il nome del server!"
+	},
+	"settingsServerNameExists": {
+		"message": "Esiste già un server con lo stesso nome!"
+	},
+	"settingsServerServerAddressIsEmpty": {
+		"message": "L'indirizzo del server non può essere vuoto"
+	},
+	"settingsServerPortNoInvalid": {
+		"message": "Inserisci un numero di porta valido"
+	},
+	"settingsServerAuthenticationInvalid": {
+		"message": "Sia nome utente che password sono richiesti per l'autenticazione"
+	},
+	"settingsServersGridNoDataContent": {
+		"message": "Nessun server definito"
+	},
+	"settingsServersGridColName": {
+		"message": "Nome"
+	},
+	"settingsServersGridColProtocol": {
+		"message": "Protocollo"
+	},
+	"settingsServersGridColServer": {
+		"message": "Server"
+	},
+	"settingsServersGridColPort": {
+		"message": "Porta"
+	},
+	"settingsServersGridColCountry": {
+		"message": "Paese"
+	},
+	"settingsServersGridColRating": {
+		"message": "Valutazione"
+	},
+	"settingsServersModalTitle": {
+		"message": "Dettagli server proxy"
+	},
+	"settingsServersServerName": {
+		"message": "Nome del server"
+	},
+	"settingsServersSeverAddress": {
+		"message": "Indirizzo del server"
+	},
+	"settingsServersProtocol": {
+		"message": "Protocollo proxy"
+	},
+	"settingsServersPort": {
+		"message": "Porta"
+	},
+	"settingsServersProxyDNS": {
+		"message": "Proxy DNS quando si utilizza SOCKS 5"
+	},
+	"settingsServersUsername": {
+		"message": "Nome utente"
+	},
+	"settingsServersPassword": {
+		"message": "Password"
+	},
+	"settingsServersAuthChromeMv3Limitation": {
+		"message": "(Sfortunatamente l'autenticazione del server proxy non è supportata da Chrome tramite l'API delle estensioni. Questo è \"intenzionale\".)"
+	},
+	"settingsServersCancel": {
+		"message": "Annulla"
+	},
+	"settingsServersSave": {
+		"message": "Salva"
+	},
+	"settingsServersImport": {
+		"message": "Importa"
+	},
+	"settingsProfilesNameTitle": {
+		"message": "Profilo Selettivo:"
+	},
+	"settingsProfilesEnabled": {
+		"message": "Abilitato"
+	},
+	"settingsProfilesTypeTitle": {
+		"message": "Tipo di Profilo:"
+	},
+	"settingsProfilesTypeDesc_SmartRules": {
+		"message": "In questo profilo nessun proxy viene applicato a meno che tu non definisca regole selettive. Definirai regole blacklist, o in altre parole regole per applicare il proxy."
+	},
+	"settingsProfilesTypeDesc_AlwaysEnabledBypassRules": {
+		"message": "In questo profilo i server proxy sono sempre applicati; definisci regole selettive per evitarli. Definirai regole whitelist, o in altre parole regole per saltare il proxy e non applicarlo."
+	},
+	"settingsProfilesTypeDesc_IgnoreFailureRules": {
+		"message": "Ignora il rilevamento degli errori per questi domini aggiungendo regole."
+	},
+	"settingsProfilesProfileProxyServer": {
+		"message": "Server proxy del profilo:"
+	},
+	"settingsProfilesDefaultProfileProxyServer": {
+		"message": "(Usa Server Proxy Predefinito)"
+	},
+	"settingsProfilesProfileProxyServerDesc": {
+		"message": "(Durante l'uso di questo profilo, questo sarà il server proxy attivo)"
+	},
+	"settingsProfilesRulesSection": {
+		"message": "Regole"
+	},
+	"settingsProfilesDelete": {
+		"message": "Elimina"
+	},
+	"settingsProfilesAddNewLabel": {
+		"message": "Aggiungi Nuovo Profilo Selettivo"
+	},
+	"settingsProfilesAddNewTypeLead": {
+		"message": "Seleziona il <b>tipo di profilo</b> che desideri aggiungere:"
+	},
+	"settingsProfilesAddNewType_SmartRules": {
+		"message": "Regole Selettive"
+	},
+	"settingsProfilesAddNewType_SmartRulesDesc": {
+		"message": "In questo tipo di profilo, il proxy verrà applicato alle richieste in base ad alcune <em>regole selettive</em> che dovrai definire. Per definire queste regole puoi utilizzare il menu popup nella barra dei menu o aggiungerle dalle impostazioni e anche dalla finestra <em>Risorse Proxyabili</em>.<br>Inoltre hai la possibilità di iscriverti a diverse liste di regole come Gfwlist."
+	},
+	"settingsProfilesAddNewType_AlwaysEnabled": {
+		"message": "Sempre Abilitato"
+	},
+	"settingsProfilesAddNewType_AlwaysEnabledDesc": {
+		"message": "In questo tipo di profilo, il proxy verrà sempre applicato alle richieste a meno che tu non definisca regole per bypassarlo. I passaggi per definire le regole sono gli stessi del tipo di profilo Regole Selettive."
+	},
+	"settingsProfilesAddNewBtnContinue": {
+		"message": "Continua"
+	},
+	"settingsProfilesAddNewBtnCancel": {
+		"message": "Annulla"
+	},
+	"settingsProfilesAddErrorTypeRequired": {
+		"message": "Seleziona un tipo di profilo"
+	},
+	"settingsProfilesAddErrorNameRequired": {
+		"message": "Il nome del profilo è obbligatorio"
+	},
+	"settingsProfilesAddErrorNameExists": {
+		"message": "Il nome del profilo esiste già, inserisci un altro nome"
+	},
+	"settingsProfilesDeleteConfirm": {
+		"message": "Sei sicuro di voler eliminare questo profilo? Attenzione: questa azione non può essere annullata!"
+	},
+	"settingsProfilesDeleteFailed": {
+		"message": "Impossibile eliminare il profilo selezionato."
+	},
+	"settingsProfilesDeleteDone": {
+		"message": "Il profilo è stato eliminato con successo"
+	},
+	"settingsProfilesDeleteBuiltinFail": {
+		"message": "Impossibile eliminare i profili integrati"
+	},
+	"settingsProfilesProxyServer": {
+		"message": "[Usa Server Proxy Predefinito]"
+	},
+	"settingsProfilesRulesSubscriptionsTitle": {
+		"message": "Sottoscrizioni Regole"
+	},
+	"settingsProfilesRulesSubscriptionsDesc": {
+		"message": "Qui puoi iscriverti a liste di regole."
+	},
+	"settingsSaveSmartProfileSuccess": {
+		"message": "Profilo Selettivo salvato con successo."
+	},
+	"settingsErrorFailedToSaveSmartProfile": {
+		"message": "Impossibile salvare il profilo selettivo."
+	},
+	"settingsRuleSourceRequired": {
+		"message": "Specificare il dominio di origine della regola!"
+	},
+	"settingsRuleSourceInvalid": {
+		"message": "Il dominio di origine non è valido, dovrebbe essere qualcosa come 'google.com'"
+	},
+	"settingsRuleSourceInvalidFormat": {
+		"message": "'dominio di origine' non valido '{0}'"
+	},
+	"settingsRuleSourceAlreadyExists": {
+		"message": "Esiste già una regola con la stessa fonte!"
+	},
+	"settingsRuleHostInvalid": {
+		"message": "Il nome host '{0}' non è valido, dovrebbe essere qualcosa come 'google.com'"
+	},
+	"settingsRuleRegexNotMatchDomain": {
+		"message": "La regola regex non corrisponde al dominio di origine '{0}'"
+	},
+	"settingsRuleDoesntIncludeDomain": {
+		"message": "La regola non corrisponde al dominio di origine '{0}'"
+	},
+	"settingsRuleRegexInvalid": {
+		"message": "La regola regex '{0}' non è valida"
+	},
+	"settingsRuleExactUrlInvalid": {
+		"message": "L'URL '{0}' non è valido"
+	},
+	"settingsRuleUrlInvalid": {
+		"message": "L'URL '{0}' non è valido"
+	},
+	"settingsRulesGridNoDataContent": {
+		"message": "Nessuna regola definita"
+	},
+	"settingsRulesGridColRuleType": {
+		"message": "Tipo di Regola"
+	},
+	"settingsRulesGridColSource": {
+		"message": "Origine"
+	},
+	"settingsRulesGridColRule": {
+		"message": "Regola"
+	},
+	"settingsRulesGridColEnabled": {
+		"message": "Abilitato"
+	},
+	"settingsRulesGridColProxy": {
+		"message": "Server Proxy"
+	},
+	"settingsRulesProxyDefault": {
+		"message": "[Usa Proxy Attivo]"
+	},
+	"settingsRulesProxyFromProfile": {
+		"message": "[Usa Proxy del Profilo]"
+	},
+	"settingsRulesModalTitle": {
+		"message": "Dettagli Regola"
+	},
+	"settingsRulesRuleType": {
+		"message": "Tipo di Regola"
+	},
+	"settingsRulesSourceDomain": {
+		"message": "Dominio di origine della regola"
+	},
+	"settingsRulesSourceDomainDesc": {
+		"message": "(es. google.com)"
+	},
+	"settingsRulesPattern": {
+		"message": "Modello di corrispondenza"
+	},
+	"settingsRulesGeneratePattern": {
+		"message": "Genera modello automaticamente"
+	},
+	"settingsRulesRegex": {
+		"message": "Regex URL"
+	},
+	"settingsRulesHostRegex": {
+		"message": "Regex Host"
+	},
+	"settingsRulesExactUrl": {
+		"message": "URL Esatto (in minuscolo)"
+	},
+	"settingsRulesProxyServer": {
+		"message": "Server Proxy"
+	},
+	"settingsRulesProxyServerNotAuth": {
+		"message": "(I server con autenticazione non sono supportati in Chrome)"
+	},
+	"settingsRulesEnabled": {
+		"message": "Abilitato"
+	},
+	"settingsRulesModalCancel": {
+		"message": "Annulla"
+	},
+	"settingsRulesModalSave": {
+		"message": "Salva"
+	},
+	"settingsRulesActionType": {
+		"message": "Azione"
+	},
+	"settingsRuleActionApplyProxy": {
+		"message": "Applica Proxy"
+	},
+	"settingsRuleActionWhitelist": {
+		"message": "Whitelist (Nessun proxy)"
+	},
+	"settingsRuleActionWhitelistDesc": {
+		"message": "(Le regole whitelist hanno priorità più alta rispetto alle regole proxy, indipendentemente dalla loro posizione)"
+	},
+	"settingsServerPortInvalid": {
+		"message": "La porta del server '{0}' non è valida"
+	},
+	"settingsServerHostInvalid": {
+		"message": "L'host del server '{0}' non è valido"
+	},
+	"settingsRestoreSettingsSuccess": {
+		"message": "Impostazioni ripristinate con successo"
+	},
+	"settingsRestoreSettingsFailed": {
+		"message": "Si è verificato un errore durante il ripristino delle impostazioni"
+	},
+	"settingsRestoreSettingsFailedInvalid": {
+		"message": "I dati di backup non sono validi o sono corrotti"
+	},
+	"settingsRestoreSettingsFailedInvalidActiveProfile": {
+		"message": "Dati non validi forniti per il profilo attivo"
+	},
+	"settingsRestoreSettingsFailedInvalidDefaultProxyServer": {
+		"message": "Dati non validi forniti per il server proxy predefinito"
+	},
+	"settingsEnableByDomainInvalid": {
+		"message": "Il dominio selezionato non è valido"
+	},
+	"settingsEnableByDomainExists": {
+		"message": "Esiste già una regola per il dominio"
+	},
+	"settingsEnableByDomainSmartProfileNonEditable": {
+		"message": "Il profilo corrente '{0}' non può essere aggiornato con regole"
+	},
+	"settingsNoRuleFoundForDomain": {
+		"message": "Non esiste alcuna regola per '{0}'"
+	},
+	"importerImportSuccess": {
+		"message": "Aggiunte {0} regole su {1}.<br>Non dimenticare di salvare le modifiche."
+	},
+	"settingsRemoveMultipleProxyRuleButton": {
+		"message": "Elimina Multipli"
+	},
+	"settingsAddMultipleRulesButton": {
+		"message": "Aggiungi Regole Multiple"
+	},
+	"settingsAddMultipleRuleTitle": {
+		"message": "Aggiungi Regole Multiple"
+	},
+	"settingsMultipleRuleList": {
+		"message": "Elenco host/regole:"
+	},
+	"settingsMultipleRuleInvalidHost": {
+		"message": "Il nome host '{0}' non è valido"
+	},
+	"settingsMultipleRuleNoNewRuleAdded": {
+		"message": "Nessuna nuova regola aggiunta"
+	},
+	"settingsTabProxyServerSubscriptionsTitle": {
+		"message": "Gestisci le sottoscrizioni dei server proxy:"
+	},
+	"settingsTabProxyServerSubscriptionsDescription": {
+		"message": "Qui puoi iscriverti a liste di proxy e passare da un proxy all'altro in seguito. Si noti che elenchi lunghi possono causare errori nella sincronizzazione dei dati tra dispositivi."
+	},
+	"settingsErrorFailedToSaveGeneral": {
+		"message": "Salvataggio delle impostazioni fallito."
+	},
+	"settingsSaveOptionsSuccess": {
+		"message": "Opzioni generali salvate con successo."
+	},
+	"settingsAddServerSubscriptionButton": {
+		"message": "Iscriviti a una lista"
+	},
+	"settingsServerSubscriptionModalTitle": {
+		"message": "Iscriviti a una lista di server proxy"
+	},
+	"settingsRemoveMultipleServerSubscriptionButton": {
+		"message": "Elimina Multipli"
+	},
+	"settingsServerSubscriptionName": {
+		"message": "Nome:"
+	},
+	"settingsServerSubscriptionUrl": {
+		"message": "URL:"
+	},
+	"settingsServerSubscriptionRefreshRate": {
+		"message": "Frequenza di aggiornamento:"
+	},
+	"settingsServerSubscriptionRefreshRateHelp": {
+		"message": "(in minuti, 0 significa nessun aggiornamento)"
+	},
+	"settingsServerSubscriptionEnabled": {
+		"message": "Abilitato"
+	},
+	"settingsServerSubscriptionProtocol": {
+		"message": "Protocollo:"
+	},
+	"settingsServerSubscriptionObfuscation": {
+		"message": "Offuscamento:"
+	},
+	"settingsServerSubscriptionFormat": {
+		"message": "Formato:"
+	},
+	"settingsServerSubscriptionApplyProxy": {
+		"message": "Passa attraverso proxy:"
+	},
+	"settingsServerSubscriptionApplyProxyHelpFirefox": {
+		"message": "(Decidi in base al tuo accesso al server)"
+	},
+	"settingsServerSubscriptionApplyProxyHelpChrome": {
+		"message": "(Sfortunatamente questa funzione non è disponibile in Chrome. Verrà applicato il proxy corrente)"
+	},
+	"settingsServerSubscriptionApplyProxy_NoProxy": {
+		"message": "Nessun Proxy"
+	},
+	"settingsServerSubscriptionApplyProxy_CurrentProxy": {
+		"message": "Proxy Corrente"
+	},
+	"settingsServerSubscriptionApplyProxy_SelectedProxy": {
+		"message": "Proxy Selezionato"
+	},
+	"settingsServerSubscriptionUsername": {
+		"message": "Nome utente:"
+	},
+	"settingsServerSubscriptionPassword": {
+		"message": "Password:"
+	},
+	"settingsServerSubscriptionAuthenticationHelp": {
+		"message": "(se la lista richiede l'autenticazione)"
+	},
+	"settingsServerSubscriptionCancelButton": {
+		"message": "Annulla"
+	},
+	"settingsServerSubscriptionSaveButton": {
+		"message": "Salva"
+	},
+	"settingsServerSubscriptionSavingButton": {
+		"message": "Salvataggio in corso..."
+	},
+	"settingsServerSubscriptionTestButton": {
+		"message": "Prova"
+	},
+	"settingsProxyTestStopButton": {
+		"message": "Ferma"
+	},
+	"settingsProxyTestCancelled": {
+		"message": "Test interrotto dall'utente"
+	},
+	"settingsProxyTestResumeDialogTitle": {
+		"message": "Test Proxy"
+	},
+	"settingsProxyTestResumeDialogMessage": {
+		"message": "Ci sono proxy non testati. Cosa vuoi fare?"
+	},
+	"settingsProxyTestResumeContinue": {
+		"message": "Continua da dove mi sono fermato"
+	},
+	"settingsProxyTestResumeRestart": {
+		"message": "Ricomincia dall'inizio"
+	},
+	"settingsServerSubscriptionTestingButton": {
+		"message": "Verifica in corso..."
+	},
+	"settingsConfirmRemoveServerSubscription": {
+		"message": "Sei sicuro di voler rimuovere la sottoscrizione selezionata?"
+	},
+	"settingsRemoveAllProxyServerSubscriptions": {
+		"message": "Sei sicuro di voler rimuovere tutte le sottoscrizioni dei server proxy?"
+	},
+	"settingsConfirmRemoveMultipleServerSubscription": {
+		"message": "Sei sicuro di voler rimuovere le sottoscrizioni selezionate?"
+	},
+	"settingsRemoveAllProxyServerSubscriptionsSuccess": {
+		"message": "Tutte le sottoscrizioni dei server proxy sono state rimosse.<br/>Devi salvare per applicare le modifiche."
+	},
+	"settingsServerSubscriptionProtocolDefault": {
+		"message": "(Rilevamento automatico con fallback HTTP)"
+	},
+	"settingsInitializeFailed": {
+		"message": "Impossibile leggere le configurazioni. Chiudi la pagina delle impostazioni e riprova."
+	},
+	"settingsActiveProxyServerSubscriptions": {
+		"message": "-Sottoscrizioni-"
+	},
+	"settingsServerSubscriptionsGridNoDataContent": {
+		"message": "Nessuna sottoscrizione"
+	},
+	"settingsServerSubscriptionsGridColName": {
+		"message": "Nome"
+	},
+	"settingsServerSubscriptionsGridColUrl": {
+		"message": "URL"
+	},
+	"settingsServerSubscriptionsGridColCount": {
+		"message": "Conteggio"
+	},
+	"settingsServerSubscriptionsGridColEnabled": {
+		"message": "Abilitato"
+	},
+	"settingsServerSubscriptionIncompleteForm": {
+		"message": "Compila i campi richiesti nel formato corretto"
+	},
+	"settingsServerSubscriptionInvalidForm": {
+		"message": "Dettagli della sottoscrizione del server proxy non validi"
+	},
+	"settingsServerSubscriptionDuplicateName": {
+		"message": "Il nome inserito è già utilizzato, inserisci un altro nome."
+	},
+	"settingsServerSubscriptionSaveUpdated": {
+		"message": "La sottoscrizione è stata aggiornata con {0} proxy.<br/>Non dimenticare di salvare le modifiche."
+	},
+	"settingsServerSubscriptionSaveAdded": {
+		"message": "La sottoscrizione è stata aggiunta con {0} proxy.<br/>Non dimenticare di salvare le modifiche."
+	},
+	"settingsServerSubscriptionSaveFailedGet": {
+		"message": "Impossibile recuperare i proxy."
+	},
+	"settingsServerSubscriptionTestSuccess": {
+		"message": "Test riuscito. L'elenco ha restituito {0} proxy."
+	},
+	"settingsServerSubscriptionTestFailed": {
+		"message": "Test fallito"
+	},
+	"settingsSaveProxyServerSubscriptionsSuccess": {
+		"message": "Sottoscrizioni server proxy salvate con successo."
+	},
+	"settingsFailedToSaveProxySubscriptions": {
+		"message": "Impossibile salvare le sottoscrizioni dei server proxy"
+	},
+	"settingsAddRulesSubscriptionButton": {
+		"message": "Iscriviti a una lista di regole"
+	},
+	"settingsRemoveMultipleRulesSubscriptionButton": {
+		"message": "Elimina Multipli"
+	},
+	"settingsRulesSubscriptionsModalTitle": {
+		"message": "Iscriviti a una lista di regole"
+	},
+	"settingsRulesSubscriptionsGridColName": {
+		"message": "Nome"
+	},
+	"settingsRulesSubscriptionsGridColUrl": {
+		"message": "URL"
+	},
+	"settingsRulesSubscriptionsGridColCount": {
+		"message": "Conteggio"
+	},
+	"settingsRulesSubscriptionsGridColEnabled": {
+		"message": "Abilitato"
+	},
+	"settingsRulesSubscriptionsName": {
+		"message": "Nome:"
+	},
+	"settingsRulesSubscriptionsUrl": {
+		"message": "URL:"
+	},
+	"settingsRulesSubscriptionsRefreshRate": {
+		"message": "Frequenza di aggiornamento:"
+	},
+	"settingsRulesSubscriptionsRefreshRateHelp": {
+		"message": "(in minuti, 0 significa nessun aggiornamento)"
+	},
+	"settingsRulesSubscriptionEnabled": {
+		"message": "Abilitato"
+	},
+	"settingsRulesSubscriptionsObfuscation": {
+		"message": "Offuscamento:"
+	},
+	"settingsRulesSubscriptionsFormat": {
+		"message": "Formato:"
+	},
+	"settingsRulesSubscriptionsApplyProxy": {
+		"message": "Passa attraverso proxy:"
+	},
+	"settingsRulesSubscriptionsApplyProxyHelpFirefox": {
+		"message": "(Decidi in base al tuo accesso al server)"
+	},
+	"settingsRulesSubscriptionsApplyProxyHelpChrome": {
+		"message": "(Sfortunatamente questa funzione non è disponibile in Chrome. Verrà applicato il proxy corrente)"
+	},
+	"settingsRulesSubscriptionsUsername": {
+		"message": "Nome utente:"
+	},
+	"settingsRulesSubscriptionsAuthenticationHelp": {
+		"message": "(se la lista richiede l'autenticazione)"
+	},
+	"settingsRulesSubscriptionsPassword": {
+		"message": "Password:"
+	},
+	"settingsRulesSubscriptionsTestButton": {
+		"message": "Prova"
+	},
+	"settingsRulesSubscriptionsSaveButton": {
+		"message": "Salva"
+	},
+	"settingsRulesSubscriptionsCancelButton": {
+		"message": "Annulla"
+	},
+	"settingsConfirmRemoveRulesSubscription": {
+		"message": "Sei sicuro di voler rimuovere la sottoscrizione alle regole selezionata?"
+	},
+	"settingsConfirmRemoveMultipleRulesSubscription": {
+		"message": "Sei sicuro di voler rimuovere le sottoscrizioni alle regole selezionate?"
+	},
+	"settingsRulesSubscriptionIncompleteForm": {
+		"message": "Compila i campi richiesti nel formato corretto"
+	},
+	"settingsRulesSubscriptionInvalidForm": {
+		"message": "Dettagli della sottoscrizione del server proxy non validi"
+	},
+	"settingsRulesSubscriptionDuplicateName": {
+		"message": "Il nome inserito è già utilizzato, inserisci un altro nome."
+	},
+	"settingsRulesSubscriptionSavingButton": {
+		"message": "Salvataggio in corso..."
+	},
+	"settingsRulesSubscriptionTestButton": {
+		"message": "Prova"
+	},
+	"settingsRulesSubscriptionTestingButton": {
+		"message": "Verifica in corso..."
+	},
+	"settingsRulesSubscriptionSaveUpdated": {
+		"message": "La sottoscrizione è stata aggiornata con {0} regole proxy e {1} regole whitelist.<br/>Non dimenticare di salvare le modifiche."
+	},
+	"settingsRulesSubscriptionSaveAdded": {
+		"message": "La sottoscrizione è stata aggiunta con {0} regole proxy e {1} regole whitelist.<br/>Non dimenticare di salvare le modifiche."
+	},
+	"settingsRulesSubscriptionSaveFailedGet": {
+		"message": "Impossibile recuperare le regole."
+	},
+	"settingsRulesSubscriptionRefreshOnDisabled": {
+		"message": "Impossibile aggiornare una sottoscrizione disabilitata"
+	},
+	"settingsRulesSubscriptionTestSuccess": {
+		"message": "Test riuscito. L'elenco ha restituito {0} regole proxy e {1} regole whitelist."
+	},
+	"settingsRulesSubscriptionTestFailed": {
+		"message": "Test fallito"
+	},
+	"settingsFailedToSaveRulesSubscriptions": {
+		"message": "Impossibile salvare le sottoscrizioni alle regole"
+	},
+	"settingsRemoveAllProxyRulesSubscriptions": {
+		"message": "Sei sicuro di voler rimuovere tutte le sottoscrizioni alle regole proxy?"
+	},
+	"settingsRemoveAllProxyRulesSubscriptionsSuccess": {
+		"message": "Tutte le sottoscrizioni alle regole proxy sono state rimosse.<br/>Devi salvare per applicare le modifiche."
+	},
+	"importerImportRulesSuccess": {
+		"message": "Restituite {0} regole proxy e {1} regole whitelist.<br>Non dimenticare di salvare le modifiche."
+	},
+	"settingsRulePatternIsEmpty": {
+		"message": "La regola non ha un modello definito"
+	},
+	"settingsWelcomeTitle": {
+		"message": "Benvenuto in ProxyMust"
+	},
+	"settingsWelcomeMessage": {
+		"message": "<p>\n\tProxyMust, gestore proxy selettivo con capacità di test dei proxy.<br>\n\tSegui questi passaggi per iniziare:\n</p>\n<ol>\n\t<li>\n\t\tAggiungi un server proxy o un elenco di proxy\n\t\t<br>\n\t\t<small>(Vai alla scheda Server Proxy e aggiungili lì)</small>\n\t</li>\n\t<li>\n\t\tImposta la modalità su Proxy Selettivo\n\t\t<br>\n\t\t<small>(Usa il menu popup della barra degli strumenti per cambiare la modalità attiva in Proxy Selettivo)</small>\n\t</li>\n\t<li>\n\t\tDefinisci le regole proxy\n\t\t<br>\n\t\t<small>(Usa il menu popup della barra degli strumenti per aggiungere regole o la scheda Regole Proxy per aggiungere/modificare le regole del server proxy)</small>\n\t</li>\n\t<li>\n\t\tSei pronto.\n\t</li>\n</ol>"
+	},
+	"settingsWelcomeSkipButton": {
+		"message": "Capito"
+	},
+	"settingsSubscriptionStatsStatusSuccess": {
+		"message": "Stato: Successo"
+	},
+	"settingsSubscriptionStatsStatusFail": {
+		"message": "Stato: Fallito"
+	},
+	"settingsSubscriptionStatsLastTry": {
+		"message": "Ultimo Tentativo:"
+	},
+	"settingsSubscriptionStatsMessage": {
+		"message": "Messaggio:"
+	},
+	"settingsSubscriptionStatsLastSuccess": {
+		"message": "Ultimo Successo:"
+	},
+	"settings_SmartProfileType_Direct": {
+		"message": "Diretto"
+	},
+	"settings_SmartProfileType_SystemProxy": {
+		"message": "Proxy di Sistema"
+	},
+	"settings_SmartProfileType_SmartRules": {
+		"message": "Regole Selettive"
+	},
+	"settings_SmartProfileType_AlwaysEnabledBypassRules": {
+		"message": "Sempre Abilitato con Regole di Bypass"
+	},
+	"settings_SmartProfileType_IgnoreFailureRules": {
+		"message": "Regole Ignora Errori"
+	},
+	"settingsRuleCidrIPAddress": {
+		"message": "Indirizzo IP"
+	},
+	"settingsRuleCidrPrefixLength": {
+		"message": "Lunghezza Prefisso"
+	},
+	"settingsRuleCidrNotationDesc": {
+		"message": "(Si noti che questa regola non risolverà il nome host in indirizzi IP.)"
+	},
+	"settingsRuleCidrIPInvalid": {
+		"message": "Inserisci un indirizzo IP valido"
+	},
+	"settingsRuleCidrPrefixLengthInvalid": {
+		"message": "Inserisci una lunghezza del prefisso valida"
+	},
+	"settingsRuleCidrNotationInvalid": {
+		"message": "La notazione CIDR '{0}' non è valida"
+	},
+	"settingsRuleCidrNotationInvalidMatch": {
+		"message": "La regola CIDR non corrisponde a '{0}'"
+	},
+	"notificationNoNextProxyServer": {
+		"message": "Non c'è un ulteriore server proxy successivo"
+	},
+	"notificationNoPreviousProxyServer": {
+		"message": "Non c'è un ulteriore server proxy precedente"
+	},
+	"notificationShortcutTitle": {
+		"message": "Notifica scorciatoia ProxyMust"
+	},
+	"notificationShortcutProxyModeMessage": {
+		"message": "Modalità proxy cambiata in {0}"
+	},
+	"notificationShortcutProxyServerChanged": {
+		"message": "Server proxy cambiato in {0}"
+	},
+	"popupRatingDialogTitle": {
+		"message": "L'indirizzo funziona?"
+	},
+	"popupRatingWorksButton": {
+		"message": "Sì (+1)"
+	},
+	"popupRatingFailsButton": {
+		"message": "No (-1)"
+	},
+	"popupRatingCancelButton": {
+		"message": "Annulla"
+	},
+	"settingsProxyTestTitle": {
+		"message": "Verifica accessibilità proxy"
+	},
+	"settingsProxyTestEnable": {
+		"message": "Aggiungi siti di test per il controllo del proxy"
+	},
+	"settingsProxyTestNote": {
+		"message": "Inserisci fino a 5 indirizzi. La verifica sarà più veloce se specifichi non più di 3."
+	},
+	"settingsProxyTestUrlsTitle": {
+		"message": "Indirizzi da visitare per il test di accesso"
+	},
+	"settingsProxyTestUrlsWarning": {
+		"message": "⚠️ Inserisci qui i siti web che visiti (es. youtube.com, telegram.org), non gli indirizzi dei proxy."
+	},
+	"settingsProxyTestClear": {
+		"message": "Cancella siti di test"
+	},
+	"settingsProxyTestStop": {
+		"message": "⏹ Ferma test"
+	},
+	"proxyTestCompleted": {
+		"message": "Verifica completata. Testati {0} proxy."
+	},
+	"settingsProxyTestRatingAutoEnabled": {
+		"message": "La valutazione è stata automaticamente abilitata per mostrare i risultati del test."
+	},
+	"settingsProxyTestNoTestUrls": {
+		"message": "Nessun sito di test specificato. Aggiungi almeno un sito web."
+	},
+	"settingsProxyMustTestTitle": {
+		"message": "Test Proxy"
+	},
+	"settingsProxyMustSiteLabel": {
+		"message": "Sito da testare:"
+	},
+	"settingsProxyMustTestRun": {
+		"message": "▶ Test"
+	},
+	"settingsProxyMustAddSite": {
+		"message": "Aggiungi sito"
+	},
+	"settingsProxyMustTestCondition": {
+		"message": "Se non viene selezionato nulla, il test viene eseguito per tutti i proxy nella tabella."
+	},
+	"settingsProxyMustTestResults": {
+		"message": "Risultati: ✅ = funziona sicuramente per questo sito, ☑️ = probabilmente funziona (dati obsoleti o successo su altri siti), ❓ = nessun dato, ⛔ = non funziona."
+	},
+	"settingsServersRatingPriority": {
+		"message": "Valutazione + Priorità"
+	},
+	"settingsContextMenuChangeRating": {
+		"message": "Modifica valutazione manuale"
+	},
+	"settingsContextMenuPlus1": {
+		"message": "(+1)"
+	},
+	"settingsContextMenuMinus1": {
+		"message": "(-1)"
+	},
+	"settingsContextMenuRatingTitle": {
+		"message": "Valutazione manuale"
+	},
+	"settingsContextMenuPlus1Desc": {
+		"message": "Sposta su nell'elenco"
+	},
+	"settingsContextMenuMinus1Desc": {
+		"message": "Sposta giù nell'elenco"
+	},
+	"settingsContextMenuResetRating": {
+		"message": "Reimposta valutazione"
+	},
+	"settingsContextMenuSetFavorite": {
+		"message": "Aggiungi ai preferiti"
+	},
+	"settingsContextMenuSetPin": {
+		"message": "Fissa"
+	},
+	"settingsContextMenuRemoveFavorite": {
+		"message": "Rimuovi dai preferiti"
+	},
+	"settingsContextMenuUnpin": {
+		"message": "Sblocca"
+	},
+	"settingsContextMenuRemovePriority": {
+		"message": "Rimuovi priorità"
+	},
+	"settingsContextMenuExportSelected": {
+		"message": "Esporta selezionati"
+	},
+	"settingsContextMenuCopyAddresses": {
+		"message": "Copia indirizzi"
+	},
+	"settingsContextMenuDelete": {
+		"message": "Elimina"
+	},
+	"settingsContextMenuTestForSite": {
+		"message": "Testa selezionati per il sito"
+	},
+	"settingsProxyMustTestProgress": {
+		"message": "Test dei proxy per {0}... ({1}/{2})"
+	},
+	"settingsProxyMustTestComplete": {
+		"message": "Test completato"
+	},
+	"settingsProxyMustAddSitePrompt": {
+		"message": "Inserisci il dominio del sito (es. youtube.com):"
+	},
+	"settingsProxyMustSiteAlreadyExists": {
+		"message": "Il sito esiste già nell'elenco."
+	},
+	"settingsProxyMustInvalidDomain": {
+		"message": "Dominio non valido. Inserisci un dominio valido (es. youtube.com)."
+	},
+	"popupCurrentSite": {
+		"message": "Sito corrente:"
+	},
+	"settingsProxyMustRemoveSite": {
+		"message": "Rimuovi sito"
+	},
+	"settingsContextMenuMoveToTop": {
+		"message": "Sposta in alto"
+	},
+	"settingsContextMenuMoveToDown": {
+		"message": "Sposta in basso"
+	},
+	"settingsProxyMustCannotRemoveAutoSite": {
+		"message": "Questo sito proviene da regole e non può essere rimosso manualmente."
+	},
+	"settingsProxyMustConfirmRemoveSite": {
+		"message": "Rimuovere \"{0}\" dai siti di test?"
+	},
+	"settingsProxyMustSiteRemoved": {
+		"message": "Sito \"{0}\" rimosso."
+	},
+	"settingsProxyMustStaleHours": {
+		"message": "Ore di obsolescenza:"
+	},
+	"settingsContextMenuPreciseTest": {
+		"message": "Test preciso (più lento, più accurato)"
+	},
+	"settingsContextMenuExpressTest": {
+		"message": "Test rapido (veloce, meno accurato)"
+	},
+	"popupQuickTestButton": {
+		"message": "Test"
+	},
+	"popupQuickTestStopButton": {
+		"message": "Ferma"
+	},
+	"settingsChooseTestTypeTitle": {
+		"message": "Seleziona tipo di test"
+	},
+	"settingsChooseTestTypeDescription": {
+		"message": "Scegli quale test eseguire:"
+	},
+	"settingsPreciseTestDesc": {
+		"message": "Verifica completa, più accurata ma richiede più tempo."
+	},
+	"settingsExpressTestDesc": {
+		"message": "Test rapido, può saltare alcuni proxy funzionanti, ma ne trova almeno uno velocemente."
+	},
+	"settingsCancelButton": {
+		"message": "Annulla"
+	},
+	"popupAddAllSuccessfulSubs": {
+		"message": "Aggiungi funzionanti"
+	},
+	"settingsContextMenuClearStatuses": {
+		"message": "Cancella stati"
+	},
+	"settingsContextMenuClearStatusesSelected": {
+		"message": "Proxy selezionati"
+	},
+	"settingsContextMenuClearStatusesAll": {
+		"message": "Tutti i proxy"
+	},
+	"settingsContextMenuClearStatusesConfirmSelected": {
+		"message": "Cancellare gli stati dei test per i proxy selezionati?"
+	},
+	"settingsContextMenuClearStatusesConfirmAll": {
+		"message": "Cancellare gli stati dei test per TUTTI i proxy? Questa azione non può essere annullata."
+	},
+	"settingsContextMenuClearStatusesSuccess": {
+		"message": "Stati dei test cancellati con successo."
+	},
+	"popupQuickTestTooltip": {
+		"message": "Test rapido per trovare proxy funzionanti per il sito corrente"
+	},
+	"popupAddAllSuccessfulSubsTooltip": {
+		"message": "Aggiunge i proxy in abbonamento che hanno superato il test al tuo elenco manuale"
+	},
+	"popupTestMenuTitle": {
+		"message": "Seleziona tipo di test"
+	},
+	"popupTestMenuAllProxies": {
+		"message": "Test rapido per tutti i proxy"
+	},
+	"popupTestMenuSubscriptionsOnly": {
+		"message": "Test rapido solo per abbonamenti"
+	},
+	"popupTestMenuAllProxiesDesc": {
+		"message": "Proxy manuali + in abbonamento"
+	},
+	"popupTestMenuSubscriptionsOnlyDesc": {
+		"message": "Poi aggiungi quelli funzionanti all'elenco manuale"
+	},
+	"popupTestMenuCycleTest": {
+		"message": "Test ciclico proxy (commutazione completa)"
+	},
+	"popupTestMenuCycleTestDesc": {
+		"message": "Commuta sequenzialmente i proxy, testa il caricamento del sito"
+	},
+	"settingsContextMenuCycleTest": {
+		"message": "Test ciclico (commutazione completa)"
+	},
+	"settingsCycleTestDesc": {
+		"message": "Commuta sequenzialmente i proxy, testa il caricamento del sito. Più approfondito ma più lento."
+	},
+	"popupTestMenuExpressCycleTest": {
+		"message": "Test ciclico rapido (commutazione veloce)"
+	},
+	"popupTestMenuExpressCycleTestDesc": {
+		"message": "Commuta rapidamente i proxy in sequenza, timeout 10s, si ferma al primo successo"
+	},
+	"popupTestMenuExpressCycleAll": {
+		"message": "Test ciclico rapido (tutti i proxy)"
+	},
+	"popupTestMenuExpressCycleAllDesc": {
+		"message": "Proxy manuali + in abbonamento"
+	},
+	"popupTestMenuExpressCycleSubsOnly": {
+		"message": "Test ciclico rapido (solo abbonamenti)"
+	},
+	"popupTestMenuExpressCycleSubsOnlyDesc": {
+		"message": "Poi aggiungi quelli funzionanti all'elenco manuale"
+	},
+	"popupNoSubscriptionProxies": {
+		"message": "Nessun proxy in abbonamento da testare."
+	},
+	"settingsCopiedAddresses": {
+		"message": "Indirizzi copiati"
+	},
+	"settingsCopyFailed": {
+		"message": "Copia fallita"
+	},
+	"settingsAnotherTestRunning": {
+		"message": "Un altro test è già in esecuzione. Se pensi sia bloccato, ricarica la pagina delle impostazioni (F5) e riprova."
+	},
+	"settingsProxyTestTimeout": {
+		"message": "Test scaduto dopo 10 minuti e fermato forzatamente. Riprova."
+	},
+	"settingsProxyMustNoSiteSelected": {
+		"message": "Seleziona un sito."
+	},
+	"settingsProxyMustSiteAdded": {
+		"message": "Sito \"{0}\" aggiunto."
+	},
+	"testingExplanationTitle": {
+		"message": "Come funziona il test dei proxy"
+	},
+	"testingExplanationText": {
+		"message": "Durante il test, schede temporanee si aprono e si chiudono automaticamente, verificando l'IP del proxy e la connessione attraverso quel proxy all'indirizzo del sito di test inserito. Le schede di test vengono immediatamente rimosse dalla cronologia del browser per evitare disordine. Puoi ridurre in sicurezza il browser durante l'esecuzione dei test, poiché i test interferiscono con la navigazione web commutando i proxy in esame."
+	},
+	"settingsGeneralEnableRating": {
+		"message": "Abilita valutazione per i proxy"
+	},
+	"settingsGeneralEnableRatingDesc": {
+		"message": "Permette di valutare i proxy (funzionante/non funzionante) e di ordinare per valutazione."
+	},
+	"settingsProxyMustStaleHoursDesc": {
+		"message": "Ore dopo le quali i risultati del test sono considerati obsoleti (1-168)."
+	},
+	"datatablesSearch": {
+		"message": "Cerca:"
+	},
+	"datatablesShow": {
+		"message": "Mostra"
+	},
+	"datatablesEntries": {
+		"message": "voci"
+	},
+	"datatablesPrevious": {
+		"message": "Precedente"
+	},
+	"datatablesNext": {
+		"message": "Successivo"
+	},
+	"datatablesInfo": {
+		"message": "Mostra da _START_ a _END_ di _TOTAL_ voci"
+	},
+	"datatablesInfoEmpty": {
+		"message": "Mostra 0 a 0 di 0 voci"
+	},
+	"datatablesEmptyTable": {
+		"message": "Nessun dato disponibile nella tabella"
+	},
+	"datatablesAll": {
+		"message": "Tutti"
+	},
+	"popupAddCurrentSiteTooltip": {
+		"message": "Aggiungi il sito corrente all'elenco di test"
+	}
+}

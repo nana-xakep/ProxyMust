@@ -1,0 +1,718 @@
+﻿/*
+ * This file is part of SmartProxy <https://github.com/salarcode/SmartProxy>,
+ * Copyright (C) 2019 Salar Khalilzadeh <salar2k@gmail.com>
+ *
+ * SmartProxy is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 3 as
+ * published by the Free Software Foundation.
+ *
+ * SmartProxy is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with SmartProxy.  If not, see <http://www.gnu.org/licenses/>.
+ */
+import { environment } from "./environment";
+import { SettingsConfig } from "../core/definitions";
+import * as pako from "pako";
+export class Utils {
+	private static readonly invalidHostSchemas = ["moz-extension:", "chrome-extension:", "about:", "data:", "chrome:", "opera:", "edge:"];
+
+	public static getNewUniqueIdNumber(): number {
+		return +Math.random()
+			.toString(10)
+			.substr(2 + Math.random() * 10);
+	}
+
+	public static getNewUniqueIdString() {
+		return (Math.random().toString(36).substr(2, 5) + Date.now().toString(36)).toLowerCase();
+	}
+
+	public static encodeSyncData(inputObject: SettingsConfig) {
+		let settingStr = JSON.stringify(inputObject);
+
+		// encode string to utf8
+		let enc = new TextEncoder();
+		let settingArray = enc.encode(settingStr);
+
+		// compress
+		let compressResultStr = pako.deflateRaw(settingArray, {}) as unknown as string;
+		compressResultStr = Utils.b64EncodeUnicode(compressResultStr as string);
+
+		let saveObject = {};
+
+		// some browsers have limitation on data size per item
+		// so we have split the data into chunks saved in a object
+		splitIntoChunks(compressResultStr, saveObject);
+
+		function splitIntoChunks(str: any, outputObject: any) {
+			let length = environment.storageQuota.syncQuotaBytesPerItem();
+			if (length > 0) {
+
+				let chunks = Utils.chunkString(str, length);
+				outputObject.chunkLength = chunks.length;
+
+				for (let index = 0; index < chunks.length; index++) {
+					outputObject["c" + index] = chunks[index];
+				}
+
+			} else {
+				outputObject.c0 = str;
+				outputObject.chunkLength = 1;
+			}
+		}
+
+		return saveObject;
+	}
+
+	public static decodeSyncData(inputObject: any): SettingsConfig {
+		if (!inputObject || !inputObject.chunkLength)
+			return null;
+
+		// joining the chunks
+		let chunks = [];
+		for (let index = 0; index < inputObject.chunkLength; index++) {
+			chunks.push(inputObject["c" + index]);
+		}
+		let compressResultStr = chunks.join("");
+
+		// convert from base64 string
+		let compressResult = Utils.b64DecodeUnicodeArray(compressResultStr);
+		let settingArray = pako.inflateRaw(compressResult);
+
+		// decode array to string
+		let dec = new TextDecoder();
+		let settingStr = dec.decode(settingArray);
+
+		// parse the JSON
+		return JSON.parse(settingStr);
+	}
+
+	public static removeDuplicates(originalArray: any[], prop: any) {
+		//<reference path="https://stackoverflow.com/a/36744732/322446"/>
+		return originalArray.filter(
+			(thing, index, self) => self.findIndex((t) => {
+				return t[prop] === thing[prop];
+			}) === index);
+	}
+
+	public static removeDuplicatesFunc(originalArray: any[], areEqualFunc: Function) {
+		//<reference path="https://stackoverflow.com/a/36744732/322446"/>
+		return originalArray.filter(
+			(thing, index, self) => self.findIndex((t) => {
+				return areEqualFunc(t, thing);
+			}) === index);
+	}
+
+	public static reverseString(str: string): string {
+		return str.split('').reverse().join('');
+	}
+
+	public static strStartsWith(str: string, prefix: string) {
+		return str.substr(0, prefix.length) === prefix;
+	}
+
+	public static chunkString(str: string, length: number) {
+		let index = 0;
+		let endIndex = length;
+		if (endIndex > str.length)
+			endIndex = str.length;
+
+		let result = new Array<string>();
+		for (; ;) {
+			result.push(str.slice(index, endIndex));
+
+			if (endIndex >= str.length)
+				break;
+
+			index += length;
+			endIndex += length;
+
+			if (endIndex > str.length)
+				endIndex = str.length;
+		}
+
+		return result;
+	}
+
+	public static b64EncodeUnicode(str: string): string {
+		// first we use encodeURIComponent to get percent-encoded UTF-8,
+		// then we convert the percent encodings into raw bytes which
+		// can be fed into btoa.
+		return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g,
+			(match, p1: number) => String.fromCharCode(+('0x' + p1))));
+	}
+
+	public static b64DecodeUnicode(str: string): string {
+		// Going backwards: from byte-stream, to percent-encoding, to original string.
+		return decodeURIComponent(atob(str)
+			.split("")
+			.map(c => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
+			.join(""));
+	}
+
+	public static b64DecodeUnicodeArray(str: string): any {
+		// Going backwards: from byte-stream, to percent-encoding, to original string.
+		let result = Utils.b64DecodeUnicode(str);
+		if (typeof (result) === 'string') {
+			return new Uint16Array(result.split(',') as unknown as number[])
+		}
+		return result;
+	}
+
+	public static isNotInternalHostName(host: string): boolean {
+		if (host) {
+			if (Utils.invalidHostSchemas.indexOf(host) >= 0)
+				return false;
+
+			return true;
+		}
+		return false;
+	}
+
+	public static isIPRelaxed(address: string): boolean {
+		if (!address) return false;
+
+		// Remove brackets from IPv6 addresses (e.g., [::1])
+		const cleaned = address.replace(/^\[|\]$/g, '');
+
+		// Quick check for IPv4-like pattern (contains only digits and dots)
+		if (/^\d+\.\d+\.\d+\.\d+$/.test(cleaned)) {
+			return true;
+		}
+
+		// Quick check for IPv6-like pattern (contains colons and hex chars)
+		if (/:/.test(cleaned) && /^[0-9a-fA-F:]+$/.test(cleaned.replace(/%.*$/, ''))) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public static isLocalIP(address: string): boolean {
+		if (!address) return false;
+
+		// Remove brackets from IPv6 addresses
+		const cleaned = address.replace(/^\[|\]$/g, '');
+
+		// Check IPv4 private/local ranges
+		if (/^\d+\.\d+\.\d+\.\d+$/.test(cleaned)) {
+			const parts = cleaned.split('.').map(Number);
+
+			// 127.0.0.0/8 (loopback)
+			if (parts[0] === 127) return true;
+
+			// 10.0.0.0/8 (private)
+			if (parts[0] === 10) return true;
+
+			// 172.16.0.0/12 (private)
+			if (parts[0] === 172 && parts[1] >= 16 && parts[1] <= 31) return true;
+
+			// 192.168.0.0/16 (private)
+			if (parts[0] === 192 && parts[1] === 168) return true;
+
+			// 169.254.0.0/16 (link-local)
+			if (parts[0] === 169 && parts[1] === 254) return true;
+
+			// 0.0.0.0/8 (current network)
+			if (parts[0] === 0) return true;
+		}
+
+		// Check IPv6 private/local ranges
+		if (/:/.test(cleaned)) {
+			// ::1 (loopback)
+			if (/^::1$/.test(cleaned) || /^0*:0*:0*:0*:0*:0*:0*:1$/.test(cleaned)) return true;
+
+			// fe80::/10 (link-local)
+			if (/^fe[89ab][0-9a-f]:/i.test(cleaned)) return true;
+
+			// fc00::/7 (unique local)
+			if (/^f[cd][0-9a-f]{2}:/i.test(cleaned)) return true;
+
+			// ::ffff:0:0/96 (IPv4-mapped IPv6 - check the IPv4 part)
+			const ipv4Mapped = cleaned.match(/^::ffff:(\d+\.\d+\.\d+\.\d+)$/i);
+			if (ipv4Mapped) {
+				return Utils.isLocalIP(ipv4Mapped[1]);
+			}
+		}
+
+		return false;
+	}
+
+	public static isValidUrl(url: string): boolean {
+		try {
+			const u = new URL(url);
+			if (Utils.invalidHostSchemas.indexOf(u.protocol) >= 0)
+				return false;
+
+			return true;
+		}
+		catch (e) { return false; }
+	}
+
+	public static isUrlHttps(url: string): boolean {
+		try {
+			const u = new URL(url);
+			if (u.protocol.toLowerCase().startsWith("https"))
+				return true;
+			return false;
+		}
+		catch (e) { return false; }
+	}
+	public static isUrlLocal(url: string): boolean {
+		try {
+			const u = new URL(url);
+			if (Utils.invalidHostSchemas.indexOf(u.protocol) >= 0)
+				return true;
+
+			return false;
+		}
+		catch (e) { return false; }
+	}
+
+	public static urlHasSchema(url: string): boolean {
+		// note: this will accept like http:/example.org/ in Chrome and Firefox
+		if (!url)
+			return false;
+		if (url.includes(":/"))
+			return true;
+		return false;
+	}
+
+
+	public static extractHostFromInvalidUrl(url: string): string | null {
+		try {
+			if (url.includes(":/")) {
+				try {
+					new URL(url);
+					// url is valid
+					return Utils.extractHostFromUrl(url);
+				} catch { }
+			}
+
+			let urlFixed = 'http://' + url;
+			return Utils.extractHostFromUrl(urlFixed);
+		}
+		catch (e) { return null; }
+	}
+
+	public static extractHostNameFromInvalidUrl(url: string): string | null {
+		try {
+			if (url.includes(":/")) {
+				try {
+					new URL(url);
+					// url is valid
+					return Utils.extractHostNameFromUrl(url);
+				} catch { }
+			}
+
+			let urlFixed = 'http://' + url;
+			return Utils.extractHostNameFromUrl(urlFixed);
+		}
+		catch (e) { return null; }
+	}
+	public static extractHostFromUrl(url: string): string | null {
+		/** 
+		 * For `http://sub.git.com/test` returns `sub.git.com`
+		 * For `http://sub.git.com:6675/test` returns `sub.git.com:6675`
+		  */
+		try {
+			const u = new URL(url);
+			if (Utils.invalidHostSchemas.indexOf(u.protocol) >= 0)
+				return null;
+			let host = u.host;
+
+			return host;
+		}
+		catch (e) { return null; }
+	}
+
+	public static extractHostNameFromUrl(url: string): string | null {
+		/** 
+		 * For `http://sub.git.com/test` returns `sub.git.com`
+		 * For `http://sub.git.com:6675/test` returns `sub.git.com`
+		  */
+		try {
+			const u = new URL(url);
+			if (Utils.invalidHostSchemas.indexOf(u.protocol) >= 0)
+				return null;
+			let host = u.hostname;
+
+			return host;
+		}
+		catch (e) { return null; }
+	}
+
+	public static extractSubdomainListFromUrl(url: string): string[] {
+		let host = Utils.extractHostFromUrl(url);
+		if (host === null)
+			return [];
+
+		return Utils.extractSubdomainListFromHost(host);
+	}
+
+	public static extractSubdomainListFromHost(host: string): string[] {
+		if (!host)
+			return null;
+
+		let parts = host.split(".");
+		if (parts.length <= 2)
+			return [host];
+
+		if (parts.length == 4) {
+			// check if it is ip
+			let lastPart = +parts[3].split(':')[0];
+			if (lastPart >= 0) {
+				// it is an IP
+				return [host];
+			}
+		}
+
+		let result = new Array<string>();
+		for (let i = 0; i < parts.length; i++) {
+			if (i == parts.length - 1)
+				break;
+
+			let sliced = parts.slice(i, parts.length);
+			//if (sliced.length > 0)
+			result.push(sliced.join("."));
+		}
+
+		result.reverse();
+
+		// removing top level extension if it is to be ignored, like .com.au
+		let topLevelDomainExtension = result[0];
+		if (topLevelDomainExtension) {
+
+			if (Utils.IgnoreDomainExtensions.indexOf(topLevelDomainExtension) != -1) {
+				result.splice(0, 1);
+			}
+		}
+		return result;
+	}
+
+	public static hostToMatchPattern(host: string, completeUrl: boolean = true): string {
+
+		// only convert to match pattern if it is just host address like 'google.com'
+		if (host.indexOf(":") > -1)
+			return host;
+
+		if (completeUrl)
+			return `*://*.${host}/*`;
+		return `*.${host}/*`;
+	}
+
+	/** Removes Https:// and ftp:// and other protocols from url */
+	public static removeSchemaFromUrl(url: string): string {
+		if (url == null)
+			return url;
+		let u = new URL(url);
+		let schemaLength = (u.protocol + '//').length;
+
+		return url.substring(schemaLength, url.length);
+	}
+
+	public static matchPatternToRegExp(pattern: string, completeUrl = true, ignoreCase = false): RegExp | null {
+		// Source: https://developer.mozilla.org/en-US/Add-ons/WebExtensions/Match_patterns
+		// Modified by Salar Khalilzadeh
+		/**
+		 * Transforms a valid match pattern into a regular expression
+		 * which matches all URLs included by that pattern.
+		 *
+		 * @param  {string}  pattern  The pattern to transform.
+		 * @return {RegExp}           The pattern's equivalent as a RegExp.
+		 * @throws {TypeError}        If the pattern is not a valid MatchPattern
+		 */
+
+		// matches all valid match patterns (except '<all_urls>')
+		// and extracts [ , scheme, host, path, ]
+		let matchPattern: RegExp;
+		matchPattern = (/^(?:(\*|https?|file|ftp|app|wss?):\/\/([^/:]+)(?:\:(\d+))?\/?(.*))$/i);
+
+		if (pattern === "<all_urls>") {
+			//return (/^(?:https?|file|ftp|app):\/\//);
+			return null;
+		}
+		if (!completeUrl) {
+			if (!pattern.includes("://")) {
+				pattern = "http://" + pattern;
+			}
+		}
+
+		const match = matchPattern.exec(pattern);
+		if (!match) {
+			//throw new TypeError(`"${pattern}" is not a valid MatchPattern`);
+			return null;
+		}
+		const [, scheme, host, port, path,] = match;
+
+		if (completeUrl) {
+			return new RegExp("^(?:"
+				+ (scheme === "*" ? "(?:https?|ftp|wss?)" : escape(scheme)) + ":\\/\\/"
+				+ (host === "*" ? "[^\\/]*" : escape(host).replace(/^\*\./g, "(?:(?:[^\\/]+)\\.|(?:[^\\/]+){0})"))
+				+ (port ? "\\:" + escape(port) : "")
+				+ (path ? (path == "*" ? "(?:\\/.*)?" : ("\\/" + escape(path).replace(/\*/g, ".*"))) : "\\/?")
+				+ ")$", ignoreCase ? "i" : undefined);
+		}
+		else {
+			return new RegExp("^(?:"
+				+ (host === "*" ? "[^\\/]*" : escape(host).replace(/^\*\./g, "(?:(?:[^\\/]+)\\.|(?:[^\\/]+){0})"))
+				+ (port ? "\\:" + escape(port) : "")
+				+ (path ? (path == "*" ? "(?:\\/.*)?" : ("\\/" + escape(path).replace(/\*/g, ".*"))) : "\\/?")
+				+ ")$", ignoreCase ? "i" : undefined);
+		}
+	}
+
+	public static ipCidrNotationToRegExp(ipAddress: string, prefixLengthStr: string): RegExp | null {
+		/*
+			The top-level public method delegates to ipv4CidrToRegExp or ipv6CidrToRegExp.
+			IPv4 regex is precise for fixed/partial/wildcard octets; large partial ranges fall back to a correct generic octet matcher.
+			IPv6 operates on expanded (8-group) addresses. The produced RegExp matches full expanded IPv6 strings (e.g. "2001:0db8:0000:0000:0000:0000:0000:0001") and is case-insensitive. If you want compressed forms to be matched directly, either:
+				expand compressed IPv6 before testing, or
+				add a more complex regexp to accept :: compression (not included here to keep the code maintainable).
+		*/
+
+		// Accept "/24" or "24"
+		const prefixStr = prefixLengthStr ? prefixLengthStr.replace(/^\s*\/\s*/, '') : '';
+		const prefix = Number(prefixStr);
+		if (!Number.isFinite(prefix))
+			return null;
+
+		// strip brackets
+		ipAddress = (ipAddress || '').replace(/^\[|\]$/g, '');
+
+		// Handle IPv4-mapped IPv6 forms (e.g. ::ffff:192.0.2.0/120)
+		if (ipAddress.indexOf(':') >= 0 && ipAddress.indexOf('.') >= 0) {
+			const m = ipAddress.match(/(\d+\.\d+\.\d+\.\d+)$/);
+			if (m) {
+				const ipv4 = m[1];
+				// IPv4 portion occupies last 32 bits of IPv6 address. Adjust prefix if needed.
+				const ipv4Prefix = prefix - 96;
+				if (ipv4Prefix < 0 || ipv4Prefix > 32) return null;
+				return Utils.ipv4CidrToRegExp(ipv4, ipv4Prefix);
+			}
+		}
+
+		// Decide IPv4 vs IPv6 (normal cases)
+		if (Utils.isIPv4String(ipAddress)) {
+			return Utils.ipv4CidrToRegExp(ipAddress, prefix);
+		}
+
+		if (ipAddress.indexOf(':') >= 0) {
+			return Utils.ipv6CidrToRegExp(ipAddress, prefix);
+		}
+
+		return null;
+	}
+
+	private static isIPv4String(ip: string): boolean {
+		if (!ip) return false;
+		return /^\d+\.\d+\.\d+\.\d+$/.test(ip.replace(/^\[|\]$/g, ''));
+	}
+
+	private static ipv4CidrToRegExp(ip: string, prefix: number): RegExp | null {
+		if (prefix < 0 || prefix > 32) return null;
+
+		const octets = ip.split('.').map(s => Number(s));
+		if (octets.length !== 4 || octets.some(o => Number.isNaN(o) || o < 0 || o > 255))
+			return null;
+
+		// Build 32-bit integers for mask and address
+		const maskInt = prefix === 0 ? 0 >>> 0 : ((0xFFFFFFFF << (32 - prefix)) >>> 0);
+		const ipInt =
+			((octets[0] << 24) >>> 0) |
+			((octets[1] << 16) >>> 0) |
+			((octets[2] << 8) >>> 0) |
+			(octets[3] >>> 0);
+
+		const netInt = (ipInt & maskInt) >>> 0;
+
+		const partsRegex: string[] = [];
+
+		for (let i = 0; i < 4; i++) {
+			const shift = 24 - i * 8;
+			const maskOctet = (maskInt >>> shift) & 0xFF;
+			const netOctet = (netInt >>> shift) & 0xFF;
+
+			if (maskOctet === 0xFF) {
+				// fixed octet
+				partsRegex.push(String(netOctet));
+			} else if (maskOctet === 0x00) {
+				// wildcard octet
+				partsRegex.push('(?:25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])');
+			} else {
+				// partial mask -> compute start and end
+				const start = netOctet & maskOctet;
+				const end = start | (~maskOctet & 0xFF);
+				partsRegex.push(Utils.ipv4OctetRangeToRegex(start, end));
+			}
+		}
+
+		try {
+			return new RegExp('^' + partsRegex.join('\\.') + '$');
+		} catch {
+			return null;
+		}
+	}
+
+	private static ipv4OctetRangeToRegex(start: number, end: number): string {
+		if (start === end) return String(start);
+		if (start === 0 && end === 255)
+			return '(?:25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])';
+
+		// small range -> enumerate
+		if (end - start <= 10) {
+			const vals: string[] = [];
+			for (let v = start; v <= end; v++) vals.push(String(v));
+			return `(?:${vals.join('|')})`;
+		}
+
+		// fallback generic octet matcher when range is large
+		return '(?:25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])';
+	}
+
+	public static expandIPv6ToGroups(ipv6: string): string[] | null {
+		// Expand compressed IPv6 into 8 groups of 4 hex digits (lowercase)
+		ipv6 = ipv6.replace(/^\[|\]$/g, '').toLowerCase();
+
+		// Reject IPv4-mapped or dotted-IPv4 mixed forms (caller should avoid these)
+		if (ipv6.includes('.')) return null;
+
+		const parts = ipv6.split('::');
+		if (parts.length > 2) return null;
+
+		const left = parts[0] ? parts[0].split(':').filter(Boolean) : [];
+		const right = parts[1] ? parts[1].split(':').filter(Boolean) : [];
+		const missing = 8 - (left.length + right.length);
+		if (missing < 0) return null;
+
+		const full: string[] = [];
+		for (const p of left) full.push(p.padStart(4, '0'));
+		for (let i = 0; i < missing; i++) full.push('0000');
+		for (const p of right) full.push(p.padStart(4, '0'));
+
+		if (full.length !== 8) return null;
+		return full;
+	}
+
+	/**
+	 * Normalize a host string for IP matching.
+	 * - strips surrounding brackets
+	 * - removes numeric port suffixes
+	 * - extracts IPv4 tail from IPv4-mapped IPv6 (::ffff:192.0.2.1)
+	 * - expands compressed IPv6 into full 8-group lowercase form
+	 * Returns normalized IPv4 (dotted) or expanded IPv6 (8 groups) or null if cannot normalize.
+	 */
+	public static normalizeIpForMatching(host: string): string | null {
+		if (!host) return null;
+		let h = host.trim();
+
+		// remove surrounding brackets if any
+		h = h.replace(/^\[|\]$/g, '');
+
+		// If there's an IPv4 tail (possibly with a port), extract it: ::ffff:192.0.2.1 or 192.0.2.1:8080
+		const ipv4Tail = h.match(/(\d+\.\d+\.\d+\.\d+)(?::\d+)?$/);
+		if (ipv4Tail) {
+			return ipv4Tail[1];
+		}
+
+		// Remove trailing :port for IPv6 hosts that lost brackets earlier (e.g. ::1:8080)
+		if (/:\d+$/.test(h)) {
+			// Only strip if it looks like a port (all digits) and the rest contains ':' (likely IPv6)
+			const withoutPort = h.replace(/:\d+$/, '');
+			if (withoutPort.indexOf(':') >= 0) {
+				h = withoutPort;
+			}
+		}
+
+		// If it looks like IPv6, try to expand
+		if (h.indexOf(':') >= 0) {
+			const groups = Utils.expandIPv6ToGroups(h);
+			if (groups) return groups.join(':');
+			// fallback: return the raw host (without brackets/port)
+			return h;
+		}
+
+		// Otherwise return as-is (likely IPv4)
+		return h;
+	}
+
+	private static ipv6CidrToRegExp(ipv6: string, prefix: number): RegExp | null {
+		if (prefix < 0 || prefix > 128) return null;
+
+		const groups = Utils.expandIPv6ToGroups(ipv6);
+		if (!groups) return null;
+
+		// mask groups: each group 16 bits
+		const maskGroups: number[] = new Array(8).fill(0);
+		let remaining = prefix;
+		for (let i = 0; i < 8; i++) {
+			const bits = Math.max(0, Math.min(16, remaining));
+			maskGroups[i] = bits === 0 ? 0 : ((0xFFFF << (16 - bits)) & 0xFFFF) >>> 0;
+			remaining -= bits;
+		}
+
+		const groupInts = groups.map(g => parseInt(g, 16) & 0xFFFF);
+		const netGroups = groupInts.map((g, i) => g & maskGroups[i]);
+
+		const groupRegex: string[] = [];
+
+		for (let i = 0; i < 8; i++) {
+			const mg = maskGroups[i];
+			const ng = netGroups[i];
+
+			if (mg === 0xFFFF) {
+				// fully fixed group -> exact hex, allow 0-padding up to 4 chars
+				const hex = ng.toString(16);
+				groupRegex.push(`(?:0{0,${4 - hex.length}}${hex})`);
+			} else if (mg === 0x0000) {
+				// fully wildcard group
+				groupRegex.push('[0-9a-fA-F]{1,4}');
+			} else {
+				// partial group: compute start/end
+				const start = ng;
+				const end = ng | (~mg & 0xFFFF);
+
+				// small ranges -> enumerate
+				if (end - start <= 10) {
+					const vals: string[] = [];
+					for (let v = start; v <= end; v++) vals.push(v.toString(16));
+					groupRegex.push(`(?:${vals.join('|')})`);
+				} else {
+					// fallback: permissive group matcher
+					groupRegex.push('[0-9a-fA-F]{1,4}');
+				}
+			}
+		}
+
+		try {
+			// Matches full expanded IPv6 form (8 groups). Case-insensitive.
+			return new RegExp('^' + groupRegex.join(':') + '$', 'i');
+		} catch {
+			return null;
+		}
+	}
+
+	public static deepClone<T>(array: T[]): T[] {
+		return JSON.parse(JSON.stringify(array));
+	}
+
+	public static deepCloneObject<T>(obj: T): T {
+		return JSON.parse(JSON.stringify(obj));
+	}
+
+	/** Does a shallow copy on properties without modifying prototype/
+	 * Should be same as `object.assign` without `Object.setPrototypeOf(dest, Object.getPrototypeOf(src));`
+	 */
+	public static shallowCopyProperties(target: any, source: any) {
+		Object.getOwnPropertyNames(source).forEach(name => {
+			const descriptor = Object.getOwnPropertyDescriptor(source, name);
+			Object.defineProperty(target, name, descriptor);
+		});
+	}
+
+	private static readonly IgnoreDomainExtensions: string[] = [
+		"000.nl", "999.nl", "aa.no", "ab.ca", "ab.se", "abo.pa", "ac.ae", "ac.at", "ac.be", "ac.be", "ac.cn", "ac.com", "ac.cr", "ac.cy", "ac.fj", "ac.fk", "ac.gn", "ac.id", "ac.il", "ac.im.in", "ac.in", "ac.ir", "ac.jp", "ac.mw", "ac.nz", "ac.pa", "ac.ru", "ac.rw", "ac.se", "ac.th", "ac.tj", "ac.tz", "ac.ug", "ac.uk", "ac.vn", "ac.yu", "ac.zm", "ac.zw", "act.au", "ad.jp", "adm.br", "adult.ht", "adv.br", "aero.mv", "agr.br", "ah.cn", "ah.no", "ak.us", "al.us", "alt.za", "am.br", "ar.us", "army.mil", "arq.br", "art.br", "art.do", "art.dz", "art.ht", "art.pl", "asn.au", "asn.au", "asn.lv", "asso.dz", "asso.fr", "asso.ht", "asso.mc", "ato.br", "av.tr", "az.us", "bbs.tr", "bc.ca", "bd.se", "bel.tr", "bio.br", "biz.az", "biz.cy", "biz.et", "biz.fj", "biz.mv", "biz.nr", "biz.om", "biz.pk", "biz.pl", "biz.pr", "biz.tj", "biz.tr", "biz.tt", "biz.vn", "bj.cn", "bl.uk", "bmd.br", "bu.no", "c.se", "ca.us", "cim.br", "city.za", "ck.ua", "club.tw", "cn.ua", "cng.br", "cnt.br", "co.ag", "co.ao", "co.at", "co.bw", "co.cc.cd", "co.ck", "co.cr", "co.fk", "co.gg", "co.hu", "co.id", "co.il", "co.im", "co.in", "co.ir", "co.je", "co.jp", "co.kr", "co.ls", "co.ma", "co.mu", "co.mw", "co.nz", "co.om", "co.rw", "co.th", "co.tj", "co.tt", "co.ug", "co.uk", "co.us", "co.ve", "co.yu", "co.za", "co.zm", "co.zw", "com.ac", "com.af", "com.ag", "com.ai", "com.al", "com.an", "com.ar", "com.au", "com.aw", "com.ax", "com.az", "com.bb", "com.bd", "com.bm", "com.bn", "com.bo", "com.br", "com.bs", "com.bt", "com.cd", "com.ch", "com.cn", "com.co", "com.cu", "com.cy", "com.dm", "com.do", "com.dz", "com.ec", "com.ee", "com.eg", "com.es", "com.et", "com.fj", "com.fr", "com.ge", "com.gh", "com.gi", "com.gn", "com.gp", "com.gr", "com.hk", "com.hn", "com.hr", "com.ht", "com.jm", "com.jo", "com.kh", "com.kw", "com.ky", "com.kz", "com.lb", "com.lc", "com.li", "com.lk", "com.lr", "com.lv", "com.ly", "com.mg", "com.mk", "com.mo", "com.mt", "com.mu", "com.mv", "com.mw", "com.mx", "com.my", "com.ng", "com.ni", "com.np", "com.nr", "com.om", "com.pa", "com.pe", "com.pf", "com.pg", "com.ph", "com.pk", "com.pl", "com.pr", "com.ps", "com.pt", "com.py", "com.ro", "com.ru", "com.rw", "com.sa", "com.sb", "com.sc", "com.sd", "com.sg", "com.sv", "com.sy", "com.tj", "com.tn", "com.tr", "com.tt", "com.tw", "com.ua", "com.uy", "com.ve", "com.vi", "com.vn", "com.ye", "conf.au", "conf.lv", "coop.br", "coop.ht", "coop.mv", "coop.mw", "cpa.pro", "cq.cn", "cri.nz", "csiro.au", "ct.us", "cv.ua", "d.se", "dc.us", "de.us", "dn.ua", "dni.us", "dp.ua", "dpn.br", "dr.tr", "e.se", "ebiz.tw", "ecn.br", "ed.ao", "ed.cr", "ed.jp", "edu.ac", "edu.af", "edu.al", "edu.an", "edu.au", "edu.az", "edu.bb", "edu.bd", "edu.bm", "edu.bn", "edu.bo", "edu.br", "edu.bt", "edu.cn", "edu.co", "edu.cu", "edu.dm", "edu.do", "edu.dz", "edu.ec", "edu.eg", "edu.es", "edu.et", "edu.ge", "edu.gh", "edu.gi", "edu.gp", "edu.gr", "edu.hk", "edu.hn", "edu.ht", "edu.in", "edu.jm", "edu.jo", "edu.kh", "edu.kw", "edu.ky", "edu.kz", "edu.lb", "edu.lc", "edu.lk", "edu.lr", "edu.lv", "edu.ly", "edu.mg", "edu.mo", "edu.mt", "edu.mv", "edu.mw", "edu.mx", "edu.my", "edu.ng", "edu.ni", "edu.np", "edu.nr", "edu.om", "edu.pa", "edu.pe", "edu.pf", "edu.pk", "edu.pl", "edu.pr", "edu.ps", "edu.pt", "edu.py", "edu.rw", "edu.sa", "edu.sb", "edu.sc", "edu.sd", "edu.sg", "edu.sv", "edu.tj", "edu.tr", "edu.tt", "edu.tw", "edu.ua", "edu.vi", "edu.vn", "edu.za", "eng.br", "ens.tn", "esp.br", "etc.br", "eti.br", "eun.eg", "f.se", "fam.pk", "far.br", "fed.us", "fh.se", "fhs.no", "fhsk.se", "fhv.se", "fi.cr", "fie.ee", "fin.ec", "fin.tn", "firm.ht", "firm.in", "fj.cn", "fl.us", "fm.br", "fm.no", "fnd.br", "fot.br", "from.hr", "fst.br", "g.se", "g12.br", "ga.us", "game.tw", "gd.cn", "geek.nz", "gen.in", "gen.nz", "gen.tr", "ggf.br", "go.cr", "go.id", "go.jp", "go.th", "go.tj", "go.tz", "go.ug", "gob.bo", "gob.do", "gob.es", "gob.hn", "gob.mx", "gob.ni", "gob.pa", "gob.pe", "gob.pk", "gob.sv", "gok.pk", "gon.pk", "gop.pk", "gos.pk", "gouv.fr", "gouv.ht", "gouv.rw", "gov.ac", "gov.ae", "gov.af", "gov.al", "gov.ar", "gov.au", "gov.az", "gov.bb", "gov.bd", "gov.bf", "gov.bm", "gov.bo", "gov.br", "gov.bt", "gov.by", "gov.ch", "gov.cn", "gov.co", "gov.cu", "gov.cx", "gov.dm", "gov.do", "gov.dz", "gov.ec", "gov.eg", "gov.et", "gov.fj", "gov.fk", "gov.ge", "gov.gh", "gov.gi", "gov.gn", "gov.gr", "gov.hk", "gov.ie", "gov.il", "gov.im", "gov.in", "gov.ir", "gov.it", "gov.jm", "gov.jo", "gov.kh", "gov.kw", "gov.ky", "gov.kz", "gov.lb", "gov.lc", "gov.li", "gov.lk", "gov.lr", "gov.lt", "gov.lu", "gov.lv", "gov.ly", "gov.ma", "gov.mg", "gov.mo", "gov.mt", "gov.mv", "gov.mw", "gov.my", "gov.ng", "gov.np", "gov.nr", "gov.om", "gov.ph", "gov.pk", "gov.pl", "gov.pr", "gov.ps", "gov.pt", "gov.py", "gov.rw", "gov.sa", "gov.sb", "gov.sc", "gov.sd", "gov.sg", "gov.sy", "gov.tj", "gov.tn", "gov.to", "gov.tp", "gov.tr", "gov.tt.tv", "gov.tv", "gov.tw", "gov.ua", "gov.uk", "gov.vi", "gov.vn", "gov.za", "gov.zm", "gov.zw", "govt.nz", "gr.jp", "gs.cn", "gub.uy", "gv.ao", "gv.at", "gx.cn", "gz.cn", "h.se", "ha.cn", "hb.cn", "he.cn", "hi.cn", "hi.us", "hl.cn", "hl.no", "hm.no", "hn.cn", "i.se", "ia.us", "id.au", "id.lv", "id.ly", "id.us", "idf.il", "idn.sg", "idv.hk", "idv.tw", "if.ua", "il.us", "imb.br", "in.th", "in.us", "ind.br", "ind.in", "ind.tn", "inf.br", "inf.cu", "info.au", "info.az", "info.cy", "info.ec", "info.et", "info.fj", "info.ht", "info.hu", "info.mv", "info.nr", "info.pl", "info.pr", "info.ro", "info.sd", "info.tn", "info.tr", "info.tt", "info.ve", "info.vn", "ing.pa", "inima.al", "int.ar", "int.az", "int.bo", "int.lk", "int.mv", "int.mw", "int.pt", "int.ru", "int.rw", "int.tj", "int.vn", "intl.tn", "ip6.ar", "ip6.pa", "iris.ar", "iris.pa", "isa.us", "isla.pr", "it.ao", "iwi.nz", "iz.hr", "jet.uk", "jl.cn", "jor.br", "js.cn", "jx.cn", "k.se", "k12.il", "k12.tr", "kh.ua", "kiev.ua", "km.ua", "kr.ua", "ks.ua", "ks.us", "kv.ua", "ky.us", "la.us", "law.pro", "law.za", "lel.br", "lg.jp", "lg.ua", "ln.cn", "ltd.co.im", "ltd.cy", "ltd.gi", "ltd.lk", "ltd.uk", "lviv.ua", "m.se", "ma.us", "mat.br", "mb.ca", "md.us", "me.uk", "me.us", "med.br", "med.ec", "med.ht", "med.ly", "med.om", "med.pa", "med.pro", "med.sa", "med.sd", "mi.th", "mi.us", "mil.ac", "mil.ae", "mil.ar", "mil.az", "mil.bd", "mil.bo", "mil.br", "mil.by", "mil.co", "mil.do", "mil.ec", "mil.eg", "mil.fj", "mil.ge", "mil.gh", "mil.hn", "mil.in", "mil.jo", "mil.kh", "mil.kw", "mil.kz", "mil.lt", "mil.lu", "mil.lv", "mil.mg", "mil.mv", "mil.my", "mil.no", "mil.np", "mil.nz", "mil.om", "mil.pe", "mil.pl", "mil.rw", "mil.se", "mil.tj", "mil.tr", "mil.tw", "mil.uk", "mil.uy", "mil.za", "mk.ua", "mn.us", "mo.us", "mod.gi", "mod.uk", "mr.no", "ms.us", "msk.ru", "mt.us", "muni.il", "mus.br", "n.se", "name.ae", "name.af", "name.az", "name.cy", "name.et", "name.fj", "name.hr", "name.mv", "name.my", "name.pr", "name.ro", "name.tj", "name.tr", "name.tt", "name.vn", "nat.tn", "navy.mil", "nb.ca", "nc.us", "nd.us", "ne.jp", "ne.tz", "ne.ug", "ne.us", "nel.uk", "net.ac", "net.ae", "net.af", "net.ag", "net.ai", "net.al", "net.an", "net.ar", "net.au", "net.az", "net.bb", "net.bd", "net.bm", "net.bn", "net.bo", "net.br", "net.bs", "net.bt", "net.cd", "net.ch", "net.cn", "net.co", "net.cu", "net.cy", "net.dm", "net.do", "net.dz", "net.ec", "net.eg", "net.et", "net.fj", "net.fk", "net.ge", "net.gg", "net.gn", "net.gp", "net.gr", "net.hk", "net.hn", "net.ht", "net.il", "net.im", "net.in", "net.ir", "net.je", "net.jm", "net.jo", "net.kh", "net.kw", "net.ky", "net.kz", "net.lb", "net.li", "net.lk", "net.lr", "net.lu", "net.lv", "net.ly", "net.ma", "net.mo", "net.mt", "net.mv", "net.mw", "net.mx", "net.my", "net.ng", "net.ni", "net.np", "net.nr", "net.nz", "net.om", "net.pa", "net.pe", "net.pg", "net.pk", "net.pl", "net.pr", "net.ps", "net.pt", "net.py", "net.ru", "net.rw", "net.sa", "net.sb", "net.sc", "net.sd", "net.sg", "net.sy", "net.th", "net.tj", "net.tn", "net.tr", "net.tt", "net.tw", "net.ua", "net.uk", "net.uy", "net.ve", "net.vn", "net.ye", "net.za", "nf.ca", "ngo.lk", "ngo.pl", "ngo.za", "nh.us", "nhs.uk", "nic.im", "nic.in", "nic.uk", "nj.us", "nl.ca", "nl.no", "nls.uk", "nm.cn", "nm.us", "nom.adae", "nom.ag", "nom.ai", "nom.br", "nom.co", "nom.es", "nom.fk", "nom.fr", "nom.mg", "nom.ni", "nom.pa", "nom.pe", "nom.ro", "nom.za", "nome.pt", "not.br", "ns.ca", "nsn.us", "nsw.au", "nt.au", "nt.ca", "nt.no", "nt.ro", "ntr.br", "nu.ca", "nv.us", "nx.cn", "ny.us", "o.se", "od.ua", "odo.br", "of.no", "off.ai", "og.ao", "oh.us", "ok.us", "ol.no", "on.ca", "or.at", "or.cr", "or.id", "or.jp", "or.kr", "or.th", "or.tz", "or.ug", "or.us", "org.ac", "org.ae", "org.ag", "org.ai", "org.al", "org.an", "org.au", "org.az", "org.bb", "org.bd", "org.bm", "org.bn", "org.bo", "org.br", "org.bs", "org.bt", "org.bw", "org.cd", "org.ch", "org.cn", "org.co", "org.cu", "org.cy", "org.dm", "org.do", "org.dz", "org.ec", "org.ee", "org.eg", "org.es", "org.et", "org.fj", "org.fk", "org.ge", "org.gg", "org.gh", "org.gi", "org.gn", "org.gp", "org.gr", "org.hk", "org.hn", "org.ht", "org.hu", "org.il", "org.im", "org.in", "org.ir", "org.je", "org.jm", "org.jo", "org.kh", "org.kw", "org.ky", "org.kz", "org.lb", "org.lc", "org.li", "org.lk", "org.lr", "org.ls", "org.lu", "org.lv", "org.ly", "org.ma", "org.mg", "org.mk", "org.mo", "org.mt", "org.mv", "org.mw", "org.mx", "org.my", "org.ng", "org.ni", "org.np", "org.nr", "org.nz", "org.om", "org.pa", "org.pe", "org.pf", "org.pk", "org.pl", "org.pr", "org.ps", "org.pt", "org.py", "org.ro", "org.ru", "org.sa", "org.sc", "org.sd", "org.se", "org.sg", "org.sv", "org.tj", "org.tn", "org.tr", "org.tt", "org.tw", "org.ua", "org.uk", "org.uy", "org.ve", "org.vi", "org.vn", "org.yu", "org.za", "org.zm", "org.zw", "oz.au", "pa.us", "pb.ao", "pe.ca", "per.kh", "per.sg", "perso.ht", "pl.ua", "plc.co.im", "plc.ly", "plc.uk", "plo.ps", "pol.dz", "pol.ht", "pol.tr", "pp.az", "pp.ru", "pp.se", "ppg.br", "prd.fr", "prd.mg", "pri.ee", "priv.at", "priv.hu", "pro.ae", "pro.br", "pro.cy", "pro.ec", "pro.fj", "pro.ht", "pro.mv", "pro.om", "pro.pr", "pro.tt", "pro.vn", "psc.br", "psi.br", "pub.sa", "publ.pt", "pvt.ge", "qc.ca", "qh.cn", "qld.au", "qsl.br", "rec.br", "rec.ro", "red.sv", "rel.ht", "res.in", "ri.us", "rl.no", "rv.ua", "s.se", "sa.au", "sa.cr", "sc.cn", "sc.ug", "sc.us", "sch.ae", "sch.ir", "sch.lk", "sch.ly", "sch.om", "sch.sa", "sch.uk", "sch.zm", "sci.eg", "sd.cn", "sd.us", "sec.ps", "sf.no", "sh.cn", "shop.ht", "sk.ca", "sld.do", "sld.pa", "slg.br", "sn.cn", "soc.lk", "soros.al", "sport.hu", "srv.br", "sshn.se", "st.no", "sumy.ua", "sx.cn", "t.se", "tas.au", "te.ua", "tel.tr", "tirana.al", "tj.cn", "tm.cy", "tm.fr", "tm.hu", "tm.mc", "tm.mg", "tm.no", "tm.ro", "tm.se", "tm.za", "tmp.br", "tn.us", "tr.no", "trd.br", "tur.br", "tv.bo", "tv.br", "tv.sd", "tx.us", "u.se", "uniti.al", "upt.al", "uri.ar", "uri.pa", "us.com", "ut.us", "va.no", "va.us", "vet.br", "vf.no", "vgs.no", "vic.au", "vn.ua", "vt.us", "w.se", "wa.au", "wa.us", "waw.pl", "web.do", "web.lk", "web.pk", "web.tj", "web.tr", "web.ve", "wi.us", "wv.us", "www.ro", "x.se", "xj.cn", "xz.cn", "y.se", "yk.ca", "yn.cn", "z.se", "zj.cn", "zlg.br", "zp.ua", "zt.ua"]
+}

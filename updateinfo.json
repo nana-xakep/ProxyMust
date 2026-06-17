@@ -1,0 +1,47 @@
+{
+	"latestVersion": {
+		"version": "2.0",
+		"versionName": "2.0",
+		"downloadPage": "https://github.com/salarcode/SmartProxy/releases"
+	},
+	"browsers": {
+		"Chrome": {
+			"latestVersion": {
+				"version": "2.0",
+				"versionName": "2.0",
+				"downloadPage": "https://chrome.google.com/webstore/detail/smartproxy/jogcnplbkgkfdakgdenhlpcfhjioidoj"
+			}
+		},
+		"Firefox": {
+			"latestVersion": {
+				"version": "2.0",
+				"versionName": "2.0",
+				"downloadPage": "https://addons.mozilla.org/en-US/firefox/addon/smartproxy/"
+			}
+		},
+		"Firefox (Unlisted)": {
+			"latestVersion": null
+		},
+		"Firefox Android": {
+			"latestVersion": {
+				"version": "1.6.2",
+				"versionName": "1.6.2",
+				"downloadPage": "https://addons.mozilla.org/en-US/firefox/addon/smartproxy/"
+			}
+		},
+		"Edge": {
+			"latestVersion": {
+				"version": "2.0",
+				"versionName": "2.0",
+				"downloadPage": "https://microsoftedge.microsoft.com/addons/detail/canbjhbbhfggbdfgpddpnckdjgfcbnpb"
+			}
+		},
+		"Thunderbird": {
+			"latestVersion": {
+				"version": "1.5",
+				"versionName": "1.5",
+				"downloadPage": "https://addons.thunderbird.net/en-US/thunderbird/addon/smartproxy/"
+			}
+		}
+	}
+}

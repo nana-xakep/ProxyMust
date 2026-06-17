@@ -1,0 +1,1626 @@
+{
+	"uiDirection": {
+		"message": "ltr"
+	},
+	"languageCode": {
+		"message": "hi",
+		"description": "We need to know the code which might not match what browser UI has"
+	},
+	"extensionName": {
+		"message": "ProxyMust"
+	},
+	"extensionDescription": {
+		"message": "ProxyMust – चयनात्मक प्रॉक्सी प्रबंधक (SmartProxy का एक शाखा)। अनुकूलन योग्य पैटर्न के आधार पर आपके द्वारा देखी जाने वाली साइटों के लिए स्वचालित रूप से प्रॉक्सी सक्षम/अक्षम करता है।"
+	},
+	"toolbarTooltipEffectiveRule": {
+		"message": "मिलान नियम स्रोत:"
+	},
+	"toolbarTooltipEffectiveRuleNone": {
+		"message": "कोई मिलान नियम नहीं"
+	},
+	"toolbarTooltipEffectiveRulePattern": {
+		"message": "नियम पैटर्न:"
+	},
+	"popupTitle": {
+		"message": "ProxyMust सक्रियण"
+	},
+	"popupPrivateBrowsingMode": {
+		"message": "निजी ब्राउज़िंग मोड"
+	},
+	"popupNoProxy": {
+		"message": "सीधे (कोई प्रॉक्सी नहीं)"
+	},
+	"popupSmartProxy": {
+		"message": "चयनात्मक प्रॉक्सी"
+	},
+	"popupAlwaysEnable": {
+		"message": "हमेशा सक्षम"
+	},
+	"popupSystemProxy": {
+		"message": "सिस्टम प्रॉक्सी"
+	},
+	"popupActiveProxy": {
+		"message": "सक्रिय प्रॉक्सी (यह प्रोफ़ाइल):"
+	},
+	"popupActiveProxyDefault": {
+		"message": "सक्रिय प्रॉक्सी (डिफ़ॉल्ट सेटिंग):"
+	},
+	"popupEnableProxyOn": {
+		"message": "प्रॉक्सी सक्षम करें"
+	},
+	"popupIgnoreTheseDomains": {
+		"message": "इन डोमेन को अनदेखा करें"
+	},
+	"popupRuleIsFromSubscription": {
+		"message": "(सदस्यता से)"
+	},
+	"popupProxyableResources": {
+		"message": "प्रॉक्सी योग्य संसाधन"
+	},
+	"popupSettings": {
+		"message": "सेटिंग्स"
+	},
+	"popupSubscriptions": {
+		"message": "-सदस्यताएँ-"
+	},
+	"popupUpdateText": {
+		"message": "{0} का अद्यतन उपलब्ध है"
+	},
+	"popupFailedRequestsMenu": {
+		"message": "असफल अनुरोध"
+	},
+	"popupFailedRequestsTitle": {
+		"message": "असफल अनुरोध सूची"
+	},
+	"popupFailedRequestsDesc": {
+		"message": "ये वे डोमेन हैं जिनका समय समाप्त हो गया या विफल रहे।<br />यदि आप मानते हैं कि ये डोमेन अवरुद्ध हैं, तो आप उन्हें यहाँ प्रॉक्सी नियम सूची में जोड़ सकते हैं।"
+	},
+	"popupAddFailedRequests": {
+		"message": "नियम सूची में जोड़ें"
+	},
+	"popupProfileTypeDoesNotSupportsRules": {
+		"message": "चयनित प्रोफ़ाइल '{0}' नियमों का समर्थन नहीं करती है, कृपया दूसरी प्रोफ़ाइल चुनें।"
+	},
+	"popupAddIgnoredFailures": {
+		"message": "उन्हें अनदेखा करें"
+	},
+	"popupAddIgnoredFailuresConfirm": {
+		"message": "क्या आप वाकई चयनित विफलताओं को अनदेखा करना चाहते हैं? यदि आप ऐसा करते हैं, तो आपको उनसे और कोई त्रुटि नहीं मिलेगी। आप इसे बाद में सेटिंग्स में बदल सकते हैं।"
+	},
+	"popupNotAllowedSetProxySettingsChrome": {
+		"message": "दुर्भाग्य से, सिस्टम प्रॉक्सी का उपयोग करने के लिए ब्राउज़र सेटिंग्स बदलने के लिए `incognito` अनुमति की आवश्यकता होती है। कृपया ब्राउज़र में ProxyMust एक्सटेंशन सेटिंग्स पर जाएँ और `Allow in incognito` अनुमति को चेक करें। <a href='https://support.google.com/chrome_webstore/answer/2664769'>जानें कैसे</a>।"
+	},
+	"popupNotAllowedSetProxySettingsFirefox": {
+		"message": "Firefox 67 के बाद से, सिस्टम प्रॉक्सी का उपयोग करने के लिए ब्राउज़र सेटिंग्स बदलने के लिए `Private Browsing` अनुमति की आवश्यकता होती है। कृपया ब्राउज़र में ProxyMust ऐड-ऑन सेटिंग्स पर जाएँ और `Run in Private Windows` अनुमति को अनुमति दें। <a href='https://support.mozilla.org/en-US/kb/extensions-private-browsing'>जानें कैसे</a>।"
+	},
+	"proxyableTitle": {
+		"message": "प्रॉक्सी योग्य संसाधन"
+	},
+	"proxyableHeader": {
+		"message": "इस पृष्ठ पर प्रॉक्सी योग्य आइटम"
+	},
+	"proxyableReload": {
+		"message": "पुनः लोड करें"
+	},
+	"proxyableClose": {
+		"message": "बंद करें"
+	},
+	"proxyableHeaderDesc": {
+		"message": "यह उन संसाधनों की सूची है जो इस पृष्ठ से उपयोग या आह्वान किए जाते हैं। इन संसाधनों को प्रॉक्सी सक्रियण नियमों में जोड़ने के लिए इस सूची का उपयोग करें।<br />यदि आपको यहाँ कुछ नहीं दिखता है, तो संसाधनों को देखने के लिए पृष्ठ को पुनः लोड करें।"
+	},
+	"proxyableErrNoSourceTab": {
+		"message": "स्रोत टैब नहीं मिला!"
+	},
+	"proxyableCreateRuleConfirm": {
+		"message": "क्या आप वाकई चयनित डोमेन के लिए एक नियम बनाना चाहते हैं?"
+	},
+	"proxyableDisableButton": {
+		"message": "अक्षम करें"
+	},
+	"proxyableEnableButton": {
+		"message": "सक्षम करें"
+	},
+	"proxyableEnableButtonDomain": {
+		"message": "इसके लिए सक्षम करें: "
+	},
+	"proxyableSubscriptionRule": {
+		"message": "(सदस्यता नियम)"
+	},
+	"proxyableDeleteRuleConfirm": {
+		"message": "क्या आप वाकई चयनित नियम को हटाना चाहते हैं:"
+	},
+	"proxyableGridNoDataContent": {
+		"message": "कोई अनुरोध नहीं"
+	},
+	"proxyableGridColUrl": {
+		"message": "अनुरोध URL"
+	},
+	"proxyableGridColRuleStatus": {
+		"message": "नियम स्थिति"
+	},
+	"proxyableGridColProxifiedStatus": {
+		"message": "प्रॉक्सी स्थिति"
+	},
+	"proxyableGridColRuleHost": {
+		"message": "नियम डोमेन"
+	},
+	"proxyableGridColRulePattern": {
+		"message": "नियम पैटर्न"
+	},
+	"proxyableGridCol_ProxifiedStatus_NoProxy": {
+		"message": "कोई प्रॉक्सी नहीं"
+	},
+	"proxyableGridCol_ProxifiedStatus_Special": {
+		"message": "विशेष"
+	},
+	"proxyableGridCol_ProxifiedStatus_ProxyPerOrigin": {
+		"message": "मूल टैब से"
+	},
+	"proxyableGridCol_ProxifiedStatus_MatchedRule": {
+		"message": "मिलान"
+	},
+	"proxyableGridCol_ProxifiedStatus_AlwaysEnabled": {
+		"message": "हमेशा सक्षम"
+	},
+	"proxyableGridCol_ProxifiedStatus_SystemProxyApplied": {
+		"message": "सिस्टम प्रॉक्सी लागू"
+	},
+	"proxyableGridCol_RuleStatus_NoneMatched": {
+		"message": "कोई मिलान नहीं"
+	},
+	"proxyableGridCol_RuleStatus_Special": {
+		"message": "विशेष"
+	},
+	"proxyableGridCol_RuleStatus_ProxyPerOrigin": {
+		"message": "मूल टैब से"
+	},
+	"proxyableGridCol_RuleStatus_MatchedRule": {
+		"message": "मिलान"
+	},
+	"proxyableGridCol_RuleStatus_Whitelisted": {
+		"message": "श्वेतसूचीबद्ध"
+	},
+	"proxyableGridCol_RuleStatus_AlwaysEnabledByPassed": {
+		"message": "हमेशा सक्षम <br> दरकिनार"
+	},
+	"proxyableGridCol_RuleStatus_AlwaysEnabledForcedByRules": {
+		"message": "हमेशा सक्षम <br> नियमों द्वारा बाध्य"
+	},
+	"settingsTitle": {
+		"message": "ProxyMust सेटिंग्स"
+	},
+	"settingsTabAbout": {
+		"message": "परिचय"
+	},
+	"settingsTabGeneral": {
+		"message": "सामान्य विकल्प"
+	},
+	"settingsTabSmartProfiles": {
+		"message": "चयनात्मक प्रोफ़ाइलें"
+	},
+	"settingsTabAddSmartProfile": {
+		"message": "नई चयनात्मक प्रोफ़ाइल जोड़ें"
+	},
+	"settingsTabProxyServers": {
+		"message": "प्रॉक्सी सर्वर"
+	},
+	"settingsTabProxyServerSubscriptions": {
+		"message": "प्रॉक्सी सर्वर सदस्यताएँ"
+	},
+	"settingsTabBackupRestore": {
+		"message": "बैकअप / पुनर्स्थापना"
+	},
+	"settingsTabUpdateText": {
+		"message": "{0} में अद्यतन करें"
+	},
+	"settingsTabAboutDescription": {
+		"message": "ProxyMust के साथ प्रॉक्सी का उपयोग करना आसान नहीं हो सकता। इसे एक बार कॉन्फ़िगर करें और भूल जाएँ समाधान के रूप में सोचें। ProxyMust के साथ आपको अपने प्रॉक्सी को मैन्युअल रूप से बदलने या उसे चालू और बंद करने की आवश्यकता नहीं है। आपको बस इतना करना है कि ProxyMust को बताएं कि आप अपनी इच्छित वेबसाइट के लिए एक क्लिक के साथ प्रॉक्सी सक्षम करना चाहते हैं। उसके बाद, जब आप उस विशिष्ट वेबसाइट पर जाते हैं, तो ProxyMust कार्य करेगा और आपके उस वेबसाइट के सभी डेटा प्रॉक्सी के माध्यम से स्थानांतरित हो जाएंगे, बिना आपको कुछ किए।"
+	},
+	"settingsGeneralSmartFeatures": {
+		"message": "स्मार्ट सुविधाएँ"
+	},
+	"settingsGeneralSmartFeaturesNoChrome": {
+		"message": "<strong><a href='https://www.getfirefox.com/' target='_blank' rel='noopener'>केवल Firefox</a>!</strong> दुर्भाग्य से यह सुविधा Chrome द्वारा समर्थित नहीं है।"
+	},
+	"settingsGeneralProxyPerOrigin": {
+		"message": "प्रति टैब/मूल प्रॉक्सी सक्षम करें"
+	},
+	"settingsGeneralProxyPerOriginDesc": {
+		"message": "यदि कोई नियम किसी टैब के URL से मेल खाता है, तो परिणामस्वरूप प्रॉक्सी टैब के कनेक्शन पर लागू होगा। आम तौर पर प्रत्येक पृष्ठ में अन्य अनुरोध होंगे और उनमें मेल खाने वाला नियम नहीं हो सकता है और इसलिए उनके कनेक्शन पर प्रॉक्सी लागू नहीं होगी। `प्रति टैब/मूल प्रॉक्सी सक्षम करें` विकल्प यह सुनिश्चित करता है कि पूरा पृष्ठ, जिसमें विभिन्न डोमेन और मूल के सभी कनेक्शन शामिल हैं, उसी प्रॉक्सी का उपयोग करता है जो टैब के मूल पर लागू होता है। साथ ही, यह विकल्प प्रत्येक डोमेन के लिए एक नियम रखने की आवश्यकता को समाप्त करता है। कृपया ध्यान दें कि यदि टैब पर कोई प्रॉक्सी लागू नहीं है, तो प्रॉक्सी नियम काम करना जारी रखेंगे और पृष्ठ में अन्य कनेक्शनों पर व्यक्तिगत रूप से प्रॉक्सी लागू करेंगे।"
+	},
+	"settingsGeneralProxyPerOriginEnabled": {
+		"message": "प्रति टैब/मूल प्रॉक्सी सक्षम"
+	},
+	"settingsGeneralProxyPerOriginDisabled": {
+		"message": "प्रति टैब/मूल प्रॉक्सी अक्षम"
+	},
+	"settingsGeneralSyncing": {
+		"message": "समन्वयन"
+	},
+	"settingsGeneralIncognitoProfile": {
+		"message": "निजी ब्राउज़िंग प्रोफ़ाइल"
+	},
+	"settingsGeneralIncognitoProfileDisabled": {
+		"message": "(अक्षम)"
+	},
+	"settingsGeneralIncognitoProfileDesc": {
+		"message": "यदि आप चाहते हैं कि जब टैब/विंडो निजी ब्राउज़िंग मोड में हो तो इसे उपयोग करने के लिए बाध्य किया जाए, तो एक निजी ब्राउज़िंग प्रोफ़ाइल चुनें। यह विकल्प सक्रिय प्रोफ़ाइल को ओवरराइड कर देगा।"
+	},
+	"settingsGeneralEnableSyncing": {
+		"message": "सेटिंग्स समन्वयन सक्षम करें"
+	},
+	"settingsGeneralEnableSyncingDesc": {
+		"message": "समन्वयन सक्षम करके, आपकी सभी सेटिंग्स जिनमें नियम, सर्वर और सदस्यताएँ शामिल हैं, सभी ब्राउज़रों में उपलब्ध होंगी।"
+	},
+	"settingsSaveGeneralOptionsButton": {
+		"message": "परिवर्तन सहेजें"
+	},
+	"settingsRejectGeneralOptionsButton": {
+		"message": "परिवर्तन अस्वीकार करें"
+	},
+	"settingsGeneralSyncProxyMode": {
+		"message": "सक्रिय प्रोफ़ाइल समन्वयन सक्षम करें"
+	},
+	"settingsGeneralSyncProxyModeDesc": {
+		"message": "यदि आप चाहते हैं कि सक्रिय प्रोफ़ाइल समन्वयित हो तो चेक करें।"
+	},
+	"settingsGeneralSyncActiveProxy": {
+		"message": "सक्रिय प्रॉक्सी समन्वयन सक्षम करें"
+	},
+	"settingsGeneralSyncActiveProxyDesc": {
+		"message": "यदि आप चाहते हैं कि चयनित प्रॉक्सी सर्वर समन्वयित हो तो चेक करें।"
+	},
+	"settingsGeneralSyncToBrowser": {
+		"message": "ब्राउज़र के समन्वयन सर्वर का उपयोग करें"
+	},
+	"settingsGeneralSyncToWebDAV": {
+		"message": "WebDAV सर्वर के साथ समन्वयन करें"
+	},
+	"settingsGeneralWebDavServerUrl": {
+		"message": "WebDAV सर्वर URL:"
+	},
+	"settingsGeneralWebDavBackupFilename": {
+		"message": "बैकअप फ़ाइलनाम:"
+	},
+	"settingsGeneralWebDavServerUser": {
+		"message": "WebDAV सर्वर उपयोगकर्ता नाम:"
+	},
+	"settingsGeneralWebDavServerPassword": {
+		"message": "WebDAV सर्वर पासवर्ड:"
+	},
+	"settingsGeneralWebDavBehaviourDesc": {
+		"message": "कृपया ध्यान दें कि बैकअप सेटिंग्स में प्रत्येक परिवर्तन पर होंगे, जबकि पुनर्स्थापना केवल तब होती है जब ब्राउज़र प्रारंभ होता है।"
+	},
+	"settingsGeneralWebDavServerBackupNow": {
+		"message": "अभी बैकअप लें"
+	},
+	"settingsGeneralWebDavServerRestoreNow": {
+		"message": "अभी पुनर्स्थापित करें"
+	},
+	"settingsGeneralWebDavRestoreNowConfirm": {
+		"message": "यह WebDAV सर्वर से आपकी वर्तमान सेटिंग्स को अधिलेखित कर देगा। यह क्रिया अपरिवर्तनीय है, सावधान रहें। जारी रखें?"
+	},
+	"settingsGeneralWebDavRestoreNowSuccess": {
+		"message": "WebDAV पुनर्स्थापना सफलतापूर्वक पूर्ण हुई!"
+	},
+	"settingsGeneralWebDavRestoreNowFailed": {
+		"message": "WebDAV पुनर्स्थापना विफल:"
+	},
+	"settingsGeneralWebDav_ErrorValidUrl": {
+		"message": "कृपया एक वैध WebDAV सर्वर URL दर्ज करें"
+	},
+	"settingsGeneralWebDav_ErrorEmptyFilename": {
+		"message": "WebDAV सर्वर बैकअप फ़ाइलनाम खाली नहीं हो सकता"
+	},
+	"settingsGeneralWebDav_ErrorRequiredFields": {
+		"message": "कृपया सभी आवश्यक WebDAV फ़ील्ड भरें।"
+	},
+	"settingsGeneralWebDavBackupNowSuccess": {
+		"message": "WebDAV बैकअप सफलतापूर्वक पूर्ण हुआ!"
+	},
+	"settingsGeneralWebDavBackupNowFailed": {
+		"message": "WebDAV बैकअप विफल:"
+	},
+	"settingsGeneralErrorDetection": {
+		"message": "त्रुटि पहचान"
+	},
+	"settingsGeneralDetectFailures": {
+		"message": "अनुरोध विफलताओं का पता लगाएँ"
+	},
+	"settingsGeneralDetectFailuresDesc": {
+		"message": "अनुरोध विफलताओं का पता लगाने से आपको उन डोमेन की पहचान करने में मदद मिलेगी जिन्हें प्रॉक्सी की आवश्यकता है।"
+	},
+	"settingsGeneralSelectIgnoredDomains": {
+		"message": "नियम दर्ज करें"
+	},
+	"settingsGeneralIgnoreRequestFailuresForDomains": {
+		"message": "इन नियमों के आधार पर विफलता पहचान को अनदेखा करें"
+	},
+	"settingsGeneralIgnoreRequestFailuresForDomainsDesc": {
+		"message": "विफलता पहचान को अक्षम करने के लिए नियम जोड़ें।"
+	},
+	"settingsGeneralDisplayFailedOnBadge": {
+		"message": "टूलबार आइकन बैज पर विफल अनुरोधों की संख्या प्रदर्शित करें"
+	},
+	"settingsGeneralThemes": {
+		"message": "थीम"
+	},
+	"settingsGeneralThemesAutoSwitch": {
+		"message": "ब्राउज़र थीम द्वारा स्वचालित स्विच"
+	},
+	"settingsGeneralThemesAutoSwitchDesc": {
+		"message": "नीचे चयनित थीम के बीच स्वचालित रूप से स्विच करें। यह आपके ब्राउज़र की थीम का अनुसरण करता है जो आपके ऑपरेटिंग सिस्टम की थीम का भी अनुसरण कर सकता है।"
+	},
+	"settingsGeneralThemesLight": {
+		"message": "हल्की थीम"
+	},
+	"settingsGeneralThemes_Default": {
+		"message": "(डिफ़ॉल्ट)"
+	},
+	"settingsGeneralThemes_Custom": {
+		"message": "(कस्टम)"
+	},
+	"settingsGeneralThemes_CustomUrl": {
+		"message": "कस्टम शैलियाँ (CSS) URL:"
+	},
+	"settingsGeneralThemes_CustomUrlDesc": {
+		"message": "URL 'Https' होना चाहिए। कस्टम शैली में आयातित फ़ॉन्ट और अन्य शैलियों से सावधान रहें, वे आपके ब्राउज़र में पॉपअप को ब्लॉक/धीमा कर सकते हैं। आप bootswatch.com से थीम आज़मा सकते हैं लेकिन उनकी Google फ़ॉन्ट निर्भरता से सावधान रहें।"
+	},
+	"settingsGeneralThemesDark": {
+		"message": "गहरी थीम"
+	},
+	"settingsGeneralThemesLight_ErrorValidUrl": {
+		"message": "कृपया हल्की थीम के लिए एक वैध css URL दर्ज करें और URL 'https' होना चाहिए।"
+	},
+	"settingsGeneralThemesDark_ErrorValidUrl": {
+		"message": "कृपया गहरी थीम के लिए एक वैध css URL दर्ज करें और URL 'https' होना चाहिए।"
+	},
+	"settingsGeneralOtherSettings": {
+		"message": "अन्य सेटिंग्स"
+	},
+	"settingsGeneralEnableShortcuts": {
+		"message": "शॉर्टकट सक्षम करें"
+	},
+	"settingsGeneralEnableShortcutsDesc": {
+		"message": "आप ब्राउज़र ऐड-ऑन सेटिंग्स पृष्ठ से शॉर्टकट कॉन्फ़िगर कर सकते हैं।"
+	},
+	"settingsGeneralViewShortcuts": {
+		"message": "शॉर्टकट देखें"
+	},
+	"settingsGeneralConfigureShortcuts": {
+		"message": "शॉर्टकट कॉन्फ़िगर करें"
+	},
+	"settingsGeneralShortcutNotification": {
+		"message": "शॉर्टकट सूचना सक्षम करें"
+	},
+	"settingsGeneralViewShortcutKeys": {
+		"message": "शॉर्टकट कुंजियाँ"
+	},
+	"settingsGeneralDisplayAppliedProxyOnBadge": {
+		"message": "बैज पर लागू नियम स्रोत प्रदर्शित करें"
+	},
+	"settingsGeneralDisplayAppliedRulePatternOnBadge": {
+		"message": "बैज पर लागू नियम पैटर्न प्रदर्शित करें"
+	},
+	"settingsGeneralRefreshTabOnConfigChanges": {
+		"message": "प्रोफ़ाइल या प्रॉक्सी बदलने पर सक्रिय टैब को ताज़ा करें"
+	},
+	"settingsGeneralCancelButton": {
+		"message": "रद्द करें"
+	},
+	"settingsGeneralSaveChanges": {
+		"message": "परिवर्तन सहेजें"
+	},
+	"settingsGeneralKeyboardShortcutsTitle": {
+		"message": "कीबोर्ड शॉर्टकट"
+	},
+	"settingsGeneralCloseButton": {
+		"message": "बंद करें"
+	},
+	"settingsGeneralKeyboardShortcutsNotSupported": {
+		"message": "मोबाइल उपकरणों पर कीबोर्ड शॉर्टकट समर्थित नहीं हैं।"
+	},
+	"settingsTabProxyServersTitle": {
+		"message": "अपने प्रॉक्सी सर्वर प्रबंधित करें:"
+	},
+	"settingsTabProxyServersDescription": {
+		"message": "यहाँ प्रॉक्सी सर्वर की सूची है। आप जितने चाहें उतने प्रॉक्सी परिभाषित कर सकते हैं और टूलबार से उनके बीच स्विच कर सकते हैं।"
+	},
+	"settingsTabBackupRestoreDescription": {
+		"message": "आप अपनी सेटिंग्स का पूर्ण या आंशिक बैकअप ले सकते हैं।"
+	},
+	"settingsErrNoServersTitle": {
+		"message": "कोई सर्वर नहीं!"
+	},
+	"settingsErrNoServersDescription": {
+		"message": "कुछ भी करने से पहले आपको प्रॉक्सी सर्वर परिभाषित करने होंगे।"
+	},
+	"settingsActiveProxyServer": {
+		"message": "डिफ़ॉल्ट प्रॉक्सी सर्वर:"
+	},
+	"settingsAddServerButton": {
+		"message": "सर्वर जोड़ें"
+	},
+	"settingsRemoveMultipleServerButton": {
+		"message": "एकाधिक हटाएँ"
+	},
+	"settingsSaveChangesButton": {
+		"message": "परिवर्तन सहेजें"
+	},
+	"settingsRejectChangesButton": {
+		"message": "परिवर्तन अस्वीकार करें"
+	},
+	"settingsEditButton": {
+		"message": "संपादित करें"
+	},
+	"settingsFullBackupButton": {
+		"message": "पूर्ण बैकअप बनाएँ"
+	},
+	"settingsFullBackupButtonDesc": {
+		"message": "विकल्पों का पूर्ण बैकअप बनाएँ (प्रॉक्सी सर्वर और नियमों सहित)।"
+	},
+	"settingsRestoreBackupButton": {
+		"message": "बैकअप पुनर्स्थापित करें"
+	},
+	"settingsRestoreBackupButtonDesc": {
+		"message": "अपना पहले लिया गया बैकअप किसी स्थानीय फ़ाइल से पुनर्स्थापित करें"
+	},
+	"settingsDangerZoneDesc": {
+		"message": "खतरा क्षेत्र"
+	},
+	"settingsFactoryResetButton": {
+		"message": "फ़ैक्टरी रीसेट"
+	},
+	"settingsFactoryResetDesc": {
+		"message": "सब कुछ रीसेट करें। यह सभी नियमों और प्रॉक्सी सर्वर को हटा देगा और विकल्पों को रीसेट कर देगा। स्थायी रूप से।"
+	},
+	"settingsFactoryResetConfirm": {
+		"message": "क्या आप वाकई सब कुछ रीसेट करना चाहते हैं? पक्का? वापस जाने का कोई रास्ता नहीं है!"
+	},
+	"settingsFactoryResetSuccess": {
+		"message": "फ़ैक्टरी रीसेट सफलतापूर्वक पूर्ण हुआ"
+	},
+	"settingsImportExportProxiesDesc": {
+		"message": "प्रॉक्सी सर्वरों की व्यक्तिगत सूचियाँ आयात/निर्यात करें।"
+	},
+	"settingsImportProxiesButtonBackup": {
+		"message": "प्रॉक्सी सर्वर आयात करें"
+	},
+	"settingsExportProxiesButtonBackup": {
+		"message": "प्रॉक्सी सर्वर निर्यात करें"
+	},
+	"settingsAddRuleButton": {
+		"message": "नियम जोड़ें"
+	},
+	"settingsImportRulesButton": {
+		"message": "नियम आयात करें"
+	},
+	"settingsImportRulesTitle": {
+		"message": "नियम आयात करें"
+	},
+	"settingsImportRulesSelectButton": {
+		"message": "नियम बैकअप फ़ाइल"
+	},
+	"settingsImportRulesText": {
+		"message": "नियम बैकअप पाठ"
+	},
+	"settingsImportRulesFrom": {
+		"message": "स्रोत"
+	},
+	"settingsImportRulesOptionAppend": {
+		"message": "मौजूदा नियमों में जोड़ें"
+	},
+	"settingsImportRulesOptionOverride": {
+		"message": "वर्तमान नियमों को बदलें (सावधानी से उपयोग करें)"
+	},
+	"settingsImportRulesCancelButton": {
+		"message": "रद्द करें"
+	},
+	"settingsImportRulesImportButton": {
+		"message": "आयात करें"
+	},
+	"settingsImportProxiesButton": {
+		"message": "प्रॉक्सी आयात करें"
+	},
+	"settingsExportProxiesButton": {
+		"message": "प्रॉक्सी निर्यात करें"
+	},
+	"settingsImportProxiesTitle": {
+		"message": "प्रॉक्सी सूची आयात करें"
+	},
+	"settingsImportProxiesSelectFileButton": {
+		"message": "प्रॉक्सी सूची फ़ाइल"
+	},
+	"settingsImportProxiesSelectTextButton": {
+		"message": "प्रॉक्सी सूची पाठ"
+	},
+	"settingsImportProxiesOptionAppend": {
+		"message": "मौजूदा प्रॉक्सी में जोड़ें"
+	},
+	"settingsImportProxiesOptionOverride": {
+		"message": "वर्तमान प्रॉक्सी बदलें (सावधानी से उपयोग करें)"
+	},
+	"settingsImportProxiesCancelButton": {
+		"message": "रद्द करें"
+	},
+	"settingsImportProxiesImportButton": {
+		"message": "आयात करें"
+	},
+	"settingsConfirmRemoveProxyServer": {
+		"message": "क्या आप वाकई चयनित प्रॉक्सी सर्वर को हटाना चाहते हैं?"
+	},
+	"settingsConfirmRemoveMultipleProxyServer": {
+		"message": "क्या आप वाकई चयनित प्रॉक्सी सर्वरों को हटाना चाहते हैं?"
+	},
+	"settingsRemoveAllProxyServers": {
+		"message": "क्या आप वाकई सभी प्रॉक्सी सर्वर हटाना चाहते हैं?"
+	},
+	"settingsRemoveAllProxyServersSuccess": {
+		"message": "सभी प्रॉक्सी सर्वर हटा दिए गए हैं।<br/>परिवर्तन लागू करने के लिए आपको सहेजना होगा।"
+	},
+	"settingsImportProxiesFileNotSelected": {
+		"message": "कृपया एक प्रॉक्सी सूची फ़ाइल चुनें"
+	},
+	"settingsImportProxyListTextIsEmpty": {
+		"message": "कृपया प्रॉक्सी सूची दर्ज करें"
+	},
+	"settingsImportProxyServersFailed": {
+		"message": "प्रॉक्सी सर्वर आयात करने में विफल"
+	},
+	"importerImportProxySuccess": {
+		"message": "कुल {1} में से {0} प्रॉक्सी आयात किए गए।<br>परिवर्तनों को सहेजना न भूलें।"
+	},
+	"settingsErrorFailedToSaveServers": {
+		"message": "सर्वर सहेजने में विफल।"
+	},
+	"settingsChangesReverted": {
+		"message": "परिवर्तन सफलतापूर्वक वापस ले लिए गए।"
+	},
+	"settingsConfirmSaveAllChanged": {
+		"message": "क्या आप सभी असंग्रहीत परिवर्तनों को सहेजना चाहते हैं?"
+	},
+	"settingsConfirmRemoveProxyRule": {
+		"message": "क्या आप वाकई चयनित नियम को हटाना चाहते हैं?"
+	},
+	"settingsConfirmRemoveMultipleProxyRule": {
+		"message": "क्या आप वाकई चयनित नियमों को हटाना चाहते हैं?"
+	},
+	"settingsRemoveAllRules": {
+		"message": "क्या आप वाकई सभी नियम हटाना चाहते हैं?"
+	},
+	"settingsRemoveAllRulesSuccess": {
+		"message": "सभी नियम हटा दिए गए हैं।<br/>परिवर्तन लागू करने के लिए आपको सहेजना होगा।"
+	},
+	"settingsRestoreBackupFailed": {
+		"message": "बैकअप पुनर्स्थापित करने में एक त्रुटि हुई"
+	},
+	"settingsRestoreBackupFileError": {
+		"message": "चयनित फ़ाइल पढ़ने में विफल"
+	},
+	"settingsRulesFileNotSelected": {
+		"message": "कृपया एक नियम फ़ाइल चुनें"
+	},
+	"settingsSourceTypeNotSelected": {
+		"message": "कृपया स्रोत प्रकार चुनें"
+	},
+	"settingsImportRulesFailed": {
+		"message": "फ़ाइल आयात करने में विफल।"
+	},
+	"settingsImportRulesTextIsEmpty": {
+		"message": "कृपया बॉक्स में नियम दर्ज करें"
+	},
+	"settingsServerNameRequired": {
+		"message": "सर्वर का नाम निर्दिष्ट करें!"
+	},
+	"settingsServerNameExists": {
+		"message": "समान नाम वाला एक सर्वर पहले से मौजूद है!"
+	},
+	"settingsServerServerAddressIsEmpty": {
+		"message": "सर्वर पता खाली नहीं हो सकता"
+	},
+	"settingsServerPortNoInvalid": {
+		"message": "कृपया एक वैध पोर्ट नंबर दर्ज करें"
+	},
+	"settingsServerAuthenticationInvalid": {
+		"message": "प्रमाणीकरण के लिए उपयोगकर्ता नाम और पासवर्ड दोनों आवश्यक हैं"
+	},
+	"settingsServersGridNoDataContent": {
+		"message": "कोई सर्वर परिभाषित नहीं है"
+	},
+	"settingsServersGridColName": {
+		"message": "नाम"
+	},
+	"settingsServersGridColProtocol": {
+		"message": "प्रोटोकॉल"
+	},
+	"settingsServersGridColServer": {
+		"message": "सर्वर"
+	},
+	"settingsServersGridColPort": {
+		"message": "पोर्ट"
+	},
+	"settingsServersGridColCountry": {
+		"message": "देश"
+	},
+	"settingsServersGridColRating": {
+		"message": "रेटिंग"
+	},
+	"settingsServersModalTitle": {
+		"message": "प्रॉक्सी सर्वर विवरण"
+	},
+	"settingsServersServerName": {
+		"message": "सर्वर का नाम"
+	},
+	"settingsServersSeverAddress": {
+		"message": "सर्वर पता"
+	},
+	"settingsServersProtocol": {
+		"message": "प्रॉक्सी प्रोटोकॉल"
+	},
+	"settingsServersPort": {
+		"message": "पोर्ट"
+	},
+	"settingsServersProxyDNS": {
+		"message": "SOCKS 5 का उपयोग करते समय DNS प्रॉक्सी"
+	},
+	"settingsServersUsername": {
+		"message": "उपयोगकर्ता नाम"
+	},
+	"settingsServersPassword": {
+		"message": "पासवर्ड"
+	},
+	"settingsServersAuthChromeMv3Limitation": {
+		"message": "(दुर्भाग्य से प्रॉक्सी सर्वर प्रमाणीकरण Chrome द्वारा एक्सटेंशन API के माध्यम से समर्थित नहीं है। यह 'जानबूझकर' है।)"
+	},
+	"settingsServersCancel": {
+		"message": "रद्द करें"
+	},
+	"settingsServersSave": {
+		"message": "सहेजें"
+	},
+	"settingsServersImport": {
+		"message": "आयात करें"
+	},
+	"settingsProfilesNameTitle": {
+		"message": "चयनात्मक प्रोफ़ाइल:"
+	},
+	"settingsProfilesEnabled": {
+		"message": "सक्षम"
+	},
+	"settingsProfilesTypeTitle": {
+		"message": "प्रोफ़ाइल प्रकार:"
+	},
+	"settingsProfilesTypeDesc_SmartRules": {
+		"message": "इस प्रोफ़ाइल में, जब तक आप चयनात्मक नियम परिभाषित नहीं करते, कोई प्रॉक्सी लागू नहीं होता है। आप ब्लैकलिस्ट नियम, या दूसरे शब्दों में प्रॉक्सी लागू करने के लिए नियम परिभाषित करेंगे।"
+	},
+	"settingsProfilesTypeDesc_AlwaysEnabledBypassRules": {
+		"message": "इस प्रोफ़ाइल में, प्रॉक्सी सर्वर हमेशा लागू होते हैं; चयनात्मक नियम परिभाषित करें और उन्हें छोड़ें। आप व्हाइटलिस्ट नियम, या दूसरे शब्दों में प्रॉक्सी को छोड़ने और प्रॉक्सी लागू न करने के लिए नियम परिभाषित करेंगे।"
+	},
+	"settingsProfilesTypeDesc_IgnoreFailureRules": {
+		"message": "नियम जोड़कर इन डोमेन के लिए विफलता पहचान को अनदेखा करें।"
+	},
+	"settingsProfilesProfileProxyServer": {
+		"message": "प्रोफ़ाइल प्रॉक्सी सर्वर:"
+	},
+	"settingsProfilesDefaultProfileProxyServer": {
+		"message": "(डिफ़ॉल्ट प्रॉक्सी सर्वर का उपयोग करें)"
+	},
+	"settingsProfilesProfileProxyServerDesc": {
+		"message": "(इस प्रोफ़ाइल का उपयोग करते समय, यह सक्रिय प्रॉक्सी सर्वर होगा)"
+	},
+	"settingsProfilesRulesSection": {
+		"message": "नियम"
+	},
+	"settingsProfilesDelete": {
+		"message": "हटाएँ"
+	},
+	"settingsProfilesAddNewLabel": {
+		"message": "नई चयनात्मक प्रोफ़ाइल जोड़ें"
+	},
+	"settingsProfilesAddNewTypeLead": {
+		"message": "कृपया वह <b>प्रोफ़ाइल प्रकार</b> चुनें जिसे आप जोड़ना चाहते हैं:"
+	},
+	"settingsProfilesAddNewType_SmartRules": {
+		"message": "चयनात्मक नियम"
+	},
+	"settingsProfilesAddNewType_SmartRulesDesc": {
+		"message": "इस प्रकार की प्रोफ़ाइल में, प्रॉक्सी कुछ <em>नियमों</em> के आधार पर अनुरोधों पर लागू होगा जिन्हें आपको परिभाषित करना होगा। इन नियमों को परिभाषित करने के लिए आप मेनू बार में पॉपअप मेनू का उपयोग कर सकते हैं, या आप उन्हें सेटिंग्स से जोड़ सकते हैं और <em>प्रॉक्सी योग्य संसाधन</em> विंडो से भी कर सकते हैं।<br>साथ ही आपके पास Gfwlist जैसी विभिन्न नियम सूचियों की सदस्यता लेने की क्षमता है।"
+	},
+	"settingsProfilesAddNewType_AlwaysEnabled": {
+		"message": "हमेशा सक्षम"
+	},
+	"settingsProfilesAddNewType_AlwaysEnabledDesc": {
+		"message": "इस प्रकार की प्रोफ़ाइल में, प्रॉक्सी हमेशा अनुरोधों पर लागू होगा जब तक कि आप बायपास नियम परिभाषित न करें। नियम परिभाषित करने के चरण चयनात्मक नियम प्रोफ़ाइल प्रकार के समान हैं।"
+	},
+	"settingsProfilesAddNewBtnContinue": {
+		"message": "जारी रखें"
+	},
+	"settingsProfilesAddNewBtnCancel": {
+		"message": "रद्द करें"
+	},
+	"settingsProfilesAddErrorTypeRequired": {
+		"message": "कृपया एक प्रोफ़ाइल प्रकार चुनें"
+	},
+	"settingsProfilesAddErrorNameRequired": {
+		"message": "प्रोफ़ाइल नाम अनिवार्य है"
+	},
+	"settingsProfilesAddErrorNameExists": {
+		"message": "प्रोफ़ाइल नाम पहले से मौजूद है, कृपया दूसरा दर्ज करें"
+	},
+	"settingsProfilesDeleteConfirm": {
+		"message": "क्या आप वाकई इस प्रोफ़ाइल को हटाना चाहते हैं? चेतावनी, यह क्रिया पूर्ववत नहीं की जा सकती!"
+	},
+	"settingsProfilesDeleteFailed": {
+		"message": "चयनित प्रोफ़ाइल को हटाने में विफल।"
+	},
+	"settingsProfilesDeleteDone": {
+		"message": "प्रोफ़ाइल सफलतापूर्वक हटा दी गई"
+	},
+	"settingsProfilesDeleteBuiltinFail": {
+		"message": "अंतर्निहित प्रोफ़ाइलों को हटाया नहीं जा सकता"
+	},
+	"settingsProfilesProxyServer": {
+		"message": "[डिफ़ॉल्ट प्रॉक्सी सर्वर का उपयोग करें]"
+	},
+	"settingsProfilesRulesSubscriptionsTitle": {
+		"message": "नियम सदस्यताएँ"
+	},
+	"settingsProfilesRulesSubscriptionsDesc": {
+		"message": "यहाँ आप नियम सूचियों की सदस्यता ले सकते हैं।"
+	},
+	"settingsSaveSmartProfileSuccess": {
+		"message": "चयनात्मक प्रोफ़ाइल सफलतापूर्वक सहेजी गई।"
+	},
+	"settingsErrorFailedToSaveSmartProfile": {
+		"message": "चयनात्मक प्रोफ़ाइल सहेजने में विफल।"
+	},
+	"settingsRuleSourceRequired": {
+		"message": "कृपया नियम का स्रोत डोमेन निर्दिष्ट करें!"
+	},
+	"settingsRuleSourceInvalid": {
+		"message": "स्रोत डोमेन अमान्य है, स्रोत डोमेन 'google.com' जैसा कुछ होना चाहिए"
+	},
+	"settingsRuleSourceInvalidFormat": {
+		"message": "'स्रोत डोमेन' मान्य नहीं है '{0}'"
+	},
+	"settingsRuleSourceAlreadyExists": {
+		"message": "समान स्रोत वाला एक नियम पहले से मौजूद है!"
+	},
+	"settingsRuleHostInvalid": {
+		"message": "होस्ट नाम '{0}' अमान्य है, होस्ट नाम 'google.com' जैसा कुछ होना चाहिए"
+	},
+	"settingsRuleRegexNotMatchDomain": {
+		"message": "रेगेक्स नियम स्रोत डोमेन '{0}' से मेल नहीं खाता"
+	},
+	"settingsRuleDoesntIncludeDomain": {
+		"message": "नियम स्रोत डोमेन '{0}' से मेल नहीं खाता"
+	},
+	"settingsRuleRegexInvalid": {
+		"message": "रेगेक्स नियम '{0}' मान्य नहीं है"
+	},
+	"settingsRuleExactUrlInvalid": {
+		"message": "URL '{0}' मान्य नहीं है"
+	},
+	"settingsRuleUrlInvalid": {
+		"message": "URL '{0}' मान्य नहीं है"
+	},
+	"settingsRulesGridNoDataContent": {
+		"message": "कोई नियम परिभाषित नहीं है"
+	},
+	"settingsRulesGridColRuleType": {
+		"message": "नियम प्रकार"
+	},
+	"settingsRulesGridColSource": {
+		"message": "स्रोत"
+	},
+	"settingsRulesGridColRule": {
+		"message": "नियम"
+	},
+	"settingsRulesGridColEnabled": {
+		"message": "सक्षम"
+	},
+	"settingsRulesGridColProxy": {
+		"message": "प्रॉक्सी सर्वर"
+	},
+	"settingsRulesProxyDefault": {
+		"message": "[सक्रिय प्रॉक्सी का उपयोग करें]"
+	},
+	"settingsRulesProxyFromProfile": {
+		"message": "[प्रोफ़ाइल प्रॉक्सी का उपयोग करें]"
+	},
+	"settingsRulesModalTitle": {
+		"message": "नियम विवरण"
+	},
+	"settingsRulesRuleType": {
+		"message": "नियम प्रकार"
+	},
+	"settingsRulesSourceDomain": {
+		"message": "नियम स्रोत डोमेन"
+	},
+	"settingsRulesSourceDomainDesc": {
+		"message": "(उदा. google.com)"
+	},
+	"settingsRulesPattern": {
+		"message": "मिलान पैटर्न"
+	},
+	"settingsRulesGeneratePattern": {
+		"message": "पैटर्न स्वचालित रूप से उत्पन्न करें"
+	},
+	"settingsRulesRegex": {
+		"message": "URL रेगेक्स"
+	},
+	"settingsRulesHostRegex": {
+		"message": "होस्ट रेगेक्स"
+	},
+	"settingsRulesExactUrl": {
+		"message": "सटीक URL (लोअरकेस में)"
+	},
+	"settingsRulesProxyServer": {
+		"message": "प्रॉक्सी सर्वर"
+	},
+	"settingsRulesProxyServerNotAuth": {
+		"message": "(प्रमाणीकरण वाले सर्वर Chrome में समर्थित नहीं हैं)"
+	},
+	"settingsRulesEnabled": {
+		"message": "सक्षम"
+	},
+	"settingsRulesModalCancel": {
+		"message": "रद्द करें"
+	},
+	"settingsRulesModalSave": {
+		"message": "सहेजें"
+	},
+	"settingsRulesActionType": {
+		"message": "कार्रवाई"
+	},
+	"settingsRuleActionApplyProxy": {
+		"message": "प्रॉक्सी लागू करें"
+	},
+	"settingsRuleActionWhitelist": {
+		"message": "श्वेतसूची (कोई प्रॉक्सी नहीं)"
+	},
+	"settingsRuleActionWhitelistDesc": {
+		"message": "(श्वेतसूची नियमों में प्रॉक्सी नियमों की तुलना में उच्च प्राथमिकता होती है, भले ही उनके स्थान की परवाह किए बिना)"
+	},
+	"settingsServerPortInvalid": {
+		"message": "सर्वर पोर्ट '{0}' अमान्य है"
+	},
+	"settingsServerHostInvalid": {
+		"message": "सर्वर होस्ट '{0}' अमान्य है"
+	},
+	"settingsRestoreSettingsSuccess": {
+		"message": "सेटिंग्स सफलतापूर्वक पुनर्स्थापित की गईं"
+	},
+	"settingsRestoreSettingsFailed": {
+		"message": "सेटिंग्स पुनर्स्थापित करने में एक त्रुटि हुई"
+	},
+	"settingsRestoreSettingsFailedInvalid": {
+		"message": "बैकअप डेटा अमान्य या दूषित है"
+	},
+	"settingsRestoreSettingsFailedInvalidActiveProfile": {
+		"message": "सक्रिय प्रोफ़ाइल के लिए अमान्य डेटा प्रदान किया गया"
+	},
+	"settingsRestoreSettingsFailedInvalidDefaultProxyServer": {
+		"message": "डिफ़ॉल्ट प्रॉक्सी सर्वर के लिए अमान्य डेटा प्रदान किया गया"
+	},
+	"settingsEnableByDomainInvalid": {
+		"message": "चयनित डोमेन मान्य नहीं है"
+	},
+	"settingsEnableByDomainExists": {
+		"message": "डोमेन के लिए नियम पहले से मौजूद है"
+	},
+	"settingsEnableByDomainSmartProfileNonEditable": {
+		"message": "वर्तमान प्रोफ़ाइल '{0}' को नियमों के साथ अद्यतन नहीं किया जा सकता"
+	},
+	"settingsNoRuleFoundForDomain": {
+		"message": "'{0}' के लिए कोई नियम नहीं है"
+	},
+	"importerImportSuccess": {
+		"message": "कुल {1} में से {0} नियम जोड़े गए।<br>परिवर्तनों को सहेजना न भूलें।"
+	},
+	"settingsRemoveMultipleProxyRuleButton": {
+		"message": "एकाधिक हटाएँ"
+	},
+	"settingsAddMultipleRulesButton": {
+		"message": "एकाधिक नियम जोड़ें"
+	},
+	"settingsAddMultipleRuleTitle": {
+		"message": "एकाधिक नियम जोड़ें"
+	},
+	"settingsMultipleRuleList": {
+		"message": "होस्ट/नियम सूची:"
+	},
+	"settingsMultipleRuleInvalidHost": {
+		"message": "होस्ट नाम '{0}' अमान्य है"
+	},
+	"settingsMultipleRuleNoNewRuleAdded": {
+		"message": "कोई नया नियम नहीं जोड़ा गया"
+	},
+	"settingsTabProxyServerSubscriptionsTitle": {
+		"message": "प्रॉक्सी सर्वर सदस्यताएँ प्रबंधित करें:"
+	},
+	"settingsTabProxyServerSubscriptionsDescription": {
+		"message": "यहाँ आप प्रॉक्सी सूचियों की सदस्यता ले सकते हैं और बाद में प्रॉक्सी के बीच स्विच कर सकते हैं। कृपया ध्यान दें कि लंबी सूचियाँ उपकरणों के बीच डेटा सिंक्रनाइज़ करने में विफलता का कारण बन सकती हैं।"
+	},
+	"settingsErrorFailedToSaveGeneral": {
+		"message": "विकल्प सेटिंग्स सहेजने में विफल।"
+	},
+	"settingsSaveOptionsSuccess": {
+		"message": "सामान्य विकल्प सफलतापूर्वक सहेजे गए।"
+	},
+	"settingsAddServerSubscriptionButton": {
+		"message": "एक सूची की सदस्यता लें"
+	},
+	"settingsServerSubscriptionModalTitle": {
+		"message": "एक प्रॉक्सी सर्वर सूची की सदस्यता लें"
+	},
+	"settingsRemoveMultipleServerSubscriptionButton": {
+		"message": "एकाधिक हटाएँ"
+	},
+	"settingsServerSubscriptionName": {
+		"message": "नाम:"
+	},
+	"settingsServerSubscriptionUrl": {
+		"message": "URL:"
+	},
+	"settingsServerSubscriptionRefreshRate": {
+		"message": "ताज़ा दर:"
+	},
+	"settingsServerSubscriptionRefreshRateHelp": {
+		"message": "(मिनटों में, 0 का अर्थ है कोई ताज़ा नहीं)"
+	},
+	"settingsServerSubscriptionEnabled": {
+		"message": "सक्षम"
+	},
+	"settingsServerSubscriptionProtocol": {
+		"message": "प्रोटोकॉल:"
+	},
+	"settingsServerSubscriptionObfuscation": {
+		"message": "अस्पष्टीकरण:"
+	},
+	"settingsServerSubscriptionFormat": {
+		"message": "प्रारूप:"
+	},
+	"settingsServerSubscriptionApplyProxy": {
+		"message": "प्रॉक्सी के माध्यम से पास करें:"
+	},
+	"settingsServerSubscriptionApplyProxyHelpFirefox": {
+		"message": "(सर्वर तक अपनी पहुँच के आधार पर निर्णय लें)"
+	},
+	"settingsServerSubscriptionApplyProxyHelpChrome": {
+		"message": "(दुर्भाग्य से यह सुविधा Chrome में उपलब्ध नहीं है। वर्तमान प्रॉक्सी लागू होगी)"
+	},
+	"settingsServerSubscriptionApplyProxy_NoProxy": {
+		"message": "कोई प्रॉक्सी नहीं"
+	},
+	"settingsServerSubscriptionApplyProxy_CurrentProxy": {
+		"message": "वर्तमान प्रॉक्सी"
+	},
+	"settingsServerSubscriptionApplyProxy_SelectedProxy": {
+		"message": "चयनित प्रॉक्सी"
+	},
+	"settingsServerSubscriptionUsername": {
+		"message": "उपयोगकर्ता नाम:"
+	},
+	"settingsServerSubscriptionPassword": {
+		"message": "पासवर्ड:"
+	},
+	"settingsServerSubscriptionAuthenticationHelp": {
+		"message": "(यदि सूची को प्रमाणीकरण की आवश्यकता है)"
+	},
+	"settingsServerSubscriptionCancelButton": {
+		"message": "रद्द करें"
+	},
+	"settingsServerSubscriptionSaveButton": {
+		"message": "सहेजें"
+	},
+	"settingsServerSubscriptionSavingButton": {
+		"message": "सहेजा जा रहा है..."
+	},
+	"settingsServerSubscriptionTestButton": {
+		"message": "परीक्षण करें"
+	},
+	"settingsProxyTestStopButton": {
+		"message": "रोकें"
+	},
+	"settingsProxyTestCancelled": {
+		"message": "परीक्षण उपयोगकर्ता द्वारा रोक दिया गया"
+	},
+	"settingsProxyTestResumeDialogTitle": {
+		"message": "प्रॉक्सी परीक्षण"
+	},
+	"settingsProxyTestResumeDialogMessage": {
+		"message": "अपरीक्षित प्रॉक्सी मौजूद हैं। आप क्या करना चाहते हैं?"
+	},
+	"settingsProxyTestResumeContinue": {
+		"message": "जहाँ रुके थे वहाँ से जारी रखें"
+	},
+	"settingsProxyTestResumeRestart": {
+		"message": "शुरू से पुनः आरंभ करें"
+	},
+	"settingsServerSubscriptionTestingButton": {
+		"message": "परीक्षण किया जा रहा है..."
+	},
+	"settingsConfirmRemoveServerSubscription": {
+		"message": "क्या आप वाकई चयनित सदस्यता को हटाना चाहते हैं?"
+	},
+	"settingsRemoveAllProxyServerSubscriptions": {
+		"message": "क्या आप वाकई सभी प्रॉक्सी सर्वर सदस्यताएँ हटाना चाहते हैं?"
+	},
+	"settingsConfirmRemoveMultipleServerSubscription": {
+		"message": "क्या आप वाकई चयनित सदस्यताओं को हटाना चाहते हैं?"
+	},
+	"settingsRemoveAllProxyServerSubscriptionsSuccess": {
+		"message": "सभी प्रॉक्सी सर्वर सदस्यताएँ हटा दी गईं।<br/>परिवर्तन लागू करने के लिए आपको सहेजना होगा।"
+	},
+	"settingsServerSubscriptionProtocolDefault": {
+		"message": "(HTTP फ़ॉलबैक के साथ स्वतः पता लगाएँ)"
+	},
+	"settingsInitializeFailed": {
+		"message": "कॉन्फ़िगरेशन पढ़ने में विफल। कृपया सेटिंग्स पृष्ठ बंद करें और पुनः प्रयास करें।"
+	},
+	"settingsActiveProxyServerSubscriptions": {
+		"message": "-सदस्यताएँ-"
+	},
+	"settingsServerSubscriptionsGridNoDataContent": {
+		"message": "कोई सदस्यता नहीं"
+	},
+	"settingsServerSubscriptionsGridColName": {
+		"message": "नाम"
+	},
+	"settingsServerSubscriptionsGridColUrl": {
+		"message": "URL"
+	},
+	"settingsServerSubscriptionsGridColCount": {
+		"message": "गणना"
+	},
+	"settingsServerSubscriptionsGridColEnabled": {
+		"message": "सक्षम"
+	},
+	"settingsServerSubscriptionIncompleteForm": {
+		"message": "कृपया आवश्यक फ़ील्ड सही प्रारूप में भरें"
+	},
+	"settingsServerSubscriptionInvalidForm": {
+		"message": "अमान्य प्रॉक्सी सर्वर सदस्यता विवरण"
+	},
+	"settingsServerSubscriptionDuplicateName": {
+		"message": "दर्ज किया गया नाम पहले से उपयोग में है, कृपया दूसरा नाम दर्ज करें।"
+	},
+	"settingsServerSubscriptionSaveUpdated": {
+		"message": "सदस्यता को {0} प्रॉक्सी के साथ अद्यतन किया गया।<br/>परिवर्तनों को सहेजना न भूलें।"
+	},
+	"settingsServerSubscriptionSaveAdded": {
+		"message": "सदस्यता को {0} प्रॉक्सी के साथ जोड़ा गया।<br/>परिवर्तनों को सहेजना न भूलें।"
+	},
+	"settingsServerSubscriptionSaveFailedGet": {
+		"message": "प्रॉक्सी प्राप्त करने में विफल।"
+	},
+	"settingsServerSubscriptionTestSuccess": {
+		"message": "परीक्षण सफल रहा। सूची ने {0} प्रॉक्सी लौटाए।"
+	},
+	"settingsServerSubscriptionTestFailed": {
+		"message": "परीक्षण विफल"
+	},
+	"settingsSaveProxyServerSubscriptionsSuccess": {
+		"message": "प्रॉक्सी सर्वर सदस्यताएँ सफलतापूर्वक सहेजी गईं।"
+	},
+	"settingsFailedToSaveProxySubscriptions": {
+		"message": "प्रॉक्सी सर्वर सदस्यताएँ सहेजने में विफल"
+	},
+	"settingsAddRulesSubscriptionButton": {
+		"message": "नियम सूची की सदस्यता लें"
+	},
+	"settingsRemoveMultipleRulesSubscriptionButton": {
+		"message": "एकाधिक हटाएँ"
+	},
+	"settingsRulesSubscriptionsModalTitle": {
+		"message": "नियम सूची की सदस्यता लें"
+	},
+	"settingsRulesSubscriptionsGridColName": {
+		"message": "नाम"
+	},
+	"settingsRulesSubscriptionsGridColUrl": {
+		"message": "URL"
+	},
+	"settingsRulesSubscriptionsGridColCount": {
+		"message": "गणना"
+	},
+	"settingsRulesSubscriptionsGridColEnabled": {
+		"message": "सक्षम"
+	},
+	"settingsRulesSubscriptionsName": {
+		"message": "नाम:"
+	},
+	"settingsRulesSubscriptionsUrl": {
+		"message": "URL:"
+	},
+	"settingsRulesSubscriptionsRefreshRate": {
+		"message": "ताज़ा दर:"
+	},
+	"settingsRulesSubscriptionsRefreshRateHelp": {
+		"message": "(मिनटों में, 0 का अर्थ है कोई ताज़ा नहीं)"
+	},
+	"settingsRulesSubscriptionEnabled": {
+		"message": "सक्षम"
+	},
+	"settingsRulesSubscriptionsObfuscation": {
+		"message": "अस्पष्टीकरण:"
+	},
+	"settingsRulesSubscriptionsFormat": {
+		"message": "प्रारूप:"
+	},
+	"settingsRulesSubscriptionsApplyProxy": {
+		"message": "प्रॉक्सी के माध्यम से पास करें:"
+	},
+	"settingsRulesSubscriptionsApplyProxyHelpFirefox": {
+		"message": "(सर्वर तक अपनी पहुँच के आधार पर निर्णय लें)"
+	},
+	"settingsRulesSubscriptionsApplyProxyHelpChrome": {
+		"message": "(दुर्भाग्य से यह सुविधा Chrome में उपलब्ध नहीं है। वर्तमान प्रॉक्सी लागू होगी)"
+	},
+	"settingsRulesSubscriptionsUsername": {
+		"message": "उपयोगकर्ता नाम:"
+	},
+	"settingsRulesSubscriptionsAuthenticationHelp": {
+		"message": "(यदि सूची को प्रमाणीकरण की आवश्यकता है)"
+	},
+	"settingsRulesSubscriptionsPassword": {
+		"message": "पासवर्ड:"
+	},
+	"settingsRulesSubscriptionsTestButton": {
+		"message": "परीक्षण करें"
+	},
+	"settingsRulesSubscriptionsSaveButton": {
+		"message": "सहेजें"
+	},
+	"settingsRulesSubscriptionsCancelButton": {
+		"message": "रद्द करें"
+	},
+	"settingsConfirmRemoveRulesSubscription": {
+		"message": "क्या आप वाकई चयनित नियम सदस्यता को हटाना चाहते हैं?"
+	},
+	"settingsConfirmRemoveMultipleRulesSubscription": {
+		"message": "क्या आप वाकई चयनित नियम सदस्यताओं को हटाना चाहते हैं?"
+	},
+	"settingsRulesSubscriptionIncompleteForm": {
+		"message": "कृपया आवश्यक फ़ील्ड सही प्रारूप में भरें"
+	},
+	"settingsRulesSubscriptionInvalidForm": {
+		"message": "अमान्य प्रॉक्सी सर्वर सदस्यता विवरण"
+	},
+	"settingsRulesSubscriptionDuplicateName": {
+		"message": "दर्ज किया गया नाम पहले से उपयोग में है, कृपया दूसरा नाम दर्ज करें।"
+	},
+	"settingsRulesSubscriptionSavingButton": {
+		"message": "सहेजा जा रहा है..."
+	},
+	"settingsRulesSubscriptionTestButton": {
+		"message": "परीक्षण करें"
+	},
+	"settingsRulesSubscriptionTestingButton": {
+		"message": "परीक्षण किया जा रहा है..."
+	},
+	"settingsRulesSubscriptionSaveUpdated": {
+		"message": "सदस्यता को {0} प्रॉक्सी नियमों और {1} श्वेतसूची नियमों के साथ अद्यतन किया गया।<br/>परिवर्तनों को सहेजना न भूलें।"
+	},
+	"settingsRulesSubscriptionSaveAdded": {
+		"message": "सदस्यता को {0} प्रॉक्सी नियमों और {1} श्वेतसूची नियमों के साथ जोड़ा गया।<br/>परिवर्तनों को सहेजना न भूलें।"
+	},
+	"settingsRulesSubscriptionSaveFailedGet": {
+		"message": "नियम प्राप्त करने में विफल।"
+	},
+	"settingsRulesSubscriptionRefreshOnDisabled": {
+		"message": "अक्षम सदस्यता को ताज़ा नहीं किया जा सकता"
+	},
+	"settingsRulesSubscriptionTestSuccess": {
+		"message": "परीक्षण सफल रहा। सूची ने {0} प्रॉक्सी नियम और {1} श्वेतसूची नियम लौटाए।"
+	},
+	"settingsRulesSubscriptionTestFailed": {
+		"message": "परीक्षण विफल"
+	},
+	"settingsFailedToSaveRulesSubscriptions": {
+		"message": "नियम सदस्यताएँ सहेजने में विफल"
+	},
+	"settingsRemoveAllProxyRulesSubscriptions": {
+		"message": "क्या आप वाकई सभी प्रॉक्सी नियम सदस्यताएँ हटाना चाहते हैं?"
+	},
+	"settingsRemoveAllProxyRulesSubscriptionsSuccess": {
+		"message": "सभी प्रॉक्सी नियम सदस्यताएँ हटा दी गईं।<br/>परिवर्तन लागू करने के लिए आपको सहेजना होगा।"
+	},
+	"importerImportRulesSuccess": {
+		"message": "कुल {0} प्रॉक्सी नियम और {1} श्वेतसूची नियम लौटाए गए।<br>परिवर्तनों को सहेजना न भूलें।"
+	},
+	"settingsRulePatternIsEmpty": {
+		"message": "नियम में कोई पैटर्न परिभाषित नहीं है"
+	},
+	"settingsWelcomeTitle": {
+		"message": "ProxyMust में आपका स्वागत है"
+	},
+	"settingsWelcomeMessage": {
+		"message": "<p>\n\tProxyMust, प्रॉक्सी परीक्षण क्षमताओं वाला चयनात्मक प्रॉक्सी प्रबंधक।<br>\n\tकृपया आरंभ करने के लिए इन चरणों का पालन करें:\n</p>\n<ol>\n\t<li>\n\t\tएक प्रॉक्सी सर्वर या प्रॉक्सी की सूची जोड़ें\n\t\t<br>\n\t\t<small>(प्रॉक्सी सर्वर टैब पर जाएँ और वहाँ जोड़ें)</small>\n\t</li>\n\t<li>\n\t\tमोड को चयनात्मक प्रॉक्सी पर सेट करें\n\t\t<br>\n\t\t<small>(सक्रिय मोड को चयनात्मक प्रॉक्सी में बदलने के लिए टूलबार पॉपअप मेनू का उपयोग करें)</small>\n\t</li>\n\t<li>\n\t\tप्रॉक्सी नियम परिभाषित करें\n\t\t<br>\n\t\t<small>(नियम जोड़ने के लिए टूलबार पॉपअप मेनू का उपयोग करें या प्रॉक्सी नियम टैब से नियम जोड़ें/संशोधित करें)</small>\n\t</li>\n\t<li>\n\t\tआप तैयार हैं।\n\t</li>\n</ol>"
+	},
+	"settingsWelcomeSkipButton": {
+		"message": "समझ गया"
+	},
+	"settingsSubscriptionStatsStatusSuccess": {
+		"message": "स्थिति: सफल"
+	},
+	"settingsSubscriptionStatsStatusFail": {
+		"message": "स्थिति: विफल"
+	},
+	"settingsSubscriptionStatsLastTry": {
+		"message": "अंतिम प्रयास:"
+	},
+	"settingsSubscriptionStatsMessage": {
+		"message": "संदेश:"
+	},
+	"settingsSubscriptionStatsLastSuccess": {
+		"message": "अंतिम सफलता:"
+	},
+	"settings_SmartProfileType_Direct": {
+		"message": "प्रत्यक्ष"
+	},
+	"settings_SmartProfileType_SystemProxy": {
+		"message": "सिस्टम प्रॉक्सी"
+	},
+	"settings_SmartProfileType_SmartRules": {
+		"message": "चयनात्मक नियम"
+	},
+	"settings_SmartProfileType_AlwaysEnabledBypassRules": {
+		"message": "बायपास नियमों के साथ हमेशा सक्षम"
+	},
+	"settings_SmartProfileType_IgnoreFailureRules": {
+		"message": "विफलताओं को अनदेखा करने के नियम"
+	},
+	"settingsRuleCidrIPAddress": {
+		"message": "IP पता"
+	},
+	"settingsRuleCidrPrefixLength": {
+		"message": "उपसर्ग लंबाई"
+	},
+	"settingsRuleCidrNotationDesc": {
+		"message": "(कृपया ध्यान दें कि यह नियम होस्टनाम को IP में हल नहीं करेगा।)"
+	},
+	"settingsRuleCidrIPInvalid": {
+		"message": "कृपया एक वैध IP पता दर्ज करें"
+	},
+	"settingsRuleCidrPrefixLengthInvalid": {
+		"message": "कृपया एक वैध उपसर्ग लंबाई दर्ज करें"
+	},
+	"settingsRuleCidrNotationInvalid": {
+		"message": "CIDR संकेतन '{0}' मान्य नहीं है"
+	},
+	"settingsRuleCidrNotationInvalidMatch": {
+		"message": "CIDR नियम '{0}' से मेल नहीं खाता"
+	},
+	"notificationNoNextProxyServer": {
+		"message": "कोई और अगला प्रॉक्सी सर्वर नहीं है"
+	},
+	"notificationNoPreviousProxyServer": {
+		"message": "कोई और पिछला प्रॉक्सी सर्वर नहीं है"
+	},
+	"notificationShortcutTitle": {
+		"message": "ProxyMust शॉर्टकट सूचना"
+	},
+	"notificationShortcutProxyModeMessage": {
+		"message": "प्रॉक्सी मोड {0} में बदल गया"
+	},
+	"notificationShortcutProxyServerChanged": {
+		"message": "प्रॉक्सी सर्वर {0} में बदल गया"
+	},
+	"popupRatingDialogTitle": {
+		"message": "क्या पता काम करता है?"
+	},
+	"popupRatingWorksButton": {
+		"message": "हाँ (+1)"
+	},
+	"popupRatingFailsButton": {
+		"message": "नहीं (-1)"
+	},
+	"popupRatingCancelButton": {
+		"message": "रद्द करें"
+	},
+	"settingsProxyTestTitle": {
+		"message": "प्रॉक्सी पहुँच की जाँच"
+	},
+	"settingsProxyTestEnable": {
+		"message": "प्रॉक्सी जाँच के लिए परीक्षण साइटें जोड़ें"
+	},
+	"settingsProxyTestNote": {
+		"message": "अधिकतम 5 पते दर्ज करें। यदि आप 3 से अधिक निर्दिष्ट नहीं करते हैं तो जाँच तेज़ होगी।"
+	},
+	"settingsProxyTestUrlsTitle": {
+		"message": "पहुँच परीक्षण के लिए देखने योग्य पते"
+	},
+	"settingsProxyTestUrlsWarning": {
+		"message": "⚠️ कृपया यहाँ वे वेबसाइटें दर्ज करें जिन्हें आप देखते हैं (जैसे youtube.com, telegram.org), प्रॉक्सी पते नहीं।"
+	},
+	"settingsProxyTestClear": {
+		"message": "परीक्षण साइटें साफ़ करें"
+	},
+	"settingsProxyTestStop": {
+		"message": "⏹ परीक्षण रोकें"
+	},
+	"proxyTestCompleted": {
+		"message": "जाँच पूर्ण हुई। {0} प्रॉक्सी का परीक्षण किया गया।"
+	},
+	"settingsProxyTestRatingAutoEnabled": {
+		"message": "परीक्षण परिणाम दिखाने के लिए रेटिंग स्वचालित रूप से सक्षम कर दी गई है।"
+	},
+	"settingsProxyTestNoTestUrls": {
+		"message": "कोई परीक्षण साइट निर्दिष्ट नहीं की गई। कृपया कम से कम एक वेबसाइट जोड़ें।"
+	},
+	"settingsProxyMustTestTitle": {
+		"message": "प्रॉक्सी परीक्षण"
+	},
+	"settingsProxyMustSiteLabel": {
+		"message": "परीक्षण के लिए साइट:"
+	},
+	"settingsProxyMustTestRun": {
+		"message": "▶ परीक्षण करें"
+	},
+	"settingsProxyMustAddSite": {
+		"message": "साइट जोड़ें"
+	},
+	"settingsProxyMustTestCondition": {
+		"message": "यदि कुछ भी चयनित नहीं है, तो परीक्षण तालिका में सभी प्रॉक्सी के लिए चलाया जाता है।"
+	},
+	"settingsProxyMustTestResults": {
+		"message": "परिणाम: ✅ = इस साइट के लिए निश्चित रूप से काम करता है, ☑️ = संभवतः काम करता है (पुराना डेटा या अन्य साइटों पर सफलता), ❓ = कोई डेटा नहीं, ⛔ = काम नहीं करता।"
+	},
+	"settingsServersRatingPriority": {
+		"message": "रेटिंग + प्राथमिकता"
+	},
+	"settingsContextMenuChangeRating": {
+		"message": "मैनुअल रेटिंग बदलें"
+	},
+	"settingsContextMenuPlus1": {
+		"message": "(+1)"
+	},
+	"settingsContextMenuMinus1": {
+		"message": "(-1)"
+	},
+	"settingsContextMenuRatingTitle": {
+		"message": "मैनुअल रेटिंग"
+	},
+	"settingsContextMenuPlus1Desc": {
+		"message": "सूची में ऊपर ले जाएँ"
+	},
+	"settingsContextMenuMinus1Desc": {
+		"message": "सूची में नीचे ले जाएँ"
+	},
+	"settingsContextMenuResetRating": {
+		"message": "रेटिंग रीसेट करें"
+	},
+	"settingsContextMenuSetFavorite": {
+		"message": "पसंदीदा के रूप में सेट करें"
+	},
+	"settingsContextMenuSetPin": {
+		"message": "पिन करें"
+	},
+	"settingsContextMenuRemoveFavorite": {
+		"message": "पसंदीदा से हटाएँ"
+	},
+	"settingsContextMenuUnpin": {
+		"message": "पिन हटाएँ"
+	},
+	"settingsContextMenuRemovePriority": {
+		"message": "प्राथमिकता हटाएँ"
+	},
+	"settingsContextMenuExportSelected": {
+		"message": "चयनित निर्यात करें"
+	},
+	"settingsContextMenuCopyAddresses": {
+		"message": "पते कॉपी करें"
+	},
+	"settingsContextMenuDelete": {
+		"message": "हटाएँ"
+	},
+	"settingsContextMenuTestForSite": {
+		"message": "साइट के लिए चयनित का परीक्षण करें"
+	},
+	"settingsProxyMustTestProgress": {
+		"message": "{0} के लिए प्रॉक्सी का परीक्षण किया जा रहा है... ({1}/{2})"
+	},
+	"settingsProxyMustTestComplete": {
+		"message": "परीक्षण पूर्ण हुआ"
+	},
+	"settingsProxyMustAddSitePrompt": {
+		"message": "साइट डोमेन दर्ज करें (जैसे youtube.com):"
+	},
+	"settingsProxyMustSiteAlreadyExists": {
+		"message": "साइट पहले से सूची में मौजूद है।"
+	},
+	"settingsProxyMustInvalidDomain": {
+		"message": "अमान्य डोमेन। कृपया एक वैध डोमेन दर्ज करें (जैसे youtube.com)।"
+	},
+	"popupCurrentSite": {
+		"message": "वर्तमान साइट:"
+	},
+	"settingsProxyMustRemoveSite": {
+		"message": "साइट हटाएँ"
+	},
+	"settingsContextMenuMoveToTop": {
+		"message": "शीर्ष पर ले जाएँ"
+	},
+	"settingsContextMenuMoveToDown": {
+		"message": "नीचे ले जाएँ"
+	},
+	"settingsProxyMustCannotRemoveAutoSite": {
+		"message": "यह साइट नियमों से आती है और इसे मैन्युअल रूप से नहीं हटाया जा सकता।"
+	},
+	"settingsProxyMustConfirmRemoveSite": {
+		"message": "\"{0}\" को परीक्षण साइटों से हटाएँ?"
+	},
+	"settingsProxyMustSiteRemoved": {
+		"message": "साइट \"{0}\" हटा दी गई।"
+	},
+	"settingsProxyMustStaleHours": {
+		"message": "पुराना होने के घंटे:"
+	},
+	"settingsContextMenuPreciseTest": {
+		"message": "सटीक परीक्षण (धीमा, अधिक सटीक)"
+	},
+	"settingsContextMenuExpressTest": {
+		"message": "एक्सप्रेस परीक्षण (तेज़, कम सटीक)"
+	},
+	"popupQuickTestButton": {
+		"message": "परीक्षण करें"
+	},
+	"popupQuickTestStopButton": {
+		"message": "रोकें"
+	},
+	"settingsChooseTestTypeTitle": {
+		"message": "परीक्षण प्रकार चुनें"
+	},
+	"settingsChooseTestTypeDescription": {
+		"message": "चुनें कि कौन सा परीक्षण चलाना है:"
+	},
+	"settingsPreciseTestDesc": {
+		"message": "पूरी जाँच, अधिक सटीक लेकिन अधिक समय लेती है।"
+	},
+	"settingsExpressTestDesc": {
+		"message": "एक्सप्रेस परीक्षण, कुछ काम करने वाले प्रॉक्सी को छोड़ सकता है, लेकिन कम से कम एक को जल्दी ढूंढ लेता है।"
+	},
+	"settingsCancelButton": {
+		"message": "रद्द करें"
+	},
+	"popupAddAllSuccessfulSubs": {
+		"message": "काम करने वाले जोड़ें"
+	},
+	"settingsContextMenuClearStatuses": {
+		"message": "स्थितियाँ साफ़ करें"
+	},
+	"settingsContextMenuClearStatusesSelected": {
+		"message": "चयनित प्रॉक्सी"
+	},
+	"settingsContextMenuClearStatusesAll": {
+		"message": "सभी प्रॉक्सी"
+	},
+	"settingsContextMenuClearStatusesConfirmSelected": {
+		"message": "चयनित प्रॉक्सी के लिए परीक्षण स्थितियाँ साफ़ करें?"
+	},
+	"settingsContextMenuClearStatusesConfirmAll": {
+		"message": "सभी प्रॉक्सी के लिए परीक्षण स्थितियाँ साफ़ करें? यह क्रिया पूर्ववत नहीं की जा सकती।"
+	},
+	"settingsContextMenuClearStatusesSuccess": {
+		"message": "परीक्षण स्थितियाँ सफलतापूर्वक साफ़ की गईं।"
+	},
+	"popupQuickTestTooltip": {
+		"message": "वर्तमान साइट के लिए काम करने वाले प्रॉक्सी खोजने के लिए त्वरित परीक्षण"
+	},
+	"popupAddAllSuccessfulSubsTooltip": {
+		"message": "परीक्षण पास करने वाले सदस्यता प्रॉक्सी को आपकी मैन्युअल सूची में जोड़ता है"
+	},
+	"popupTestMenuTitle": {
+		"message": "परीक्षण प्रकार चुनें"
+	},
+	"popupTestMenuAllProxies": {
+		"message": "सभी प्रॉक्सी के लिए एक्सप्रेस परीक्षण"
+	},
+	"popupTestMenuSubscriptionsOnly": {
+		"message": "केवल सदस्यताओं के लिए एक्सप्रेस परीक्षण"
+	},
+	"popupTestMenuAllProxiesDesc": {
+		"message": "मैन्युअल + सदस्यता प्रॉक्सी"
+	},
+	"popupTestMenuSubscriptionsOnlyDesc": {
+		"message": "फिर काम करने वालों को मैन्युअल सूची में जोड़ें"
+	},
+	"popupTestMenuCycleTest": {
+		"message": "चक्रीय प्रॉक्सी परीक्षण (पूर्ण स्विचिंग)"
+	},
+	"popupTestMenuCycleTestDesc": {
+		"message": "प्रॉक्सी को क्रमिक रूप से स्विच करता है, साइट लोडिंग का परीक्षण करता है"
+	},
+	"settingsContextMenuCycleTest": {
+		"message": "चक्रीय परीक्षण (पूर्ण स्विचिंग)"
+	},
+	"settingsCycleTestDesc": {
+		"message": "प्रॉक्सी को क्रमिक रूप से स्विच करता है, साइट लोडिंग का परीक्षण करता है। अधिक संपूर्ण लेकिन धीमा।"
+	},
+	"popupTestMenuExpressCycleTest": {
+		"message": "एक्सप्रेस चक्रीय परीक्षण (तेज़ स्विचिंग)"
+	},
+	"popupTestMenuExpressCycleTestDesc": {
+		"message": "तेज़ क्रमिक प्रॉक्सी स्विचिंग, 10 सेकंड टाइमआउट, पहली सफलता पर रुकता है"
+	},
+	"popupTestMenuExpressCycleAll": {
+		"message": "एक्सप्रेस चक्रीय परीक्षण (सभी प्रॉक्सी)"
+	},
+	"popupTestMenuExpressCycleAllDesc": {
+		"message": "मैन्युअल + सदस्यता प्रॉक्सी"
+	},
+	"popupTestMenuExpressCycleSubsOnly": {
+		"message": "एक्सप्रेस चक्रीय परीक्षण (केवल सदस्यताएँ)"
+	},
+	"popupTestMenuExpressCycleSubsOnlyDesc": {
+		"message": "फिर काम करने वालों को मैन्युअल सूची में जोड़ें"
+	},
+	"popupNoSubscriptionProxies": {
+		"message": "परीक्षण करने के लिए कोई सदस्यता प्रॉक्सी नहीं।"
+	},
+	"settingsCopiedAddresses": {
+		"message": "पते कॉपी कर दिए गए"
+	},
+	"settingsCopyFailed": {
+		"message": "कॉपी करने में विफल"
+	},
+	"settingsAnotherTestRunning": {
+		"message": "एक और परीक्षण पहले से चल रहा है। यदि आपको लगता है कि यह अटक गया है, तो कृपया सेटिंग्स पृष्ठ को पुनः लोड करें (F5) और पुनः प्रयास करें।"
+	},
+	"settingsProxyTestTimeout": {
+		"message": "10 मिनट के बाद परीक्षण का समय समाप्त हो गया और उसे बलपूर्वक रोक दिया गया। कृपया पुनः प्रयास करें।"
+	},
+	"settingsProxyMustNoSiteSelected": {
+		"message": "कृपया एक साइट चुनें।"
+	},
+	"settingsProxyMustSiteAdded": {
+		"message": "साइट \"{0}\" जोड़ दी गई।"
+	},
+	"testingExplanationTitle": {
+		"message": "प्रॉक्सी परीक्षण कैसे काम करता है"
+	},
+	"testingExplanationText": {
+		"message": "परीक्षण के दौरान, अस्थायी टैब स्वचालित रूप से खुलते और बंद होते हैं, प्रॉक्सी आईपी और उस प्रॉक्सी के माध्यम से दर्ज परीक्षण साइट पते के कनेक्शन की जाँच करते हैं। परीक्षण टैब तुरंत आपके ब्राउज़र इतिहास से हटा दिए जाते हैं ताकि अव्यवस्था से बचा जा सके। परीक्षण चलने के दौरान आप ब्राउज़र को सुरक्षित रूप से छोटा कर सकते हैं, क्योंकि परीक्षण परीक्षण किए जा रहे प्रॉक्सी को स्विच करके आपकी वेब ब्राउज़िंग में हस्तक्षेप करता है।"
+	},
+	"settingsGeneralEnableRating": {
+		"message": "प्रॉक्सी के लिए रेटिंग सक्षम करें"
+	},
+	"settingsGeneralEnableRatingDesc": {
+		"message": "प्रॉक्सी को रेटिंग देने (काम करता है/काम नहीं करता है) और रेटिंग के अनुसार क्रमबद्ध करने की अनुमति देता है।"
+	},
+	"settingsProxyMustStaleHoursDesc": {
+		"message": "वह घंटों की संख्या जिसके बाद परीक्षण परिणाम पुराने माने जाते हैं (1-168)।"
+	},
+	"datatablesSearch": {
+		"message": "खोजें:"
+	},
+	"datatablesShow": {
+		"message": "दिखाएँ"
+	},
+	"datatablesEntries": {
+		"message": "प्रविष्टियाँ"
+	},
+	"datatablesPrevious": {
+		"message": "पिछला"
+	},
+	"datatablesNext": {
+		"message": "अगला"
+	},
+	"datatablesInfo": {
+		"message": "_START_ से _END_ तक _TOTAL_ प्रविष्टियों में से दिखा रहा है"
+	},
+	"datatablesInfoEmpty": {
+		"message": "0 से 0 तक 0 प्रविष्टियों में से दिखा रहा है"
+	},
+	"datatablesEmptyTable": {
+		"message": "तालिका में कोई डेटा उपलब्ध नहीं है"
+	},
+	"datatablesAll": {
+		"message": "सभी"
+	},
+	"popupAddCurrentSiteTooltip": {
+		"message": "वर्तमान साइट को परीक्षण सूची में जोड़ें"
+	}
+}

@@ -1,0 +1,1626 @@
+{
+	"uiDirection": {
+		"message": "ltr"
+	},
+	"languageCode": {
+		"message": "vi",
+		"description": "We need to know the code which might not match what browser UI has"
+	},
+	"extensionName": {
+		"message": "ProxyMust"
+	},
+	"extensionDescription": {
+		"message": "ProxyMust – trình quản lý proxy chọn lọc (phân nhánh từ SmartProxy). Tự động bật/tắt proxy cho các trang bạn truy cập dựa trên các mẫu có thể tùy chỉnh."
+	},
+	"toolbarTooltipEffectiveRule": {
+		"message": "Nguồn quy tắc khớp:"
+	},
+	"toolbarTooltipEffectiveRuleNone": {
+		"message": "Không có quy tắc khớp"
+	},
+	"toolbarTooltipEffectiveRulePattern": {
+		"message": "Mẫu quy tắc:"
+	},
+	"popupTitle": {
+		"message": "Kích hoạt ProxyMust"
+	},
+	"popupPrivateBrowsingMode": {
+		"message": "Chế độ duyệt web riêng tư"
+	},
+	"popupNoProxy": {
+		"message": "Trực tiếp (Không proxy)"
+	},
+	"popupSmartProxy": {
+		"message": "Proxy chọn lọc"
+	},
+	"popupAlwaysEnable": {
+		"message": "Luôn bật"
+	},
+	"popupSystemProxy": {
+		"message": "Proxy hệ thống"
+	},
+	"popupActiveProxy": {
+		"message": "Proxy đang hoạt động (hồ sơ này):"
+	},
+	"popupActiveProxyDefault": {
+		"message": "Proxy đang hoạt động (Cài đặt mặc định):"
+	},
+	"popupEnableProxyOn": {
+		"message": "Bật proxy trên"
+	},
+	"popupIgnoreTheseDomains": {
+		"message": "Bỏ qua các miền này"
+	},
+	"popupRuleIsFromSubscription": {
+		"message": "(Từ đăng ký)"
+	},
+	"popupProxyableResources": {
+		"message": "Tài nguyên có thể dùng proxy"
+	},
+	"popupSettings": {
+		"message": "Cài đặt"
+	},
+	"popupSubscriptions": {
+		"message": "-Đăng ký-"
+	},
+	"popupUpdateText": {
+		"message": "Đã có bản cập nhật lên {0}"
+	},
+	"popupFailedRequestsMenu": {
+		"message": "Yêu cầu thất bại"
+	},
+	"popupFailedRequestsTitle": {
+		"message": "Danh sách yêu cầu thất bại"
+	},
+	"popupFailedRequestsDesc": {
+		"message": "Đây là các miền đã hết thời gian chờ hoặc thất bại.<br />Nếu bạn cho rằng các miền này bị chặn, bạn có thể thêm chúng vào danh sách quy tắc proxy ở đây."
+	},
+	"popupAddFailedRequests": {
+		"message": "Thêm vào danh sách quy tắc"
+	},
+	"popupProfileTypeDoesNotSupportsRules": {
+		"message": "Hồ sơ đã chọn '{0}' không hỗ trợ quy tắc, vui lòng chọn hồ sơ khác."
+	},
+	"popupAddIgnoredFailures": {
+		"message": "Bỏ qua chúng"
+	},
+	"popupAddIgnoredFailuresConfirm": {
+		"message": "Bạn có chắc chắn muốn bỏ qua các lỗi đã chọn không? Nếu bạn làm vậy, bạn sẽ không nhận được thêm lỗi nào từ chúng nữa. Bạn có thể thay đổi điều này sau trong cài đặt."
+	},
+	"popupNotAllowedSetProxySettingsChrome": {
+		"message": "Rất tiếc, việc thay đổi cài đặt trình duyệt để sử dụng Proxy Hệ thống yêu cầu quyền `incognito`. Vui lòng vào cài đặt tiện ích ProxyMust trong trình duyệt và chọn quyền `Cho phép ở chế độ ẩn danh`. <a href='https://support.google.com/chrome_webstore/answer/2664769'>Tìm hiểu cách thực hiện</a>."
+	},
+	"popupNotAllowedSetProxySettingsFirefox": {
+		"message": "Kể từ Firefox 67, việc thay đổi cài đặt trình duyệt để sử dụng Proxy Hệ thống yêu cầu quyền `Duyệt web riêng tư`. Vui lòng vào cài đặt tiện ích ProxyMust trong trình duyệt và cho phép quyền `Chạy trong cửa sổ riêng tư`. <a href='https://support.mozilla.org/en-US/kb/extensions-private-browsing'>Tìm hiểu cách thực hiện</a>."
+	},
+	"proxyableTitle": {
+		"message": "Tài nguyên có thể dùng proxy"
+	},
+	"proxyableHeader": {
+		"message": "Các mục có thể dùng proxy trên trang này"
+	},
+	"proxyableReload": {
+		"message": "Tải lại"
+	},
+	"proxyableClose": {
+		"message": "Đóng"
+	},
+	"proxyableHeaderDesc": {
+		"message": "Đây là danh sách các tài nguyên được sử dụng hoặc gọi từ trang này. Sử dụng danh sách này để thêm các tài nguyên vào quy tắc kích hoạt proxy.<br />Nếu bạn không thấy gì ở đây, hãy tải lại trang để xem các tài nguyên."
+	},
+	"proxyableErrNoSourceTab": {
+		"message": "Không tìm thấy tab nguồn!"
+	},
+	"proxyableCreateRuleConfirm": {
+		"message": "Bạn có chắc chắn muốn tạo quy tắc cho miền đã chọn?"
+	},
+	"proxyableDisableButton": {
+		"message": "Vô hiệu hóa"
+	},
+	"proxyableEnableButton": {
+		"message": "Kích hoạt"
+	},
+	"proxyableEnableButtonDomain": {
+		"message": "Kích hoạt cho: "
+	},
+	"proxyableSubscriptionRule": {
+		"message": "(Quy tắc đăng ký)"
+	},
+	"proxyableDeleteRuleConfirm": {
+		"message": "Bạn có chắc chắn muốn xóa quy tắc đã chọn cho:"
+	},
+	"proxyableGridNoDataContent": {
+		"message": "Không có yêu cầu"
+	},
+	"proxyableGridColUrl": {
+		"message": "URL yêu cầu"
+	},
+	"proxyableGridColRuleStatus": {
+		"message": "Trạng thái quy tắc"
+	},
+	"proxyableGridColProxifiedStatus": {
+		"message": "Trạng thái proxy"
+	},
+	"proxyableGridColRuleHost": {
+		"message": "Miền quy tắc"
+	},
+	"proxyableGridColRulePattern": {
+		"message": "Mẫu quy tắc"
+	},
+	"proxyableGridCol_ProxifiedStatus_NoProxy": {
+		"message": "Không proxy"
+	},
+	"proxyableGridCol_ProxifiedStatus_Special": {
+		"message": "Đặc biệt"
+	},
+	"proxyableGridCol_ProxifiedStatus_ProxyPerOrigin": {
+		"message": "Từ tab cha"
+	},
+	"proxyableGridCol_ProxifiedStatus_MatchedRule": {
+		"message": "Khớp"
+	},
+	"proxyableGridCol_ProxifiedStatus_AlwaysEnabled": {
+		"message": "Luôn bật"
+	},
+	"proxyableGridCol_ProxifiedStatus_SystemProxyApplied": {
+		"message": "Đã áp dụng proxy hệ thống"
+	},
+	"proxyableGridCol_RuleStatus_NoneMatched": {
+		"message": "Không khớp"
+	},
+	"proxyableGridCol_RuleStatus_Special": {
+		"message": "Đặc biệt"
+	},
+	"proxyableGridCol_RuleStatus_ProxyPerOrigin": {
+		"message": "Từ tab cha"
+	},
+	"proxyableGridCol_RuleStatus_MatchedRule": {
+		"message": "Khớp"
+	},
+	"proxyableGridCol_RuleStatus_Whitelisted": {
+		"message": "Danh sách trắng"
+	},
+	"proxyableGridCol_RuleStatus_AlwaysEnabledByPassed": {
+		"message": "Luôn bật <br> Bỏ qua"
+	},
+	"proxyableGridCol_RuleStatus_AlwaysEnabledForcedByRules": {
+		"message": "Luôn bật <br> Bị ép bởi quy tắc"
+	},
+	"settingsTitle": {
+		"message": "Cài đặt ProxyMust"
+	},
+	"settingsTabAbout": {
+		"message": "Giới thiệu"
+	},
+	"settingsTabGeneral": {
+		"message": "Tùy chọn chung"
+	},
+	"settingsTabSmartProfiles": {
+		"message": "Hồ sơ chọn lọc"
+	},
+	"settingsTabAddSmartProfile": {
+		"message": "Thêm hồ sơ chọn lọc mới"
+	},
+	"settingsTabProxyServers": {
+		"message": "Máy chủ proxy"
+	},
+	"settingsTabProxyServerSubscriptions": {
+		"message": "Đăng ký máy chủ proxy"
+	},
+	"settingsTabBackupRestore": {
+		"message": "Sao lưu / Phục hồi"
+	},
+	"settingsTabUpdateText": {
+		"message": "Cập nhật lên {0}"
+	},
+	"settingsTabAboutDescription": {
+		"message": "Sử dụng proxy chưa bao giờ dễ dàng hơn với ProxyMust. Hãy coi nó như một giải pháp cấu hình một lần và quên đi. Với ProxyMust, bạn không cần phải thay đổi proxy theo cách thủ công hoặc bật tắt nó. Tất cả những gì bạn cần làm là yêu cầu ProxyMust kích hoạt proxy cho trang web mong muốn chỉ bằng một cú nhấp chuột. Sau đó, khi bạn truy cập trang web cụ thể đó, ProxyMust sẽ hoạt động và tất cả dữ liệu của bạn cho trang web đó sẽ được chuyển qua proxy mà không cần bạn làm gì cả."
+	},
+	"settingsGeneralSmartFeatures": {
+		"message": "Tính năng thông minh"
+	},
+	"settingsGeneralSmartFeaturesNoChrome": {
+		"message": "<strong><a href='https://www.getfirefox.com/' target='_blank' rel='noopener'>Chỉ dành cho Firefox</a>!</strong> Rất tiếc, tính năng này không được Chrome hỗ trợ."
+	},
+	"settingsGeneralProxyPerOrigin": {
+		"message": "Bật proxy trên mỗi tab/nguồn gốc"
+	},
+	"settingsGeneralProxyPerOriginDesc": {
+		"message": "Nếu một quy tắc khớp với URL của một tab, thì proxy sẽ được áp dụng cho kết nối của tab đó. Thông thường sẽ có các yêu cầu khác trong mỗi trang và những yêu cầu đó có thể không có quy tắc khớp và do đó sẽ không có proxy được áp dụng cho kết nối của chúng. Tùy chọn `Bật proxy trên mỗi tab/nguồn gốc` đảm bảo rằng toàn bộ trang, bao gồm tất cả các kết nối từ các miền và nguồn gốc khác nhau, sử dụng cùng một proxy được áp dụng cho nguồn gốc của tab. Ngoài ra, tùy chọn này loại bỏ nhu cầu phải có một quy tắc cho mọi miền riêng lẻ. Xin lưu ý rằng nếu không có proxy nào được áp dụng cho tab, các quy tắc proxy sẽ tiếp tục hoạt động và áp dụng proxy cho các kết nối khác trong trang một cách riêng lẻ."
+	},
+	"settingsGeneralProxyPerOriginEnabled": {
+		"message": "Đã bật proxy trên mỗi tab/nguồn gốc"
+	},
+	"settingsGeneralProxyPerOriginDisabled": {
+		"message": "Đã tắt proxy trên mỗi tab/nguồn gốc"
+	},
+	"settingsGeneralSyncing": {
+		"message": "Đồng bộ hóa"
+	},
+	"settingsGeneralIncognitoProfile": {
+		"message": "Hồ sơ duyệt web riêng tư"
+	},
+	"settingsGeneralIncognitoProfileDisabled": {
+		"message": "(Đã tắt)"
+	},
+	"settingsGeneralIncognitoProfileDesc": {
+		"message": "Chọn hồ sơ duyệt web riêng tư nếu bạn muốn buộc sử dụng nó khi tab/cửa sổ ở chế độ Duyệt web riêng tư. Tùy chọn này sẽ ghi đè hồ sơ đang hoạt động."
+	},
+	"settingsGeneralEnableSyncing": {
+		"message": "Bật đồng bộ hóa cài đặt"
+	},
+	"settingsGeneralEnableSyncingDesc": {
+		"message": "Bằng cách bật đồng bộ hóa, tất cả cài đặt của bạn bao gồm quy tắc, máy chủ và đăng ký sẽ có sẵn trên tất cả các trình duyệt."
+	},
+	"settingsSaveGeneralOptionsButton": {
+		"message": "Lưu thay đổi"
+	},
+	"settingsRejectGeneralOptionsButton": {
+		"message": "Từ chối thay đổi"
+	},
+	"settingsGeneralSyncProxyMode": {
+		"message": "Bật đồng bộ hóa hồ sơ đang hoạt động"
+	},
+	"settingsGeneralSyncProxyModeDesc": {
+		"message": "Chọn nếu bạn muốn hồ sơ đang hoạt động được đồng bộ hóa."
+	},
+	"settingsGeneralSyncActiveProxy": {
+		"message": "Bật đồng bộ hóa proxy đang hoạt động"
+	},
+	"settingsGeneralSyncActiveProxyDesc": {
+		"message": "Chọn nếu bạn muốn máy chủ proxy đã chọn được đồng bộ hóa."
+	},
+	"settingsGeneralSyncToBrowser": {
+		"message": "Sử dụng máy chủ đồng bộ hóa của trình duyệt"
+	},
+	"settingsGeneralSyncToWebDAV": {
+		"message": "Đồng bộ hóa với máy chủ WebDAV"
+	},
+	"settingsGeneralWebDavServerUrl": {
+		"message": "URL máy chủ WebDAV:"
+	},
+	"settingsGeneralWebDavBackupFilename": {
+		"message": "Tên tệp sao lưu:"
+	},
+	"settingsGeneralWebDavServerUser": {
+		"message": "Tên người dùng máy chủ WebDAV:"
+	},
+	"settingsGeneralWebDavServerPassword": {
+		"message": "Mật khẩu máy chủ WebDAV:"
+	},
+	"settingsGeneralWebDavBehaviourDesc": {
+		"message": "Xin lưu ý rằng sao lưu sẽ diễn ra sau mỗi lần thay đổi cài đặt, trong khi phục hồi chỉ xảy ra khi trình duyệt khởi động."
+	},
+	"settingsGeneralWebDavServerBackupNow": {
+		"message": "Sao lưu ngay"
+	},
+	"settingsGeneralWebDavServerRestoreNow": {
+		"message": "Phục hồi ngay"
+	},
+	"settingsGeneralWebDavRestoreNowConfirm": {
+		"message": "Thao tác này sẽ ghi đè cài đặt hiện tại của bạn từ máy chủ WebDAV. Hành động này không thể hoàn tác, hãy thận trọng. Tiếp tục?"
+	},
+	"settingsGeneralWebDavRestoreNowSuccess": {
+		"message": "Phục hồi WebDAV hoàn tất thành công!"
+	},
+	"settingsGeneralWebDavRestoreNowFailed": {
+		"message": "Phục hồi WebDAV thất bại:"
+	},
+	"settingsGeneralWebDav_ErrorValidUrl": {
+		"message": "Vui lòng nhập URL máy chủ WebDAV hợp lệ"
+	},
+	"settingsGeneralWebDav_ErrorEmptyFilename": {
+		"message": "Tên tệp sao lưu máy chủ WebDAV không được để trống"
+	},
+	"settingsGeneralWebDav_ErrorRequiredFields": {
+		"message": "Vui lòng điền tất cả các trường WebDAV bắt buộc."
+	},
+	"settingsGeneralWebDavBackupNowSuccess": {
+		"message": "Sao lưu WebDAV hoàn tất thành công!"
+	},
+	"settingsGeneralWebDavBackupNowFailed": {
+		"message": "Sao lưu WebDAV thất bại:"
+	},
+	"settingsGeneralErrorDetection": {
+		"message": "Phát hiện lỗi"
+	},
+	"settingsGeneralDetectFailures": {
+		"message": "Phát hiện yêu cầu thất bại"
+	},
+	"settingsGeneralDetectFailuresDesc": {
+		"message": "Phát hiện yêu cầu thất bại sẽ giúp bạn xác định các miền cần proxy."
+	},
+	"settingsGeneralSelectIgnoredDomains": {
+		"message": "Nhập quy tắc"
+	},
+	"settingsGeneralIgnoreRequestFailuresForDomains": {
+		"message": "Bỏ qua phát hiện lỗi dựa trên các quy tắc này"
+	},
+	"settingsGeneralIgnoreRequestFailuresForDomainsDesc": {
+		"message": "Thêm quy tắc để vô hiệu hóa phát hiện lỗi."
+	},
+	"settingsGeneralDisplayFailedOnBadge": {
+		"message": "Hiển thị số lượng yêu cầu thất bại trên huy hiệu biểu tượng thanh công cụ"
+	},
+	"settingsGeneralThemes": {
+		"message": "Chủ đề"
+	},
+	"settingsGeneralThemesAutoSwitch": {
+		"message": "Tự động chuyển đổi theo chủ đề Trình duyệt"
+	},
+	"settingsGeneralThemesAutoSwitchDesc": {
+		"message": "Tự động chuyển đổi giữa các chủ đề được chọn bên dưới. Điều này tuân theo chủ đề trình duyệt của bạn, chủ đề này cũng có thể tuân theo chủ đề hệ điều hành của bạn."
+	},
+	"settingsGeneralThemesLight": {
+		"message": "Chủ đề sáng"
+	},
+	"settingsGeneralThemes_Default": {
+		"message": "(Mặc định)"
+	},
+	"settingsGeneralThemes_Custom": {
+		"message": "(Tùy chỉnh)"
+	},
+	"settingsGeneralThemes_CustomUrl": {
+		"message": "URL kiểu tùy chỉnh (CSS):"
+	},
+	"settingsGeneralThemes_CustomUrlDesc": {
+		"message": "URL phải là 'Https'. Hãy lưu ý về các phông chữ đã nhập và các kiểu khác trong kiểu tùy chỉnh sau, chúng có thể chặn/làm chậm cửa sổ bật lên trong trình duyệt của bạn. Bạn có thể thử các chủ đề từ bootswatch.com nhưng hãy lưu ý về sự phụ thuộc vào phông chữ Google của chúng."
+	},
+	"settingsGeneralThemesDark": {
+		"message": "Chủ đề tối"
+	},
+	"settingsGeneralThemesLight_ErrorValidUrl": {
+		"message": "Vui lòng nhập URL css hợp lệ cho Chủ đề sáng và URL phải là 'https'."
+	},
+	"settingsGeneralThemesDark_ErrorValidUrl": {
+		"message": "Vui lòng nhập URL css hợp lệ cho Chủ đề tối và URL phải là 'https'."
+	},
+	"settingsGeneralOtherSettings": {
+		"message": "Cài đặt khác"
+	},
+	"settingsGeneralEnableShortcuts": {
+		"message": "Bật phím tắt"
+	},
+	"settingsGeneralEnableShortcutsDesc": {
+		"message": "Bạn có thể định cấu hình phím tắt từ trang cài đặt tiện ích của trình duyệt."
+	},
+	"settingsGeneralViewShortcuts": {
+		"message": "Xem phím tắt"
+	},
+	"settingsGeneralConfigureShortcuts": {
+		"message": "Định cấu hình phím tắt"
+	},
+	"settingsGeneralShortcutNotification": {
+		"message": "Bật thông báo phím tắt"
+	},
+	"settingsGeneralViewShortcutKeys": {
+		"message": "Phím tắt"
+	},
+	"settingsGeneralDisplayAppliedProxyOnBadge": {
+		"message": "Hiển thị nguồn quy tắc đã áp dụng trên huy hiệu"
+	},
+	"settingsGeneralDisplayAppliedRulePatternOnBadge": {
+		"message": "Hiển thị mẫu quy tắc đã áp dụng trên huy hiệu"
+	},
+	"settingsGeneralRefreshTabOnConfigChanges": {
+		"message": "Làm mới tab đang hoạt động khi hồ sơ hoặc proxy thay đổi"
+	},
+	"settingsGeneralCancelButton": {
+		"message": "Hủy"
+	},
+	"settingsGeneralSaveChanges": {
+		"message": "Lưu thay đổi"
+	},
+	"settingsGeneralKeyboardShortcutsTitle": {
+		"message": "Phím tắt bàn phím"
+	},
+	"settingsGeneralCloseButton": {
+		"message": "Đóng"
+	},
+	"settingsGeneralKeyboardShortcutsNotSupported": {
+		"message": "Phím tắt bàn phím không được hỗ trợ trên thiết bị di động."
+	},
+	"settingsTabProxyServersTitle": {
+		"message": "Quản lý máy chủ proxy của bạn:"
+	},
+	"settingsTabProxyServersDescription": {
+		"message": "Đây là danh sách các máy chủ proxy. Bạn có thể định nghĩa bao nhiêu proxy tùy thích và chuyển đổi giữa chúng từ thanh công cụ."
+	},
+	"settingsTabBackupRestoreDescription": {
+		"message": "Bạn có thể sao lưu toàn bộ hoặc một phần cài đặt của mình."
+	},
+	"settingsErrNoServersTitle": {
+		"message": "Không có máy chủ!"
+	},
+	"settingsErrNoServersDescription": {
+		"message": "Trước tiên bạn phải định nghĩa máy chủ proxy."
+	},
+	"settingsActiveProxyServer": {
+		"message": "Máy chủ proxy mặc định:"
+	},
+	"settingsAddServerButton": {
+		"message": "Thêm máy chủ"
+	},
+	"settingsRemoveMultipleServerButton": {
+		"message": "Xóa nhiều"
+	},
+	"settingsSaveChangesButton": {
+		"message": "Lưu thay đổi"
+	},
+	"settingsRejectChangesButton": {
+		"message": "Từ chối thay đổi"
+	},
+	"settingsEditButton": {
+		"message": "Chỉnh sửa"
+	},
+	"settingsFullBackupButton": {
+		"message": "Tạo bản sao lưu đầy đủ"
+	},
+	"settingsFullBackupButtonDesc": {
+		"message": "Tạo bản sao lưu đầy đủ các tùy chọn (bao gồm máy chủ proxy và quy tắc)."
+	},
+	"settingsRestoreBackupButton": {
+		"message": "Phục hồi bản sao lưu"
+	},
+	"settingsRestoreBackupButtonDesc": {
+		"message": "Phục hồi bản sao lưu đã tạo trước đó từ tệp cục bộ"
+	},
+	"settingsDangerZoneDesc": {
+		"message": "Khu vực nguy hiểm"
+	},
+	"settingsFactoryResetButton": {
+		"message": "Khôi phục cài đặt gốc"
+	},
+	"settingsFactoryResetDesc": {
+		"message": "Đặt lại mọi thứ. Thao tác này sẽ xóa tất cả quy tắc và máy chủ proxy và đặt lại các tùy chọn. Vĩnh viễn."
+	},
+	"settingsFactoryResetConfirm": {
+		"message": "Bạn có chắc chắn muốn đặt lại MỌI THỨ không? Chắc chắn? Không có đường quay lại!"
+	},
+	"settingsFactoryResetSuccess": {
+		"message": "Khôi phục cài đặt gốc đã hoàn tất thành công"
+	},
+	"settingsImportExportProxiesDesc": {
+		"message": "Nhập/Xuất danh sách máy chủ proxy riêng lẻ."
+	},
+	"settingsImportProxiesButtonBackup": {
+		"message": "Nhập máy chủ proxy"
+	},
+	"settingsExportProxiesButtonBackup": {
+		"message": "Xuất máy chủ proxy"
+	},
+	"settingsAddRuleButton": {
+		"message": "Thêm quy tắc"
+	},
+	"settingsImportRulesButton": {
+		"message": "Nhập quy tắc"
+	},
+	"settingsImportRulesTitle": {
+		"message": "Nhập quy tắc"
+	},
+	"settingsImportRulesSelectButton": {
+		"message": "Tệp sao lưu quy tắc"
+	},
+	"settingsImportRulesText": {
+		"message": "Văn bản sao lưu quy tắc"
+	},
+	"settingsImportRulesFrom": {
+		"message": "Từ"
+	},
+	"settingsImportRulesOptionAppend": {
+		"message": "Thêm vào quy tắc hiện có"
+	},
+	"settingsImportRulesOptionOverride": {
+		"message": "Thay thế quy tắc hiện tại (sử dụng thận trọng)"
+	},
+	"settingsImportRulesCancelButton": {
+		"message": "Hủy"
+	},
+	"settingsImportRulesImportButton": {
+		"message": "Nhập"
+	},
+	"settingsImportProxiesButton": {
+		"message": "Nhập proxy"
+	},
+	"settingsExportProxiesButton": {
+		"message": "Xuất proxy"
+	},
+	"settingsImportProxiesTitle": {
+		"message": "Nhập danh sách proxy"
+	},
+	"settingsImportProxiesSelectFileButton": {
+		"message": "Tệp danh sách proxy"
+	},
+	"settingsImportProxiesSelectTextButton": {
+		"message": "Văn bản danh sách proxy"
+	},
+	"settingsImportProxiesOptionAppend": {
+		"message": "Thêm vào proxy hiện có"
+	},
+	"settingsImportProxiesOptionOverride": {
+		"message": "Thay thế proxy hiện tại (sử dụng thận trọng)"
+	},
+	"settingsImportProxiesCancelButton": {
+		"message": "Hủy"
+	},
+	"settingsImportProxiesImportButton": {
+		"message": "Nhập"
+	},
+	"settingsConfirmRemoveProxyServer": {
+		"message": "Bạn có chắc chắn muốn xóa máy chủ proxy đã chọn?"
+	},
+	"settingsConfirmRemoveMultipleProxyServer": {
+		"message": "Bạn có chắc chắn muốn xóa các máy chủ proxy đã chọn?"
+	},
+	"settingsRemoveAllProxyServers": {
+		"message": "Bạn có chắc chắn muốn xóa tất cả máy chủ proxy?"
+	},
+	"settingsRemoveAllProxyServersSuccess": {
+		"message": "Tất cả máy chủ proxy đã bị xóa.<br/>Bạn phải lưu để áp dụng các thay đổi."
+	},
+	"settingsImportProxiesFileNotSelected": {
+		"message": "Vui lòng chọn tệp danh sách proxy"
+	},
+	"settingsImportProxyListTextIsEmpty": {
+		"message": "Vui lòng nhập danh sách proxy"
+	},
+	"settingsImportProxyServersFailed": {
+		"message": "Nhập máy chủ proxy thất bại"
+	},
+	"importerImportProxySuccess": {
+		"message": "Tổng số {0} trên {1} proxy đã được nhập.<br>Đừng quên lưu các thay đổi."
+	},
+	"settingsErrorFailedToSaveServers": {
+		"message": "Lưu máy chủ thất bại."
+	},
+	"settingsChangesReverted": {
+		"message": "Các thay đổi đã được hoàn tác thành công."
+	},
+	"settingsConfirmSaveAllChanged": {
+		"message": "Bạn có muốn lưu tất cả các thay đổi chưa được lưu không?"
+	},
+	"settingsConfirmRemoveProxyRule": {
+		"message": "Bạn có chắc chắn muốn xóa quy tắc đã chọn?"
+	},
+	"settingsConfirmRemoveMultipleProxyRule": {
+		"message": "Bạn có chắc chắn muốn xóa các quy tắc đã chọn?"
+	},
+	"settingsRemoveAllRules": {
+		"message": "Bạn có chắc chắn muốn xóa tất cả quy tắc?"
+	},
+	"settingsRemoveAllRulesSuccess": {
+		"message": "Tất cả quy tắc đã bị xóa.<br/>Bạn phải lưu để áp dụng các thay đổi."
+	},
+	"settingsRestoreBackupFailed": {
+		"message": "Đã xảy ra lỗi khi phục hồi bản sao lưu"
+	},
+	"settingsRestoreBackupFileError": {
+		"message": "Đọc tệp đã chọn thất bại"
+	},
+	"settingsRulesFileNotSelected": {
+		"message": "Vui lòng chọn tệp quy tắc"
+	},
+	"settingsSourceTypeNotSelected": {
+		"message": "Vui lòng chọn loại nguồn"
+	},
+	"settingsImportRulesFailed": {
+		"message": "Nhập tệp thất bại."
+	},
+	"settingsImportRulesTextIsEmpty": {
+		"message": "Vui lòng nhập quy tắc vào ô"
+	},
+	"settingsServerNameRequired": {
+		"message": "Chỉ định tên của máy chủ!"
+	},
+	"settingsServerNameExists": {
+		"message": "Một máy chủ có cùng tên đã tồn tại!"
+	},
+	"settingsServerServerAddressIsEmpty": {
+		"message": "Địa chỉ máy chủ không được để trống"
+	},
+	"settingsServerPortNoInvalid": {
+		"message": "Vui lòng nhập số cổng hợp lệ"
+	},
+	"settingsServerAuthenticationInvalid": {
+		"message": "Cả tên người dùng và mật khẩu đều cần thiết để xác thực"
+	},
+	"settingsServersGridNoDataContent": {
+		"message": "Chưa có máy chủ nào được định nghĩa"
+	},
+	"settingsServersGridColName": {
+		"message": "Tên"
+	},
+	"settingsServersGridColProtocol": {
+		"message": "Giao thức"
+	},
+	"settingsServersGridColServer": {
+		"message": "Máy chủ"
+	},
+	"settingsServersGridColPort": {
+		"message": "Cổng"
+	},
+	"settingsServersGridColCountry": {
+		"message": "Quốc gia"
+	},
+	"settingsServersGridColRating": {
+		"message": "Xếp hạng"
+	},
+	"settingsServersModalTitle": {
+		"message": "Chi tiết máy chủ proxy"
+	},
+	"settingsServersServerName": {
+		"message": "Tên máy chủ"
+	},
+	"settingsServersSeverAddress": {
+		"message": "Địa chỉ máy chủ"
+	},
+	"settingsServersProtocol": {
+		"message": "Giao thức proxy"
+	},
+	"settingsServersPort": {
+		"message": "Cổng"
+	},
+	"settingsServersProxyDNS": {
+		"message": "Proxy DNS khi sử dụng SOCKS 5"
+	},
+	"settingsServersUsername": {
+		"message": "Tên người dùng"
+	},
+	"settingsServersPassword": {
+		"message": "Mật khẩu"
+	},
+	"settingsServersAuthChromeMv3Limitation": {
+		"message": "(Rất tiếc, xác thực máy chủ proxy không được Chrome hỗ trợ thông qua API tiện ích. Điều này là 'có chủ đích'.)"
+	},
+	"settingsServersCancel": {
+		"message": "Hủy"
+	},
+	"settingsServersSave": {
+		"message": "Lưu"
+	},
+	"settingsServersImport": {
+		"message": "Nhập"
+	},
+	"settingsProfilesNameTitle": {
+		"message": "Hồ sơ chọn lọc:"
+	},
+	"settingsProfilesEnabled": {
+		"message": "Đã bật"
+	},
+	"settingsProfilesTypeTitle": {
+		"message": "Loại hồ sơ:"
+	},
+	"settingsProfilesTypeDesc_SmartRules": {
+		"message": "Trong hồ sơ này, không có proxy nào được áp dụng trừ khi bạn định nghĩa các quy tắc chọn lọc. Bạn sẽ định nghĩa các quy tắc danh sách đen, hay nói cách khác là các quy tắc để áp dụng proxy."
+	},
+	"settingsProfilesTypeDesc_AlwaysEnabledBypassRules": {
+		"message": "Trong hồ sơ này, các máy chủ proxy luôn được áp dụng; hãy định nghĩa các quy tắc chọn lọc và bỏ qua chúng. Bạn sẽ định nghĩa các quy tắc danh sách trắng, hay nói cách khác là các quy tắc để bỏ qua proxy và không áp dụng proxy."
+	},
+	"settingsProfilesTypeDesc_IgnoreFailureRules": {
+		"message": "Bỏ qua phát hiện lỗi cho các miền này bằng cách thêm quy tắc."
+	},
+	"settingsProfilesProfileProxyServer": {
+		"message": "Máy chủ proxy của hồ sơ:"
+	},
+	"settingsProfilesDefaultProfileProxyServer": {
+		"message": "(Sử dụng máy chủ proxy mặc định)"
+	},
+	"settingsProfilesProfileProxyServerDesc": {
+		"message": "(Khi sử dụng hồ sơ này, đây sẽ là máy chủ proxy đang hoạt động)"
+	},
+	"settingsProfilesRulesSection": {
+		"message": "Quy tắc"
+	},
+	"settingsProfilesDelete": {
+		"message": "Xóa"
+	},
+	"settingsProfilesAddNewLabel": {
+		"message": "Thêm hồ sơ chọn lọc mới"
+	},
+	"settingsProfilesAddNewTypeLead": {
+		"message": "Vui lòng chọn <b>loại hồ sơ</b> bạn muốn thêm:"
+	},
+	"settingsProfilesAddNewType_SmartRules": {
+		"message": "Quy tắc chọn lọc"
+	},
+	"settingsProfilesAddNewType_SmartRulesDesc": {
+		"message": "Trong loại hồ sơ này, proxy sẽ được áp dụng cho các yêu cầu dựa trên một số <em>quy tắc</em> mà bạn cần định nghĩa. Để định nghĩa các quy tắc này, bạn có thể sử dụng menu bật lên trên thanh menu, bạn có thể thêm chúng từ cài đặt và cũng có thể thực hiện từ cửa sổ <em>Tài nguyên có thể dùng proxy</em>.<br>Ngoài ra, bạn có khả năng đăng ký các danh sách quy tắc khác nhau như Gfwlist."
+	},
+	"settingsProfilesAddNewType_AlwaysEnabled": {
+		"message": "Luôn bật"
+	},
+	"settingsProfilesAddNewType_AlwaysEnabledDesc": {
+		"message": "Trong loại hồ sơ này, proxy sẽ luôn được áp dụng cho các yêu cầu trừ khi bạn định nghĩa các quy tắc bỏ qua. Các bước định nghĩa quy tắc giống như trong loại hồ sơ Quy tắc chọn lọc."
+	},
+	"settingsProfilesAddNewBtnContinue": {
+		"message": "Tiếp tục"
+	},
+	"settingsProfilesAddNewBtnCancel": {
+		"message": "Hủy"
+	},
+	"settingsProfilesAddErrorTypeRequired": {
+		"message": "Vui lòng chọn loại hồ sơ"
+	},
+	"settingsProfilesAddErrorNameRequired": {
+		"message": "Tên hồ sơ là bắt buộc"
+	},
+	"settingsProfilesAddErrorNameExists": {
+		"message": "Tên hồ sơ đã tồn tại, vui lòng nhập tên khác"
+	},
+	"settingsProfilesDeleteConfirm": {
+		"message": "Bạn có chắc chắn muốn xóa hồ sơ này không? Cảnh báo, hành động này không thể hoàn tác!"
+	},
+	"settingsProfilesDeleteFailed": {
+		"message": "Xóa hồ sơ đã chọn thất bại."
+	},
+	"settingsProfilesDeleteDone": {
+		"message": "Hồ sơ đã được xóa thành công"
+	},
+	"settingsProfilesDeleteBuiltinFail": {
+		"message": "Không thể xóa các hồ sơ tích hợp sẵn"
+	},
+	"settingsProfilesProxyServer": {
+		"message": "[Sử dụng máy chủ proxy mặc định]"
+	},
+	"settingsProfilesRulesSubscriptionsTitle": {
+		"message": "Đăng ký quy tắc"
+	},
+	"settingsProfilesRulesSubscriptionsDesc": {
+		"message": "Tại đây bạn có thể đăng ký các danh sách quy tắc."
+	},
+	"settingsSaveSmartProfileSuccess": {
+		"message": "Hồ sơ chọn lọc đã được lưu thành công."
+	},
+	"settingsErrorFailedToSaveSmartProfile": {
+		"message": "Lưu hồ sơ chọn lọc thất bại."
+	},
+	"settingsRuleSourceRequired": {
+		"message": "Vui lòng chỉ định miền nguồn của quy tắc!"
+	},
+	"settingsRuleSourceInvalid": {
+		"message": "Miền nguồn không hợp lệ, miền nguồn phải giống như 'google.com'"
+	},
+	"settingsRuleSourceInvalidFormat": {
+		"message": "'miền nguồn' không hợp lệ '{0}'"
+	},
+	"settingsRuleSourceAlreadyExists": {
+		"message": "Một quy tắc có cùng nguồn đã tồn tại!"
+	},
+	"settingsRuleHostInvalid": {
+		"message": "Tên máy chủ '{0}' không hợp lệ, tên máy chủ phải giống như 'google.com'"
+	},
+	"settingsRuleRegexNotMatchDomain": {
+		"message": "Quy tắc regex không khớp với miền nguồn '{0}'"
+	},
+	"settingsRuleDoesntIncludeDomain": {
+		"message": "Quy tắc không khớp với miền nguồn '{0}'"
+	},
+	"settingsRuleRegexInvalid": {
+		"message": "Quy tắc regex '{0}' không hợp lệ"
+	},
+	"settingsRuleExactUrlInvalid": {
+		"message": "URL '{0}' không hợp lệ"
+	},
+	"settingsRuleUrlInvalid": {
+		"message": "URL '{0}' không hợp lệ"
+	},
+	"settingsRulesGridNoDataContent": {
+		"message": "Chưa có quy tắc nào được định nghĩa"
+	},
+	"settingsRulesGridColRuleType": {
+		"message": "Loại quy tắc"
+	},
+	"settingsRulesGridColSource": {
+		"message": "Nguồn"
+	},
+	"settingsRulesGridColRule": {
+		"message": "Quy tắc"
+	},
+	"settingsRulesGridColEnabled": {
+		"message": "Đã bật"
+	},
+	"settingsRulesGridColProxy": {
+		"message": "Máy chủ proxy"
+	},
+	"settingsRulesProxyDefault": {
+		"message": "[Sử dụng proxy đang hoạt động]"
+	},
+	"settingsRulesProxyFromProfile": {
+		"message": "[Sử dụng proxy của hồ sơ]"
+	},
+	"settingsRulesModalTitle": {
+		"message": "Chi tiết quy tắc"
+	},
+	"settingsRulesRuleType": {
+		"message": "Loại quy tắc"
+	},
+	"settingsRulesSourceDomain": {
+		"message": "Miền nguồn quy tắc"
+	},
+	"settingsRulesSourceDomainDesc": {
+		"message": "(ví dụ: google.com)"
+	},
+	"settingsRulesPattern": {
+		"message": "Mẫu khớp"
+	},
+	"settingsRulesGeneratePattern": {
+		"message": "Tạo mẫu tự động"
+	},
+	"settingsRulesRegex": {
+		"message": "Regex URL"
+	},
+	"settingsRulesHostRegex": {
+		"message": "Regex máy chủ"
+	},
+	"settingsRulesExactUrl": {
+		"message": "URL chính xác (chữ thường)"
+	},
+	"settingsRulesProxyServer": {
+		"message": "Máy chủ proxy"
+	},
+	"settingsRulesProxyServerNotAuth": {
+		"message": "(Máy chủ có xác thực không được hỗ trợ trong Chrome)"
+	},
+	"settingsRulesEnabled": {
+		"message": "Đã bật"
+	},
+	"settingsRulesModalCancel": {
+		"message": "Hủy"
+	},
+	"settingsRulesModalSave": {
+		"message": "Lưu"
+	},
+	"settingsRulesActionType": {
+		"message": "Hành động"
+	},
+	"settingsRuleActionApplyProxy": {
+		"message": "Áp dụng proxy"
+	},
+	"settingsRuleActionWhitelist": {
+		"message": "Danh sách trắng (Không proxy)"
+	},
+	"settingsRuleActionWhitelistDesc": {
+		"message": "(Các quy tắc danh sách trắng có mức độ ưu tiên cao hơn các quy tắc proxy, bất kể vị trí của chúng)"
+	},
+	"settingsServerPortInvalid": {
+		"message": "Cổng máy chủ '{0}' không hợp lệ"
+	},
+	"settingsServerHostInvalid": {
+		"message": "Máy chủ '{0}' không hợp lệ"
+	},
+	"settingsRestoreSettingsSuccess": {
+		"message": "Cài đặt đã được phục hồi thành công"
+	},
+	"settingsRestoreSettingsFailed": {
+		"message": "Đã xảy ra lỗi khi phục hồi cài đặt"
+	},
+	"settingsRestoreSettingsFailedInvalid": {
+		"message": "Dữ liệu sao lưu không hợp lệ hoặc bị hỏng"
+	},
+	"settingsRestoreSettingsFailedInvalidActiveProfile": {
+		"message": "Dữ liệu không hợp lệ được cung cấp cho hồ sơ đang hoạt động"
+	},
+	"settingsRestoreSettingsFailedInvalidDefaultProxyServer": {
+		"message": "Dữ liệu không hợp lệ được cung cấp cho máy chủ proxy mặc định"
+	},
+	"settingsEnableByDomainInvalid": {
+		"message": "Miền đã chọn không hợp lệ"
+	},
+	"settingsEnableByDomainExists": {
+		"message": "Quy tắc cho miền đã tồn tại"
+	},
+	"settingsEnableByDomainSmartProfileNonEditable": {
+		"message": "Hồ sơ hiện tại '{0}' không thể cập nhật bằng quy tắc"
+	},
+	"settingsNoRuleFoundForDomain": {
+		"message": "Không có quy tắc nào cho '{0}'"
+	},
+	"importerImportSuccess": {
+		"message": "Tổng số {0} trên {1} quy tắc đã được thêm.<br>Đừng quên lưu các thay đổi."
+	},
+	"settingsRemoveMultipleProxyRuleButton": {
+		"message": "Xóa nhiều"
+	},
+	"settingsAddMultipleRulesButton": {
+		"message": "Thêm nhiều quy tắc"
+	},
+	"settingsAddMultipleRuleTitle": {
+		"message": "Thêm nhiều quy tắc"
+	},
+	"settingsMultipleRuleList": {
+		"message": "Danh sách Máy chủ/Quy tắc:"
+	},
+	"settingsMultipleRuleInvalidHost": {
+		"message": "Tên máy chủ '{0}' không hợp lệ"
+	},
+	"settingsMultipleRuleNoNewRuleAdded": {
+		"message": "Không có quy tắc mới nào được thêm"
+	},
+	"settingsTabProxyServerSubscriptionsTitle": {
+		"message": "Quản lý đăng ký máy chủ proxy:"
+	},
+	"settingsTabProxyServerSubscriptionsDescription": {
+		"message": "Tại đây bạn có thể đăng ký các danh sách proxy và chuyển đổi giữa các proxy sau đó. Xin lưu ý rằng danh sách dài có thể gây ra lỗi đồng bộ hóa dữ liệu giữa các thiết bị."
+	},
+	"settingsErrorFailedToSaveGeneral": {
+		"message": "Lưu cài đặt tùy chọn thất bại."
+	},
+	"settingsSaveOptionsSuccess": {
+		"message": "Các tùy chọn chung đã được lưu thành công."
+	},
+	"settingsAddServerSubscriptionButton": {
+		"message": "Đăng ký một danh sách"
+	},
+	"settingsServerSubscriptionModalTitle": {
+		"message": "Đăng ký danh sách máy chủ proxy"
+	},
+	"settingsRemoveMultipleServerSubscriptionButton": {
+		"message": "Xóa nhiều"
+	},
+	"settingsServerSubscriptionName": {
+		"message": "Tên:"
+	},
+	"settingsServerSubscriptionUrl": {
+		"message": "URL:"
+	},
+	"settingsServerSubscriptionRefreshRate": {
+		"message": "Tần suất làm mới:"
+	},
+	"settingsServerSubscriptionRefreshRateHelp": {
+		"message": "(tính bằng phút, 0 có nghĩa là không làm mới)"
+	},
+	"settingsServerSubscriptionEnabled": {
+		"message": "Đã bật"
+	},
+	"settingsServerSubscriptionProtocol": {
+		"message": "Giao thức:"
+	},
+	"settingsServerSubscriptionObfuscation": {
+		"message": "Xáo trộn:"
+	},
+	"settingsServerSubscriptionFormat": {
+		"message": "Định dạng:"
+	},
+	"settingsServerSubscriptionApplyProxy": {
+		"message": "Đi qua proxy:"
+	},
+	"settingsServerSubscriptionApplyProxyHelpFirefox": {
+		"message": "(Quyết định dựa trên quyền truy cập của bạn vào máy chủ)"
+	},
+	"settingsServerSubscriptionApplyProxyHelpChrome": {
+		"message": "(Rất tiếc, tính năng này không có sẵn trong Chrome. Proxy hiện tại sẽ được áp dụng)"
+	},
+	"settingsServerSubscriptionApplyProxy_NoProxy": {
+		"message": "Không proxy"
+	},
+	"settingsServerSubscriptionApplyProxy_CurrentProxy": {
+		"message": "Proxy hiện tại"
+	},
+	"settingsServerSubscriptionApplyProxy_SelectedProxy": {
+		"message": "Proxy đã chọn"
+	},
+	"settingsServerSubscriptionUsername": {
+		"message": "Tên người dùng:"
+	},
+	"settingsServerSubscriptionPassword": {
+		"message": "Mật khẩu:"
+	},
+	"settingsServerSubscriptionAuthenticationHelp": {
+		"message": "(nếu danh sách yêu cầu xác thực)"
+	},
+	"settingsServerSubscriptionCancelButton": {
+		"message": "Hủy"
+	},
+	"settingsServerSubscriptionSaveButton": {
+		"message": "Lưu"
+	},
+	"settingsServerSubscriptionSavingButton": {
+		"message": "Đang lưu..."
+	},
+	"settingsServerSubscriptionTestButton": {
+		"message": "Kiểm tra"
+	},
+	"settingsProxyTestStopButton": {
+		"message": "Dừng"
+	},
+	"settingsProxyTestCancelled": {
+		"message": "Người dùng đã dừng kiểm tra"
+	},
+	"settingsProxyTestResumeDialogTitle": {
+		"message": "Kiểm tra proxy"
+	},
+	"settingsProxyTestResumeDialogMessage": {
+		"message": "Có các proxy chưa được kiểm tra. Bạn muốn làm gì?"
+	},
+	"settingsProxyTestResumeContinue": {
+		"message": "Tiếp tục từ nơi đã dừng"
+	},
+	"settingsProxyTestResumeRestart": {
+		"message": "Bắt đầu lại từ đầu"
+	},
+	"settingsServerSubscriptionTestingButton": {
+		"message": "Đang kiểm tra..."
+	},
+	"settingsConfirmRemoveServerSubscription": {
+		"message": "Bạn có chắc chắn muốn xóa đăng ký đã chọn không?"
+	},
+	"settingsRemoveAllProxyServerSubscriptions": {
+		"message": "Bạn có chắc chắn muốn xóa tất cả đăng ký máy chủ proxy không?"
+	},
+	"settingsConfirmRemoveMultipleServerSubscription": {
+		"message": "Bạn có chắc chắn muốn xóa các đăng ký đã chọn không?"
+	},
+	"settingsRemoveAllProxyServerSubscriptionsSuccess": {
+		"message": "Tất cả đăng ký máy chủ proxy đã bị xóa.<br/>Bạn phải lưu để áp dụng các thay đổi."
+	},
+	"settingsServerSubscriptionProtocolDefault": {
+		"message": "(Tự động phát hiện với dự phòng HTTP)"
+	},
+	"settingsInitializeFailed": {
+		"message": "Đọc cấu hình thất bại. Vui lòng đóng trang cài đặt và thử lại."
+	},
+	"settingsActiveProxyServerSubscriptions": {
+		"message": "-Đăng ký-"
+	},
+	"settingsServerSubscriptionsGridNoDataContent": {
+		"message": "Không có đăng ký"
+	},
+	"settingsServerSubscriptionsGridColName": {
+		"message": "Tên"
+	},
+	"settingsServerSubscriptionsGridColUrl": {
+		"message": "URL"
+	},
+	"settingsServerSubscriptionsGridColCount": {
+		"message": "Số lượng"
+	},
+	"settingsServerSubscriptionsGridColEnabled": {
+		"message": "Đã bật"
+	},
+	"settingsServerSubscriptionIncompleteForm": {
+		"message": "Vui lòng điền các trường bắt buộc đúng định dạng"
+	},
+	"settingsServerSubscriptionInvalidForm": {
+		"message": "Chi tiết đăng ký máy chủ proxy không hợp lệ"
+	},
+	"settingsServerSubscriptionDuplicateName": {
+		"message": "Tên đã nhập đã được sử dụng, vui lòng nhập tên khác."
+	},
+	"settingsServerSubscriptionSaveUpdated": {
+		"message": "Đăng ký đã được cập nhật với {0} proxy.<br/>Đừng quên lưu các thay đổi."
+	},
+	"settingsServerSubscriptionSaveAdded": {
+		"message": "Đăng ký đã được thêm với {0} proxy.<br/>Đừng quên lưu các thay đổi."
+	},
+	"settingsServerSubscriptionSaveFailedGet": {
+		"message": "Lấy proxy thất bại."
+	},
+	"settingsServerSubscriptionTestSuccess": {
+		"message": "Kiểm tra thành công. Danh sách trả về {0} proxy."
+	},
+	"settingsServerSubscriptionTestFailed": {
+		"message": "Kiểm tra thất bại"
+	},
+	"settingsSaveProxyServerSubscriptionsSuccess": {
+		"message": "Đăng ký máy chủ proxy đã được lưu thành công."
+	},
+	"settingsFailedToSaveProxySubscriptions": {
+		"message": "Lưu đăng ký máy chủ proxy thất bại"
+	},
+	"settingsAddRulesSubscriptionButton": {
+		"message": "Đăng ký danh sách quy tắc"
+	},
+	"settingsRemoveMultipleRulesSubscriptionButton": {
+		"message": "Xóa nhiều"
+	},
+	"settingsRulesSubscriptionsModalTitle": {
+		"message": "Đăng ký danh sách quy tắc"
+	},
+	"settingsRulesSubscriptionsGridColName": {
+		"message": "Tên"
+	},
+	"settingsRulesSubscriptionsGridColUrl": {
+		"message": "URL"
+	},
+	"settingsRulesSubscriptionsGridColCount": {
+		"message": "Số lượng"
+	},
+	"settingsRulesSubscriptionsGridColEnabled": {
+		"message": "Đã bật"
+	},
+	"settingsRulesSubscriptionsName": {
+		"message": "Tên:"
+	},
+	"settingsRulesSubscriptionsUrl": {
+		"message": "URL:"
+	},
+	"settingsRulesSubscriptionsRefreshRate": {
+		"message": "Tần suất làm mới:"
+	},
+	"settingsRulesSubscriptionsRefreshRateHelp": {
+		"message": "(tính bằng phút, 0 có nghĩa là không làm mới)"
+	},
+	"settingsRulesSubscriptionEnabled": {
+		"message": "Đã bật"
+	},
+	"settingsRulesSubscriptionsObfuscation": {
+		"message": "Xáo trộn:"
+	},
+	"settingsRulesSubscriptionsFormat": {
+		"message": "Định dạng:"
+	},
+	"settingsRulesSubscriptionsApplyProxy": {
+		"message": "Đi qua proxy:"
+	},
+	"settingsRulesSubscriptionsApplyProxyHelpFirefox": {
+		"message": "(Quyết định dựa trên quyền truy cập của bạn vào máy chủ)"
+	},
+	"settingsRulesSubscriptionsApplyProxyHelpChrome": {
+		"message": "(Rất tiếc, tính năng này không có sẵn trong Chrome. Proxy hiện tại sẽ được áp dụng)"
+	},
+	"settingsRulesSubscriptionsUsername": {
+		"message": "Tên người dùng:"
+	},
+	"settingsRulesSubscriptionsAuthenticationHelp": {
+		"message": "(nếu danh sách yêu cầu xác thực)"
+	},
+	"settingsRulesSubscriptionsPassword": {
+		"message": "Mật khẩu:"
+	},
+	"settingsRulesSubscriptionsTestButton": {
+		"message": "Kiểm tra"
+	},
+	"settingsRulesSubscriptionsSaveButton": {
+		"message": "Lưu"
+	},
+	"settingsRulesSubscriptionsCancelButton": {
+		"message": "Hủy"
+	},
+	"settingsConfirmRemoveRulesSubscription": {
+		"message": "Bạn có chắc chắn muốn xóa đăng ký quy tắc đã chọn không?"
+	},
+	"settingsConfirmRemoveMultipleRulesSubscription": {
+		"message": "Bạn có chắc chắn muốn xóa các đăng ký quy tắc đã chọn không?"
+	},
+	"settingsRulesSubscriptionIncompleteForm": {
+		"message": "Vui lòng điền các trường bắt buộc đúng định dạng"
+	},
+	"settingsRulesSubscriptionInvalidForm": {
+		"message": "Chi tiết đăng ký máy chủ proxy không hợp lệ"
+	},
+	"settingsRulesSubscriptionDuplicateName": {
+		"message": "Tên đã nhập đã được sử dụng, vui lòng nhập tên khác."
+	},
+	"settingsRulesSubscriptionSavingButton": {
+		"message": "Đang lưu..."
+	},
+	"settingsRulesSubscriptionTestButton": {
+		"message": "Kiểm tra"
+	},
+	"settingsRulesSubscriptionTestingButton": {
+		"message": "Đang kiểm tra..."
+	},
+	"settingsRulesSubscriptionSaveUpdated": {
+		"message": "Đăng ký đã được cập nhật với {0} quy tắc proxy và {1} quy tắc danh sách trắng.<br/>Đừng quên lưu các thay đổi."
+	},
+	"settingsRulesSubscriptionSaveAdded": {
+		"message": "Đăng ký đã được thêm với {0} quy tắc proxy và {1} quy tắc danh sách trắng.<br/>Đừng quên lưu các thay đổi."
+	},
+	"settingsRulesSubscriptionSaveFailedGet": {
+		"message": "Lấy quy tắc thất bại."
+	},
+	"settingsRulesSubscriptionRefreshOnDisabled": {
+		"message": "Không thể làm mới đăng ký đã bị vô hiệu hóa"
+	},
+	"settingsRulesSubscriptionTestSuccess": {
+		"message": "Kiểm tra thành công. Danh sách trả về {0} quy tắc proxy và {1} quy tắc danh sách trắng."
+	},
+	"settingsRulesSubscriptionTestFailed": {
+		"message": "Kiểm tra thất bại"
+	},
+	"settingsFailedToSaveRulesSubscriptions": {
+		"message": "Lưu đăng ký quy tắc thất bại"
+	},
+	"settingsRemoveAllProxyRulesSubscriptions": {
+		"message": "Bạn có chắc chắn muốn xóa tất cả đăng ký quy tắc proxy không?"
+	},
+	"settingsRemoveAllProxyRulesSubscriptionsSuccess": {
+		"message": "Tất cả đăng ký quy tắc proxy đã bị xóa.<br/>Bạn phải lưu để áp dụng các thay đổi."
+	},
+	"importerImportRulesSuccess": {
+		"message": "Tổng số {0} quy tắc proxy và {1} quy tắc danh sách trắng đã được trả về.<br>Đừng quên lưu các thay đổi."
+	},
+	"settingsRulePatternIsEmpty": {
+		"message": "Quy tắc không có mẫu nào được định nghĩa"
+	},
+	"settingsWelcomeTitle": {
+		"message": "Chào mừng bạn đến với ProxyMust"
+	},
+	"settingsWelcomeMessage": {
+		"message": "<p>\n\tProxyMust, trình quản lý proxy chọn lọc với khả năng kiểm tra proxy.<br>\n\tVui lòng làm theo các bước sau để bắt đầu:\n</p>\n<ol>\n\t<li>\n\t\tThêm máy chủ proxy hoặc danh sách proxy\n\t\t<br>\n\t\t<small>(Chuyển đến tab Máy chủ Proxy và thêm tại đó)</small>\n\t</li>\n\t<li>\n\t\tĐặt chế độ thành Proxy chọn lọc\n\t\t<br>\n\t\t<small>(Sử dụng menu bật lên trên thanh công cụ để thay đổi chế độ hoạt động thành Proxy chọn lọc)</small>\n\t</li>\n\t<li>\n\t\tĐịnh nghĩa quy tắc proxy\n\t\t<br>\n\t\t<small>(Sử dụng menu bật lên trên thanh công cụ để thêm quy tắc hoặc tab Quy tắc Proxy để thêm/sửa đổi quy tắc máy chủ proxy)</small>\n\t</li>\n\t<li>\n\t\tBạn đã sẵn sàng.\n\t</li>\n</ol>"
+	},
+	"settingsWelcomeSkipButton": {
+		"message": "Đã hiểu"
+	},
+	"settingsSubscriptionStatsStatusSuccess": {
+		"message": "Trạng thái: Thành công"
+	},
+	"settingsSubscriptionStatsStatusFail": {
+		"message": "Trạng thái: Thất bại"
+	},
+	"settingsSubscriptionStatsLastTry": {
+		"message": "Lần thử cuối:"
+	},
+	"settingsSubscriptionStatsMessage": {
+		"message": "Thông báo:"
+	},
+	"settingsSubscriptionStatsLastSuccess": {
+		"message": "Thành công cuối:"
+	},
+	"settings_SmartProfileType_Direct": {
+		"message": "Trực tiếp"
+	},
+	"settings_SmartProfileType_SystemProxy": {
+		"message": "Proxy hệ thống"
+	},
+	"settings_SmartProfileType_SmartRules": {
+		"message": "Quy tắc chọn lọc"
+	},
+	"settings_SmartProfileType_AlwaysEnabledBypassRules": {
+		"message": "Luôn bật với quy tắc bỏ qua"
+	},
+	"settings_SmartProfileType_IgnoreFailureRules": {
+		"message": "Quy tắc bỏ qua lỗi"
+	},
+	"settingsRuleCidrIPAddress": {
+		"message": "Địa chỉ IP"
+	},
+	"settingsRuleCidrPrefixLength": {
+		"message": "Độ dài tiền tố"
+	},
+	"settingsRuleCidrNotationDesc": {
+		"message": "(Xin lưu ý rằng quy tắc này sẽ không phân giải tên máy chủ thành IP.)"
+	},
+	"settingsRuleCidrIPInvalid": {
+		"message": "Vui lòng nhập địa chỉ IP hợp lệ"
+	},
+	"settingsRuleCidrPrefixLengthInvalid": {
+		"message": "Vui lòng nhập độ dài tiền tố hợp lệ"
+	},
+	"settingsRuleCidrNotationInvalid": {
+		"message": "Ký hiệu CIDR '{0}' không hợp lệ"
+	},
+	"settingsRuleCidrNotationInvalidMatch": {
+		"message": "Quy tắc CIDR không khớp với '{0}'"
+	},
+	"notificationNoNextProxyServer": {
+		"message": "Không có máy chủ proxy tiếp theo nào nữa"
+	},
+	"notificationNoPreviousProxyServer": {
+		"message": "Không có máy chủ proxy trước đó nào nữa"
+	},
+	"notificationShortcutTitle": {
+		"message": "Thông báo phím tắt ProxyMust"
+	},
+	"notificationShortcutProxyModeMessage": {
+		"message": "Chế độ proxy đã được thay đổi thành {0}"
+	},
+	"notificationShortcutProxyServerChanged": {
+		"message": "Máy chủ proxy đã được thay đổi thành {0}"
+	},
+	"popupRatingDialogTitle": {
+		"message": "Địa chỉ có hoạt động không?"
+	},
+	"popupRatingWorksButton": {
+		"message": "Có (+1)"
+	},
+	"popupRatingFailsButton": {
+		"message": "Không (-1)"
+	},
+	"popupRatingCancelButton": {
+		"message": "Hủy"
+	},
+	"settingsProxyTestTitle": {
+		"message": "Kiểm tra khả năng truy cập proxy"
+	},
+	"settingsProxyTestEnable": {
+		"message": "Thêm trang web thử nghiệm để kiểm tra proxy"
+	},
+	"settingsProxyTestNote": {
+		"message": "Nhập tối đa 5 địa chỉ. Việc kiểm tra sẽ nhanh hơn nếu bạn chỉ định không quá 3 địa chỉ."
+	},
+	"settingsProxyTestUrlsTitle": {
+		"message": "Địa chỉ cần truy cập để kiểm tra truy cập"
+	},
+	"settingsProxyTestUrlsWarning": {
+		"message": "⚠️ Nhập các trang web bạn truy cập vào đây (ví dụ: youtube.com, telegram.org), không phải địa chỉ proxy."
+	},
+	"settingsProxyTestClear": {
+		"message": "Xóa trang thử nghiệm"
+	},
+	"settingsProxyTestStop": {
+		"message": "⏹ Dừng kiểm tra"
+	},
+	"proxyTestCompleted": {
+		"message": "Kiểm tra hoàn tất. Đã kiểm tra {0} proxy."
+	},
+	"settingsProxyTestRatingAutoEnabled": {
+		"message": "Xếp hạng đã được tự động bật để hiển thị kết quả kiểm tra."
+	},
+	"settingsProxyTestNoTestUrls": {
+		"message": "Không có trang thử nghiệm nào được chỉ định. Vui lòng thêm ít nhất một trang web."
+	},
+	"settingsProxyMustTestTitle": {
+		"message": "Kiểm tra proxy"
+	},
+	"settingsProxyMustSiteLabel": {
+		"message": "Trang web để kiểm tra:"
+	},
+	"settingsProxyMustTestRun": {
+		"message": "▶ Kiểm tra"
+	},
+	"settingsProxyMustAddSite": {
+		"message": "Thêm trang web"
+	},
+	"settingsProxyMustTestCondition": {
+		"message": "Nếu không có gì được chọn, bài kiểm tra sẽ chạy cho tất cả proxy trong bảng."
+	},
+	"settingsProxyMustTestResults": {
+		"message": "Kết quả: ✅ = chắc chắn hoạt động cho trang web này, ☑️ = có thể hoạt động (dữ liệu cũ hoặc thành công trên các trang web khác), ❓ = không có dữ liệu, ⛔ = không hoạt động."
+	},
+	"settingsServersRatingPriority": {
+		"message": "Xếp hạng + Ưu tiên"
+	},
+	"settingsContextMenuChangeRating": {
+		"message": "Thay đổi xếp hạng thủ công"
+	},
+	"settingsContextMenuPlus1": {
+		"message": "(+1)"
+	},
+	"settingsContextMenuMinus1": {
+		"message": "(-1)"
+	},
+	"settingsContextMenuRatingTitle": {
+		"message": "Xếp hạng thủ công"
+	},
+	"settingsContextMenuPlus1Desc": {
+		"message": "Di chuyển lên trong danh sách"
+	},
+	"settingsContextMenuMinus1Desc": {
+		"message": "Di chuyển xuống trong danh sách"
+	},
+	"settingsContextMenuResetRating": {
+		"message": "Đặt lại xếp hạng"
+	},
+	"settingsContextMenuSetFavorite": {
+		"message": "Đặt làm yêu thích"
+	},
+	"settingsContextMenuSetPin": {
+		"message": "Ghim"
+	},
+	"settingsContextMenuRemoveFavorite": {
+		"message": "Xóa khỏi yêu thích"
+	},
+	"settingsContextMenuUnpin": {
+		"message": "Bỏ ghim"
+	},
+	"settingsContextMenuRemovePriority": {
+		"message": "Xóa ưu tiên"
+	},
+	"settingsContextMenuExportSelected": {
+		"message": "Xuất các mục đã chọn"
+	},
+	"settingsContextMenuCopyAddresses": {
+		"message": "Sao chép địa chỉ"
+	},
+	"settingsContextMenuDelete": {
+		"message": "Xóa"
+	},
+	"settingsContextMenuTestForSite": {
+		"message": "Kiểm tra các mục đã chọn cho trang web"
+	},
+	"settingsProxyMustTestProgress": {
+		"message": "Đang kiểm tra proxy cho {0}... ({1}/{2})"
+	},
+	"settingsProxyMustTestComplete": {
+		"message": "Kiểm tra hoàn tất"
+	},
+	"settingsProxyMustAddSitePrompt": {
+		"message": "Nhập tên miền trang web (ví dụ: youtube.com):"
+	},
+	"settingsProxyMustSiteAlreadyExists": {
+		"message": "Trang web đã tồn tại trong danh sách."
+	},
+	"settingsProxyMustInvalidDomain": {
+		"message": "Tên miền không hợp lệ. Vui lòng nhập tên miền hợp lệ (ví dụ: youtube.com)."
+	},
+	"popupCurrentSite": {
+		"message": "Trang web hiện tại:"
+	},
+	"settingsProxyMustRemoveSite": {
+		"message": "Xóa trang web"
+	},
+	"settingsContextMenuMoveToTop": {
+		"message": "Di chuyển lên đầu"
+	},
+	"settingsContextMenuMoveToDown": {
+		"message": "Di chuyển xuống cuối"
+	},
+	"settingsProxyMustCannotRemoveAutoSite": {
+		"message": "Trang web này đến từ các quy tắc và không thể bị xóa theo cách thủ công."
+	},
+	"settingsProxyMustConfirmRemoveSite": {
+		"message": "Xóa \"{0}\" khỏi các trang thử nghiệm?"
+	},
+	"settingsProxyMustSiteRemoved": {
+		"message": "Đã xóa trang web \"{0}\"."
+	},
+	"settingsProxyMustStaleHours": {
+		"message": "Giờ cũ:"
+	},
+	"settingsContextMenuPreciseTest": {
+		"message": "Kiểm tra chính xác (chậm hơn, chính xác hơn)"
+	},
+	"settingsContextMenuExpressTest": {
+		"message": "Kiểm tra nhanh (nhanh, kém chính xác hơn)"
+	},
+	"popupQuickTestButton": {
+		"message": "Kiểm tra"
+	},
+	"popupQuickTestStopButton": {
+		"message": "Dừng"
+	},
+	"settingsChooseTestTypeTitle": {
+		"message": "Chọn loại kiểm tra"
+	},
+	"settingsChooseTestTypeDescription": {
+		"message": "Chọn bài kiểm tra nào sẽ chạy:"
+	},
+	"settingsPreciseTestDesc": {
+		"message": "Kiểm tra đầy đủ, chính xác hơn nhưng mất nhiều thời gian hơn."
+	},
+	"settingsExpressTestDesc": {
+		"message": "Kiểm tra nhanh, có thể bỏ qua một số proxy hoạt động, nhưng tìm thấy ít nhất một proxy nhanh chóng."
+	},
+	"settingsCancelButton": {
+		"message": "Hủy"
+	},
+	"popupAddAllSuccessfulSubs": {
+		"message": "Thêm các proxy hoạt động"
+	},
+	"settingsContextMenuClearStatuses": {
+		"message": "Xóa trạng thái"
+	},
+	"settingsContextMenuClearStatusesSelected": {
+		"message": "Proxy đã chọn"
+	},
+	"settingsContextMenuClearStatusesAll": {
+		"message": "Tất cả proxy"
+	},
+	"settingsContextMenuClearStatusesConfirmSelected": {
+		"message": "Xóa trạng thái kiểm tra cho các proxy đã chọn?"
+	},
+	"settingsContextMenuClearStatusesConfirmAll": {
+		"message": "Xóa trạng thái kiểm tra cho TẤT CẢ proxy? Hành động này không thể hoàn tác."
+	},
+	"settingsContextMenuClearStatusesSuccess": {
+		"message": "Đã xóa trạng thái kiểm tra thành công."
+	},
+	"popupQuickTestTooltip": {
+		"message": "Kiểm tra nhanh để tìm proxy hoạt động cho trang web hiện tại"
+	},
+	"popupAddAllSuccessfulSubsTooltip": {
+		"message": "Thêm các proxy đăng ký đã vượt qua bài kiểm tra vào danh sách thủ công của bạn"
+	},
+	"popupTestMenuTitle": {
+		"message": "Chọn loại kiểm tra"
+	},
+	"popupTestMenuAllProxies": {
+		"message": "Kiểm tra nhanh cho tất cả proxy"
+	},
+	"popupTestMenuSubscriptionsOnly": {
+		"message": "Kiểm tra nhanh chỉ cho các đăng ký"
+	},
+	"popupTestMenuAllProxiesDesc": {
+		"message": "Proxy thủ công + đăng ký"
+	},
+	"popupTestMenuSubscriptionsOnlyDesc": {
+		"message": "Sau đó thêm các proxy hoạt động vào danh sách thủ công"
+	},
+	"popupTestMenuCycleTest": {
+		"message": "Kiểm tra proxy theo chu kỳ (chuyển đổi hoàn toàn)"
+	},
+	"popupTestMenuCycleTestDesc": {
+		"message": "Chuyển đổi proxy tuần tự, kiểm tra tải trang"
+	},
+	"settingsContextMenuCycleTest": {
+		"message": "Kiểm tra theo chu kỳ (chuyển đổi hoàn toàn)"
+	},
+	"settingsCycleTestDesc": {
+		"message": "Chuyển đổi proxy tuần tự, kiểm tra tải trang. Kỹ lưỡng hơn nhưng chậm hơn."
+	},
+	"popupTestMenuExpressCycleTest": {
+		"message": "Kiểm tra chu kỳ nhanh (chuyển đổi nhanh)"
+	},
+	"popupTestMenuExpressCycleTestDesc": {
+		"message": "Chuyển đổi proxy tuần tự nhanh, thời gian chờ 10 giây, dừng ở lần thành công đầu tiên"
+	},
+	"popupTestMenuExpressCycleAll": {
+		"message": "Kiểm tra chu kỳ nhanh (tất cả proxy)"
+	},
+	"popupTestMenuExpressCycleAllDesc": {
+		"message": "Proxy thủ công + đăng ký"
+	},
+	"popupTestMenuExpressCycleSubsOnly": {
+		"message": "Kiểm tra chu kỳ nhanh (chỉ đăng ký)"
+	},
+	"popupTestMenuExpressCycleSubsOnlyDesc": {
+		"message": "Sau đó thêm các proxy hoạt động vào danh sách thủ công"
+	},
+	"popupNoSubscriptionProxies": {
+		"message": "Không có proxy đăng ký để kiểm tra."
+	},
+	"settingsCopiedAddresses": {
+		"message": "Đã sao chép địa chỉ"
+	},
+	"settingsCopyFailed": {
+		"message": "Sao chép thất bại"
+	},
+	"settingsAnotherTestRunning": {
+		"message": "Một bài kiểm tra khác đang chạy. Nếu bạn cho rằng nó bị kẹt, vui lòng tải lại trang cài đặt (F5) và thử lại."
+	},
+	"settingsProxyTestTimeout": {
+		"message": "Bài kiểm tra đã hết thời gian chờ sau 10 phút và bị dừng cưỡng chế. Vui lòng thử lại."
+	},
+	"settingsProxyMustNoSiteSelected": {
+		"message": "Vui lòng chọn một trang web."
+	},
+	"settingsProxyMustSiteAdded": {
+		"message": "Đã thêm trang web \"{0}\"."
+	},
+	"testingExplanationTitle": {
+		"message": "Cách thức hoạt động của kiểm tra proxy"
+	},
+	"testingExplanationText": {
+		"message": "Trong quá trình kiểm tra, các tab tạm thời sẽ tự động mở và đóng, kiểm tra IP proxy và kết nối qua proxy đó đến địa chỉ trang web thử nghiệm đã nhập. Các tab kiểm tra ngay lập tức bị xóa khỏi lịch sử trình duyệt của bạn để tránh lộn xộn. Bạn có thể thu nhỏ trình duyệt một cách an toàn trong khi kiểm tra đang chạy, vì việc kiểm tra can thiệp vào hoạt động duyệt web của bạn bằng cách chuyển đổi các proxy đang được kiểm tra."
+	},
+	"settingsGeneralEnableRating": {
+		"message": "Bật xếp hạng cho proxy"
+	},
+	"settingsGeneralEnableRatingDesc": {
+		"message": "Cho phép xếp hạng proxy (hoạt động/không hoạt động) và sắp xếp theo xếp hạng."
+	},
+	"settingsProxyMustStaleHoursDesc": {
+		"message": "Số giờ sau đó kết quả kiểm tra được coi là cũ (1-168)."
+	},
+	"datatablesSearch": {
+		"message": "Tìm kiếm:"
+	},
+	"datatablesShow": {
+		"message": "Hiển thị"
+	},
+	"datatablesEntries": {
+		"message": "mục"
+	},
+	"datatablesPrevious": {
+		"message": "Trước"
+	},
+	"datatablesNext": {
+		"message": "Tiếp"
+	},
+	"datatablesInfo": {
+		"message": "Hiển thị _START_ đến _END_ của _TOTAL_ mục"
+	},
+	"datatablesInfoEmpty": {
+		"message": "Hiển thị 0 đến 0 của 0 mục"
+	},
+	"datatablesEmptyTable": {
+		"message": "Không có dữ liệu trong bảng"
+	},
+	"datatablesAll": {
+		"message": "Tất cả"
+	},
+	"popupAddCurrentSiteTooltip": {
+		"message": "Thêm trang web hiện tại vào danh sách kiểm tra"
+	}
+}

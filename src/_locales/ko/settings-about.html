@@ -1,0 +1,209 @@
+<h2 class="text-primary">
+	ProxyMust
+</h2>
+<p>
+	<em>ProxyMust는 SmartProxy 확장 프로그램의 포크(fork)입니다. 우리는 원저자 <strong>Salar Khalilzadeh</strong>의 훌륭한 작업에 대해 존경과 감사를 표합니다.
+	원본 SmartProxy는 <a href="https://github.com/salarcode/SmartProxy" target="_blank">https://github.com/salarcode/SmartProxy</a>에서 찾을 수 있습니다.</em>
+</p>
+<p data-localize="settingsTabAboutDescription">
+	ProxyMust를 사용하면 프록시 사용이 그 어느 때보다 쉬워집니다. 한 번 구성하고 잊어버리는 솔루션이라고 생각하세요.
+	ProxyMust를 사용하면 프록시를 수동으로 변경하거나 켜고 끌 필요가 없습니다.
+	원하는 웹사이트에 대해 한 번의 클릭으로 프록시를 활성화하도록 ProxyMust에 지시하기만 하면 됩니다.
+	그런 다음 해당 특정 웹사이트를 방문하면 ProxyMust가 작동하여 해당 웹사이트의 모든 데이터가 프록시를 통해 전송됩니다. 아무것도 할 필요가 없습니다.
+</p>
+<p>
+	ProxyMust는 초보자와 고급 사용자 모두에게 적합한 다양한 기능을 제공합니다:
+</p>
+<ul>
+	<li>하나의 탭에서 단일 사이트에 대해 프록시를 활성화하면 해당 탭의 모든 항목이 자동으로 프록시를 사용합니다. 이 기능을 탭별 프록시라고 합니다.</li>
+	<li>규칙 패턴을 기반으로 특정 웹사이트에 대해 프록시를 활성화하거나 비활성화할 시기를 자동으로 감지합니다.</li>
+	<li>활성 프록시 서버 설정으로 여러 프록시 서버 간에 쉽게 전환할 수 있습니다.</li>
+	<li>현재 있는 사이트에 대해 한 번의 클릭으로 프록시를 활성화합니다.</li>
+	<li>현재 웹사이트의 리소스와 요청을 보고 한 번의 클릭으로 해당 항목에 대해 프록시를 활성화할지 결정합니다.</li>
+	<li>프록시 모드 간에 쉽게 전환하거나 모든 도메인에 대해 프록시를 활성화합니다.</li>
+	<li>설정 및 규칙을 백업/복원합니다.</li>
+</ul>
+<br />
+
+<h3>참고 사항:</h3>
+<p>
+<div class="text-info">
+	<i class="fas fa-info-circle" aria-hidden="true"></i>
+	ProxyMust는 어떤 유형의 프록시 서버도 제공하지 않습니다.
+</div>
+<div class="text-danger">
+	<i class="fas fa-eye-slash" aria-hidden="true"></i>
+	ProxyMust는 어떤 방식으로도 사용자를 추적하지 않습니다.
+</div>
+<div class="text-warning">
+	<i class="fas fa-eye-slash" aria-hidden="true"></i>
+	ProxyMust는 광고가 없으며 웹 페이지 및 콘텐츠에 간섭하지 않습니다.
+</div>
+</p>
+<br />
+
+<h3>여러분의 피드백은 중요합니다</h3>
+<p>
+<div>
+	<i class="fas fa-star text-warning"></i>
+	ProxyMust를 <i class="fas fa-heart text-danger"></i> 좋아하신다면
+	<a id="linkAddonsMarket" href="#" target="_blank">확장 프로그램</a> 페이지에서 평가해 주세요.
+</div>
+<div>
+	<i class="fas fa-question-circle text-primary"></i>
+	질문이나 문제가 있으면 이슈 페이지를 방문하여
+	<a href="https://github.com/nana-xakep/ProxyMust/issues" target="_blank">문제를 보고</a>하는 티켓을 열어주세요.
+</div>
+</p>
+<br />
+
+<h3>ProxyMust의 새로운 기능</h3>
+
+<h4>📊 평가 및 상태 시스템</h4>
+<ul>
+	<li>각 프록시와 각 테스트된 사이트에 대해 상태가 표시됩니다:
+		<ul>
+			<li>✅ – 이 사이트에 확실히 작동함(최근 성공)</li>
+			<li>☑️ – 작동할 가능성이 있음(성공이 이전이거나 다른 사이트에서 얻어짐)</li>
+			<li>❓ – 데이터 없음(이 사이트에 대해 프록시가 테스트되지 않음)</li>
+			<li>⛔ – 작동하지 않음(최근 실패)</li>
+		</ul>
+	</li>
+	<li>각 프록시의 평가는 테스트 결과에 따라 자동으로 변경됩니다: <strong>성공 시 +1</strong>, <strong>실패 시 -1</strong>.</li>
+	<li>컨텍스트 메뉴(테이블의 프록시 행 또는 도구 모음 팝업의 활성 프록시에서 마우스 오른쪽 버튼 클릭)를 통해 수동으로 평가를 변경할 수도 있습니다.</li>
+	<li>상태는 구성 가능한 시간(기본값 6시간) 동안 '신선한' 것으로 간주됩니다. 데이터가 오래된 경우 간접 상태(☑️)가 사용됩니다.</li>
+</ul>
+
+<h4>📋 프록시 목록 관리</h4>
+<ul>
+	<li><strong>프록시 테이블의 컨텍스트 메뉴(마우스 오른쪽 버튼 클릭)</strong> – 평가, 우선순위(고정, 즐겨찾기)를 빠르게 변경, 선택 항목 내보내기, 주소 복사, 삭제, 상태 및 평가 지우기, 선택한 프록시에 대한 테스트 실행.</li>
+	<li><strong>도구 모음 팝업의 정렬</strong> – 평가 및 우선순위별로 정렬(📌 고정된 항목 위쪽, ⭐ 즐겨찾기).</li>
+	<li><strong>설정 테이블의 정렬</strong> – 국가, 프로토콜, 평가별로 정렬.</li>
+</ul>
+
+<h4>🚀 프록시 테스트</h4>
+<ul>
+	<li><strong>순환 테스트</strong> – 활성 프로필과 프록시를 순차적으로 전환하며 사이트 로딩을 테스트합니다. 신뢰할 수 있지만 느립니다.</li>
+	<li><strong>익스프레스 순환 테스트</strong> – 첫 번째 성공에서 멈추는 가속 테스트. 빠른 평가에 좋습니다.</li>
+	<li><strong>정밀(느린) 테스트</strong> – 더 철저하고 시간이 더 오래 걸리며 더 신뢰할 수 있는 결과를 제공합니다(Firefox에서 작동하지 않음).</li>
+	<li><strong>익스프레스 테스트</strong> – 빠르지만 일부 작동하는 프록시를 건너뛸 수 있습니다. 빠른 개요에 좋습니다(Firefox에서 작동하지 않음).</li>
+	<li><strong>도구 모음 팝업의 빠른 테스트</strong> – 모든 프록시 또는 구독 프록시에 대해서만 현재 사이트를 테스트합니다.</li>
+</ul>
+
+<p>
+	<strong>⚠️ 사용자 중요 사항:</strong> 테스트 중에는 활성 프로필과 프록시가 실제로 전환됩니다.
+	이것은 정상적인 브라우징을 방해할 수 있습니다. 브라우저가 다른 활동에 사용되지 않을 때 테스트를 실행하세요.
+</p>
+
+<br />
+<h3>도구 모음 아이콘 범례</h3>
+<p>
+	브라우저 도구 모음의 아이콘은 ProxyMust의 상태를 나타내기 위해 변경됩니다. 다양한 아이콘의 의미는 다음과 같습니다:
+	<br />
+
+<div class="table-responsive">
+	<table class="table table-sm table-striped caption-top table-borderless align-middle">
+		<caption><b>아이콘 범례(모든 브라우저):</b></caption>
+		<thead>
+			<tr>
+				<th style="width: 70px;">아이콘</th>
+				<th>의미</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td class="p-2"><img src="../icons/profile-disabled.svg" class="">顶}
+			<td>요청이 프록시를 사용하지 않습니다。顶}
+			</tr>
+			<tr>
+				<td class="p-2"><img src="../icons/smartproxy.svg" class="">顶}
+			<td>
+				정의된 규칙과 일치하는 요청에 프록시가 적용되었거나 적용될 것입니다.
+				<br /> 또는 탭에 일치하는 규칙이 없습니다.
+				<br />
+				프로필: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i>
+				선택적 규칙
+			顶}
+			</tr>
+			<tr>
+				<td class="p-2"><img src="../icons/profile-always.svg" class="">顶}
+			<td>
+				프록시가 현재 탭의 모든 요청에 적용됩니다. (Chrome 기반 브라우저에서는 화이트리스트 도메인이 별도로 표시됩니다.)
+				<br />
+				프로필: <i class="icon fa-sm fas fa-globe-americas text-success" aria-hidden="true"></i>
+				항상 활성화
+			顶}
+			</tr>
+			<tr>
+				<td class="p-2"><img src="../icons/profile-system.svg" class="">顶}
+			<td>
+				프록시 사용 여부에 대한 결정이 운영 체제에 위임됩니다.
+				<br/> 프로필: 시스템
+			顶}
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+<div class="table-responsive">
+	<table class="table table-sm table-striped caption-top table-borderless align-middle">
+		<caption><b>아이콘 범례(Firefox 전용):</b></caption>
+		<thead>
+			<tr>
+				<th style="width: 70px;">아이콘</th>
+				<th>의미</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td class="p-2"><img src="../icons/profile-smartrules-green.svg" class="">顶}
+			<td>
+				현재 탭에 대해 규칙이 일치합니다. 모든 후속 요청이 프록시를 통과합니다.
+				<br />
+				프로필: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> 선택적 규칙
+			顶}
+			</tr>
+			<tr>
+				<td class="p-2"><img src="../icons/profile-smartrules-has-failed.svg" class="">顶}
+			<td>
+				현재 탭에 대해 규칙이 일치합니다. 응답하지 않거나 실패한 요청이 하나 이상 있습니다.
+				<br />
+				프로필: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> 선택적 규칙
+			顶}
+			</tr>
+			<tr>
+				<td class="p-2"><img src="../icons/profile-smartrules-has-bypassed.svg" class="">顶}
+			<td>
+				현재 탭에 대해 규칙이 일치합니다. 하나 이상의 후속 요청이 규칙을 통해 프록시를 우회했습니다.
+				<br />
+				프로필: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> 선택적 규칙
+			顶}
+			</td>
+			<tr>
+				<td class="p-2"><img src="../icons/profile-smartrules-has-unmatched.svg" class="">顶}
+			<td>
+				현재 탭에 대해 규칙이 일치합니다. 하나 이상의 후속 요청이 어떤 규칙과도 일치하지 않으며 프록시를 통과하지 않습니다.
+				<br />
+				프로필: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> 선택적 규칙
+			顶}
+			</tr>
+			<tr>
+				<td class="p-2"><img src="../icons/profile-smartrules-noproxy-has-matched.svg" class="">顶}
+			<td>
+				현재 탭에 대해 일치하는 규칙이 없습니다. 하나 이상의 후속 요청이 규칙과 일치하여 프록시를 통과하고 있습니다.
+				<br />
+				프로필: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> 선택적 규칙
+			顶}
+			</td>
+			<tr>
+				<td class="p-2"><img src="../icons/profile-always-bypassed.svg" class="">顶}
+			<td>
+				프록시가 현재 탭의 모든 요청에 적용됩니다. 하나 이상의 후속 요청이 규칙을 통해 프록시를 우회했습니다.
+				<br />
+				프로필: <i class="icon fa-sm fas fa-globe-americas text-success" aria-hidden="true"></i> 항상 활성화
+			顶}
+			</tr>
+		</tbody>
+	</table>
+</div>
+</p>

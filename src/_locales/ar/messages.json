@@ -1,0 +1,1626 @@
+{
+	"uiDirection": {
+		"message": "rtl"
+	},
+	"languageCode": {
+		"message": "ar",
+		"description": "We need to know the code which might not match what browser UI has"
+	},
+	"extensionName": {
+		"message": "ProxyMust"
+	},
+	"extensionDescription": {
+		"message": "ProxyMust – مدير بروكسي انتقائي (مشتق من SmartProxy). يقوم تلقائياً بتمكين / تعطيل البروكسي للمواقع التي تزورها بناءً على أنماط قابلة للتخصيص."
+	},
+	"toolbarTooltipEffectiveRule": {
+		"message": "مصدر القاعدة المطابقة:"
+	},
+	"toolbarTooltipEffectiveRuleNone": {
+		"message": "لا توجد قاعدة مطابقة"
+	},
+	"toolbarTooltipEffectiveRulePattern": {
+		"message": "نمط القاعدة:"
+	},
+	"popupTitle": {
+		"message": "تفعيل ProxyMust"
+	},
+	"popupPrivateBrowsingMode": {
+		"message": "وضع التصفح الخاص"
+	},
+	"popupNoProxy": {
+		"message": "مباشرة (بدون بروكسي)"
+	},
+	"popupSmartProxy": {
+		"message": "البروكسي الانتقائي"
+	},
+	"popupAlwaysEnable": {
+		"message": "مفعّل دائمًا"
+	},
+	"popupSystemProxy": {
+		"message": "نظام بروكسي"
+	},
+	"popupActiveProxy": {
+		"message": "البروكسي النشط (لهذا الملف الشخصي):"
+	},
+	"popupActiveProxyDefault": {
+		"message": "البروكسي النشط (الإعداد الافتراضي):"
+	},
+	"popupEnableProxyOn": {
+		"message": "تشغيل البروكسي على"
+	},
+	"popupIgnoreTheseDomains": {
+		"message": "تجاهل هذه النطاقات"
+	},
+	"popupRuleIsFromSubscription": {
+		"message": "(من اشتراك)"
+	},
+	"popupProxyableResources": {
+		"message": "الموارد القابلة للتنفيذ"
+	},
+	"popupSettings": {
+		"message": "إعدادات"
+	},
+	"popupSubscriptions": {
+		"message": "-الاشتراكات-"
+	},
+	"popupUpdateText": {
+		"message": "يتوفر التحديث إلى {0}"
+	},
+	"popupFailedRequestsMenu": {
+		"message": "الطلبات التي فشلت"
+	},
+	"popupFailedRequestsTitle": {
+		"message": "قائمة الطلبات التي فشلت"
+	},
+	"popupFailedRequestsDesc": {
+		"message": "هذه النطاقات انتهى وقت طلباتها أو فشلت.<br />إذا كنت تعتقد أن هذه النطاقات محجوبة، يمكنك إضافتها هنا إلى قائمة قواعد البروكسي."
+	},
+	"popupAddFailedRequests": {
+		"message": "أضف إلى قائمة القواعد"
+	},
+	"popupProfileTypeDoesNotSupportsRules": {
+		"message": "الملف الشخصي المحدد '{0}' لا يدعم القواعد، يرجى اختيار ملف شخصي آخر."
+	},
+	"popupAddIgnoredFailures": {
+		"message": "تجاهلها"
+	},
+	"popupAddIgnoredFailuresConfirm": {
+		"message": "هل أنت متأكد من تجاهل الأخطاء المحددة؟ إذا فعلت ذلك، لن تتلقى أي أخطاء إضافية منها. يمكنك تغيير ذلك لاحقًا من الإعدادات."
+	},
+	"popupNotAllowedSetProxySettingsChrome": {
+		"message": "للأسف تغيير إعدادات المتصفح لاستخدام بروكسي النظام يتطلب صلاحية `incognito`. الرجاء الذهاب إلى إعدادات ملحق ProxyMust في المتصفح وتفعيل صلاحية `Allow in incognito`. <a href='https://support.google.com/chrome_webstore/answer/2664769'>تعرف على الطريقة</a>."
+	},
+	"popupNotAllowedSetProxySettingsFirefox": {
+		"message": "بما أن Firefox 67، تغيير إعدادات المتصفح لاستخدام بروكسي النظام يتطلب صلاحية `Private Browsing`. الرجاء الذهاب إلى إعدادات ملحق ProxyMust في المتصفح وتفعيل `Run in Private Windows`. <a href='https://support.mozilla.org/en-US/kb/extensions-private-browsing'>تعرف على الطريقة</a>."
+	},
+	"proxyableTitle": {
+		"message": "الموارد القابلة للتنفيذ"
+	},
+	"proxyableHeader": {
+		"message": "العناصر القابلة للتنفيذ في هذه الصفحة"
+	},
+	"proxyableReload": {
+		"message": "إعادة تحميل"
+	},
+	"proxyableClose": {
+		"message": "إغلاق"
+	},
+	"proxyableHeaderDesc": {
+		"message": "هذه هي قائمة الموارد التي يتم استخدامها أو التذرع بها من هذه الصفحة. استخدم هذه القائمة لإضافة هذه الموارد إلى قواعد تنشيط البروكسي. <br />إذا كنت لا ترى أي شيء هنا، فأعد تحميل الصفحة للاطلاع على الموارد."
+	},
+	"proxyableErrNoSourceTab": {
+		"message": "لم يتم العثور على مصدر التبويب!"
+	},
+	"proxyableCreateRuleConfirm": {
+		"message": "هل أنت متأكد من إنشاء قاعدة للنطاق المحدد"
+	},
+	"proxyableDisableButton": {
+		"message": "تعطيل"
+	},
+	"proxyableEnableButton": {
+		"message": "تفعيل"
+	},
+	"proxyableEnableButtonDomain": {
+		"message": "تفعيل: "
+	},
+	"proxyableSubscriptionRule": {
+		"message": "(قاعدة اشتراك)"
+	},
+	"proxyableDeleteRuleConfirm": {
+		"message": "هل تريد بالتأكيد حذف القاعدة المحددة من أجل:"
+	},
+	"proxyableGridNoDataContent": {
+		"message": "لا توجد طلبات"
+	},
+	"proxyableGridColUrl": {
+		"message": "طلب رابط"
+	},
+	"proxyableGridColRuleStatus": {
+		"message": "حالة القاعدة"
+	},
+	"proxyableGridColProxifiedStatus": {
+		"message": "حالة البروكسي"
+	},
+	"proxyableGridColRuleHost": {
+		"message": "نطاق القاعدة"
+	},
+	"proxyableGridColRulePattern": {
+		"message": "نمط القاعدة"
+	},
+	"proxyableGridCol_ProxifiedStatus_NoProxy": {
+		"message": "بدون بروكسي"
+	},
+	"proxyableGridCol_ProxifiedStatus_Special": {
+		"message": "خاص"
+	},
+	"proxyableGridCol_ProxifiedStatus_ProxyPerOrigin": {
+		"message": "من التبويب الأصل"
+	},
+	"proxyableGridCol_ProxifiedStatus_MatchedRule": {
+		"message": "مطابق"
+	},
+	"proxyableGridCol_ProxifiedStatus_AlwaysEnabled": {
+		"message": "مفعّل دائمًا"
+	},
+	"proxyableGridCol_ProxifiedStatus_SystemProxyApplied": {
+		"message": "تم تطبيق بروكسي النظام"
+	},
+	"proxyableGridCol_RuleStatus_NoneMatched": {
+		"message": "لا يوجد تطابق"
+	},
+	"proxyableGridCol_RuleStatus_Special": {
+		"message": "خاص"
+	},
+	"proxyableGridCol_RuleStatus_ProxyPerOrigin": {
+		"message": "من التبويب الأصل"
+	},
+	"proxyableGridCol_RuleStatus_MatchedRule": {
+		"message": "مطابق"
+	},
+	"proxyableGridCol_RuleStatus_Whitelisted": {
+		"message": "قائمة بيضاء"
+	},
+	"proxyableGridCol_RuleStatus_AlwaysEnabledByPassed": {
+		"message": "مفعّل دائمًا <br> تم التجاوز"
+	},
+	"proxyableGridCol_RuleStatus_AlwaysEnabledForcedByRules": {
+		"message": "مفعّل دائمًا <br> مفروض بواسطة القواعد"
+	},
+	"settingsTitle": {
+		"message": "إعدادات ProxyMust"
+	},
+	"settingsTabAbout": {
+		"message": "حول البرنامج"
+	},
+	"settingsTabGeneral": {
+		"message": "خيارات عامة"
+	},
+	"settingsTabSmartProfiles": {
+		"message": "الملفات الذكية"
+	},
+	"settingsTabAddSmartProfile": {
+		"message": "إضافة ملف ذكي جديد"
+	},
+	"settingsTabProxyServers": {
+		"message": "سيرفرات البروكسي"
+	},
+	"settingsTabProxyServerSubscriptions": {
+		"message": "اشتراكات سيرفر بروكسي"
+	},
+	"settingsTabBackupRestore": {
+		"message": "استرجاع البيانات"
+	},
+	"settingsTabUpdateText": {
+		"message": "تحديث إلى {0}"
+	},
+	"settingsTabAboutDescription": {
+		"message": "استخدام البروكسي أصبح أسهل مع ProxyMust. اعتبره حلًا \"اضبط مرة وانسَ\". مع ProxyMust لا تحتاج لتغيير البروكسي يدويًا أو تشغيله وإيقافه. كل ما عليك هو إخبار ProxyMust بأنك تريد تفعيل البروكسي لموقع معين بنقرة واحدة. بعد ذلك، عندما تزور ذلك الموقع، سيتولى ProxyMust توجيه جميع بيانات ذلك الموقع عبر البروكسي تلقائيًا."
+	},
+	"settingsGeneralSmartFeatures": {
+		"message": "ميزات ذكية"
+	},
+	"settingsGeneralSmartFeaturesNoChrome": {
+		"message": "<strong><a href='https://www.getfirefox.com/' target='_blank' rel='noopener'>فقط في Firefox</a>!</strong> للأسف هذه الميزة غير مدعومة في Chrome."
+	},
+	"settingsGeneralProxyPerOrigin": {
+		"message": "تفعيل البروكسي لكل تبويب/أصل"
+	},
+	"settingsGeneralProxyPerOriginDesc": {
+		"message": "إذا طابقت قاعدة عنوان تبويب معين، فسيُطبق البروكسي على اتصال ذلك التبويب. عادةً توجد طلبات أخرى في الصفحة قد لا تطابق أي قاعدة وبالتالي لن يُطبق عليها البروكسي. خيار `تفعيل البروكسي لكل تبويب/أصل` يضمن أن الصفحة كاملةً بما في ذلك الاتصالات من نطاقات وأصول مختلفة تستخدم نفس البروكسي المطبّق على أصل التبويب. كما يلغي هذا الخيار الحاجة لقاعدة لكل نطاق منفرد. ملاحظة: إذا لم يُطبق بروكسي على التبويب، ستظل قواعد البروكسي تعمل وتطبق البروكسي على الاتصالات الأخرى في الصفحة بشكل فردي."
+	},
+	"settingsGeneralProxyPerOriginEnabled": {
+		"message": "تم تفعيل البروكسي لكل تبويب/أصل"
+	},
+	"settingsGeneralProxyPerOriginDisabled": {
+		"message": "تم تعطيل البروكسي لكل تبويب/أصل"
+	},
+	"settingsGeneralSyncing": {
+		"message": "المزامنة"
+	},
+	"settingsGeneralIncognitoProfile": {
+		"message": "ملف التصفح الخاص"
+	},
+	"settingsGeneralIncognitoProfileDisabled": {
+		"message": "(معطل)"
+	},
+	"settingsGeneralIncognitoProfileDesc": {
+		"message": "اختر ملف التصفح الخاص إذا أردت فرض استخدامه عندما يكون التبويب/النافذة في وضع التصفح الخاص. هذا الخيار سيستبدل الملف الشخصي النشط."
+	},
+	"settingsGeneralEnableSyncing": {
+		"message": "تمكين مزامنة الإعدادات"
+	},
+	"settingsGeneralEnableSyncingDesc": {
+		"message": "من خلال تمكين المزامنة، ستتوفر جميع الإعدادات بما في ذلك القواعد والخوادم والاشتراكات عبر جميع المتصفحات."
+	},
+	"settingsSaveGeneralOptionsButton": {
+		"message": "حفظ التغييرات"
+	},
+	"settingsRejectGeneralOptionsButton": {
+		"message": "رفض التغييرات"
+	},
+	"settingsGeneralSyncProxyMode": {
+		"message": "تمكين مزامنة الملف الشخصي النشط"
+	},
+	"settingsGeneralSyncProxyModeDesc": {
+		"message": "حدد هذا إذا أردت مزامنة الملف الشخصي النشط."
+	},
+	"settingsGeneralSyncActiveProxy": {
+		"message": "تمكين مزامنة البروكسي النشط"
+	},
+	"settingsGeneralSyncActiveProxyDesc": {
+		"message": "حدد هذا إذا أردت مزامنة خادم البروكسي المحدد"
+	},
+	"settingsGeneralSyncToBrowser": {
+		"message": "استخدام خوادم المزامنة الخاصة بالمتصفح"
+	},
+	"settingsGeneralSyncToWebDAV": {
+		"message": "المزامنة إلى خادم WebDAV"
+	},
+	"settingsGeneralWebDavServerUrl": {
+		"message": "رابط خادم WebDAV:"
+	},
+	"settingsGeneralWebDavBackupFilename": {
+		"message": "اسم ملف النسخة الاحتياطية:"
+	},
+	"settingsGeneralWebDavServerUser": {
+		"message": "اسم مستخدم خادم WebDAV:"
+	},
+	"settingsGeneralWebDavServerPassword": {
+		"message": "كلمة مرور خادم WebDAV:"
+	},
+	"settingsGeneralWebDavBehaviourDesc": {
+		"message": "يرجى ملاحظة أن النسخ الاحتياطية ستتم عند كل تغيير في الإعدادات، بينما الاستعادة تتم فقط عند بدء المتصفح."
+	},
+	"settingsGeneralWebDavServerBackupNow": {
+		"message": "نسخ احتياطي الآن"
+	},
+	"settingsGeneralWebDavServerRestoreNow": {
+		"message": "استعادة الآن"
+	},
+	"settingsGeneralWebDavRestoreNowConfirm": {
+		"message": "This will override your current settings from WebDAV server. This action is not revertable, be cautious. Proceed?"
+	},
+	"settingsGeneralWebDavRestoreNowSuccess": {
+		"message": "WebDAV restore completed successfully!"
+	},
+	"settingsGeneralWebDavRestoreNowFailed": {
+		"message": "WebDAV restore failed:"
+	},
+	"settingsGeneralWebDav_ErrorValidUrl": {
+		"message": "الرجاء إدخال رابط خادم WebDAV صالح"
+	},
+	"settingsGeneralWebDav_ErrorEmptyFilename": {
+		"message": "لا يمكن أن يكون اسم ملف النسخة الاحتياطية خاليًا"
+	},
+	"settingsGeneralWebDav_ErrorRequiredFields": {
+		"message": "Please fill in all required WebDAV fields."
+	},
+	"settingsGeneralWebDavBackupNowSuccess": {
+		"message": "تم إكمال النسخ الاحتياطي إلى WebDAV بنجاح!"
+	},
+	"settingsGeneralWebDavBackupNowFailed": {
+		"message": "فشل النسخ الاحتياطي إلى WebDAV:"
+	},
+	"settingsGeneralErrorDetection": {
+		"message": "كشف الأخطاء"
+	},
+	"settingsGeneralDetectFailures": {
+		"message": "كشف فشل الطلبات"
+	},
+	"settingsGeneralDetectFailuresDesc": {
+		"message": "كشف فشل الطلبات سيساعدك على تحديد النطاقات التي تحتاج إلى بروكسي."
+	},
+	"settingsGeneralSelectIgnoredDomains": {
+		"message": "أدخل القواعد"
+	},
+	"settingsGeneralIgnoreRequestFailuresForDomains": {
+		"message": "تجاهل كشف الفشل بناءً على هذه القواعد"
+	},
+	"settingsGeneralIgnoreRequestFailuresForDomainsDesc": {
+		"message": "أضف قواعد لتعطيل كشف الفشل."
+	},
+	"settingsGeneralDisplayFailedOnBadge": {
+		"message": "عرض عدد الطلبات الفاشلة على شارة أيقونة الشريط"
+	},
+	"settingsGeneralThemes": {
+		"message": "الثيمات"
+	},
+	"settingsGeneralThemesAutoSwitch": {
+		"message": "التبديل التلقائي حسب ثيم المتصفح"
+	},
+	"settingsGeneralThemesAutoSwitchDesc": {
+		"message": "التبديل التلقائي بين الثيمات المحددة أدناه. هذا يتبع ثيم المتصفح الذي قد يتبع أيضًا ثيم نظام التشغيل."
+	},
+	"settingsGeneralThemesLight": {
+		"message": "ثيم فاتح"
+	},
+	"settingsGeneralThemes_Default": {
+		"message": "(افتراضي)"
+	},
+	"settingsGeneralThemes_Custom": {
+		"message": "(مخصص)"
+	},
+	"settingsGeneralThemes_CustomUrl": {
+		"message": "رابط ستايلات مخصصة (CSS):"
+	},
+	"settingsGeneralThemes_CustomUrlDesc": {
+		"message": "يجب أن يكون الرابط 'Https'. انتبه للخطوط والستايلات المستوردة في الستايل المخصص لأنها قد تحجب/تبطئ النوافذ المنبثقة في المتصفح. يمكنك تجربة ثيمات من bootswatch.com لكن احذر اعتمادها على خطوط Google."
+	},
+	"settingsGeneralThemesDark": {
+		"message": "ثيم داكن"
+	},
+	"settingsGeneralThemesLight_ErrorValidUrl": {
+		"message": "الرجاء إدخال رابط CSS صالح للثيم الفاتح ويجب أن يكون 'https'."
+	},
+	"settingsGeneralThemesDark_ErrorValidUrl": {
+		"message": "الرجاء إدخال رابط CSS صالح للثيم الداكن ويجب أن يكون 'https'."
+	},
+	"settingsGeneralOtherSettings": {
+		"message": "إعدادات أخرى"
+	},
+	"settingsGeneralEnableShortcuts": {
+		"message": "تمكين الاختصارات"
+	},
+	"settingsGeneralEnableShortcutsDesc": {
+		"message": "يمكنك تكوين الاختصارات من صفحة إعدادات الإضافة في المتصفح."
+	},
+	"settingsGeneralViewShortcuts": {
+		"message": "عرض الاختصارات"
+	},
+	"settingsGeneralConfigureShortcuts": {
+		"message": "تكوين الاختصارات"
+	},
+	"settingsGeneralShortcutNotification": {
+		"message": "تمكين إشعارات الاختصارات"
+	},
+	"settingsGeneralViewShortcutKeys": {
+		"message": "مفاتيح الاختصار"
+	},
+	"settingsGeneralDisplayAppliedProxyOnBadge": {
+		"message": "عرض مصدر القاعدة المطبقة على الشارة"
+	},
+	"settingsGeneralDisplayAppliedRulePatternOnBadge": {
+		"message": "عرض نمط القاعدة المطبقة على الشارة"
+	},
+	"settingsGeneralRefreshTabOnConfigChanges": {
+		"message": "تحديث التبويب النشط عند تغيير الملف الشخصي أو البروكسي"
+	},
+	"settingsGeneralCancelButton": {
+		"message": "إلغاء"
+	},
+	"settingsGeneralSaveChanges": {
+		"message": "حفظ التغييرات"
+	},
+	"settingsGeneralKeyboardShortcutsTitle": {
+		"message": "اختصارات لوحة المفاتيح"
+	},
+	"settingsGeneralCloseButton": {
+		"message": "إغلاق"
+	},
+	"settingsGeneralKeyboardShortcutsNotSupported": {
+		"message": "اختصارات لوحة المفاتيح غير مدعومة على الأجهزة المحمولة."
+	},
+	"settingsTabProxyServersTitle": {
+		"message": "إدارة سيرفرات البروكسي:"
+	},
+	"settingsTabProxyServersDescription": {
+		"message": "هنا قائمة سيرفرات البروكسي. يمكنك تحديد العديد من البروكسيات كما تريد وتغييرهم من شريط الأدوات."
+	},
+	"settingsTabBackupRestoreDescription": {
+		"message": "يمكنك إجراء النسخ الاحتياطي الكامل أو الجزئي من الإعدادات الخاصة بك."
+	},
+	"settingsErrNoServersTitle": {
+		"message": "لا خوادم!"
+	},
+	"settingsErrNoServersDescription": {
+		"message": "قبل أي شيء يجب تحديد سيرفرات البروكسي."
+	},
+	"settingsActiveProxyServer": {
+		"message": "خادم البروكسي الافتراضي:"
+	},
+	"settingsAddServerButton": {
+		"message": "إضافة خادم"
+	},
+	"settingsRemoveMultipleServerButton": {
+		"message": "حذف متعدد"
+	},
+	"settingsSaveChangesButton": {
+		"message": "حفظ التغييرات"
+	},
+	"settingsRejectChangesButton": {
+		"message": "رفض التغييرات"
+	},
+	"settingsEditButton": {
+		"message": "تعديل"
+	},
+	"settingsFullBackupButton": {
+		"message": "إنشاء نسخة احتياطية كاملة"
+	},
+	"settingsFullBackupButtonDesc": {
+		"message": "قم بعمل نسخة احتياطية كاملة من الخيارات (بما في ذلك سيرفرات البروكسي والقواعد)."
+	},
+	"settingsRestoreBackupButton": {
+		"message": "استرجاع النسخة الاحتياطية"
+	},
+	"settingsRestoreBackupButtonDesc": {
+		"message": "استعادة النسخ الاحتياطي التي تم اتخاذها مسبقا من ملف محلي"
+	},
+	"settingsDangerZoneDesc": {
+		"message": "منطقة الخطر"
+	},
+	"settingsFactoryResetButton": {
+		"message": "إعادة ضبط المصنع"
+	},
+	"settingsFactoryResetDesc": {
+		"message": "إعادة ضبط كل شيء. سيؤدي هذا إلى إزالة جميع القواعد وخوادم البروكسي وإعادة تعيين الخيارات. بشكل دائم."
+	},
+	"settingsFactoryResetConfirm": {
+		"message": "هل أنت متأكد من إعادة ضبط كل شيء؟ لا يوجد عودة!"
+	},
+	"settingsFactoryResetSuccess": {
+		"message": "اكتملت إعادة ضبط المصنع بنجاح"
+	},
+	"settingsImportExportProxiesDesc": {
+		"message": "استيراد/تصدير قوائم خوادم البروكسي فرادى."
+	},
+	"settingsImportProxiesButtonBackup": {
+		"message": "استيراد سيرفرات البروكسي"
+	},
+	"settingsExportProxiesButtonBackup": {
+		"message": "تصدير سيرفرات البروكسي"
+	},
+	"settingsAddRuleButton": {
+		"message": "إضافة قاعدة"
+	},
+	"settingsImportRulesButton": {
+		"message": "قواعد الاستيراد"
+	},
+	"settingsImportRulesTitle": {
+		"message": "قواعد الاستيراد"
+	},
+	"settingsImportRulesSelectButton": {
+		"message": "قاعدة ملف النسخ الاحتياطي"
+	},
+	"settingsImportRulesText": {
+		"message": "نص نسخ قواعد احتياطية"
+	},
+	"settingsImportRulesFrom": {
+		"message": "من"
+	},
+	"settingsImportRulesOptionAppend": {
+		"message": "إلحاق بالقواعد الحالية"
+	},
+	"settingsImportRulesOptionOverride": {
+		"message": "استبدال القواعد الحالية (استخدام بحذر)"
+	},
+	"settingsImportRulesCancelButton": {
+		"message": "إلغاء"
+	},
+	"settingsImportRulesImportButton": {
+		"message": "استيراد"
+	},
+	"settingsImportProxiesButton": {
+		"message": "استيراد وكلاء"
+	},
+	"settingsExportProxiesButton": {
+		"message": "بروكسيات التصدير"
+	},
+	"settingsImportProxiesTitle": {
+		"message": "استيراد قائمة وكيل"
+	},
+	"settingsImportProxiesSelectFileButton": {
+		"message": "ملف قائمة البروكسي"
+	},
+	"settingsImportProxiesSelectTextButton": {
+		"message": "نص قائمة البروكسيات"
+	},
+	"settingsImportProxiesOptionAppend": {
+		"message": "إلحاق الوكلاء الحاليين"
+	},
+	"settingsImportProxiesOptionOverride": {
+		"message": "استبدال الوكلاء الحاليين (استخدام بحذر)"
+	},
+	"settingsImportProxiesCancelButton": {
+		"message": "إلغاء"
+	},
+	"settingsImportProxiesImportButton": {
+		"message": "استيراد"
+	},
+	"settingsConfirmRemoveProxyServer": {
+		"message": "هل أنت متأكد من إزالة خادم البروكسي المحدد؟"
+	},
+	"settingsConfirmRemoveMultipleProxyServer": {
+		"message": "هل أنت متأكد من إزالة خوادم البروكسي المحددة؟"
+	},
+	"settingsRemoveAllProxyServers": {
+		"message": "هل تريد بالتأكيد إزالة جميع سيرفرات البروكسي؟"
+	},
+	"settingsRemoveAllProxyServersSuccess": {
+		"message": "تتم إزالة جميع سيرفرات البروكسي. <br/> يجب حفظها لتطبيق التغييرات."
+	},
+	"settingsImportProxiesFileNotSelected": {
+		"message": "الرجاء تحديد ملف قائمة البروكسيات"
+	},
+	"settingsImportProxyListTextIsEmpty": {
+		"message": "الرجاء إدخال قائمة البروكسيات"
+	},
+	"settingsImportProxyServersFailed": {
+		"message": "أخفق استيراد سيرفرات البروكسي"
+	},
+	"importerImportProxySuccess": {
+		"message": "يتم استيراد إجمالي {0} من {1} بروكسيات. <br> لا تنس حفظ التغييرات."
+	},
+	"settingsErrorFailedToSaveServers": {
+		"message": "أخفق حفظ الخوادم."
+	},
+	"settingsChangesReverted": {
+		"message": "تمت إعادة التغييرات بنجاح."
+	},
+	"settingsConfirmSaveAllChanged": {
+		"message": "هل تريد حفظ جميع التغييرات غير المحفوظة؟"
+	},
+	"settingsConfirmRemoveProxyRule": {
+		"message": "هل أنت متأكد من إزالة القاعدة المحددة؟"
+	},
+	"settingsConfirmRemoveMultipleProxyRule": {
+		"message": "هل أنت متأكد من إزالة القواعد المحددة؟"
+	},
+	"settingsRemoveAllRules": {
+		"message": "هل تريد بالتأكيد إزالة جميع القواعد؟"
+	},
+	"settingsRemoveAllRulesSuccess": {
+		"message": "تتم إزالة جميع القواعد. <br/> يجب حفظها لتطبيق التغييرات."
+	},
+	"settingsRestoreBackupFailed": {
+		"message": "حدث خطأ أثناء استعادة النسخة الاحتياطية"
+	},
+	"settingsRestoreBackupFileError": {
+		"message": "أخفق قراءة الملف المحدد"
+	},
+	"settingsRulesFileNotSelected": {
+		"message": "الرجاء تحديد ملف القواعد"
+	},
+	"settingsSourceTypeNotSelected": {
+		"message": "الرجاء تحديد نوع المصدر"
+	},
+	"settingsImportRulesFailed": {
+		"message": "أخفق استيراد الملف."
+	},
+	"settingsImportRulesTextIsEmpty": {
+		"message": "الرجاء إدخال القواعد في الصندوق"
+	},
+	"settingsServerNameRequired": {
+		"message": "حدد اسم الخادم!"
+	},
+	"settingsServerNameExists": {
+		"message": "يوجد خادم بنفس الاسم بالفعل!"
+	},
+	"settingsServerServerAddressIsEmpty": {
+		"message": "لا يمكن أن يكون عنوان الخادم فارغا"
+	},
+	"settingsServerPortNoInvalid": {
+		"message": "الرجاء إدخال رقم منفذ صالح"
+	},
+	"settingsServerAuthenticationInvalid": {
+		"message": "مطلوب كل من اسم المستخدم وكلمة المرور للمصادقة"
+	},
+	"settingsServersGridNoDataContent": {
+		"message": "لم يتم تعريف أي خادم"
+	},
+	"settingsServersGridColName": {
+		"message": "الاسم"
+	},
+	"settingsServersGridColProtocol": {
+		"message": "البروتوكول"
+	},
+	"settingsServersGridColServer": {
+		"message": "السيرفر"
+	},
+	"settingsServersGridColPort": {
+		"message": "المنفذ"
+	},
+	"settingsServersGridColCountry": {
+		"message": "الدولة"
+	},
+	"settingsServersGridColRating": {
+		"message": "التقييم"
+	},
+	"settingsServersModalTitle": {
+		"message": "تفاصيل خادم البروكسي"
+	},
+	"settingsServersServerName": {
+		"message": "اسم السيرفر"
+	},
+	"settingsServersSeverAddress": {
+		"message": "عنوان السيرفر"
+	},
+	"settingsServersProtocol": {
+		"message": "بروتوكول البروكسي"
+	},
+	"settingsServersPort": {
+		"message": "المنفذ"
+	},
+	"settingsServersProxyDNS": {
+		"message": "استخدام DNS عبر البروكسي عند استخدام SOCKS 5"
+	},
+	"settingsServersUsername": {
+		"message": "اسم المستخدم"
+	},
+	"settingsServersPassword": {
+		"message": "كلمة السر"
+	},
+	"settingsServersAuthChromeMv3Limitation": {
+		"message": "(للأسف مصادقة خادم البروكسي غير مدعومة في Chrome عبر API الإضافات. هذا مقصود.)"
+	},
+	"settingsServersCancel": {
+		"message": "إلغاء"
+	},
+	"settingsServersSave": {
+		"message": "حفظ"
+	},
+	"settingsServersImport": {
+		"message": "استيراد"
+	},
+	"settingsProfilesNameTitle": {
+		"message": "الملف الذكي:"
+	},
+	"settingsProfilesEnabled": {
+		"message": "مفعل"
+	},
+	"settingsProfilesTypeTitle": {
+		"message": "نوع الملف الشخصي:"
+	},
+	"settingsProfilesTypeDesc_SmartRules": {
+		"message": "في هذا الملف لا يُطبق البروكسي إلا إذا عرّفت قواعد ذكية. ستحدد قواعد القائمة السوداء، أو بعبارة أخرى القواعد التي تطبّق البروكسي."
+	},
+	"settingsProfilesTypeDesc_AlwaysEnabledBypassRules": {
+		"message": "في هذا الملف تُطبّق خوادم البروكسي دائمًا وتعرّف القواعد الذكية لتجاوزها. ستحدد قواعد القائمة البيضاء، أو بعبارة أخرى القواعد التي تتخطى البروكسي ولا تطبقه."
+	},
+	"settingsProfilesTypeDesc_IgnoreFailureRules": {
+		"message": "تجاهل كشف الفشل لهذه النطاقات عن طريق إضافة قواعد."
+	},
+	"settingsProfilesProfileProxyServer": {
+		"message": "خادم بروكسي الملف الشخصي:"
+	},
+	"settingsProfilesDefaultProfileProxyServer": {
+		"message": "(استخدام خادم البروكسي الافتراضي)"
+	},
+	"settingsProfilesProfileProxyServerDesc": {
+		"message": "(أثناء استخدام هذا الملف، سيكون هذا خادم البروكسي النشط)"
+	},
+	"settingsProfilesRulesSection": {
+		"message": "القواعد"
+	},
+	"settingsProfilesDelete": {
+		"message": "حذف"
+	},
+	"settingsProfilesAddNewLabel": {
+		"message": "إضافة ملف ذكي جديد"
+	},
+	"settingsProfilesAddNewTypeLead": {
+		"message": "الرجاء اختيار <b>نوع الملف الشخصي</b> الذي تريد إضافته:"
+	},
+	"settingsProfilesAddNewType_SmartRules": {
+		"message": "قواعد ذكية"
+	},
+	"settingsProfilesAddNewType_SmartRulesDesc": {
+		"message": "في هذا النوع من الملفات، يُطبق البروكسي على الطلبات بناءً على <em>قواعد</em> تحتاج إلى تعريفها. لتعريف هذه القواعد يمكنك استخدام قائمة النوافذ المنبثقة في شريط القوائم أو إضافتها من الإعدادات أو من نافذة <em>الموارد القابلة للبروكسي</em>.<br>كما يمكنك الاشتراك في قوائم قواعد مختلفة مثل Gfwlist."
+	},
+	"settingsProfilesAddNewType_AlwaysEnabled": {
+		"message": "مفعّل دائمًا"
+	},
+	"settingsProfilesAddNewType_AlwaysEnabledDesc": {
+		"message": "في هذا النوع من الملفات، سيُطبق البروكسي دائمًا على الطلبات ما لم تُعرّف قواعد لتجاوزه. خطوات تعريف القواعد مماثلة لنوع ملف قواعد ذكية."
+	},
+	"settingsProfilesAddNewBtnContinue": {
+		"message": "متابعة"
+	},
+	"settingsProfilesAddNewBtnCancel": {
+		"message": "إلغاء"
+	},
+	"settingsProfilesAddErrorTypeRequired": {
+		"message": "الرجاء اختيار نوع الملف الشخصي"
+	},
+	"settingsProfilesAddErrorNameRequired": {
+		"message": "اسم الملف الشخصي إلزامي"
+	},
+	"settingsProfilesAddErrorNameExists": {
+		"message": "اسم الملف الشخصي موجود بالفعل، الرجاء إدخال اسم آخر"
+	},
+	"settingsProfilesDeleteConfirm": {
+		"message": "هل أنت متأكد من حذف هذا الملف الشخصي؟ تحذير، لا يمكن التراجع عن هذا الإجراء!"
+	},
+	"settingsProfilesDeleteFailed": {
+		"message": "فشل حذف الملف الشخصي المحدد."
+	},
+	"settingsProfilesDeleteDone": {
+		"message": "تم حذف الملف الشخصي بنجاح"
+	},
+	"settingsProfilesDeleteBuiltinFail": {
+		"message": "لا يمكن حذف الملفات المدمجة"
+	},
+	"settingsProfilesProxyServer": {
+		"message": "[استخدام خادم البروكسي الافتراضي]"
+	},
+	"settingsProfilesRulesSubscriptionsTitle": {
+		"message": "اشتراكات القواعد"
+	},
+	"settingsProfilesRulesSubscriptionsDesc": {
+		"message": "يمكنك هنا الاشتراك في قوائم القواعد."
+	},
+	"settingsSaveSmartProfileSuccess": {
+		"message": "تم حفظ الملف الذكي بنجاح."
+	},
+	"settingsErrorFailedToSaveSmartProfile": {
+		"message": "فشل حفظ الملف الذكي."
+	},
+	"settingsRuleSourceRequired": {
+		"message": "الرجاء تحديد نطاق مصدر القاعدة!"
+	},
+	"settingsRuleSourceInvalid": {
+		"message": "نطاق المصدر غير صالح، يجب أن يكون شيئًا مثل 'google.com'"
+	},
+	"settingsRuleSourceInvalidFormat": {
+		"message": "'نطاق المصدر' غير صالح '{0}'"
+	},
+	"settingsRuleSourceAlreadyExists": {
+		"message": "توجد قاعدة بنفس المصدر بالفعل!"
+	},
+	"settingsRuleHostInvalid": {
+		"message": "اسم المضيف '{0}' غير صالح، يجب أن يكون اسم المضيف شيئا مثل 'google.com'"
+	},
+	"settingsRuleRegexNotMatchDomain": {
+		"message": "قاعدة Regex لا تطابق نطاق المصدر '{0}'"
+	},
+	"settingsRuleDoesntIncludeDomain": {
+		"message": "القاعدة لا تطابق نطاق المصدر '{0}'"
+	},
+	"settingsRuleRegexInvalid": {
+		"message": "قاعدة Regex '{0}' غير صالحة"
+	},
+	"settingsRuleExactUrlInvalid": {
+		"message": "الرابط '{0}' غير صالح"
+	},
+	"settingsRuleUrlInvalid": {
+		"message": "الرابط '{0}' غير صالح"
+	},
+	"settingsRulesGridNoDataContent": {
+		"message": "لم يتم تعريف أي قاعدة"
+	},
+	"settingsRulesGridColRuleType": {
+		"message": "نوع القاعدة"
+	},
+	"settingsRulesGridColSource": {
+		"message": "المصدر"
+	},
+	"settingsRulesGridColRule": {
+		"message": "القاعدة"
+	},
+	"settingsRulesGridColEnabled": {
+		"message": "مفعل"
+	},
+	"settingsRulesGridColProxy": {
+		"message": "سيرفر بروكسي"
+	},
+	"settingsRulesProxyDefault": {
+		"message": "[استخدام البروكسي النشط]"
+	},
+	"settingsRulesProxyFromProfile": {
+		"message": "[استخدام بروكسي الملف الشخصي]"
+	},
+	"settingsRulesModalTitle": {
+		"message": "تفاصيل القاعدة"
+	},
+	"settingsRulesRuleType": {
+		"message": "نوع القاعدة"
+	},
+	"settingsRulesSourceDomain": {
+		"message": "نطاق مصدر القاعدة"
+	},
+	"settingsRulesSourceDomainDesc": {
+		"message": "(مثل google.com)"
+	},
+	"settingsRulesPattern": {
+		"message": "نمط التشابه"
+	},
+	"settingsRulesGeneratePattern": {
+		"message": "توليد النمط تلقائيًا"
+	},
+	"settingsRulesRegex": {
+		"message": "Regex للرابط"
+	},
+	"settingsRulesHostRegex": {
+		"message": "مضيف Regex"
+	},
+	"settingsRulesExactUrl": {
+		"message": "رابط دقيق (بأحرف صغيرة)"
+	},
+	"settingsRulesProxyServer": {
+		"message": "سيرفر بروكسي"
+	},
+	"settingsRulesProxyServerNotAuth": {
+		"message": "(الخوادم التي تتطلب مصادقة غير مدعومة في Chrome)"
+	},
+	"settingsRulesEnabled": {
+		"message": "مفعل"
+	},
+	"settingsRulesModalCancel": {
+		"message": "إلغاء"
+	},
+	"settingsRulesModalSave": {
+		"message": "حفظ"
+	},
+	"settingsRulesActionType": {
+		"message": "الإجراء"
+	},
+	"settingsRuleActionApplyProxy": {
+		"message": "تطبيق البروكسي"
+	},
+	"settingsRuleActionWhitelist": {
+		"message": "قائمة بيضاء (بدون بروكسي)"
+	},
+	"settingsRuleActionWhitelistDesc": {
+		"message": "(لقواعد القائمة البيضاء أولوية أعلى من قواعد البروكسي بغض النظر عن ترتيبها)"
+	},
+	"settingsServerPortInvalid": {
+		"message": "منفذ السيرفر '{0}' غير صالح"
+	},
+	"settingsServerHostInvalid": {
+		"message": "منفذ المضيف'{0}' غير صالح"
+	},
+	"settingsRestoreSettingsSuccess": {
+		"message": "تتم استعادة الإعدادات بنجاح"
+	},
+	"settingsRestoreSettingsFailed": {
+		"message": "حدث خطأ أثناء استعادة الإعدادات"
+	},
+	"settingsRestoreSettingsFailedInvalid": {
+		"message": "بيانات النسخ الاحتياطي غير صالحة أو تالفة"
+	},
+	"settingsRestoreSettingsFailedInvalidActiveProfile": {
+		"message": "بيانات غير صالحة للملف الشخصي النشط"
+	},
+	"settingsRestoreSettingsFailedInvalidDefaultProxyServer": {
+		"message": "بيانات غير صالحة لخادم البروكسي الافتراضي"
+	},
+	"settingsEnableByDomainInvalid": {
+		"message": "النطاق المحدد غير صالح"
+	},
+	"settingsEnableByDomainExists": {
+		"message": "قاعدة النطاق موجودة بالفعل"
+	},
+	"settingsEnableByDomainSmartProfileNonEditable": {
+		"message": "الملف الشخصي الحالي '{0}' لا يمكن تحديثه بالقواعد"
+	},
+	"settingsNoRuleFoundForDomain": {
+		"message": "ليس هناك أي قاعدة ل '{0}'"
+	},
+	"importerImportSuccess": {
+		"message": "يتم إلحاق إجمالي {0} من {1} القواعد. <br> لا تنس حفظ التغييرات."
+	},
+	"settingsRemoveMultipleProxyRuleButton": {
+		"message": "حذف متعدد"
+	},
+	"settingsAddMultipleRulesButton": {
+		"message": "إضافة قواعد متعددة"
+	},
+	"settingsAddMultipleRuleTitle": {
+		"message": "إضافة قواعد متعددة"
+	},
+	"settingsMultipleRuleList": {
+		"message": "قائمة المضيف/القاعدة:"
+	},
+	"settingsMultipleRuleInvalidHost": {
+		"message": "اسم المضيف '{0}' غير صالح"
+	},
+	"settingsMultipleRuleNoNewRuleAdded": {
+		"message": "لم تُضاف أية قاعدة جديدة"
+	},
+	"settingsTabProxyServerSubscriptionsTitle": {
+		"message": "إدارة اشتراكات سيرفر البروكسي:"
+	},
+	"settingsTabProxyServerSubscriptionsDescription": {
+		"message": "هنا يمكنك الاشتراك في قوائمة البروكسيات والتبديل بينهم في وقت لاحق. يرجى ملاحظة أن القوائم الطويلة قد تسبب الفشل في مزامنة البيانات بين الأجهزة."
+	},
+	"settingsErrorFailedToSaveGeneral": {
+		"message": "أخفق حفظ إعدادات الخيارات."
+	},
+	"settingsSaveOptionsSuccess": {
+		"message": "تم حفظ الخيارات العامة بنجاح."
+	},
+	"settingsAddServerSubscriptionButton": {
+		"message": "الاشتراك في قائمة"
+	},
+	"settingsServerSubscriptionModalTitle": {
+		"message": "اشترك في قائمة خادم وكيل"
+	},
+	"settingsRemoveMultipleServerSubscriptionButton": {
+		"message": "حذف متعدد"
+	},
+	"settingsServerSubscriptionName": {
+		"message": "اسم:"
+	},
+	"settingsServerSubscriptionUrl": {
+		"message": "رابط:"
+	},
+	"settingsServerSubscriptionRefreshRate": {
+		"message": "معدل التحديث:"
+	},
+	"settingsServerSubscriptionRefreshRateHelp": {
+		"message": "(بالدقائق، 0 يعني عدم التحديث)"
+	},
+	"settingsServerSubscriptionEnabled": {
+		"message": "تمكين"
+	},
+	"settingsServerSubscriptionProtocol": {
+		"message": "بروتوكول:"
+	},
+	"settingsServerSubscriptionObfuscation": {
+		"message": "التشويش:"
+	},
+	"settingsServerSubscriptionFormat": {
+		"message": "التنسيق:"
+	},
+	"settingsServerSubscriptionApplyProxy": {
+		"message": "تمرير عبر البروكسي:"
+	},
+	"settingsServerSubscriptionApplyProxyHelpFirefox": {
+		"message": "(قرر بناءً على الوصول للخادم)"
+	},
+	"settingsServerSubscriptionApplyProxyHelpChrome": {
+		"message": "(للأسف هذه الميزة غير متاحة في Chrome. سيُطبق البروكسي الحالي)"
+	},
+	"settingsServerSubscriptionApplyProxy_NoProxy": {
+		"message": "بدون بروكسي"
+	},
+	"settingsServerSubscriptionApplyProxy_CurrentProxy": {
+		"message": "البروكسي الحالي"
+	},
+	"settingsServerSubscriptionApplyProxy_SelectedProxy": {
+		"message": "البروكسي المحدد"
+	},
+	"settingsServerSubscriptionUsername": {
+		"message": "اسم المستخدم:"
+	},
+	"settingsServerSubscriptionPassword": {
+		"message": "كلمة السر:"
+	},
+	"settingsServerSubscriptionAuthenticationHelp": {
+		"message": "(إذا كانت القائمة تتطلب المصادقة)"
+	},
+	"settingsServerSubscriptionCancelButton": {
+		"message": "إلغاء"
+	},
+	"settingsServerSubscriptionSaveButton": {
+		"message": "حفظ"
+	},
+	"settingsServerSubscriptionSavingButton": {
+		"message": "جاري الحفظ..."
+	},
+	"settingsServerSubscriptionTestButton": {
+		"message": "اختبار"
+	},
+	"settingsProxyTestStopButton": {
+		"message": "إيقاف"
+	},
+	"settingsProxyTestCancelled": {
+		"message": "تم إيقاف الاختبار بواسطة المستخدم"
+	},
+	"settingsProxyTestResumeDialogTitle": {
+		"message": "اختبار البروكسي"
+	},
+	"settingsProxyTestResumeDialogMessage": {
+		"message": "هناك بروكسيات لم يتم اختبارها. ماذا تريد أن تفعل؟"
+	},
+	"settingsProxyTestResumeContinue": {
+		"message": "المتابعة من حيث توقفنا"
+	},
+	"settingsProxyTestResumeRestart": {
+		"message": "إعادة التشغيل من البداية"
+	},
+	"settingsServerSubscriptionTestingButton": {
+		"message": "اختبار..."
+	},
+	"settingsConfirmRemoveServerSubscription": {
+		"message": "هل أنت متأكد من إزالة الاشتراك المحدد؟"
+	},
+	"settingsRemoveAllProxyServerSubscriptions": {
+		"message": "هل تريد بالتأكيد إزالة جميع اشتراكات سيرفر بروكسي؟"
+	},
+	"settingsConfirmRemoveMultipleServerSubscription": {
+		"message": "هل أنت متأكد من إزالة الاشتراكات المحددة؟"
+	},
+	"settingsRemoveAllProxyServerSubscriptionsSuccess": {
+		"message": "تتم إزالة جميع اشتراكات الخادم الوكيل. <br/> يجب حفظها لتطبيق التغييرات."
+	},
+	"settingsServerSubscriptionProtocolDefault": {
+		"message": "(الكشف التلقائي مع هتب الاحتياطي)"
+	},
+	"settingsInitializeFailed": {
+		"message": "أخفق قراءة التهيئات. يرجى إغلاق صفحة الإعدادات وإعادة المحاولة."
+	},
+	"settingsActiveProxyServerSubscriptions": {
+		"message": "-الاشتراكات-"
+	},
+	"settingsServerSubscriptionsGridNoDataContent": {
+		"message": "لا اشتراكات"
+	},
+	"settingsServerSubscriptionsGridColName": {
+		"message": "الاسم"
+	},
+	"settingsServerSubscriptionsGridColUrl": {
+		"message": "الرابط"
+	},
+	"settingsServerSubscriptionsGridColCount": {
+		"message": "العدد"
+	},
+	"settingsServerSubscriptionsGridColEnabled": {
+		"message": "مفعل"
+	},
+	"settingsServerSubscriptionIncompleteForm": {
+		"message": "الرجاء ملء الحقول المطلوبة بالتنسيق الصحيح"
+	},
+	"settingsServerSubscriptionInvalidForm": {
+		"message": "تفاصيل اشتراك سيرفر بروكسي غير صالحة"
+	},
+	"settingsServerSubscriptionDuplicateName": {
+		"message": "الاسم الذي تم إدخاله مستخدم بالفعل، يرجى إدخال اسم آخر."
+	},
+	"settingsServerSubscriptionSaveUpdated": {
+		"message": "يتم تحديث الاشتراك مع {0} وكلاء في ذلك. <br/> لا تنس حفظ التغييرات."
+	},
+	"settingsServerSubscriptionSaveAdded": {
+		"message": "تتم إضافة الاشتراك مع {0} وكلاء في ذلك. <br/> لا تنس حفظ التغييرات."
+	},
+	"settingsServerSubscriptionSaveFailedGet": {
+		"message": "أخفق الحصول على وكلاء."
+	},
+	"settingsServerSubscriptionTestSuccess": {
+		"message": "اختبار ناجح. أرجعت القائمة {0} بروكسي."
+	},
+	"settingsServerSubscriptionTestFailed": {
+		"message": "أخفق الاختبار"
+	},
+	"settingsSaveProxyServerSubscriptionsSuccess": {
+		"message": "تم حفظ اشتراكات سيرفر بروكسي بنجاح."
+	},
+	"settingsFailedToSaveProxySubscriptions": {
+		"message": "فشل حفظ اشتراكات خوادم البروكسي"
+	},
+	"settingsAddRulesSubscriptionButton": {
+		"message": "الاشتراك في قائمة قواعد"
+	},
+	"settingsRemoveMultipleRulesSubscriptionButton": {
+		"message": "حذف متعدد"
+	},
+	"settingsRulesSubscriptionsModalTitle": {
+		"message": "الاشتراك في قائمة قواعد"
+	},
+	"settingsRulesSubscriptionsGridColName": {
+		"message": "الاسم"
+	},
+	"settingsRulesSubscriptionsGridColUrl": {
+		"message": "الرابط"
+	},
+	"settingsRulesSubscriptionsGridColCount": {
+		"message": "العدد"
+	},
+	"settingsRulesSubscriptionsGridColEnabled": {
+		"message": "مفعل"
+	},
+	"settingsRulesSubscriptionsName": {
+		"message": "الاسم:"
+	},
+	"settingsRulesSubscriptionsUrl": {
+		"message": "الرابط:"
+	},
+	"settingsRulesSubscriptionsRefreshRate": {
+		"message": "معدل التحديث:"
+	},
+	"settingsRulesSubscriptionsRefreshRateHelp": {
+		"message": "(بالدقائق، 0 يعني لا تحديث)"
+	},
+	"settingsRulesSubscriptionEnabled": {
+		"message": "مفعل"
+	},
+	"settingsRulesSubscriptionsObfuscation": {
+		"message": "التشويش:"
+	},
+	"settingsRulesSubscriptionsFormat": {
+		"message": "التنسيق:"
+	},
+	"settingsRulesSubscriptionsApplyProxy": {
+		"message": "تمرير عبر البروكسي:"
+	},
+	"settingsRulesSubscriptionsApplyProxyHelpFirefox": {
+		"message": "(قرر بناءً على الوصول للخادم)"
+	},
+	"settingsRulesSubscriptionsApplyProxyHelpChrome": {
+		"message": "(للأسف هذه الميزة غير متاحة في Chrome. سيُطبق البروكسي الحالي)"
+	},
+	"settingsRulesSubscriptionsUsername": {
+		"message": "اسم المستخدم:"
+	},
+	"settingsRulesSubscriptionsAuthenticationHelp": {
+		"message": "(إذا كانت القائمة تتطلب مصادقة)"
+	},
+	"settingsRulesSubscriptionsPassword": {
+		"message": "كلمة المرور:"
+	},
+	"settingsRulesSubscriptionsTestButton": {
+		"message": "اختبار"
+	},
+	"settingsRulesSubscriptionsSaveButton": {
+		"message": "حفظ"
+	},
+	"settingsRulesSubscriptionsCancelButton": {
+		"message": "إلغاء"
+	},
+	"settingsConfirmRemoveRulesSubscription": {
+		"message": "هل أنت متأكد من إزالة اشتراك قواعد المحدد؟"
+	},
+	"settingsConfirmRemoveMultipleRulesSubscription": {
+		"message": "هل أنت متأكد من إزالة الاشتراكات المحددة من قواعد؟"
+	},
+	"settingsRulesSubscriptionIncompleteForm": {
+		"message": "الرجاء ملء الحقول المطلوبة بالتنسيق الصحيح"
+	},
+	"settingsRulesSubscriptionInvalidForm": {
+		"message": "تفاصيل اشتراك خادم البروكسي غير صالحة"
+	},
+	"settingsRulesSubscriptionDuplicateName": {
+		"message": "الاسم المدخل مستخدم بالفعل، الرجاء إدخال اسم آخر."
+	},
+	"settingsRulesSubscriptionSavingButton": {
+		"message": "جاري الحفظ..."
+	},
+	"settingsRulesSubscriptionTestButton": {
+		"message": "اختبار"
+	},
+	"settingsRulesSubscriptionTestingButton": {
+		"message": "جارٍ الاختبار..."
+	},
+	"settingsRulesSubscriptionSaveUpdated": {
+		"message": "تم تحديث الاشتراك بـ {0} قواعد بروكسي و {1} قواعد في القائمة البيضاء. <br/>لا تنسَ حفظ التغييرات."
+	},
+	"settingsRulesSubscriptionSaveAdded": {
+		"message": "تمت إضافة الاشتراك مع {0} قواعد بروكسي و {1} قواعد قائمة بيضاء. <br/>لا تنسَ حفظ التغييرات."
+	},
+	"settingsRulesSubscriptionSaveFailedGet": {
+		"message": "فشل الحصول على القواعد."
+	},
+	"settingsRulesSubscriptionRefreshOnDisabled": {
+		"message": "لا يمكن تحديث اشتراك معطل"
+	},
+	"settingsRulesSubscriptionTestSuccess": {
+		"message": "الاختبار نجح. أعادت القائمة {0} قواعد بروكسي و {1} قواعد قائمة بيضاء."
+	},
+	"settingsRulesSubscriptionTestFailed": {
+		"message": "فشل الاختبار"
+	},
+	"settingsFailedToSaveRulesSubscriptions": {
+		"message": "فشل حفظ اشتراكات القواعد"
+	},
+	"settingsRemoveAllProxyRulesSubscriptions": {
+		"message": "هل أنت متأكد من إزالة جميع اشتراكات قواعد البروكسي؟"
+	},
+	"settingsRemoveAllProxyRulesSubscriptionsSuccess": {
+		"message": "تم إزالة جميع اشتراكات قواعد البروكسي.<br/>عليك الحفظ لتطبيق التغييرات."
+	},
+	"importerImportRulesSuccess": {
+		"message": "تم استيراد {0} قواعد بروكسي و {1} قواعد قائمة بيضاء.<br>لا تنسَ حفظ التغييرات."
+	},
+	"settingsRulePatternIsEmpty": {
+		"message": "القاعدة ليس لديها نمط محدد"
+	},
+	"settingsWelcomeTitle": {
+		"message": "مرحبًا بك في ProxyMust"
+	},
+	"settingsWelcomeMessage": {
+		"message": "<p>\n\tProxyMust، مدير بروكسي انتقائي مع إمكانية اختبار البروكسيات.<br>\n\tيرجى اتباع الخطوات التالية للبدء:\n</p>\n<ol>\n\t<li>\n\t\tأضف خادم بروكسي أو قائمة بروكسيات\n\t\t<br>\n\t\t<small>(انتقل إلى علامة تبويب خوادم البروكسي وأضف هناك)</small>\n\t</li>\n\t<li>\n\t\tاضبط الوضع على البروكسي الانتقائي\n\t\t<br>\n\t\t<small>(استخدم القائمة المنبثقة في شريط الأدوات لتغيير الوضع النشط إلى البروكسي الانتقائي)</small>\n\t</li>\n\t<li>\n\t\tحدد قواعد البروكسي\n\t\t<br>\n\t\t<small>(استخدم القائمة المنبثقة لشريط الأدوات لإضافة القواعد أو علامة تبويب قواعد البروكسي لإضافة/تعديل قواعد خادم البروكسي)</small>\n\t</li>\n\t<li>\n\t\tأنت الآن جاهز.\n\t</li>\n</ol>"
+	},
+	"settingsWelcomeSkipButton": {
+		"message": "حسنًا"
+	},
+	"settingsSubscriptionStatsStatusSuccess": {
+		"message": "الحالة: ناجح"
+	},
+	"settingsSubscriptionStatsStatusFail": {
+		"message": "الحالة: فشل"
+	},
+	"settingsSubscriptionStatsLastTry": {
+		"message": "آخر محاولة:"
+	},
+	"settingsSubscriptionStatsMessage": {
+		"message": "الرسالة:"
+	},
+	"settingsSubscriptionStatsLastSuccess": {
+		"message": "آخر نجاح:"
+	},
+	"settings_SmartProfileType_Direct": {
+		"message": "مباشر"
+	},
+	"settings_SmartProfileType_SystemProxy": {
+		"message": "بروكسي النظام"
+	},
+	"settings_SmartProfileType_SmartRules": {
+		"message": "قواعد ذكية"
+	},
+	"settings_SmartProfileType_AlwaysEnabledBypassRules": {
+		"message": "مفعّل دائمًا مع قواعد تجاوز"
+	},
+	"settings_SmartProfileType_IgnoreFailureRules": {
+		"message": "قواعد تجاهل الفشل"
+	},
+	"settingsRuleCidrIPAddress": {
+		"message": "عنوان IP"
+	},
+	"settingsRuleCidrPrefixLength": {
+		"message": "طول البادئة"
+	},
+	"settingsRuleCidrNotationDesc": {
+		"message": "(يرجى ملاحظة أن هذه القاعدة لن تقوم بتحويل اسم المضيف إلى عناوين IP.)"
+	},
+	"settingsRuleCidrIPInvalid": {
+		"message": "الرجاء إدخال عنوان IP صالح"
+	},
+	"settingsRuleCidrPrefixLengthInvalid": {
+		"message": "الرجاء إدخال طول بادئة صالح"
+	},
+	"settingsRuleCidrNotationInvalid": {
+		"message": "ترميز CIDR '{0}' غير صالح"
+	},
+	"settingsRuleCidrNotationInvalidMatch": {
+		"message": "قاعدة CIDR لا تطابق '{0}'"
+	},
+	"notificationNoNextProxyServer": {
+		"message": "لا يوجد خادم بروكسي إضافي"
+	},
+	"notificationNoPreviousProxyServer": {
+		"message": "لا يوجد خادم بروكسي سابق"
+	},
+	"notificationShortcutTitle": {
+		"message": "إشعار اختصار ProxyMust"
+	},
+	"notificationShortcutProxyModeMessage": {
+		"message": "تم تغيير وضع البروكسي إلى {0}"
+	},
+	"notificationShortcutProxyServerChanged": {
+		"message": "تم تغيير خادم البروكسي إلى {0}"
+	},
+	"popupRatingDialogTitle": {
+		"message": "هل العنوان يعمل؟"
+	},
+	"popupRatingWorksButton": {
+		"message": "نعم (+1)"
+	},
+	"popupRatingFailsButton": {
+		"message": "لا (-1)"
+	},
+	"popupRatingCancelButton": {
+		"message": "إلغاء"
+	},
+	"settingsProxyTestTitle": {
+		"message": "فحص إمكانية الوصول إلى البروكسي"
+	},
+	"settingsProxyTestEnable": {
+		"message": "إضافة مواقع اختبار للتحقق من البروكسي"
+	},
+	"settingsProxyTestNote": {
+		"message": "أدخل ما يصل إلى 5 عناوين. سيكون الفحص أسرع إذا حددت 3 عناوين على الأكثر."
+	},
+	"settingsProxyTestUrlsTitle": {
+		"message": "عناوين الزيارة لاختبار الوصول"
+	},
+	"settingsProxyTestUrlsWarning": {
+		"message": "⚠️ أدخل المواقع التي تزورها هنا (مثل youtube.com، telegram.org)، وليس عناوين البروكسي."
+	},
+	"settingsProxyTestClear": {
+		"message": "مسح مواقع الاختبار"
+	},
+	"settingsProxyTestStop": {
+		"message": "⏹ إيقاف الاختبار"
+	},
+	"proxyTestCompleted": {
+		"message": "اكتمل الفحص. تم اختبار {0} بروكسي."
+	},
+	"settingsProxyTestRatingAutoEnabled": {
+		"message": "تم تمكين التقييم تلقائياً لعرض نتائج الاختبار."
+	},
+	"settingsProxyTestNoTestUrls": {
+		"message": "لم يتم تحديد مواقع اختبار. يرجى إضافة موقع واحد على الأقل."
+	},
+	"settingsProxyMustTestTitle": {
+		"message": "اختبار البروكسي"
+	},
+	"settingsProxyMustSiteLabel": {
+		"message": "موقع الاختبار:"
+	},
+	"settingsProxyMustTestRun": {
+		"message": "▶ اختبار"
+	},
+	"settingsProxyMustAddSite": {
+		"message": "إضافة موقع"
+	},
+	"settingsProxyMustTestCondition": {
+		"message": "إذا لم يتم تحديد أي شيء، فسيتم تشغيل الاختبار لجميع البروكسيات في الجدول."
+	},
+	"settingsProxyMustTestResults": {
+		"message": "النتائج: ✅ = يعمل بالتأكيد لهذا الموقع، ☑️ = ربما يعمل (بيانات قديمة أو نجاح على مواقع أخرى)، ❓ = لا توجد بيانات، ⛔ = لا يعمل."
+	},
+	"settingsServersRatingPriority": {
+		"message": "التقييم + الأولوية"
+	},
+	"settingsContextMenuChangeRating": {
+		"message": "تغيير التقييم اليدوي"
+	},
+	"settingsContextMenuPlus1": {
+		"message": "(+1)"
+	},
+	"settingsContextMenuMinus1": {
+		"message": "(-1)"
+	},
+	"settingsContextMenuRatingTitle": {
+		"message": "تقييم يدوي"
+	},
+	"settingsContextMenuPlus1Desc": {
+		"message": "رفع في القائمة"
+	},
+	"settingsContextMenuMinus1Desc": {
+		"message": "خفض في القائمة"
+	},
+	"settingsContextMenuResetRating": {
+		"message": "إعادة تعيين التقييم"
+	},
+	"settingsContextMenuSetFavorite": {
+		"message": "تعيين كمفضلة"
+	},
+	"settingsContextMenuSetPin": {
+		"message": "تثبيت"
+	},
+	"settingsContextMenuRemoveFavorite": {
+		"message": "إزالة من المفضلة"
+	},
+	"settingsContextMenuUnpin": {
+		"message": "إلغاء التثبيت"
+	},
+	"settingsContextMenuRemovePriority": {
+		"message": "إزالة الأولوية"
+	},
+	"settingsContextMenuExportSelected": {
+		"message": "تصدير المحدد"
+	},
+	"settingsContextMenuCopyAddresses": {
+		"message": "نسخ العناوين"
+	},
+	"settingsContextMenuDelete": {
+		"message": "حذف"
+	},
+	"settingsContextMenuTestForSite": {
+		"message": "اختبار المحدد للموقع"
+	},
+	"settingsProxyMustTestProgress": {
+		"message": "اختبار البروكسيات لـ {0}... ({1}/{2})"
+	},
+	"settingsProxyMustTestComplete": {
+		"message": "اكتمل الاختبار"
+	},
+	"settingsProxyMustAddSitePrompt": {
+		"message": "أدخل نطاق الموقع (مثل youtube.com):"
+	},
+	"settingsProxyMustSiteAlreadyExists": {
+		"message": "الموقع موجود بالفعل في القائمة."
+	},
+	"settingsProxyMustInvalidDomain": {
+		"message": "نطاق غير صالح. يرجى إدخال نطاق صالح (مثل youtube.com)."
+	},
+	"popupCurrentSite": {
+		"message": "الموقع الحالي:"
+	},
+	"settingsProxyMustRemoveSite": {
+		"message": "إزالة الموقع"
+	},
+	"settingsContextMenuMoveToTop": {
+		"message": "نقل إلى الأعلى"
+	},
+	"settingsContextMenuMoveToDown": {
+		"message": "نقل إلى الأسفل"
+	},
+	"settingsProxyMustCannotRemoveAutoSite": {
+		"message": "هذا الموقع مأخوذ من القواعد ولا يمكن إزالته يدوياً."
+	},
+	"settingsProxyMustConfirmRemoveSite": {
+		"message": "هل تريد إزالة \"{0}\" من مواقع الاختبار؟"
+	},
+	"settingsProxyMustSiteRemoved": {
+		"message": "تمت إزالة الموقع \"{0}\"."
+	},
+	"settingsProxyMustStaleHours": {
+		"message": "ساعات التقادم:"
+	},
+	"settingsContextMenuPreciseTest": {
+		"message": "اختبار دقيق (أبطأ، أكثر دقة)"
+	},
+	"settingsContextMenuExpressTest": {
+		"message": "اختبار سريع (سريع، أقل دقة)"
+	},
+	"popupQuickTestButton": {
+		"message": "اختبار"
+	},
+	"popupQuickTestStopButton": {
+		"message": "إيقاف"
+	},
+	"settingsChooseTestTypeTitle": {
+		"message": "اختر نوع الاختبار"
+	},
+	"settingsChooseTestTypeDescription": {
+		"message": "اختر الاختبار الذي تريد تشغيله:"
+	},
+	"settingsPreciseTestDesc": {
+		"message": "فحص كامل، أكثر دقة ولكنه يستغرق وقتًا أطول."
+	},
+	"settingsExpressTestDesc": {
+		"message": "اختبار سريع، قد يتخطى بعض البروكسيات العاملة، لكنه يجد بروكسيًا واحدًا على الأقل بسرعة."
+	},
+	"settingsCancelButton": {
+		"message": "إلغاء"
+	},
+	"popupAddAllSuccessfulSubs": {
+		"message": "إضافة العاملة"
+	},
+	"settingsContextMenuClearStatuses": {
+		"message": "مسح الحالات"
+	},
+	"settingsContextMenuClearStatusesSelected": {
+		"message": "البروكسيات المحددة"
+	},
+	"settingsContextMenuClearStatusesAll": {
+		"message": "جميع البروكسيات"
+	},
+	"settingsContextMenuClearStatusesConfirmSelected": {
+		"message": "هل تريد مسح حالات الاختبار للبروكسيات المحددة؟"
+	},
+	"settingsContextMenuClearStatusesConfirmAll": {
+		"message": "هل تريد مسح حالات الاختبار لجميع البروكسيات؟ لا يمكن التراجع عن هذا الإجراء."
+	},
+	"settingsContextMenuClearStatusesSuccess": {
+		"message": "تم مسح حالات الاختبار بنجاح."
+	},
+	"popupQuickTestTooltip": {
+		"message": "اختبار سريع للعثور على بروكسيات عاملة للموقع الحالي"
+	},
+	"popupAddAllSuccessfulSubsTooltip": {
+		"message": "يضيف البروكسيات المشتركة التي اجتازت الاختبار إلى قائمتك اليدوية"
+	},
+	"popupTestMenuTitle": {
+		"message": "اختر نوع الاختبار"
+	},
+	"popupTestMenuAllProxies": {
+		"message": "اختبار سريع لجميع البروكسيات"
+	},
+	"popupTestMenuSubscriptionsOnly": {
+		"message": "اختبار سريع للاشتراكات فقط"
+	},
+	"popupTestMenuAllProxiesDesc": {
+		"message": "بروكسيات يدوية + مشتركة"
+	},
+	"popupTestMenuSubscriptionsOnlyDesc": {
+		"message": "ثم إضافة العاملة إلى القائمة اليدوية"
+	},
+	"popupTestMenuCycleTest": {
+		"message": "اختبار دوري للبروكسي (تبديل كامل)"
+	},
+	"popupTestMenuCycleTestDesc": {
+		"message": "يقوم بتبديل البروكسيات بالتسلسل، ويختبر تحميل الموقع"
+	},
+	"settingsContextMenuCycleTest": {
+		"message": "اختبار دوري (تبديل كامل)"
+	},
+	"settingsCycleTestDesc": {
+		"message": "يقوم بتبديل البروكسيات بالتسلسل، ويختبر تحميل الموقع. أكثر شمولاً ولكن أبطأ."
+	},
+	"popupTestMenuExpressCycleTest": {
+		"message": "اختبار دوري سريع (تبديل سريع)"
+	},
+	"popupTestMenuExpressCycleTestDesc": {
+		"message": "تبديل سريع متسلسل للبروكسيات، مهلة 10 ثوانٍ، يعمل عند أول نجاح"
+	},
+	"popupTestMenuExpressCycleAll": {
+		"message": "اختبار دوري سريع (جميع البروكسيات)"
+	},
+	"popupTestMenuExpressCycleAllDesc": {
+		"message": "بروكسيات يدوية + مشتركة"
+	},
+	"popupTestMenuExpressCycleSubsOnly": {
+		"message": "اختبار دوري سريع (الاشتراكات فقط)"
+	},
+	"popupTestMenuExpressCycleSubsOnlyDesc": {
+		"message": "ثم إضافة العاملة إلى القائمة اليدوية"
+	},
+	"popupNoSubscriptionProxies": {
+		"message": "لا توجد بروكسيات اشتراك لاختبارها."
+	},
+	"settingsCopiedAddresses": {
+		"message": "تم نسخ العناوين"
+	},
+	"settingsCopyFailed": {
+		"message": "فشل النسخ"
+	},
+	"settingsAnotherTestRunning": {
+		"message": "هناك اختبار آخر قيد التشغيل بالفعل. إذا كنت تعتقد أنه عالق، يرجى إعادة تحميل صفحة الإعدادات (F5) والمحاولة مرة أخرى."
+	},
+	"settingsProxyTestTimeout": {
+		"message": "انتهت مهلة الاختبار بعد 10 دقائق وتم إيقافه قسراً. يرجى المحاولة مرة أخرى."
+	},
+	"settingsProxyMustNoSiteSelected": {
+		"message": "يرجى تحديد موقع."
+	},
+	"settingsProxyMustSiteAdded": {
+		"message": "تمت إضافة الموقع \"{0}\"."
+	},
+	"testingExplanationTitle": {
+		"message": "كيف يعمل اختبار البروكسي"
+	},
+	"testingExplanationText": {
+		"message": "أثناء الاختبار، يتم فتح علامات تبويب مؤقتة وإغلاقها تلقائياً، للتحقق من عنوان IP للبروكسي والاتصال عبر هذا البروكسي بعنوان موقع الاختبار المدخل. تتم إزالة علامات تبويب الاختبار فوراً من سجل المتصفح لتجنب الفوضى. يمكنك تصغير المتصفح بأمان أثناء تشغيل الاختبارات، لأن الاختبار يتداخل مع تصفح الويب عن طريق تبديل البروكسيات التي يتم اختبارها."
+	},
+	"settingsGeneralEnableRating": {
+		"message": "تمكين تقييم البروكسيات"
+	},
+	"settingsGeneralEnableRatingDesc": {
+		"message": "يسمح بتقييم البروكسيات (يعمل / لا يعمل) والفرز حسب التقييم."
+	},
+	"settingsProxyMustStaleHoursDesc": {
+		"message": "بعد كم ساعة تعتبر نتائج الاختبار قديمة (1-168)."
+	},
+	"datatablesSearch": {
+		"message": "بحث:"
+	},
+	"datatablesShow": {
+		"message": "عرض"
+	},
+	"datatablesEntries": {
+		"message": "مدخلات"
+	},
+	"datatablesPrevious": {
+		"message": "السابق"
+	},
+	"datatablesNext": {
+		"message": "التالي"
+	},
+	"datatablesInfo": {
+		"message": "عرض _START_ إلى _END_ من أصل _TOTAL_ مدخلات"
+	},
+	"datatablesInfoEmpty": {
+		"message": "عرض 0 إلى 0 من أصل 0 مدخلات"
+	},
+	"datatablesEmptyTable": {
+		"message": "لا توجد بيانات متاحة في الجدول"
+	},
+	"datatablesAll": {
+		"message": "الكل"
+	},
+	"popupAddCurrentSiteTooltip": {
+		"message": "إضافة الموقع الحالي إلى قائمة الاختبار"
+	}
+}

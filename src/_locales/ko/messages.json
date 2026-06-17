@@ -1,0 +1,1626 @@
+{
+	"uiDirection": {
+		"message": "ltr"
+	},
+	"languageCode": {
+		"message": "ko",
+		"description": "We need to know the code which might not match what browser UI has"
+	},
+	"extensionName": {
+		"message": "ProxyMust"
+	},
+	"extensionDescription": {
+		"message": "ProxyMust – 선택적 프록시 관리자(SmartProxy의 포크). 사용자 정의 가능한 패턴을 기반으로 방문하는 사이트에 대해 프록시를 자동으로 활성화/비활성화합니다."
+	},
+	"toolbarTooltipEffectiveRule": {
+		"message": "일치하는 규칙 소스:"
+	},
+	"toolbarTooltipEffectiveRuleNone": {
+		"message": "일치하는 규칙 없음"
+	},
+	"toolbarTooltipEffectiveRulePattern": {
+		"message": "규칙 패턴:"
+	},
+	"popupTitle": {
+		"message": "ProxyMust 활성화"
+	},
+	"popupPrivateBrowsingMode": {
+		"message": "개인 정보 보호 브라우징 모드"
+	},
+	"popupNoProxy": {
+		"message": "직접 연결 (프록시 없음)"
+	},
+	"popupSmartProxy": {
+		"message": "선택적 프록시"
+	},
+	"popupAlwaysEnable": {
+		"message": "항상 활성화"
+	},
+	"popupSystemProxy": {
+		"message": "시스템 프록시"
+	},
+	"popupActiveProxy": {
+		"message": "활성 프록시(이 프로필):"
+	},
+	"popupActiveProxyDefault": {
+		"message": "활성 프록시(기본 설정):"
+	},
+	"popupEnableProxyOn": {
+		"message": "다음에 프록시 활성화"
+	},
+	"popupIgnoreTheseDomains": {
+		"message": "이 도메인 무시"
+	},
+	"popupRuleIsFromSubscription": {
+		"message": "(구독에서)"
+	},
+	"popupProxyableResources": {
+		"message": "프록시 가능 리소스"
+	},
+	"popupSettings": {
+		"message": "설정"
+	},
+	"popupSubscriptions": {
+		"message": "-구독-"
+	},
+	"popupUpdateText": {
+		"message": "{0}(으)로 업데이트 가능"
+	},
+	"popupFailedRequestsMenu": {
+		"message": "실패한 요청"
+	},
+	"popupFailedRequestsTitle": {
+		"message": "실패한 요청 목록"
+	},
+	"popupFailedRequestsDesc": {
+		"message": "시간 초과되거나 실패한 도메인입니다.<br />이 도메인이 차단되었다고 생각되면 여기에서 프록시 규칙 목록에 추가할 수 있습니다."
+	},
+	"popupAddFailedRequests": {
+		"message": "규칙 목록에 추가"
+	},
+	"popupProfileTypeDoesNotSupportsRules": {
+		"message": "선택한 프로필 '{0}'은(는) 규칙을 지원하지 않습니다. 다른 프로필을 선택하세요."
+	},
+	"popupAddIgnoredFailures": {
+		"message": "무시"
+	},
+	"popupAddIgnoredFailuresConfirm": {
+		"message": "선택한 실패를 무시하시겠습니까? 무시하면 해당 항목에서 더 이상 오류를 받지 않습니다. 나중에 설정에서 변경할 수 있습니다."
+	},
+	"popupNotAllowedSetProxySettingsChrome": {
+		"message": "불행히도 시스템 프록시를 사용하도록 브라우저 설정을 변경하려면 `incognito` 권한이 필요합니다. 브라우저에서 ProxyMust 확장 설정으로 이동하여 `Allow in incognito` 권한을 체크하세요. <a href='https://support.google.com/chrome_webstore/answer/2664769'>방법 알아보기</a>."
+	},
+	"popupNotAllowedSetProxySettingsFirefox": {
+		"message": "Firefox 67부터 시스템 프록시를 사용하도록 브라우저 설정을 변경하려면 `Private Browsing` 권한이 필요합니다. 브라우저에서 ProxyMust 애드온 설정으로 이동하여 `Run in Private Windows` 권한을 허용하세요. <a href='https://support.mozilla.org/en-US/kb/extensions-private-browsing'>방법 알아보기</a>."
+	},
+	"proxyableTitle": {
+		"message": "프록시 가능 리소스"
+	},
+	"proxyableHeader": {
+		"message": "이 페이지의 프록시 가능 항목"
+	},
+	"proxyableReload": {
+		"message": "새로 고침"
+	},
+	"proxyableClose": {
+		"message": "닫기"
+	},
+	"proxyableHeaderDesc": {
+		"message": "이 페이지에서 사용되거나 호출되는 리소스 목록입니다. 이 목록을 사용하여 이러한 리소스를 프록시 활성화 규칙에 추가하세요.<br />아무것도 보이지 않으면 페이지를 새로 고침하여 리소스를 확인하세요."
+	},
+	"proxyableErrNoSourceTab": {
+		"message": "소스 탭을 찾을 수 없습니다!"
+	},
+	"proxyableCreateRuleConfirm": {
+		"message": "선택한 도메인에 대한 규칙을 생성하시겠습니까?"
+	},
+	"proxyableDisableButton": {
+		"message": "비활성화"
+	},
+	"proxyableEnableButton": {
+		"message": "활성화"
+	},
+	"proxyableEnableButtonDomain": {
+		"message": "다음에 대해 활성화: "
+	},
+	"proxyableSubscriptionRule": {
+		"message": "(구독 규칙)"
+	},
+	"proxyableDeleteRuleConfirm": {
+		"message": "선택한 규칙을 삭제하시겠습니까:"
+	},
+	"proxyableGridNoDataContent": {
+		"message": "요청 없음"
+	},
+	"proxyableGridColUrl": {
+		"message": "요청 URL"
+	},
+	"proxyableGridColRuleStatus": {
+		"message": "규칙 상태"
+	},
+	"proxyableGridColProxifiedStatus": {
+		"message": "프록시 상태"
+	},
+	"proxyableGridColRuleHost": {
+		"message": "규칙 도메인"
+	},
+	"proxyableGridColRulePattern": {
+		"message": "규칙 패턴"
+	},
+	"proxyableGridCol_ProxifiedStatus_NoProxy": {
+		"message": "프록시 없음"
+	},
+	"proxyableGridCol_ProxifiedStatus_Special": {
+		"message": "특수"
+	},
+	"proxyableGridCol_ProxifiedStatus_ProxyPerOrigin": {
+		"message": "상위 탭에서"
+	},
+	"proxyableGridCol_ProxifiedStatus_MatchedRule": {
+		"message": "일치함"
+	},
+	"proxyableGridCol_ProxifiedStatus_AlwaysEnabled": {
+		"message": "항상 활성화"
+	},
+	"proxyableGridCol_ProxifiedStatus_SystemProxyApplied": {
+		"message": "시스템 프록시 적용됨"
+	},
+	"proxyableGridCol_RuleStatus_NoneMatched": {
+		"message": "일치 없음"
+	},
+	"proxyableGridCol_RuleStatus_Special": {
+		"message": "특수"
+	},
+	"proxyableGridCol_RuleStatus_ProxyPerOrigin": {
+		"message": "상위 탭에서"
+	},
+	"proxyableGridCol_RuleStatus_MatchedRule": {
+		"message": "일치함"
+	},
+	"proxyableGridCol_RuleStatus_Whitelisted": {
+		"message": "화이트리스트"
+	},
+	"proxyableGridCol_RuleStatus_AlwaysEnabledByPassed": {
+		"message": "항상 활성화 <br> 우회됨"
+	},
+	"proxyableGridCol_RuleStatus_AlwaysEnabledForcedByRules": {
+		"message": "항상 활성화 <br> 규칙에 의해 강제됨"
+	},
+	"settingsTitle": {
+		"message": "ProxyMust 설정"
+	},
+	"settingsTabAbout": {
+		"message": "정보"
+	},
+	"settingsTabGeneral": {
+		"message": "일반 옵션"
+	},
+	"settingsTabSmartProfiles": {
+		"message": "선택적 프로필"
+	},
+	"settingsTabAddSmartProfile": {
+		"message": "새 선택적 프로필 추가"
+	},
+	"settingsTabProxyServers": {
+		"message": "프록시 서버"
+	},
+	"settingsTabProxyServerSubscriptions": {
+		"message": "프록시 서버 구독"
+	},
+	"settingsTabBackupRestore": {
+		"message": "백업/복원"
+	},
+	"settingsTabUpdateText": {
+		"message": "{0}(으)로 업데이트"
+	},
+	"settingsTabAboutDescription": {
+		"message": "ProxyMust를 사용하면 프록시 사용이 그 어느 때보다 쉬워집니다. 한 번 구성하고 잊어버리는 솔루션이라고 생각하세요. ProxyMust를 사용하면 프록시를 수동으로 변경하거나 켜고 끌 필요가 없습니다. 원하는 웹사이트에 대해 한 번의 클릭으로 프록시를 활성화하도록 ProxyMust에 지시하기만 하면 됩니다. 그런 다음 해당 특정 웹사이트를 방문하면 ProxyMust가 작동하여 해당 웹사이트의 모든 데이터가 프록시를 통해 전송됩니다. 아무것도 할 필요가 없습니다."
+	},
+	"settingsGeneralSmartFeatures": {
+		"message": "스마트 기능"
+	},
+	"settingsGeneralSmartFeaturesNoChrome": {
+		"message": "<strong><a href='https://www.getfirefox.com/' target='_blank' rel='noopener'>Firefox 전용</a>!</strong> 불행히도 이 기능은 Chrome에서 지원되지 않습니다."
+	},
+	"settingsGeneralProxyPerOrigin": {
+		"message": "탭/원본별 프록시 활성화"
+	},
+	"settingsGeneralProxyPerOriginDesc": {
+		"message": "규칙이 탭의 URL과 일치하면 해당 탭의 연결에 프록시가 적용됩니다. 일반적으로 각 페이지에는 다른 요청이 있으며 해당 요청에는 일치하는 규칙이 없을 수 있으므로 해당 연결에 프록시가 적용되지 않습니다. `탭/원본별 프록시 활성화` 옵션은 전체 페이지(다른 도메인 및 원본의 모든 연결 포함)가 탭의 원본에 적용된 동일한 프록시를 사용하도록 보장합니다. 또한 이 옵션은 모든 단일 도메인에 대한 규칙을 가질 필요성을 제거합니다. 탭에 프록시가 적용되지 않은 경우 프록시 규칙은 계속 작동하여 페이지의 다른 연결에 개별적으로 프록시를 적용합니다."
+	},
+	"settingsGeneralProxyPerOriginEnabled": {
+		"message": "탭/원본별 프록시 활성화됨"
+	},
+	"settingsGeneralProxyPerOriginDisabled": {
+		"message": "탭/원본별 프록시 비활성화됨"
+	},
+	"settingsGeneralSyncing": {
+		"message": "동기화"
+	},
+	"settingsGeneralIncognitoProfile": {
+		"message": "개인 정보 보호 브라우징 프로필"
+	},
+	"settingsGeneralIncognitoProfileDisabled": {
+		"message": "(비활성화됨)"
+	},
+	"settingsGeneralIncognitoProfileDesc": {
+		"message": "탭/창이 개인 정보 보호 브라우징 모드일 때 강제로 사용하려면 개인 정보 보호 브라우징 프로필을 선택하세요. 이 옵션은 활성 프로필을 재정의합니다."
+	},
+	"settingsGeneralEnableSyncing": {
+		"message": "설정 동기화 활성화"
+	},
+	"settingsGeneralEnableSyncingDesc": {
+		"message": "동기화를 활성화하면 규칙, 서버 및 구독을 포함한 모든 설정이 모든 브라우저에서 사용 가능해집니다."
+	},
+	"settingsSaveGeneralOptionsButton": {
+		"message": "변경 사항 저장"
+	},
+	"settingsRejectGeneralOptionsButton": {
+		"message": "변경 사항 거부"
+	},
+	"settingsGeneralSyncProxyMode": {
+		"message": "활성 프로필 동기화 활성화"
+	},
+	"settingsGeneralSyncProxyModeDesc": {
+		"message": "활성 프로필을 동기화하려면 체크하세요."
+	},
+	"settingsGeneralSyncActiveProxy": {
+		"message": "활성 프록시 동기화 활성화"
+	},
+	"settingsGeneralSyncActiveProxyDesc": {
+		"message": "선택한 프록시 서버를 동기화하려면 체크하세요."
+	},
+	"settingsGeneralSyncToBrowser": {
+		"message": "브라우저의 동기화 서버 사용"
+	},
+	"settingsGeneralSyncToWebDAV": {
+		"message": "WebDAV 서버에 동기화"
+	},
+	"settingsGeneralWebDavServerUrl": {
+		"message": "WebDAV 서버 URL:"
+	},
+	"settingsGeneralWebDavBackupFilename": {
+		"message": "백업 파일명:"
+	},
+	"settingsGeneralWebDavServerUser": {
+		"message": "WebDAV 서버 사용자 이름:"
+	},
+	"settingsGeneralWebDavServerPassword": {
+		"message": "WebDAV 서버 비밀번호:"
+	},
+	"settingsGeneralWebDavBehaviourDesc": {
+		"message": "설정이 변경될 때마다 백업이 발생하며 복원은 브라우저가 시작될 때만 발생합니다."
+	},
+	"settingsGeneralWebDavServerBackupNow": {
+		"message": "지금 백업"
+	},
+	"settingsGeneralWebDavServerRestoreNow": {
+		"message": "지금 복원"
+	},
+	"settingsGeneralWebDavRestoreNowConfirm": {
+		"message": "이것은 WebDAV 서버에서 현재 설정을 덮어씁니다. 이 작업은 되돌릴 수 없으며 주의하시기 바랍니다. 계속하시겠습니까?"
+	},
+	"settingsGeneralWebDavRestoreNowSuccess": {
+		"message": "WebDAV 복원이 성공적으로 완료되었습니다!"
+	},
+	"settingsGeneralWebDavRestoreNowFailed": {
+		"message": "WebDAV 복원 실패:"
+	},
+	"settingsGeneralWebDav_ErrorValidUrl": {
+		"message": "유효한 WebDAV 서버 URL을 입력하세요"
+	},
+	"settingsGeneralWebDav_ErrorEmptyFilename": {
+		"message": "WebDAV 서버 백업 파일명은 비워둘 수 없습니다"
+	},
+	"settingsGeneralWebDav_ErrorRequiredFields": {
+		"message": "필요한 모든 WebDAV 필드를 채우세요."
+	},
+	"settingsGeneralWebDavBackupNowSuccess": {
+		"message": "WebDAV 백업이 성공적으로 완료되었습니다!"
+	},
+	"settingsGeneralWebDavBackupNowFailed": {
+		"message": "WebDAV 백업 실패:"
+	},
+	"settingsGeneralErrorDetection": {
+		"message": "오류 감지"
+	},
+	"settingsGeneralDetectFailures": {
+		"message": "요청 실패 감지"
+	},
+	"settingsGeneralDetectFailuresDesc": {
+		"message": "요청 실패 감지는 프록시가 필요한 도메인을 식별하는 데 도움이 됩니다."
+	},
+	"settingsGeneralSelectIgnoredDomains": {
+		"message": "규칙 입력"
+	},
+	"settingsGeneralIgnoreRequestFailuresForDomains": {
+		"message": "이 규칙을 기반으로 실패 감지 무시"
+	},
+	"settingsGeneralIgnoreRequestFailuresForDomainsDesc": {
+		"message": "실패 감지를 비활성화하려면 규칙을 추가하세요."
+	},
+	"settingsGeneralDisplayFailedOnBadge": {
+		"message": "도구 모음 아이콘 배지에 실패한 요청 수 표시"
+	},
+	"settingsGeneralThemes": {
+		"message": "테마"
+	},
+	"settingsGeneralThemesAutoSwitch": {
+		"message": "브라우저 테마에 따라 자동 전환"
+	},
+	"settingsGeneralThemesAutoSwitchDesc": {
+		"message": "아래에서 선택한 테마 사이를 자동으로 전환합니다. 브라우저 테마를 따라가며 운영 체제 테마도 따라갈 수 있습니다."
+	},
+	"settingsGeneralThemesLight": {
+		"message": "밝은 테마"
+	},
+	"settingsGeneralThemes_Default": {
+		"message": "(기본값)"
+	},
+	"settingsGeneralThemes_Custom": {
+		"message": "(사용자 정의)"
+	},
+	"settingsGeneralThemes_CustomUrl": {
+		"message": "사용자 정의 스타일(CSS) URL:"
+	},
+	"settingsGeneralThemes_CustomUrlDesc": {
+		"message": "URL은 'Https'여야 합니다. 사용자 정의 스타일에서 가져온 글꼴 및 기타 스타일에 유의하세요. 브라우저의 팝업을 차단하거나 느려지게 할 수 있습니다. bootswatch.com에서 테마를 시도할 수 있지만 Google 글꼴 종속성에 유의하세요."
+	},
+	"settingsGeneralThemesDark": {
+		"message": "어두운 테마"
+	},
+	"settingsGeneralThemesLight_ErrorValidUrl": {
+		"message": "밝은 테마에 대한 유효한 CSS URL을 입력하세요. URL은 'https'여야 합니다."
+	},
+	"settingsGeneralThemesDark_ErrorValidUrl": {
+		"message": "어두운 테마에 대한 유효한 CSS URL을 입력하세요. URL은 'https'여야 합니다."
+	},
+	"settingsGeneralOtherSettings": {
+		"message": "기타 설정"
+	},
+	"settingsGeneralEnableShortcuts": {
+		"message": "단축키 활성화"
+	},
+	"settingsGeneralEnableShortcutsDesc": {
+		"message": "브라우저 애드온 설정 페이지에서 단축키를 구성할 수 있습니다."
+	},
+	"settingsGeneralViewShortcuts": {
+		"message": "단축키 보기"
+	},
+	"settingsGeneralConfigureShortcuts": {
+		"message": "단축키 구성"
+	},
+	"settingsGeneralShortcutNotification": {
+		"message": "단축키 알림 활성화"
+	},
+	"settingsGeneralViewShortcutKeys": {
+		"message": "단축키"
+	},
+	"settingsGeneralDisplayAppliedProxyOnBadge": {
+		"message": "배지에 적용된 규칙 소스 표시"
+	},
+	"settingsGeneralDisplayAppliedRulePatternOnBadge": {
+		"message": "배지에 적용된 규칙 패턴 표시"
+	},
+	"settingsGeneralRefreshTabOnConfigChanges": {
+		"message": "프로필 또는 프록시가 변경되면 활성 탭 새로 고침"
+	},
+	"settingsGeneralCancelButton": {
+		"message": "취소"
+	},
+	"settingsGeneralSaveChanges": {
+		"message": "변경 사항 저장"
+	},
+	"settingsGeneralKeyboardShortcutsTitle": {
+		"message": "키보드 단축키"
+	},
+	"settingsGeneralCloseButton": {
+		"message": "닫기"
+	},
+	"settingsGeneralKeyboardShortcutsNotSupported": {
+		"message": "키보드 단축키는 모바일 장치에서 지원되지 않습니다."
+	},
+	"settingsTabProxyServersTitle": {
+		"message": "프록시 서버 관리:"
+	},
+	"settingsTabProxyServersDescription": {
+		"message": "프록시 서버 목록입니다. 원하는 만큼 많은 프록시를 정의하고 도구 모음에서 전환할 수 있습니다."
+	},
+	"settingsTabBackupRestoreDescription": {
+		"message": "설정의 전체 또는 부분 백업을 만들 수 있습니다."
+	},
+	"settingsErrNoServersTitle": {
+		"message": "서버 없음!"
+	},
+	"settingsErrNoServersDescription": {
+		"message": "무엇보다 먼저 프록시 서버를 정의해야 합니다."
+	},
+	"settingsActiveProxyServer": {
+		"message": "기본 프록시 서버:"
+	},
+	"settingsAddServerButton": {
+		"message": "서버 추가"
+	},
+	"settingsRemoveMultipleServerButton": {
+		"message": "여러 개 삭제"
+	},
+	"settingsSaveChangesButton": {
+		"message": "변경 사항 저장"
+	},
+	"settingsRejectChangesButton": {
+		"message": "변경 사항 거부"
+	},
+	"settingsEditButton": {
+		"message": "편집"
+	},
+	"settingsFullBackupButton": {
+		"message": "전체 백업 생성"
+	},
+	"settingsFullBackupButtonDesc": {
+		"message": "옵션의 전체 백업을 만듭니다(프록시 서버 및 규칙 포함)."
+	},
+	"settingsRestoreBackupButton": {
+		"message": "백업 복원"
+	},
+	"settingsRestoreBackupButtonDesc": {
+		"message": "로컬 파일에서 이전에 만든 백업을 복원합니다"
+	},
+	"settingsDangerZoneDesc": {
+		"message": "위험 구역"
+	},
+	"settingsFactoryResetButton": {
+		"message": "공장 초기화"
+	},
+	"settingsFactoryResetDesc": {
+		"message": "모든 것을 재설정합니다. 이렇게 하면 모든 규칙과 프록시 서버가 제거되고 옵션이 영구적으로 재설정됩니다."
+	},
+	"settingsFactoryResetConfirm": {
+		"message": "모든 것을 재설정하시겠습니까? 정말요? 돌아갈 수 없습니다!"
+	},
+	"settingsFactoryResetSuccess": {
+		"message": "공장 초기화가 성공적으로 완료되었습니다"
+	},
+	"settingsImportExportProxiesDesc": {
+		"message": "개별 프록시 서버 목록을 가져오거나 내보냅니다."
+	},
+	"settingsImportProxiesButtonBackup": {
+		"message": "프록시 서버 가져오기"
+	},
+	"settingsExportProxiesButtonBackup": {
+		"message": "프록시 서버 내보내기"
+	},
+	"settingsAddRuleButton": {
+		"message": "규칙 추가"
+	},
+	"settingsImportRulesButton": {
+		"message": "규칙 가져오기"
+	},
+	"settingsImportRulesTitle": {
+		"message": "규칙 가져오기"
+	},
+	"settingsImportRulesSelectButton": {
+		"message": "규칙 백업 파일"
+	},
+	"settingsImportRulesText": {
+		"message": "규칙 백업 텍스트"
+	},
+	"settingsImportRulesFrom": {
+		"message": "소스"
+	},
+	"settingsImportRulesOptionAppend": {
+		"message": "기존 규칙에 추가"
+	},
+	"settingsImportRulesOptionOverride": {
+		"message": "현재 규칙 바꾸기(주의해서 사용)"
+	},
+	"settingsImportRulesCancelButton": {
+		"message": "취소"
+	},
+	"settingsImportRulesImportButton": {
+		"message": "가져오기"
+	},
+	"settingsImportProxiesButton": {
+		"message": "프록시 가져오기"
+	},
+	"settingsExportProxiesButton": {
+		"message": "프록시 내보내기"
+	},
+	"settingsImportProxiesTitle": {
+		"message": "프록시 목록 가져오기"
+	},
+	"settingsImportProxiesSelectFileButton": {
+		"message": "프록시 목록 파일"
+	},
+	"settingsImportProxiesSelectTextButton": {
+		"message": "프록시 목록 텍스트"
+	},
+	"settingsImportProxiesOptionAppend": {
+		"message": "기존 프록시에 추가"
+	},
+	"settingsImportProxiesOptionOverride": {
+		"message": "현재 프록시 바꾸기(주의해서 사용)"
+	},
+	"settingsImportProxiesCancelButton": {
+		"message": "취소"
+	},
+	"settingsImportProxiesImportButton": {
+		"message": "가져오기"
+	},
+	"settingsConfirmRemoveProxyServer": {
+		"message": "선택한 프록시 서버를 제거하시겠습니까?"
+	},
+	"settingsConfirmRemoveMultipleProxyServer": {
+		"message": "선택한 프록시 서버들을 제거하시겠습니까?"
+	},
+	"settingsRemoveAllProxyServers": {
+		"message": "모든 프록시 서버를 제거하시겠습니까?"
+	},
+	"settingsRemoveAllProxyServersSuccess": {
+		"message": "모든 프록시 서버가 제거되었습니다.<br/>변경 사항을 적용하려면 저장해야 합니다."
+	},
+	"settingsImportProxiesFileNotSelected": {
+		"message": "프록시 목록 파일을 선택하세요"
+	},
+	"settingsImportProxyListTextIsEmpty": {
+		"message": "프록시 목록을 입력하세요"
+	},
+	"settingsImportProxyServersFailed": {
+		"message": "프록시 서버 가져오기 실패"
+	},
+	"importerImportProxySuccess": {
+		"message": "총 {1}개 중 {0}개의 프록시가 가져와졌습니다.<br>변경 사항을 저장하는 것을 잊지 마세요."
+	},
+	"settingsErrorFailedToSaveServers": {
+		"message": "서버 저장 실패."
+	},
+	"settingsChangesReverted": {
+		"message": "변경 사항이 성공적으로 되돌려졌습니다."
+	},
+	"settingsConfirmSaveAllChanged": {
+		"message": "저장되지 않은 모든 변경 사항을 저장하시겠습니까?"
+	},
+	"settingsConfirmRemoveProxyRule": {
+		"message": "선택한 규칙을 제거하시겠습니까?"
+	},
+	"settingsConfirmRemoveMultipleProxyRule": {
+		"message": "선택한 규칙들을 제거하시겠습니까?"
+	},
+	"settingsRemoveAllRules": {
+		"message": "모든 규칙을 제거하시겠습니까?"
+	},
+	"settingsRemoveAllRulesSuccess": {
+		"message": "모든 규칙이 제거되었습니다.<br/>변경 사항을 적용하려면 저장해야 합니다."
+	},
+	"settingsRestoreBackupFailed": {
+		"message": "백업을 복원하는 중 오류가 발생했습니다"
+	},
+	"settingsRestoreBackupFileError": {
+		"message": "선택한 파일을 읽지 못했습니다"
+	},
+	"settingsRulesFileNotSelected": {
+		"message": "규칙 파일을 선택하세요"
+	},
+	"settingsSourceTypeNotSelected": {
+		"message": "소스 유형을 선택하세요"
+	},
+	"settingsImportRulesFailed": {
+		"message": "파일 가져오기 실패."
+	},
+	"settingsImportRulesTextIsEmpty": {
+		"message": "상자에 규칙을 입력하세요"
+	},
+	"settingsServerNameRequired": {
+		"message": "서버 이름을 지정하세요!"
+	},
+	"settingsServerNameExists": {
+		"message": "같은 이름의 서버가 이미 존재합니다!"
+	},
+	"settingsServerServerAddressIsEmpty": {
+		"message": "서버 주소는 비워둘 수 없습니다"
+	},
+	"settingsServerPortNoInvalid": {
+		"message": "유효한 포트 번호를 입력하세요"
+	},
+	"settingsServerAuthenticationInvalid": {
+		"message": "인증을 위해 사용자 이름과 비밀번호가 모두 필요합니다"
+	},
+	"settingsServersGridNoDataContent": {
+		"message": "정의된 서버 없음"
+	},
+	"settingsServersGridColName": {
+		"message": "이름"
+	},
+	"settingsServersGridColProtocol": {
+		"message": "프로토콜"
+	},
+	"settingsServersGridColServer": {
+		"message": "서버"
+	},
+	"settingsServersGridColPort": {
+		"message": "포트"
+	},
+	"settingsServersGridColCountry": {
+		"message": "국가"
+	},
+	"settingsServersGridColRating": {
+		"message": "평점"
+	},
+	"settingsServersModalTitle": {
+		"message": "프록시 서버 세부 정보"
+	},
+	"settingsServersServerName": {
+		"message": "서버 이름"
+	},
+	"settingsServersSeverAddress": {
+		"message": "서버 주소"
+	},
+	"settingsServersProtocol": {
+		"message": "프록시 프로토콜"
+	},
+	"settingsServersPort": {
+		"message": "포트"
+	},
+	"settingsServersProxyDNS": {
+		"message": "SOCKS 5 사용 시 DNS 프록시"
+	},
+	"settingsServersUsername": {
+		"message": "사용자 이름"
+	},
+	"settingsServersPassword": {
+		"message": "비밀번호"
+	},
+	"settingsServersAuthChromeMv3Limitation": {
+		"message": "(불행히도 프록시 서버 인증은 Chrome에서 확장 API를 통해 지원되지 않습니다. 이는 '의도적'입니다.)"
+	},
+	"settingsServersCancel": {
+		"message": "취소"
+	},
+	"settingsServersSave": {
+		"message": "저장"
+	},
+	"settingsServersImport": {
+		"message": "가져오기"
+	},
+	"settingsProfilesNameTitle": {
+		"message": "선택적 프로필:"
+	},
+	"settingsProfilesEnabled": {
+		"message": "활성화됨"
+	},
+	"settingsProfilesTypeTitle": {
+		"message": "프로필 유형:"
+	},
+	"settingsProfilesTypeDesc_SmartRules": {
+		"message": "이 프로필에서는 선택적 규칙을 정의하지 않는 한 프록시가 적용되지 않습니다. 블랙리스트 규칙, 즉 프록시를 적용할 규칙을 정의합니다."
+	},
+	"settingsProfilesTypeDesc_AlwaysEnabledBypassRules": {
+		"message": "이 프로필에서는 프록시 서버가 항상 적용되며, 선택적 규칙을 정의하여 이를 우회할 수 있습니다. 화이트리스트 규칙, 즉 프록시를 건너뛰고 적용하지 않을 규칙을 정의합니다."
+	},
+	"settingsProfilesTypeDesc_IgnoreFailureRules": {
+		"message": "규칙을 추가하여 이러한 도메인에 대한 실패 감지를 무시합니다."
+	},
+	"settingsProfilesProfileProxyServer": {
+		"message": "프로필 프록시 서버:"
+	},
+	"settingsProfilesDefaultProfileProxyServer": {
+		"message": "(기본 프록시 서버 사용)"
+	},
+	"settingsProfilesProfileProxyServerDesc": {
+		"message": "(이 프로필을 사용하는 동안 이것이 활성 프록시 서버가 됩니다)"
+	},
+	"settingsProfilesRulesSection": {
+		"message": "규칙"
+	},
+	"settingsProfilesDelete": {
+		"message": "삭제"
+	},
+	"settingsProfilesAddNewLabel": {
+		"message": "새 선택적 프로필 추가"
+	},
+	"settingsProfilesAddNewTypeLead": {
+		"message": "추가할 <b>프로필 유형</b>을 선택하세요:"
+	},
+	"settingsProfilesAddNewType_SmartRules": {
+		"message": "선택적 규칙"
+	},
+	"settingsProfilesAddNewType_SmartRulesDesc": {
+		"message": "이 유형의 프로필에서는 정의해야 하는 일부 <em>규칙</em>에 따라 프록시가 요청에 적용됩니다. 이러한 규칙을 정의하려면 메뉴 모음의 팝업 메뉴를 사용하거나 설정에서 추가할 수 있으며 <em>프록시 가능 리소스</em> 창에서도 할 수 있습니다.<br>또한 Gfwlist와 같은 다양한 규칙 목록을 구독할 수 있습니다."
+	},
+	"settingsProfilesAddNewType_AlwaysEnabled": {
+		"message": "항상 활성화"
+	},
+	"settingsProfilesAddNewType_AlwaysEnabledDesc": {
+		"message": "이 유형의 프로필에서는 우회 규칙을 정의하지 않는 한 프록시가 항상 요청에 적용됩니다. 규칙 정의 단계는 선택적 규칙 프로필 유형과 동일합니다."
+	},
+	"settingsProfilesAddNewBtnContinue": {
+		"message": "계속"
+	},
+	"settingsProfilesAddNewBtnCancel": {
+		"message": "취소"
+	},
+	"settingsProfilesAddErrorTypeRequired": {
+		"message": "프로필 유형을 선택하세요"
+	},
+	"settingsProfilesAddErrorNameRequired": {
+		"message": "프로필 이름은 필수입니다"
+	},
+	"settingsProfilesAddErrorNameExists": {
+		"message": "프로필 이름이 이미 존재합니다. 다른 이름을 입력하세요"
+	},
+	"settingsProfilesDeleteConfirm": {
+		"message": "이 프로필을 삭제하시겠습니까? 경고: 이 작업은 되돌릴 수 없습니다!"
+	},
+	"settingsProfilesDeleteFailed": {
+		"message": "선택한 프로필을 삭제하지 못했습니다."
+	},
+	"settingsProfilesDeleteDone": {
+		"message": "프로필이 성공적으로 삭제되었습니다"
+	},
+	"settingsProfilesDeleteBuiltinFail": {
+		"message": "내장 프로필은 삭제할 수 없습니다"
+	},
+	"settingsProfilesProxyServer": {
+		"message": "[기본 프록시 서버 사용]"
+	},
+	"settingsProfilesRulesSubscriptionsTitle": {
+		"message": "규칙 구독"
+	},
+	"settingsProfilesRulesSubscriptionsDesc": {
+		"message": "여기에서 규칙 목록을 구독할 수 있습니다."
+	},
+	"settingsSaveSmartProfileSuccess": {
+		"message": "선택적 프로필이 성공적으로 저장되었습니다."
+	},
+	"settingsErrorFailedToSaveSmartProfile": {
+		"message": "선택적 프로필 저장 실패."
+	},
+	"settingsRuleSourceRequired": {
+		"message": "규칙의 소스 도메인을 지정하세요!"
+	},
+	"settingsRuleSourceInvalid": {
+		"message": "소스 도메인이 잘못되었습니다. 'google.com'과 같은 형식이어야 합니다"
+	},
+	"settingsRuleSourceInvalidFormat": {
+		"message": "'소스 도메인'이 잘못되었습니다 '{0}'"
+	},
+	"settingsRuleSourceAlreadyExists": {
+		"message": "같은 소스를 가진 규칙이 이미 존재합니다!"
+	},
+	"settingsRuleHostInvalid": {
+		"message": "호스트 이름 '{0}'이(가) 잘못되었습니다. 'google.com'과 같은 형식이어야 합니다"
+	},
+	"settingsRuleRegexNotMatchDomain": {
+		"message": "정규식 규칙이 소스 도메인 '{0}'과(와) 일치하지 않습니다"
+	},
+	"settingsRuleDoesntIncludeDomain": {
+		"message": "규칙이 소스 도메인 '{0}'과(와) 일치하지 않습니다"
+	},
+	"settingsRuleRegexInvalid": {
+		"message": "정규식 규칙 '{0}'이(가) 잘못되었습니다"
+	},
+	"settingsRuleExactUrlInvalid": {
+		"message": "URL '{0}'이(가) 잘못되었습니다"
+	},
+	"settingsRuleUrlInvalid": {
+		"message": "URL '{0}'이(가) 잘못되었습니다"
+	},
+	"settingsRulesGridNoDataContent": {
+		"message": "정의된 규칙 없음"
+	},
+	"settingsRulesGridColRuleType": {
+		"message": "규칙 유형"
+	},
+	"settingsRulesGridColSource": {
+		"message": "소스"
+	},
+	"settingsRulesGridColRule": {
+		"message": "규칙"
+	},
+	"settingsRulesGridColEnabled": {
+		"message": "활성화됨"
+	},
+	"settingsRulesGridColProxy": {
+		"message": "프록시 서버"
+	},
+	"settingsRulesProxyDefault": {
+		"message": "[활성 프록시 사용]"
+	},
+	"settingsRulesProxyFromProfile": {
+		"message": "[프로필 프록시 사용]"
+	},
+	"settingsRulesModalTitle": {
+		"message": "규칙 세부 정보"
+	},
+	"settingsRulesRuleType": {
+		"message": "규칙 유형"
+	},
+	"settingsRulesSourceDomain": {
+		"message": "규칙 소스 도메인"
+	},
+	"settingsRulesSourceDomainDesc": {
+		"message": "(예: google.com)"
+	},
+	"settingsRulesPattern": {
+		"message": "일치 패턴"
+	},
+	"settingsRulesGeneratePattern": {
+		"message": "패턴 자동 생성"
+	},
+	"settingsRulesRegex": {
+		"message": "URL 정규식"
+	},
+	"settingsRulesHostRegex": {
+		"message": "호스트 정규식"
+	},
+	"settingsRulesExactUrl": {
+		"message": "정확한 URL(소문자)"
+	},
+	"settingsRulesProxyServer": {
+		"message": "프록시 서버"
+	},
+	"settingsRulesProxyServerNotAuth": {
+		"message": "(인증이 있는 서버는 Chrome에서 지원되지 않습니다)"
+	},
+	"settingsRulesEnabled": {
+		"message": "활성화됨"
+	},
+	"settingsRulesModalCancel": {
+		"message": "취소"
+	},
+	"settingsRulesModalSave": {
+		"message": "저장"
+	},
+	"settingsRulesActionType": {
+		"message": "동작"
+	},
+	"settingsRuleActionApplyProxy": {
+		"message": "프록시 적용"
+	},
+	"settingsRuleActionWhitelist": {
+		"message": "화이트리스트(프록시 없음)"
+	},
+	"settingsRuleActionWhitelistDesc": {
+		"message": "(화이트리스트 규칙은 배치 순서에 관계없이 프록시 규칙보다 높은 우선순위를 가집니다)"
+	},
+	"settingsServerPortInvalid": {
+		"message": "서버 포트 '{0}'이(가) 잘못되었습니다"
+	},
+	"settingsServerHostInvalid": {
+		"message": "서버 호스트 '{0}'이(가) 잘못되었습니다"
+	},
+	"settingsRestoreSettingsSuccess": {
+		"message": "설정이 성공적으로 복원되었습니다"
+	},
+	"settingsRestoreSettingsFailed": {
+		"message": "설정을 복원하는 중 오류가 발생했습니다"
+	},
+	"settingsRestoreSettingsFailedInvalid": {
+		"message": "백업 데이터가 잘못되었거나 손상되었습니다"
+	},
+	"settingsRestoreSettingsFailedInvalidActiveProfile": {
+		"message": "활성 프로필에 대해 잘못된 데이터가 제공되었습니다"
+	},
+	"settingsRestoreSettingsFailedInvalidDefaultProxyServer": {
+		"message": "기본 프록시 서버에 대해 잘못된 데이터가 제공되었습니다"
+	},
+	"settingsEnableByDomainInvalid": {
+		"message": "선택한 도메인이 잘못되었습니다"
+	},
+	"settingsEnableByDomainExists": {
+		"message": "도메인에 대한 규칙이 이미 존재합니다"
+	},
+	"settingsEnableByDomainSmartProfileNonEditable": {
+		"message": "현재 프로필 '{0}'은(는) 규칙으로 업데이트할 수 없습니다"
+	},
+	"settingsNoRuleFoundForDomain": {
+		"message": "'{0}'에 대한 규칙이 없습니다"
+	},
+	"importerImportSuccess": {
+		"message": "총 {1}개 중 {0}개의 규칙이 추가되었습니다.<br>변경 사항을 저장하는 것을 잊지 마세요."
+	},
+	"settingsRemoveMultipleProxyRuleButton": {
+		"message": "여러 개 삭제"
+	},
+	"settingsAddMultipleRulesButton": {
+		"message": "여러 규칙 추가"
+	},
+	"settingsAddMultipleRuleTitle": {
+		"message": "여러 규칙 추가"
+	},
+	"settingsMultipleRuleList": {
+		"message": "호스트/규칙 목록:"
+	},
+	"settingsMultipleRuleInvalidHost": {
+		"message": "호스트 이름 '{0}'이(가) 잘못되었습니다"
+	},
+	"settingsMultipleRuleNoNewRuleAdded": {
+		"message": "새 규칙이 추가되지 않았습니다"
+	},
+	"settingsTabProxyServerSubscriptionsTitle": {
+		"message": "프록시 서버 구독 관리:"
+	},
+	"settingsTabProxyServerSubscriptionsDescription": {
+		"message": "여기에서 프록시 목록을 구독하고 나중에 프록시 간에 전환할 수 있습니다. 긴 목록은 장치 간 데이터 동기화 실패를 일으킬 수 있습니다."
+	},
+	"settingsErrorFailedToSaveGeneral": {
+		"message": "옵션 설정 저장 실패."
+	},
+	"settingsSaveOptionsSuccess": {
+		"message": "일반 옵션이 성공적으로 저장되었습니다."
+	},
+	"settingsAddServerSubscriptionButton": {
+		"message": "목록 구독"
+	},
+	"settingsServerSubscriptionModalTitle": {
+		"message": "프록시 서버 목록 구독"
+	},
+	"settingsRemoveMultipleServerSubscriptionButton": {
+		"message": "여러 개 삭제"
+	},
+	"settingsServerSubscriptionName": {
+		"message": "이름:"
+	},
+	"settingsServerSubscriptionUrl": {
+		"message": "URL:"
+	},
+	"settingsServerSubscriptionRefreshRate": {
+		"message": "새로 고침 빈도:"
+	},
+	"settingsServerSubscriptionRefreshRateHelp": {
+		"message": "(분 단위, 0은 새로 고침 없음)"
+	},
+	"settingsServerSubscriptionEnabled": {
+		"message": "활성화됨"
+	},
+	"settingsServerSubscriptionProtocol": {
+		"message": "프로토콜:"
+	},
+	"settingsServerSubscriptionObfuscation": {
+		"message": "난독화:"
+	},
+	"settingsServerSubscriptionFormat": {
+		"message": "형식:"
+	},
+	"settingsServerSubscriptionApplyProxy": {
+		"message": "프록시 통과:"
+	},
+	"settingsServerSubscriptionApplyProxyHelpFirefox": {
+		"message": "(서버에 대한 액세스를 기준으로 결정)"
+	},
+	"settingsServerSubscriptionApplyProxyHelpChrome": {
+		"message": "(불행히도 이 기능은 Chrome에서 사용할 수 없습니다. 현재 프록시가 적용됩니다)"
+	},
+	"settingsServerSubscriptionApplyProxy_NoProxy": {
+		"message": "프록시 없음"
+	},
+	"settingsServerSubscriptionApplyProxy_CurrentProxy": {
+		"message": "현재 프록시"
+	},
+	"settingsServerSubscriptionApplyProxy_SelectedProxy": {
+		"message": "선택한 프록시"
+	},
+	"settingsServerSubscriptionUsername": {
+		"message": "사용자 이름:"
+	},
+	"settingsServerSubscriptionPassword": {
+		"message": "비밀번호:"
+	},
+	"settingsServerSubscriptionAuthenticationHelp": {
+		"message": "(목록에 인증이 필요한 경우)"
+	},
+	"settingsServerSubscriptionCancelButton": {
+		"message": "취소"
+	},
+	"settingsServerSubscriptionSaveButton": {
+		"message": "저장"
+	},
+	"settingsServerSubscriptionSavingButton": {
+		"message": "저장 중..."
+	},
+	"settingsServerSubscriptionTestButton": {
+		"message": "테스트"
+	},
+	"settingsProxyTestStopButton": {
+		"message": "중지"
+	},
+	"settingsProxyTestCancelled": {
+		"message": "사용자가 테스트를 중지했습니다"
+	},
+	"settingsProxyTestResumeDialogTitle": {
+		"message": "프록시 테스트"
+	},
+	"settingsProxyTestResumeDialogMessage": {
+		"message": "테스트되지 않은 프록시가 있습니다. 어떻게 하시겠습니까?"
+	},
+	"settingsProxyTestResumeContinue": {
+		"message": "중단된 지점에서 계속"
+	},
+	"settingsProxyTestResumeRestart": {
+		"message": "처음부터 다시 시작"
+	},
+	"settingsServerSubscriptionTestingButton": {
+		"message": "테스트 중..."
+	},
+	"settingsConfirmRemoveServerSubscription": {
+		"message": "선택한 구독을 제거하시겠습니까?"
+	},
+	"settingsRemoveAllProxyServerSubscriptions": {
+		"message": "모든 프록시 서버 구독을 제거하시겠습니까?"
+	},
+	"settingsConfirmRemoveMultipleServerSubscription": {
+		"message": "선택한 구독들을 제거하시겠습니까?"
+	},
+	"settingsRemoveAllProxyServerSubscriptionsSuccess": {
+		"message": "모든 프록시 서버 구독이 제거되었습니다.<br/>변경 사항을 적용하려면 저장해야 합니다."
+	},
+	"settingsServerSubscriptionProtocolDefault": {
+		"message": "(HTTP 폴백으로 자동 감지)"
+	},
+	"settingsInitializeFailed": {
+		"message": "구성을 읽지 못했습니다. 설정 페이지를 닫고 다시 시도하세요."
+	},
+	"settingsActiveProxyServerSubscriptions": {
+		"message": "-구독-"
+	},
+	"settingsServerSubscriptionsGridNoDataContent": {
+		"message": "구독 없음"
+	},
+	"settingsServerSubscriptionsGridColName": {
+		"message": "이름"
+	},
+	"settingsServerSubscriptionsGridColUrl": {
+		"message": "URL"
+	},
+	"settingsServerSubscriptionsGridColCount": {
+		"message": "개수"
+	},
+	"settingsServerSubscriptionsGridColEnabled": {
+		"message": "활성화됨"
+	},
+	"settingsServerSubscriptionIncompleteForm": {
+		"message": "필수 필드를 올바른 형식으로 입력하세요"
+	},
+	"settingsServerSubscriptionInvalidForm": {
+		"message": "잘못된 프록시 서버 구독 세부 정보"
+	},
+	"settingsServerSubscriptionDuplicateName": {
+		"message": "입력한 이름이 이미 사용 중입니다. 다른 이름을 입력하세요."
+	},
+	"settingsServerSubscriptionSaveUpdated": {
+		"message": "구독이 {0}개의 프록시로 업데이트되었습니다.<br/>변경 사항을 저장하는 것을 잊지 마세요."
+	},
+	"settingsServerSubscriptionSaveAdded": {
+		"message": "구독이 {0}개의 프록시로 추가되었습니다.<br/>변경 사항을 저장하는 것을 잊지 마세요."
+	},
+	"settingsServerSubscriptionSaveFailedGet": {
+		"message": "프록시를 가져오지 못했습니다."
+	},
+	"settingsServerSubscriptionTestSuccess": {
+		"message": "테스트 성공. 목록에서 {0}개의 프록시를 반환했습니다."
+	},
+	"settingsServerSubscriptionTestFailed": {
+		"message": "테스트 실패"
+	},
+	"settingsSaveProxyServerSubscriptionsSuccess": {
+		"message": "프록시 서버 구독이 성공적으로 저장되었습니다."
+	},
+	"settingsFailedToSaveProxySubscriptions": {
+		"message": "프록시 서버 구독 저장 실패"
+	},
+	"settingsAddRulesSubscriptionButton": {
+		"message": "규칙 목록 구독"
+	},
+	"settingsRemoveMultipleRulesSubscriptionButton": {
+		"message": "여러 개 삭제"
+	},
+	"settingsRulesSubscriptionsModalTitle": {
+		"message": "규칙 목록 구독"
+	},
+	"settingsRulesSubscriptionsGridColName": {
+		"message": "이름"
+	},
+	"settingsRulesSubscriptionsGridColUrl": {
+		"message": "URL"
+	},
+	"settingsRulesSubscriptionsGridColCount": {
+		"message": "개수"
+	},
+	"settingsRulesSubscriptionsGridColEnabled": {
+		"message": "활성화됨"
+	},
+	"settingsRulesSubscriptionsName": {
+		"message": "이름:"
+	},
+	"settingsRulesSubscriptionsUrl": {
+		"message": "URL:"
+	},
+	"settingsRulesSubscriptionsRefreshRate": {
+		"message": "새로 고침 빈도:"
+	},
+	"settingsRulesSubscriptionsRefreshRateHelp": {
+		"message": "(분 단위, 0은 새로 고침 없음)"
+	},
+	"settingsRulesSubscriptionEnabled": {
+		"message": "활성화됨"
+	},
+	"settingsRulesSubscriptionsObfuscation": {
+		"message": "난독화:"
+	},
+	"settingsRulesSubscriptionsFormat": {
+		"message": "형식:"
+	},
+	"settingsRulesSubscriptionsApplyProxy": {
+		"message": "프록시 통과:"
+	},
+	"settingsRulesSubscriptionsApplyProxyHelpFirefox": {
+		"message": "(서버에 대한 액세스를 기준으로 결정)"
+	},
+	"settingsRulesSubscriptionsApplyProxyHelpChrome": {
+		"message": "(불행히도 이 기능은 Chrome에서 사용할 수 없습니다. 현재 프록시가 적용됩니다)"
+	},
+	"settingsRulesSubscriptionsUsername": {
+		"message": "사용자 이름:"
+	},
+	"settingsRulesSubscriptionsAuthenticationHelp": {
+		"message": "(목록에 인증이 필요한 경우)"
+	},
+	"settingsRulesSubscriptionsPassword": {
+		"message": "비밀번호:"
+	},
+	"settingsRulesSubscriptionsTestButton": {
+		"message": "테스트"
+	},
+	"settingsRulesSubscriptionsSaveButton": {
+		"message": "저장"
+	},
+	"settingsRulesSubscriptionsCancelButton": {
+		"message": "취소"
+	},
+	"settingsConfirmRemoveRulesSubscription": {
+		"message": "선택한 규칙 구독을 제거하시겠습니까?"
+	},
+	"settingsConfirmRemoveMultipleRulesSubscription": {
+		"message": "선택한 규칙 구독들을 제거하시겠습니까?"
+	},
+	"settingsRulesSubscriptionIncompleteForm": {
+		"message": "필수 필드를 올바른 형식으로 입력하세요"
+	},
+	"settingsRulesSubscriptionInvalidForm": {
+		"message": "잘못된 프록시 서버 구독 세부 정보"
+	},
+	"settingsRulesSubscriptionDuplicateName": {
+		"message": "입력한 이름이 이미 사용 중입니다. 다른 이름을 입력하세요."
+	},
+	"settingsRulesSubscriptionSavingButton": {
+		"message": "저장 중..."
+	},
+	"settingsRulesSubscriptionTestButton": {
+		"message": "테스트"
+	},
+	"settingsRulesSubscriptionTestingButton": {
+		"message": "테스트 중..."
+	},
+	"settingsRulesSubscriptionSaveUpdated": {
+		"message": "구독이 {0}개의 프록시 규칙과 {1}개의 화이트리스트 규칙으로 업데이트되었습니다.<br/>변경 사항을 저장하는 것을 잊지 마세요."
+	},
+	"settingsRulesSubscriptionSaveAdded": {
+		"message": "구독이 {0}개의 프록시 규칙과 {1}개의 화이트리스트 규칙으로 추가되었습니다.<br/>변경 사항을 저장하는 것을 잊지 마세요."
+	},
+	"settingsRulesSubscriptionSaveFailedGet": {
+		"message": "규칙을 가져오지 못했습니다."
+	},
+	"settingsRulesSubscriptionRefreshOnDisabled": {
+		"message": "비활성화된 구독은 새로 고칠 수 없습니다"
+	},
+	"settingsRulesSubscriptionTestSuccess": {
+		"message": "테스트 성공. 목록에서 {0}개의 프록시 규칙과 {1}개의 화이트리스트 규칙을 반환했습니다."
+	},
+	"settingsRulesSubscriptionTestFailed": {
+		"message": "테스트 실패"
+	},
+	"settingsFailedToSaveRulesSubscriptions": {
+		"message": "규칙 구독 저장 실패"
+	},
+	"settingsRemoveAllProxyRulesSubscriptions": {
+		"message": "모든 프록시 규칙 구독을 제거하시겠습니까?"
+	},
+	"settingsRemoveAllProxyRulesSubscriptionsSuccess": {
+		"message": "모든 프록시 규칙 구독이 제거되었습니다.<br/>변경 사항을 적용하려면 저장해야 합니다."
+	},
+	"importerImportRulesSuccess": {
+		"message": "총 {0}개의 프록시 규칙과 {1}개의 화이트리스트 규칙이 반환되었습니다.<br>변경 사항을 저장하는 것을 잊지 마세요."
+	},
+	"settingsRulePatternIsEmpty": {
+		"message": "규칙에 정의된 패턴이 없습니다"
+	},
+	"settingsWelcomeTitle": {
+		"message": "ProxyMust에 오신 것을 환영합니다"
+	},
+	"settingsWelcomeMessage": {
+		"message": "<p>\n\tProxyMust, 프록시 테스트 기능을 갖춘 선택적 프록시 관리자입니다.<br>\n\t시작하려면 다음 단계를 따르세요:\n</p>\n<ol>\n\t<li>\n\t\t프록시 서버 또는 프록시 목록 추가\n\t\t<br>\n\t\t<small>(프록시 서버 탭으로 이동하여 추가하세요)</small>\n\t</li>\n\t<li>\n\t\t모드를 선택적 프록시로 설정\n\t\t<br>\n\t\t<small>(도구 모음 팝업 메뉴를 사용하여 활성 모드를 선택적 프록시로 변경하세요)</small>\n\t</li>\n\t<li>\n\t\t프록시 규칙 정의\n\t\t<br>\n\t\t<small>(도구 모음 팝업 메뉴를 사용하여 규칙을 추가하거나 프록시 규칙 탭에서 규칙을 추가/수정하세요)</small>\n\t</li>\n\t<li>\n\t\t준비 완료.\n\t</li>\n</ol>"
+	},
+	"settingsWelcomeSkipButton": {
+		"message": "알겠습니다"
+	},
+	"settingsSubscriptionStatsStatusSuccess": {
+		"message": "상태: 성공"
+	},
+	"settingsSubscriptionStatsStatusFail": {
+		"message": "상태: 실패"
+	},
+	"settingsSubscriptionStatsLastTry": {
+		"message": "마지막 시도:"
+	},
+	"settingsSubscriptionStatsMessage": {
+		"message": "메시지:"
+	},
+	"settingsSubscriptionStatsLastSuccess": {
+		"message": "마지막 성공:"
+	},
+	"settings_SmartProfileType_Direct": {
+		"message": "직접"
+	},
+	"settings_SmartProfileType_SystemProxy": {
+		"message": "시스템 프록시"
+	},
+	"settings_SmartProfileType_SmartRules": {
+		"message": "선택적 규칙"
+	},
+	"settings_SmartProfileType_AlwaysEnabledBypassRules": {
+		"message": "우회 규칙으로 항상 활성화"
+	},
+	"settings_SmartProfileType_IgnoreFailureRules": {
+		"message": "실패 무시 규칙"
+	},
+	"settingsRuleCidrIPAddress": {
+		"message": "IP 주소"
+	},
+	"settingsRuleCidrPrefixLength": {
+		"message": "접두사 길이"
+	},
+	"settingsRuleCidrNotationDesc": {
+		"message": "(이 규칙은 호스트 이름을 IP로 변환하지 않습니다.)"
+	},
+	"settingsRuleCidrIPInvalid": {
+		"message": "유효한 IP 주소를 입력하세요"
+	},
+	"settingsRuleCidrPrefixLengthInvalid": {
+		"message": "유효한 접두사 길이를 입력하세요"
+	},
+	"settingsRuleCidrNotationInvalid": {
+		"message": "CIDR 표기법 '{0}'이(가) 잘못되었습니다"
+	},
+	"settingsRuleCidrNotationInvalidMatch": {
+		"message": "CIDR 규칙이 '{0}'과(와) 일치하지 않습니다"
+	},
+	"notificationNoNextProxyServer": {
+		"message": "더 이상 다음 프록시 서버가 없습니다"
+	},
+	"notificationNoPreviousProxyServer": {
+		"message": "더 이상 이전 프록시 서버가 없습니다"
+	},
+	"notificationShortcutTitle": {
+		"message": "ProxyMust 단축키 알림"
+	},
+	"notificationShortcutProxyModeMessage": {
+		"message": "프록시 모드가 {0}(으)로 변경되었습니다"
+	},
+	"notificationShortcutProxyServerChanged": {
+		"message": "프록시 서버가 {0}(으)로 변경되었습니다"
+	},
+	"popupRatingDialogTitle": {
+		"message": "주소가 작동하나요?"
+	},
+	"popupRatingWorksButton": {
+		"message": "예 (+1)"
+	},
+	"popupRatingFailsButton": {
+		"message": "아니요 (-1)"
+	},
+	"popupRatingCancelButton": {
+		"message": "취소"
+	},
+	"settingsProxyTestTitle": {
+		"message": "프록시 접근성 확인"
+	},
+	"settingsProxyTestEnable": {
+		"message": "프록시 확인을 위한 테스트 사이트 추가"
+	},
+	"settingsProxyTestNote": {
+		"message": "최대 5개 주소를 입력하세요. 3개 이하로 지정하면 확인 속도가 더 빨라집니다."
+	},
+	"settingsProxyTestUrlsTitle": {
+		"message": "접근 테스트를 위해 방문할 주소"
+	},
+	"settingsProxyTestUrlsWarning": {
+		"message": "⚠️ 여기에 방문하는 웹사이트(예: youtube.com, telegram.org)를 입력하세요. 프록시 주소가 아닙니다."
+	},
+	"settingsProxyTestClear": {
+		"message": "테스트 사이트 지우기"
+	},
+	"settingsProxyTestStop": {
+		"message": "⏹ 테스트 중지"
+	},
+	"proxyTestCompleted": {
+		"message": "확인 완료. {0}개의 프록시를 테스트했습니다."
+	},
+	"settingsProxyTestRatingAutoEnabled": {
+		"message": "테스트 결과를 표시하기 위해 평가가 자동으로 활성화되었습니다."
+	},
+	"settingsProxyTestNoTestUrls": {
+		"message": "테스트 사이트가 지정되지 않았습니다. 최소 하나의 웹사이트를 추가하세요."
+	},
+	"settingsProxyMustTestTitle": {
+		"message": "프록시 테스트"
+	},
+	"settingsProxyMustSiteLabel": {
+		"message": "테스트할 사이트:"
+	},
+	"settingsProxyMustTestRun": {
+		"message": "▶ 테스트"
+	},
+	"settingsProxyMustAddSite": {
+		"message": "사이트 추가"
+	},
+	"settingsProxyMustTestCondition": {
+		"message": "아무것도 선택하지 않으면 테이블의 모든 프록시에 대해 테스트가 실행됩니다."
+	},
+	"settingsProxyMustTestResults": {
+		"message": "결과: ✅ = 이 사이트에 확실히 작동함, ☑️ = 작동할 가능성이 있음(오래된 데이터 또는 다른 사이트에서 성공), ❓ = 데이터 없음, ⛔ = 작동하지 않음."
+	},
+	"settingsServersRatingPriority": {
+		"message": "평점 + 우선순위"
+	},
+	"settingsContextMenuChangeRating": {
+		"message": "수동 평가 변경"
+	},
+	"settingsContextMenuPlus1": {
+		"message": "(+1)"
+	},
+	"settingsContextMenuMinus1": {
+		"message": "(-1)"
+	},
+	"settingsContextMenuRatingTitle": {
+		"message": "수동 평가"
+	},
+	"settingsContextMenuPlus1Desc": {
+		"message": "목록에서 위로 이동"
+	},
+	"settingsContextMenuMinus1Desc": {
+		"message": "목록에서 아래로 이동"
+	},
+	"settingsContextMenuResetRating": {
+		"message": "평점 재설정"
+	},
+	"settingsContextMenuSetFavorite": {
+		"message": "즐겨찾기로 설정"
+	},
+	"settingsContextMenuSetPin": {
+		"message": "고정"
+	},
+	"settingsContextMenuRemoveFavorite": {
+		"message": "즐겨찾기에서 제거"
+	},
+	"settingsContextMenuUnpin": {
+		"message": "고정 해제"
+	},
+	"settingsContextMenuRemovePriority": {
+		"message": "우선순위 제거"
+	},
+	"settingsContextMenuExportSelected": {
+		"message": "선택 항목 내보내기"
+	},
+	"settingsContextMenuCopyAddresses": {
+		"message": "주소 복사"
+	},
+	"settingsContextMenuDelete": {
+		"message": "삭제"
+	},
+	"settingsContextMenuTestForSite": {
+		"message": "사이트에 대해 선택 항목 테스트"
+	},
+	"settingsProxyMustTestProgress": {
+		"message": "{0}에 대한 프록시 테스트 중... ({1}/{2})"
+	},
+	"settingsProxyMustTestComplete": {
+		"message": "테스트 완료"
+	},
+	"settingsProxyMustAddSitePrompt": {
+		"message": "사이트 도메인 입력(예: youtube.com):"
+	},
+	"settingsProxyMustSiteAlreadyExists": {
+		"message": "사이트가 이미 목록에 있습니다."
+	},
+	"settingsProxyMustInvalidDomain": {
+		"message": "잘못된 도메인입니다. 유효한 도메인을 입력하세요(예: youtube.com)."
+	},
+	"popupCurrentSite": {
+		"message": "현재 사이트:"
+	},
+	"settingsProxyMustRemoveSite": {
+		"message": "사이트 제거"
+	},
+	"settingsContextMenuMoveToTop": {
+		"message": "맨 위로 이동"
+	},
+	"settingsContextMenuMoveToDown": {
+		"message": "아래로 이동"
+	},
+	"settingsProxyMustCannotRemoveAutoSite": {
+		"message": "이 사이트는 규칙에서 비롯되었으며 수동으로 제거할 수 없습니다."
+	},
+	"settingsProxyMustConfirmRemoveSite": {
+		"message": "테스트 사이트에서 \"{0}\"을(를) 제거하시겠습니까?"
+	},
+	"settingsProxyMustSiteRemoved": {
+		"message": "사이트 \"{0}\"이(가) 제거되었습니다."
+	},
+	"settingsProxyMustStaleHours": {
+		"message": "만료 시간(시간):"
+	},
+	"settingsContextMenuPreciseTest": {
+		"message": "정밀 테스트(느림, 더 정확함)"
+	},
+	"settingsContextMenuExpressTest": {
+		"message": "익스프레스 테스트(빠름, 덜 정확함)"
+	},
+	"popupQuickTestButton": {
+		"message": "테스트"
+	},
+	"popupQuickTestStopButton": {
+		"message": "중지"
+	},
+	"settingsChooseTestTypeTitle": {
+		"message": "테스트 유형 선택"
+	},
+	"settingsChooseTestTypeDescription": {
+		"message": "실행할 테스트를 선택하세요:"
+	},
+	"settingsPreciseTestDesc": {
+		"message": "전체 확인, 더 정확하지만 시간이 더 오래 걸립니다."
+	},
+	"settingsExpressTestDesc": {
+		"message": "익스프레스 테스트, 일부 작동하는 프록시를 건너뛸 수 있지만 빠르게 하나 이상을 찾습니다."
+	},
+	"settingsCancelButton": {
+		"message": "취소"
+	},
+	"popupAddAllSuccessfulSubs": {
+		"message": "작동하는 프록시 추가"
+	},
+	"settingsContextMenuClearStatuses": {
+		"message": "상태 지우기"
+	},
+	"settingsContextMenuClearStatusesSelected": {
+		"message": "선택한 프록시"
+	},
+	"settingsContextMenuClearStatusesAll": {
+		"message": "모든 프록시"
+	},
+	"settingsContextMenuClearStatusesConfirmSelected": {
+		"message": "선택한 프록시의 테스트 상태를 지우시겠습니까?"
+	},
+	"settingsContextMenuClearStatusesConfirmAll": {
+		"message": "모든 프록시의 테스트 상태를 지우시겠습니까? 이 작업은 되돌릴 수 없습니다."
+	},
+	"settingsContextMenuClearStatusesSuccess": {
+		"message": "테스트 상태가 성공적으로 지워졌습니다."
+	},
+	"popupQuickTestTooltip": {
+		"message": "현재 사이트에 대해 작동하는 프록시를 찾기 위한 빠른 테스트"
+	},
+	"popupAddAllSuccessfulSubsTooltip": {
+		"message": "테스트를 통과한 구독 프록시를 수동 목록에 추가합니다"
+	},
+	"popupTestMenuTitle": {
+		"message": "테스트 유형 선택"
+	},
+	"popupTestMenuAllProxies": {
+		"message": "모든 프록시에 대한 익스프레스 테스트"
+	},
+	"popupTestMenuSubscriptionsOnly": {
+		"message": "구독만 익스프레스 테스트"
+	},
+	"popupTestMenuAllProxiesDesc": {
+		"message": "수동 + 구독 프록시"
+	},
+	"popupTestMenuSubscriptionsOnlyDesc": {
+		"message": "그런 다음 작동하는 프록시를 수동 목록에 추가"
+	},
+	"popupTestMenuCycleTest": {
+		"message": "순환 프록시 테스트(전체 전환)"
+	},
+	"popupTestMenuCycleTestDesc": {
+		"message": "프록시를 순차적으로 전환하며 사이트 로딩을 테스트합니다"
+	},
+	"settingsContextMenuCycleTest": {
+		"message": "순환 테스트(전체 전환)"
+	},
+	"settingsCycleTestDesc": {
+		"message": "프록시를 순차적으로 전환하며 사이트 로딩을 테스트합니다. 더 철저하지만 느립니다."
+	},
+	"popupTestMenuExpressCycleTest": {
+		"message": "익스프레스 순환 테스트(빠른 전환)"
+	},
+	"popupTestMenuExpressCycleTestDesc": {
+		"message": "빠른 순차 프록시 전환, 10초 타임아웃, 첫 번째 성공 시 중지"
+	},
+	"popupTestMenuExpressCycleAll": {
+		"message": "익스프레스 순환 테스트(모든 프록시)"
+	},
+	"popupTestMenuExpressCycleAllDesc": {
+		"message": "수동 + 구독 프록시"
+	},
+	"popupTestMenuExpressCycleSubsOnly": {
+		"message": "익스프레스 순환 테스트(구독만)"
+	},
+	"popupTestMenuExpressCycleSubsOnlyDesc": {
+		"message": "그런 다음 작동하는 프록시를 수동 목록에 추가"
+	},
+	"popupNoSubscriptionProxies": {
+		"message": "테스트할 구독 프록시가 없습니다."
+	},
+	"settingsCopiedAddresses": {
+		"message": "주소 복사됨"
+	},
+	"settingsCopyFailed": {
+		"message": "복사 실패"
+	},
+	"settingsAnotherTestRunning": {
+		"message": "다른 테스트가 이미 실행 중입니다. 멈춘 것 같으면 설정 페이지를 새로 고침(F5)하고 다시 시도하세요."
+	},
+	"settingsProxyTestTimeout": {
+		"message": "10분 후 테스트 시간이 초과되어 강제로 중지되었습니다. 다시 시도하세요."
+	},
+	"settingsProxyMustNoSiteSelected": {
+		"message": "사이트를 선택하세요."
+	},
+	"settingsProxyMustSiteAdded": {
+		"message": "사이트 \"{0}\"이(가) 추가되었습니다."
+	},
+	"testingExplanationTitle": {
+		"message": "프록시 테스트 작동 방식"
+	},
+	"testingExplanationText": {
+		"message": "테스트 중에 임시 탭이 자동으로 열리고 닫히며, 프록시 IP와 해당 프록시를 통해 입력한 테스트 사이트 주소에 대한 연결을 확인합니다. 테스트 탭은 혼란을 피하기 위해 즉시 브라우저 기록에서 제거됩니다. 테스트는 테스트 중인 프록시를 전환하여 웹 브라우징을 방해하므로 테스트가 실행되는 동안 브라우저를 안전하게 최소화할 수 있습니다."
+	},
+	"settingsGeneralEnableRating": {
+		"message": "프록시 평가 활성화"
+	},
+	"settingsGeneralEnableRatingDesc": {
+		"message": "프록시 평가(작동/작동 안 함) 및 평가별 정렬을 허용합니다."
+	},
+	"settingsProxyMustStaleHoursDesc": {
+		"message": "테스트 결과가 오래된 것으로 간주되는 시간(시간, 1-168)."
+	},
+	"datatablesSearch": {
+		"message": "검색:"
+	},
+	"datatablesShow": {
+		"message": "표시"
+	},
+	"datatablesEntries": {
+		"message": "개 항목"
+	},
+	"datatablesPrevious": {
+		"message": "이전"
+	},
+	"datatablesNext": {
+		"message": "다음"
+	},
+	"datatablesInfo": {
+		"message": "총 _TOTAL_개 항목 중 _START_ ~ _END_ 표시"
+	},
+	"datatablesInfoEmpty": {
+		"message": "총 0개 항목 중 0 ~ 0 표시"
+	},
+	"datatablesEmptyTable": {
+		"message": "테이블에 데이터가 없습니다"
+	},
+	"datatablesAll": {
+		"message": "전체"
+	},
+	"popupAddCurrentSiteTooltip": {
+		"message": "현재 사이트를 테스트 목록에 추가"
+	}
+}

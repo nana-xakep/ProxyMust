@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProxyMust — документация</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: #f6f8fa;
+            color: #24292f;
+            padding: 30px 20px;
+            margin: 0;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 40px 50px;
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+        }
+        h1 {
+            font-size: 2.4rem;
+            margin-bottom: 0.2em;
+            border-bottom: 3px solid #e1e4e8;
+            padding-bottom: 0.3em;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        h1 small {
+            font-size: 1rem;
+            font-weight: 400;
+            color: #586069;
+            margin-left: 12px;
+        }
+        h2 {
+            font-size: 1.8rem;
+            margin-top: 1.8em;
+            padding-bottom: 0.2em;
+            border-bottom: 1px solid #e1e4e8;
+        }
+        h3 {
+            font-size: 1.3rem;
+            margin-top: 1.5em;
+        }
+        h4 {
+            font-size: 1.1rem;
+            margin-top: 1.2em;
+            margin-bottom: 0.3em;
+        }
+        p, li {
+            margin-bottom: 0.6rem;
+        }
+        ul, ol {
+            padding-left: 1.8rem;
+        }
+        code {
+            background: #f1f3f5;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            font-family: 'SF Mono', Consolas, 'Liberation Mono', monospace;
+        }
+        pre {
+            background: #f6f8fa;
+            padding: 16px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 0.9rem;
+            border: 1px solid #e1e4e8;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.2em 0;
+        }
+        th, td {
+            border: 1px solid #d0d7de;
+            padding: 8px 12px;
+            text-align: left;
+        }
+        th {
+            background: #f6f8fa;
+        }
+        .badge {
+            display: inline-block;
+            background: #2ea44f;
+            color: #fff;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-left: 6px;
+        }
+        .badge-warn {
+            background: #d73a49;
+        }
+        .badge-info {
+            background: #0366d6;
+        }
+        .toc {
+            background: #f6f8fa;
+            padding: 16px 24px;
+            border-radius: 8px;
+            margin: 1.5em 0 2em 0;
+        }
+        .toc ul {
+            list-style: none;
+            padding-left: 0;
+            columns: 2;
+        }
+        .toc li {
+            margin-bottom: 4px;
+        }
+        .toc a {
+            text-decoration: none;
+            color: #0366d6;
+        }
+        .toc a:hover {
+            text-decoration: underline;
+        }
+        @media (max-width: 700px) {
+            .container { padding: 20px; }
+            .toc ul { columns: 1; }
+            h1 { font-size: 1.8rem; }
+        }
+        .footer {
+            margin-top: 3em;
+            padding-top: 1.5em;
+            border-top: 1px solid #e1e4e8;
+            font-size: 0.9rem;
+            color: #586069;
+            text-align: center;
+        }
+        .emoji {
+            font-size: 1.1em;
+        }
+        .img-placeholder {
+            background: #f1f3f5;
+            border: 1px dashed #d0d7de;
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px;
+            color: #586069;
+            margin: 12px 0;
+        }
+        .img-placeholder i {
+            font-style: normal;
+            font-size: 1.2rem;
+        }
+        .note {
+            background: #fff9e6;
+            border-left: 4px solid #f0b400;
+            padding: 12px 18px;
+            margin: 16px 0;
+            border-radius: 4px;
+        }
+        .note strong {
+            color: #b08800;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <h1>
+        <span>ProxyMust</span>
+        <small>— расширенный выборочный менеджер прокси</small>
+    </h1>
+
+    <p>
+        <strong>Версия:</strong> 1.0.0 (на основе SmartProxy 2.1)<br>
+        <strong>Автор форка:</strong> nana-xakep<br>
+        <strong>Исходный код:</strong> <a href="https://github.com/nana-xakep/ProxyMust" target="_blank">github.com/nana-xakep/ProxyMust</a>
+    </p>
+
+    <div class="toc">
+        <strong>📑 Оглавление</strong>
+        <ul>
+            <li><a href="#intro">Введение</a></li>
+            <li><a href="#install">Установка</a></li>
+            <li><a href="#profiles">Режимы работы (профили)</a></li>
+            <li><a href="#servers">Управление прокси-серверами</a></li>
+            <li><a href="#testing">Тестирование прокси</a></li>
+            <li><a href="#rating">Рейтинг и статусы</a></li>
+            <li><a href="#rules">Правила (фильтры)</a></li>
+            <li><a href="#context-menu">Контекстное меню</a></li>
+            <li><a href="#import-export">Импорт / экспорт</a></li>
+            <li><a href="#subscriptions">Подписки</a></li>
+            <li><a href="#sync-backup">Синхронизация и резервное копирование</a></li>
+            <li><a href="#themes">Темы оформления</a></li>
+            <li><a href="#shortcuts">Горячие клавиши</a></li>
+            <li><a href="#troubleshooting">Устранение проблем</a></li>
+            <li><a href="#license">Лицензия</a></li>
+        </ul>
+    </div>
+
+    <!-- ============================================================ -->
+    <h2 id="intro">📖 Введение</h2>
+    <p>
+        <strong>ProxyMust</strong> – это форк расширения <a href="https://github.com/salarcode/SmartProxy" target="_blank">SmartProxy</a>,
+        созданный для более гибкого и удобного управления прокси-серверами.
+        Расширение автоматически включает или отключает прокси для сайтов на основе заданных правил,
+        позволяет тестировать работоспособность прокси, присваивать им рейтинг и сортировать по приоритету.
+    </p>
+    <p>
+        ProxyMust работает в <strong>Chrome, Firefox, Edge, Opera, Firefox для Android</strong>
+        и полностью переведён на <strong>24 языка</strong>.
+    </p>
+    <div class="note">
+        <strong>⚠️ Важно:</strong> Расширение <strong>не предоставляет</strong> собственных прокси-серверов.
+        Вы должны добавить их самостоятельно. Также оно <strong>не собирает и не передаёт</strong> никакие данные пользователя.
+    </div>
+
+    <!-- ============================================================ -->
+    <h2 id="install">📦 Установка</h2>
+
+    <h3>Из магазина (рекомендуется)</h3>
+    <ul>
+        <li><strong>Firefox Add-ons:</strong> перейдите в магазин, найдите «ProxyMust» и нажмите «Установить».</li>
+        <li><strong>Chrome Web Store:</strong> аналогично.</li>
+        <li><strong>Edge, Opera:</strong> через соответствующие магазины расширений.</li>
+    </ul>
+
+    <h3>Вручную (для разработчиков)</h3>
+    <ol>
+        <li>Скачайте последний релиз с <a href="https://github.com/nana-xakep/ProxyMust/releases" target="_blank">GitHub Releases</a>.</li>
+        <li>Распакуйте архив в отдельную папку.</li>
+        <li>
+            <strong>Chrome/Edge/Opera:</strong> откройте <code>chrome://extensions</code>, включите «Режим разработчика»,
+            нажмите «Загрузить распакованное» и выберите папку с расширением.
+        </li>
+        <li>
+            <strong>Firefox:</strong> откройте <code>about:debugging</code>, нажмите «Загрузить временное дополнение»,
+            выберите любой файл в папке расширения.
+        </li>
+    </ol>
+
+    <!-- ============================================================ -->
+    <h2 id="profiles">🎛 Режимы работы (профили)</h2>
+    <p>
+        В попапе (иконка на панели инструментов) вы можете переключать режимы работы:
+    </p>
+    <ul>
+        <li><strong>Напрямую (без прокси)</strong> — все запросы идут напрямую, прокси не используется.</li>
+        <li><strong>Выборочный прокси</strong> — прокси включается только для сайтов, которые соответствуют правилам (черный список).</li>
+        <li><strong>Всегда включён</strong> — прокси работает для всех сайтов, кроме тех, что добавлены в исключения (белый список).</li>
+        <li><strong>Системный прокси</strong> — решение о использовании прокси передаётся операционной системе (настройки системы).</li>
+    </ul>
+    <p>
+        Вы также можете создавать <strong>собственные профили</strong> с уникальными наборами правил и привязкой к определённому прокси.
+    </p>
+
+    <!-- ============================================================ -->
+    <h2 id="servers">🖥 Управление прокси-серверами</h2>
+    <p>На странице настроек (вкладка «Proxy Servers») вы можете управлять списком прокси.</p>
+
+    <h3>Добавление вручную</h3>
+    <ol>
+        <li>Нажмите «Add Server».</li>
+        <li>Укажите:
+            <ul>
+                <li><strong>Имя</strong> (для удобства)</li>
+                <li><strong>Адрес</strong> (IP или домен)</li>
+                <li><strong>Порт</strong></li>
+                <li><strong>Протокол</strong> (HTTP, HTTPS, SOCKS4, SOCKS5)</li>
+                <li>При необходимости — <strong>логин и пароль</strong> (в Chrome не поддерживается для SOCKS).</li>
+            </ul>
+        </li>
+        <li>Нажмите «Save».</li>
+    </ol>
+
+    <h3>Импорт списка</h3>
+    <ul>
+        <li>Нажмите «Import Proxies».</li>
+        <li>Вставьте текст со списком прокси или загрузите файл.</li>
+        <li>Поддерживаются форматы: <code>host:port</code>, <code>host:port [protocol]</code>, <code>protocol://user:pass@host:port</code>.</li>
+        <li>Расширение автоматически определяет протокол и удаляет дубликаты.</li>
+    </ul>
+
+    <h3>Экспорт</h3>
+    <ul>
+        <li>Нажмите «Export Proxies» — сохранится весь список.</li>
+        <li>Или выберите несколько прокси в таблице, нажмите правой кнопкой мыши → «Экспорт выбранные» (контекстное меню).</li>
+    </ul>
+
+    <!-- ============================================================ -->
+    <h2 id="testing">🧪 Тестирование прокси</h2>
+    <p>
+        Проверьте, работает ли прокси для нужного вам сайта. Выберите сайт из выпадающего списка (или добавьте свой)
+        и нажмите «Test». Доступны четыре типа тестов:
+    </p>
+    <ul>
+        <li><strong>Циклический тест</strong> (работает во всех браузерах) — последовательно переключает активный профиль и каждый прокси из списка, проверяя загрузку сайта. Самый надёжный, но медленный.</li>
+        <li><strong>Экспресс-циклический тест</strong> (все браузеры) — ускоренная версия, подходит для предварительной оценки.</li>
+        <li><strong>Точный (медленный) тест</strong> (не работает в Firefox) — тщательная проверка, даёт точный результат.</li>
+        <li><strong>Экспресс-тест</strong> (не работает в Firefox) — быстрая проверка.</li>
+    </ul>
+    <div class="note">
+        <strong>⚠️ Внимание:</strong> во время циклических и экспресс-циклических тестов расширение реально переключает активный профиль и прокси.
+        Это может мешать обычному сёрфингу. Запускайте тесты, когда браузер не используется для других задач.
+    </div>
+    <p>
+        Тесты можно запускать для:
+    </p>
+    <ul>
+        <li>всех прокси в таблице,</li>
+        <li>только выбранных (через контекстное меню),</li>
+        <li>текущего сайта прямо из попапа (кнопка «Test»).</li>
+    </ul>
+
+    <!-- ============================================================ -->
+    <h2 id="rating">📊 Рейтинг и статусы прокси</h2>
+    <p>
+        Каждый прокси получает <strong>числовой рейтинг</strong>, который автоматически изменяется по результатам тестов:
+        <code>+1</code> за успех, <code>–1</code> за неудачу. Вы также можете менять рейтинг вручную через контекстное меню (правый клик).
+    </p>
+    <p>Рядом с каждым прокси отображается <strong>статус</strong> для выбранного сайта:</p>
+    <ul>
+        <li><span class="emoji">✅</span> – точно работает (свежий успех)</li>
+        <li><span class="emoji">☑️</span> – вероятно работает (данные устарели или успех получен для другого сайта)</li>
+        <li><span class="emoji">❓</span> – нет данных</li>
+        <li><span class="emoji">⛔</span> – не работает (свежий провал)</li>
+    </ul>
+    <p>
+        В настройках вы можете задать <strong>время устаревания</strong> (по умолчанию 6 часов).
+        По истечении этого срока статус становится косвенным (<span class="emoji">☑️</span>).
+    </p>
+    <p>
+        Сортировка в попапе и в таблице настроек учитывает <strong>приоритет</strong> (📌 закреплённые, ⭐ избранные) и рейтинг.
+    </p>
+
+    <!-- ============================================================ -->
+    <h2 id="rules">📝 Правила (фильтры)</h2>
+    <p>
+        Правила определяют, для каких сайтов включать или отключать прокси. Настраиваются в профилях (вкладка «Selective Profiles»).
+    </p>
+    <h3>Типы правил</h3>
+    <ul>
+        <li><strong>Домен и поддомены</strong> – например, <code>google.com</code> сработает для <code>mail.google.com</code>.</li>
+        <li><strong>Маска хоста / URL</strong> – например, <code>*.google.com</code>.</li>
+        <li><strong>Регулярное выражение</strong> (для хоста или полного URL).</li>
+        <li><strong>Точный URL</strong> – полное совпадение.</li>
+        <li><strong>IP-диапазон (CIDR)</strong> – например, <code>192.168.1.0/24</code>.</li>
+    </ul>
+    <h3>Добавление правил</h3>
+    <ul>
+        <li>Из попапа: нажмите на домен в списке «Proxyable Resources».</li>
+        <li>Вручную: на странице настроек в нужном профиле нажмите «Add Rule».</li>
+        <li>Импорт: из файлов GFWList или SwitchyOmega.</li>
+    </ul>
+    <p>
+        <strong>Приоритет:</strong> правила белого списка (<em>whitelist</em>) всегда имеют более высокий приоритет и отменяют прокси для указанных сайтов.
+    </p>
+
+    <!-- ============================================================ -->
+    <h2 id="context-menu">🖱 Контекстное меню</h2>
+    <p>
+        В таблице прокси (на странице настроек) нажмите правой кнопкой мыши на строке с прокси.
+        Появится меню, где вы можете:
+    </p>
+    <ul>
+        <li>Изменить рейтинг (+1, –1, сброс)</li>
+        <li>Установить приоритет: 📌 закрепить или ⭐ добавить в избранное</li>
+        <li>Экспортировать выбранные прокси</li>
+        <li>Копировать адреса выбранных прокси</li>
+        <li>Удалить выбранные прокси</li>
+        <li>Очистить статусы для выбранных или всех прокси</li>
+        <li>Запустить тесты для выбранных прокси (с выбором сайта)</li>
+        <li>Переместить выбранные прокси вверх/вниз (в таблице)</li>
+    </ul>
+    <p>
+        В попапе (управляющем окне) правый клик по активному прокси позволяет:
+    </p>
+    <ul>
+        <li>Изменить рейтинг</li>
+        <li>Установить приоритет</li>
+        <li>Добавить подписочный прокси в ручной список (если клик на прокси из подписки).</li>
+    </ul>
+
+    <!-- ============================================================ -->
+    <h2 id="import-export">📤 Импорт / экспорт</h2>
+    <p>
+        Кроме основных функций импорта/экспорта списка прокси, реализованы следующие улучшения:
+    </p>
+    <ul>
+        <li><strong>Автоматическое переключение режима импорта:</strong> при вводе текста в поле ввода активируется режим «Текст списка прокси»; при выборе файла — режим «Файл списка прокси».</li>
+        <li><strong>Экспорт выбранных:</strong> в контекстном меню таблицы можно экспортировать только отмеченные серверы.</li>
+    </ul>
+
+    <!-- ============================================================ -->
+    <h2 id="subscriptions">📋 Подписки на списки прокси и правил</h2>
+    <h3>Подписки на списки прокси</h3>
+    <ul>
+        <li>Вкладка «Proxy Server Subscriptions» → «Subscribe to a list».</li>
+        <li>Укажите URL списка (формат: PlainText, JSON, CSV).</li>
+        <li>Расширение будет автоматически обновлять список по расписанию (задаётся в минутах).</li>
+        <li>Подписочные прокси отображаются в общем списке с пометкой источника.</li>
+    </ul>
+    <h3>Подписки на правила</h3>
+    <ul>
+        <li>Внутри профиля → «Rules Subscriptions» → «Subscribe to a rules list».</li>
+        <li>Поддерживаются форматы AutoProxy/GFWList и SwitchyOmega.</li>
+        <li>Правила автоматически добавляются в профиль.</li>
+    </ul>
+
+    <!-- ============================================================ -->
+    <h2 id="sync-backup">🔄 Синхронизация и резервное копирование</h2>
+    <h3>Синхронизация</h3>
+    <ul>
+        <li>Включите синхронизацию в общих настройках.</li>
+        <li>Выберите источник: <strong>браузерная синхронизация</strong> или <strong>WebDAV-сервер</strong>.</li>
+        <li>При использовании WebDAV укажите URL, имя файла, логин и пароль.</li>
+        <li>Настройки синхронизируются автоматически при изменении.</li>
+    </ul>
+    <h3>Резервное копирование</h3>
+    <ul>
+        <li>Вкладка «Backup/Restore».</li>
+        <li>Нажмите «Create full backup» — скачается файл со всеми настройками, правилами и прокси.</li>
+        <li>Для восстановления выберите «Restore backup» и загрузите файл.</li>
+    </ul>
+
+    <!-- ============================================================ -->
+    <h2 id="themes">🎨 Темы оформления</h2>
+    <ul>
+        <li>В общих настройках выберите <strong>светлую</strong>, <strong>тёмную</strong> или <strong>авто</strong> (следует за темой браузера).</li>
+        <li>Можно указать свою <strong>пользовательскую тему</strong> — вставьте URL CSS-файла (обязательно HTTPS).</li>
+        <li>Поддерживаются темы из <a href="https://bootswatch.com" target="_blank">bootswatch.com</a>.</li>
+    </ul>
+
+    <!-- ============================================================ -->
+    <h2 id="shortcuts">⌨️ Горячие клавиши</h2>
+    <p>
+        Вы можете настроить сочетания клавиш в браузере (управление расширениями → клавиатурные сокращения).
+        Доступны команды:
+    </p>
+    <ul>
+        <li><strong>Следующий / предыдущий прокси</strong> (циклический перебор)</li>
+        <li><strong>Переключение профилей:</strong> «Нет прокси», «Выборочный», «Всегда включён», «Системный»</li>
+    </ul>
+    <p>По умолчанию: <kbd>Ctrl+Shift+1</kbd> — Direct, <kbd>Ctrl+Shift+2</kbd> — Selective, <kbd>Ctrl+Shift+3</kbd> — Always, <kbd>Ctrl+Shift+4</kbd> — System.</p>
+
+    <!-- ============================================================ -->
+    <h2 id="troubleshooting">⚠️ Устранение проблем</h2>
+
+    <h3>Расширение не работает в приватном режиме (инкогнито)</h3>
+    <p>
+        В настройках браузера (управление расширениями) разрешите расширению работу в режиме инкогнито.
+    </p>
+
+    <h3>В Firefox не работают точный и экспресс-тесты</h3>
+    <p>
+        Это связано с ограничениями API браузера. Используйте циклические тесты — они работают во всех браузерах.
+    </p>
+
+    <h3>Прокси не подключается</h3>
+    <ul>
+        <li>Проверьте правильность адреса и порта.</li>
+        <li>Убедитесь, что прокси-сервер запущен и доступен.</li>
+        <li>Если используется аутентификация, проверьте логин/пароль (в Chrome аутентификация не поддерживается для SOCKS).</li>
+        <li>Запустите тест для проверки работоспособности.</li>
+    </ul>
+
+    <h3>Не отображаются статусы и рейтинги</h3>
+    <p>
+        Включите опцию «Enable rating for proxies» на вкладке «Proxy Servers».
+    </p>
+
+    <h3>Не удаётся импортировать список прокси</h3>
+    <p>
+        Убедитесь, что список соответствует поддерживаемым форматам. Воспользуйтесь автоматическим переключением режимов (текст/файл).
+    </p>
+
+    <h3>Ошибка при синхронизации через WebDAV</h3>
+    <ul>
+        <li>Проверьте URL и учётные данные.</li>
+        <li>Убедитесь, что файл доступен для записи.</li>
+        <li>Попробуйте выполнить резервное копирование вручную через кнопку «Backup Now».</li>
+    </ul>
+
+    <h3>Где посмотреть логи ошибок?</h3>
+    <p>
+        Откройте консоль разработчика (<kbd>F12</kbd>) на странице настроек или попапа.
+        Включите диагностику (кнопка «diag?» внизу страницы настроек) для подробного лога.
+    </p>
+
+    <!-- ============================================================ -->
+    <h2 id="license">📄 Лицензия</h2>
+    <p>
+        ProxyMust распространяется под лицензией <strong>GNU General Public License v3.0</strong>.
+        Оригинальный SmartProxy (c) Salar Khalilzadeh, используется с разрешения.
+        Полный текст лицензии доступен в файле <code>LICENSE</code>.
+    </p>
+	<ul>
+            <li><a href="https://github.com/nana-xakep/ProxyMust" target="_blank">Репозиторий на GitHub</a></li>
+            <li><a href="https://github.com/nana-xakep/ProxyMust/issues" target="_blank">Сообщить об ошибке или предложить идею</a></li>
+            <li><a href="https://github.com/salarcode/SmartProxy" target="_blank">Оригинальный SmartProxy</a></li>
+        </ul>
+
+        <div class="footer">
+            <p>ProxyMust – форк SmartProxy, поддерживается <a href="https://github.com/nana-xakep" target="_blank">nana-xakep</a>.</p>
+            <p>Лицензия <a href="https://www.gnu.org/licenses/gpl-3.0.html" target="_blank">GPL-3.0</a>. Версия 1.0.0 (основан на SmartProxy 2.1).</p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
+    <div class="footer">
+        <p>Версия документации: 1.0.0 (2026-06-17)</p>
+    </div>
+
+</div>
+</body>
+</html>

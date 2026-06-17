@@ -1,0 +1,1626 @@
+{
+	"uiDirection": {
+		"message": "rtl"
+	},
+	"languageCode": {
+		"message": "ur",
+		"description": "We need to know the code which might not match what browser UI has"
+	},
+	"extensionName": {
+		"message": "ProxyMust"
+	},
+	"extensionDescription": {
+		"message": "ProxyMust – انتخابی پراکسی مینیجر (SmartProxy کی ایک شاخ)。 آپ کی مرضی کے مطابق پیٹرن کی بنیاد پر آپ کی وزٹ کردہ ویب سائٹس کے لیے خودکار طور پر پراکسی کو فعال/غیرفعال کرتا ہے۔"
+	},
+	"toolbarTooltipEffectiveRule": {
+		"message": "مماثل اصول کا ماخذ:"
+	},
+	"toolbarTooltipEffectiveRuleNone": {
+		"message": "کوئی مماثل اصول نہیں"
+	},
+	"toolbarTooltipEffectiveRulePattern": {
+		"message": "اصول کا پیٹرن:"
+	},
+	"popupTitle": {
+		"message": "ProxyMust ایکٹیویشن"
+	},
+	"popupPrivateBrowsingMode": {
+		"message": "پرائیویٹ براؤزنگ موڈ"
+	},
+	"popupNoProxy": {
+		"message": "براہ راست (بغیر پراکسی)"
+	},
+	"popupSmartProxy": {
+		"message": "انتخابی پراکسی"
+	},
+	"popupAlwaysEnable": {
+		"message": "ہمیشہ فعال"
+	},
+	"popupSystemProxy": {
+		"message": "سسٹم پراکسی"
+	},
+	"popupActiveProxy": {
+		"message": "فعال پراکسی (یہ پروفائل):"
+	},
+	"popupActiveProxyDefault": {
+		"message": "فعال پراکسی (طے شدہ ترتیب):"
+	},
+	"popupEnableProxyOn": {
+		"message": "پراکسی کو چالو کریں"
+	},
+	"popupIgnoreTheseDomains": {
+		"message": "ان ڈومینز کو نظر انداز کریں"
+	},
+	"popupRuleIsFromSubscription": {
+		"message": "(سبسکرپشن سے)"
+	},
+	"popupProxyableResources": {
+		"message": "پراکسی کے قابل وسائل"
+	},
+	"popupSettings": {
+		"message": "ترتیبات"
+	},
+	"popupSubscriptions": {
+		"message": "-سبسکرپشنز-"
+	},
+	"popupUpdateText": {
+		"message": "{0} پر اپ ڈیٹ دستیاب ہے"
+	},
+	"popupFailedRequestsMenu": {
+		"message": "ناکام درخواستیں"
+	},
+	"popupFailedRequestsTitle": {
+		"message": "ناکام درخواستوں کی فہرست"
+	},
+	"popupFailedRequestsDesc": {
+		"message": "یہ وہ ڈومینز ہیں جن کا وقت ختم ہو گیا یا وہ ناکام ہو گئے۔<br />اگر آپ کو لگتا ہے کہ یہ ڈومینز بلاک ہیں، تو آپ انہیں یہاں پراکسی اصولوں کی فہرست میں شامل کر سکتے ہیں۔"
+	},
+	"popupAddFailedRequests": {
+		"message": "اصولوں کی فہرست میں شامل کریں"
+	},
+	"popupProfileTypeDoesNotSupportsRules": {
+		"message": "منتخب کردہ پروفائل '{0}' اصولوں کی حمایت نہیں کرتا، براہ کرم دوسرا پروفائل منتخب کریں۔"
+	},
+	"popupAddIgnoredFailures": {
+		"message": "انہیں نظر انداز کریں"
+	},
+	"popupAddIgnoredFailuresConfirm": {
+		"message": "کیا آپ واقعی منتخب کردہ ناکامیوں کو نظر انداز کرنا چاہتے ہیں؟ اگر آپ ایسا کرتے ہیں، تو آپ کو ان سے مزید کوئی خرابی نہیں ملے گی۔ آپ بعد میں ترتیبات سے اسے تبدیل کر سکتے ہیں۔"
+	},
+	"popupNotAllowedSetProxySettingsChrome": {
+		"message": "بدقسمتی سے، سسٹم پراکسی استعمال کرنے کے لیے براؤزر کی ترتیبات تبدیل کرنے کے لیے `incognito` کی اجازت درکار ہے۔ براہ کرم براؤزر میں ProxyMust ایکسٹینشن کی ترتیبات پر جائیں اور `Allow in incognito` کی اجازت کو چیک کریں۔ <a href='https://support.google.com/chrome_webstore/answer/2664769'>طریقہ جانیں</a>۔"
+	},
+	"popupNotAllowedSetProxySettingsFirefox": {
+		"message": "Firefox 67 کے بعد سے، سسٹم پراکسی استعمال کرنے کے لیے براؤزر کی ترتیبات تبدیل کرنے کے لیے `Private Browsing` کی اجازت درکار ہے۔ براہ کرم براؤزر میں ProxyMust ایڈ آن کی ترتیبات پر جائیں اور `Run in Private Windows` کی اجازت کو دیں۔ <a href='https://support.mozilla.org/en-US/kb/extensions-private-browsing'>طریقہ جانیں</a>۔"
+	},
+	"proxyableTitle": {
+		"message": "پراکسی کے قابل وسائل"
+	},
+	"proxyableHeader": {
+		"message": "اس صفحہ پر پراکسی کے قابل اشیاء"
+	},
+	"proxyableReload": {
+		"message": "دوبارہ لوڈ کریں"
+	},
+	"proxyableClose": {
+		"message": "بند کریں"
+	},
+	"proxyableHeaderDesc": {
+		"message": "یہ ان وسائل کی فہرست ہے جو اس صفحہ سے استعمال یا بلائے جاتے ہیں۔ ان وسائل کو پراکسی ایکٹیویشن اصولوں میں شامل کرنے کے لیے اس فہرست کا استعمال کریں۔<br />اگر آپ کو یہاں کچھ نظر نہیں آتا ہے، تو وسائل دیکھنے کے لیے صفحہ کو دوبارہ لوڈ کریں۔"
+	},
+	"proxyableErrNoSourceTab": {
+		"message": "ماخذ ٹیب نہیں ملا!"
+	},
+	"proxyableCreateRuleConfirm": {
+		"message": "کیا آپ واقعی منتخب کردہ ڈومین کے لیے اصول بنانا چاہتے ہیں؟"
+	},
+	"proxyableDisableButton": {
+		"message": "غیر فعال کریں"
+	},
+	"proxyableEnableButton": {
+		"message": "فعال کریں"
+	},
+	"proxyableEnableButtonDomain": {
+		"message": "اس کے لیے فعال کریں: "
+	},
+	"proxyableSubscriptionRule": {
+		"message": "(سبسکرپشن اصول)"
+	},
+	"proxyableDeleteRuleConfirm": {
+		"message": "کیا آپ واقعی منتخب کردہ اصول کو حذف کرنا چاہتے ہیں:"
+	},
+	"proxyableGridNoDataContent": {
+		"message": "کوئی درخواست نہیں"
+	},
+	"proxyableGridColUrl": {
+		"message": "درخواست کا یو آر ایل"
+	},
+	"proxyableGridColRuleStatus": {
+		"message": "اصول کی حالت"
+	},
+	"proxyableGridColProxifiedStatus": {
+		"message": "پراکسی کی حالت"
+	},
+	"proxyableGridColRuleHost": {
+		"message": "اصول کا ڈومین"
+	},
+	"proxyableGridColRulePattern": {
+		"message": "اصول کا پیٹرن"
+	},
+	"proxyableGridCol_ProxifiedStatus_NoProxy": {
+		"message": "کوئی پراکسی نہیں"
+	},
+	"proxyableGridCol_ProxifiedStatus_Special": {
+		"message": "خاص"
+	},
+	"proxyableGridCol_ProxifiedStatus_ProxyPerOrigin": {
+		"message": "والد ٹیب سے"
+	},
+	"proxyableGridCol_ProxifiedStatus_MatchedRule": {
+		"message": "مماثل"
+	},
+	"proxyableGridCol_ProxifiedStatus_AlwaysEnabled": {
+		"message": "ہمیشہ فعال"
+	},
+	"proxyableGridCol_ProxifiedStatus_SystemProxyApplied": {
+		"message": "سسٹم پراکسی نافذ"
+	},
+	"proxyableGridCol_RuleStatus_NoneMatched": {
+		"message": "کوئی مماثلت نہیں"
+	},
+	"proxyableGridCol_RuleStatus_Special": {
+		"message": "خاص"
+	},
+	"proxyableGridCol_RuleStatus_ProxyPerOrigin": {
+		"message": "والد ٹیب سے"
+	},
+	"proxyableGridCol_RuleStatus_MatchedRule": {
+		"message": "مماثل"
+	},
+	"proxyableGridCol_RuleStatus_Whitelisted": {
+		"message": "وائٹ لسٹ میں"
+	},
+	"proxyableGridCol_RuleStatus_AlwaysEnabledByPassed": {
+		"message": "ہمیشہ فعال <br> نظرانداز"
+	},
+	"proxyableGridCol_RuleStatus_AlwaysEnabledForcedByRules": {
+		"message": "ہمیشہ فعال <br> اصولوں کے ذریعے مجبور"
+	},
+	"settingsTitle": {
+		"message": "ProxyMust ترتیبات"
+	},
+	"settingsTabAbout": {
+		"message": "تعارف"
+	},
+	"settingsTabGeneral": {
+		"message": "عمومی اختیارات"
+	},
+	"settingsTabSmartProfiles": {
+		"message": "انتخابی پروفائلز"
+	},
+	"settingsTabAddSmartProfile": {
+		"message": "نیا انتخابی پروفائل شامل کریں"
+	},
+	"settingsTabProxyServers": {
+		"message": "پراکسی سرورز"
+	},
+	"settingsTabProxyServerSubscriptions": {
+		"message": "پراکسی سرور سبسکرپشنز"
+	},
+	"settingsTabBackupRestore": {
+		"message": "بیک اپ / بحالی"
+	},
+	"settingsTabUpdateText": {
+		"message": "{0} میں اپ ڈیٹ کریں"
+	},
+	"settingsTabAboutDescription": {
+		"message": "ProxyMust کے ساتھ پراکسی کا استعمال آسان نہیں ہو سکتا۔ اسے ایک بار ترتیب دیں اور بھول جائیں کے حل کے طور پر سوچیں۔ ProxyMust کے ساتھ آپ کو دستی طور پر اپنی پراکسی تبدیل کرنے یا اسے آن اور آف کرنے کی ضرورت نہیں ہے۔ آپ کو صرف اتنا کرنا ہے کہ ProxyMust کو بتائیں کہ آپ اپنی مطلوبہ ویب سائٹ کے لیے ایک کلک کے ساتھ پراکسی کو فعال کرنا چاہتے ہیں۔ اس کے بعد، جب آپ اس مخصوص ویب سائٹ پر جاتے ہیں، تو ProxyMust کام کرے گا اور آپ کے اس ویب سائٹ کے تمام ڈیٹا پراکسی کے ذریعے منتقل ہو جائیں گے، بغیر آپ کو کچھ کیے۔"
+	},
+	"settingsGeneralSmartFeatures": {
+		"message": "سمارٹ خصوصیات"
+	},
+	"settingsGeneralSmartFeaturesNoChrome": {
+		"message": "<strong><a href='https://www.getfirefox.com/' target='_blank' rel='noopener'>صرف Firefox</a>!</strong> بدقسمتی سے یہ خصوصیت Chrome میں تعاون یافتہ نہیں ہے۔"
+	},
+	"settingsGeneralProxyPerOrigin": {
+		"message": "فی ٹیب/ماخذ پراکسی کو فعال کریں"
+	},
+	"settingsGeneralProxyPerOriginDesc": {
+		"message": "اگر کوئی اصول کسی ٹیب کے یو آر ایل سے ملتا ہے، تو اس کے نتیجے میں پراکسی ٹیب کے کنکشن پر لاگو ہوگی۔ عام طور پر ہر صفحے میں دوسری درخواستیں ہوں گی اور ان کا کوئی مماثل اصول نہیں ہو سکتا اور اس لیے ان کے کنکشن پر پراکسی لاگو نہیں ہوگی۔ `فی ٹیب/ماخذ پراکسی کو فعال کریں` آپشن کیا کرتا ہے یہ یقینی بناتا ہے کہ پورا صفحہ، بشمول مختلف ڈومینز اور مآخذ کے تمام کنکشن، اسی پراکسی کا استعمال کرتے ہیں جو ٹیب کے ماخذ پر لاگو ہوتی ہے۔ نیز، یہ آپشن ہر ایک ڈومین کے لیے اصول رکھنے کی ضرورت کو ختم کرتا ہے۔ براہ کرم نوٹ کریں کہ اگر ٹیب پر کوئی پراکسی لاگو نہیں ہے، تو پراکسی اصول کام کرتے رہیں گے اور صفحہ میں دیگر کنکشنز پر انفرادی طور پر پراکسی لاگو کریں گے۔"
+	},
+	"settingsGeneralProxyPerOriginEnabled": {
+		"message": "فی ٹیب/ماخذ پراکسی فعال ہے"
+	},
+	"settingsGeneralProxyPerOriginDisabled": {
+		"message": "فی ٹیب/ماخذ پراکسی غیر فعال ہے"
+	},
+	"settingsGeneralSyncing": {
+		"message": "ہم آہنگی"
+	},
+	"settingsGeneralIncognitoProfile": {
+		"message": "پرائیویٹ براؤزنگ پروفائل"
+	},
+	"settingsGeneralIncognitoProfileDisabled": {
+		"message": "(غیر فعال)"
+	},
+	"settingsGeneralIncognitoProfileDesc": {
+		"message": "اگر آپ چاہتے ہیں کہ جب ٹیب/ونڈو پرائیویٹ براؤزنگ موڈ میں ہو تو اسے استعمال کرنے پر مجبور کیا جائے تو ایک پرائیویٹ براؤزنگ پروفائل منتخب کریں۔ یہ آپشن فعال پروفائل کو اوور رائڈ کر دے گا۔"
+	},
+	"settingsGeneralEnableSyncing": {
+		"message": "ترتیبات کی ہم آہنگی کو فعال کریں"
+	},
+	"settingsGeneralEnableSyncingDesc": {
+		"message": "ہم آہنگی کو فعال کرنے سے، آپ کی تمام ترتیبات بشمول اصول، سرورز اور سبسکرپشنز تمام براؤزرز پر دستیاب ہوں گی۔"
+	},
+	"settingsSaveGeneralOptionsButton": {
+		"message": "تبدیلیاں محفوظ کریں"
+	},
+	"settingsRejectGeneralOptionsButton": {
+		"message": "تبدیلیاں مسترد کریں"
+	},
+	"settingsGeneralSyncProxyMode": {
+		"message": "فعال پروفائل کی ہم آہنگی کو فعال کریں"
+	},
+	"settingsGeneralSyncProxyModeDesc": {
+		"message": "اگر آپ چاہتے ہیں کہ فعال پروفائل ہم آہنگ ہو تو نشان زد کریں۔"
+	},
+	"settingsGeneralSyncActiveProxy": {
+		"message": "فعال پراکسی کی ہم آہنگی کو فعال کریں"
+	},
+	"settingsGeneralSyncActiveProxyDesc": {
+		"message": "اگر آپ چاہتے ہیں کہ منتخب کردہ پراکسی سرور ہم آہنگ ہو تو نشان زد کریں۔"
+	},
+	"settingsGeneralSyncToBrowser": {
+		"message": "براؤزر کے ہم آہنگی سرورز استعمال کریں"
+	},
+	"settingsGeneralSyncToWebDAV": {
+		"message": "WebDAV سرور کے ساتھ ہم آہنگ کریں"
+	},
+	"settingsGeneralWebDavServerUrl": {
+		"message": "WebDAV سرور کا یو آر ایل:"
+	},
+	"settingsGeneralWebDavBackupFilename": {
+		"message": "بیک اپ فائل کا نام:"
+	},
+	"settingsGeneralWebDavServerUser": {
+		"message": "WebDAV سرور کا صارف نام:"
+	},
+	"settingsGeneralWebDavServerPassword": {
+		"message": "WebDAV سرور کا پاس ورڈ:"
+	},
+	"settingsGeneralWebDavBehaviourDesc": {
+		"message": "براہ کرم نوٹ کریں کہ بیک اپ ترتیبات میں ہر تبدیلی پر ہوں گے، جبکہ بحالی صرف اس وقت ہوتی ہے جب براؤزر شروع ہوتا ہے۔"
+	},
+	"settingsGeneralWebDavServerBackupNow": {
+		"message": "ابھی بیک اپ لیں"
+	},
+	"settingsGeneralWebDavServerRestoreNow": {
+		"message": "ابھی بحال کریں"
+	},
+	"settingsGeneralWebDavRestoreNowConfirm": {
+		"message": "یہ WebDAV سرور سے آپ کی موجودہ ترتیبات کو اوور رائڈ کر دے گا۔ یہ عمل واپس نہیں کیا جا سکتا، محتاط رہیں۔ آگے بڑھیں؟"
+	},
+	"settingsGeneralWebDavRestoreNowSuccess": {
+		"message": "WebDAV بحالی کامیابی سے مکمل ہوگئی!"
+	},
+	"settingsGeneralWebDavRestoreNowFailed": {
+		"message": "WebDAV بحالی ناکام:"
+	},
+	"settingsGeneralWebDav_ErrorValidUrl": {
+		"message": "براہ کرم ایک درست WebDAV سرور یو آر ایل درج کریں"
+	},
+	"settingsGeneralWebDav_ErrorEmptyFilename": {
+		"message": "WebDAV سرور بیک اپ فائل کا نام خالی نہیں ہو سکتا"
+	},
+	"settingsGeneralWebDav_ErrorRequiredFields": {
+		"message": "براہ کرم تمام مطلوبہ WebDAV فیلڈز پُر کریں۔"
+	},
+	"settingsGeneralWebDavBackupNowSuccess": {
+		"message": "WebDAV بیک اپ کامیابی سے مکمل ہوگیا!"
+	},
+	"settingsGeneralWebDavBackupNowFailed": {
+		"message": "WebDAV بیک اپ ناکام:"
+	},
+	"settingsGeneralErrorDetection": {
+		"message": "خرابی کا پتہ لگانا"
+	},
+	"settingsGeneralDetectFailures": {
+		"message": "درخواست کی ناکامیوں کا پتہ لگائیں"
+	},
+	"settingsGeneralDetectFailuresDesc": {
+		"message": "درخواست کی ناکامیوں کا پتہ لگانا آپ کو ان ڈومینز کی شناخت کرنے میں مدد دے گا جنہیں پراکسی کی ضرورت ہے۔"
+	},
+	"settingsGeneralSelectIgnoredDomains": {
+		"message": "اصول درج کریں"
+	},
+	"settingsGeneralIgnoreRequestFailuresForDomains": {
+		"message": "ان اصولوں کی بنیاد پر ناکامی کا پتہ لگانے کو نظر انداز کریں"
+	},
+	"settingsGeneralIgnoreRequestFailuresForDomainsDesc": {
+		"message": "ناکامی کا پتہ لگانے کو غیر فعال کرنے کے لیے اصول شامل کریں۔"
+	},
+	"settingsGeneralDisplayFailedOnBadge": {
+		"message": "ٹول بار آئیکن بیج پر ناکام درخواستوں کی تعداد دکھائیں"
+	},
+	"settingsGeneralThemes": {
+		"message": "تھیمز"
+	},
+	"settingsGeneralThemesAutoSwitch": {
+		"message": "براؤزر تھیم کے ذریعے خودکار سوئچ"
+	},
+	"settingsGeneralThemesAutoSwitchDesc": {
+		"message": "نیچے منتخب کردہ تھیمز کے درمیان خودکار سوئچ کریں۔ یہ آپ کے براؤزر کے تھیم کی پیروی کرتا ہے جو آپ کے آپریٹنگ سسٹم کے تھیم کی بھی پیروی کر سکتا ہے۔"
+	},
+	"settingsGeneralThemesLight": {
+		"message": "ہلکا تھیم"
+	},
+	"settingsGeneralThemes_Default": {
+		"message": "(طے شدہ)"
+	},
+	"settingsGeneralThemes_Custom": {
+		"message": "(اپنی مرضی)"
+	},
+	"settingsGeneralThemes_CustomUrl": {
+		"message": "اپنی مرضی کے اسٹائل (CSS) کا یو آر ایل:"
+	},
+	"settingsGeneralThemes_CustomUrlDesc": {
+		"message": "یو آر ایل 'Https' ہونا چاہیے۔ درج ذیل اپنی مرضی کے اسٹائل میں درآمد شدہ فونٹس اور دیگر اسٹائلز سے آگاہ رہیں، وہ آپ کے براؤزر میں پاپ اپ کو روک/سست کر سکتے ہیں۔ آپ bootswatch.com سے تھیمز آزما سکتے ہیں لیکن ان کے گوگل فونٹس پر انحصار سے آگاہ رہیں۔"
+	},
+	"settingsGeneralThemesDark": {
+		"message": "گہرا تھیم"
+	},
+	"settingsGeneralThemesLight_ErrorValidUrl": {
+		"message": "براہ کرم ہلکے تھیم کے لیے ایک درست css یو آر ایل درج کریں اور یو آر ایل 'https' ہونا چاہیے۔"
+	},
+	"settingsGeneralThemesDark_ErrorValidUrl": {
+		"message": "براہ کرم گہرے تھیم کے لیے ایک درست css یو آر ایل درج کریں اور یو آر ایل 'https' ہونا چاہیے۔"
+	},
+	"settingsGeneralOtherSettings": {
+		"message": "دیگر ترتیبات"
+	},
+	"settingsGeneralEnableShortcuts": {
+		"message": "شارٹ کٹس کو فعال کریں"
+	},
+	"settingsGeneralEnableShortcutsDesc": {
+		"message": "آپ براؤزر ایڈ آن ترتیبات کے صفحے سے شارٹ کٹس ترتیب دے سکتے ہیں۔"
+	},
+	"settingsGeneralViewShortcuts": {
+		"message": "شارٹ کٹس دیکھیں"
+	},
+	"settingsGeneralConfigureShortcuts": {
+		"message": "شارٹ کٹس ترتیب دیں"
+	},
+	"settingsGeneralShortcutNotification": {
+		"message": "شارٹ کٹ نوٹیفکیشن کو فعال کریں"
+	},
+	"settingsGeneralViewShortcutKeys": {
+		"message": "شارٹ کٹ کیز"
+	},
+	"settingsGeneralDisplayAppliedProxyOnBadge": {
+		"message": "بیج پر لاگو اصول کا ماخذ دکھائیں"
+	},
+	"settingsGeneralDisplayAppliedRulePatternOnBadge": {
+		"message": "بیج پر لاگو اصول کا پیٹرن دکھائیں"
+	},
+	"settingsGeneralRefreshTabOnConfigChanges": {
+		"message": "جب پروفائل یا پراکسی تبدیل ہو تو فعال ٹیب کو ریفریش کریں"
+	},
+	"settingsGeneralCancelButton": {
+		"message": "منسوخ کریں"
+	},
+	"settingsGeneralSaveChanges": {
+		"message": "تبدیلیاں محفوظ کریں"
+	},
+	"settingsGeneralKeyboardShortcutsTitle": {
+		"message": "کی بورڈ شارٹ کٹس"
+	},
+	"settingsGeneralCloseButton": {
+		"message": "بند کریں"
+	},
+	"settingsGeneralKeyboardShortcutsNotSupported": {
+		"message": "موبائل آلات پر کی بورڈ شارٹ کٹس تعاون یافتہ نہیں ہیں۔"
+	},
+	"settingsTabProxyServersTitle": {
+		"message": "اپنے پراکسی سرورز کا نظم کریں:"
+	},
+	"settingsTabProxyServersDescription": {
+		"message": "یہاں پراکسی سرورز کی فہرست ہے۔ آپ جتنے چاہیں پراکسی کی وضاحت کر سکتے ہیں اور ٹول بار سے ان کے درمیان سوئچ کر سکتے ہیں۔"
+	},
+	"settingsTabBackupRestoreDescription": {
+		"message": "آپ اپنی ترتیبات کا مکمل یا جزوی بیک اپ لے سکتے ہیں۔"
+	},
+	"settingsErrNoServersTitle": {
+		"message": "کوئی سرور نہیں!"
+	},
+	"settingsErrNoServersDescription": {
+		"message": "کچھ بھی کرنے سے پہلے آپ کو پراکسی سرورز کی وضاحت کرنی ہوگی۔"
+	},
+	"settingsActiveProxyServer": {
+		"message": "طے شدہ پراکسی سرور:"
+	},
+	"settingsAddServerButton": {
+		"message": "سرور شامل کریں"
+	},
+	"settingsRemoveMultipleServerButton": {
+		"message": "متعدد حذف کریں"
+	},
+	"settingsSaveChangesButton": {
+		"message": "تبدیلیاں محفوظ کریں"
+	},
+	"settingsRejectChangesButton": {
+		"message": "تبدیلیاں مسترد کریں"
+	},
+	"settingsEditButton": {
+		"message": "ترمیم کریں"
+	},
+	"settingsFullBackupButton": {
+		"message": "مکمل بیک اپ بنائیں"
+	},
+	"settingsFullBackupButtonDesc": {
+		"message": "اختیارات کا مکمل بیک اپ بنائیں (پراکسی سرورز اور اصولوں سمیت)۔"
+	},
+	"settingsRestoreBackupButton": {
+		"message": "بیک اپ بحال کریں"
+	},
+	"settingsRestoreBackupButtonDesc": {
+		"message": "مقامی فائل سے اپنا پہلے لیا گیا بیک اپ بحال کریں"
+	},
+	"settingsDangerZoneDesc": {
+		"message": "خطرناک زون"
+	},
+	"settingsFactoryResetButton": {
+		"message": "فیکٹری ری سیٹ"
+	},
+	"settingsFactoryResetDesc": {
+		"message": "سب کچھ ری سیٹ کریں۔ یہ تمام اصولوں اور پراکسی سرورز کو ہٹا دے گا اور اختیارات کو مستقل طور پر ری سیٹ کر دے گا۔"
+	},
+	"settingsFactoryResetConfirm": {
+		"message": "کیا آپ واقعی سب کچھ ری سیٹ کرنا چاہتے ہیں؟ یقین؟ واپسی کی کوئی صورت نہیں!"
+	},
+	"settingsFactoryResetSuccess": {
+		"message": "فیکٹری ری سیٹ کامیابی سے مکمل ہوگیا"
+	},
+	"settingsImportExportProxiesDesc": {
+		"message": "پراکسی سرورز کی انفرادی فہرستیں درآمد/برآمد کریں۔"
+	},
+	"settingsImportProxiesButtonBackup": {
+		"message": "پراکسی سرورز درآمد کریں"
+	},
+	"settingsExportProxiesButtonBackup": {
+		"message": "پراکسی سرورز برآمد کریں"
+	},
+	"settingsAddRuleButton": {
+		"message": "اصول شامل کریں"
+	},
+	"settingsImportRulesButton": {
+		"message": "اصول درآمد کریں"
+	},
+	"settingsImportRulesTitle": {
+		"message": "اصول درآمد کریں"
+	},
+	"settingsImportRulesSelectButton": {
+		"message": "اصولوں کی بیک اپ فائل"
+	},
+	"settingsImportRulesText": {
+		"message": "اصولوں کا بیک اپ متن"
+	},
+	"settingsImportRulesFrom": {
+		"message": "سے"
+	},
+	"settingsImportRulesOptionAppend": {
+		"message": "موجودہ اصولوں میں شامل کریں"
+	},
+	"settingsImportRulesOptionOverride": {
+		"message": "موجودہ اصولوں کو بدلیں (احتیاط سے استعمال کریں)"
+	},
+	"settingsImportRulesCancelButton": {
+		"message": "منسوخ کریں"
+	},
+	"settingsImportRulesImportButton": {
+		"message": "درآمد کریں"
+	},
+	"settingsImportProxiesButton": {
+		"message": "پراکسی درآمد کریں"
+	},
+	"settingsExportProxiesButton": {
+		"message": "پراکسی برآمد کریں"
+	},
+	"settingsImportProxiesTitle": {
+		"message": "پراکسی فہرست درآمد کریں"
+	},
+	"settingsImportProxiesSelectFileButton": {
+		"message": "پراکسی فہرست فائل"
+	},
+	"settingsImportProxiesSelectTextButton": {
+		"message": "پراکسی فہرست متن"
+	},
+	"settingsImportProxiesOptionAppend": {
+		"message": "موجودہ پراکسی میں شامل کریں"
+	},
+	"settingsImportProxiesOptionOverride": {
+		"message": "موجودہ پراکسی کو بدلیں (احتیاط سے استعمال کریں)"
+	},
+	"settingsImportProxiesCancelButton": {
+		"message": "منسوخ کریں"
+	},
+	"settingsImportProxiesImportButton": {
+		"message": "درآمد کریں"
+	},
+	"settingsConfirmRemoveProxyServer": {
+		"message": "کیا آپ واقعی منتخب کردہ پراکسی سرور کو ہٹانا چاہتے ہیں؟"
+	},
+	"settingsConfirmRemoveMultipleProxyServer": {
+		"message": "کیا آپ واقعی منتخب کردہ پراکسی سرورز کو ہٹانا چاہتے ہیں؟"
+	},
+	"settingsRemoveAllProxyServers": {
+		"message": "کیا آپ واقعی تمام پراکسی سرورز کو ہٹانا چاہتے ہیں؟"
+	},
+	"settingsRemoveAllProxyServersSuccess": {
+		"message": "تمام پراکسی سرورز ہٹا دیے گئے ہیں۔<br/>تبدیلیاں لاگو کرنے کے لیے آپ کو محفوظ کرنا ہوگا۔"
+	},
+	"settingsImportProxiesFileNotSelected": {
+		"message": "براہ کرم ایک پراکسی فہرست فائل منتخب کریں"
+	},
+	"settingsImportProxyListTextIsEmpty": {
+		"message": "براہ کرم پراکسی فہرست درج کریں"
+	},
+	"settingsImportProxyServersFailed": {
+		"message": "پراکسی سرورز درآمد کرنے میں ناکامی"
+	},
+	"importerImportProxySuccess": {
+		"message": "کل {1} میں سے {0} پراکسی درآمد ہوگئے۔<br>تبدیلیاں محفوظ کرنا نہ بھولیں۔"
+	},
+	"settingsErrorFailedToSaveServers": {
+		"message": "سرورز محفوظ کرنے میں ناکامی۔"
+	},
+	"settingsChangesReverted": {
+		"message": "تبدیلیاں کامیابی سے واپس لے لی گئیں۔"
+	},
+	"settingsConfirmSaveAllChanged": {
+		"message": "کیا آپ تمام غیر محفوظ کردہ تبدیلیاں محفوظ کرنا چاہتے ہیں؟"
+	},
+	"settingsConfirmRemoveProxyRule": {
+		"message": "کیا آپ واقعی منتخب کردہ اصول کو ہٹانا چاہتے ہیں؟"
+	},
+	"settingsConfirmRemoveMultipleProxyRule": {
+		"message": "کیا آپ واقعی منتخب کردہ اصولوں کو ہٹانا چاہتے ہیں؟"
+	},
+	"settingsRemoveAllRules": {
+		"message": "کیا آپ واقعی تمام اصولوں کو ہٹانا چاہتے ہیں؟"
+	},
+	"settingsRemoveAllRulesSuccess": {
+		"message": "تمام اصول ہٹا دیے گئے ہیں۔<br/>تبدیلیاں لاگو کرنے کے لیے آپ کو محفوظ کرنا ہوگا۔"
+	},
+	"settingsRestoreBackupFailed": {
+		"message": "بیک اپ بحال کرنے میں ایک خرابی پیش آگئی"
+	},
+	"settingsRestoreBackupFileError": {
+		"message": "منتخب کردہ فائل پڑھنے میں ناکامی"
+	},
+	"settingsRulesFileNotSelected": {
+		"message": "براہ کرم ایک اصول فائل منتخب کریں"
+	},
+	"settingsSourceTypeNotSelected": {
+		"message": "براہ کرم ماخذ کی قسم منتخب کریں"
+	},
+	"settingsImportRulesFailed": {
+		"message": "فائل درآمد کرنے میں ناکامی۔"
+	},
+	"settingsImportRulesTextIsEmpty": {
+		"message": "براہ کرم باکس میں اصول درج کریں"
+	},
+	"settingsServerNameRequired": {
+		"message": "سرور کا نام بتائیں!"
+	},
+	"settingsServerNameExists": {
+		"message": "اسی نام کا ایک سرور پہلے سے موجود ہے!"
+	},
+	"settingsServerServerAddressIsEmpty": {
+		"message": "سرور کا پتہ خالی نہیں ہو سکتا"
+	},
+	"settingsServerPortNoInvalid": {
+		"message": "براہ کرم ایک درست پورٹ نمبر درج کریں"
+	},
+	"settingsServerAuthenticationInvalid": {
+		"message": "تصدیق کے لیے صارف نام اور پاس ورڈ دونوں کی ضرورت ہے"
+	},
+	"settingsServersGridNoDataContent": {
+		"message": "کوئی سرور متعین نہیں ہے"
+	},
+	"settingsServersGridColName": {
+		"message": "نام"
+	},
+	"settingsServersGridColProtocol": {
+		"message": "پروٹوکول"
+	},
+	"settingsServersGridColServer": {
+		"message": "سرور"
+	},
+	"settingsServersGridColPort": {
+		"message": "پورٹ"
+	},
+	"settingsServersGridColCountry": {
+		"message": "ملک"
+	},
+	"settingsServersGridColRating": {
+		"message": "درجہ بندی"
+	},
+	"settingsServersModalTitle": {
+		"message": "پراکسی سرور کی تفصیلات"
+	},
+	"settingsServersServerName": {
+		"message": "سرور کا نام"
+	},
+	"settingsServersSeverAddress": {
+		"message": "سرور کا پتہ"
+	},
+	"settingsServersProtocol": {
+		"message": "پراکسی پروٹوکول"
+	},
+	"settingsServersPort": {
+		"message": "پورٹ"
+	},
+	"settingsServersProxyDNS": {
+		"message": "SOCKS 5 استعمال کرتے وقت DNS پراکسی"
+	},
+	"settingsServersUsername": {
+		"message": "صارف نام"
+	},
+	"settingsServersPassword": {
+		"message": "پاس ورڈ"
+	},
+	"settingsServersAuthChromeMv3Limitation": {
+		"message": "(بدقسمتی سے پراکسی سرور کی توثیق Chrome ایکسٹینشن API کے ذریعے تعاون یافتہ نہیں ہے۔ یہ 'جان بوجھ کر' ہے۔)"
+	},
+	"settingsServersCancel": {
+		"message": "منسوخ کریں"
+	},
+	"settingsServersSave": {
+		"message": "محفوظ کریں"
+	},
+	"settingsServersImport": {
+		"message": "درآمد کریں"
+	},
+	"settingsProfilesNameTitle": {
+		"message": "انتخابی پروفائل:"
+	},
+	"settingsProfilesEnabled": {
+		"message": "فعال"
+	},
+	"settingsProfilesTypeTitle": {
+		"message": "پروفائل کی قسم:"
+	},
+	"settingsProfilesTypeDesc_SmartRules": {
+		"message": "اس پروفائل میں، جب تک آپ انتخابی اصول متعین نہ کریں، کوئی پراکسی لاگو نہیں ہوتی۔ آپ بلیک لسٹ اصول، یا دوسرے الفاظ میں پراکسی لاگو کرنے کے اصول متعین کریں گے۔"
+	},
+	"settingsProfilesTypeDesc_AlwaysEnabledBypassRules": {
+		"message": "اس پروفائل میں، پراکسی سرورز ہمیشہ لاگو ہوتے ہیں؛ انتخابی اصول متعین کریں اور انہیں نظرانداز کریں۔ آپ وائٹ لسٹ اصول، یا دوسرے الفاظ میں پراکسی کو چھوڑنے اور لاگو نہ کرنے کے اصول متعین کریں گے۔"
+	},
+	"settingsProfilesTypeDesc_IgnoreFailureRules": {
+		"message": "اصول شامل کرکے ان ڈومینز کے لیے ناکامی کا پتہ لگانے کو نظر انداز کریں۔"
+	},
+	"settingsProfilesProfileProxyServer": {
+		"message": "پروفائل پراکسی سرور:"
+	},
+	"settingsProfilesDefaultProfileProxyServer": {
+		"message": "(طے شدہ پراکسی سرور استعمال کریں)"
+	},
+	"settingsProfilesProfileProxyServerDesc": {
+		"message": "(اس پروفائل کو استعمال کرتے وقت، یہ فعال پراکسی سرور ہوگا)"
+	},
+	"settingsProfilesRulesSection": {
+		"message": "اصول"
+	},
+	"settingsProfilesDelete": {
+		"message": "حذف کریں"
+	},
+	"settingsProfilesAddNewLabel": {
+		"message": "نیا انتخابی پروفائل شامل کریں"
+	},
+	"settingsProfilesAddNewTypeLead": {
+		"message": "براہ کرم وہ <b>پروفائل کی قسم</b> منتخب کریں جسے آپ شامل کرنا چاہتے ہیں:"
+	},
+	"settingsProfilesAddNewType_SmartRules": {
+		"message": "انتخابی اصول"
+	},
+	"settingsProfilesAddNewType_SmartRulesDesc": {
+		"message": "اس قسم کے پروفائل میں، پراکسی کچھ <em>اصولوں</em> کی بنیاد پر درخواستوں پر لاگو ہوگی جن کی آپ کو وضاحت کرنی ہوگی۔ ان اصولوں کی وضاحت کرنے کے لیے آپ مینو بار میں پاپ اپ مینو استعمال کر سکتے ہیں، یا آپ انہیں ترتیبات سے شامل کر سکتے ہیں اور <em>پراکسی کے قابل وسائل</em> ونڈو سے بھی کر سکتے ہیں۔<br>ساتھ ہی آپ کے پاس Gfwlist جیسی مختلف اصولوں کی فہرستوں کی سبسکرائب کرنے کی صلاحیت بھی ہے۔"
+	},
+	"settingsProfilesAddNewType_AlwaysEnabled": {
+		"message": "ہمیشہ فعال"
+	},
+	"settingsProfilesAddNewType_AlwaysEnabledDesc": {
+		"message": "اس قسم کے پروفائل میں، جب تک آپ نظرانداز کرنے کے اصول متعین نہ کریں، پراکسی ہمیشہ درخواستوں پر لاگو ہوگی۔ اصولوں کی وضاحت کے اقدامات انتخابی اصول پروفائل کی قسم کی طرح ہی ہیں۔"
+	},
+	"settingsProfilesAddNewBtnContinue": {
+		"message": "جاری رکھیں"
+	},
+	"settingsProfilesAddNewBtnCancel": {
+		"message": "منسوخ کریں"
+	},
+	"settingsProfilesAddErrorTypeRequired": {
+		"message": "براہ کرم ایک پروفائل کی قسم منتخب کریں"
+	},
+	"settingsProfilesAddErrorNameRequired": {
+		"message": "پروفائل کا نام ضروری ہے"
+	},
+	"settingsProfilesAddErrorNameExists": {
+		"message": "پروفائل کا نام پہلے سے موجود ہے، براہ کرم دوسرا نام درج کریں"
+	},
+	"settingsProfilesDeleteConfirm": {
+		"message": "کیا آپ واقعی اس پروفائل کو حذف کرنا چاہتے ہیں؟ انتباہ: یہ عمل واپس نہیں کیا جا سکتا!"
+	},
+	"settingsProfilesDeleteFailed": {
+		"message": "منتخب کردہ پروفائل کو حذف کرنے میں ناکامی۔"
+	},
+	"settingsProfilesDeleteDone": {
+		"message": "پروفائل کامیابی سے حذف ہوگیا"
+	},
+	"settingsProfilesDeleteBuiltinFail": {
+		"message": "بلٹ ان پروفائلز کو حذف نہیں کیا جا سکتا"
+	},
+	"settingsProfilesProxyServer": {
+		"message": "[طے شدہ پراکسی سرور استعمال کریں]"
+	},
+	"settingsProfilesRulesSubscriptionsTitle": {
+		"message": "اصولوں کی سبسکرپشنز"
+	},
+	"settingsProfilesRulesSubscriptionsDesc": {
+		"message": "یہاں آپ اصولوں کی فہرستوں کی سبسکرائب کر سکتے ہیں۔"
+	},
+	"settingsSaveSmartProfileSuccess": {
+		"message": "انتخابی پروفائل کامیابی سے محفوظ ہوگیا۔"
+	},
+	"settingsErrorFailedToSaveSmartProfile": {
+		"message": "انتخابی پروفائل محفوظ کرنے میں ناکامی۔"
+	},
+	"settingsRuleSourceRequired": {
+		"message": "براہ کرم اصول کے ماخذ ڈومین کی وضاحت کریں!"
+	},
+	"settingsRuleSourceInvalid": {
+		"message": "ماخذ ڈومین غلط ہے، ماخذ ڈومین 'google.com' جیسا ہونا چاہیے"
+	},
+	"settingsRuleSourceInvalidFormat": {
+		"message": "'ماخذ ڈومین' درست نہیں ہے '{0}'"
+	},
+	"settingsRuleSourceAlreadyExists": {
+		"message": "اسی ماخذ والا ایک اصول پہلے سے موجود ہے!"
+	},
+	"settingsRuleHostInvalid": {
+		"message": "ہوسٹ نام '{0}' غلط ہے، ہوسٹ نام 'google.com' جیسا ہونا چاہیے"
+	},
+	"settingsRuleRegexNotMatchDomain": {
+		"message": "ریجیکس اصول ماخذ ڈومین '{0}' سے مماثل نہیں ہے"
+	},
+	"settingsRuleDoesntIncludeDomain": {
+		"message": "اصول ماخذ ڈومین '{0}' سے مماثل نہیں ہے"
+	},
+	"settingsRuleRegexInvalid": {
+		"message": "ریجیکس اصول '{0}' درست نہیں ہے"
+	},
+	"settingsRuleExactUrlInvalid": {
+		"message": "یو آر ایل '{0}' درست نہیں ہے"
+	},
+	"settingsRuleUrlInvalid": {
+		"message": "یو آر ایل '{0}' درست نہیں ہے"
+	},
+	"settingsRulesGridNoDataContent": {
+		"message": "کوئی اصول متعین نہیں ہے"
+	},
+	"settingsRulesGridColRuleType": {
+		"message": "اصول کی قسم"
+	},
+	"settingsRulesGridColSource": {
+		"message": "ماخذ"
+	},
+	"settingsRulesGridColRule": {
+		"message": "اصول"
+	},
+	"settingsRulesGridColEnabled": {
+		"message": "فعال"
+	},
+	"settingsRulesGridColProxy": {
+		"message": "پراکسی سرور"
+	},
+	"settingsRulesProxyDefault": {
+		"message": "[فعال پراکسی استعمال کریں]"
+	},
+	"settingsRulesProxyFromProfile": {
+		"message": "[پروفائل پراکسی استعمال کریں]"
+	},
+	"settingsRulesModalTitle": {
+		"message": "اصول کی تفصیلات"
+	},
+	"settingsRulesRuleType": {
+		"message": "اصول کی قسم"
+	},
+	"settingsRulesSourceDomain": {
+		"message": "اصول کا ماخذ ڈومین"
+	},
+	"settingsRulesSourceDomainDesc": {
+		"message": "(مثال: google.com)"
+	},
+	"settingsRulesPattern": {
+		"message": "مماثلت کا پیٹرن"
+	},
+	"settingsRulesGeneratePattern": {
+		"message": "پیٹرن خود بخود تیار کریں"
+	},
+	"settingsRulesRegex": {
+		"message": "یو آر ایل ریجیکس"
+	},
+	"settingsRulesHostRegex": {
+		"message": "ہوسٹ ریجیکس"
+	},
+	"settingsRulesExactUrl": {
+		"message": "عین یو آر ایل (چھوٹے حروف میں)"
+	},
+	"settingsRulesProxyServer": {
+		"message": "پراکسی سرور"
+	},
+	"settingsRulesProxyServerNotAuth": {
+		"message": "(تصدیق والے سرورز Chrome میں تعاون یافتہ نہیں ہیں)"
+	},
+	"settingsRulesEnabled": {
+		"message": "فعال"
+	},
+	"settingsRulesModalCancel": {
+		"message": "منسوخ کریں"
+	},
+	"settingsRulesModalSave": {
+		"message": "محفوظ کریں"
+	},
+	"settingsRulesActionType": {
+		"message": "عمل"
+	},
+	"settingsRuleActionApplyProxy": {
+		"message": "پراکسی لاگو کریں"
+	},
+	"settingsRuleActionWhitelist": {
+		"message": "وائٹ لسٹ (کوئی پراکسی نہیں)"
+	},
+	"settingsRuleActionWhitelistDesc": {
+		"message": "(وائٹ لسٹ کے اصولوں کو پراکسی اصولوں سے زیادہ ترجیح حاصل ہے، چاہے ان کی جگہ کچھ بھی ہو)"
+	},
+	"settingsServerPortInvalid": {
+		"message": "سرور پورٹ '{0}' غلط ہے"
+	},
+	"settingsServerHostInvalid": {
+		"message": "سرور ہوسٹ '{0}' غلط ہے"
+	},
+	"settingsRestoreSettingsSuccess": {
+		"message": "ترتیبات کامیابی سے بحال ہوگئیں"
+	},
+	"settingsRestoreSettingsFailed": {
+		"message": "ترتیبات بحال کرنے میں ایک خرابی پیش آگئی"
+	},
+	"settingsRestoreSettingsFailedInvalid": {
+		"message": "بیک اپ ڈیٹا غلط یا خراب ہے"
+	},
+	"settingsRestoreSettingsFailedInvalidActiveProfile": {
+		"message": "فعال پروفائل کے لیے غلط ڈیٹا فراہم کیا گیا"
+	},
+	"settingsRestoreSettingsFailedInvalidDefaultProxyServer": {
+		"message": "طے شدہ پراکسی سرور کے لیے غلط ڈیٹا فراہم کیا گیا"
+	},
+	"settingsEnableByDomainInvalid": {
+		"message": "منتخب کردہ ڈومین غلط ہے"
+	},
+	"settingsEnableByDomainExists": {
+		"message": "ڈومین کے لیے اصول پہلے سے موجود ہے"
+	},
+	"settingsEnableByDomainSmartProfileNonEditable": {
+		"message": "موجودہ پروفائل '{0}' کو اصولوں کے ساتھ اپ ڈیٹ نہیں کیا جا سکتا"
+	},
+	"settingsNoRuleFoundForDomain": {
+		"message": "'{0}' کے لیے کوئی اصول نہیں ہے"
+	},
+	"importerImportSuccess": {
+		"message": "کل {1} میں سے {0} اصول شامل کر دیے گئے۔<br>تبدیلیاں محفوظ کرنا نہ بھولیں۔"
+	},
+	"settingsRemoveMultipleProxyRuleButton": {
+		"message": "متعدد حذف کریں"
+	},
+	"settingsAddMultipleRulesButton": {
+		"message": "متعدد اصول شامل کریں"
+	},
+	"settingsAddMultipleRuleTitle": {
+		"message": "متعدد اصول شامل کریں"
+	},
+	"settingsMultipleRuleList": {
+		"message": "ہوسٹ/اصولوں کی فہرست:"
+	},
+	"settingsMultipleRuleInvalidHost": {
+		"message": "ہوسٹ نام '{0}' غلط ہے"
+	},
+	"settingsMultipleRuleNoNewRuleAdded": {
+		"message": "کوئی نیا اصول شامل نہیں کیا گیا"
+	},
+	"settingsTabProxyServerSubscriptionsTitle": {
+		"message": "پراکسی سرور سبسکرپشنز کا نظم کریں:"
+	},
+	"settingsTabProxyServerSubscriptionsDescription": {
+		"message": "یہاں آپ پراکسی فہرستوں کی سبسکرائب کر سکتے ہیں اور بعد میں پراکسیوں کے درمیان سوئچ کر سکتے ہیں۔ براہ کرم نوٹ کریں کہ طویل فہرستیں آلات کے درمیان ڈیٹا ہم آہنگی میں ناکامی کا سبب بن سکتی ہیں۔"
+	},
+	"settingsErrorFailedToSaveGeneral": {
+		"message": "اختیارات کی ترتیبات محفوظ کرنے میں ناکامی۔"
+	},
+	"settingsSaveOptionsSuccess": {
+		"message": "عمومی اختیارات کامیابی سے محفوظ ہوگئے۔"
+	},
+	"settingsAddServerSubscriptionButton": {
+		"message": "ایک فہرست کی سبسکرائب کریں"
+	},
+	"settingsServerSubscriptionModalTitle": {
+		"message": "پراکسی سرور فہرست کی سبسکرائب کریں"
+	},
+	"settingsRemoveMultipleServerSubscriptionButton": {
+		"message": "متعدد حذف کریں"
+	},
+	"settingsServerSubscriptionName": {
+		"message": "نام:"
+	},
+	"settingsServerSubscriptionUrl": {
+		"message": "یو آر ایل:"
+	},
+	"settingsServerSubscriptionRefreshRate": {
+		"message": "ریفریش کی شرح:"
+	},
+	"settingsServerSubscriptionRefreshRateHelp": {
+		"message": "(منٹوں میں، 0 کا مطلب ہے کوئی ریفریش نہیں)"
+	},
+	"settingsServerSubscriptionEnabled": {
+		"message": "فعال"
+	},
+	"settingsServerSubscriptionProtocol": {
+		"message": "پروٹوکول:"
+	},
+	"settingsServerSubscriptionObfuscation": {
+		"message": "مبہم کاری:"
+	},
+	"settingsServerSubscriptionFormat": {
+		"message": "فارمیٹ:"
+	},
+	"settingsServerSubscriptionApplyProxy": {
+		"message": "پراکسی کے ذریعے گزریں:"
+	},
+	"settingsServerSubscriptionApplyProxyHelpFirefox": {
+		"message": "(سرور تک اپنی رسائی کی بنیاد پر فیصلہ کریں)"
+	},
+	"settingsServerSubscriptionApplyProxyHelpChrome": {
+		"message": "(بدقسمتی سے یہ خصوصیت Chrome میں دستیاب نہیں ہے۔ موجودہ پراکسی لاگو ہوگی)"
+	},
+	"settingsServerSubscriptionApplyProxy_NoProxy": {
+		"message": "کوئی پراکسی نہیں"
+	},
+	"settingsServerSubscriptionApplyProxy_CurrentProxy": {
+		"message": "موجودہ پراکسی"
+	},
+	"settingsServerSubscriptionApplyProxy_SelectedProxy": {
+		"message": "منتخب کردہ پراکسی"
+	},
+	"settingsServerSubscriptionUsername": {
+		"message": "صارف نام:"
+	},
+	"settingsServerSubscriptionPassword": {
+		"message": "پاس ورڈ:"
+	},
+	"settingsServerSubscriptionAuthenticationHelp": {
+		"message": "(اگر فہرست کو تصدیق کی ضرورت ہو)"
+	},
+	"settingsServerSubscriptionCancelButton": {
+		"message": "منسوخ کریں"
+	},
+	"settingsServerSubscriptionSaveButton": {
+		"message": "محفوظ کریں"
+	},
+	"settingsServerSubscriptionSavingButton": {
+		"message": "محفوظ کیا جا رہا ہے..."
+	},
+	"settingsServerSubscriptionTestButton": {
+		"message": "ٹیسٹ کریں"
+	},
+	"settingsProxyTestStopButton": {
+		"message": "روکیں"
+	},
+	"settingsProxyTestCancelled": {
+		"message": "ٹیسٹ صارف کے ذریعے روک دیا گیا"
+	},
+	"settingsProxyTestResumeDialogTitle": {
+		"message": "پراکسی ٹیسٹ"
+	},
+	"settingsProxyTestResumeDialogMessage": {
+		"message": "غیر جانچے گئے پراکسی موجود ہیں۔ آپ کیا کرنا چاہتے ہیں؟"
+	},
+	"settingsProxyTestResumeContinue": {
+		"message": "جہاں رکا تھا وہاں سے جاری رکھیں"
+	},
+	"settingsProxyTestResumeRestart": {
+		"message": "شروع سے دوبارہ شروع کریں"
+	},
+	"settingsServerSubscriptionTestingButton": {
+		"message": "ٹیسٹ کیا جا رہا ہے..."
+	},
+	"settingsConfirmRemoveServerSubscription": {
+		"message": "کیا آپ واقعی منتخب کردہ سبسکرپشن کو ہٹانا چاہتے ہیں؟"
+	},
+	"settingsRemoveAllProxyServerSubscriptions": {
+		"message": "کیا آپ واقعی تمام پراکسی سرور سبسکرپشنز کو ہٹانا چاہتے ہیں؟"
+	},
+	"settingsConfirmRemoveMultipleServerSubscription": {
+		"message": "کیا آپ واقعی منتخب کردہ سبسکرپشنز کو ہٹانا چاہتے ہیں؟"
+	},
+	"settingsRemoveAllProxyServerSubscriptionsSuccess": {
+		"message": "تمام پراکسی سرور سبسکرپشنز ہٹا دی گئیں۔<br/>تبدیلیاں لاگو کرنے کے لیے آپ کو محفوظ کرنا ہوگا۔"
+	},
+	"settingsServerSubscriptionProtocolDefault": {
+		"message": "(HTTP فال بیک کے ساتھ خودکار پتہ لگانا)"
+	},
+	"settingsInitializeFailed": {
+		"message": "ترتیبات پڑھنے میں ناکامی۔ براہ کرم ترتیبات کا صفحہ بند کریں اور دوبارہ کوشش کریں۔"
+	},
+	"settingsActiveProxyServerSubscriptions": {
+		"message": "-سبسکرپشنز-"
+	},
+	"settingsServerSubscriptionsGridNoDataContent": {
+		"message": "کوئی سبسکرپشن نہیں"
+	},
+	"settingsServerSubscriptionsGridColName": {
+		"message": "نام"
+	},
+	"settingsServerSubscriptionsGridColUrl": {
+		"message": "یو آر ایل"
+	},
+	"settingsServerSubscriptionsGridColCount": {
+		"message": "تعداد"
+	},
+	"settingsServerSubscriptionsGridColEnabled": {
+		"message": "فعال"
+	},
+	"settingsServerSubscriptionIncompleteForm": {
+		"message": "براہ کرم ضروری فیلڈز کو صحیح فارمیٹ میں پُر کریں"
+	},
+	"settingsServerSubscriptionInvalidForm": {
+		"message": "غلط پراکسی سرور سبسکرپشن کی تفصیلات"
+	},
+	"settingsServerSubscriptionDuplicateName": {
+		"message": "درج کردہ نام پہلے سے استعمال ہو رہا ہے، براہ کرم دوسرا نام درج کریں۔"
+	},
+	"settingsServerSubscriptionSaveUpdated": {
+		"message": "سبسکرپشن {0} پراکسی کے ساتھ اپ ڈیٹ ہوگئی۔<br/>تبدیلیاں محفوظ کرنا نہ بھولیں۔"
+	},
+	"settingsServerSubscriptionSaveAdded": {
+		"message": "سبسکرپشن {0} پراکسی کے ساتھ شامل ہوگئی۔<br/>تبدیلیاں محفوظ کرنا نہ بھولیں۔"
+	},
+	"settingsServerSubscriptionSaveFailedGet": {
+		"message": "پراکسی حاصل کرنے میں ناکامی۔"
+	},
+	"settingsServerSubscriptionTestSuccess": {
+		"message": "ٹیسٹ کامیاب رہا۔ فہرست نے {0} پراکسی واپس کیں۔"
+	},
+	"settingsServerSubscriptionTestFailed": {
+		"message": "ٹیسٹ ناکام"
+	},
+	"settingsSaveProxyServerSubscriptionsSuccess": {
+		"message": "پراکسی سرور سبسکرپشنز کامیابی سے محفوظ ہوگئیں۔"
+	},
+	"settingsFailedToSaveProxySubscriptions": {
+		"message": "پراکسی سرور سبسکرپشنز محفوظ کرنے میں ناکامی"
+	},
+	"settingsAddRulesSubscriptionButton": {
+		"message": "اصولوں کی فہرست کی سبسکرائب کریں"
+	},
+	"settingsRemoveMultipleRulesSubscriptionButton": {
+		"message": "متعدد حذف کریں"
+	},
+	"settingsRulesSubscriptionsModalTitle": {
+		"message": "اصولوں کی فہرست کی سبسکرائب کریں"
+	},
+	"settingsRulesSubscriptionsGridColName": {
+		"message": "نام"
+	},
+	"settingsRulesSubscriptionsGridColUrl": {
+		"message": "یو آر ایل"
+	},
+	"settingsRulesSubscriptionsGridColCount": {
+		"message": "تعداد"
+	},
+	"settingsRulesSubscriptionsGridColEnabled": {
+		"message": "فعال"
+	},
+	"settingsRulesSubscriptionsName": {
+		"message": "نام:"
+	},
+	"settingsRulesSubscriptionsUrl": {
+		"message": "یو آر ایل:"
+	},
+	"settingsRulesSubscriptionsRefreshRate": {
+		"message": "ریفریش کی شرح:"
+	},
+	"settingsRulesSubscriptionsRefreshRateHelp": {
+		"message": "(منٹوں میں، 0 کا مطلب ہے کوئی ریفریش نہیں)"
+	},
+	"settingsRulesSubscriptionEnabled": {
+		"message": "فعال"
+	},
+	"settingsRulesSubscriptionsObfuscation": {
+		"message": "مبہم کاری:"
+	},
+	"settingsRulesSubscriptionsFormat": {
+		"message": "فارمیٹ:"
+	},
+	"settingsRulesSubscriptionsApplyProxy": {
+		"message": "پراکسی کے ذریعے گزریں:"
+	},
+	"settingsRulesSubscriptionsApplyProxyHelpFirefox": {
+		"message": "(سرور تک اپنی رسائی کی بنیاد پر فیصلہ کریں)"
+	},
+	"settingsRulesSubscriptionsApplyProxyHelpChrome": {
+		"message": "(بدقسمتی سے یہ خصوصیت Chrome میں دستیاب نہیں ہے۔ موجودہ پراکسی لاگو ہوگی)"
+	},
+	"settingsRulesSubscriptionsUsername": {
+		"message": "صارف نام:"
+	},
+	"settingsRulesSubscriptionsAuthenticationHelp": {
+		"message": "(اگر فہرست کو تصدیق کی ضرورت ہو)"
+	},
+	"settingsRulesSubscriptionsPassword": {
+		"message": "پاس ورڈ:"
+	},
+	"settingsRulesSubscriptionsTestButton": {
+		"message": "ٹیسٹ کریں"
+	},
+	"settingsRulesSubscriptionsSaveButton": {
+		"message": "محفوظ کریں"
+	},
+	"settingsRulesSubscriptionsCancelButton": {
+		"message": "منسوخ کریں"
+	},
+	"settingsConfirmRemoveRulesSubscription": {
+		"message": "کیا آپ واقعی منتخب کردہ اصول سبسکرپشن کو ہٹانا چاہتے ہیں؟"
+	},
+	"settingsConfirmRemoveMultipleRulesSubscription": {
+		"message": "کیا آپ واقعی منتخب کردہ اصول سبسکرپشنز کو ہٹانا چاہتے ہیں؟"
+	},
+	"settingsRulesSubscriptionIncompleteForm": {
+		"message": "براہ کرم ضروری فیلڈز کو صحیح فارمیٹ میں پُر کریں"
+	},
+	"settingsRulesSubscriptionInvalidForm": {
+		"message": "غلط پراکسی سرور سبسکرپشن کی تفصیلات"
+	},
+	"settingsRulesSubscriptionDuplicateName": {
+		"message": "درج کردہ نام پہلے سے استعمال ہو رہا ہے، براہ کرم دوسرا نام درج کریں۔"
+	},
+	"settingsRulesSubscriptionSavingButton": {
+		"message": "محفوظ کیا جا رہا ہے..."
+	},
+	"settingsRulesSubscriptionTestButton": {
+		"message": "ٹیسٹ کریں"
+	},
+	"settingsRulesSubscriptionTestingButton": {
+		"message": "ٹیسٹ کیا جا رہا ہے..."
+	},
+	"settingsRulesSubscriptionSaveUpdated": {
+		"message": "سبسکرپشن {0} پراکسی اصولوں اور {1} وائٹ لسٹ اصولوں کے ساتھ اپ ڈیٹ ہوگئی۔<br/>تبدیلیاں محفوظ کرنا نہ بھولیں۔"
+	},
+	"settingsRulesSubscriptionSaveAdded": {
+		"message": "سبسکرپشن {0} پراکسی اصولوں اور {1} وائٹ لسٹ اصولوں کے ساتھ شامل ہوگئی۔<br/>تبدیلیاں محفوظ کرنا نہ بھولیں۔"
+	},
+	"settingsRulesSubscriptionSaveFailedGet": {
+		"message": "اصول حاصل کرنے میں ناکامی۔"
+	},
+	"settingsRulesSubscriptionRefreshOnDisabled": {
+		"message": "غیر فعال کردہ سبسکرپشن کو ریفریش نہیں کیا جا سکتا"
+	},
+	"settingsRulesSubscriptionTestSuccess": {
+		"message": "ٹیسٹ کامیاب رہا۔ فہرست نے {0} پراکسی اصول اور {1} وائٹ لسٹ اصول واپس کیے۔"
+	},
+	"settingsRulesSubscriptionTestFailed": {
+		"message": "ٹیسٹ ناکام"
+	},
+	"settingsFailedToSaveRulesSubscriptions": {
+		"message": "اصولوں کی سبسکرپشنز محفوظ کرنے میں ناکامی"
+	},
+	"settingsRemoveAllProxyRulesSubscriptions": {
+		"message": "کیا آپ واقعی تمام پراکسی اصول سبسکرپشنز کو ہٹانا چاہتے ہیں؟"
+	},
+	"settingsRemoveAllProxyRulesSubscriptionsSuccess": {
+		"message": "تمام پراکسی اصول سبسکرپشنز ہٹا دی گئیں۔<br/>تبدیلیاں لاگو کرنے کے لیے آپ کو محفوظ کرنا ہوگا۔"
+	},
+	"importerImportRulesSuccess": {
+		"message": "کل {0} پراکسی اصول اور {1} وائٹ لسٹ اصول واپس کیے گئے۔<br>تبدیلیاں محفوظ کرنا نہ بھولیں۔"
+	},
+	"settingsRulePatternIsEmpty": {
+		"message": "اصول میں کوئی پیٹرن متعین نہیں ہے"
+	},
+	"settingsWelcomeTitle": {
+		"message": "ProxyMust میں خوش آمدید"
+	},
+	"settingsWelcomeMessage": {
+		"message": "<p>\n\tProxyMust، پراکسی جانچ کی صلاحیتوں کے ساتھ ایک انتخابی پراکسی مینیجر۔<br>\n\tشروع کرنے کے لیے براہ کرم ان اقدامات پر عمل کریں:\n</p>\n<ol>\n\t<li>\n\t\tایک پراکسی سرور یا پراکسی کی فہرست شامل کریں\n\t\t<br>\n\t\t<small>(پراکسی سرورز ٹیب پر جائیں اور وہاں شامل کریں)</small>\n\t</li>\n\t<li>\n\t\tموڈ کو انتخابی پراکسی پر سیٹ کریں\n\t\t<br>\n\t\t<small>(فعال موڈ کو انتخابی پراکسی میں تبدیل کرنے کے لیے ٹول بار پاپ اپ مینو استعمال کریں)</small>\n\t</li>\n\t<li>\n\t\tپراکسی اصول متعین کریں\n\t\t<br>\n\t\t<small>(اصول شامل کرنے کے لیے ٹول بار پاپ اپ مینو استعمال کریں یا پراکسی اصول ٹیب سے اصول شامل/ترمیم کریں)</small>\n\t</li>\n\t<li>\n\t\tآپ تیار ہیں۔\n\t</li>\n</ol>"
+	},
+	"settingsWelcomeSkipButton": {
+		"message": "سمجھ گیا"
+	},
+	"settingsSubscriptionStatsStatusSuccess": {
+		"message": "حالت: کامیاب"
+	},
+	"settingsSubscriptionStatsStatusFail": {
+		"message": "حالت: ناکام"
+	},
+	"settingsSubscriptionStatsLastTry": {
+		"message": "آخری کوشش:"
+	},
+	"settingsSubscriptionStatsMessage": {
+		"message": "پیغام:"
+	},
+	"settingsSubscriptionStatsLastSuccess": {
+		"message": "آخری کامیابی:"
+	},
+	"settings_SmartProfileType_Direct": {
+		"message": "براہ راست"
+	},
+	"settings_SmartProfileType_SystemProxy": {
+		"message": "سسٹم پراکسی"
+	},
+	"settings_SmartProfileType_SmartRules": {
+		"message": "انتخابی اصول"
+	},
+	"settings_SmartProfileType_AlwaysEnabledBypassRules": {
+		"message": "نظرانداز کرنے والے اصولوں کے ساتھ ہمیشہ فعال"
+	},
+	"settings_SmartProfileType_IgnoreFailureRules": {
+		"message": "ناکامیوں کو نظر انداز کرنے والے اصول"
+	},
+	"settingsRuleCidrIPAddress": {
+		"message": "آئی پی ایڈریس"
+	},
+	"settingsRuleCidrPrefixLength": {
+		"message": "سابقہ لمبائی"
+	},
+	"settingsRuleCidrNotationDesc": {
+		"message": "(براہ کرم نوٹ کریں کہ یہ اصول ہوسٹ نام کو آئی پیز میں حل نہیں کرے گا۔)"
+	},
+	"settingsRuleCidrIPInvalid": {
+		"message": "براہ کرم ایک درست آئی پی ایڈریس درج کریں"
+	},
+	"settingsRuleCidrPrefixLengthInvalid": {
+		"message": "براہ کرم ایک درست سابقہ لمبائی درج کریں"
+	},
+	"settingsRuleCidrNotationInvalid": {
+		"message": "CIDR نوٹیشن '{0}' درست نہیں ہے"
+	},
+	"settingsRuleCidrNotationInvalidMatch": {
+		"message": "CIDR اصول '{0}' سے مماثل نہیں ہے"
+	},
+	"notificationNoNextProxyServer": {
+		"message": "کوئی مزید اگلا پراکسی سرور نہیں ہے"
+	},
+	"notificationNoPreviousProxyServer": {
+		"message": "کوئی مزید پچھلا پراکسی سرور نہیں ہے"
+	},
+	"notificationShortcutTitle": {
+		"message": "ProxyMust شارٹ کٹ نوٹیفکیشن"
+	},
+	"notificationShortcutProxyModeMessage": {
+		"message": "پراکسی موڈ {0} میں تبدیل کر دیا گیا"
+	},
+	"notificationShortcutProxyServerChanged": {
+		"message": "پراکسی سرور {0} میں تبدیل کر دیا گیا"
+	},
+	"popupRatingDialogTitle": {
+		"message": "کیا پتہ کام کرتا ہے؟"
+	},
+	"popupRatingWorksButton": {
+		"message": "ہاں (+1)"
+	},
+	"popupRatingFailsButton": {
+		"message": "نہیں (-1)"
+	},
+	"popupRatingCancelButton": {
+		"message": "منسوخ کریں"
+	},
+	"settingsProxyTestTitle": {
+		"message": "پراکسی قابل رسائی کی جانچ"
+	},
+	"settingsProxyTestEnable": {
+		"message": "پراکسی کی جانچ کے لیے ٹیسٹ سائٹس شامل کریں"
+	},
+	"settingsProxyTestNote": {
+		"message": "زیادہ سے زیادہ 5 پتے درج کریں۔ اگر آپ 3 سے زیادہ متعین نہیں کرتے تو جانچ تیز ہوگی۔"
+	},
+	"settingsProxyTestUrlsTitle": {
+		"message": "رسائی کی جانچ کے لیے دیکھنے کے پتے"
+	},
+	"settingsProxyTestUrlsWarning": {
+		"message": "⚠️ براہ کرم یہاں وہ ویب سائٹس درج کریں جو آپ دیکھتے ہیں (مثال: youtube.com، telegram.org)، پراکسی کے پتے نہیں۔"
+	},
+	"settingsProxyTestClear": {
+		"message": "ٹیسٹ سائٹس صاف کریں"
+	},
+	"settingsProxyTestStop": {
+		"message": "⏹ ٹیسٹ روکیں"
+	},
+	"proxyTestCompleted": {
+		"message": "جانچ مکمل ہوگئی۔ {0} پراکسیوں کا ٹیسٹ کیا گیا۔"
+	},
+	"settingsProxyTestRatingAutoEnabled": {
+		"message": "ٹیسٹ کے نتائج دکھانے کے لیے درجہ بندی خود بخود فعال ہوگئی۔"
+	},
+	"settingsProxyTestNoTestUrls": {
+		"message": "کوئی ٹیسٹ سائٹ متعین نہیں کی گئی۔ براہ کرم کم از کم ایک ویب سائٹ شامل کریں۔"
+	},
+	"settingsProxyMustTestTitle": {
+		"message": "پراکسی ٹیسٹ"
+	},
+	"settingsProxyMustSiteLabel": {
+		"message": "ٹیسٹ کرنے کے لیے سائٹ:"
+	},
+	"settingsProxyMustTestRun": {
+		"message": "▶ ٹیسٹ کریں"
+	},
+	"settingsProxyMustAddSite": {
+		"message": "سائٹ شامل کریں"
+	},
+	"settingsProxyMustTestCondition": {
+		"message": "اگر کچھ بھی منتخب نہیں کیا جاتا ہے، تو ٹیسٹ ٹیبل میں موجود تمام پراکسیوں کے لیے چلایا جائے گا۔"
+	},
+	"settingsProxyMustTestResults": {
+		"message": "نتائج: ✅ = اس سائٹ کے لیے یقینی طور پر کام کرتا ہے، ☑️ = ممکنہ طور پر کام کرتا ہے (پرانا ڈیٹا یا دوسری سائٹوں پر کامیابی)، ❓ = کوئی ڈیٹا نہیں، ⛔ = کام نہیں کرتا۔"
+	},
+	"settingsServersRatingPriority": {
+		"message": "درجہ بندی + ترجیح"
+	},
+	"settingsContextMenuChangeRating": {
+		"message": "دستی درجہ بندی تبدیل کریں"
+	},
+	"settingsContextMenuPlus1": {
+		"message": "(+1)"
+	},
+	"settingsContextMenuMinus1": {
+		"message": "(-1)"
+	},
+	"settingsContextMenuRatingTitle": {
+		"message": "دستی درجہ بندی"
+	},
+	"settingsContextMenuPlus1Desc": {
+		"message": "فہرست میں اوپر لے جائیں"
+	},
+	"settingsContextMenuMinus1Desc": {
+		"message": "فہرست میں نیچے لے جائیں"
+	},
+	"settingsContextMenuResetRating": {
+		"message": "درجہ بندی ری سیٹ کریں"
+	},
+	"settingsContextMenuSetFavorite": {
+		"message": "پسندیدہ کے طور پر سیٹ کریں"
+	},
+	"settingsContextMenuSetPin": {
+		"message": "پن کریں"
+	},
+	"settingsContextMenuRemoveFavorite": {
+		"message": "پسندیدہ سے ہٹائیں"
+	},
+	"settingsContextMenuUnpin": {
+		"message": "پن ہٹائیں"
+	},
+	"settingsContextMenuRemovePriority": {
+		"message": "ترجیح ہٹائیں"
+	},
+	"settingsContextMenuExportSelected": {
+		"message": "منتخب کردہ برآمد کریں"
+	},
+	"settingsContextMenuCopyAddresses": {
+		"message": "پتے کاپی کریں"
+	},
+	"settingsContextMenuDelete": {
+		"message": "حذف کریں"
+	},
+	"settingsContextMenuTestForSite": {
+		"message": "سائٹ کے لیے منتخب کردہ کا ٹیسٹ کریں"
+	},
+	"settingsProxyMustTestProgress": {
+		"message": "{0} کے لیے پراکسیوں کا ٹیسٹ کیا جا رہا ہے... ({1}/{2})"
+	},
+	"settingsProxyMustTestComplete": {
+		"message": "ٹیسٹ مکمل ہوگیا"
+	},
+	"settingsProxyMustAddSitePrompt": {
+		"message": "سائٹ کا ڈومین درج کریں (مثال: youtube.com):"
+	},
+	"settingsProxyMustSiteAlreadyExists": {
+		"message": "سائٹ پہلے سے فہرست میں موجود ہے۔"
+	},
+	"settingsProxyMustInvalidDomain": {
+		"message": "غلط ڈومین۔ براہ کرم ایک درست ڈومین درج کریں (مثال: youtube.com)۔"
+	},
+	"popupCurrentSite": {
+		"message": "موجودہ سائٹ:"
+	},
+	"settingsProxyMustRemoveSite": {
+		"message": "سائٹ ہٹائیں"
+	},
+	"settingsContextMenuMoveToTop": {
+		"message": "اوپر لے جائیں"
+	},
+	"settingsContextMenuMoveToDown": {
+		"message": "نیچے لے جائیں"
+	},
+	"settingsProxyMustCannotRemoveAutoSite": {
+		"message": "یہ سائٹ اصولوں سے آتی ہے اور اسے دستی طور پر نہیں ہٹایا جا سکتا۔"
+	},
+	"settingsProxyMustConfirmRemoveSite": {
+		"message": "کیا \"{0}\" کو ٹیسٹ سائٹس سے ہٹایا جائے؟"
+	},
+	"settingsProxyMustSiteRemoved": {
+		"message": "سائٹ \"{0}\" ہٹا دی گئی۔"
+	},
+	"settingsProxyMustStaleHours": {
+		"message": "فرسودگی کے اوقات:"
+	},
+	"settingsContextMenuPreciseTest": {
+		"message": "عین ٹیسٹ (سست، زیادہ درست)"
+	},
+	"settingsContextMenuExpressTest": {
+		"message": "ایکسپریس ٹیسٹ (تیز، کم درست)"
+	},
+	"popupQuickTestButton": {
+		"message": "ٹیسٹ کریں"
+	},
+	"popupQuickTestStopButton": {
+		"message": "روکیں"
+	},
+	"settingsChooseTestTypeTitle": {
+		"message": "ٹیسٹ کی قسم منتخب کریں"
+	},
+	"settingsChooseTestTypeDescription": {
+		"message": "منتخب کریں کہ کون سا ٹیسٹ چلانا ہے:"
+	},
+	"settingsPreciseTestDesc": {
+		"message": "مکمل جانچ، زیادہ درست لیکن زیادہ وقت لیتی ہے۔"
+	},
+	"settingsExpressTestDesc": {
+		"message": "ایکسپریس ٹیسٹ، کچھ کام کرنے والے پراکسیوں کو چھوڑ سکتا ہے، لیکن کم از کم ایک کو تیزی سے ڈھونڈ لیتا ہے۔"
+	},
+	"settingsCancelButton": {
+		"message": "منسوخ کریں"
+	},
+	"popupAddAllSuccessfulSubs": {
+		"message": "کام کرنے والے شامل کریں"
+	},
+	"settingsContextMenuClearStatuses": {
+		"message": "حالات صاف کریں"
+	},
+	"settingsContextMenuClearStatusesSelected": {
+		"message": "منتخب کردہ پراکسی"
+	},
+	"settingsContextMenuClearStatusesAll": {
+		"message": "تمام پراکسی"
+	},
+	"settingsContextMenuClearStatusesConfirmSelected": {
+		"message": "کیا منتخب کردہ پراکسیوں کے لیے ٹیسٹ کی حالتیں صاف کی جائیں؟"
+	},
+	"settingsContextMenuClearStatusesConfirmAll": {
+		"message": "کیا تمام پراکسیوں کے لیے ٹیسٹ کی حالتیں صاف کی جائیں؟ یہ عمل واپس نہیں کیا جا سکتا۔"
+	},
+	"settingsContextMenuClearStatusesSuccess": {
+		"message": "ٹیسٹ کی حالتیں کامیابی سے صاف ہوگئیں۔"
+	},
+	"popupQuickTestTooltip": {
+		"message": "موجودہ سائٹ کے لیے کام کرنے والے پراکسی ڈھونڈنے کے لیے فوری ٹیسٹ"
+	},
+	"popupAddAllSuccessfulSubsTooltip": {
+		"message": "ٹیسٹ پاس کرنے والے سبسکرپشن پراکسیوں کو آپ کی دستی فہرست میں شامل کرتا ہے"
+	},
+	"popupTestMenuTitle": {
+		"message": "ٹیسٹ کی قسم منتخب کریں"
+	},
+	"popupTestMenuAllProxies": {
+		"message": "تمام پراکسیوں کے لیے ایکسپریس ٹیسٹ"
+	},
+	"popupTestMenuSubscriptionsOnly": {
+		"message": "صرف سبسکرپشنز کے لیے ایکسپریس ٹیسٹ"
+	},
+	"popupTestMenuAllProxiesDesc": {
+		"message": "دستی + سبسکرپشن پراکسی"
+	},
+	"popupTestMenuSubscriptionsOnlyDesc": {
+		"message": "پھر کام کرنے والوں کو دستی فہرست میں شامل کریں"
+	},
+	"popupTestMenuCycleTest": {
+		"message": "چکراتی پراکسی ٹیسٹ (مکمل سوئچنگ)"
+	},
+	"popupTestMenuCycleTestDesc": {
+		"message": "پراکسیوں کو ترتیب وار سوئچ کرتا ہے، سائٹ لوڈنگ کا ٹیسٹ کرتا ہے"
+	},
+	"settingsContextMenuCycleTest": {
+		"message": "چکراتی ٹیسٹ (مکمل سوئچنگ)"
+	},
+	"settingsCycleTestDesc": {
+		"message": "پراکسیوں کو ترتیب وار سوئچ کرتا ہے، سائٹ لوڈنگ کا ٹیسٹ کرتا ہے۔ زیادہ مکمل لیکن سست۔"
+	},
+	"popupTestMenuExpressCycleTest": {
+		"message": "ایکسپریس چکراتی ٹیسٹ (تیز سوئچنگ)"
+	},
+	"popupTestMenuExpressCycleTestDesc": {
+		"message": "تیز ترتیب وار پراکسی سوئچنگ، 10 سیکنڈ ٹائم آؤٹ، پہلی کامیابی پر رک جاتا ہے"
+	},
+	"popupTestMenuExpressCycleAll": {
+		"message": "ایکسپریس چکراتی ٹیسٹ (تمام پراکسی)"
+	},
+	"popupTestMenuExpressCycleAllDesc": {
+		"message": "دستی + سبسکرپشن پراکسی"
+	},
+	"popupTestMenuExpressCycleSubsOnly": {
+		"message": "ایکسپریس چکراتی ٹیسٹ (صرف سبسکرپشنز)"
+	},
+	"popupTestMenuExpressCycleSubsOnlyDesc": {
+		"message": "پھر کام کرنے والوں کو دستی فہرست میں شامل کریں"
+	},
+	"popupNoSubscriptionProxies": {
+		"message": "ٹیسٹ کرنے کے لیے کوئی سبسکرپشن پراکسی نہیں۔"
+	},
+	"settingsCopiedAddresses": {
+		"message": "پتے کاپی ہوگئے"
+	},
+	"settingsCopyFailed": {
+		"message": "کاپی کرنے میں ناکامی"
+	},
+	"settingsAnotherTestRunning": {
+		"message": "ایک اور ٹیسٹ پہلے سے چل رہا ہے۔ اگر آپ کو لگتا ہے کہ یہ پھنس گیا ہے، تو براہ کرم ترتیبات کا صفحہ دوبارہ لوڈ کریں (F5) اور دوبارہ کوشش کریں۔"
+	},
+	"settingsProxyTestTimeout": {
+		"message": "ٹیسٹ کا 10 منٹ کے بعد وقت ختم ہوگیا اور اسے زبردستی روک دیا گیا۔ براہ کرم دوبارہ کوشش کریں۔"
+	},
+	"settingsProxyMustNoSiteSelected": {
+		"message": "براہ کرم ایک سائٹ منتخب کریں۔"
+	},
+	"settingsProxyMustSiteAdded": {
+		"message": "سائٹ \"{0}\" شامل کر دی گئی۔"
+	},
+	"testingExplanationTitle": {
+		"message": "پراکسی ٹیسٹ کیسے کام کرتا ہے"
+	},
+	"testingExplanationText": {
+		"message": "ٹیسٹ کے دوران، عارضی ٹیبز خود بخود کھلتے اور بند ہوتے ہیں، پراکسی آئی پی اور اس پراکسی کے ذریعے داخل کردہ ٹیسٹ سائٹ کے پتے سے کنکشن کی جانچ کرتے ہیں۔ ٹیسٹ ٹیبز فوری طور پر آپ کے براؤزر کی تاریخ سے ہٹا دی جاتی ہیں تاکہ بے ترتیبی سے بچا جا سکے۔ آپ ٹیسٹ چلنے کے دوران براؤزر کو محفوظ طریقے سے چھوٹا کر سکتے ہیں، کیونکہ ٹیسٹ جانچی جا رہی پراکسیوں کو سوئچ کرکے آپ کے ویب براؤزنگ میں مداخلت کرتے ہیں۔"
+	},
+	"settingsGeneralEnableRating": {
+		"message": "پراکسیوں کے لیے درجہ بندی کو فعال کریں"
+	},
+	"settingsGeneralEnableRatingDesc": {
+		"message": "پراکسیوں کی درجہ بندی (کام کرتی ہے / کام نہیں کرتی) اور درجہ بندی کے لحاظ سے ترتیب دینے کی اجازت دیتا ہے۔"
+	},
+	"settingsProxyMustStaleHoursDesc": {
+		"message": "وہ گھنٹے جن کے بعد ٹیسٹ کے نتائج فرسودہ سمجھے جاتے ہیں (1-168)۔"
+	},
+	"datatablesSearch": {
+		"message": "تلاش کریں:"
+	},
+	"datatablesShow": {
+		"message": "دکھائیں"
+	},
+	"datatablesEntries": {
+		"message": "اندراجات"
+	},
+	"datatablesPrevious": {
+		"message": "پچھلا"
+	},
+	"datatablesNext": {
+		"message": "اگلا"
+	},
+	"datatablesInfo": {
+		"message": "_TOTAL_ میں سے _START_ سے _END_ تک اندراجات دکھا رہا ہے"
+	},
+	"datatablesInfoEmpty": {
+		"message": "0 میں سے 0 سے 0 تک اندراجات دکھا رہا ہے"
+	},
+	"datatablesEmptyTable": {
+		"message": "ٹیبل میں کوئی ڈیٹا دستیاب نہیں ہے"
+	},
+	"datatablesAll": {
+		"message": "سب"
+	},
+	"popupAddCurrentSiteTooltip": {
+		"message": "موجودہ سائٹ کو ٹیسٹ فہرست میں شامل کریں"
+	}
+}

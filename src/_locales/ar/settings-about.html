@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>حول ProxyMust</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="../css/settings.css">
+</head>
+<body>
+<div class="container-fluid mt-3">
+    <h2 class="text-primary">ProxyMust</h2>
+    <p>
+        <em>ProxyMust هو fork من إضافة SmartProxy. نحن نحترم ونشكر المؤلف الأصلي <strong>Salar Khalilzadeh</strong> على عمله المتميز.
+        يمكن العثور على SmartProxy الأصلي على <a href="https://github.com/salarcode/SmartProxy" target="_blank">https://github.com/salarcode/SmartProxy</a>.</em>
+    </p>
+    <p data-localize="settingsTabAboutDescription">
+        استخدام البروكسي أصبح أسهل مع ProxyMust. اعتبره حلًا "اضبط مرة وانسَ". مع ProxyMust لا تحتاج لتغيير البروكسي يدويًا أو تشغيله وإيقافه. كل ما عليك هو إخبار ProxyMust بأنك تريد تفعيل البروكسي لموقع معين بنقرة واحدة. بعد ذلك، عندما تزور ذلك الموقع، سيتولى ProxyMust توجيه جميع بيانات ذلك الموقع عبر البروكسي تلقائيًا.
+    </p>
+    <p>
+        يقدم ProxyMust العديد من الميزات للمبتدئين والمتقدمين، بما في ذلك:
+    </p>
+    <ul>
+        <li>تمكين البروكسي لموقع معين على علامة تبويب – كل ما يتم فتحه في تلك العلامة يستخدم البروكسي تلقائيًا. تسمى هذه الميزة "بروكسي لكل علامة تبويب".</li>
+        <li>الكشف التلقائي عن ما إذا كان يجب تمكين أو تعطيل البروكسي لمواقع معينة بناءً على القواعد.</li>
+        <li>التبديل السريع بين عدة خوادم بروكسي كبروكسي نشط.</li>
+        <li>تمكين البروكسي للموقع الحالي بنقرة واحدة.</li>
+        <li>عرض موارد وطلبات الموقع الحالي، وتمكين البروكسي لها بنقرة واحدة.</li>
+        <li>سهولة التبديل بين أوضاع البروكسي أو تمكين البروكسي لجميع النطاقات.</li>
+        <li>النسخ الاحتياطي والاستعادة للإعدادات والقواعد.</li>
+    </ul>
+    <br />
+
+    <h3>يرجى الملاحظة:</h3>
+    <p>
+        <div class="text-info">
+            <i class="fas fa-info-circle" aria-hidden="true"></i>
+            ProxyMust لا يوفر أي خوادم بروكسي.
+        </div>
+        <div class="text-danger">
+            <i class="fas fa-eye-slash" aria-hidden="true"></i>
+            ProxyMust لا يتتبعك بأي شكل من الأشكال.
+        </div>
+        <div class="text-warning">
+            <i class="fas fa-eye-slash" aria-hidden="true"></i>
+            ProxyMust خالٍ من الإعلانات ولا يتداخل مع محتوى صفحات الويب.
+        </div>
+    </p>
+    <br />
+
+    <h3>ملاحظاتك مهمة</h3>
+    <p>
+        <div>
+            <i class="fas fa-star text-warning"></i>
+            إذا أعجبك ProxyMust <i class="fas fa-heart text-danger"></i>، يرجى تقييمه على
+            <a id="linkAddonsMarket" href="#" target="_blank">صفحة الإضافات</a>.
+        </div>
+        <div>
+            <i class="fas fa-question-circle text-primary"></i>
+            إذا كانت لديك أسئلة أو مشكلات، يرجى زيارة صفحة التتبع وفتح تذكرة لـ
+            <a href="https://github.com/nana-xakep/ProxyMust/issues" target="_blank">الإبلاغ عن مشكلة</a>.
+        </div>
+    </p>
+    <br />
+
+    <h3>ميزات ProxyMust الجديدة</h3>
+
+    <h4>📊 نظام التقييم والحالات</h4>
+    <ul>
+        <li>لكل بروكسي ولكل موقع تم اختباره، تظهر الحالة:
+            <ul>
+                <li>✅ – يعمل بالتأكيد لهذا الموقع (نجاح جديد)</li>
+                <li>☑️ – ربما يعمل (كان النجاح سابقًا أو تم الحصول عليه لموقع آخر)</li>
+                <li>❓ – لا توجد بيانات (لم يتم اختبار البروكسي لهذا الموقع)</li>
+                <li>⛔ – لا يعمل (فشل جديد)</li>
+            </ul>
+        </li>
+        <li>يتغير تقييم كل بروكسي تلقائيًا بناءً على نتائج الاختبار: <strong>+1 عند النجاح</strong>، <strong>-1 عند الفشل</strong>.</li>
+        <li>يمكنك أيضًا تغيير التقييم يدويًا عبر القائمة السياقية (زر الفأرة الأيمن على صف البروكسي في الجدول أو على البروكسي النشط في النافذة المنبثقة لشريط الأدوات).</li>
+        <li>تعتبر الحالات "جديدة" لعدد قابل للتكوين من الساعات (افتراضي 6). إذا كانت البيانات قديمة، يتم استخدام حالة غير مباشرة (☑️).</li>
+    </ul>
+
+    <h4>📋 إدارة قائمة البروكسي</h4>
+    <ul>
+        <li><strong>القائمة السياقية في جدول البروكسي (زر الفأرة الأيمن)</strong> – تغيير سريع للتقييم والأولوية (تثبيت، نجمة)، تصدير المحدد، نسخ العناوين، حذف، مسح الحالات والتقييمات، تشغيل اختبارات للبروكسيات المحددة.</li>
+        <li><strong>الفرز في النافذة المنبثقة لشريط الأدوات</strong> – حسب التقييم والأولوية (📌 مثبتة في الأعلى، ⭐ مفضلة).</li>
+        <li><strong>الفرز في جدول الإعدادات</strong> – حسب البلد، البروتوكول، التقييم.</li>
+    </ul>
+
+    <h4>🚀 اختبار البروكسي</h4>
+    <ul>
+        <li><strong>اختبار دوري</strong> – يقوم بتبديل الملف الشخصي النشط والبروكسي بالتسلسل، ويتحقق من تحميل الموقع. موثوق ولكنه بطيء.</li>
+        <li><strong>اختبار دوري سريع</strong> – اختبار متسارع يتوقف عند أول نجاح. مناسب للتقييم السريع.</li>
+        <li><strong>اختبار دقيق (بطيء)</strong> – أكثر شمولاً، يستغرق وقتًا أطول، ويعطي نتائج أكثر موثوقية (لا يعمل في Firefox).</li>
+        <li><strong>اختبار سريع</strong> – سريع ولكنه قد يفوت بعض البروكسيات العاملة. مناسب لنظرة عامة سريعة (لا يعمل في Firefox).</li>
+        <li><strong>الاختبارات السريعة من النافذة المنبثقة لشريط الأدوات</strong> – اختبار الموقع الحالي لجميع البروكسيات أو فقط لبروكسيات الاشتراك.</li>
+    </ul>
+
+    <p>
+        <strong>⚠️ مهم للمستخدمين:</strong> أثناء الاختبارات، يتم تبديل الملف الشخصي النشط والبروكسي فعليًا.
+        قد يتداخل هذا مع التصفح العادي. قم بتشغيل الاختبارات عندما لا يكون المتصفح قيد الاستخدام لأنشطة أخرى.
+    </p>
+
+    <br />
+    <h3>أسطوانات أيقونات شريط الأدوات</h3>
+    <p>
+        يتغير الرمز الموجود على شريط أدوات المتصفح ليعكس حالة ProxyMust. إليك ما تعنيه الرموز المختلفة:
+        <br />
+
+        <div class="table-responsive">
+            <table class="table table-sm table-striped caption-top table-borderless align-middle">
+                <caption><b>أسطوانات الأيقونات (جميع المتصفحات):</b></caption>
+                <thead>
+                    <tr>
+                        <th style="width: 70px;">الأيقونة</th>
+                        <th>المعنى</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="p-2"><img src="../icons/profile-disabled.svg" class=""></td>
+                        <td>الطلبات لن تستخدم البروكسي.</td>
+                    </tr>
+                    <tr>
+                        <td class="p-2"><img src="../icons/smartproxy.svg" class=""></td>
+                        <td>
+                            سيتم تطبيق البروكسي أو سيتم تطبيقه على الطلبات التي تطابق القواعد المحددة.
+                            <br /> أو لا توجد قاعدة تطابق علامة التبويب الحالية.
+                            <br />
+                            الملف الشخصي: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i>
+                            قواعد انتقائية
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="p-2"><img src="../icons/profile-always.svg" class=""></td>
+                        <td>
+                            يتم تطبيق البروكسي على جميع الطلبات في علامة التبويب الحالية. (في المتصفحات المستندة إلى Chrome، يتم عرض النطاقات المضافة إلى القائمة البيضاء بشكل منفصل.)
+                            <br />
+                            الملف الشخصي: <i class="icon fa-sm fas fa-globe-americas text-success" aria-hidden="true"></i>
+                            مفعّل دائمًا
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="p-2"><img src="../icons/profile-system.svg" class=""></td>
+                        <td>
+                            يتم تفويض قرار استخدام البروكسي إلى نظام التشغيل.
+                            <br/> الملف الشخصي: نظام
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-sm table-striped caption-top table-borderless align-middle">
+                <caption><b>أسطوانات الأيقونات (Firefox فقط):</b></caption>
+                <thead>
+                    <tr>
+                        <th style="width: 70px;">الأيقونة</th>
+                        <th>المعنى</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="p-2"><img src="../icons/profile-smartrules-green.svg" class=""></td>
+                        <td>
+                            هناك قاعدة تطابق علامة التبويب الحالية. جميع الطلبات اللاحقة تمر عبر البروكسي.
+                            <br />
+                            الملف الشخصي: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> قواعد انتقائية
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="p-2"><img src="../icons/profile-smartrules-has-failed.svg" class=""></td>
+                        <td>
+                            هناك قاعدة تطابق علامة التبويب الحالية. يوجد طلب واحد على الأقل فاشل / غير مستجيب.
+                            <br />
+                            الملف الشخصي: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> قواعد انتقائية
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="p-2"><img src="../icons/profile-smartrules-has-bypassed.svg" class=""></td>
+                        <td>
+                            هناك قاعدة تطابق علامة التبويب الحالية. قام طلب لاحق واحد على الأقل بتجاوز البروكسي عبر قاعدة.
+                            <br />
+                            الملف الشخصي: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> قواعد انتقائية
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="p-2"><img src="../icons/profile-smartrules-has-unmatched.svg" class=""></td>
+                        <td>
+                            هناك قاعدة تطابق علامة التبويب الحالية. طلب لاحق واحد على الأقل لا يتطابق مع أي قاعدة ولا يمر عبر البروكسي.
+                            <br />
+                            الملف الشخصي: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> قواعد انتقائية
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="p-2"><img src="../icons/profile-smartrules-noproxy-has-matched.svg" class=""></td>
+                        <td>
+                            لا توجد قاعدة تطابق علامة التبويب الحالية. طلب لاحق واحد على الأقل يطابق قاعدة ويمر عبر البروكسي.
+                            <br />
+                            الملف الشخصي: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> قواعد انتقائية
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="p-2"><img src="../icons/profile-always-bypassed.svg" class=""></td>
+                        <td>
+                            يتم تطبيق البروكسي على جميع الطلبات في علامة التبويب الحالية. طلب لاحق واحد على الأقل قام بتجاوز البروكسي عبر قاعدة.
+                            <br />
+                            الملف الشخصي: <i class="icon fa-sm fas fa-globe-americas text-success" aria-hidden="true"></i> مفعّل دائمًا
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </p>
+</div>
+</body>
+</html>

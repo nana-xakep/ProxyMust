@@ -1,0 +1,209 @@
+<h2 class="text-primary">
+	ProxyMust
+</h2>
+<p>
+	<em>ProxyMust, SmartProxy eklentisinin bir çatalıdır (fork). Orijinal yazar <strong>Salar Khalilzadeh</strong>'e mükemmel çalışması için saygı duyuyor ve teşekkür ediyoruz.
+	Orijinal SmartProxy'e <a href="https://github.com/salarcode/SmartProxy" target="_blank">https://github.com/salarcode/SmartProxy</a> adresinden ulaşabilirsiniz.</em>
+</p>
+<p data-localize="settingsTabAboutDescription">
+	Proxy kullanmak ProxyMust ile hiç bu kadar kolay olmamıştı. Bunu bir kere yapılandır ve unut çözümü olarak düşünün.
+	ProxyMust ile proxy ayarlarınızı manuel olarak değiştirmenize veya açıp kapatmanıza gerek yok.
+	İstediğiniz web sitesi için proxy'yi etkinleştirmesini ProxyMust'e tek bir tıklamayla söylemeniz yeterli.
+	Bundan sonra, o siteyi ziyaret ettiğinizde ProxyMust otomatik olarak tüm verilerinizi proxy üzerinden yönlendirecek, siz hiçbir şey yapmadan.
+</p>
+<p>
+	ProxyMust, hem yeni başlayanlar hem de ileri düzey kullanıcılar için uygun çeşitli özellikler sunar:
+</p>
+<ul>
+	<li>Tek bir sekmede tek bir site için proxy'yi etkinleştirin – o sekmedeki her şey otomatik olarak proxy kullanır. Bu özellik "sekme başına proxy" olarak adlandırılır.</li>
+	<li>Belirli web siteleri için proxy'nin ne zaman etkinleştirileceğini veya devre dışı bırakılacağını kurallara göre otomatik olarak algılayın.</li>
+	<li>Birden çok proxy sunucusu arasında etkin proxy sunucunuz olarak kolayca geçiş yapın.</li>
+	<li>Geçerli site için proxy'yi tek bir tıklamayla etkinleştirin.</li>
+	<li>Geçerli web sitesinin kaynaklarını ve isteklerini görüntüleyin ve bunlar için proxy'yi etkinleştirip etkinleştirmeyeceğinize tek bir tıklamayla karar verin.</li>
+	<li>Proxy modları arasında kolayca geçiş yapın veya tüm alan adları için proxy'yi etkinleştirin.</li>
+	<li>Ayarları ve kuralları yedekleyin/geri yükleyin.</li>
+</ul>
+<br />
+
+<h3>Lütfen dikkat edin:</h3>
+<p>
+<div class="text-info">
+	<i class="fas fa-info-circle" aria-hidden="true"></i>
+	ProxyMust herhangi bir türde proxy sunucusu sağlamaz.
+</div>
+<div class="text-danger">
+	<i class="fas fa-eye-slash" aria-hidden="true"></i>
+	ProxyMust sizi hiçbir şekilde takip etmez.
+</div>
+<div class="text-warning">
+	<i class="fas fa-eye-slash" aria-hidden="true"></i>
+	ProxyMust reklamsızdır ve web sayfaları ile içeriklere müdahale etmez.
+</div>
+</p>
+<br />
+
+<h3>Geri bildiriminiz önemlidir</h3>
+<p>
+<div>
+	<i class="fas fa-star text-warning"></i>
+	ProxyMust'yi <i class="fas fa-heart text-danger"></i> seviyorsanız lütfen
+	<a id="linkAddonsMarket" href="#" target="_blank">Uzantılar</a> sayfasında değerlendirin.
+</div>
+<div>
+	<i class="fas fa-question-circle text-primary"></i>
+	Sorularınız veya sorunlarınız varsa, lütfen sorun izleyici sayfasını ziyaret edin ve
+	<a href="https://github.com/nana-xakep/ProxyMust/issues" target="_blank">sorun bildirmek</a> için bir kayıt açın.
+</div>
+</p>
+<br />
+
+<h3>ProxyMust'in Yeni Özellikleri</h3>
+
+<h4>📊 Puanlama ve Durum Sistemi</h4>
+<ul>
+	<li>Her proxy ve test edilen her site için durum gösterilir:
+		<ul>
+			<li>✅ – bu site için kesinlikle çalışıyor (taze başarı)</li>
+			<li>☑️ – muhtemelen çalışıyor (başarı daha önceydi veya başka bir site için elde edildi)</li>
+			<li>❓ – veri yok (proxy bu site için test edilmedi)</li>
+			<li>⛔ – çalışmıyor (taze başarısızlık)</li>
+		</ul>
+	</li>
+	<li>Her proxy'nin puanı, test sonuçlarına göre otomatik olarak değişir: <strong>Başarı durumunda +1</strong>, <strong>Başarısızlık durumunda -1</strong>.</li>
+	<li>Puanı, bağlam menüsü aracılığıyla manuel olarak da değiştirebilirsiniz (tablodaki bir proxy satırına veya araç çubuğu açılır penceresindeki aktif proxy'ye sağ tıklayın).</li>
+	<li>Durumlar, yapılandırılabilir bir saat sayısı boyunca (varsayılan 6) "taze" olarak kabul edilir. Veriler eskimişse, dolaylı bir durum (☑️) kullanılır.</li>
+</ul>
+
+<h4>📋 Proxy Listesini Yönetme</h4>
+<ul>
+	<li><strong>Proxy tablosunda bağlam menüsü (sağ tıklama)</strong> – puanı, önceliği (sabitleme, yıldız) hızlıca değiştirme, seçilileri dışa aktarma, adresleri kopyalama, silme, durumları ve puanları temizleme, seçili proxy'ler için test çalıştırma.</li>
+	<li><strong>Araç çubuğu açılır penceresinde sıralama</strong> – puana ve önceliğe göre (📌 sabitlenmişler üstte, ⭐ favoriler).</li>
+	<li><strong>Ayarlar tablosunda sıralama</strong> – ülkeye, protokole, puana göre.</li>
+</ul>
+
+<h4>🚀 Proxy Testleri</h4>
+<ul>
+	<li><strong>Döngüsel test</strong> – aktif profili ve proxy'yi sırayla değiştirir, site yüklenmesini test eder. Güvenilir ancak yavaş.</li>
+	<li><strong>Ekspres döngüsel test</strong> – ilk başarıda duran hızlandırılmış test. Hızlı değerlendirme için iyidir.</li>
+	<li><strong>Kesin (yavaş) test</strong> – daha kapsamlı, daha uzun sürer, daha güvenilir sonuçlar verir (Firefox'ta çalışmaz).</li>
+	<li><strong>Ekspres test</strong> – hızlı ancak bazı çalışan proxy'leri atlayabilir. Hızlı bir genel bakış için iyidir (Firefox'ta çalışmaz).</li>
+	<li><strong>Araç çubuğu açılır penceresinden hızlı testler</strong> – geçerli siteyi tüm proxy'ler veya yalnızca abonelik proxy'leri için test edin.</li>
+</ul>
+
+<p>
+	<strong>⚠️ Kullanıcılar için önemli:</strong> Testler sırasında aktif profil ve proxy gerçekten değiştirilir.
+	Bu, normal gezinmeye müdahale edebilir. Testleri, tarayıcı başka etkinlikler için kullanılmadığında çalıştırın.
+</p>
+
+<br />
+<h3>Araç Çubuğu Simge Açıklamaları</h3>
+<p>
+	Tarayıcı araç çubuğunuzdaki simge, ProxyMust'in durumunu temsil edecek şekilde değişecektir. Farklı simgelerin anlamları şunlardır:
+	<br />
+
+<div class="table-responsive">
+	<table class="table table-sm table-striped caption-top table-borderless align-middle">
+		<caption><b>Simge Açıklamaları (tüm tarayıcılar):</b></caption>
+		<thead>
+			<tr>
+				<th style="width: 70px;">Simge</th>
+				<th>Anlam</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td class="p-2"><img src="../icons/profile-disabled.svg" class=""></td>
+				<td>İstekler proxy kullanmayacak.</td>
+			</tr>
+			<tr>
+				<td class="p-2"><img src="../icons/smartproxy.svg" class=""></td>
+				<td>
+					Proxy, tanımlanan kurallara uyan isteklere uygulandı veya uygulanacak.
+					<br /> Veya sekme için hiçbir kural eşleşmedi.
+					<br />
+					Profil: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i>
+					Seçici Kurallar
+				</td>
+			</tr>
+			<tr>
+				<td class="p-2"><img src="../icons/profile-always.svg" class=""></td>
+				<td>
+					Proxy, mevcut sekmedeki tüm isteklere uygulanır. (Chrome tabanlı tarayıcılarda beyaz listeye alınmış alan adları ayrı olarak gösterilir.)
+					<br />
+					Profil: <i class="icon fa-sm fas fa-globe-americas text-success" aria-hidden="true"></i>
+					Her Zaman Etkin
+				</td>
+			</tr>
+			<tr>
+				<td class="p-2"><img src="../icons/profile-system.svg" class=""></td>
+				<td>
+					Herhangi bir proxy kullanma kararı işletim sistemine devredilir.
+					<br/> Profil: Sistem
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+<div class="table-responsive">
+	<table class="table table-sm table-striped caption-top table-borderless align-middle">
+		<caption><b>Simge Açıklamaları (yalnızca Firefox):</b></caption>
+		<thead>
+			<tr>
+				<th style="width: 70px;">Simge</th>
+				<th>Anlam</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td class="p-2"><img src="../icons/profile-smartrules-green.svg" class=""></td>
+				<td>
+					Mevcut sekme için bir kural eşleşti. Sonraki tüm istekler proxy üzerinden gidiyor.
+					<br />
+					Profil: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> Seçici Kurallar
+				</td>
+			</tr>
+			<tr>
+				<td class="p-2"><img src="../icons/profile-smartrules-has-failed.svg" class=""></td>
+				<td>
+					Mevcut sekme için bir kural eşleşti. En az bir yanıt vermeyen / başarısız istek var.
+					<br />
+					Profil: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> Seçici Kurallar
+				</td>
+			</tr>
+			<tr>
+				<td class="p-2"><img src="../icons/profile-smartrules-has-bypassed.svg" class=""></td>
+				<td>
+					Mevcut sekme için bir kural eşleşti. En az bir sonraki istek bir kural aracılığıyla proxy'yi atladı.
+					<br />
+					Profil: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> Seçici Kurallar
+				</td>
+			</tr>
+			<tr>
+				<td class="p-2"><img src="../icons/profile-smartrules-has-unmatched.svg" class=""></td>
+				<td>
+					Mevcut sekme için bir kural eşleşti. En az bir sonraki istek hiçbir kuralla eşleşmedi ve proxy üzerinden gitmiyor.
+					<br />
+					Profil: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> Seçici Kurallar
+				</td>
+			</tr>
+			<tr>
+				<td class="p-2"><img src="../icons/profile-smartrules-noproxy-has-matched.svg" class=""></td>
+				<td>
+					Mevcut sekme için hiçbir kural eşleşmedi. En az bir sonraki istek bir kuralla eşleşti ve bir proxy üzerinden gidiyor.
+					<br />
+					Profil: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> Seçici Kurallar
+				</td>
+			</tr>
+			<tr>
+				<td class="p-2"><img src="../icons/profile-always-bypassed.svg" class=""></td>
+				<td>
+					Proxy, mevcut sekmedeki tüm isteklere uygulanır. En az bir sonraki istek bir kural aracılığıyla proxy'yi atladı.
+					<br />
+					Profil: <i class="icon fa-sm fas fa-globe-americas text-success" aria-hidden="true"></i> Her Zaman Etkin
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+</p>

@@ -1,0 +1,209 @@
+<h2 class="text-primary">
+	ProxyMust
+</h2>
+<p>
+	<em>ProxyMust is a fork of the SmartProxy extension. We respect and thank the original author <strong>Salar Khalilzadeh</strong> for his excellent work.
+	The original SmartProxy can be found at <a href="https://github.com/salarcode/SmartProxy" target="_blank">https://github.com/salarcode/SmartProxy</a>.</em>
+</p>
+<p data-localize="settingsTabAboutDescription">
+	Using proxies couldn't be easier with ProxyMust. Think of it as a "configure once and forget" solution.
+	With ProxyMust, you don't need to manually change your proxy settings or turn them on and off.
+	Just tell ProxyMust to enable the proxy for the website you need with one click.
+	After that, whenever you visit that website, ProxyMust will automatically route all your data through the proxy – without any additional action on your part.
+</p>
+<p>
+	ProxyMust offers many features for both beginners and advanced users, including:
+</p>
+<ul>
+	<li>Enabling the proxy for a specific site on a tab – everything opened in that tab automatically uses the proxy. This feature is called "proxy per tab".</li>
+	<li>Automatically detecting whether to enable or disable the proxy for certain sites based on rules.</li>
+	<li>Quickly switching between multiple proxy servers as the active proxy.</li>
+	<li>Enabling the proxy for the current site with a single click.</li>
+	<li>Viewing resources and requests of the current site, and enabling the proxy for them with one click.</li>
+	<li>Easy switching between proxy modes or enabling the proxy for all domains.</li>
+	<li>Backup and restore of settings and rules.</li>
+</ul>
+<br />
+
+<h3>Please note:</h3>
+<p>
+<div class="text-info">
+	<i class="fas fa-info-circle" aria-hidden="true"></i>
+	ProxyMust does not provide any proxy servers.
+</div>
+<div class="text-danger">
+	<i class="fas fa-eye-slash" aria-hidden="true"></i>
+	ProxyMust does not track you in any way.
+</div>
+<div class="text-warning">
+	<i class="fas fa-eye-slash" aria-hidden="true"></i>
+	ProxyMust is ad‑free and does not interfere with web page content.
+</div>
+</p>
+<br />
+
+<h3>Your feedback matters</h3>
+<p>
+<div>
+	<i class="fas fa-star text-warning"></i>
+	If you <i class="fas fa-heart text-danger"></i> like ProxyMust, please rate it on the
+	<a id="linkAddonsMarket" href="#" target="_blank">extensions page</a>.
+</div>
+<div class="">
+	<i class="fas fa-question-circle text-primary"></i>
+	If you have questions or problems, please visit the issue tracker and open a ticket to
+	<a href="https://github.com/nana-xakep/ProxyMust/issues" target="_blank">report an issue</a>.
+</div>
+</p>
+<br />
+
+<h3>New ProxyMust features</h3>
+
+<h4>📊 Rating and status system</h4>
+<ul>
+	<li>For each proxy and each tested site, the status is shown:
+		<ul>
+			<li>✅ – definitely works for this site (fresh success)</li>
+			<li>☑️ – likely works (success was earlier or obtained for another site)</li>
+			<li>❓ – no data (proxy not tested for this site)</li>
+			<li>⛔ – does not work (fresh failure)</li>
+		</ul>
+	</li>
+	<li>Each proxy's rating automatically changes based on test results: <strong>+1 on success</strong>, <strong>-1 on failure</strong>.</li>
+	<li>You can also manually change the rating via the context menu (right‑click on a proxy row in the table or on the active proxy in the toolbar popup).</li>
+	<li>Statuses are considered "fresh" for a configurable number of hours (default 6). If data is stale, an indirect status (☑️) is used.</li>
+</ul>
+
+<h4>📋 Managing the proxy list</h4>
+<ul>
+	<li><strong>Context menu in the proxy table (right‑click)</strong> – quickly change rating, priority (pin, star), export selected, copy addresses, delete, clear statuses and ratings, run tests for selected proxies.</li>
+	<li><strong>Sorting in the toolbar popup</strong> – by rating and priority (📌 pinned at the top, ⭐ favourites).</li>
+	<li><strong>Sorting in the settings table</strong> – by country, protocol, rating.</li>
+</ul>
+
+<h4>🚀 Proxy testing</h4>
+<ul>
+	<li><strong>Cycle test</strong> – sequentially switches the active profile and proxy, checking site loading. Reliable but slow.</li>
+	<li><strong>Express cycle test</strong> – accelerated testing that stops at the first success. Good for quick assessment.</li>
+	<li><strong>Precise (slow) test</strong> – more thorough, takes longer, gives more reliable results (does not work in Firefox).</li>
+	<li><strong>Express test</strong> – fast but may miss some working proxies. Good for a quick overview (does not work in Firefox).</li>
+	<li><strong>Quick tests from the toolbar popup</strong> – test the current site for all proxies or only for subscription proxies.</li>
+</ul>
+
+<p>
+	<strong>⚠️ Important for users:</strong> During tests, the active profile and proxy are actually switched.
+	This may interfere with normal browsing. Run tests when the browser is not being used for other activities.
+</p>
+
+<br />
+<h3>Toolbar icon legends</h3>
+<p>
+	The icon on your browser toolbar changes to reflect the status of ProxyMust. Here’s what the different icons mean:
+	<br />
+
+<div class="table-responsive">
+	<table class="table table-sm table table-striped caption-top table-borderless align-middle table-responsive">
+		<caption><b>Icon legends (all browsers):</b></caption>
+		<thead>
+			<tr>
+				<th style="width: 70px;">Icon</th>
+				<th>Meaning</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td class="p-2"><img src="../icons/profile-disabled.svg" class=""></td>
+				<td>Requests will not use the proxy.</td>
+			</tr>
+			<tr>
+				<td class="p-2"><img src="../icons/smartproxy.svg" class=""></td>
+				<td>
+					The proxy is or will be applied to requests that match the defined rules.
+					<br /> Or no rule matches the current tab.
+					<br />
+					Profile: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i>
+					Selective Rules
+				</td>
+			</tr>
+			<tr>
+				<td class="p-2"><img src="../icons/profile-always.svg" class=""></td>
+				<td>
+					The proxy is applied to all requests in the current tab. (In Chrome‑based browsers, domains added to the whitelist are shown separately.)
+					<br />
+					Profile: <i class="icon fa-sm fas fa-globe-americas text-success" aria-hidden="true"></i>
+					Always Enabled
+				</td>
+			</tr>
+			<tr>
+				<td class="p-2"><img src="../icons/profile-system.svg" class=""></td>
+				<td>
+					The decision of whether to use a proxy is delegated to the operating system.
+					<br/> Profile: System
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+<div class="table-responsive">
+	<table class="table table-sm table table-striped caption-top table-borderless align-middle table-responsive">
+		<caption><b>Icon legends (Firefox only):</b></caption>
+		<thead>
+			<tr>
+				<th style="width: 70px;">Icon</th>
+				<th>Meaning</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td class="p-2"><img src="../icons/profile-smartrules-green.svg" class=""></td>
+				<td>
+					A rule matches the current tab. All subsequent requests go through the proxy.
+					<br />
+					Profile: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> Selective Rules
+				</td>
+			</tr>
+			<tr>
+				<td class="p-2"><img src="../icons/profile-smartrules-has-failed.svg" class=""></td>
+				<td>
+					A rule matches the current tab. There is at least one failed / unresponsive request.
+					<br />
+					Profile: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> Selective Rules
+				</td>
+			</tr>
+			<tr>
+				<td class="p-2"><img src="../icons/profile-smartrules-has-bypassed.svg" class=""></td>
+				<td>
+					A rule matches the current tab. At least one subsequent request bypassed the proxy via a rule.
+					<br />
+					Profile: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> Selective Rules
+				</td>
+			</tr>
+			<tr>
+				<td class="p-2"><img src="../icons/profile-smartrules-has-unmatched.svg" class=""></td>
+				<td>
+					A rule matches the current tab. At least one subsequent request does not match any rule and does not go through the proxy.
+					<br />
+					Profile: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> Selective Rules
+				</td>
+			</tr>
+			<tr>
+				<td class="p-2"><img src="../icons/profile-smartrules-noproxy-has-matched.svg" class=""></td>
+				<td>
+					No rule matches the current tab. At least one subsequent request matches a rule and goes through the proxy.
+					<br />
+					Profile: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> Selective Rules
+				</td>
+			</tr>
+			<tr>
+				<td class="p-2"><img src="../icons/profile-always-bypassed.svg" class=""></td>
+				<td>
+					The proxy is applied to all requests in the current tab. At least one subsequent request bypassed the proxy via a rule.
+					<br />
+					Profile: <i class="icon fa-sm fas fa-globe-americas text-success" aria-hidden="true"></i> Always Enabled
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+</p>

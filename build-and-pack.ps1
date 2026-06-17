@@ -1,0 +1,63 @@
+# use PowerShell 7 or later for correct zip file format
+# run this in powershell to enable scripts
+# Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+
+$global:Success = $true
+$global:version = ""
+
+Write-Output "Creating Browser Markets Release Packs..."
+
+# Copy IP2Location database to assets
+Write-Output "Copying IP2Location database..."
+$csvSource = "IPCountryDB\IP2LOCATION-LITE-DB1.CSV"
+$csvDestination = "src\assets\IPCountryDB\IP2LOCATION-LITE-DB1.CSV"
+
+if (Test-Path $csvSource) {
+    Copy-Item -Path $csvSource -Destination $csvDestination -Force
+    Write-Output "IP2Location database copied successfully."
+} else {
+    Write-Warning "IP2Location database not found at '$csvSource'. Build will continue without country code database."
+}
+
+Function BuildAndPack($Build, $BuildName) {
+
+ if(!$global:Success) {
+    return;
+ }
+ Write-Output "Cleaning build folder"
+ Remove-Item -path .\build\* -recurse
+
+ Invoke-Expression ("npm run build-$Build " + ';$global:Success=$?')
+
+ if($global:Success)
+ {
+    $manifest = Get-Content .\build\manifest.json | ConvertFrom-Json
+    $global:version = $manifest.version
+	if (!(Test-Path "..\!Releases\$global:version\")) {
+		New-Item -Path "..\!Releases\$global:version\" -ItemType Directory
+	}
+    $zipfile = "..\!Releases\$global:version\SmartProxy-v$global:version-$BuildName.zip"
+    $compress = @{
+        Path = ".\build\*"
+        DestinationPath = $zipfile
+    }
+    Compress-Archive @compress
+    Write-Output "Created release in $zipfile"
+ }
+ else
+ {
+    Write-Output "Build has failed for $BuildName"
+ }
+}
+
+
+BuildAndPack "ff" "Firefox"
+BuildAndPack "ch"  "Chrome-ManifestV3"
+BuildAndPack "ch-mv2"  "Chrome-ManifestV2"
+BuildAndPack "ed"  "Edge"
+BuildAndPack "th"  "Thunderbird"
+BuildAndPack "op"  "Opera"
+BuildAndPack "ff-unlisted" "firefox-unlisted"
+
+Invoke-Expression ("git archive --format zip -o ..\!Releases\$global:version\SmartProxy-$global:version-sources.zip HEAD")
+Write-Output "Sources are saved in SmartProxy-$global:version-sources.zip"
