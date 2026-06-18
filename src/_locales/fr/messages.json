@@ -1582,7 +1582,7 @@
 		"message": "Fonctionnement du test de proxy"
 	},
 	"testingExplanationText": {
-		"message": "Pendant le test, des onglets temporaires s’ouvrent et se ferment automatiquement, vérifiant l’IP du proxy et la connexion via ce proxy à l’adresse du site de test saisie. Les onglets de test sont immédiatement supprimés de l’historique de votre navigateur pour éviter l’encombrement. Vous pouvez réduire le navigateur en toute sécurité pendant l’exécution des tests, car les tests interfèrent avec votre navigation en basculant les proxys testés."
+		"message": "Le test de proxy utilise des services externes de détection d'IP (ipify.org, ifconfig.me, etc.) pour vérifier la connectivité du proxy. Votre adresse IP peut être transmise à ces services uniquement à des fins de test. Aucune donnée n'est stockée. Pendant le test, des onglets temporaires s'ouvrent et se ferment automatiquement, vérifiant l'IP du proxy et la connexion via ce proxy à l'adresse du site de test saisie. Les onglets de test sont immédiatement supprimés de l'historique de votre navigateur pour éviter l'encombrement. Vous pouvez réduire le navigateur en toute sécurité pendant l'exécution des tests, car les tests interfèrent avec votre navigation en basculant les proxys testés."
 	},
 	"settingsGeneralEnableRating": {
 		"message": "Activer la notation des proxys"

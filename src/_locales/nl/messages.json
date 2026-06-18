@@ -1582,7 +1582,7 @@
 		"message": "Hoe proxytests werken"
 	},
 	"testingExplanationText": {
-		"message": "Tijdens het testen worden tijdelijke tabbladen automatisch geopend en gesloten, waarbij het proxy-IP en de verbinding via die proxy met het ingevoerde testadres worden gecontroleerd. Testtabbladen worden onmiddellijk uit uw browserhistorie verwijderd om rommel te voorkomen. U kunt de browser veilig minimaliseren terwijl de tests worden uitgevoerd, omdat tests uw webbrowsing verstoren door de te testen proxy's te schakelen."
+		"message": "Proxy-tests gebruiken externe IP-detectiediensten (ipify.org, ifconfig.me, enz.) om de proxy-connectiviteit te verifiëren. Uw IP-adres kan uitsluitend voor testedoeleinden aan deze diensten worden doorgegeven. Er worden geen gegevens opgeslagen. Tijdens het testen worden tijdelijke tabbladen automatisch geopend en gesloten, waarbij het proxy-IP en de verbinding via die proxy naar het ingevoerde testadres worden gecontroleerd. Testtabbladen worden onmiddellijk uit uw browserhistorie verwijderd om rommel te voorkomen. U kunt de browser veilig minimaliseren terwijl de tests worden uitgevoerd, omdat tests uw webbrowsing verstoren door de te testen proxy's te schakelen."
 	},
 	"settingsGeneralEnableRating": {
 		"message": "Beoordeling voor proxy's inschakelen"

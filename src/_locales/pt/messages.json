@@ -1582,7 +1582,7 @@
 		"message": "Como funciona o teste de proxy"
 	},
 	"testingExplanationText": {
-		"message": "Durante o teste, separadores temporários abrem e fecham automaticamente, verificando o IP do proxy e a ligação através desse proxy para o endereço do site de teste introduzido. Os separadores de teste são imediatamente removidos do histórico do seu browser para evitar desordem. Pode minimizar o browser em segurança enquanto os testes decorrem, uma vez que os testes interferem com a sua navegação ao trocarem os proxies que estão a ser testados."
+		"message": "O teste de proxy utiliza serviços externos de deteção de IP (ipify.org, ifconfig.me, etc.) para verificar a conectividade do proxy. O seu endereço IP pode ser transmitido a estes serviços exclusivamente para fins de teste. Não são armazenados dados. Durante o teste, separadores temporários abrem e fecham automaticamente, verificando o IP do proxy e a ligação através desse proxy para o endereço do site de teste introduzido. Os separadores de teste são imediatamente removidos do histórico do seu browser para evitar desordem. Pode minimizar o browser em segurança enquanto os testes decorrem, uma vez que os testes interferem com a sua navegação ao trocarem os proxies que estão a ser testados."
 	},
 	"settingsGeneralEnableRating": {
 		"message": "Ativar classificação para proxies"

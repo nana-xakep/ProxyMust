@@ -1582,7 +1582,7 @@
 		"message": "Proxy testi nasıl çalışır"
 	},
 	"testingExplanationText": {
-		"message": "Test sırasında, geçici sekmeler otomatik olarak açılır ve kapanır, proxy IP'sini ve bu proxy üzerinden girilen test sitesi adresine bağlantıyı kontrol eder. Test sekmeleri, karışıklığı önlemek için tarayıcı geçmişinizden hemen kaldırılır. Testler çalışırken tarayıcıyı güvenle simge durumuna küçültebilirsiniz, çünkü testler test edilen proxy'leri değiştirerek web gezintinize müdahale eder."
+		"message": "Proxy testi, proxy bağlantısını doğrulamak için harici IP tespit hizmetlerini (ipify.org, ifconfig.me, vb.) kullanır. IP adresiniz yalnızca test amacıyla bu hizmetlere iletilebilir. Hiçbir veri saklanmaz. Test sırasında, geçici sekmeler otomatik olarak açılır ve kapanır, proxy IP'sini ve bu proxy üzerinden girilen test sitesi adresine bağlantıyı kontrol eder. Test sekmeleri, karışıklığı önlemek için tarayıcı geçmişinizden hemen kaldırılır. Testler çalışırken tarayıcıyı güvenle simge durumuna küçültebilirsiniz, çünkü testler test edilen proxy'leri değiştirerek web gezintinize müdahale eder."
 	},
 	"settingsGeneralEnableRating": {
 		"message": "Proxy'ler için puanlamayı etkinleştir"

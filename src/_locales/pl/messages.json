@@ -1582,7 +1582,7 @@
 		"message": "Jak działa testowanie proxy"
 	},
 	"testingExplanationText": {
-		"message": "Podczas testowania tymczasowe karty otwierają się i zamykają automatycznie, sprawdzając adres IP proxy i połączenie przez to proxy z wprowadzonym adresem strony testowej. Karty testowe są natychmiast usuwane z historii przeglądarki, aby uniknąć bałaganu. Możesz bezpiecznie zminimalizować przeglądarkę podczas testów, ponieważ testy zakłócają przeglądanie sieci przez przełączanie testowanych proxy."
+		"message": "Testowanie proxy wykorzystuje zewnętrzne usługi wykrywania IP (ipify.org, ifconfig.me itp.) w celu weryfikacji łączności proxy. Twój adres IP może być przesyłany do tych usług wyłącznie w celach testowych. Żadne dane nie są przechowywane. Podczas testowania tymczasowe karty otwierają się i zamykają automatycznie, sprawdzając IP proxy i połączenie przez to proxy z wprowadzonym adresem strony testowej. Karty testowe są natychmiast usuwane z historii przeglądarki, aby uniknąć bałaganu. Możesz bezpiecznie zminimalizować przeglądarkę podczas testów, ponieważ testy zakłócają przeglądanie sieci przez przełączanie testowanych proxy."
 	},
 	"settingsGeneralEnableRating": {
 		"message": "Włącz ocenianie proxy"

@@ -1585,7 +1585,7 @@
     "message": "How proxy testing works"
 	},
 	"testingExplanationText": {
-    "message": "During testing, temporary tabs open and close automatically, checking the proxy IP and connection through that proxy to the entered test site address. Test tabs are immediately removed from your browser history to avoid clutter. You can safely minimize the browser while tests are running, since testing interferes with your web browsing by switching the proxies being tested."
+    "message": "Proxy testing uses external IP detection services (ipify.org, ifconfig.me, etc.) to verify proxy connectivity. Your IP address may be transmitted to these services solely for test purposes. No data is stored. During testing, temporary tabs open and close automatically, checking the proxy IP and connection through that proxy to the entered test site address. Test tabs are immediately removed from your browser history to avoid clutter. You can safely minimize the browser while tests are running, since testing interferes with your web browsing by switching the proxies being tested."
 	},
 	"settingsGeneralEnableRating": {
 		"message": "Enable rating for proxies"

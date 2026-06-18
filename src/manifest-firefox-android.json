@@ -1,6 +1,6 @@
 {
 	"name": "__MSG_extensionName__",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"manifest_version": 2,
 	"author": "Salar Khalilzadeh (maintained by nana-xakep)",
 	"description": "__MSG_extensionDescription__",
@@ -30,7 +30,7 @@
 		"history"
 	],
 	"host_permissions": [
-    "<all_urls>"
+		"<all_urls>"
 	],
 	"browser_action": {
 		"browser_style": true,
@@ -54,10 +54,53 @@
 		"open_in_tab": true,
 		"browser_style": false
 	},
+	"commands": {
+		"next-proxy-server": {
+			"suggested_key": {
+				"default": "Ctrl+Shift+Period"
+			},
+			"description": "Switch to next proxy server as the active proxy"
+		},
+		"previous-proxy-server": {
+			"suggested_key": {
+				"default": "Ctrl+Shift+Comma"
+			},
+			"description": "Switch to the next previous server as the active proxy"
+		},
+		"proxy-mode-none": {
+			"suggested_key": {
+				"default": "Ctrl+Shift+1"
+			},
+			"description": "Switch to 'No Proxy' mode"
+		},
+		"proxy-mode-smart": {
+			"suggested_key": {
+				"default": "Ctrl+Shift+2"
+			},
+			"description": "Switch to 'Selective Proxy' mode"
+		},
+		"proxy-mode-always": {
+			"suggested_key": {
+				"default": "Ctrl+Shift+3",
+				"mac": "Command+Shift+9"
+			},
+			"description": "Switch to 'Always Enabled' mode"
+		},
+		"proxy-mode-system": {
+			"suggested_key": {
+				"default": "Ctrl+Shift+4",
+				"mac": "Command+Shift+0"
+			},
+			"description": "Switch to 'System' mode"
+		}
+	},
 	"browser_specific_settings": {
 		"gecko": {
 			"id": "proxymust@nana-xakep",
-			"strict_min_version": "100.0"
+			"strict_min_version": "100.0",
+			"data_collection_permissions": {
+				"required": ["locationInfo"]
+			}
 		},
 		"gecko_android": {
 			"strict_min_version": "120.0"

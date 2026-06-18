@@ -1582,7 +1582,7 @@
 		"message": "Cách thức hoạt động của kiểm tra proxy"
 	},
 	"testingExplanationText": {
-		"message": "Trong quá trình kiểm tra, các tab tạm thời sẽ tự động mở và đóng, kiểm tra IP proxy và kết nối qua proxy đó đến địa chỉ trang web thử nghiệm đã nhập. Các tab kiểm tra ngay lập tức bị xóa khỏi lịch sử trình duyệt của bạn để tránh lộn xộn. Bạn có thể thu nhỏ trình duyệt một cách an toàn trong khi kiểm tra đang chạy, vì việc kiểm tra can thiệp vào hoạt động duyệt web của bạn bằng cách chuyển đổi các proxy đang được kiểm tra."
+		"message": "Kiểm tra proxy sử dụng các dịch vụ phát hiện IP bên ngoài (ipify.org, ifconfig.me, v.v.) để xác minh kết nối proxy. Địa chỉ IP của bạn có thể được truyền đến các dịch vụ này chỉ cho mục đích kiểm tra. Không có dữ liệu nào được lưu trữ. Trong quá trình kiểm tra, các tab tạm thời sẽ tự động mở và đóng, kiểm tra IP proxy và kết nối qua proxy đó đến địa chỉ trang web thử nghiệm đã nhập. Các tab kiểm tra ngay lập tức bị xóa khỏi lịch sử trình duyệt của bạn để tránh lộn xộn. Bạn có thể thu nhỏ trình duyệt một cách an toàn trong khi kiểm tra đang chạy, vì việc kiểm tra can thiệp vào hoạt động duyệt web của bạn bằng cách chuyển đổi các proxy đang được kiểm tra."
 	},
 	"settingsGeneralEnableRating": {
 		"message": "Bật xếp hạng cho proxy"

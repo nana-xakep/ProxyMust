@@ -1,6 +1,6 @@
 {
 	"name": "__MSG_extensionName__",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"manifest_version": 2,
 	"author": "Salar Khalilzadeh (maintained by nana-xakep)",
 	"description": "__MSG_extensionDescription__",
@@ -55,7 +55,7 @@
 	},
 	"commands": {
 		"next-proxy-server": {
-			"suggested_key": { 
+			"suggested_key": {
 				"default": "Ctrl+Shift+Period"
 			},
 			"description": "Switch to next proxy server as the active proxy"
@@ -76,7 +76,7 @@
 			"suggested_key": {
 				"default": "Ctrl+Shift+2"
 			},
-			"description": "Switch to 'Smart Proxy' mode"
+			"description": "Switch to 'Selective Proxy' mode"
 		},
 		"proxy-mode-always": {
 			"suggested_key": {
@@ -96,7 +96,10 @@
 	"browser_specific_settings": {
 		"gecko": {
 			"id": "proxymust-unlisted@nana-xakep",
-			"strict_min_version": "100.0"
+			"strict_min_version": "100.0",
+			"data_collection_permissions": {
+				"required": ["locationInfo"]
+			}
 		},
 		"gecko_android": {
 			"strict_min_version": "120.0"

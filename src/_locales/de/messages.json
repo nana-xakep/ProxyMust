@@ -1582,7 +1582,7 @@
 		"message": "Wie der Proxy-Test funktioniert"
 	},
 	"testingExplanationText": {
-		"message": "Während des Tests werden temporäre Tabs automatisch geöffnet und geschlossen, um die Proxy-IP und die Verbindung über diesen Proxy zur eingegebenen Test-Website-Adresse zu überprüfen. Test-Tabs werden sofort aus Ihrem Browserverlauf entfernt, um Unordnung zu vermeiden. Sie können den Browser während des Testlaufs gefahrlos minimieren, da der Test Ihre Browsing-Aktivitäten durch Umschalten der getesteten Proxys beeinträchtigt."
+		"message": "Der Proxy-Test verwendet externe IP-Erkennungsdienste (ipify.org, ifconfig.me usw.), um die Proxy-Konnektivität zu überprüfen. Ihre IP-Adresse kann zu Testzwecken an diese Dienste übermittelt werden. Es werden keine Daten gespeichert. Während des Tests werden temporäre Tabs automatisch geöffnet und geschlossen, um die Proxy-IP und die Verbindung über diesen Proxy zur eingegebenen Test-Website-Adresse zu überprüfen. Test-Tabs werden sofort aus Ihrem Browserverlauf entfernt, um Unordnung zu vermeiden. Sie können den Browser während des Testlaufs gefahrlos minimieren, da der Test Ihre Browsing-Aktivitäten durch Umschalten der getesteten Proxys beeinträchtigt."
 	},
 	"settingsGeneralEnableRating": {
 		"message": "Proxy-Bewertung aktivieren"

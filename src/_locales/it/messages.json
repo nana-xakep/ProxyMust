@@ -1582,7 +1582,7 @@
 		"message": "Come funziona il test dei proxy"
 	},
 	"testingExplanationText": {
-		"message": "Durante il test, schede temporanee si aprono e si chiudono automaticamente, verificando l'IP del proxy e la connessione attraverso quel proxy all'indirizzo del sito di test inserito. Le schede di test vengono immediatamente rimosse dalla cronologia del browser per evitare disordine. Puoi ridurre in sicurezza il browser durante l'esecuzione dei test, poiché i test interferiscono con la navigazione web commutando i proxy in esame."
+		"message": "Il test del proxy utilizza servizi esterni di rilevamento IP (ipify.org, ifconfig.me, ecc.) per verificare la connettività del proxy. Il tuo indirizzo IP può essere trasmesso a questi servizi esclusivamente a scopo di test. Non vengono memorizzati dati. Durante il test, schede temporanee si aprono e si chiudono automaticamente, verificando l'IP del proxy e la connessione attraverso quel proxy all'indirizzo del sito di test inserito. Le schede di test vengono immediatamente rimosse dalla cronologia del browser per evitare disordine. Puoi ridurre in sicurezza il browser durante l'esecuzione dei test, poiché i test interferiscono con la navigazione web commutando i proxy in esame."
 	},
 	"settingsGeneralEnableRating": {
 		"message": "Abilita valutazione per i proxy"
