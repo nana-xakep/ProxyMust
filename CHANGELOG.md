@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.1] – 2026-06-18
+
+### Added
+- Added privacy notice in the Proxy Test section explaining IP transmission to external services.
+- Added `PRIVACY.md` and `PRIVACY.ru.md` with detailed privacy policy.
+
+### Changed
+- Updated Firefox manifests: added `data_collection_permissions` with `locationInfo` requirement.
+- Removed `license` field from manifest (now set via AMO).
+- Merged two separate test information messages into one comprehensive explanation.
+- Updated `settings.html` to show combined message about privacy and testing workflow.
+- Updated `_locales/en/messages.json` and `_locales/ru/messages.json` accordingly.
+
+### Fixed
+- Removed duplicate message `settingsProxyTestPrivacyNotice` from localization.
+- Fixed manifest validation warnings (`data_collection_permissions` and `license`).
+
+### Removed
+- Duplicate informational block in `settings.html`.
+
+---
+
 ## [1.0.0] – 2026-06-15
 
 ### Added (fork from SmartProxy 2.1)
