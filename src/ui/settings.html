@@ -667,6 +667,17 @@
             <small class="form-text text-muted d-inline-block ms-2" data-localize="settingsProxyMustStaleHoursDesc">After which test results are considered stale (1-168).</small>
         </div>
     </div>
+    <div class="row mt-3">
+        <div class="col-12">
+            <label class="form-label">
+                <input id="chkEnableDirectIpDetection" type="checkbox" class="form-check-input" />
+                <span data-localize="settingsGeneralEnableDirectIpDetection">Enable direct IP detection for proxy testing</span>
+                <div class="form-text text-muted" data-localize="settingsGeneralEnableDirectIpDetectionDesc">
+                    When enabled, your real IP address is sent to external IP services to verify proxy connectivity. When disabled, proxy tests will rely on website loading (less accurate, but more private).
+                </div>
+            </label>
+        </div>
+    </div>
         <div class="col-12 mt-2">
             <div class="text-muted small" data-localize="settingsProxyMustTestCondition">
                 If nothing is selected, the test runs for all proxies in the table.

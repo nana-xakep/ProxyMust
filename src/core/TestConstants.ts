@@ -19,20 +19,22 @@
  * English: Shared constants for all proxy testers (IP services, error indicators)
  * Russian: Общие константы для всех тестеров прокси (IP-сервисы, индикаторы ошибок)
  */
+
 export const IP_SERVICES: string[] = [
     'http://api.ipify.org?format=text',
-    'http://ip-api.com/line?fields=query',
     'http://ifconfig.me/ip',
     'http://checkip.amazonaws.com',
     'http://ipv4.icanhazip.com',
-    'http://ipinfo.io/ip',
-    'http://ident.me',
-    'http://myexternalip.com/raw',
-    'http://ipecho.net/plain',
-    'https://whatismyip.akamai.com',
-    'http://wtfismyip.com/text',
-    'http://ip.me',
-    'http://2ip.io'
+    'http://icanhazip.com',
+	'http://ipecho.net/plain',
+	'http://whatismyip.akamai.com',
+    'http://l2.io/ip',
+    'http://ip.tyk.nu',	
+	'http://wtfismyip.com/text',
+	'http://myexternalip.com/raw',
+	'http://ip-api.com/line?fields=query',	
+	'http://ipinfo.io/ip',
+    'http://ip.brightfur.net/',	
 ];
 
 export const ERROR_INDICATORS: string[] = [

@@ -1582,7 +1582,7 @@
 		"message": "Cómo funciona la prueba de proxy"
 	},
 	"testingExplanationText": {
-		"message": "La prueba de proxy utiliza servicios externos de detección de IP (ipify.org, ifconfig.me, etc.) para verificar la conectividad del proxy. Su dirección IP puede ser transmitida a estos servicios únicamente con fines de prueba. No se almacenan datos. Durante la prueba, se abren y cierran automáticamente pestañas temporales, verificando la IP del proxy y la conexión a través de ese proxy con la dirección del sitio de prueba introducida. Las pestañas de prueba se eliminan inmediatamente de su historial del navegador para evitar desorden. Puede minimizar el navegador de forma segura mientras las pruebas se ejecutan, ya que las pruebas interfieren con su navegación web al cambiar los proxies que se están probando."
+		"message": "Las pruebas de proxy utilizan servicios externos de detección de IP (ipify.org, ifconfig.me, etc.) para verificar la conectividad del proxy. Su dirección IP puede transmitirse a estos servicios únicamente con fines de prueba y solo si elige habilitar pruebas precisas para obtener una mejor precisión. No se almacenan datos. Puede minimizar el navegador de forma segura mientras las pruebas se ejecutan, ya que las pruebas interfieren con su navegación web al cambiar los proxies que se están probando. Si desea continuar navegando durante las pruebas, puede usar el modo incógnito/privado del navegador."
 	},
 	"settingsGeneralEnableRating": {
 		"message": "Habilitar puntuación de proxies"
@@ -1622,5 +1622,11 @@
 	},
 	"popupAddCurrentSiteTooltip": {
 		"message": "Añadir el sitio actual a la lista de prueba"
+	},
+	"settingsGeneralEnableDirectIpDetection": {
+    "message": "Habilitar la detección directa de IP para pruebas de proxy"
+	},
+	"settingsGeneralEnableDirectIpDetectionDesc": {
+		"message": "Cuando está habilitado, su dirección IP real se envía a servicios externos para la verificación comparativa de la funcionalidad del proxy. Cuando está deshabilitado, las pruebas dependerán de la carga de sitios y los datos de origen del proxy (menos precisos pero más privados)."
 	}
 }

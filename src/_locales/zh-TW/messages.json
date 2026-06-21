@@ -1582,7 +1582,7 @@
 		"message": "代理測試的工作原理"
 	},
 	"testingExplanationText": {
-		"message": "代理測試使用外部IP偵測服務（ipify.org、ifconfig.me等）來驗證代理連線。您的IP位址可能僅出於測試目的而傳輸到這些服務。不會儲存任何資料。在測試期間，臨時分頁會自動開啟和關閉，檢查代理IP以及透過該代理連接到輸入的測試網站位址。測試分頁會立即從您的瀏覽器歷史記錄中刪除，以免造成混亂。測試執行時，您可以安全地最小化瀏覽器，因為測試會透過切換正在測試的代理來干擾您的網頁瀏覽。"
+		"message": "代理測試使用外部IP偵測服務（ipify.org、ifconfig.me等）來驗證代理連線。您的IP位址僅出於測試目的傳輸，且僅當您選擇啟用精確測試以提高準確性時才會傳輸。不會儲存任何資料。測試執行時，您可以安全地最小化瀏覽器，因為測試會透過切換正在測試的代理來干擾您的網頁瀏覽。如果您想在測試期間繼續瀏覽，可以使用瀏覽器的無痕/隱私模式。"
 	},
 	"settingsGeneralEnableRating": {
 		"message": "啟用代理評分"
@@ -1622,5 +1622,11 @@
 	},
 	"popupAddCurrentSiteTooltip": {
 		"message": "將目前網站新增到測試清單"
+	},
+	"settingsGeneralEnableDirectIpDetection": {
+    "message": "啟用代理測試的直接IP偵測"
+	},
+	"settingsGeneralEnableDirectIpDetectionDesc": {
+		"message": "啟用後，您的真實IP位址將被傳送到外部服務，以進行代理功能的比較檢查。停用後，測試將依賴於網站載入和代理來源資料（準確性較低，但更隱私）。"
 	}
 }

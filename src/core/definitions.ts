@@ -734,6 +734,9 @@ export class GeneralOptions implements Cloneable, Comparable {
     // Настройки проверки прокси через тестовые сайты
     public enableProxyTest: boolean = false;
     public testUrls: string[] = [];
+    // English: Enable direct IP detection for proxy testing (sends real IP to external services)
+    // Russian: Включить определение прямого IP для проверки прокси (отправляет реальный IP внешним сервисам)
+    public enableDirectIpDetection: boolean = false;
 	public proxyPerOrigin: boolean = true;
 	public activeIncognitoProfileId: string;
 	public enableShortcuts: boolean = true;
@@ -767,6 +770,7 @@ export class GeneralOptions implements Cloneable, Comparable {
 		if (source['refreshTabOnConfigChanges'] != null)
 			this.refreshTabOnConfigChanges = source['refreshTabOnConfigChanges'] == true ? true : false;
 		if (source['enableRating'] != null) this.enableRating = source['enableRating'] == true ? true : false;
+		if (source['enableDirectIpDetection'] != null) this.enableDirectIpDetection = source['enableDirectIpDetection'] == true ? true : false;
 		if (source['proxyPerOrigin'] != null) this.proxyPerOrigin = source['proxyPerOrigin'] == true ? true : false;
 		if (source['enableShortcuts'] != null) this.enableShortcuts = source['enableShortcuts'] == true ? true : false;
 		if (source['shortcutNotification'] != null)
@@ -797,6 +801,7 @@ export class GeneralOptions implements Cloneable, Comparable {
 		if (neq(other.displayMatchedRuleOnBadge, this.displayMatchedRuleOnBadge)) return false;
 		if (neq(other.refreshTabOnConfigChanges, this.refreshTabOnConfigChanges)) return false;
 		if (neq(other.enableRating, this.enableRating)) return false;
+		if (neq(other.enableDirectIpDetection, this.enableDirectIpDetection)) return false;
 		if (neq(other.proxyPerOrigin, this.proxyPerOrigin)) return false;
 		if (neq(other.activeIncognitoProfileId, this.activeIncognitoProfileId)) return false;
 		if (neq(other.enableShortcuts, this.enableShortcuts)) return false;
@@ -1424,9 +1429,9 @@ export class UpdateInfo {
  * Статус автотеста для конкретного прокси и сайта
  */
 export interface AutoStatusEntry {
-    // English: status can be 'success' (direct success ✅), 'indirect' (indirect success ☑️), 'fail' (⛔), or null (no data)
-    // Russian: статус может быть 'success' (прямой успех ✅), 'indirect' (косвенный успех ☑️), 'fail' (⛔) или null (нет данных)
-    status: 'success' | 'indirect' | 'fail' | null;
+    // English: status can be 'success' (direct success ✅), 'indirect' (indirect success ☑️), 'ip-only' (IP received but page not loaded ❔), 'fail' (⛔), or null (no data)
+    // Russian: статус может быть 'success' (прямой успех ✅), 'indirect' (косвенный успех ☑️), 'ip-only' (IP получен, страница не загружена ❔), 'fail' (⛔) или null (нет данных)
+    status: 'success' | 'indirect' | 'ip-only' | 'fail' | null;
     timestamp: number;                    // last test time in ms since epoch
 }
 

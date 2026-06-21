@@ -35,9 +35,10 @@ export function normalizeSite(site: string): string {
  */
 export type ProxyStatusType = 
     | "direct-success"    // ✅ green - fresh success for this site
-    | "direct-fail"       // ⛔ red - fresh failure for this site
+    | "direct-fail"       // ⛔ red - fresh failure for this site (now same as fail)
     | "indirect-success"  // ☑️ blue - stale success or success on other sites
-    | "indirect-fail"     // ⛔ gray - stale failure or only failures on other sites
+    | "indirect-fail"     // ⛔ gray - stale failure or only failures on other sites (now same as fail)
+    | "ip-only"           // ❔ white question - IP received, page not loaded
     | "unknown";          // ❓ gray - no data
 
 /**
@@ -71,9 +72,12 @@ export function getProxyStatus(
     // Russian: Нормализуем ключ сайта для единообразного поиска
     const normalizedSite = normalizeSite(site);
     
+    console.log(`[statusUtils] getProxyStatus: proxyId=${proxyId}, site=${normalizedSite}, autoStatus keys:`, Object.keys(autoStatus || {}));
+
     // English: If no autoStatus data for this proxy, return unknown
     // Russian: Если нет данных autoStatus для этого прокси, возвращаем unknown
     if (!autoStatus || !autoStatus[proxyId]) {
+        console.log(`[statusUtils] Нет данных для прокси ${proxyId}, возвращаем unknown`);
         return { type: "unknown", symbol: "❓", cssClass: "status-unknown", weight: 3 };
     }
 
@@ -94,8 +98,10 @@ export function getProxyStatus(
                 return { type: "direct-success", symbol: "✅", cssClass: "status-direct-success", weight: 5 };
             } else if (directEntry.status === "indirect") {
                 return { type: "indirect-success", symbol: "☑️", cssClass: "status-indirect-success", weight: 4 };
+            } else if (directEntry.status === "ip-only") {
+                return { type: "ip-only", symbol: "❔", cssClass: "status-ip-only", weight: 3 };
             } else {
-                return { type: "direct-fail", symbol: "⛔", cssClass: "status-direct-fail", weight: 2 };
+                return { type: "direct-fail", symbol: "⛔", cssClass: "status-direct-fail", weight: 1 };
             }
         } else {
             // English: Stale direct entry - use indirect logic
@@ -107,8 +113,10 @@ export function getProxyStatus(
     // English: Indirect check: look at all other sites for this proxy
     // Russian: Косвенная проверка: смотрим все другие сайты для этого прокси
     let hasFreshSuccess = false;
+    let hasFreshIpOnly = false;
     let hasFreshFail = false;
     let hasAnyStaleSuccess = false;
+    let hasAnyStaleIpOnly = false;
     let hasAnyStaleFail = false;
 
     for (const otherSite in proxyData) {
@@ -120,6 +128,9 @@ export function getProxyStatus(
         if (entry.status === "success" || entry.status === "indirect") {
             if (isFresh) hasFreshSuccess = true;
             else hasAnyStaleSuccess = true;
+        } else if (entry.status === "ip-only") {
+            if (isFresh) hasFreshIpOnly = true;
+            else hasAnyStaleIpOnly = true;
         } else if (entry.status === "fail") {
             if (isFresh) hasFreshFail = true;
             else hasAnyStaleFail = true;
@@ -132,16 +143,26 @@ export function getProxyStatus(
         return { type: "indirect-success", symbol: "☑️", cssClass: "status-indirect-success", weight: 4 };
     }
 
-    // English: Priority 2: no fresh success, but have fresh fail -> indirect fail
-    // Russian: Приоритет 2: нет свежих успехов, но есть свежий провал -> косвенный провал
+    // English: Priority 2: at least one fresh ip-only on another site -> ip-only (unknown)
+    // Russian: Приоритет 2: хотя бы один свежий ip-only на другом сайте -> ip-only (неизвестно)
+    if (hasFreshIpOnly) {
+        console.log(`[statusUtils] Возвращаем ip-only (свежий ip-only на другом сайте) для прокси ${proxyId}`);
+        return { type: "ip-only", symbol: "❔", cssClass: "status-ip-only", weight: 3 };
+    }
+
+    // English: Priority 3: no fresh success or ip-only, but have fresh fail -> indirect fail
+    // Russian: Приоритет 3: нет свежих успехов или ip-only, но есть свежий провал -> косвенный провал
     if (hasFreshFail) {
         return { type: "indirect-fail", symbol: "⛔", cssClass: "status-indirect-fail", weight: 1 };
     }
 
-    // English: Priority 3: only stale entries - prefer success over fail if any stale success exists
-    // Russian: Приоритет 3: только устаревшие записи - предпочитаем успех, если есть хоть один устаревший успех
+    // English: Priority 4: only stale entries - prefer success over ip-only over fail
+    // Russian: Приоритет 4: только устаревшие записи - предпочитаем успех, затем ip-only, затем провал
     if (hasAnyStaleSuccess) {
         return { type: "indirect-success", symbol: "☑️", cssClass: "status-indirect-success", weight: 4 };
+    }
+    if (hasAnyStaleIpOnly) {
+        return { type: "ip-only", symbol: "❔", cssClass: "status-ip-only", weight: 3 };
     }
     if (hasAnyStaleFail) {
         return { type: "indirect-fail", symbol: "⛔", cssClass: "status-indirect-fail", weight: 1 };
@@ -150,8 +171,10 @@ export function getProxyStatus(
     // English: If we have a direct stale entry but no other sites, treat as indirect based on its status
     // Russian: Если есть прямая устаревшая запись, но нет других сайтов, рассматриваем её как косвенную
     if (directEntry) {
-        if (directEntry.status === "success") {
+        if (directEntry.status === "success" || directEntry.status === "indirect") {
             return { type: "indirect-success", symbol: "☑️", cssClass: "status-indirect-success", weight: 4 };
+        } else if (directEntry.status === "ip-only") {
+            return { type: "ip-only", symbol: "❔", cssClass: "status-ip-only", weight: 3 };
         } else {
             return { type: "indirect-fail", symbol: "⛔", cssClass: "status-indirect-fail", weight: 1 };
         }
@@ -159,7 +182,8 @@ export function getProxyStatus(
 
     // English: No data at all
     // Russian: Вообще нет данных
-    return { type: "unknown", symbol: "❓", cssClass: "status-unknown", weight: 3 };
+    console.log(`[statusUtils] Нет данных для прокси ${proxyId}, возвращаем unknown`);
+    return { type: "unknown", symbol: "❓", cssClass: "status-unknown", weight: 2 };
 }
 
 /**

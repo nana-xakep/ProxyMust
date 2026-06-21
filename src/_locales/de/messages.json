@@ -1582,7 +1582,7 @@
 		"message": "Wie der Proxy-Test funktioniert"
 	},
 	"testingExplanationText": {
-		"message": "Der Proxy-Test verwendet externe IP-Erkennungsdienste (ipify.org, ifconfig.me usw.), um die Proxy-Konnektivität zu überprüfen. Ihre IP-Adresse kann zu Testzwecken an diese Dienste übermittelt werden. Es werden keine Daten gespeichert. Während des Tests werden temporäre Tabs automatisch geöffnet und geschlossen, um die Proxy-IP und die Verbindung über diesen Proxy zur eingegebenen Test-Website-Adresse zu überprüfen. Test-Tabs werden sofort aus Ihrem Browserverlauf entfernt, um Unordnung zu vermeiden. Sie können den Browser während des Testlaufs gefahrlos minimieren, da der Test Ihre Browsing-Aktivitäten durch Umschalten der getesteten Proxys beeinträchtigt."
+		"message": "Der Proxy-Test verwendet externe IP-Erkennungsdienste (ipify.org, ifconfig.me usw.), um die Proxy-Konnektivität zu überprüfen. Ihre IP-Adresse kann zu Testzwecken und nur dann an diese Dienste übermittelt werden, wenn Sie präzise Tests für eine bessere Genauigkeit aktivieren. Es werden keine Daten gespeichert. Sie können den Browser während des Testlaufs gefahrlos minimieren, da der Test Ihre Browsing-Aktivitäten durch Umschalten der getesteten Proxys beeinträchtigt. Wenn Sie während der Tests weiter surfen möchten, können Sie den Inkognito-/Privatmodus Ihres Browsers verwenden."
 	},
 	"settingsGeneralEnableRating": {
 		"message": "Proxy-Bewertung aktivieren"
@@ -1622,5 +1622,11 @@
 	},
 	"popupAddCurrentSiteTooltip": {
 		"message": "Aktuelle Website zur Testliste hinzufügen"
+	},
+	"settingsGeneralEnableDirectIpDetection": {
+    "message": "Direkte IP-Erkennung für Proxy-Tests aktivieren"
+	},
+	"settingsGeneralEnableDirectIpDetectionDesc": {
+		"message": "Wenn aktiviert, wird Ihre echte IP-Adresse zu externen Diensten gesendet, um die Proxy-Funktionalität vergleichend zu prüfen. Bei Deaktivierung verlassen sich die Tests auf das Laden von Websites und Proxy-Quelldaten (weniger genau, aber privater)."
 	}
 }

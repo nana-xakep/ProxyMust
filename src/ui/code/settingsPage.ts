@@ -519,7 +519,37 @@ jq("#chkEnableRating").off('change').on('change', function () {
             messageBox.error(api.i18n.getMessage("settingsErrorFailedToSaveGeneral") + " " + error.message);
             jq(this).prop('checked', !enabled);
         }
-		
+    );
+});
+
+// English: Handle direct IP detection toggle
+// Russian: Обработка переключателя определения прямого IP
+jq("#chkEnableDirectIpDetection").off('change').on('change', function () {
+    const enabled = jq(this).prop('checked');
+    const generalOptions = settingsPage.readGeneralOptions();
+    generalOptions.enableDirectIpDetection = enabled;
+    
+    settingsPage.currentSettings.options.enableDirectIpDetection = enabled;
+    
+    PolyFill.runtimeSendMessage(
+        {
+            command: CommandMessages.SettingsPageSaveOptions,
+            options: generalOptions
+        },
+        (response: ResultHolder) => {
+            if (response && response.success) {
+                api.storage.local.set({ options: generalOptions })
+                    .catch((err: any) => console.error("[ProxyMust] Ошибка сохранения options в local storage:", err));
+                jq(this).prop('checked', enabled);
+            } else {
+                if (response && response.message) messageBox.error(response.message);
+                jq(this).prop('checked', !enabled);
+            }
+        },
+        (error: Error) => {
+            messageBox.error(api.i18n.getMessage("settingsErrorFailedToSaveGeneral") + " " + error.message);
+            jq(this).prop('checked', !enabled);
+        }
     );
 });
 
@@ -748,6 +778,8 @@ jq("#staleHoursInput").off("change").on("change", function() {
                     settingsPage.changeTracking.servers = true;
                     settingsPage.loadDefaultProxyServer();
                     settingsPage.enableGridMultipleDelete(jq("#btnRemoveMultipleProxyServer"), false);
+                    // Немедленно сохраняем изменения, чтобы удаление сохранилось после перезагрузки
+                    settingsPage.saveProxyServersChanges();
                 }
             }
         });
@@ -1516,9 +1548,25 @@ jq("#staleHoursInput").off("change").on("change", function() {
 			placeHolder.html(htmlText);
 			placeHolder.data('loaded', true);
 
-			jq("#linkAddonsMarket")
-				.text(environment.browserConfig.marketName)
-				.attr("href", environment.browserConfig.marketUrl || "#");
+		// ProxyMust: определяем ссылку на магазин в зависимости от браузера
+		var storeName = "";
+		var storeUrl = "";
+		if (environment.name === "Firefox") {
+			storeName = "Firefox Add-ons";
+			storeUrl = "https://addons.mozilla.org/ru/firefox/addon/proxymust/";
+		} else if (environment.name === "Chrome") {
+			storeName = "Chrome Web Store";
+			// пока ссылка на репозиторий, позже заменим на реальную после публикации в Chrome
+			storeUrl = "https://github.com/nana-xakep/ProxyMust";
+			// когда получите ID в Chrome, используйте:
+			// storeUrl = "https://chrome.google.com/webstore/detail/proxymust/ВАШ_ИДЕНТИФИКАТОР";
+		} else {
+			storeName = "Extensions";
+			storeUrl = "https://github.com/nana-xakep/ProxyMust";
+		}
+		jq("#linkAddonsMarket")
+			.text(storeName)
+			.attr("href", storeUrl);
 		}
 
 		fetchSettingAbout(true);
@@ -1555,7 +1603,8 @@ jq("#staleHoursInput").off("change").on("change", function() {
 
 		divGeneral.find("#chkEnableShortcuts").prop("checked", options.enableShortcuts || false);
 		divGeneral.find("#chkEnableRating").prop("checked", options.enableRating);
-        jq("#proxyTestControlBlock").toggle(options.enableRating === true);
+		divGeneral.find("#chkEnableDirectIpDetection").prop("checked", options.enableDirectIpDetection === true);
+		jq("#proxyTestControlBlock").toggle(options.enableRating === true);
 		divGeneral.find("#chkShortcutNotification").prop("checked", options.shortcutNotification || false);
 		divGeneral.find("#chkDisplayAppliedProxyOnBadge").prop("checked", options.displayAppliedProxyOnBadge || false);
 		divGeneral.find("#chkDisplayMatchedRuleOnBadge").prop("checked", options.displayMatchedRuleOnBadge || false);
@@ -1644,6 +1693,7 @@ jq("#staleHoursInput").off("change").on("change", function() {
 
 		generalOptions.enableShortcuts = divGeneral.find("#chkEnableShortcuts").prop("checked");
 		generalOptions.enableRating = divGeneral.find("#chkEnableRating").prop("checked");
+		generalOptions.enableDirectIpDetection = divGeneral.find("#chkEnableDirectIpDetection").prop("checked");
 		generalOptions.shortcutNotification = divGeneral.find("#chkShortcutNotification").prop("checked");
 		generalOptions.displayAppliedProxyOnBadge = divGeneral.find("#chkDisplayAppliedProxyOnBadge").prop("checked");
 		generalOptions.displayMatchedRuleOnBadge = divGeneral.find("#chkDisplayMatchedRuleOnBadge").prop("checked");

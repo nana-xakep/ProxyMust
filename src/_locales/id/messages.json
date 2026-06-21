@@ -1582,7 +1582,7 @@
 		"message": "Cara kerja pengujian proksi"
 	},
 	"testingExplanationText": {
-		"message": "Pengujian proxy menggunakan layanan deteksi IP eksternal (ipify.org, ifconfig.me, dll.) untuk memverifikasi konektivitas proxy. Alamat IP Anda dapat dikirimkan ke layanan ini semata-mata untuk tujuan pengujian. Tidak ada data yang disimpan. Selama pengujian, tab sementara terbuka dan tertutup secara otomatis, memeriksa IP proxy dan koneksi melalui proxy tersebut ke alamat situs uji yang dimasukkan. Tab uji segera dihapus dari riwayat peramban Anda untuk menghindari kekacauan. Anda dapat meminimalkan peramban dengan aman saat pengujian berjalan, karena pengujian mengganggu penjelajahan web Anda dengan mengganti proxy yang sedang diuji."
+		"message": "Pengujian proxy menggunakan layanan deteksi IP eksternal (ipify.org, ifconfig.me, dll.) untuk memverifikasi konektivitas proxy. Alamat IP Anda dapat dikirimkan ke layanan ini semata-mata untuk tujuan pengujian dan hanya jika Anda memilih untuk mengaktifkan pengujian presisi untuk akurasi yang lebih baik. Tidak ada data yang disimpan. Anda dapat meminimalkan peramban dengan aman saat pengujian berjalan, karena pengujian mengganggu penjelajahan web Anda dengan mengganti proxy yang sedang diuji. Jika Anda ingin terus menjelajah selama pengujian, Anda dapat menggunakan mode penyamaran/private peramban."
 	},
 	"settingsGeneralEnableRating": {
 		"message": "Aktifkan peringkat untuk proksi"
@@ -1622,5 +1622,11 @@
 	},
 	"popupAddCurrentSiteTooltip": {
 		"message": "Tambahkan situs saat ini ke daftar uji"
+	},
+	"settingsGeneralEnableDirectIpDetection": {
+    "message": "Aktifkan deteksi IP langsung untuk pengujian proxy"
+	},
+	"settingsGeneralEnableDirectIpDetectionDesc": {
+		"message": "Saat diaktifkan, alamat IP asli Anda dikirim ke layanan eksternal untuk pemeriksaan komparatif fungsi proxy. Saat dinonaktifkan, pengujian akan mengandalkan pemuatan situs dan data sumber proxy (kurang akurat tetapi lebih pribadi)."
 	}
 }

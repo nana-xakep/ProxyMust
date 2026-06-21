@@ -175,7 +175,7 @@
     </h1>
 
     <p>
-        <strong>Version:</strong> 1.0.0 (based on SmartProxy 2.1)<br>
+        <strong>Version:</strong> 1.0.2 (based on SmartProxy 2.1)<br>
         <strong>Fork author:</strong> nana-xakep<br>
         <strong>Source code:</strong> <a href="https://github.com/nana-xakep/ProxyMust" target="_blank">github.com/nana-xakep/ProxyMust</a>
     </p>
@@ -303,8 +303,16 @@
         <li><strong>Express test</strong> (does not work in Firefox) — quick check.</li>
     </ul>
     <div class="note">
-        <strong>⚠️ Caution:</strong> during cyclic and express‑cyclic tests, the extension actually switches the active profile and proxy.
-        This may interfere with normal browsing. Run tests when the browser is not being used for other tasks.
+        <strong>🛡️ Privacy control:</strong> In the settings, you can enable or disable the
+        <strong>"Enable direct IP detection"</strong> checkbox (disabled by default).
+        When <strong>disabled</strong>, your real IP is <em>never</em> sent to external IP services – the extension relies only on website loading checks and compares the proxy host IP (if it is an IP address) with the IP obtained through the proxy.
+        When <strong>enabled</strong>, your IP is sent to IP‑detection services for more accurate results (eliminates the ❔ status).
+    </div>
+    <div class="note">
+        <strong>⚡ Performance & privacy:</strong> ProxyMust now performs all tests
+        <strong>without opening any browser tabs</strong>.
+        All checks (main page loading and IP service queries) are done using <code>fetch</code> requests.
+        This means no history entries are added, no unwanted files are downloaded, and testing is faster.
     </div>
     <p>
         Tests can be launched for:
@@ -314,6 +322,9 @@
         <li>only selected ones (via context menu),</li>
         <li>the current site directly from the popup (the "Test" button).</li>
     </ul>
+    <p>
+        <strong>Note about timeouts:</strong> The test timer automatically extends on each progress update, so long-running tests (e.g., hundreds of proxies) won't be interrupted prematurely.
+    </p>
 
     <!-- ============================================================ -->
     <h2 id="rating">📊 Rating and proxy statuses</h2>
@@ -325,6 +336,7 @@
     <ul>
         <li><span class="emoji">✅</span> – definitely working (fresh success)</li>
         <li><span class="emoji">☑️</span> – probably working (data outdated or success obtained for another site)</li>
+        <li><span class="emoji">❔</span> – IP received, but page did not load (only appears when <strong>direct IP detection is disabled</strong> and the obtained IP differs from the proxy host)</li>
         <li><span class="emoji">❓</span> – no data</li>
         <li><span class="emoji">⛔</span> – not working (fresh failure)</li>
     </ul>
@@ -334,6 +346,9 @@
     </p>
     <p>
         Sorting in the popup and in the settings table takes into account <strong>priority</strong> (📌 pinned, ⭐ starred) and rating.
+    </p>
+    <p>
+        The <span class="emoji">❔</span> status <strong>does not affect</strong> the proxy rating, because it is uncertain whether the proxy actually works (the IP was obtained, but the site did not load).
     </p>
 
     <!-- ============================================================ -->
@@ -505,11 +520,11 @@
 
     <div class="footer">
         <p>ProxyMust – fork of SmartProxy, maintained by <a href="https://github.com/nana-xakep" target="_blank">nana-xakep</a>.</p>
-        <p>License <a href="https://www.gnu.org/licenses/gpl-3.0.html" target="_blank">GPL-3.0</a>. Version 1.0.0 (based on SmartProxy 2.1).</p>
+        <p>License <a href="https://www.gnu.org/licenses/gpl-3.0.html" target="_blank">GPL-3.0</a>. Version 1.0.2 (based on SmartProxy 2.1).</p>
     </div>
 
     <div class="footer">
-        <p>Documentation version: 1.0.0 (2026-06-17)</p>
+        <p>Documentation version: 1.0.2 (2026-06-21)</p>
     </div>
 
 </div>

@@ -1582,7 +1582,7 @@
 		"message": "Proxy testi nasıl çalışır"
 	},
 	"testingExplanationText": {
-		"message": "Proxy testi, proxy bağlantısını doğrulamak için harici IP tespit hizmetlerini (ipify.org, ifconfig.me, vb.) kullanır. IP adresiniz yalnızca test amacıyla bu hizmetlere iletilebilir. Hiçbir veri saklanmaz. Test sırasında, geçici sekmeler otomatik olarak açılır ve kapanır, proxy IP'sini ve bu proxy üzerinden girilen test sitesi adresine bağlantıyı kontrol eder. Test sekmeleri, karışıklığı önlemek için tarayıcı geçmişinizden hemen kaldırılır. Testler çalışırken tarayıcıyı güvenle simge durumuna küçültebilirsiniz, çünkü testler test edilen proxy'leri değiştirerek web gezintinize müdahale eder."
+		"message": "Proxy testi, proxy bağlantısını doğrulamak için harici IP tespit hizmetlerini (ipify.org, ifconfig.me, vb.) kullanır. IP adresiniz yalnızca test amacıyla ve daha iyi doğruluk için hassas testleri etkinleştirmeyi seçerseniz bu hizmetlere iletilebilir. Hiçbir veri saklanmaz. Testler çalışırken tarayıcıyı güvenle simge durumuna küçültebilirsiniz, çünkü testler test edilen proxy'leri değiştirerek web gezintinize müdahale eder. Testler sırasında gezintiye devam etmek isterseniz, tarayıcının gizli/özel modunu kullanabilirsiniz."
 	},
 	"settingsGeneralEnableRating": {
 		"message": "Proxy'ler için puanlamayı etkinleştir"
@@ -1622,5 +1622,11 @@
 	},
 	"popupAddCurrentSiteTooltip": {
 		"message": "Geçerli siteyi test listesine ekle"
+	},
+	"settingsGeneralEnableDirectIpDetection": {
+    "message": "Proxy testi için doğrudan IP algılamayı etkinleştir"
+	},
+	"settingsGeneralEnableDirectIpDetectionDesc": {
+		"message": "Etkinleştirildiğinde, gerçek IP adresiniz proxy işlevselliğinin karşılaştırmalı kontrolü için harici hizmetlere gönderilir. Devre dışı bırakıldığında, testler site yükleme ve proxy kaynak verilerine dayanır (daha az doğru ancak daha gizli)."
 	}
 }

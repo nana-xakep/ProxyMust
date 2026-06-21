@@ -1582,7 +1582,7 @@
 		"message": "Hoe proxytests werken"
 	},
 	"testingExplanationText": {
-		"message": "Proxy-tests gebruiken externe IP-detectiediensten (ipify.org, ifconfig.me, enz.) om de proxy-connectiviteit te verifiëren. Uw IP-adres kan uitsluitend voor testedoeleinden aan deze diensten worden doorgegeven. Er worden geen gegevens opgeslagen. Tijdens het testen worden tijdelijke tabbladen automatisch geopend en gesloten, waarbij het proxy-IP en de verbinding via die proxy naar het ingevoerde testadres worden gecontroleerd. Testtabbladen worden onmiddellijk uit uw browserhistorie verwijderd om rommel te voorkomen. U kunt de browser veilig minimaliseren terwijl de tests worden uitgevoerd, omdat tests uw webbrowsing verstoren door de te testen proxy's te schakelen."
+		"message": "Proxy-tests gebruiken externe IP-detectiediensten (ipify.org, ifconfig.me, enz.) om de proxy-connectiviteit te verifiëren. Uw IP-adres kan uitsluitend voor testedoeleinden en alleen als u kiest voor nauwkeurige tests voor betere precisie, aan deze diensten worden doorgegeven. Er worden geen gegevens opgeslagen. U kunt de browser veilig minimaliseren terwijl de tests worden uitgevoerd, omdat tests uw webbrowsing verstoren door de te testen proxy's te schakelen. Als u tijdens tests wilt blijven browsen, kunt u de incognito/privémodus van uw browser gebruiken."
 	},
 	"settingsGeneralEnableRating": {
 		"message": "Beoordeling voor proxy's inschakelen"
@@ -1622,5 +1622,11 @@
 	},
 	"popupAddCurrentSiteTooltip": {
 		"message": "Huidige site toevoegen aan testlijst"
+	},
+	"settingsGeneralEnableDirectIpDetection": {
+    "message": "Directe IP-detectie voor proxy-tests inschakelen"
+	},
+	"settingsGeneralEnableDirectIpDetectionDesc": {
+		"message": "Wanneer ingeschakeld, wordt uw echte IP-adres verzonden naar externe diensten voor een vergelijkende controle van de proxy-functionaliteit. Wanneer uitgeschakeld, vertrouwen de tests op het laden van sites en proxy-brondata (minder nauwkeurig maar privé)."
 	}
 }

@@ -1582,7 +1582,7 @@
 		"message": "Jak działa testowanie proxy"
 	},
 	"testingExplanationText": {
-		"message": "Testowanie proxy wykorzystuje zewnętrzne usługi wykrywania IP (ipify.org, ifconfig.me itp.) w celu weryfikacji łączności proxy. Twój adres IP może być przesyłany do tych usług wyłącznie w celach testowych. Żadne dane nie są przechowywane. Podczas testowania tymczasowe karty otwierają się i zamykają automatycznie, sprawdzając IP proxy i połączenie przez to proxy z wprowadzonym adresem strony testowej. Karty testowe są natychmiast usuwane z historii przeglądarki, aby uniknąć bałaganu. Możesz bezpiecznie zminimalizować przeglądarkę podczas testów, ponieważ testy zakłócają przeglądanie sieci przez przełączanie testowanych proxy."
+		"message": "Testowanie proxy wykorzystuje zewnętrzne usługi wykrywania IP (ipify.org, ifconfig.me itp.) w celu weryfikacji łączności proxy. Twój adres IP może być przesyłany do tych usług wyłącznie w celach testowych i tylko wtedy, gdy wybierzesz testy precyzyjne dla lepszej dokładności. Żadne dane nie są przechowywane. Możesz bezpiecznie zminimalizować przeglądarkę podczas testów, ponieważ testy zakłócają przeglądanie sieci przez przełączanie testowanych proxy. Jeśli chcesz kontynuować przeglądanie podczas testów, możesz użyć trybu incognito/prywatnego przeglądarki."
 	},
 	"settingsGeneralEnableRating": {
 		"message": "Włącz ocenianie proxy"
@@ -1622,5 +1622,11 @@
 	},
 	"popupAddCurrentSiteTooltip": {
 		"message": "Dodaj bieżącą stronę do listy testowej"
+	},
+	"settingsGeneralEnableDirectIpDetection": {
+    "message": "Włącz bezpośrednie wykrywanie IP do testowania proxy"
+	},
+	"settingsGeneralEnableDirectIpDetectionDesc": {
+		"message": "Po włączeniu Twój prawdziwy adres IP jest wysyłany do zewnętrznych usług w celu porównawczego sprawdzenia funkcjonalności proxy. Po wyłączeniu testy będą opierać się na ładowaniu stron i danych źródłowych proxy (mniej dokładne, ale bardziej prywatne)."
 	}
 }

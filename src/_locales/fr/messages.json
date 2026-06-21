@@ -1582,7 +1582,7 @@
 		"message": "Fonctionnement du test de proxy"
 	},
 	"testingExplanationText": {
-		"message": "Le test de proxy utilise des services externes de détection d'IP (ipify.org, ifconfig.me, etc.) pour vérifier la connectivité du proxy. Votre adresse IP peut être transmise à ces services uniquement à des fins de test. Aucune donnée n'est stockée. Pendant le test, des onglets temporaires s'ouvrent et se ferment automatiquement, vérifiant l'IP du proxy et la connexion via ce proxy à l'adresse du site de test saisie. Les onglets de test sont immédiatement supprimés de l'historique de votre navigateur pour éviter l'encombrement. Vous pouvez réduire le navigateur en toute sécurité pendant l'exécution des tests, car les tests interfèrent avec votre navigation en basculant les proxys testés."
+		"message": "Le test de proxy utilise des services externes de détection d'IP (ipify.org, ifconfig.me, etc.) pour vérifier la connectivité du proxy. Votre adresse IP peut être transmise à ces services uniquement à des fins de test et seulement si vous choisissez d'activer les tests précis pour une meilleure précision. Aucune donnée n'est stockée. Vous pouvez réduire le navigateur en toute sécurité pendant l'exécution des tests, car les tests interfèrent avec votre navigation en basculant les proxys testés. Si vous souhaitez continuer à naviguer pendant les tests, vous pouvez utiliser le mode privé/incognito de votre navigateur."
 	},
 	"settingsGeneralEnableRating": {
 		"message": "Activer la notation des proxys"
@@ -1622,5 +1622,11 @@
 	},
 	"popupAddCurrentSiteTooltip": {
 		"message": "Ajouter le site actuel à la liste de test"
+	},
+	"settingsGeneralEnableDirectIpDetection": {
+    "message": "Activer la détection d'IP directe pour les tests de proxy"
+	},
+	"settingsGeneralEnableDirectIpDetectionDesc": {
+		"message": "Lorsqu'elle est activée, votre adresse IP réelle est envoyée à des services externes pour une vérification comparative de la fonctionnalité du proxy. Lorsqu'elle est désactivée, les tests s'appuieront sur le chargement des sites et les données sources du proxy (moins précis mais plus privé)."
 	}
 }

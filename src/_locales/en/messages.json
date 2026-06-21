@@ -1585,7 +1585,7 @@
     "message": "How proxy testing works"
 	},
 	"testingExplanationText": {
-    "message": "Proxy testing uses external IP detection services (ipify.org, ifconfig.me, etc.) to verify proxy connectivity. Your IP address may be transmitted to these services solely for test purposes. No data is stored. During testing, temporary tabs open and close automatically, checking the proxy IP and connection through that proxy to the entered test site address. Test tabs are immediately removed from your browser history to avoid clutter. You can safely minimize the browser while tests are running, since testing interferes with your web browsing by switching the proxies being tested."
+    "message": "Proxy testing uses external IP detection services (ipify.org, ifconfig.me, etc.) to verify proxy connectivity. Your IP address may be transmitted to these services solely for test purposes, and only if you choose to enable precise testing for better accuracy. No data is stored. You can safely minimize the browser while tests are running, since testing interferes with your web browsing by switching the proxies being tested. If you want to continue browsing during tests, you can use the browser's incognito/private mode."
 	},
 	"settingsGeneralEnableRating": {
 		"message": "Enable rating for proxies"
@@ -1614,16 +1614,22 @@
 	"datatablesInfo": {
 		"message": "Showing _START_ to _END_ of _TOTAL_ entries"
 	},
-"datatablesInfoEmpty": {
-    "message": "Showing 0 to 0 of 0 entries"
-},
-"datatablesEmptyTable": {
-    "message": "No data available in table"
-},
-"datatablesAll": {
-    "message": "All"
-},
-"popupAddCurrentSiteTooltip": {
-    "message": "Add current site to test list"
-}
+	"datatablesInfoEmpty": {
+		"message": "Showing 0 to 0 of 0 entries"
+	},
+	"datatablesEmptyTable": {
+		"message": "No data available in table"
+	},
+	"datatablesAll": {
+		"message": "All"
+	},
+	"popupAddCurrentSiteTooltip": {
+		"message": "Add current site to test list"
+	},
+	"settingsGeneralEnableDirectIpDetection": {
+		"message": "Enable direct IP detection for proxy testing"
+	},
+	"settingsGeneralEnableDirectIpDetectionDesc": {
+		"message": "When enabled, your real IP address is sent to external services for comparative checking of proxy functionality. When disabled, tests will rely on site loading and proxy source data (less accurate but more private)."
+	}
 }

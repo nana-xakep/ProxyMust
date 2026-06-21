@@ -54,62 +54,13 @@ import { ProxyEngineSpecialRequests } from './ProxyEngineSpecialRequests';
 import { ProfileOperations } from './ProfileOperations';
 import { ProfileRules } from './ProfileRules';
 import { Icons } from './Icons';
-import { TEST_LOCK_TIMEOUT_MS } from './TestConstants';
-//import { LocalProxyChecker } from "./LocalProxyChecker";
+import { TestManager } from './TestManager';
 
 const subscriptionUpdaterLib = SubscriptionUpdater;
 const proxyEngineLib = ProxyEngine;
 const settingsLib = Settings;
 const settingsOperationLib = SettingsOperation;
 const iconsLib = Icons;
-
-// English: Global test lock - only one test can run at a time
-// Russian: Глобальная блокировка теста - одновременно может выполняться только один тест
-let currentActiveTest: 'cycle' | 'express-cycle' | 'quick' | null = null;
-let testTimeoutId: ReturnType<typeof setTimeout> | null = null;
-
-// English: Try to start a test, returns false if another test is already running
-// Russian: Попытаться запустить тест, возвращает false если другой тест уже выполняется
-function tryStartTest(testType: 'cycle' | 'express-cycle' | 'quick'): boolean {
-    if (currentActiveTest !== null) {
-        console.warn(`[Core] Cannot start ${testType} test, ${currentActiveTest} test is already running`);
-        return false;
-    }
-    currentActiveTest = testType;
-    // English: Set automatic lock release timeout
-    // Russian: Устанавливаем таймер автоматического снятия блокировки
-    if (testTimeoutId) clearTimeout(testTimeoutId);
-    testTimeoutId = setTimeout(() => {
-        if (currentActiveTest !== null) {
-            console.warn(`[Core] Test lock timeout (${TEST_LOCK_TIMEOUT_MS / 60000} min), forcing release.`);
-            // English: Notify user that test was forcibly stopped due to timeout
-            // Russian: Уведомляем пользователя о принудительной остановке теста
-            PolyFill.runtimeSendMessage({
-                command: CommandMessages.SettingsPageShowMessage,
-                success: false,
-                message: api.i18n.getMessage("settingsProxyTestTimeout") || "The test was automatically stopped because it took too long. Please reload the settings page and try again."
-            });
-            releaseTest();
-        }
-    }, TEST_LOCK_TIMEOUT_MS);
-    console.log(`[Core] Test started: ${testType}`);
-    return true;
-}
-
-// English: Release test lock (call when test finishes or is cancelled)
-// Russian: Освободить блокировку теста (вызывать при завершении или отмене теста)
-function releaseTest() {
-    // English: Clear the automatic lock release timer
-    // Russian: Очищаем таймер автоматического снятия блокировки
-    if (testTimeoutId) {
-        clearTimeout(testTimeoutId);
-        testTimeoutId = null;
-    }
-    if (currentActiveTest !== null) {
-        console.log(`[Core] Test finished: ${currentActiveTest}`);
-        currentActiveTest = null;
-    }
-}
 
 /**
  * Cross-browser runtime detection - use instead of direct chrome checks
@@ -345,11 +296,19 @@ export class Core {
 			case CommandMessages.DebugGetDiagnosticsLogs:
 				return Core.handleDebugGetDiagnosticsLogs(sendResponse);
 
+			case "CHECK_START":
+			case "CHECK_PROGRESS":
+				// English: Reset the test timeout timer on progress update
+				// Russian: Сбрасываем таймер таймаута теста при обновлении прогресса
+				TestManager.resetTimer();
+				// Pass through to let other handlers process if needed
+				break;
+
 			case "CHECK_COMPLETE":
 			case "TEST_CANCELLED":
 				// English: Release test lock when test finishes or is cancelled
 				// Russian: Освобождаем блокировку теста при завершении или отмене
-				releaseTest();
+				TestManager.finishTest();
 				// Pass through to let other handlers process if needed
 				break;
 
@@ -864,9 +823,9 @@ export class Core {
      */
     private static handleStartProxyTestForSite(message: any, sendResponse: Function): boolean {
         try {
-            // English: Check if another test is already running
-            // Russian: Проверяем, не запущен ли уже другой тест
-            if (!tryStartTest('quick')) {
+            // English: Check if another test is already running (precise test)
+            // Russian: Проверяем, не запущен ли уже другой тест (точный тест)
+            if (!TestManager.tryStartTest('precise')) {
                 if (sendResponse) sendResponse({ 
                     success: false, 
                     message: api.i18n.getMessage("settingsAnotherTestRunning") || "Another test is already running. If you think it's stuck, please reload the settings page (F5) and try again."
@@ -876,24 +835,24 @@ export class Core {
             
             const { site, proxies } = message;
             if (!site || !proxies || !proxies.length) {
-                releaseTest();
+                TestManager.finishTest();
                 if (sendResponse) sendResponse({ success: false, message: "Invalid site or proxies" });
                 return false;
             }
             ProxyTester.startCheckForSite(site, proxies)
                 .finally(() => {
-                    releaseTest();
+                    TestManager.finishTest();
                 })
                 .then(() => {
                     if (sendResponse) sendResponse({ success: true });
                 })
                 .catch((err) => {
-                    releaseTest(); // Дополнительная страховка
+                    TestManager.finishTest(); // Дополнительная страховка
                     if (sendResponse) sendResponse({ success: false, message: err.message });
                 });
             return true;
         } catch (err) {
-            releaseTest();
+            TestManager.finishTest();
             if (sendResponse) sendResponse({ success: false, message: String(err) });
             return false;
         }
@@ -907,7 +866,7 @@ export class Core {
         try {
             // English: Check if another test is already running
             // Russian: Проверяем, не запущен ли уже другой тест
-            if (!tryStartTest('quick')) {
+            if (!TestManager.tryStartTest('quick')) {
                 if (sendResponse) sendResponse({ 
                     success: false, 
                     message: api.i18n.getMessage("settingsAnotherTestRunning") || "Another test is already running. If you think it's stuck, please reload the settings page (F5) and try again."
@@ -917,7 +876,7 @@ export class Core {
             
             const { site, proxies } = message;
             if (!site || !proxies || !proxies.length) {
-                releaseTest();
+                TestManager.finishTest();
                 if (sendResponse) sendResponse({ success: false, message: "Invalid site or proxies" });
                 return false;
             }
@@ -925,18 +884,18 @@ export class Core {
             // Russian: запускаем экспресс-тест через ProxyTester.startQuickTestForSite
             ProxyTester.startQuickTestForSite(site, proxies)
                 .finally(() => {
-                    releaseTest();
+                    TestManager.finishTest();
                 })
                 .then(() => {
                     if (sendResponse) sendResponse({ success: true });
                 })
                 .catch((err) => {
-                    releaseTest(); // Дополнительная страховка
+                    TestManager.finishTest(); // Дополнительная страховка
                     if (sendResponse) sendResponse({ success: false, message: err.message });
                 });
             return true;
         } catch (err) {
-            releaseTest();
+            TestManager.finishTest();
             if (sendResponse) sendResponse({ success: false, message: String(err) });
             return false;
         }
@@ -949,7 +908,7 @@ export class Core {
         try {
             // English: Check if another test is already running
             // Russian: Проверяем, не запущен ли уже другой тест
-            if (!tryStartTest('quick')) {
+            if (!TestManager.tryStartTest('quick')) {
                 if (sendResponse) sendResponse({ 
                     success: false, 
                     message: api.i18n.getMessage("settingsAnotherTestRunning") || "Another test is already running. If you think it's stuck, please reload the settings page (F5) and try again."
@@ -959,24 +918,24 @@ export class Core {
             
             const { site, proxies } = message;
             if (!site || !proxies || !proxies.length) {
-                releaseTest();
+                TestManager.finishTest();
                 if (sendResponse) sendResponse({ success: false, message: "Invalid site or proxies" });
                 return false;
             }
             ProxyTester.startQuickTestForSite(site, proxies)
                 .finally(() => {
-                    releaseTest();
+                    TestManager.finishTest();
                 })
                 .then(() => {
                     if (sendResponse) sendResponse({ success: true });
                 })
                 .catch((err) => {
-                    releaseTest(); // Дополнительная страховка
+                    TestManager.finishTest(); // Дополнительная страховка
                     if (sendResponse) sendResponse({ success: false, message: err.message });
                 });
             return true;
         } catch (err) {
-            releaseTest();
+            TestManager.finishTest();
             if (sendResponse) sendResponse({ success: false, message: String(err) });
             return false;
         }
@@ -986,7 +945,7 @@ export class Core {
         try {
             // English: Check if another test is already running
             // Russian: Проверяем, не запущен ли уже другой тест
-            if (!tryStartTest('cycle')) {
+            if (!TestManager.tryStartTest('cycle')) {
                 if (sendResponse) sendResponse({ 
                     success: false, 
                     message: api.i18n.getMessage("settingsAnotherTestRunning") || "Another test is already running. If you think it's stuck, please reload the settings page (F5) and try again."
@@ -996,7 +955,7 @@ export class Core {
             
             const { site, proxies } = message;
             if (!site || !proxies || !proxies.length) {
-                releaseTest();
+                TestManager.finishTest();
                 if (sendResponse) sendResponse({ success: false, message: "Invalid site or proxies" });
                 return false;
             }
@@ -1019,18 +978,18 @@ export class Core {
             // Russian: Запускаем циклический тест через ProxyCycleTester с переданным списком прокси
             ProxyCycleTester.startCycleTest(site, refreshTabOnConfigChanges, originalProfileId, proxyList)
                 .finally(() => {
-                    releaseTest();
+                    TestManager.finishTest();
                 })
                 .then(() => {
                     if (sendResponse) sendResponse({ success: true });
                 })
                 .catch((err) => {
-                    releaseTest(); // Дополнительная страховка
+                    TestManager.finishTest(); // Дополнительная страховка
                     if (sendResponse) sendResponse({ success: false, message: err.message });
                 });
             return true;
         } catch (err) {
-            releaseTest();
+            TestManager.finishTest();
             if (sendResponse) sendResponse({ success: false, message: String(err) });
             return false;
         }
@@ -1044,7 +1003,7 @@ export class Core {
         try {
             // English: Check if another test is already running
             // Russian: Проверяем, не запущен ли уже другой тест
-            if (!tryStartTest('express-cycle')) {
+            if (!TestManager.tryStartTest('express-cycle')) {
                 if (sendResponse) sendResponse({ 
                     success: false, 
                     message: api.i18n.getMessage("settingsAnotherTestRunning") || "Another test is already running. If you think it's stuck, please reload the settings page (F5) and try again."
@@ -1054,7 +1013,7 @@ export class Core {
             
             const { site, proxies } = message;
             if (!site || !proxies || !proxies.length) {
-                releaseTest();
+                TestManager.finishTest();
                 if (sendResponse) sendResponse({ success: false, message: "Invalid site or proxies" });
                 return false;
             }
@@ -1075,18 +1034,18 @@ export class Core {
             // Russian: Запускаем экспресс-циклический тест через ExpressProxyCycleTester
             ExpressProxyCycleTester.startCycleTest(site, refreshTabOnConfigChanges, originalProfileId, proxyList)
                 .finally(() => {
-                    releaseTest();
+                    TestManager.finishTest();
                 })
                 .then(() => {
                     if (sendResponse) sendResponse({ success: true });
                 })
                 .catch((err) => {
-                    releaseTest(); // Дополнительная страховка
+                    TestManager.finishTest(); // Дополнительная страховка
                     if (sendResponse) sendResponse({ success: false, message: err.message });
                 });
             return true;
         } catch (err) {
-            releaseTest();
+            TestManager.finishTest();
             if (sendResponse) sendResponse({ success: false, message: String(err) });
             return false;
         }
