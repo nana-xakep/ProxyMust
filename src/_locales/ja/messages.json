@@ -1628,5 +1628,179 @@
 	},
 	"settingsGeneralEnableDirectIpDetectionDesc": {
 		"message": "有効にすると、実際のIPアドレスが外部サービスに送信され、プロキシ機能の比較チェックが行われます。無効にすると、テストはサイトの読み込みとプロキシソースデータに依存します（精度は低くなりますが、プライバシーは高まります）。"
+	},
+		"testLogTitle": {
+		"message": "プロキシテストログ"
+	},
+	"testLogWaiting": {
+		"message": "テスト開始待機中..."
+	},
+	"testLogStart": {
+		"message": "▶ {0} ({1}) をチェック中"
+	},
+	"testLogIpSuccess": {
+		"message": "IP取得: {0}"
+	},
+	"testLogIpFail": {
+		"message": "IP取得失敗"
+	},
+	"testLogPageSuccess": {
+		"message": "✓ {0} にアクセス可能"
+	},
+	"testLogPageFail": {
+		"message": "✗ {0} にアクセス不可"
+	},
+	"testLogStatus": {
+		"message": "最終ステータス: {0}"
+	},
+	"testLogNext": {
+		"message": "次のプロキシへ移動"
+	},
+	"testLogStop": {
+		"message": "テストが停止されました – 別のテストを開始する前に、現在のチェックが完了するまでお待ちください。"
+	},
+	"testLogComplete": {
+		"message": "テストが完了しました – 新しいテストを開始できます。"
+	},
+	"testLogClear": {
+		"message": "クリア"
+	},
+	"testLogClose": {
+		"message": "閉じる"
+	},
+	"testLogOpenButton": {
+		"message": "テストログ"
+	},
+	"testLogOpenFailed": {
+		"message": "ログウィンドウを開けませんでした。"
+	},
+	"testLogStatusSuccess": {
+		"message": "成功"
+	},
+	"testLogStatusIndirect": {
+		"message": "間接的成功"
+	},
+	"testLogStatusFail": {
+		"message": "失敗"
+	},
+	"testLogStatusIpOnly": {
+		"message": "IPのみ"
+	},
+	"testLogStatusUnknown": {
+		"message": "不明"
+	},
+	"testLogPageAvailable": {
+		"message": "利用可能"
+	},
+	"testLogPageUnavailable": {
+		"message": "利用不可"
+	},
+	"settingsShowLog": {
+		"message": "ログを表示"
+	},
+	"testLogLabelProxy": {
+		"message": "プロキシ"
+	},
+	"testLogLabelSite": {
+		"message": "サイト"
+	},
+	"testLogLabelStatus": {
+		"message": "ステータス"
+	},
+	"settingsHideLog": {
+		"message": "ログを非表示"
+	},
+		"proxyCheckerEmptyUrl": {
+		"message": "テストURLが空です"
+	},
+	"proxyCheckerNoProxyApi": {
+		"message": "プロキシAPIが利用できません"
+	},
+	"proxyCheckerIndirectSuccessPageNotLoaded": {
+		"message": "間接的成功（ページが読み込まれませんでした）"
+	},
+	"proxyCheckerProxyReturnsOwnIp": {
+		"message": "プロキシが自身のIPを返します"
+	},
+	"proxyCheckerProxyNotWorking": {
+		"message": "プロキシは機能していません"
+	},
+	"proxyCheckerUnknownIpOnly": {
+		"message": "不明（IPを受信しましたが、ページが読み込まれませんでした）"
+	},
+	"localProxyCheckerEmptyTestUrl": {
+		"message": "テストURLが指定されていません"
+	},
+	"loadingMessage": {
+		"message": "読み込み中…"
+	},
+	"loadingErrorHint": {
+		"message": "これが表示されている場合、ページの読み込み中にエラーが発生しました。再読み込みして問題を報告してください。"
+	},
+	"loadingReloadHint": {
+		"message": "またはブラウザがProxyMust拡張機能ではなくページを読み込んだ可能性があります。ページを再読み込みしてください。"
+	},
+	"footerBroughtBy": {
+		"message": "Salar より提供"
+	},
+	"footerVersionInfo": {
+		"message": "ProxyMust {0}（SmartProxy 2.1ベース） – nana-xakep によって保守 | SmartProxyのフォーク"
+	},
+	"noProxiesSelected": {
+		"message": "プロキシが選択されていません。"
+	},
+	"defaultProxyUpdated": {
+		"message": "デフォルトのプロキシサーバーが更新されました。"
+	},
+	"addSiteFailed": {
+		"message": "サイトの追加に失敗しました。"
+	},
+	"popupAddProxySuccess": {
+		"message": "評価とテスト結果を含むプロキシが正常に追加されました！"
+	},
+	"popupAddProxyFailed": {
+		"message": "プロキシの追加に失敗しました。"
+	},
+	"popupAddProxyExistsConfirm": {
+		"message": "このプロキシはすでに存在します（評価: {0}）。\n\n切り替えて評価を変更しますか？"
+	},
+	"popupNoTestData": {
+		"message": "テストデータがありません。最初にテストを実行してください。"
+	},
+	"popupNoNewSuccessfulProxies": {
+		"message": "追加する新しい成功したサブスクリプションプロキシはありません。"
+	},
+	"popupAddedProxiesCount": {
+		"message": "{0}個のプロキシを追加しました{1}"
+	},
+	"popupAddSubscriptionTitle": {
+		"message": "手動リストに追加しますか？"
+	},
+	"popupAddSubscriptionConfirm": {
+		"message": "これにより、すべての設定とテスト結果を含むプロキシがコピーされます。続行しますか？"
+	},
+	"popupAddSubscriptionYes": {
+		"message": "追加"
+	},
+	"settingsContextMenuSelectedCount": {
+		"message": "選択済み: {0}"
+	},
+		"settingsGeneralWebDavServerUrlPlaceholder": {
+		"message": "WebDAVサーバーのURLを入力"
+	},
+	"settingsGeneralWebDavServerUserPlaceholder": {
+		"message": "ユーザー名を入力"
+	},
+	"settingsGeneralWebDavServerPasswordPlaceholder": {
+		"message": "パスワードを入力"
+	},
+		"settingsContextMenuSetDefaultSingle": {
+		"message": "デフォルトとして設定するプロキシを1つだけ選択してください。"
+	},
+	"popupAddProxiesPartialFail": {
+		"message": "一部のプロキシの追加に失敗しました。"
+	},
+	"settingsExpressCycleTestFailed": {
+		"message": "エクスプレスサイクルテストに失敗しました: {0}"
 	}
 }

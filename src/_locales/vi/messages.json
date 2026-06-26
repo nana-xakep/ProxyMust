@@ -1628,5 +1628,179 @@
 	},
 	"settingsGeneralEnableDirectIpDetectionDesc": {
 		"message": "Khi được bật, địa chỉ IP thực của bạn được gửi đến các dịch vụ bên ngoài để kiểm tra so sánh chức năng proxy. Khi tắt, các bài kiểm tra sẽ dựa vào tải trang và dữ liệu nguồn proxy (kém chính xác hơn nhưng riêng tư hơn)."
+	},
+		"testLogTitle": {
+		"message": "Nhật ký kiểm tra proxy"
+	},
+	"testLogWaiting": {
+		"message": "Đang chờ bắt đầu kiểm tra..."
+	},
+	"testLogStart": {
+		"message": "▶ Đang kiểm tra {0} ({1})"
+	},
+	"testLogIpSuccess": {
+		"message": "Đã lấy được IP: {0}"
+	},
+	"testLogIpFail": {
+		"message": "Không lấy được IP"
+	},
+	"testLogPageSuccess": {
+		"message": "✓ {0} có thể truy cập"
+	},
+	"testLogPageFail": {
+		"message": "✗ {0} không thể truy cập"
+	},
+	"testLogStatus": {
+		"message": "Trạng thái cuối: {0}"
+	},
+	"testLogNext": {
+		"message": "Chuyển sang proxy tiếp theo"
+	},
+	"testLogStop": {
+		"message": "Đã dừng kiểm tra – vui lòng đợi các kiểm tra hiện tại hoàn tất trước khi bắt đầu kiểm tra khác."
+	},
+	"testLogComplete": {
+		"message": "Kiểm tra hoàn tất – bạn có thể bắt đầu kiểm tra mới."
+	},
+	"testLogClear": {
+		"message": "Xóa"
+	},
+	"testLogClose": {
+		"message": "Đóng"
+	},
+	"testLogOpenButton": {
+		"message": "Nhật ký kiểm tra"
+	},
+	"testLogOpenFailed": {
+		"message": "Không thể mở cửa sổ nhật ký."
+	},
+	"testLogStatusSuccess": {
+		"message": "THÀNH CÔNG"
+	},
+	"testLogStatusIndirect": {
+		"message": "THÀNH CÔNG GIÁN TIẾP"
+	},
+	"testLogStatusFail": {
+		"message": "THẤT BẠI"
+	},
+	"testLogStatusIpOnly": {
+		"message": "CHỈ IP"
+	},
+	"testLogStatusUnknown": {
+		"message": "KHÔNG RÕ"
+	},
+	"testLogPageAvailable": {
+		"message": "có sẵn"
+	},
+	"testLogPageUnavailable": {
+		"message": "không có sẵn"
+	},
+	"settingsShowLog": {
+		"message": "Hiển thị nhật ký"
+	},
+	"testLogLabelProxy": {
+		"message": "PROXY"
+	},
+	"testLogLabelSite": {
+		"message": "TRANG WEB"
+	},
+	"testLogLabelStatus": {
+		"message": "TRẠNG THÁI"
+	},
+	"settingsHideLog": {
+		"message": "Ẩn nhật ký"
+	},
+		"proxyCheckerEmptyUrl": {
+		"message": "URL kiểm tra trống"
+	},
+	"proxyCheckerNoProxyApi": {
+		"message": "API proxy không khả dụng"
+	},
+	"proxyCheckerIndirectSuccessPageNotLoaded": {
+		"message": "Thành công gián tiếp (trang chưa tải)"
+	},
+	"proxyCheckerProxyReturnsOwnIp": {
+		"message": "Proxy trả về IP của chính nó"
+	},
+	"proxyCheckerProxyNotWorking": {
+		"message": "Proxy không hoạt động"
+	},
+	"proxyCheckerUnknownIpOnly": {
+		"message": "Không rõ (đã nhận IP, trang chưa tải)"
+	},
+	"localProxyCheckerEmptyTestUrl": {
+		"message": "URL kiểm tra chưa được chỉ định"
+	},
+	"loadingMessage": {
+		"message": "Đang tải…"
+	},
+	"loadingErrorHint": {
+		"message": "Nếu bạn thấy thông báo này, đã có lỗi khi tải trang. Vui lòng tải lại và báo cáo sự cố."
+	},
+	"loadingReloadHint": {
+		"message": "Hoặc trình duyệt đã tải trang chứ không phải tiện ích ProxyMust. Chỉ cần tải lại trang."
+	},
+	"footerBroughtBy": {
+		"message": "Được cung cấp bởi Salar,"
+	},
+	"footerVersionInfo": {
+		"message": "ProxyMust {0} (dựa trên SmartProxy 2.1) – được duy trì bởi nana-xakep | Fork của SmartProxy"
+	},
+	"noProxiesSelected": {
+		"message": "Chưa chọn proxy nào."
+	},
+	"defaultProxyUpdated": {
+		"message": "Máy chủ proxy mặc định đã được cập nhật."
+	},
+	"addSiteFailed": {
+		"message": "Thêm trang thất bại."
+	},
+	"popupAddProxySuccess": {
+		"message": "Đã thêm proxy thành công kèm xếp hạng và kết quả kiểm tra!"
+	},
+	"popupAddProxyFailed": {
+		"message": "Thêm proxy thất bại."
+	},
+	"popupAddProxyExistsConfirm": {
+		"message": "Proxy này đã tồn tại (xếp hạng: {0}).\n\nChuyển sang nó và thay đổi xếp hạng?"
+	},
+	"popupNoTestData": {
+		"message": "Không có dữ liệu kiểm tra. Hãy chạy kiểm tra trước."
+	},
+	"popupNoNewSuccessfulProxies": {
+		"message": "Không có proxy đăng ký thành công mới để thêm."
+	},
+	"popupAddedProxiesCount": {
+		"message": "Đã thêm {0} proxy{1}"
+	},
+	"popupAddSubscriptionTitle": {
+		"message": "Thêm vào danh sách thủ công?"
+	},
+	"popupAddSubscriptionConfirm": {
+		"message": "Thao tác này sẽ sao chép proxy cùng với tất cả cài đặt và kết quả kiểm tra. Tiếp tục?"
+	},
+	"popupAddSubscriptionYes": {
+		"message": "Thêm"
+	},
+	"settingsContextMenuSelectedCount": {
+		"message": "Đã chọn: {0}"
+	},
+		"settingsGeneralWebDavServerUrlPlaceholder": {
+		"message": "Nhập URL máy chủ WebDAV"
+	},
+	"settingsGeneralWebDavServerUserPlaceholder": {
+		"message": "Nhập tên người dùng"
+	},
+	"settingsGeneralWebDavServerPasswordPlaceholder": {
+		"message": "Nhập mật khẩu"
+	},
+		"settingsContextMenuSetDefaultSingle": {
+		"message": "Vui lòng chọn chính xác một proxy để đặt làm mặc định."
+	},
+	"popupAddProxiesPartialFail": {
+		"message": "Không thể thêm một số proxy."
+	},
+	"settingsExpressCycleTestFailed": {
+		"message": "Kiểm tra chu kỳ nhanh thất bại: {0}"
 	}
 }

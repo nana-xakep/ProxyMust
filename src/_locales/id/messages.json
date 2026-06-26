@@ -1628,5 +1628,179 @@
 	},
 	"settingsGeneralEnableDirectIpDetectionDesc": {
 		"message": "Saat diaktifkan, alamat IP asli Anda dikirim ke layanan eksternal untuk pemeriksaan komparatif fungsi proxy. Saat dinonaktifkan, pengujian akan mengandalkan pemuatan situs dan data sumber proxy (kurang akurat tetapi lebih pribadi)."
+	},
+		"testLogTitle": {
+		"message": "Log Tes Proxy"
+	},
+	"testLogWaiting": {
+		"message": "Menunggu tes dimulai..."
+	},
+	"testLogStart": {
+		"message": "▶ Memeriksa {0} ({1})"
+	},
+	"testLogIpSuccess": {
+		"message": "IP diperoleh: {0}"
+	},
+	"testLogIpFail": {
+		"message": "IP tidak diperoleh"
+	},
+	"testLogPageSuccess": {
+		"message": "✓ {0} dapat diakses"
+	},
+	"testLogPageFail": {
+		"message": "✗ {0} tidak dapat diakses"
+	},
+	"testLogStatus": {
+		"message": "Status akhir: {0}"
+	},
+	"testLogNext": {
+		"message": "Beralih ke proxy berikutnya"
+	},
+	"testLogStop": {
+		"message": "Tes dihentikan – harap tunggu hingga pemeriksaan saat ini selesai sebelum memulai tes lain."
+	},
+	"testLogComplete": {
+		"message": "Tes selesai – Anda sekarang dapat memulai tes baru."
+	},
+	"testLogClear": {
+		"message": "Bersihkan"
+	},
+	"testLogClose": {
+		"message": "Tutup"
+	},
+	"testLogOpenButton": {
+		"message": "Log Tes"
+	},
+	"testLogOpenFailed": {
+		"message": "Gagal membuka jendela log."
+	},
+	"testLogStatusSuccess": {
+		"message": "BERHASIL"
+	},
+	"testLogStatusIndirect": {
+		"message": "BERHASIL TIDAK LANGSUNG"
+	},
+	"testLogStatusFail": {
+		"message": "GAGAL"
+	},
+	"testLogStatusIpOnly": {
+		"message": "HANYA IP"
+	},
+	"testLogStatusUnknown": {
+		"message": "TIDAK DIKETAHUI"
+	},
+	"testLogPageAvailable": {
+		"message": "tersedia"
+	},
+	"testLogPageUnavailable": {
+		"message": "tidak tersedia"
+	},
+	"settingsShowLog": {
+		"message": "Tampilkan Log"
+	},
+	"testLogLabelProxy": {
+		"message": "PROXY"
+	},
+	"testLogLabelSite": {
+		"message": "SITUS"
+	},
+	"testLogLabelStatus": {
+		"message": "STATUS"
+	},
+	"settingsHideLog": {
+		"message": "Sembunyikan Log"
+	},
+		"proxyCheckerEmptyUrl": {
+		"message": "URL tes kosong"
+	},
+	"proxyCheckerNoProxyApi": {
+		"message": "API proxy tidak tersedia"
+	},
+	"proxyCheckerIndirectSuccessPageNotLoaded": {
+		"message": "Sukses tidak langsung (halaman tidak dimuat)"
+	},
+	"proxyCheckerProxyReturnsOwnIp": {
+		"message": "Proxy mengembalikan IP-nya sendiri"
+	},
+	"proxyCheckerProxyNotWorking": {
+		"message": "Proxy tidak berfungsi"
+	},
+	"proxyCheckerUnknownIpOnly": {
+		"message": "Tidak diketahui (IP diterima, halaman tidak dimuat)"
+	},
+	"localProxyCheckerEmptyTestUrl": {
+		"message": "URL tes tidak ditentukan"
+	},
+	"loadingMessage": {
+		"message": "Memuat…"
+	},
+	"loadingErrorHint": {
+		"message": "Jika Anda melihat ini, pasti ada kesalahan saat memuat halaman, coba muat ulang dan laporkan masalahnya."
+	},
+	"loadingReloadHint": {
+		"message": "Atau browser telah memuat halaman dan bukan ekstensi ProxyMust. Cukup muat ulang halaman."
+	},
+	"footerBroughtBy": {
+		"message": "Dipersembahkan oleh Salar,"
+	},
+	"footerVersionInfo": {
+		"message": "ProxyMust {0} (berbasis SmartProxy 2.1) – dikelola oleh nana-xakep | Fork dari SmartProxy"
+	},
+	"noProxiesSelected": {
+		"message": "Tidak ada proxy yang dipilih."
+	},
+	"defaultProxyUpdated": {
+		"message": "Server proxy default diperbarui."
+	},
+	"addSiteFailed": {
+		"message": "Gagal menambahkan situs."
+	},
+	"popupAddProxySuccess": {
+		"message": "Proxy berhasil ditambahkan dengan peringkat dan hasil tes!"
+	},
+	"popupAddProxyFailed": {
+		"message": "Gagal menambahkan proxy."
+	},
+	"popupAddProxyExistsConfirm": {
+		"message": "Proxy ini sudah ada (peringkat: {0}).\n\nBeralih ke sana dan mengubah peringkat?"
+	},
+	"popupNoTestData": {
+		"message": "Tidak ada data tes yang tersedia. Jalankan tes terlebih dahulu."
+	},
+	"popupNoNewSuccessfulProxies": {
+		"message": "Tidak ada proxy langganan baru yang berhasil untuk ditambahkan."
+	},
+	"popupAddedProxiesCount": {
+		"message": "{0} proxy ditambahkan{1}"
+	},
+	"popupAddSubscriptionTitle": {
+		"message": "Tambahkan ke daftar manual?"
+	},
+	"popupAddSubscriptionConfirm": {
+		"message": "Ini akan menyalin proxy dengan semua pengaturan dan hasil tesnya. Lanjutkan?"
+	},
+	"popupAddSubscriptionYes": {
+		"message": "Tambah"
+	},
+	"settingsContextMenuSelectedCount": {
+		"message": "Dipilih: {0}"
+	},
+		"settingsGeneralWebDavServerUrlPlaceholder": {
+		"message": "Masukkan URL server WebDAV"
+	},
+	"settingsGeneralWebDavServerUserPlaceholder": {
+		"message": "Masukkan nama pengguna"
+	},
+	"settingsGeneralWebDavServerPasswordPlaceholder": {
+		"message": "Masukkan kata sandi"
+	},
+		"settingsContextMenuSetDefaultSingle": {
+		"message": "Harap pilih tepat satu proxy untuk dijadikan default."
+	},
+	"popupAddProxiesPartialFail": {
+		"message": "Gagal menambahkan beberapa proxy."
+	},
+	"settingsExpressCycleTestFailed": {
+		"message": "Tes siklus ekspres gagal: {0}"
 	}
 }

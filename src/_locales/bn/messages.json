@@ -1628,5 +1628,179 @@
 	},
 	"settingsGeneralEnableDirectIpDetectionDesc": {
 		"message": "সক্রিয় থাকলে, আপনার আসল আইপি ঠিকানা প্রক্সি কার্যকারিতার তুলনামূলক পরীক্ষার জন্য বহিরাগত পরিষেবাগুলিতে প্রেরণ করা হয়। নিষ্ক্রিয় থাকলে, পরীক্ষাগুলি সাইট লোডিং এবং প্রক্সি উত্স ডেটার উপর নির্ভর করবে (কম সঠিক তবে আরও ব্যক্তিগত)।"
+	},
+		"testLogTitle": {
+		"message": "প্রক্সি পরীক্ষার লগ"
+	},
+	"testLogWaiting": {
+		"message": "পরীক্ষা শুরুর অপেক্ষায়..."
+	},
+	"testLogStart": {
+		"message": "▶ {0} ({1}) পরীক্ষা করা হচ্ছে"
+	},
+	"testLogIpSuccess": {
+		"message": "IP প্রাপ্ত: {0}"
+	},
+	"testLogIpFail": {
+		"message": "IP প্রাপ্ত হয়নি"
+	},
+	"testLogPageSuccess": {
+		"message": "✓ {0} অ্যাক্সেসযোগ্য"
+	},
+	"testLogPageFail": {
+		"message": "✗ {0} অ্যাক্সেসযোগ্য নয়"
+	},
+	"testLogStatus": {
+		"message": "চূড়ান্ত অবস্থা: {0}"
+	},
+	"testLogNext": {
+		"message": "পরবর্তী প্রক্সিতে যাচ্ছি"
+	},
+	"testLogStop": {
+		"message": "পরীক্ষা বন্ধ করা হয়েছে – অনুগ্রহ করে অন্য পরীক্ষা শুরুর আগে বর্তমান পরীক্ষাগুলি শেষ হওয়া পর্যন্ত অপেক্ষা করুন।"
+	},
+	"testLogComplete": {
+		"message": "পরীক্ষা সম্পূর্ণ – আপনি এখন একটি নতুন পরীক্ষা শুরু করতে পারেন।"
+	},
+	"testLogClear": {
+		"message": "সাফ করুন"
+	},
+	"testLogClose": {
+		"message": "বন্ধ করুন"
+	},
+	"testLogOpenButton": {
+		"message": "পরীক্ষার লগ"
+	},
+	"testLogOpenFailed": {
+		"message": "লগ উইন্ডো খুলতে ব্যর্থ।"
+	},
+	"testLogStatusSuccess": {
+		"message": "সাফল্য"
+	},
+	"testLogStatusIndirect": {
+		"message": "পরোক্ষ সাফল্য"
+	},
+	"testLogStatusFail": {
+		"message": "ব্যর্থ"
+	},
+	"testLogStatusIpOnly": {
+		"message": "শুধু IP"
+	},
+	"testLogStatusUnknown": {
+		"message": "অজানা"
+	},
+	"testLogPageAvailable": {
+		"message": "উপলব্ধ"
+	},
+	"testLogPageUnavailable": {
+		"message": "অনুপলব্ধ"
+	},
+	"settingsShowLog": {
+		"message": "লগ দেখান"
+	},
+	"testLogLabelProxy": {
+		"message": "প্রক্সি"
+	},
+	"testLogLabelSite": {
+		"message": "সাইট"
+	},
+	"testLogLabelStatus": {
+		"message": "অবস্থা"
+	},
+	"settingsHideLog": {
+		"message": "লগ লুকান"
+	},
+		"proxyCheckerEmptyUrl": {
+		"message": "পরীক্ষার URL খালি"
+	},
+	"proxyCheckerNoProxyApi": {
+		"message": "প্রক্সি API উপলব্ধ নয়"
+	},
+	"proxyCheckerIndirectSuccessPageNotLoaded": {
+		"message": "পরোক্ষ সাফল্য (পেজ লোড হয়নি)"
+	},
+	"proxyCheckerProxyReturnsOwnIp": {
+		"message": "প্রক্সি নিজের IP ফিরিয়ে দেয়"
+	},
+	"proxyCheckerProxyNotWorking": {
+		"message": "প্রক্সি কাজ করছে না"
+	},
+	"proxyCheckerUnknownIpOnly": {
+		"message": "অজানা (IP প্রাপ্ত, পেজ লোড হয়নি)"
+	},
+	"localProxyCheckerEmptyTestUrl": {
+		"message": "পরীক্ষার URL নির্দিষ্ট করা নেই"
+	},
+	"loadingMessage": {
+		"message": "লোড হচ্ছে…"
+	},
+	"loadingErrorHint": {
+		"message": "যদি আপনি এটি দেখতে পান তবে পেজ লোড করার সময় একটি ত্রুটি হয়েছে, দয়া করে পুনরায় লোড করুন এবং সমস্যাটি রিপোর্ট করুন।"
+	},
+	"loadingReloadHint": {
+		"message": "অথবা ব্রাউজার পেজটি লোড করেছে এবং ProxyMust এক্সটেনশনটি নয়। শুধু পেজটি রিফ্রেশ করুন।"
+	},
+	"footerBroughtBy": {
+		"message": "আপনার জন্য নিয়ে এসেছেন সালার,"
+	},
+	"footerVersionInfo": {
+		"message": "ProxyMust {0} (SmartProxy 2.1-এর ভিত্তিতে) – nana-xakep দ্বারা রক্ষণাবেক্ষণকৃত | SmartProxy-এর একটি ফর্ক"
+	},
+	"noProxiesSelected": {
+		"message": "কোন প্রক্সি নির্বাচিত হয়নি।"
+	},
+	"defaultProxyUpdated": {
+		"message": "ডিফল্ট প্রক্সি সার্ভার আপডেট করা হয়েছে।"
+	},
+	"addSiteFailed": {
+		"message": "সাইট যোগ করতে ব্যর্থ।"
+	},
+	"popupAddProxySuccess": {
+		"message": "রেটিং এবং পরীক্ষার ফলাফল সহ প্রক্সি সফলভাবে যোগ করা হয়েছে!"
+	},
+	"popupAddProxyFailed": {
+		"message": "প্রক্সি যোগ করতে ব্যর্থ।"
+	},
+	"popupAddProxyExistsConfirm": {
+		"message": "এই প্রক্সি ইতিমধ্যেই বিদ্যমান (রেটিং: {0})।\n\nএটিতে স্যুইচ করে রেটিং পরিবর্তন করবেন?"
+	},
+	"popupNoTestData": {
+		"message": "কোন পরীক্ষার ডেটা উপলব্ধ নেই। প্রথমে একটি পরীক্ষা চালান।"
+	},
+	"popupNoNewSuccessfulProxies": {
+		"message": "যোগ করার জন্য কোন নতুন সফল সাবস্ক্রিপশন প্রক্সি নেই।"
+	},
+	"popupAddedProxiesCount": {
+		"message": "{0}টি প্রক্সি যোগ করা হয়েছে{1}"
+	},
+	"popupAddSubscriptionTitle": {
+		"message": "ম্যানুয়াল তালিকায় যোগ করবেন?"
+	},
+	"popupAddSubscriptionConfirm": {
+		"message": "এটি তার সমস্ত সেটিংস এবং পরীক্ষার ফলাফল সহ প্রক্সি কপি করবে। চালিয়ে যাবেন?"
+	},
+	"popupAddSubscriptionYes": {
+		"message": "যোগ করুন"
+	},
+	"settingsContextMenuSelectedCount": {
+		"message": "নির্বাচিত: {0}"
+	},
+		"settingsGeneralWebDavServerUrlPlaceholder": {
+		"message": "WebDAV সার্ভার URL লিখুন"
+	},
+	"settingsGeneralWebDavServerUserPlaceholder": {
+		"message": "ব্যবহারকারীর নাম লিখুন"
+	},
+	"settingsGeneralWebDavServerPasswordPlaceholder": {
+		"message": "পাসওয়ার্ড লিখুন"
+	},
+		"settingsContextMenuSetDefaultSingle": {
+		"message": "ডিফল্ট হিসেবে সেট করতে দয়া করে ঠিক একটি প্রক্সি নির্বাচন করুন।"
+	},
+	"popupAddProxiesPartialFail": {
+		"message": "কিছু প্রক্সি যোগ করতে ব্যর্থ হয়েছে।"
+	},
+	"settingsExpressCycleTestFailed": {
+		"message": "এক্সপ্রেস সাইকেল পরীক্ষা ব্যর্থ হয়েছে: {0}"
 	}
 }

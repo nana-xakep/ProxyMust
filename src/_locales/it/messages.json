@@ -1628,5 +1628,179 @@
 	},
 	"settingsGeneralEnableDirectIpDetectionDesc": {
 		"message": "Quando abilitato, il tuo indirizzo IP reale viene inviato a servizi esterni per il controllo comparativo della funzionalità del proxy. Quando disabilitato, i test si baseranno sul caricamento dei siti e sui dati di origine del proxy (meno precisi ma più privati)."
+	},
+		"testLogTitle": {
+		"message": "Registro test proxy"
+	},
+	"testLogWaiting": {
+		"message": "In attesa dell'inizio del test..."
+	},
+	"testLogStart": {
+		"message": "▶ Verifica di {0} ({1})"
+	},
+	"testLogIpSuccess": {
+		"message": "IP ottenuto: {0}"
+	},
+	"testLogIpFail": {
+		"message": "IP non ottenuto"
+	},
+	"testLogPageSuccess": {
+		"message": "✓ {0} è raggiungibile"
+	},
+	"testLogPageFail": {
+		"message": "✗ {0} non è raggiungibile"
+	},
+	"testLogStatus": {
+		"message": "Stato finale: {0}"
+	},
+	"testLogNext": {
+		"message": "Passaggio al proxy successivo"
+	},
+	"testLogStop": {
+		"message": "Test interrotto – attendere il completamento dei controlli in corso prima di avviare un altro test."
+	},
+	"testLogComplete": {
+		"message": "Test completato – ora è possibile avviare un nuovo test."
+	},
+	"testLogClear": {
+		"message": "Cancella"
+	},
+	"testLogClose": {
+		"message": "Chiudi"
+	},
+	"testLogOpenButton": {
+		"message": "Registro test"
+	},
+	"testLogOpenFailed": {
+		"message": "Impossibile aprire la finestra del registro."
+	},
+	"testLogStatusSuccess": {
+		"message": "SUCCESSO"
+	},
+	"testLogStatusIndirect": {
+		"message": "SUCCESSO INDIRETTO"
+	},
+	"testLogStatusFail": {
+		"message": "FALLIMENTO"
+	},
+	"testLogStatusIpOnly": {
+		"message": "SOLO IP"
+	},
+	"testLogStatusUnknown": {
+		"message": "SCONOSCIUTO"
+	},
+	"testLogPageAvailable": {
+		"message": "disponibile"
+	},
+	"testLogPageUnavailable": {
+		"message": "non disponibile"
+	},
+	"settingsShowLog": {
+		"message": "Mostra registro"
+	},
+	"testLogLabelProxy": {
+		"message": "PROXY"
+	},
+	"testLogLabelSite": {
+		"message": "SITO"
+	},
+	"testLogLabelStatus": {
+		"message": "STATO"
+	},
+	"settingsHideLog": {
+		"message": "Nascondi registro"
+	},
+		"proxyCheckerEmptyUrl": {
+		"message": "L'URL di test è vuoto"
+	},
+	"proxyCheckerNoProxyApi": {
+		"message": "API proxy non disponibile"
+	},
+	"proxyCheckerIndirectSuccessPageNotLoaded": {
+		"message": "Successo indiretto (pagina non caricata)"
+	},
+	"proxyCheckerProxyReturnsOwnIp": {
+		"message": "Il proxy restituisce il proprio IP"
+	},
+	"proxyCheckerProxyNotWorking": {
+		"message": "Il proxy non funziona"
+	},
+	"proxyCheckerUnknownIpOnly": {
+		"message": "Sconosciuto (IP ricevuto, pagina non caricata)"
+	},
+	"localProxyCheckerEmptyTestUrl": {
+		"message": "URL di test non specificato"
+	},
+	"loadingMessage": {
+		"message": "Caricamento…"
+	},
+	"loadingErrorHint": {
+		"message": "Se vedi questo, si è verificato un errore durante il caricamento della pagina. Prova a ricaricare e segnala il problema."
+	},
+	"loadingReloadHint": {
+		"message": "Oppure il browser ha caricato la pagina e non l'estensione ProxyMust. Basta ricaricare la pagina."
+	},
+	"footerBroughtBy": {
+		"message": "Offerto da Salar,"
+	},
+	"footerVersionInfo": {
+		"message": "ProxyMust {0} (basato su SmartProxy 2.1) – mantenuto da nana-xakep | Fork di SmartProxy"
+	},
+	"noProxiesSelected": {
+		"message": "Nessun proxy selezionato."
+	},
+	"defaultProxyUpdated": {
+		"message": "Server proxy predefinito aggiornato."
+	},
+	"addSiteFailed": {
+		"message": "Impossibile aggiungere il sito."
+	},
+	"popupAddProxySuccess": {
+		"message": "Proxy aggiunto con successo con valutazione e risultati dei test!"
+	},
+	"popupAddProxyFailed": {
+		"message": "Impossibile aggiungere il proxy."
+	},
+	"popupAddProxyExistsConfirm": {
+		"message": "Questo proxy esiste già (valutazione: {0}).\n\nPassare a esso e modificare la valutazione?"
+	},
+	"popupNoTestData": {
+		"message": "Nessun dato di test disponibile. Esegui prima un test."
+	},
+	"popupNoNewSuccessfulProxies": {
+		"message": "Nessun nuovo proxy di abbonamento riuscito da aggiungere."
+	},
+	"popupAddedProxiesCount": {
+		"message": "Aggiunti {0} proxy{1}"
+	},
+	"popupAddSubscriptionTitle": {
+		"message": "Aggiungere alla lista manuale?"
+	},
+	"popupAddSubscriptionConfirm": {
+		"message": "Questo copierà il proxy con tutte le sue impostazioni e risultati di test. Continuare?"
+	},
+	"popupAddSubscriptionYes": {
+		"message": "Aggiungi"
+	},
+	"settingsContextMenuSelectedCount": {
+		"message": "Selezionati: {0}"
+	},
+		"settingsGeneralWebDavServerUrlPlaceholder": {
+		"message": "Inserisci l'URL del server WebDAV"
+	},
+	"settingsGeneralWebDavServerUserPlaceholder": {
+		"message": "Inserisci il nome utente"
+	},
+	"settingsGeneralWebDavServerPasswordPlaceholder": {
+		"message": "Inserisci la password"
+	},
+		"settingsContextMenuSetDefaultSingle": {
+		"message": "Seleziona esattamente un proxy da impostare come predefinito."
+	},
+	"popupAddProxiesPartialFail": {
+		"message": "Impossibile aggiungere alcuni proxy."
+	},
+	"settingsExpressCycleTestFailed": {
+		"message": "Test ciclico espresso fallito: {0}"
 	}
 }

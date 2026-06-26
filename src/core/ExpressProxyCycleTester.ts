@@ -25,6 +25,7 @@ import { IpServiceManager } from "./IpServiceManager";
 import { checkCycleProxy } from "./ProxyCheckerCore";
 import { saveResult, sendProgress } from "./ResultSaver";
 import { TestManager } from "./TestManager";
+import { Core } from "./Core";
 
 type TestResult = {
     proxyId: string;
@@ -40,6 +41,7 @@ type ProxyListItem = {
     protocol?: string;
     host?: string;
     port?: number;
+    countryCode?: string;
 };
 
 export const ExpressProxyCycleTester = {
@@ -174,13 +176,14 @@ export const ExpressProxyCycleTester = {
         const subscribedProxies = SettingsOperation.getAllSubscribedProxyServers();
         const allProxies = [...manualProxies, ...subscribedProxies];
         console.log(`[ExpressCycleTester] Прочитано ${manualProxies.length} ручных + ${subscribedProxies.length} подписочных = ${allProxies.length} всего`);
-        const proxies: ProxyListItem[] = allProxies.map((proxy: any) => ({
-            id: proxy.id,
-            name: `${proxy.countryCode || ''} ${proxy.host}:${proxy.port}`,
-            protocol: proxy.protocol,
-            host: proxy.host,
-            port: proxy.port
-        }));
+		const proxies: ProxyListItem[] = allProxies.map((proxy: any) => ({
+			id: proxy.id,
+			name: `${proxy.countryCode || ''} ${proxy.host}:${proxy.port}`,
+			protocol: proxy.protocol,
+			host: proxy.host,
+			port: proxy.port,
+			countryCode: proxy.countryCode || ''
+		}));
         return proxies;
     },
 
@@ -222,6 +225,14 @@ export const ExpressProxyCycleTester = {
                 this._totalProxies,
                 "express-cycle"
             );
+            // English: Send next step to log (express-cycle)
+            // Russian: Отправляем шаг перехода к следующему прокси в лог (экспресс-цикл)
+            Core.sendTestLogStep({
+                type: 'next',
+                proxyId: proxy.id,
+                current: this._completedProxies,
+                total: this._totalProxies
+            });
         }
 
         const wasCancelled = this._cancelRequested;
@@ -232,9 +243,25 @@ export const ExpressProxyCycleTester = {
 
         if (wasCancelled) {
             console.log("[ExpressCycleTester] Тест отменён");
+            // English: Send stop and complete messages to log (express-cycle)
+            // Russian: Отправляем сообщения об остановке и завершении в лог (экспресс-цикл)
+            Core.sendTestLogStep({
+                type: 'stop',
+                message: api.i18n.getMessage('testLogStop') || 'Test stopped – please wait for current checks to finish before starting another test.'
+            });
+            Core.sendTestLogStep({
+                type: 'complete',
+                message: api.i18n.getMessage('testLogComplete') || 'Test completed – you may now start a new test.'
+            });
             api.runtime.sendMessage({ command: "TEST_CANCELLED", completed: this._completedProxies, total: this._totalProxies, site: this._testSite, testType: "express-cycle" });
         } else {
             console.log(`%c[ExpressCycleTester] ========== ТЕСТ ЗАВЕРШЁН ==========`, 'color: #00ff00; font-weight: bold; font-size: 1.2em');
+            // English: Send complete message to log (express-cycle)
+            // Russian: Отправляем сообщение о завершении в лог (экспресс-цикл)
+            Core.sendTestLogStep({
+                type: 'complete',
+                message: api.i18n.getMessage('testLogComplete') || 'Test completed – you may now start a new test.'
+            });
             api.runtime.sendMessage({ command: "CHECK_COMPLETE", total: this._totalProxies, site: this._testSite, testType: "express-cycle" });
         }
         api.runtime.sendMessage({ command: "EXPRESS_CYCLE_TEST_FINISHED" });
@@ -258,13 +285,14 @@ export const ExpressProxyCycleTester = {
             return { proxyId: proxy.id, proxyName: proxy.name, status: "cancelled", latencyMs: 0 };
         }
 
-        const result = await checkCycleProxy(
-            {
-                id: proxy.id,
-                name: proxy.name,
-                host: proxy.host || '',
-                port: proxy.port || 0,
-                protocol: proxy.protocol || 'HTTP'
+		const result = await checkCycleProxy(
+			{
+				id: proxy.id,
+				name: proxy.name,
+				host: proxy.host || '',
+				port: proxy.port || 0,
+				protocol: proxy.protocol || 'HTTP',
+				countryCode: proxy.countryCode || ''
             },
             this._testSite,
             this._directIp,
@@ -287,12 +315,12 @@ export const ExpressProxyCycleTester = {
         };
     },
 
-    async cancelTest(): Promise<void> {
-        if (!this._isRunning) return;
-        console.log("[ExpressCycleTester] Отмена запрошена - текущий прокси завершится, следующие не запустятся");
-        this._cancelRequested = true;
-        await SettingsOperation.saveAllLocal(true);
-        await SettingsOperation.saveAllSync(false);
+	async cancelTest(): Promise<void> {
+		if (!this._isRunning) return;
+		console.log("[ExpressCycleTester] Отмена запрошена - текущий прокси завершится, следующие не запустятся");
+		this._cancelRequested = true;
+		await SettingsOperation.saveAllLocal(true);
+		await SettingsOperation.saveAllSync(false);
     },
 
     getStatus(): { isRunning: boolean; total: number; completed: number; site: string } {

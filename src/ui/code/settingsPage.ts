@@ -92,7 +92,7 @@ export class settingsPage {
 	}
 
 private static handleMessages(message: any, sender: any, sendResponse: Function) {
- // console.log("[DEBUG] handleMessages received:", message);
+    console.log("[Settings] handleMessages received:", message);
     let command: string;
     if (typeof message == 'string') command = message;
     else {
@@ -220,6 +220,12 @@ else if (command === "CHECK_PROGRESS") {
         setTimeout(() => {
             window.location.reload();
         }, 1000);
+    }
+	// English: Render log messages in the viewer (always, even if hidden)
+    // Russian: Отобразить сообщения лога в просмотрщике (всегда, даже если скрыт)
+    else if (command === "PROXY_TEST_STEP") {
+        console.log("[Settings] PROXY_TEST_STEP received:", message.data);
+        settingsPage.renderLogMessage(message.data);
     }
 }
 
@@ -643,6 +649,29 @@ jq("#staleHoursInput").off("change").on("change", function() {
             if (this.files && this.files.length > 0) {
                 jq("#rbtnImportProxyServer_File").prop("checked", true);
             }
+        });
+		// English: Open test log window
+        // Russian: Открыть окно лога тестирования
+        jq("#openTestLogBtn").off("click").on("click", settingsPage.uiEvents.onToggleLogViewer);
+
+        // English: Clear log button
+        // Russian: Кнопка очистки лога
+        jq("#clearLogBtn").off("click").on("click", function() {
+            const container = document.getElementById('logContainer');
+            if (container) {
+                container.innerHTML = '';
+                const emptyState = document.getElementById('emptyState');
+                if (emptyState) {
+                    container.appendChild(emptyState);
+                    emptyState.style.display = 'block';
+                }
+            }
+        });
+        // English: Close log viewer
+        // Russian: Закрыть просмотрщик лога
+        jq("#closeLogBtn").off("click").on("click", function() {
+            jq("#testLogViewer").slideUp(200);
+            jq("#openTestLogBtn").find("span").text(api.i18n.getMessage("settingsProxyMustOpenLog") || "Log");
         });
 	}
 
@@ -4656,6 +4685,43 @@ private static loadServersGrid(servers: any[]) {
 				window.open("https://github.com/salarcode/SmartProxy/wiki/Enable-Diagnostics")
 			}
 		},
+		
+        /**
+         * English: Toggles the embedded test log viewer.
+         * Russian: Переключает встроенный просмотрщик лога тестирования.
+         */
+        onToggleLogViewer: function() {
+            const viewer = jq("#testLogViewer");
+            const btn = jq("#openTestLogBtn");
+            const container = document.getElementById('logContainer');
+            const emptyState = document.getElementById('emptyState');
+            
+            if (viewer.is(":visible")) {
+                viewer.slideUp(200);
+                btn.find("span").text(api.i18n.getMessage("settingsProxyMustOpenLog"));
+            } else {
+                viewer.slideDown(200);
+                btn.find("span").text(api.i18n.getMessage("settingsHideLog") || "Скрыть лог");
+                
+                // If container is empty, load history
+                if (container && container.children.length === 0) {
+                    PolyFill.runtimeSendMessage({ command: "GET_TEST_LOG_HISTORY" }, (response) => {
+                        if (response && response.history && response.history.length) {
+                            if (container) {
+                                if (emptyState) emptyState.style.display = 'none';
+                                response.history.forEach((msg) => settingsPage.renderLogMessage(msg));
+                            }
+                        } else {
+                            if (emptyState) emptyState.style.display = 'block';
+                        }
+                    });
+                } else {
+                    // Already has messages, just show
+                    if (emptyState) emptyState.style.display = 'none';
+                }
+            }
+        },
+		
 		onWindowUnload(event) {
 			if (!settingsPage.readGeneralOptions().Equals(settingsPage.currentSettings.options)) {
 				settingsPage.changeTracking.options = true;
@@ -4767,6 +4833,149 @@ private static loadServersGrid(servers: any[]) {
 		}
 		return result;
 	}
+	
+	    // ==================== Log Viewer Helpers ====================
+    // English: Format timestamp (HH:MM:SS) / Russian: Форматирование времени
+    private static formatTime(ts: number): string {
+        const d = new Date(ts);
+        return d.toTimeString().slice(0, 8);
+    }
+
+    // English: Escape HTML entities / Russian: Экранирование HTML
+    private static escapeHtml(str: string): string {
+        if (!str) return '';
+        return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    // English: Get flag emoji / Russian: Получить эмодзи флага
+    private static getFlagEmoji(countryCode: string): string {
+        if (!countryCode) return '';
+        const code = countryCode.toUpperCase();
+        if (code.length !== 2) return '';
+        const base = 0x1F1E6;
+        return String.fromCodePoint(
+            base + code.charCodeAt(0) - 65,
+            base + code.charCodeAt(1) - 65
+        );
+    }
+
+    // English: Localization helper with parameter substitution / Russian: Вспомогательная функция локализации с подстановкой параметров
+    private static t(key: string, ...args: any[]): string {
+        let msg = api.i18n.getMessage(key) || key;
+        if (args.length) {
+            msg = msg.replace(/\{(\d+)\}/g, (match, num) => {
+                const idx = parseInt(num, 10);
+                return args[idx] !== undefined ? String(args[idx]) : match;
+            });
+        }
+        return msg;
+    }
+
+    // English: Get localized status text / Russian: Получить локализованный текст статуса
+    private static getStatusText(status: string): string {
+        switch (status) {
+            case 'success': return settingsPage.t('testLogStatusSuccess');
+            case 'indirect': return settingsPage.t('testLogStatusIndirect');
+            case 'fail': return settingsPage.t('testLogStatusFail');
+            case 'ip-only': return settingsPage.t('testLogStatusIpOnly');
+            default: return settingsPage.t('testLogStatusUnknown');
+        }
+    }
+
+    // English: Render a log message in the viewer / Russian: Отобразить сообщение лога в просмотрщике
+    private static renderLogMessage(msg: any): void {
+        console.log("[Settings] renderLogMessage called with:", msg);
+        const container = document.getElementById('logContainer');
+        if (!container) {
+            console.warn("[Settings] logContainer not found!");
+            return;
+        }
+
+        const emptyState = document.getElementById('emptyState');
+        if (emptyState) emptyState.style.display = 'none';
+
+        const timeStr = settingsPage.formatTime(msg.timestamp || Date.now());
+        let messageHtml = '';
+        let entryClass = '';
+
+        switch (msg.type) {
+            case 'start': {
+                const proxyLabel = `${msg.host}:${msg.port}`;
+                const countryCode = msg.countryCode ? msg.countryCode.toUpperCase() : '';
+                const flag = countryCode ? settingsPage.getFlagEmoji(countryCode) : '';
+                const flagHtml = flag ? `<span class="flag-emoji">${flag}</span> <span class="color-start">${settingsPage.escapeHtml(countryCode)}</span>` : '';
+                const proto = msg.protocol || 'HTTP';
+                const progress = msg.total ? ` (${msg.current}/${msg.total})` : '';
+                const labelProxy = settingsPage.t('testLogLabelProxy');
+                messageHtml = `<span class="log-time">${timeStr}</span><span class="log-message"><span class="action-label color-start">${settingsPage.escapeHtml(labelProxy)}</span><span class="color-start">${settingsPage.escapeHtml(proxyLabel)}</span>${flagHtml ? `<span class="color-start"> ${flagHtml}</span>` : ''}<span class="color-progress"> ${settingsPage.escapeHtml(proto)}</span><span class="color-progress">${settingsPage.escapeHtml(progress)}</span></span>`;
+                break;
+            }
+            case 'ip': {
+                if (msg.ip) {
+                    messageHtml = `<span class="log-time">${timeStr}</span><span class="log-message"><span class="color-ip-success">${settingsPage.escapeHtml(settingsPage.t('testLogIpSuccess', msg.ip))}</span></span>`;
+                } else {
+                    messageHtml = `<span class="log-time">${timeStr}</span><span class="log-message"><span class="color-ip-fail">${settingsPage.escapeHtml(settingsPage.t('testLogIpFail'))}</span></span>`;
+                }
+                break;
+            }
+            case 'page': {
+                const site = msg.site ? msg.site.replace(/^https?:\/\//, '').replace(/\/.*$/, '') : '';
+                const labelSite = settingsPage.t('testLogLabelSite');
+                if (msg.pageSuccess) {
+                    messageHtml = `<span class="log-time">${timeStr}</span><span class="log-message"><span class="action-label color-page-success">${settingsPage.escapeHtml(labelSite)}</span><span class="color-page-success">${settingsPage.escapeHtml(site)} — ${settingsPage.escapeHtml(settingsPage.t('testLogPageAvailable'))}</span></span>`;
+                } else {
+                    messageHtml = `<span class="log-time">${timeStr}</span><span class="log-message"><span class="action-label color-page-fail">${settingsPage.escapeHtml(labelSite)}</span><span class="color-page-fail">${settingsPage.escapeHtml(site)} — ${settingsPage.escapeHtml(settingsPage.t('testLogPageUnavailable'))}</span></span>`;
+                }
+                break;
+            }
+            case 'status': {
+                const localizedStatus = settingsPage.getStatusText(msg.status);
+                let colorClass = 'color-status-unknown';
+                let icon = '❔';
+                if (msg.status === 'success') {
+                    colorClass = 'color-status-success';
+                    icon = '✅';
+                } else if (msg.status === 'indirect') {
+                    colorClass = 'color-status-indirect';
+                    icon = '☑️';
+                } else if (msg.status === 'fail') {
+                    colorClass = 'color-status-fail';
+                    icon = '❌';
+                } else {
+                    colorClass = 'color-status-unknown';
+                    icon = '❔';
+                }
+                const labelStatus = settingsPage.t('testLogLabelStatus');
+                messageHtml = `<span class="log-time">${timeStr}</span><span class="log-message"><span class="action-label ${colorClass}">${settingsPage.escapeHtml(labelStatus)}</span><span class="${colorClass}">${icon} ${settingsPage.escapeHtml(localizedStatus)}</span></span>`;
+                break;
+            }
+            case 'next': {
+                // Стрелка — символ, не локализуется
+                messageHtml = `<span class="log-time">${timeStr}</span><span class="log-message"><span class="action-label color-progress">→</span><span class="color-progress">${settingsPage.escapeHtml(settingsPage.t('testLogNext'))}</span></span>`;
+                break;
+            }
+            case 'stop': {
+                entryClass = 'stop-message';
+                messageHtml = `<span class="log-time">${timeStr}</span><span class="log-message"><span class="color-stop">⏹ ${settingsPage.escapeHtml(settingsPage.t('testLogStop'))}</span></span>`;
+                break;
+            }
+            case 'complete': {
+                entryClass = 'complete-message';
+                messageHtml = `<span class="log-time">${timeStr}</span><span class="log-message"><span class="color-complete">🏁 ${settingsPage.escapeHtml(settingsPage.t('testLogComplete'))}</span></span>`;
+                break;
+            }
+            default: {
+                messageHtml = `<span class="log-time">${timeStr}</span><span class="log-message">${settingsPage.escapeHtml(msg.message || '')}</span>`;
+            }
+        }
+
+        const entry = document.createElement('div');
+        entry.className = 'log-entry' + (entryClass ? ' ' + entryClass : '');
+        entry.innerHTML = messageHtml;
+        container.appendChild(entry);
+        container.scrollTop = container.scrollHeight;
+    }
+	
     // ========================
     // ProxyMust: site list and test functions
     // English: Site list building, test running and priority handling
@@ -5013,7 +5222,7 @@ private static loadServersGrid(servers: any[]) {
         menu.style.cssText = `position:fixed; background:${themeBg}; color:${themeText}; border:1px solid ${themeBorder}; box-shadow:2px 2px 10px rgba(0,0,0,0.2); z-index:10000; min-width:180px;`;
 
         const sites = settingsPage.getAllSitesList();
-        const selectedCountText = api.i18n.getMessage("settingsContextMenuSelectedCount", selectedProxyIds.length.toString()) || `Selected: ${selectedProxyIds.length}`;
+        const selectedCountText = api.i18n.getMessage("settingsContextMenuSelectedCount", selectedProxyIds.length.toString());
         const changeRatingText = api.i18n.getMessage("settingsContextMenuRatingTitle") || "Manual rating";
         const resetText = api.i18n.getMessage("settingsContextMenuResetRating") || "Reset rating";
         const favoriteText = api.i18n.getMessage("settingsContextMenuSetFavorite") || "Set favorite";
@@ -5021,8 +5230,8 @@ private static loadServersGrid(servers: any[]) {
         const exportText = api.i18n.getMessage("settingsContextMenuExportSelected") || "Export selected";
         const copyText = api.i18n.getMessage("settingsContextMenuCopyAddresses") || "Copy addresses";
         const deleteText = api.i18n.getMessage("settingsContextMenuDelete") || "Delete";
-        const preciseTestText = api.i18n.getMessage("settingsContextMenuPreciseTest") || "Точный тест (медленно)";
-        const expressTestText = api.i18n.getMessage("settingsContextMenuExpressTest") || "Быстрый тест (экспресс)";
+        const preciseTestText = api.i18n.getMessage("settingsContextMenuPreciseTest");
+        const expressTestText = api.i18n.getMessage("settingsContextMenuExpressTest");
 
         let html = `
     <div style="padding:4px 8px; background:${themeHeaderBg}; border-bottom:1px solid ${themeBorder}; color:${themeText};">${selectedCountText}</div>
@@ -5052,8 +5261,8 @@ private static loadServersGrid(servers: any[]) {
         <div style="border-top:1px solid ${themeBorder}; margin:4px 0;"></div>
     `;
         } else {
-            const moveToTopText = api.i18n.getMessage("settingsContextMenuMoveToTop") || "Move to top";
-            const moveToDownText = api.i18n.getMessage("settingsContextMenuMoveToDown") || "Move to down";
+			const moveToTopText = api.i18n.getMessage("settingsContextMenuMoveToTop");
+			const moveToDownText = api.i18n.getMessage("settingsContextMenuMoveToDown");
             html += `
         <div class="menu-item" data-action="move_to_top" style="padding:4px 12px; cursor:pointer;">⬆ ${moveToTopText}</div>
         <div class="menu-item" data-action="move_to_down" style="padding:4px 12px; cursor:pointer;">⬇ ${moveToDownText}</div>
@@ -5212,9 +5421,9 @@ private static loadServersGrid(servers: any[]) {
                             await settingsPage.saveProxyServersChanges();
                             // Обновляем выпадающий список активного прокси
                             settingsPage.loadDefaultProxyServer();
-                            messageBox.info("Default proxy server updated.");
+							messageBox.info(api.i18n.getMessage("defaultProxyUpdated"));
                         } else {
-                            messageBox.warning("Please select exactly one proxy to set as default.");
+                            messageBox.warning(api.i18n.getMessage("settingsContextMenuSetDefaultSingle"));
                         }
                         break;
                     case "copy":
@@ -5231,7 +5440,7 @@ private static loadServersGrid(servers: any[]) {
                             if (selectedProxies.length) {
                                 settingsPage.runTestForProxies(selectedProxies, site, false);
                             } else {
-                                messageBox.warning(api.i18n.getMessage("settingsProxyMustNoProxies") || "No proxies selected");
+                                messageBox.warning(api.i18n.getMessage("noProxiesSelected"));
                             }
                         }
                         break;
@@ -5241,7 +5450,7 @@ private static loadServersGrid(servers: any[]) {
                             if (selectedProxies.length) {
                                 settingsPage.runTestForProxies(selectedProxies, site, true);
                             } else {
-                                messageBox.warning(api.i18n.getMessage("settingsProxyMustNoProxies") || "No proxies selected");
+                                messageBox.warning(api.i18n.getMessage("noProxiesSelected"));
                             }
                         }
                         break;
@@ -5251,13 +5460,13 @@ private static loadServersGrid(servers: any[]) {
                             if (selectedProxies.length) {
                                 settingsPage.runCycleTestForProxies(selectedProxies, site);
                             } else {
-                                messageBox.warning(api.i18n.getMessage("settingsProxyMustNoProxies") || "No proxies selected");
+                                messageBox.warning(api.i18n.getMessage("noProxiesSelected"));
                             }
                         }
                         break;
                     case "test_cycle_prompt":
                         {
-                            const enterSiteMsg = api.i18n.getMessage("settingsProxyMustAddSitePrompt") || "Enter site domain (e.g. youtube.com):";
+                            const enterSiteMsg = api.i18n.getMessage("settingsProxyMustAddSitePrompt");
                             const enteredSite = prompt(enterSiteMsg);
                             if (enteredSite && enteredSite.trim()) {
                                 let normalizedSite = enteredSite.trim().toLowerCase();
@@ -5283,7 +5492,7 @@ private static loadServersGrid(servers: any[]) {
                                     if (selectedProxies.length) {
                                         settingsPage.runCycleTestForProxies(selectedProxies, normalizedSite);
                                     } else {
-                                        messageBox.warning(api.i18n.getMessage("settingsProxyMustNoProxies") || "No proxies selected");
+                                        messageBox.warning(api.i18n.getMessage("noProxiesSelected"));
                                     }
                                 }
                             }
@@ -5295,13 +5504,13 @@ private static loadServersGrid(servers: any[]) {
                             if (selectedProxies.length) {
                                 settingsPage.runExpressCycleTestForProxies(selectedProxies, site);
                             } else {
-                                messageBox.warning(api.i18n.getMessage("settingsProxyMustNoProxies") || "No proxies selected");
+                                messageBox.warning(api.i18n.getMessage("noProxiesSelected"));
                             }
                         }
                         break;
                     case "test_express_cycle_prompt":
                         {
-                            const enterSiteMsg = api.i18n.getMessage("settingsProxyMustAddSitePrompt") || "Enter site domain (e.g. youtube.com):";
+                            const enterSiteMsg = api.i18n.getMessage("settingsProxyMustAddSitePrompt");
                             const enteredSite = prompt(enterSiteMsg);
                             if (enteredSite && enteredSite.trim()) {
                                 let normalizedSite = enteredSite.trim().toLowerCase();
@@ -5327,7 +5536,7 @@ private static loadServersGrid(servers: any[]) {
                                     if (selectedProxies.length) {
                                         settingsPage.runExpressCycleTestForProxies(selectedProxies, normalizedSite);
                                     } else {
-                                        messageBox.warning(api.i18n.getMessage("settingsProxyMustNoProxies") || "No proxies selected");
+                                        messageBox.warning(api.i18n.getMessage("noProxiesSelected"));
                                     }
                                 }
                             }
@@ -5335,7 +5544,7 @@ private static loadServersGrid(servers: any[]) {
                         break;
                     case "test_express_prompt":
                         {
-                            const enterSiteMsg = api.i18n.getMessage("settingsProxyMustAddSitePrompt") || "Enter site domain (e.g. youtube.com):";
+                            const enterSiteMsg = api.i18n.getMessage("settingsProxyMustAddSitePrompt");
                             const enteredSite = prompt(enterSiteMsg);
                             if (enteredSite && enteredSite.trim()) {
                                 let normalizedSite = enteredSite.trim().toLowerCase();
@@ -5361,7 +5570,7 @@ private static loadServersGrid(servers: any[]) {
                                     if (selectedProxies.length) {
                                         settingsPage.runTestForProxies(selectedProxies, normalizedSite, true);
                                     } else {
-                                        messageBox.warning(api.i18n.getMessage("settingsProxyMustNoProxies") || "No proxies selected");
+                                        messageBox.warning(api.i18n.getMessage("noProxiesSelected"));
                                     }
                                 }
                             }
@@ -5369,7 +5578,7 @@ private static loadServersGrid(servers: any[]) {
                         break;
                     case "test_express_cycle_prompt":
                         {
-                            const enterSiteMsg = api.i18n.getMessage("settingsProxyMustAddSitePrompt") || "Enter site domain (e.g. youtube.com):";
+                            const enterSiteMsg = api.i18n.getMessage("settingsProxyMustAddSitePrompt");
                             const enteredSite = prompt(enterSiteMsg);
                             if (enteredSite && enteredSite.trim()) {
                                 let normalizedSite = enteredSite.trim().toLowerCase();
@@ -5393,7 +5602,7 @@ private static loadServersGrid(servers: any[]) {
                                     if (selectedProxies.length) {
                                         settingsPage.runExpressCycleTestForProxies(selectedProxies, normalizedSite);
                                     } else {
-                                        messageBox.warning(api.i18n.getMessage("settingsProxyMustNoProxies") || "No proxies selected");
+                                        messageBox.warning(api.i18n.getMessage("noProxiesSelected"));
                                     }
                                 }
                             }
@@ -5781,7 +5990,7 @@ private static loadServersGrid(servers: any[]) {
         }
 
         if (!proxies || !proxies.length) {
-            messageBox.warning(api.i18n.getMessage("settingsProxyMustNoProxies") || "No proxies to test.");
+            messageBox.warning(api.i18n.getMessage("settingsProxyMustNoProxies"));
             return;
         }
 
@@ -5832,7 +6041,7 @@ private static loadServersGrid(servers: any[]) {
         }
 
         if (!proxies || !proxies.length) {
-            messageBox.warning(api.i18n.getMessage("settingsProxyMustNoProxies") || "No proxies to test.");
+            messageBox.warning(api.i18n.getMessage("settingsProxyMustNoProxies"));
             return;
         }
 
@@ -5882,7 +6091,7 @@ private static loadServersGrid(servers: any[]) {
         }
 
         if (!proxies || !proxies.length) {
-            messageBox.warning(api.i18n.getMessage("settingsProxyMustNoProxies") || "No proxies to test.");
+            messageBox.warning(api.i18n.getMessage("settingsProxyMustNoProxies"));
             return;
         }
 
@@ -5920,6 +6129,12 @@ private static loadServersGrid(servers: any[]) {
 
     private static cancelCurrentTest(): void {
         if (settingsPage.isTestingForSite) {
+            // English: Immediately show stop message in the log
+            // Russian: Немедленно показываем сообщение об остановке в логе
+            settingsPage.renderLogMessage({
+                type: 'stop',
+                timestamp: Date.now()
+            });
             // English: Send cancel commands for all possible test types
             // Russian: Отправляем команды отмены для всех возможных типов тестов
             PolyFill.runtimeSendMessage({ command: "CANCEL_PROXY_TEST_FOR_SITE" });
@@ -6032,7 +6247,7 @@ private static loadServersGrid(servers: any[]) {
             }
 
             if (!proxies.length) {
-                messageBox.warning(api.i18n.getMessage("settingsProxyMustNoProxies") || "No proxies to test.");
+                messageBox.warning(api.i18n.getMessage("settingsProxyMustNoProxies"));
                 return;
             }
 

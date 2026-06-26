@@ -21,6 +21,8 @@ import { ProxyServer } from "./definitions";
 import { api } from "../lib/environment";
 import { IpServiceManager } from "./IpServiceManager";
 import { Settings } from "./Settings";
+import { Core } from "./Core";
+import { CountryCode } from "../lib/CountryCode";
 
 // ==================== Utility functions ====================
 // English: Checks if a string is a valid IPv4 or IPv6 address
@@ -98,7 +100,7 @@ async function applyProxyConfig(
 ): Promise<{ originalConfig: any; initialDelay: number }> {
     const proxyAPI = api.proxy;
     if (!proxyAPI) {
-        throw new Error("Нет API прокси");
+        throw new Error(api.i18n.getMessage('proxyCheckerNoProxyApi'));
     }
 
     // Расчёт задержки
@@ -180,7 +182,7 @@ export async function checkProxy(
 
     let normalizedUrl = testUrl.trim();
     if (!normalizedUrl) {
-        return { alive: false, exact: false, status: "fail", latencyMs: 0, error: "Пустой тестовый URL" };
+        return { alive: false, exact: false, status: "fail", latencyMs: 0, error: api.i18n.getMessage('proxyCheckerEmptyUrl') };
     }
     if (!normalizedUrl.startsWith('http://') && !normalizedUrl.startsWith('https://')) {
         normalizedUrl = 'https://' + normalizedUrl;
@@ -219,6 +221,21 @@ export async function checkProxy(
     } catch (_) { /* ignore */ }
     console.log(`[ProxyCheckerCore] Прозвон выполнен`);
 
+    // English: Ensure CountryCode is initialized for flag detection
+    // Russian: Инициализируем CountryCode для определения флага
+    await CountryCode.ensureInitialized();
+
+    // English: Send start log step
+    // Russian: Отправляем шаг начала в лог
+    Core.sendTestLogStep({
+        type: 'start',
+        proxyId: proxy.id || 'unknown',
+        host: proxy.host,
+        port: proxy.port,
+        protocol: proxy.protocol,
+        countryCode: proxy.countryCode || CountryCode.getCountryCode(proxy.host) || '',
+    });
+
     // Ожидание оседания
     await new Promise(r => setTimeout(r, initialDelay));
 
@@ -248,6 +265,14 @@ export async function checkProxy(
 
         if (ip) {
             retrievedIp = ip;
+            // English: Send IP obtained to log
+            // Russian: Отправляем полученный IP в лог
+            Core.sendTestLogStep({
+                type: 'ip',
+                proxyId: proxy.id || 'unknown',
+                ip: ip,
+                success: true
+            });
             let isMatch = false;
             let isSameSubnetMatch = false;
             if (directIpStr !== null) {
@@ -290,6 +315,14 @@ export async function checkProxy(
             }
         } else {
             console.log(`[ProxyCheckerCore] IP не получен`);
+            // English: Send IP not obtained to log
+            // Russian: Отправляем отсутствие IP в лог
+            Core.sendTestLogStep({
+                type: 'ip',
+                proxyId: proxy.id || 'unknown',
+                ip: null,
+                success: false
+            });
         }
         await decideFinalResult();
     }, options.ipCheckDelay);
@@ -371,10 +404,10 @@ export async function checkProxy(
 
                 if (isRealIndirect) {
                     console.log(`%c[ProxyCheckerCore] ☑️ Косвенный успех (страница не загружена)`, 'color: #0088ff');
-                    await finishTest("indirect", "Косвенный успех (страница не загружена)");
+                    await finishTest("indirect", api.i18n.getMessage('proxyCheckerIndirectSuccessPageNotLoaded'));
                 } else {
                     console.log(`%c[ProxyCheckerCore] Неизвестно (IP получен, страница не загружена)`, 'color: #ffa500');
-                    await finishTest("ip-only", "Неизвестно (IP получен, страница не загружена)");
+                    await finishTest("ip-only", api.i18n.getMessage('proxyCheckerUnknownIpOnly'));
                 }
                 return;
             }
@@ -392,7 +425,7 @@ export async function checkProxy(
 
         if (directIpDetected) {
             if (Settings.current?.options?.enableDirectIpDetection === false) {
-                await finishTest("fail", "Прокси возвращает свой IP (эталон)");
+                await finishTest("fail", api.i18n.getMessage('proxyCheckerProxyReturnsOwnIp'));
                 return;
             }
             if (options.retryOnDirectIp) {
@@ -406,9 +439,9 @@ export async function checkProxy(
             // English: If IP was retrieved even though main tab failed, treat as ip-only (unknown)
             // Russian: Если IP был получен, даже если основная вкладка не загрузилась, считаем неизвестным (ip-only)
             if (retrievedIp !== null) {
-                await finishTest("ip-only", "Неизвестно (IP получен, страница не загружена)");
+                await finishTest("ip-only", api.i18n.getMessage('proxyCheckerUnknownIpOnly'));
             } else {
-                await finishTest("fail", "Прокси не работает");
+                await finishTest("fail", api.i18n.getMessage('proxyCheckerProxyNotWorking'));
             }
         }
     };
@@ -416,6 +449,14 @@ export async function checkProxy(
     const finishTest = async (status: "success" | "indirect" | "ip-only" | "fail", error?: string) => {
         if (testCompleted) return;
         testCompleted = true;
+        // English: Send final status to log
+        // Russian: Отправляем финальный статус в лог
+        Core.sendTestLogStep({
+            type: 'status',
+            proxyId: proxy.id || 'unknown',
+            status: status,
+            statusText: status
+        });
         const alive = status === "success" || status === "indirect" || status === "ip-only";
         const exact = status === "success";
         finalResult = { alive, exact, status, latencyMs: Date.now() - startTime, ip: retrievedIp, error };
@@ -463,6 +504,15 @@ export async function checkProxy(
             mainTabFailed = true;
         }
 
+        // English: Send page availability to log
+        // Russian: Отправляем доступность страницы в лог
+        Core.sendTestLogStep({
+            type: 'page',
+            proxyId: proxy.id || 'unknown',
+            site: mainUrl,
+            pageSuccess: mainSuccess || faviconSuccess
+        });
+
         await decideFinalResult();
 
         // Основной таймаут
@@ -498,7 +548,7 @@ export async function checkProxy(
 // ==================== Проверка для циклических тестов (Cycle / Express-Cycle) ====================
 
 export async function checkCycleProxy(
-    proxy: { id: string; name: string; host: string; port: number; protocol: string },
+    proxy: { id: string; name: string; host: string; port: number; protocol: string; countryCode?: string },
     testUrl: string,
     directIp: string | null,
     options: CycleCheckOptions,
@@ -507,7 +557,7 @@ export async function checkCycleProxy(
     const startTime = Date.now();
     let normalizedUrl = testUrl.trim();
     if (!normalizedUrl) {
-        return { status: "fail", latencyMs: 0, error: "Пустой тестовый URL" };
+        return { status: "fail", latencyMs: 0, error: api.i18n.getMessage('proxyCheckerEmptyUrl') };
     }
     if (!normalizedUrl.startsWith('http://') && !normalizedUrl.startsWith('https://')) {
         normalizedUrl = 'https://' + normalizedUrl;
@@ -516,6 +566,25 @@ export async function checkCycleProxy(
     const faviconUrl = mainUrl.replace(/\/$/, '') + '/favicon.ico';
 
     console.log(`[ProxyCheckerCore][Cycle] Проверка ${proxy.host}:${proxy.port} для ${mainUrl}`);
+
+    // English: Send start log step for cycle test
+    // Russian: Отправляем шаг начала для циклического теста
+// Ensure CountryCode is initialized
+await CountryCode.ensureInitialized();
+const countryCode = (proxy as any).countryCode || CountryCode.getCountryCode(proxy.host) || '';
+console.log(`[ProxyCheckerCore][Cycle] 🔍 countryCode for ${proxy.host}:`, {
+    fromProxy: (proxy as any).countryCode,
+    fromCountryCode: CountryCode.getCountryCode(proxy.host),
+    final: countryCode
+});
+Core.sendTestLogStep({
+    type: 'start',
+    proxyId: proxy.id || 'unknown',
+    host: proxy.host,
+    port: proxy.port,
+    protocol: proxy.protocol,
+    countryCode: countryCode,
+});
 
     let testCompleted = false;
     let hasIndirectSuccess = false;
@@ -542,6 +611,14 @@ export async function checkCycleProxy(
         if (testCompleted) return;
         if (ip) {
             retrievedIp = ip;
+            // English: Send IP obtained to log (cycle)
+            // Russian: Отправляем полученный IP в лог (цикл)
+            Core.sendTestLogStep({
+                type: 'ip',
+                proxyId: proxy.id || 'unknown',
+                ip: ip,
+                success: true
+            });
             let isMatch = false;
             let isSameSubnetMatch = false;
             if (directIp !== null) {
@@ -580,6 +657,14 @@ export async function checkCycleProxy(
             }
         } else {
             console.log(`[ProxyCheckerCore][Cycle] IP не получен`);
+            // English: Send IP not obtained to log (cycle)
+            // Russian: Отправляем отсутствие IP в лог (цикл)
+            Core.sendTestLogStep({
+                type: 'ip',
+                proxyId: proxy.id || 'unknown',
+                ip: null,
+                success: false
+            });
         }
         await decideFinalResult();
     }, options.ipCheckDelay);
@@ -654,10 +739,10 @@ export async function checkCycleProxy(
 
                 if (isRealIndirect) {
                     console.log(`%c[ProxyCheckerCore][Cycle] ☑️ Косвенный успех (страница не загружена)`, 'color: #0088ff');
-                    await finishTest("indirect", "Косвенный успех (страница не загружена)");
+                    await finishTest("indirect", api.i18n.getMessage('proxyCheckerIndirectSuccessPageNotLoaded'));
                 } else {
                     console.log(`%c[ProxyCheckerCore][Cycle] Неизвестно (IP получен, страница не загружена)`, 'color: #ffa500');
-                    await finishTest("ip-only", "Неизвестно (IP получен, страница не загружена)");
+                    await finishTest("ip-only", api.i18n.getMessage('proxyCheckerUnknownIpOnly'));
                 }
                 return;
             }
@@ -675,7 +760,7 @@ export async function checkCycleProxy(
 
         if (directIpDetected) {
             if (Settings.current?.options?.enableDirectIpDetection === false) {
-                await finishTest("fail", "Прокси возвращает свой IP (эталон)");
+                await finishTest("fail", api.i18n.getMessage('proxyCheckerProxyReturnsOwnIp'));
                 return;
             }
             if (options.retryOnDirectIp) {
@@ -689,9 +774,9 @@ export async function checkCycleProxy(
             // English: If IP was retrieved even though main tab failed, treat as ip-only (unknown)
             // Russian: Если IP был получен, даже если основная вкладка не загрузилась, считаем неизвестным (ip-only)
             if (retrievedIp !== null) {
-                await finishTest("ip-only", "Неизвестно (IP получен, страница не загружена)");
+                await finishTest("ip-only", api.i18n.getMessage('proxyCheckerUnknownIpOnly'));
             } else {
-                await finishTest("fail", "Прокси не работает");
+                await finishTest("fail", api.i18n.getMessage('proxyCheckerProxyNotWorking'));
             }
         }
     };
@@ -699,6 +784,14 @@ export async function checkCycleProxy(
     const finishTest = async (status: "success" | "indirect" | "ip-only" | "fail", error?: string) => {
         if (testCompleted) return;
         testCompleted = true;
+        // English: Send final status to log (cycle)
+        // Russian: Отправляем финальный статус в лог (цикл)
+        Core.sendTestLogStep({
+            type: 'status',
+            proxyId: proxy.id || 'unknown',
+            status: status,
+            statusText: status
+        });
         finalResult = { status, latencyMs: Date.now() - startTime, error };
 
         clearTimeout(mainTimeoutId);
@@ -744,6 +837,15 @@ export async function checkCycleProxy(
         } else {
             mainTabFailed = true;
         }
+
+        // English: Send page availability to log (cycle)
+        // Russian: Отправляем доступность страницы в лог (цикл)
+        Core.sendTestLogStep({
+            type: 'page',
+            proxyId: proxy.id || 'unknown',
+            site: mainUrl,
+            pageSuccess: mainSuccess || faviconSuccess
+        });
 
         await decideFinalResult();
 

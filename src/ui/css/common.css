@@ -979,3 +979,57 @@ html.popup.wide-mode-prompt body {
     max-width: 450px !important;
     overflow-x: visible !important;
 }
+
+/* ============================== */
+/* Test log viewer styles (embedded in settings) */
+/* ============================== */
+#logContainer .log-entry {
+    display: flex;
+    gap: 4px;
+    padding: 1px 0;
+    border-bottom: 1px solid #1a1a1a;
+    animation: fadeIn 0.15s ease-in;
+    line-height: 1.2;
+    align-items: baseline;
+    min-height: 16px;
+}
+#logContainer .log-time {
+    color: #aaa;
+    flex-shrink: 0;
+    min-width: 44px;
+    font-size: 9px;
+    user-select: none;
+    opacity: 0.9;
+}
+#logContainer .log-message {
+    flex: 1;
+    word-break: break-word;
+    white-space: pre-wrap;
+}
+#logContainer .action-label {
+    font-weight: bold;
+    margin-right: 4px;
+    display: inline;
+}
+#logContainer .color-start { color: #ffd700; }
+#logContainer .color-ip-success { color: #66b3ff; }
+#logContainer .color-ip-fail { color: #ff5555; }
+#logContainer .color-page-success { color: #00ff88; }
+#logContainer .color-page-fail { color: #ff5555; }
+#logContainer .color-status-success { color: #00ff88; font-weight: bold; }
+#logContainer .color-status-fail { color: #ff5555; font-weight: bold; }
+#logContainer .color-status-indirect { color: #66b3ff; font-weight: bold; }
+#logContainer .color-status-unknown { color: #d4d4d4; font-weight: bold; }
+#logContainer .color-stop { color: #ffaa00; font-weight: bold; }
+#logContainer .color-complete { color: #00ff88; font-weight: bold; }
+#logContainer .color-progress { color: #d4d4d4; }
+#logContainer .log-entry.stop-message {
+    border-left: 3px solid #ffaa00;
+    padding-left: 4px;
+    background: rgba(255,170,0,0.05);
+}
+#logContainer .log-entry.complete-message {
+    border-left: 3px solid #00ff88;
+    padding-left: 4px;
+    background: rgba(0,255,136,0.05);
+}

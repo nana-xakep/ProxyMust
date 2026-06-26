@@ -1,4 +1,4 @@
-{
+	{
 	"uiDirection": {
 		"message": "ltr"
 	},
@@ -1628,5 +1628,179 @@
 	},
 	"settingsGeneralEnableDirectIpDetectionDesc": {
 		"message": "सक्षम होने पर, आपका वास्तविक आईपी पता प्रॉक्सी कार्यक्षमता की तुलनात्मक जाँच के लिए बाहरी सेवाओं को भेजा जाता है। अक्षम होने पर, परीक्षण साइट लोडिंग और प्रॉक्सी स्रोत डेटा पर निर्भर करेंगे (कम सटीक लेकिन अधिक निजी)।"
+	},
+		"testLogTitle": {
+		"message": "प्रॉक्सी परीक्षण लॉग"
+	},
+	"testLogWaiting": {
+		"message": "परीक्षण शुरू होने की प्रतीक्षा..."
+	},
+	"testLogStart": {
+		"message": "▶ {0} ({1}) की जाँच की जा रही है"
+	},
+	"testLogIpSuccess": {
+		"message": "IP प्राप्त हुआ: {0}"
+	},
+	"testLogIpFail": {
+		"message": "IP प्राप्त नहीं हुआ"
+	},
+	"testLogPageSuccess": {
+		"message": "✓ {0} पहुँच योग्य है"
+	},
+	"testLogPageFail": {
+		"message": "✗ {0} पहुँच योग्य नहीं है"
+	},
+	"testLogStatus": {
+		"message": "अंतिम स्थिति: {0}"
+	},
+	"testLogNext": {
+		"message": "अगले प्रॉक्सी पर जा रहे हैं"
+	},
+	"testLogStop": {
+		"message": "परीक्षण रोक दिया गया – कृपया दूसरा परीक्षण शुरू करने से पहले वर्तमान जाँच समाप्त होने तक प्रतीक्षा करें।"
+	},
+	"testLogComplete": {
+		"message": "परीक्षण पूर्ण – अब आप एक नया परीक्षण शुरू कर सकते हैं।"
+	},
+	"testLogClear": {
+		"message": "साफ़ करें"
+	},
+	"testLogClose": {
+		"message": "बंद करें"
+	},
+	"testLogOpenButton": {
+		"message": "परीक्षण लॉग"
+	},
+	"testLogOpenFailed": {
+		"message": "लॉग विंडो खोलने में विफल।"
+	},
+	"testLogStatusSuccess": {
+		"message": "सफल"
+	},
+	"testLogStatusIndirect": {
+		"message": "अप्रत्यक्ष सफलता"
+	},
+	"testLogStatusFail": {
+		"message": "असफल"
+	},
+	"testLogStatusIpOnly": {
+		"message": "केवल IP"
+	},
+	"testLogStatusUnknown": {
+		"message": "अज्ञात"
+	},
+	"testLogPageAvailable": {
+		"message": "उपलब्ध"
+	},
+	"testLogPageUnavailable": {
+		"message": "अनुपलब्ध"
+	},
+	"settingsShowLog": {
+		"message": "लॉग दिखाएँ"
+	},
+	"testLogLabelProxy": {
+		"message": "प्रॉक्सी"
+	},
+	"testLogLabelSite": {
+		"message": "साइट"
+	},
+	"testLogLabelStatus": {
+		"message": "स्थिति"
+	},
+	"settingsHideLog": {
+		"message": "लॉग छिपाएँ"
+	},
+		"proxyCheckerEmptyUrl": {
+		"message": "टेस्ट URL खाली है"
+	},
+	"proxyCheckerNoProxyApi": {
+		"message": "प्रॉक्सी API उपलब्ध नहीं है"
+	},
+	"proxyCheckerIndirectSuccessPageNotLoaded": {
+		"message": "अप्रत्यक्ष सफलता (पेज लोड नहीं हुआ)"
+	},
+	"proxyCheckerProxyReturnsOwnIp": {
+		"message": "प्रॉक्सी अपना स्वयं का IP लौटाता है"
+	},
+	"proxyCheckerProxyNotWorking": {
+		"message": "प्रॉक्सी काम नहीं कर रहा है"
+	},
+	"proxyCheckerUnknownIpOnly": {
+		"message": "अज्ञात (IP प्राप्त हुआ, पेज लोड नहीं हुआ)"
+	},
+	"localProxyCheckerEmptyTestUrl": {
+		"message": "टेस्ट URL निर्दिष्ट नहीं है"
+	},
+	"loadingMessage": {
+		"message": "लोड हो रहा है…"
+	},
+	"loadingErrorHint": {
+		"message": "यदि आप यह देख रहे हैं तो पेज लोड करते समय कोई त्रुटि हुई है, कृपया पुनः लोड करें और समस्या की रिपोर्ट करें।"
+	},
+	"loadingReloadHint": {
+		"message": "या ब्राउज़र ने पेज लोड किया है न कि ProxyMust एक्सटेंशन। बस पेज को पुनः लोड करें।"
+	},
+	"footerBroughtBy": {
+		"message": "सलार द्वारा प्रस्तुत,"
+	},
+	"footerVersionInfo": {
+		"message": "ProxyMust {0} (SmartProxy 2.1 पर आधारित) – nana-xakep द्वारा अनुरक्षित | SmartProxy का एक शाखा"
+	},
+	"noProxiesSelected": {
+		"message": "कोई प्रॉक्सी चयनित नहीं है।"
+	},
+	"defaultProxyUpdated": {
+		"message": "डिफ़ॉल्ट प्रॉक्सी सर्वर अपडेट किया गया।"
+	},
+	"addSiteFailed": {
+		"message": "साइट जोड़ने में विफल।"
+	},
+	"popupAddProxySuccess": {
+		"message": "प्रॉक्सी रेटिंग और परीक्षण परिणामों के साथ सफलतापूर्वक जोड़ा गया!"
+	},
+	"popupAddProxyFailed": {
+		"message": "प्रॉक्सी जोड़ने में विफल।"
+	},
+	"popupAddProxyExistsConfirm": {
+		"message": "यह प्रॉक्सी पहले से मौजूद है (रेटिंग: {0})।\n\nक्या आप इस पर स्विच करके रेटिंग बदलना चाहते हैं?"
+	},
+	"popupNoTestData": {
+		"message": "कोई परीक्षण डेटा उपलब्ध नहीं है। पहले एक परीक्षण चलाएँ।"
+	},
+	"popupNoNewSuccessfulProxies": {
+		"message": "जोड़ने के लिए कोई नई सफल सब्सक्रिप्शन प्रॉक्सी नहीं है।"
+	},
+	"popupAddedProxiesCount": {
+		"message": "{0} प्रॉक्सी जोड़ी गई{1}"
+	},
+	"popupAddSubscriptionTitle": {
+		"message": "मैन्युअल सूची में जोड़ें?"
+	},
+	"popupAddSubscriptionConfirm": {
+		"message": "यह प्रॉक्सी को उसकी सभी सेटिंग्स और परीक्षण परिणामों के साथ कॉपी करेगा। जारी रखें?"
+	},
+	"popupAddSubscriptionYes": {
+		"message": "जोड़ें"
+	},
+	"settingsContextMenuSelectedCount": {
+		"message": "चयनित: {0}"
+	},
+		"settingsGeneralWebDavServerUrlPlaceholder": {
+		"message": "WebDAV सर्वर URL दर्ज करें"
+	},
+	"settingsGeneralWebDavServerUserPlaceholder": {
+		"message": "उपयोगकर्ता नाम दर्ज करें"
+	},
+	"settingsGeneralWebDavServerPasswordPlaceholder": {
+		"message": "पासवर्ड दर्ज करें"
+	},
+		"settingsContextMenuSetDefaultSingle": {
+		"message": "कृपया डिफ़ॉल्ट के रूप में सेट करने के लिए बिल्कुल एक प्रॉक्सी चुनें।"
+	},
+	"popupAddProxiesPartialFail": {
+		"message": "कुछ प्रॉक्सी जोड़ने में विफल।"
+	},
+	"settingsExpressCycleTestFailed": {
+		"message": "एक्सप्रेस साइकल परीक्षण विफल: {0}"
 	}
 }

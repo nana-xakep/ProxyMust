@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Original SmartProxy copyright:
  * This file is part of SmartProxy <https://github.com/salarcode/SmartProxy>,
  * Copyright (C) 2023 Salar Khalilzadeh <salar2k@gmail.com>
@@ -127,6 +127,13 @@ export class Core {
                 tabId: activeInfo.tabId
             });
         });
+		// English: Listen for test log window closure to reset the reference
+		// Russian: Слушаем закрытие окна лога для сброса ссылки
+		api.windows.onRemoved.addListener((windowId) => {
+			if (Core._testLogWindowId === windowId) {
+				Core._testLogWindowId = null;
+			}
+		});
 		TabManager.TabUpdated.on(Core.onTabUpdatedUpdateActionStatus);
 
 		// register the request logger used for Proxyable Resources
@@ -297,6 +304,16 @@ export class Core {
 				return Core.handleDebugGetDiagnosticsLogs(sendResponse);
 
 			case "CHECK_START":
+				// English: Reset the test timeout timer on progress update
+				// Russian: Сбрасываем таймер таймаута теста при обновлении прогресса
+				TestManager.resetTimer();
+				// English: Automatically open test log window when test starts
+				// Russian: Автоматически открываем окно лога при старте теста
+				Core.handleOpenTestLog((response) => {
+					// Ignore response, just ensure window opens
+				});
+				break;
+
 			case "CHECK_PROGRESS":
 				// English: Reset the test timeout timer on progress update
 				// Russian: Сбрасываем таймер таймаута теста при обновлении прогресса
@@ -373,7 +390,18 @@ export class Core {
 				
 			case "CANCEL_EXPRESS_CYCLE_TEST_FOR_SITE":
                 return Core.handleCancelExpressCycleTestForSite(message, sendResponse);	
+			case "OPEN_TEST_LOG":
+				return Core.handleOpenTestLog(sendResponse);
 
+			case "CLOSE_TEST_LOG":
+				return Core.handleCloseTestLog(sendResponse);
+
+			case "GET_TEST_LOG_HISTORY":
+				return Core.handleGetTestLogHistory(sendResponse);
+			
+			case "TOGGLE_TEST_LOG_PIN":
+				return Core.handleToggleTestLogPin(sendResponse);
+				
 			default:
 				if (sendResponse) sendResponse(null);
 				return false;
@@ -407,10 +435,103 @@ export class Core {
      * Russian: Обрабатывает отмену экспресс-циклического теста.
      */
     private static handleCancelExpressCycleTestForSite(message: any, sendResponse: Function): boolean {
+        // English: Immediately send stop message to log
+        // Russian: Немедленно отправляем сообщение об остановке в лог
+        Core.sendTestLogStep({
+            type: 'stop',
+            timestamp: Date.now()
+        });
         ExpressProxyCycleTester.cancelTest();
         if (sendResponse) sendResponse({ success: true });
         return false;
     }
+	
+	/**
+ * English: Opens the test log window.
+ * Russian: Открывает окно лога тестирования.
+ */
+	private static handleOpenTestLog(sendResponse: Function): boolean {
+		if (Core._testLogWindowId !== null) {
+			// Check if window still exists
+			api.windows.get(Core._testLogWindowId, (win) => {
+				if (api.runtime?.lastError || !win) {
+					Core._testLogWindowId = null;
+					Core._createTestLogWindow(sendResponse);
+				} else {
+					// Focus existing window
+					api.windows.update(Core._testLogWindowId, { focused: true });
+					if (sendResponse) sendResponse({ success: true, alreadyOpen: true });
+				}
+			});
+			return true;
+		} else {
+			Core._createTestLogWindow(sendResponse);
+			return true;
+		}
+	}
+
+	/**
+	 * English: Creates the test log window.
+	 * Russian: Создаёт окно лога тестирования.
+	 */
+	private static _createTestLogWindow(sendResponse?: Function): void {
+		const width = 450;
+		const height = 900;
+		api.windows.create({
+			url: api.runtime.getURL('ui/test-log.html'),
+			type: 'popup',
+			width: width,
+			height: height,
+			focused: true
+		}, (win) => {
+			if (win) {
+				Core._testLogWindowId = win.id;
+				Core._testLogPinned = false; // Сброс закрепления при новом окне
+				if (sendResponse) sendResponse({ success: true, windowId: win.id });
+			} else {
+				if (sendResponse) sendResponse({ success: false, error: 'Failed to create window' });
+			}
+		});
+	}
+
+	/**
+	 * English: Closes the test log window.
+	 * Russian: Закрывает окно лога тестирования.
+	 */
+	private static handleCloseTestLog(sendResponse: Function): boolean {
+		if (Core._testLogWindowId !== null) {
+			api.windows.remove(Core._testLogWindowId, () => {
+				Core._testLogWindowId = null;
+				if (sendResponse) sendResponse({ success: true });
+			});
+		} else {
+			if (sendResponse) sendResponse({ success: false, error: 'No log window open' });
+		}
+		return true;
+	}
+
+	/**
+	 * English: Toggles pin state of the test log window.
+	 * Russian: Переключает состояние закрепления окна лога тестирования.
+	 */
+	private static handleToggleTestLogPin(sendResponse: Function): boolean {
+		Core._testLogPinned = !Core._testLogPinned;
+		if (sendResponse) {
+			sendResponse({ success: true, pinned: Core._testLogPinned });
+		}
+		return false;
+	}
+
+	/**
+	 * English: Returns the log history to the requesting window.
+	 * Russian: Возвращает историю лога запрашивающему окну.
+	 */
+	private static handleGetTestLogHistory(sendResponse: Function): boolean {
+		if (sendResponse) {
+			sendResponse({ history: Core._logBuffer });
+		}
+		return false;
+	}
 
 	private static handleProxyableRemoveProxyableLog(message: any): void {
 		if (message.tabId === null) return;
@@ -1055,6 +1176,12 @@ export class Core {
 	 * Russian: Обрабатывает отмену циклического теста.
 	 */
 	private static handleCancelCycleTestForSite(message: any, sendResponse: Function): boolean {
+		// English: Immediately send stop message to log
+		// Russian: Немедленно отправляем сообщение об остановке в лог
+		Core.sendTestLogStep({
+			type: 'stop',
+			timestamp: Date.now()
+		});
 		ProxyCycleTester.cancelTest();
 		if (sendResponse) sendResponse({ success: true });
 		return false;
@@ -1091,6 +1218,12 @@ export class Core {
      * Обрабатывает отмену теста прокси для конкретного сайта
      */
     private static handleCancelProxyTestForSite(message: any, sendResponse: Function): boolean {
+        // English: Immediately send stop message to log
+        // Russian: Немедленно отправляем сообщение об остановке в лог
+        Core.sendTestLogStep({
+            type: 'stop',
+            timestamp: Date.now()
+        });
         ProxyTester.cancelTestForSite().then(() => {
             if (sendResponse) sendResponse({ success: true });
         }).catch((err) => {
@@ -1309,6 +1442,23 @@ private static async handleAddSubscriptionProxyToManual(message: any, sendRespon
 	// ==================== Helper Methods for Proxy Management ====================
 
 	private static proxyCache: Map<string, ProxyServer> | null = null;
+	
+		// ==================== Test Log Window ====================
+	// English: Stores the window ID of the test log window (if open)
+	// Russian: Хранит ID окна лога тестирования (если открыто)
+	private static _testLogWindowId: number | null = null;
+
+	// English: Buffer of log messages (max 200 entries)
+	// Russian: Буфер сообщений лога (макс. 200 записей)
+	private static _logBuffer: any[] = [];
+
+	// English: Maximum number of log entries to keep
+	// Russian: Максимальное количество записей в логе
+	private static readonly MAX_LOG_BUFFER = 200;
+
+	// English: Whether the test log window is pinned (always on top via focus)
+	// Russian: Закреплено ли окно лога (поверх всех через фокусировку)
+	private static _testLogPinned: boolean = false;
 
 	private static normalizeHost(host: string): string | null {
 		if (!host || typeof host !== 'string') return null;
@@ -1815,6 +1965,57 @@ private static async handleAddSubscriptionProxyToManual(message: any, sendRespon
 			});
 		});
 	}
+
+	/**
+	 * English: Sends a test log step to the test log window (if open) and stores it in buffer.
+	 * Russian: Отправляет шаг лога тестирования в окно лога (если открыто) и сохраняет в буфере.
+	 */
+private static _stopSent: boolean = false;
+private static _completeSent: boolean = false;
+
+public static sendTestLogStep(data: any): void {
+    // English: Prevent duplicate stop/complete messages from multiple testers
+    // Russian: Предотвращаем дублирование сообщений stop/complete от нескольких тестеров
+    if (data.type === 'stop') {
+        if (Core._stopSent) return;
+        Core._stopSent = true;
+        Core._completeSent = false;
+    }
+    if (data.type === 'complete') {
+        if (Core._completeSent) return;
+        Core._completeSent = true;
+        Core._stopSent = false;
+    }
+
+    // Add to buffer
+    Core._logBuffer.push(data);
+    if (Core._logBuffer.length > Core.MAX_LOG_BUFFER) {
+        Core._logBuffer.shift();
+    }
+
+    // English: Send to ALL listeners (including settings page embedded log and separate log window)
+    // Russian: Отправляем ВСЕМ слушателям (включая встроенный лог на странице настроек и отдельное окно лога)
+    try {
+        api.runtime.sendMessage({
+            command: 'PROXY_TEST_STEP',
+            data: data
+        });
+    } catch (e) {
+        // Ignore
+    }
+
+    // English: If test log window is open and pinned, bring it to front
+    // Russian: Если окно лога открыто и закреплено, выводим его на передний план
+    if (Core._testLogWindowId !== null && Core._testLogPinned) {
+        try {
+            api.windows.update(Core._testLogWindowId, { focused: true });
+        } catch (e) {
+            // Window was closed, reset ID
+            Core._testLogWindowId = null;
+            Core._testLogPinned = false;
+        }
+    }
+}
 
 	/**
 	 * English: Handles clearing autoStatus for proxies from settings page

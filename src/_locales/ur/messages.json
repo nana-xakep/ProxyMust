@@ -1628,5 +1628,179 @@
 	},
 	"settingsGeneralEnableDirectIpDetectionDesc": {
 		"message": "فعال ہونے پر، آپ کا حقیقی آئی پی ایڈریس پراکسی کی فعالیت کی تقابلی جانچ کے لیے بیرونی خدمات کو بھیجا جاتا ہے۔ غیر فعال ہونے پر، ٹیسٹ سائٹ لوڈنگ اور پراکسی ماخذ کے ڈیٹا پر منحصر ہوں گے (کم درست لیکن زیادہ نجی)۔"
+	},
+		"testLogTitle": {
+		"message": "پراکسی ٹیسٹ لاگ"
+	},
+	"testLogWaiting": {
+		"message": "ٹیسٹ شروع ہونے کا انتظار..."
+	},
+	"testLogStart": {
+		"message": "▶ {0} ({1}) کی جانچ کی جا رہی ہے"
+	},
+	"testLogIpSuccess": {
+		"message": "IP حاصل ہوا: {0}"
+	},
+	"testLogIpFail": {
+		"message": "IP حاصل نہیں ہوا"
+	},
+	"testLogPageSuccess": {
+		"message": "✓ {0} قابل رسائی ہے"
+	},
+	"testLogPageFail": {
+		"message": "✗ {0} قابل رسائی نہیں ہے"
+	},
+	"testLogStatus": {
+		"message": "حتمی حالت: {0}"
+	},
+	"testLogNext": {
+		"message": "اگلے پراکسی پر جا رہے ہیں"
+	},
+	"testLogStop": {
+		"message": "ٹیسٹ روک دیا گیا – براہ کرم دوسرا ٹیسٹ شروع کرنے سے پہلے موجودہ جانچ مکمل ہونے کا انتظار کریں۔"
+	},
+	"testLogComplete": {
+		"message": "ٹیسٹ مکمل – اب آپ نیا ٹیسٹ شروع کر سکتے ہیں۔"
+	},
+	"testLogClear": {
+		"message": "صاف کریں"
+	},
+	"testLogClose": {
+		"message": "بند کریں"
+	},
+	"testLogOpenButton": {
+		"message": "ٹیسٹ لاگ"
+	},
+	"testLogOpenFailed": {
+		"message": "لاگ ونڈو کھولنے میں ناکامی۔"
+	},
+	"testLogStatusSuccess": {
+		"message": "کامیاب"
+	},
+	"testLogStatusIndirect": {
+		"message": "بالواسطہ کامیابی"
+	},
+	"testLogStatusFail": {
+		"message": "ناکام"
+	},
+	"testLogStatusIpOnly": {
+		"message": "صرف IP"
+	},
+	"testLogStatusUnknown": {
+		"message": "نامعلوم"
+	},
+	"testLogPageAvailable": {
+		"message": "دستیاب"
+	},
+	"testLogPageUnavailable": {
+		"message": "دستیاب نہیں"
+	},
+	"settingsShowLog": {
+		"message": "لاگ دکھائیں"
+	},
+	"testLogLabelProxy": {
+		"message": "پراکسی"
+	},
+	"testLogLabelSite": {
+		"message": "سائٹ"
+	},
+	"testLogLabelStatus": {
+		"message": "حالت"
+	},
+	"settingsHideLog": {
+		"message": "لاگ چھپائیں"
+	},
+		"proxyCheckerEmptyUrl": {
+		"message": "ٹیسٹ کا URL خالی ہے"
+	},
+	"proxyCheckerNoProxyApi": {
+		"message": "پراکسی API دستیاب نہیں ہے"
+	},
+	"proxyCheckerIndirectSuccessPageNotLoaded": {
+		"message": "بالواسطہ کامیابی (صفحہ لوڈ نہیں ہوا)"
+	},
+	"proxyCheckerProxyReturnsOwnIp": {
+		"message": "پراکسی اپنا IP لوٹاتی ہے"
+	},
+	"proxyCheckerProxyNotWorking": {
+		"message": "پراکسی کام نہیں کر رہی"
+	},
+	"proxyCheckerUnknownIpOnly": {
+		"message": "نامعلوم (IP موصول، صفحہ لوڈ نہیں ہوا)"
+	},
+	"localProxyCheckerEmptyTestUrl": {
+		"message": "ٹیسٹ کا URL متعین نہیں ہے"
+	},
+	"loadingMessage": {
+		"message": "لوڈ ہو رہا ہے…"
+	},
+	"loadingErrorHint": {
+		"message": "اگر آپ یہ دیکھ رہے ہیں تو صفحہ لوڈ کرتے وقت کوئی خرابی ہوئی ہے، براہ کرم دوبارہ لوڈ کریں اور مسئلہ کی اطلاع دیں۔"
+	},
+	"loadingReloadHint": {
+		"message": "یا براؤزر نے صفحہ لوڈ کیا ہے نہ کہ ProxyMust ایکسٹینشن۔ بس صفحہ کو دوبارہ لوڈ کریں۔"
+	},
+	"footerBroughtBy": {
+		"message": "سالار کی طرف سے پیش کردہ،"
+	},
+	"footerVersionInfo": {
+		"message": "ProxyMust {0} (SmartProxy 2.1 پر مبنی) – nana-xakep کے زیر انتظام | SmartProxy کی ایک شاخ"
+	},
+	"noProxiesSelected": {
+		"message": "کوئی پراکسی منتخب نہیں کی گئی۔"
+	},
+	"defaultProxyUpdated": {
+		"message": "طے شدہ پراکسی سرور اپ ڈیٹ ہو گیا۔"
+	},
+	"addSiteFailed": {
+		"message": "سائٹ شامل کرنے میں ناکامی۔"
+	},
+	"popupAddProxySuccess": {
+		"message": "پراکسی کامیابی سے درجہ بندی اور ٹیسٹ کے نتائج کے ساتھ شامل کر دی گئی!"
+	},
+	"popupAddProxyFailed": {
+		"message": "پراکسی شامل کرنے میں ناکامی۔"
+	},
+	"popupAddProxyExistsConfirm": {
+		"message": "یہ پراکسی پہلے سے موجود ہے (درجہ بندی: {0})۔\n\nکیا آپ اس پر سوئچ کر کے درجہ بندی تبدیل کرنا چاہتے ہیں؟"
+	},
+	"popupNoTestData": {
+		"message": "کوئی ٹیسٹ ڈیٹا دستیاب نہیں۔ پہلے ٹیسٹ چلائیں۔"
+	},
+	"popupNoNewSuccessfulProxies": {
+		"message": "شامل کرنے کے لیے کوئی نئی کامیاب سبسکرپشن پراکسی نہیں۔"
+	},
+	"popupAddedProxiesCount": {
+		"message": "{0} پراکسی شامل کی گئی{1}"
+	},
+	"popupAddSubscriptionTitle": {
+		"message": "دستی فہرست میں شامل کریں؟"
+	},
+	"popupAddSubscriptionConfirm": {
+		"message": "یہ پراکسی کو اس کی تمام ترتیبات اور ٹیسٹ کے نتائج کے ساتھ کاپی کرے گا۔ جاری رکھیں؟"
+	},
+	"popupAddSubscriptionYes": {
+		"message": "شامل کریں"
+	},
+	"settingsContextMenuSelectedCount": {
+		"message": "منتخب کردہ: {0}"
+	},
+		"settingsGeneralWebDavServerUrlPlaceholder": {
+		"message": "WebDAV سرور کا URL درج کریں"
+	},
+	"settingsGeneralWebDavServerUserPlaceholder": {
+		"message": "صارف نام درج کریں"
+	},
+	"settingsGeneralWebDavServerPasswordPlaceholder": {
+		"message": "پاس ورڈ درج کریں"
+	},
+		"settingsContextMenuSetDefaultSingle": {
+		"message": "براہ کرم ڈیفالٹ کے طور پر سیٹ کرنے کے لیے بالکل ایک پراکسی منتخب کریں۔"
+	},
+	"popupAddProxiesPartialFail": {
+		"message": "کچھ پراکسی شامل کرنے میں ناکامی۔"
+	},
+	"settingsExpressCycleTestFailed": {
+		"message": "ایکسپریس سائیکل ٹیسٹ ناکام: {0}"
 	}
 }

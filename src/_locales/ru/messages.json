@@ -1634,5 +1634,179 @@
 	},
 	"settingsGeneralEnableDirectIpDetectionDesc": {
 		"message": "При включении ваш реальный IP-адрес отправляется внешним сервисам для сравнительной проверки работоспособности прокси. При отключении тесты будут полагаться на загрузку сайтов и исходные данные прокси (менее точно, но более приватно)."
+	},
+	"testLogTitle": {
+    "message": "Лог тестирования прокси"
+	},
+	"testLogWaiting": {
+		"message": "Ожидание начала теста..."
+	},
+	"testLogStart": {
+		"message": "▶ Проверка {0} ({1})"
+	},
+	"testLogIpSuccess": {
+		"message": "IP получен: {0}"
+	},
+	"testLogIpFail": {
+		"message": "IP не получен"
+	},
+	"testLogPageSuccess": {
+		"message": "✓ {0} доступен"
+	},
+	"testLogPageFail": {
+		"message": "✗ {0} недоступен"
+	},
+	"testLogStatus": {
+		"message": "Итоговый статус: {0}"
+	},
+	"testLogNext": {
+		"message": "Переход к следующему прокси"
+	},
+	"testLogStop": {
+		"message": "Тест остановлен – дождитесь полного завершения текущих проверок перед запуском других тестов."
+	},
+	"testLogComplete": {
+		"message": "Тест полностью завершён – теперь можно запускать новые проверки."
+	},
+	"testLogClear": {
+		"message": "Очистить"
+	},
+	"testLogClose": {
+		"message": "Закрыть"
+	},
+	"testLogOpenButton": {
+    "message": "Лог тестирования"
+	},
+	"testLogOpenFailed": {
+		"message": "Не удалось открыть окно лога."
+	},
+	"testLogStatusSuccess": {
+		"message": "УСПЕХ"
+	},
+	"testLogStatusIndirect": {
+		"message": "КОСВЕННЫЙ УСПЕХ"
+	},
+	"testLogStatusFail": {
+		"message": "НЕУДАЧА"
+	},
+	"testLogStatusIpOnly": {
+		"message": "ТОЛЬКО IP"
+	},
+	"testLogStatusUnknown": {
+		"message": "НЕИЗВЕСТНО"
+	},
+	"testLogPageAvailable": {
+    "message": "доступен"
+	},
+	"testLogPageUnavailable": {
+		"message": "недоступен"
+	},
+	"settingsShowLog": {
+    "message": "Показать лог"
+	},
+	"testLogLabelProxy": {
+    "message": "ПРОКСИ"
+	},
+	"testLogLabelSite": {
+		"message": "САЙТ"
+	},
+	"testLogLabelStatus": {
+		"message": "СТАТУС"
+	},
+	"settingsHideLog": {
+		"message": "Скрыть лог"
+	},
+	"proxyCheckerEmptyUrl": {
+		"message": "Пустой тестовый URL"
+	},
+	"proxyCheckerNoProxyApi": {
+		"message": "Нет API прокси"
+	},
+	"proxyCheckerIndirectSuccessPageNotLoaded": {
+		"message": "Косвенный успех (страница не загружена)"
+	},
+	"proxyCheckerProxyReturnsOwnIp": {
+		"message": "Прокси возвращает свой IP"
+	},
+	"proxyCheckerProxyNotWorking": {
+		"message": "Прокси не работает"
+	},
+	"proxyCheckerUnknownIpOnly": {
+		"message": "Неизвестно (IP получен, страница не загружена)"
+	},
+	"localProxyCheckerEmptyTestUrl": {
+		"message": "Не указан тестовый URL"
+	},
+	"loadingMessage": {
+		"message": "Загрузка…"
+	},
+	"loadingErrorHint": {
+		"message": "Если вы видите это, значит при загрузке страницы произошла ошибка. Попробуйте перезагрузить страницу и сообщите о проблеме."
+	},
+	"loadingReloadHint": {
+		"message": "Или браузер загрузил страницу, но расширение ProxyMust не запущено. Просто перезагрузите страницу."
+	},
+	"footerBroughtBy": {
+		"message": "Создано при участии Salar,"
+	},
+	"footerVersionInfo": {
+		"message": "ProxyMust {0} (на основе SmartProxy 2.1) – поддерживается nana-xakep | Форк SmartProxy"
+	},
+	"noProxiesSelected": {
+		"message": "Прокси не выбраны."
+	},
+	"defaultProxyUpdated": {
+		"message": "Прокси-сервер по умолчанию обновлён."
+	},
+	"addSiteFailed": {
+		"message": "Не удалось добавить сайт."
+	},
+	"popupAddProxySuccess": {
+		"message": "Прокси успешно добавлен с рейтингом и результатами тестов!"
+	},
+	"popupAddProxyFailed": {
+		"message": "Не удалось добавить прокси."
+	},
+	"popupAddProxyExistsConfirm": {
+		"message": "Этот прокси уже существует (рейтинг: {0}).\n\nПереключиться на него и изменить рейтинг?"
+	},
+	"popupNoTestData": {
+		"message": "Нет данных тестов. Сначала запустите тест."
+	},
+	"popupNoNewSuccessfulProxies": {
+		"message": "Нет новых успешных подписочных прокси для добавления."
+	},
+	"popupAddedProxiesCount": {
+		"message": "Добавлено {0} прокси{1}"
+	},
+	"popupAddSubscriptionTitle": {
+		"message": "Добавить в ручной список?"
+	},
+	"popupAddSubscriptionConfirm": {
+		"message": "Это скопирует прокси со всеми настройками и результатами тестов. Продолжить?"
+	},
+	"popupAddSubscriptionYes": {
+		"message": "Добавить"
+	},
+	"settingsContextMenuSelectedCount": {
+		"message": "Выбрано: {0}"
+	},
+		"settingsGeneralWebDavServerUrlPlaceholder": {
+		"message": "Введите URL WebDAV-сервера"
+	},
+	"settingsGeneralWebDavServerUserPlaceholder": {
+		"message": "Введите имя пользователя"
+	},
+	"settingsGeneralWebDavServerPasswordPlaceholder": {
+		"message": "Введите пароль"
+	},
+		"settingsContextMenuSetDefaultSingle": {
+		"message": "Пожалуйста, выберите ровно один прокси, чтобы установить его по умолчанию."
+	},
+	"popupAddProxiesPartialFail": {
+		"message": "Не удалось добавить некоторые прокси."
+	},
+		"settingsExpressCycleTestFailed": {
+		"message": "Экспресс-циклический тест не удался: {0}"
 	}
 }

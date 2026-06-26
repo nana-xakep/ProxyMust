@@ -1628,5 +1628,179 @@
 	},
 	"settingsGeneralEnableDirectIpDetectionDesc": {
 		"message": "Etkinleştirildiğinde, gerçek IP adresiniz proxy işlevselliğinin karşılaştırmalı kontrolü için harici hizmetlere gönderilir. Devre dışı bırakıldığında, testler site yükleme ve proxy kaynak verilerine dayanır (daha az doğru ancak daha gizli)."
+	},
+		"testLogTitle": {
+		"message": "Proxy Test Günlüğü"
+	},
+	"testLogWaiting": {
+		"message": "Test başlangıcı bekleniyor..."
+	},
+	"testLogStart": {
+		"message": "▶ {0} ({1}) kontrol ediliyor"
+	},
+	"testLogIpSuccess": {
+		"message": "IP alındı: {0}"
+	},
+	"testLogIpFail": {
+		"message": "IP alınamadı"
+	},
+	"testLogPageSuccess": {
+		"message": "✓ {0} erişilebilir"
+	},
+	"testLogPageFail": {
+		"message": "✗ {0} erişilemez"
+	},
+	"testLogStatus": {
+		"message": "Son durum: {0}"
+	},
+	"testLogNext": {
+		"message": "Sonraki proxy'e geçiliyor"
+	},
+	"testLogStop": {
+		"message": "Test durduruldu – lütfen başka bir test başlatmadan önce mevcut kontrollerin bitmesini bekleyin."
+	},
+	"testLogComplete": {
+		"message": "Test tamamlandı – artık yeni bir test başlatabilirsiniz."
+	},
+	"testLogClear": {
+		"message": "Temizle"
+	},
+	"testLogClose": {
+		"message": "Kapat"
+	},
+	"testLogOpenButton": {
+		"message": "Test Günlüğü"
+	},
+	"testLogOpenFailed": {
+		"message": "Günlük penceresi açılamadı."
+	},
+	"testLogStatusSuccess": {
+		"message": "BAŞARILI"
+	},
+	"testLogStatusIndirect": {
+		"message": "DOLAYLI BAŞARI"
+	},
+	"testLogStatusFail": {
+		"message": "BAŞARISIZ"
+	},
+	"testLogStatusIpOnly": {
+		"message": "SADECE IP"
+	},
+	"testLogStatusUnknown": {
+		"message": "BİLİNMEYEN"
+	},
+	"testLogPageAvailable": {
+		"message": "mevcut"
+	},
+	"testLogPageUnavailable": {
+		"message": "mevcut değil"
+	},
+	"settingsShowLog": {
+		"message": "Günlüğü Göster"
+	},
+	"testLogLabelProxy": {
+		"message": "PROXY"
+	},
+	"testLogLabelSite": {
+		"message": "SİTE"
+	},
+	"testLogLabelStatus": {
+		"message": "DURUM"
+	},
+	"settingsHideLog": {
+		"message": "Günlüğü Gizle"
+	},
+		"proxyCheckerEmptyUrl": {
+		"message": "Test URL'si boş"
+	},
+	"proxyCheckerNoProxyApi": {
+		"message": "Proxy API'si mevcut değil"
+	},
+	"proxyCheckerIndirectSuccessPageNotLoaded": {
+		"message": "Dolaylı başarı (sayfa yüklenmedi)"
+	},
+	"proxyCheckerProxyReturnsOwnIp": {
+		"message": "Proxy kendi IP'sini döndürüyor"
+	},
+	"proxyCheckerProxyNotWorking": {
+		"message": "Proxy çalışmıyor"
+	},
+	"proxyCheckerUnknownIpOnly": {
+		"message": "Bilinmiyor (IP alındı, sayfa yüklenmedi)"
+	},
+	"localProxyCheckerEmptyTestUrl": {
+		"message": "Test URL'si belirtilmemiş"
+	},
+	"loadingMessage": {
+		"message": "Yükleniyor…"
+	},
+	"loadingErrorHint": {
+		"message": "Bunu görüyorsanız, sayfa yüklenirken bir hata oluşmuş demektir. Lütfen yeniden yükleyin ve sorunu bildirin."
+	},
+	"loadingReloadHint": {
+		"message": "Ya da tarayıcı sayfayı yükledi ama ProxyMust uzantısını değil. Sadece sayfayı yenileyin."
+	},
+	"footerBroughtBy": {
+		"message": "Salar tarafından sunulmuştur,"
+	},
+	"footerVersionInfo": {
+		"message": "ProxyMust {0} (SmartProxy 2.1 tabanlı) – nana-xakep tarafından bakımı yapılıyor | SmartProxy çatalı"
+	},
+	"noProxiesSelected": {
+		"message": "Hiçbir proxy seçilmedi."
+	},
+	"defaultProxyUpdated": {
+		"message": "Varsayılan proxy sunucusu güncellendi."
+	},
+	"addSiteFailed": {
+		"message": "Site eklenemedi."
+	},
+	"popupAddProxySuccess": {
+		"message": "Proxy, puan ve test sonuçlarıyla birlikte başarıyla eklendi!"
+	},
+	"popupAddProxyFailed": {
+		"message": "Proxy eklenemedi."
+	},
+	"popupAddProxyExistsConfirm": {
+		"message": "Bu proxy zaten mevcut (puan: {0}).\n\nBuna geçip puanı değiştirmek ister misiniz?"
+	},
+	"popupNoTestData": {
+		"message": "Kullanılabilir test verisi yok. Önce bir test çalıştırın."
+	},
+	"popupNoNewSuccessfulProxies": {
+		"message": "Eklenecek yeni başarılı abonelik proxy'si yok."
+	},
+	"popupAddedProxiesCount": {
+		"message": "{0} proxy eklendi{1}"
+	},
+	"popupAddSubscriptionTitle": {
+		"message": "Manuel listeye eklensin mi?"
+	},
+	"popupAddSubscriptionConfirm": {
+		"message": "Bu, proxy'yi tüm ayarları ve test sonuçlarıyla birlikte kopyalayacaktır. Devam edilsin mi?"
+	},
+	"popupAddSubscriptionYes": {
+		"message": "Ekle"
+	},
+	"settingsContextMenuSelectedCount": {
+		"message": "Seçili: {0}"
+	},
+		"settingsGeneralWebDavServerUrlPlaceholder": {
+		"message": "WebDAV sunucu URL'sini girin"
+	},
+	"settingsGeneralWebDavServerUserPlaceholder": {
+		"message": "Kullanıcı adını girin"
+	},
+	"settingsGeneralWebDavServerPasswordPlaceholder": {
+		"message": "Şifreyi girin"
+	},
+		"settingsContextMenuSetDefaultSingle": {
+		"message": "Varsayılan olarak ayarlamak için lütfen tam olarak bir proxy seçin."
+	},
+	"popupAddProxiesPartialFail": {
+		"message": "Bazı proxy'ler eklenemedi."
+	},
+	"settingsExpressCycleTestFailed": {
+		"message": "Ekspres döngü testi başarısız oldu: {0}"
 	}
 }

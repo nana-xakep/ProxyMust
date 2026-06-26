@@ -1628,5 +1628,179 @@
 	},
 	"settingsGeneralEnableDirectIpDetectionDesc": {
 		"message": "هنگام فعال‌سازی، آدرس IP واقعی شما برای بررسی مقایسه‌ای عملکرد پروکسی به خدمات خارجی ارسال می‌شود. در صورت غیرفعال‌سازی، آزمایش‌ها به بارگیری سایت‌ها و داده‌های منبع پروکسی متکی خواهند بود (کمتر دقیق اما خصوصی‌تر)."
+	},
+		"testLogTitle": {
+		"message": "گزارش تست پروکسی"
+	},
+	"testLogWaiting": {
+		"message": "در انتظار شروع تست..."
+	},
+	"testLogStart": {
+		"message": "▶ در حال بررسی {0} ({1})"
+	},
+	"testLogIpSuccess": {
+		"message": "IP دریافت شد: {0}"
+	},
+	"testLogIpFail": {
+		"message": "IP دریافت نشد"
+	},
+	"testLogPageSuccess": {
+		"message": "✓ {0} در دسترس است"
+	},
+	"testLogPageFail": {
+		"message": "✗ {0} در دسترس نیست"
+	},
+	"testLogStatus": {
+		"message": "وضعیت نهایی: {0}"
+	},
+	"testLogNext": {
+		"message": "رفتن به پروکسی بعدی"
+	},
+	"testLogStop": {
+		"message": "تست متوقف شد – لطفاً قبل از شروع تست دیگر، صبر کنید تا بررسی‌های فعلی تمام شوند."
+	},
+	"testLogComplete": {
+		"message": "تست کامل شد – اکنون می‌توانید تست جدیدی را شروع کنید."
+	},
+	"testLogClear": {
+		"message": "پاک کردن"
+	},
+	"testLogClose": {
+		"message": "بستن"
+	},
+	"testLogOpenButton": {
+		"message": "گزارش تست"
+	},
+	"testLogOpenFailed": {
+		"message": "باز کردن پنجره گزارش ناموفق بود."
+	},
+	"testLogStatusSuccess": {
+		"message": "موفق"
+	},
+	"testLogStatusIndirect": {
+		"message": "موفقیت غیرمستقیم"
+	},
+	"testLogStatusFail": {
+		"message": "ناموفق"
+	},
+	"testLogStatusIpOnly": {
+		"message": "فقط IP"
+	},
+	"testLogStatusUnknown": {
+		"message": "ناشناخته"
+	},
+	"testLogPageAvailable": {
+		"message": "در دسترس"
+	},
+	"testLogPageUnavailable": {
+		"message": "در دسترس نیست"
+	},
+	"settingsShowLog": {
+		"message": "نمایش گزارش"
+	},
+	"testLogLabelProxy": {
+		"message": "پروکسی"
+	},
+	"testLogLabelSite": {
+		"message": "سایت"
+	},
+	"testLogLabelStatus": {
+		"message": "وضعیت"
+	},
+	"settingsHideLog": {
+		"message": "پنهان کردن گزارش"
+	},
+		"proxyCheckerEmptyUrl": {
+		"message": "آدرس تست خالی است"
+	},
+	"proxyCheckerNoProxyApi": {
+		"message": "API پروکسی در دسترس نیست"
+	},
+	"proxyCheckerIndirectSuccessPageNotLoaded": {
+		"message": "موفقیت غیرمستقیم (صفحه بارگذاری نشد)"
+	},
+	"proxyCheckerProxyReturnsOwnIp": {
+		"message": "پروکسی IP خود را برمی‌گرداند"
+	},
+	"proxyCheckerProxyNotWorking": {
+		"message": "پروکسی کار نمی‌کند"
+	},
+	"proxyCheckerUnknownIpOnly": {
+		"message": "ناشناخته (IP دریافت شد، صفحه بارگذاری نشد)"
+	},
+	"localProxyCheckerEmptyTestUrl": {
+		"message": "آدرس تست مشخص نشده است"
+	},
+	"loadingMessage": {
+		"message": "در حال بارگذاری…"
+	},
+	"loadingErrorHint": {
+		"message": "اگر این را می‌بینید، خطایی در بارگذاری صفحه رخ داده است، لطفاً دوباره بارگذاری کرده و مشکل را گزارش دهید."
+	},
+	"loadingReloadHint": {
+		"message": "یا مرورگر صفحه را بارگذاری کرده است نه افزونه ProxyMust. فقط صفحه را دوباره بارگذاری کنید."
+	},
+	"footerBroughtBy": {
+		"message": "ارائه شده توسط سالار،"
+	},
+	"footerVersionInfo": {
+		"message": "ProxyMust {0} (بر اساس SmartProxy 2.1) – نگهداری شده توسط nana-xakep | انشعابی از SmartProxy"
+	},
+	"noProxiesSelected": {
+		"message": "هیچ پروکسی انتخاب نشده است."
+	},
+	"defaultProxyUpdated": {
+		"message": "پروکسی سرور پیش‌فرض به‌روزرسانی شد."
+	},
+	"addSiteFailed": {
+		"message": "افزودن سایت ناموفق بود."
+	},
+	"popupAddProxySuccess": {
+		"message": "پروکسی با موفقیت همراه با امتیاز و نتایج تست اضافه شد!"
+	},
+	"popupAddProxyFailed": {
+		"message": "افزودن پروکسی ناموفق بود."
+	},
+	"popupAddProxyExistsConfirm": {
+		"message": "این پروکسی قبلاً وجود دارد (امتیاز: {0}).\n\nآیا به آن سوئیچ کرده و امتیاز را تغییر دهید؟"
+	},
+	"popupNoTestData": {
+		"message": "هیچ داده تستی در دسترس نیست. ابتدا یک تست اجرا کنید."
+	},
+	"popupNoNewSuccessfulProxies": {
+		"message": "هیچ پروکسی اشتراک موفق جدیدی برای افزودن وجود ندارد."
+	},
+	"popupAddedProxiesCount": {
+		"message": "{0} پروکسی اضافه شد{1}"
+	},
+	"popupAddSubscriptionTitle": {
+		"message": "به لیست دستی اضافه شود؟"
+	},
+	"popupAddSubscriptionConfirm": {
+		"message": "این کار پروکسی را با تمام تنظیمات و نتایج تست کپی می‌کند. ادامه می‌دهید؟"
+	},
+	"popupAddSubscriptionYes": {
+		"message": "افزودن"
+	},
+	"settingsContextMenuSelectedCount": {
+		"message": "انتخاب شده: {0}"
+	},
+		"settingsGeneralWebDavServerUrlPlaceholder": {
+		"message": "آدرس URL سرور WebDAV را وارد کنید"
+	},
+	"settingsGeneralWebDavServerUserPlaceholder": {
+		"message": "نام کاربری را وارد کنید"
+	},
+	"settingsGeneralWebDavServerPasswordPlaceholder": {
+		"message": "رمز عبور را وارد کنید"
+	},
+		"settingsContextMenuSetDefaultSingle": {
+		"message": "لطفاً دقیقاً یک پروکسی را برای تنظیم به عنوان پیش‌فرض انتخاب کنید."
+	},
+	"popupAddProxiesPartialFail": {
+		"message": "افزودن برخی از پروکسی‌ها ناموفق بود."
+	},
+	"settingsExpressCycleTestFailed": {
+		"message": "آزمایش چرخه‌ای سریع ناموفق بود: {0}"
 	}
 }

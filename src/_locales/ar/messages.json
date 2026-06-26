@@ -1628,5 +1628,179 @@
 	},
 	"settingsGeneralEnableDirectIpDetectionDesc": {
 		"message": "عند التمكين، يتم إرسال عنوان IP الحقيقي الخاص بك إلى خدمات خارجية لإجراء فحص مقارن لوظائف البروكسي. عند التعطيل، ستعتمد الاختبارات على تحميل المواقع وبيانات مصدر البروكسي (أقل دقة ولكن أكثر خصوصية)."
+	},
+		"testLogTitle": {
+		"message": "سجل اختبار البروكسي"
+	},
+	"testLogWaiting": {
+		"message": "في انتظار بدء الاختبار..."
+	},
+	"testLogStart": {
+		"message": "▶ جاري فحص {0} ({1})"
+	},
+	"testLogIpSuccess": {
+		"message": "تم الحصول على IP: {0}"
+	},
+	"testLogIpFail": {
+		"message": "لم يتم الحصول على IP"
+	},
+	"testLogPageSuccess": {
+		"message": "✓ {0} متاح"
+	},
+	"testLogPageFail": {
+		"message": "✗ {0} غير متاح"
+	},
+	"testLogStatus": {
+		"message": "الحالة النهائية: {0}"
+	},
+	"testLogNext": {
+		"message": "الانتقال إلى الوكيل التالي"
+	},
+	"testLogStop": {
+		"message": "تم إيقاف الاختبار – يرجى الانتظار حتى انتهاء الفحوصات الحالية قبل بدء اختبار آخر."
+	},
+	"testLogComplete": {
+		"message": "اكتمل الاختبار – يمكنك الآن بدء اختبار جديد."
+	},
+	"testLogClear": {
+		"message": "مسح"
+	},
+	"testLogClose": {
+		"message": "إغلاق"
+	},
+	"testLogOpenButton": {
+		"message": "سجل الاختبار"
+	},
+	"testLogOpenFailed": {
+		"message": "فشل فتح نافذة السجل."
+	},
+	"testLogStatusSuccess": {
+		"message": "نجاح"
+	},
+	"testLogStatusIndirect": {
+		"message": "نجاح غير مباشر"
+	},
+	"testLogStatusFail": {
+		"message": "فشل"
+	},
+	"testLogStatusIpOnly": {
+		"message": "IP فقط"
+	},
+	"testLogStatusUnknown": {
+		"message": "غير معروف"
+	},
+	"testLogPageAvailable": {
+		"message": "متاح"
+	},
+	"testLogPageUnavailable": {
+		"message": "غير متاح"
+	},
+	"settingsShowLog": {
+		"message": "إظهار السجل"
+	},
+	"testLogLabelProxy": {
+		"message": "البروكسي"
+	},
+	"testLogLabelSite": {
+		"message": "الموقع"
+	},
+	"testLogLabelStatus": {
+		"message": "الحالة"
+	},
+	"settingsHideLog": {
+		"message": "إخفاء السجل"
+	},
+		"proxyCheckerEmptyUrl": {
+		"message": "عنوان URL للاختبار فارغ"
+	},
+	"proxyCheckerNoProxyApi": {
+		"message": "واجهة برمجة تطبيقات البروكسي غير متوفرة"
+	},
+	"proxyCheckerIndirectSuccessPageNotLoaded": {
+		"message": "نجاح غير مباشر (لم يتم تحميل الصفحة)"
+	},
+	"proxyCheckerProxyReturnsOwnIp": {
+		"message": "يعيد البروكسي عنوان IP الخاص به"
+	},
+	"proxyCheckerProxyNotWorking": {
+		"message": "البروكسي لا يعمل"
+	},
+	"proxyCheckerUnknownIpOnly": {
+		"message": "غير معروف (تم استلام IP، لم يتم تحميل الصفحة)"
+	},
+	"localProxyCheckerEmptyTestUrl": {
+		"message": "عنوان URL للاختبار غير محدد"
+	},
+	"loadingMessage": {
+		"message": "جاري التحميل…"
+	},
+	"loadingErrorHint": {
+		"message": "إذا رأيت هذا، فهذا يعني وجود خطأ أثناء تحميل الصفحة، حاول إعادة التحميل والإبلاغ عن المشكلة من فضلك."
+	},
+	"loadingReloadHint": {
+		"message": "أو أن المتصفح قد حمّل الصفحة وليس إضافة ProxyMust. ما عليك سوى إعادة تحميل الصفحة."
+	},
+	"footerBroughtBy": {
+		"message": "مقدّم لكم بواسطة سالار،"
+	},
+	"footerVersionInfo": {
+		"message": "ProxyMust {0} (بناءً على SmartProxy 2.1) – يُصان بواسطة nana-xakep | شوكة من SmartProxy"
+	},
+	"noProxiesSelected": {
+		"message": "لم يتم تحديد أي بروكسي."
+	},
+	"defaultProxyUpdated": {
+		"message": "تم تحديث خادم البروكسي الافتراضي."
+	},
+	"addSiteFailed": {
+		"message": "فشل في إضافة الموقع."
+	},
+	"popupAddProxySuccess": {
+		"message": "تمت إضافة البروكسي بنجاح مع التقييم ونتائج الاختبار!"
+	},
+	"popupAddProxyFailed": {
+		"message": "فشل في إضافة البروكسي."
+	},
+	"popupAddProxyExistsConfirm": {
+		"message": "هذا البروكسي موجود بالفعل (التقييم: {0}).\n\nهل تريد التبديل إليه وتغيير التقييم؟"
+	},
+	"popupNoTestData": {
+		"message": "لا توجد بيانات اختبار متاحة. قم بتشغيل اختبار أولاً."
+	},
+	"popupNoNewSuccessfulProxies": {
+		"message": "لا توجد بروكسيات اشتراك جديدة ناجحة للإضافة."
+	},
+	"popupAddedProxiesCount": {
+		"message": "تمت إضافة {0} بروكسي{1}"
+	},
+	"popupAddSubscriptionTitle": {
+		"message": "هل تريد الإضافة إلى القائمة اليدوية؟"
+	},
+	"popupAddSubscriptionConfirm": {
+		"message": "سيؤدي هذا إلى نسخ البروكسي مع جميع إعداداته ونتائج الاختبار. هل تريد المتابعة؟"
+	},
+	"popupAddSubscriptionYes": {
+		"message": "إضافة"
+	},
+	"settingsContextMenuSelectedCount": {
+		"message": "المحدد: {0}"
+	},
+		"settingsGeneralWebDavServerUrlPlaceholder": {
+		"message": "أدخل عنوان URL لخادم WebDAV"
+	},
+	"settingsGeneralWebDavServerUserPlaceholder": {
+		"message": "أدخل اسم المستخدم"
+	},
+	"settingsGeneralWebDavServerPasswordPlaceholder": {
+		"message": "أدخل كلمة المرور"
+	},
+		"settingsContextMenuSetDefaultSingle": {
+		"message": "يرجى تحديد بروكسي واحد بالضبط لتعيينه كافتراضي."
+	},
+	"popupAddProxiesPartialFail": {
+		"message": "فشل في إضافة بعض البروكسيات."
+	},
+	"settingsExpressCycleTestFailed": {
+		"message": "فشل اختبار الدورة السريعة: {0}"
 	}
 }

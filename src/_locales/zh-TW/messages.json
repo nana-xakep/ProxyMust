@@ -1628,5 +1628,179 @@
 	},
 	"settingsGeneralEnableDirectIpDetectionDesc": {
 		"message": "啟用後，您的真實IP位址將被傳送到外部服務，以進行代理功能的比較檢查。停用後，測試將依賴於網站載入和代理來源資料（準確性較低，但更隱私）。"
+	},
+		"testLogTitle": {
+		"message": "代理測試日誌"
+	},
+	"testLogWaiting": {
+		"message": "等待測試開始..."
+	},
+	"testLogStart": {
+		"message": "▶ 正在檢查 {0} ({1})"
+	},
+	"testLogIpSuccess": {
+		"message": "已取得 IP：{0}"
+	},
+	"testLogIpFail": {
+		"message": "未取得 IP"
+	},
+	"testLogPageSuccess": {
+		"message": "✓ {0} 可存取"
+	},
+	"testLogPageFail": {
+		"message": "✗ {0} 無法存取"
+	},
+	"testLogStatus": {
+		"message": "最終狀態：{0}"
+	},
+	"testLogNext": {
+		"message": "切換到下一個代理"
+	},
+	"testLogStop": {
+		"message": "測試已停止 – 請在開始另一個測試前等待目前檢查完成。"
+	},
+	"testLogComplete": {
+		"message": "測試已完成 – 您現在可以開始新的測試。"
+	},
+	"testLogClear": {
+		"message": "清除"
+	},
+	"testLogClose": {
+		"message": "關閉"
+	},
+	"testLogOpenButton": {
+		"message": "測試日誌"
+	},
+	"testLogOpenFailed": {
+		"message": "無法開啟日誌視窗。"
+	},
+	"testLogStatusSuccess": {
+		"message": "成功"
+	},
+	"testLogStatusIndirect": {
+		"message": "間接成功"
+	},
+	"testLogStatusFail": {
+		"message": "失敗"
+	},
+	"testLogStatusIpOnly": {
+		"message": "僅 IP"
+	},
+	"testLogStatusUnknown": {
+		"message": "未知"
+	},
+	"testLogPageAvailable": {
+		"message": "可用"
+	},
+	"testLogPageUnavailable": {
+		"message": "不可用"
+	},
+	"settingsShowLog": {
+		"message": "顯示日誌"
+	},
+	"testLogLabelProxy": {
+		"message": "代理"
+	},
+	"testLogLabelSite": {
+		"message": "網站"
+	},
+	"testLogLabelStatus": {
+		"message": "狀態"
+	},
+	"settingsHideLog": {
+		"message": "隱藏日誌"
+	},
+		"proxyCheckerEmptyUrl": {
+		"message": "測試 URL 為空"
+	},
+	"proxyCheckerNoProxyApi": {
+		"message": "代理 API 不可用"
+	},
+	"proxyCheckerIndirectSuccessPageNotLoaded": {
+		"message": "間接成功（頁面未載入）"
+	},
+	"proxyCheckerProxyReturnsOwnIp": {
+		"message": "代理傳回其自身的 IP"
+	},
+	"proxyCheckerProxyNotWorking": {
+		"message": "代理不起作用"
+	},
+	"proxyCheckerUnknownIpOnly": {
+		"message": "未知（已取得 IP，頁面未載入）"
+	},
+	"localProxyCheckerEmptyTestUrl": {
+		"message": "未指定測試 URL"
+	},
+	"loadingMessage": {
+		"message": "載入中…"
+	},
+	"loadingErrorHint": {
+		"message": "如果您看到此訊息，表示載入頁面時發生錯誤，請嘗試重新載入並回報問題。"
+	},
+	"loadingReloadHint": {
+		"message": "或者瀏覽器載入的是頁面而不是 ProxyMust 擴充功能。只需重新載入頁面即可。"
+	},
+	"footerBroughtBy": {
+		"message": "由 Salar 提供，"
+	},
+	"footerVersionInfo": {
+		"message": "ProxyMust {0}（基於 SmartProxy 2.1） – 由 nana-xakep 維護 | SmartProxy 的分支"
+	},
+	"noProxiesSelected": {
+		"message": "未選取代理。"
+	},
+	"defaultProxyUpdated": {
+		"message": "預設代理伺服器已更新。"
+	},
+	"addSiteFailed": {
+		"message": "新增網站失敗。"
+	},
+	"popupAddProxySuccess": {
+		"message": "已成功新增代理及其評分和測試結果！"
+	},
+	"popupAddProxyFailed": {
+		"message": "新增代理失敗。"
+	},
+	"popupAddProxyExistsConfirm": {
+		"message": "此代理已存在（評分：{0}）。\n\n是否切換到此代理並變更評分？"
+	},
+	"popupNoTestData": {
+		"message": "沒有可用的測試資料。請先執行測試。"
+	},
+	"popupNoNewSuccessfulProxies": {
+		"message": "沒有新的成功訂閱代理可新增。"
+	},
+	"popupAddedProxiesCount": {
+		"message": "已新增 {0} 個代理{1}"
+	},
+	"popupAddSubscriptionTitle": {
+		"message": "新增到手動清單？"
+	},
+	"popupAddSubscriptionConfirm": {
+		"message": "這將複製代理及其所有設定和測試結果。繼續？"
+	},
+	"popupAddSubscriptionYes": {
+		"message": "新增"
+	},
+	"settingsContextMenuSelectedCount": {
+		"message": "已選：{0}"
+	},
+		"settingsGeneralWebDavServerUrlPlaceholder": {
+		"message": "輸入 WebDAV 伺服器 URL"
+	},
+	"settingsGeneralWebDavServerUserPlaceholder": {
+		"message": "輸入使用者名稱"
+	},
+	"settingsGeneralWebDavServerPasswordPlaceholder": {
+		"message": "輸入密碼"
+	},
+		"settingsContextMenuSetDefaultSingle": {
+		"message": "請精確選擇一個代理以設為預設。"
+	},
+	"popupAddProxiesPartialFail": {
+		"message": "新增部分代理失敗。"
+	},
+	"settingsExpressCycleTestFailed": {
+		"message": "快速循環測試失敗：{0}"
 	}
 }

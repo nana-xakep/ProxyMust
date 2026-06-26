@@ -20,6 +20,7 @@
 import { ProxyServer } from "./definitions";
 import { checkProxy, CheckResult, CheckerOptions } from "./ProxyCheckerCore";
 import { saveResult } from "./ResultSaver";
+import { api } from "../lib/environment";
 
 type CheckResultExtended = {
     alive: boolean;
@@ -42,7 +43,7 @@ export const LocalProxyChecker = {
     ): Promise<CheckResultExtended> {
         const testUrl = testUrls[0]?.trim() || "";
         if (!testUrl) {
-            return { alive: false, latencyMs: 0, statusType: "fail", error: "Не указан тестовый URL" };
+            return { alive: false, latencyMs: 0, statusType: "fail", error: api.i18n.getMessage('proxyCheckerEmptyUrl') };
         }
 
         const options: CheckerOptions = {

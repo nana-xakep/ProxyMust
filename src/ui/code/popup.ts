@@ -43,6 +43,7 @@ export class popup {
     private static quickTestBtn: JQuery;
     private static quickTestProgress: JQuery;
     private static addAllSuccessfulSubsBtn: JQuery;
+    private static openTestLogBtn: JQuery;
     private static quickTestInProgress: boolean = false;
 
     // English: Last tested site for status display after test completion
@@ -305,6 +306,7 @@ export class popup {
         popup.quickTestBtn = jQuery("#quickTestBtn");
         popup.quickTestProgress = jQuery("#quickTestProgress");
         popup.addAllSuccessfulSubsBtn = jQuery("#addAllSuccessfulSubsBtn");
+        popup.openTestLogBtn = jQuery("#openTestLogBtn");
 
         console.log("[ProxyMust] quickTestBtn found:", popup.quickTestBtn.length);
 
@@ -321,6 +323,9 @@ export class popup {
         }
         if (popup.addAllSuccessfulSubsBtn.length) {
             popup.addAllSuccessfulSubsBtn.off("click").on("click", popup.onAddAllSuccessfulSubscriptionsClick);
+        }
+        if (popup.openTestLogBtn.length) {
+            popup.openTestLogBtn.off("click").on("click", popup.onOpenTestLogClick);
         }
 
         if (popup.addCurrentSiteBtn.length) {
@@ -439,6 +444,14 @@ export class popup {
                 $addAllSuccessfulSubsBtn.show();
             } else {
                 $addAllSuccessfulSubsBtn.hide();
+            }
+            // English: Show/hide log button
+            // Russian: Показать/скрыть кнопку лога
+            const $openTestLogBtn = jQuery("#openTestLogBtn");
+            if (enableRating) {
+                $openTestLogBtn.show();
+            } else {
+                $openTestLogBtn.hide();
             }
         } else {
             $quickTestBtn.hide();
@@ -841,8 +854,12 @@ private static populateUpdateAvailable(dataForPopup: PopupInternalDataType) {
         const site = popup.currentSiteLabel ? popup.currentSiteLabel.text() : "";
         if (!site || site === "—") return;
         PolyFill.runtimeSendMessage({ command: "AddCurrentSiteToManual", site }, (resp) => {
-            if (resp?.success) messageBox.success(`Site "${site}" added to test list.`);
-            else messageBox.error("Failed to add site.");
+            if (resp?.success) {
+                const msg = api.i18n.getMessage('popupAddCurrentSiteSuccess', site) || `Site "${site}" added to test list.`;
+                messageBox.success(msg);
+            } else {
+                messageBox.error(api.i18n.getMessage('popupAddCurrentSiteFailed') || "Failed to add site.");
+            }
         });
     }
 
@@ -861,7 +878,7 @@ private static populateUpdateAvailable(dataForPopup: PopupInternalDataType) {
     private static async onAddAllSuccessfulSubscriptionsClick() {
         const subscribedProxies = popup.popupData?.proxyServersSubscribed || [];
         if (!subscribedProxies.length) {
-            messageBox.warning("No subscription proxies available.");
+            messageBox.warning(api.i18n.getMessage("popupNoSubscriptionProxies"));
             return;
         }
 
@@ -876,7 +893,7 @@ private static populateUpdateAvailable(dataForPopup: PopupInternalDataType) {
         }
         const sitesArray = Array.from(allSites);
         if (sitesArray.length === 0) {
-            messageBox.info("No test data available. Run a test first.");
+            messageBox.info(api.i18n.getMessage("popupNoTestData"));
             return;
         }
 
@@ -907,7 +924,7 @@ private static populateUpdateAvailable(dataForPopup: PopupInternalDataType) {
         }
 
         if (!toAdd.length) {
-            messageBox.info("No new successful subscription proxies to add.");
+            messageBox.info(api.i18n.getMessage("popupNoNewSuccessfulProxies"));
             return;
         }
 
@@ -942,13 +959,28 @@ private static populateUpdateAvailable(dataForPopup: PopupInternalDataType) {
             }
         } catch (err) {
             console.error("Error adding proxies:", err);
-            messageBox.error("Failed to add some proxies.");
+            messageBox.error(api.i18n.getMessage("popupAddProxiesPartialFail"));
         } finally {
             popup.addAllSuccessfulSubsBtn.prop("disabled", false).html("📋 <span>" + api.i18n.getMessage("popupAddAllSuccessfulSubs") + "</span>");
             popup.refreshPopupData();
-            const msg = `Added ${addedCount} proxy(ies)${duplicateCount ? `, ${duplicateCount} already existed` : ''}.`;
+            const msg = api.i18n.getMessage("popupAddedProxiesCount", addedCount.toString(), duplicateCount ? `, ${duplicateCount} already existed` : '');
             messageBox.success(msg);
         }
+    }
+
+    /**
+     * English: Opens the test log window.
+     * Russian: Открывает окно лога тестирования.
+     */
+    private static onOpenTestLogClick() {
+        PolyFill.runtimeSendMessage({ command: "OPEN_TEST_LOG" }, (response) => {
+            if (response && response.success) {
+                console.log("[Popup] Test log window opened/focused.");
+            } else {
+                console.warn("[Popup] Failed to open test log window:", response?.error);
+                messageBox.error(api.i18n.getMessage("testLogOpenFailed") || "Failed to open log window.");
+            }
+        });
     }
 
     private static onQuickTestClick() {
@@ -966,7 +998,7 @@ private static populateUpdateAvailable(dataForPopup: PopupInternalDataType) {
         let site = popup.currentSiteLabel ? popup.currentSiteLabel.text() : "";
         if (!site || site === "—") {
             document.documentElement.classList.add("wide-mode-prompt");
-            site = prompt(api.i18n.getMessage("popupEnterSitePrompt") || "Enter site domain (e.g., youtube.com):");
+            site = prompt(api.i18n.getMessage("settingsProxyMustAddSitePrompt"));
             document.documentElement.classList.remove("wide-mode-prompt");
             if (!site) return;
         }
@@ -981,7 +1013,7 @@ private static populateUpdateAvailable(dataForPopup: PopupInternalDataType) {
         const allProxies = Array.from(allProxiesMap.values());
 
         if (allProxies.length === 0) {
-            messageBox.warning("No proxies to test.");
+            messageBox.warning(api.i18n.getMessage("settingsProxyMustNoProxies"));
             return;
         }
 
@@ -1119,7 +1151,7 @@ private static populateUpdateAvailable(dataForPopup: PopupInternalDataType) {
             }
 
             if (!proxies.length) {
-                messageBox.warning("No proxies to test.");
+                messageBox.warning(api.i18n.getMessage("settingsProxyMustNoProxies"));
                 return;
             }
 
@@ -1151,7 +1183,7 @@ private static populateUpdateAvailable(dataForPopup: PopupInternalDataType) {
      */
     private static runQuickTest(site: string, proxies: ProxyServer[]) {
         if (!proxies.length) {
-            messageBox.warning("No proxies to test.");
+            messageBox.warning(api.i18n.getMessage("settingsProxyMustNoProxies"));
             return;
         }
         popup.quickTestInProgress = true;
@@ -1222,7 +1254,7 @@ private static populateUpdateAvailable(dataForPopup: PopupInternalDataType) {
         }
         PolyFill.runtimeSendMessage(message, null, (err: Error) => {
             console.error("[ProxyMust] Express cycle test start failed:", err);
-            messageBox.error("Express cycle test failed: " + err.message);
+            messageBox.error(api.i18n.getMessage("settingsExpressCycleTestFailed", err.message));
             popup.quickTestInProgress = false;
             popup.quickTestBtn.html("⚡ <span>" + api.i18n.getMessage("popupQuickTestButton") + "</span>");
             popup.quickTestBtn.removeClass("btn-danger").addClass("btn-outline-success");
@@ -1672,16 +1704,16 @@ private static populateUpdateAvailable(dataForPopup: PopupInternalDataType) {
             <div class="modal show" style="display: block; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1060; width: 320px; max-width: 90%;">
                 <div class="modal-content" style="border-radius: 8px;">
                     <div class="modal-header" style="padding: 12px; border-bottom: 1px solid #dee2e6;">
-                        <h5 class="modal-title" style="font-size: 1rem;">${escapeHtml(api.i18n.getMessage("popupAddSubscriptionTitle") || "Add proxy to your list?")}</h5>
+                        <h5 class="modal-title" style="font-size: 1rem;">${escapeHtml(api.i18n.getMessage("popupAddSubscriptionTitle"))}</h5>
                         <button type="button" class="btn-close" style="font-size: 0.8rem;" data-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body" style="padding: 12px;">
                         <p style="margin: 0 0 8px 0; word-break: break-word; font-size: 0.9rem;">${escapeHtml(displayAddress)}</p>
-                        <p style="margin: 0; font-size: 0.8rem; color: #6c757d;">${escapeHtml(api.i18n.getMessage("popupAddSubscriptionConfirm") || "Do you want to add this proxy to your manual list?")}</p>
+                        <p style="margin: 0; font-size: 0.8rem; color: #6c757d;">${escapeHtml(api.i18n.getMessage("popupAddSubscriptionConfirm"))}</p>
                     </div>
                     <div class="modal-footer" style="padding: 12px; justify-content: center; border-top: 1px solid #dee2e6;">
-                        <button type="button" class="btn btn-success btn-sm" id="add-subscription-yes">${escapeHtml(api.i18n.getMessage("popupAddSubscriptionYes") || "Add")}</button>
-                        <button type="button" class="btn btn-secondary btn-sm" id="add-subscription-no">${escapeHtml(api.i18n.getMessage("popupAddSubscriptionNo") || "Cancel")}</button>
+                        <button type="button" class="btn btn-success btn-sm" id="add-subscription-yes">${escapeHtml(api.i18n.getMessage("popupAddSubscriptionYes"))}</button>
+                        <button type="button" class="btn btn-secondary btn-sm" id="add-subscription-no">${escapeHtml(api.i18n.getMessage("settingsCancelButton"))}</button>
                     </div>
                 </div>
             </div>
@@ -1712,9 +1744,9 @@ private static populateUpdateAvailable(dataForPopup: PopupInternalDataType) {
             };
             PolyFill.runtimeSendMessage({ command: "AddSubscriptionProxyToManual", proxy: proxyPayload }, (response: any) => {
                 console.log("[ProxyMust] Sending AddSubscriptionProxyToManual", proxyPayload);
-                if (!response) { messageBox.error("Failed to add proxy: no response"); return; }
+                if (!response) { messageBox.error(api.i18n.getMessage("popupAddProxyFailed")); return; }
                 if (response?.success) {
-                    messageBox.success("Proxy added successfully with rating and test results!");
+                    messageBox.success(api.i18n.getMessage("popupAddProxySuccess"));
                     setTimeout(() => {
                         popup.refreshPopupData();
                         setTimeout(() => {
@@ -1724,8 +1756,8 @@ private static populateUpdateAvailable(dataForPopup: PopupInternalDataType) {
                     return;
                 }
                 if (response?.alreadyExists) {
-                    const confirmMessage = `This proxy already exists (rating: ${response.existingProxyRating}).\n\nSwitch to it and change rating?`;
-                    messageBox.confirm(confirmMessage, () => {
+						const confirmMessage = api.i18n.getMessage("popupAddProxyExistsConfirm", response.existingProxyRating);
+						messageBox.confirm(confirmMessage, () => {
                         PolyFill.runtimeSendMessage({ command: CommandMessages.PopupChangeActiveProxyServer, id: response.existingProxyId });
                         popup.showRatingDialog(proxyName, (delta: number) => {
                             if (delta !== 0) {
@@ -1736,7 +1768,7 @@ private static populateUpdateAvailable(dataForPopup: PopupInternalDataType) {
                     });
                     return;
                 }
-                messageBox.error(response?.message || "Failed to add proxy");
+                messageBox.error(response?.message || api.i18n.getMessage("popupAddProxyFailed"));
             });
         });
 

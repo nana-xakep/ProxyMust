@@ -1631,5 +1631,179 @@
 	},
 	"settingsGeneralEnableDirectIpDetectionDesc": {
 		"message": "When enabled, your real IP address is sent to external services for comparative checking of proxy functionality. When disabled, tests will rely on site loading and proxy source data (less accurate but more private)."
+	},
+	"testLogTitle": {
+    "message": "Proxy Test Log"
+	},
+	"testLogWaiting": {
+		"message": "Waiting for test to start..."
+	},
+	"testLogStart": {
+		"message": "▶ Checking {0} ({1})"
+	},
+	"testLogIpSuccess": {
+		"message": "IP obtained: {0}"
+	},
+	"testLogIpFail": {
+		"message": "IP not obtained"
+	},
+	"testLogPageSuccess": {
+		"message": "✓ {0} is reachable"
+	},
+	"testLogPageFail": {
+		"message": "✗ {0} is not reachable"
+	},
+	"testLogStatus": {
+		"message": "Final status: {0}"
+	},
+	"testLogNext": {
+		"message": "Moving to next proxy"
+	},
+	"testLogStop": {
+		"message": "Test stopped – please wait for current checks to finish before starting another test."
+	},
+	"testLogComplete": {
+		"message": "Test completed – you may now start a new test."
+	},
+	"testLogClear": {
+		"message": "Clear"
+	},
+	"testLogClose": {
+		"message": "Close"
+	},
+	"testLogOpenButton": {
+    "message": "Test Log"
+	},
+	"testLogOpenFailed": {
+		"message": "Failed to open log window."
+	},
+	"testLogStatusSuccess": {
+		"message": "SUCCESS"
+	},
+	"testLogStatusIndirect": {
+		"message": "INDIRECT SUCCESS"
+	},
+	"testLogStatusFail": {
+		"message": "FAIL"
+	},
+	"testLogStatusIpOnly": {
+		"message": "IP ONLY"
+	},
+	"testLogStatusUnknown": {
+		"message": "UNKNOWN"
+	},
+	"testLogPageAvailable": {
+    "message": "available"
+	},
+	"testLogPageUnavailable": {
+		"message": "unavailable"
+	},
+	"settingsShowLog": {
+    "message": "Show Log"
+	},
+	"testLogLabelProxy": {
+    "message": "PROXY"
+	},
+	"testLogLabelSite": {
+		"message": "SITE"
+	},
+	"testLogLabelStatus": {
+		"message": "STATUS"
+	},
+	"settingsHideLog": {
+		"message": "Hide Log"
+	},
+		"proxyCheckerEmptyUrl": {
+		"message": "Test URL is empty"
+	},
+	"proxyCheckerNoProxyApi": {
+		"message": "Proxy API not available"
+	},
+	"proxyCheckerIndirectSuccessPageNotLoaded": {
+		"message": "Indirect success (page not loaded)"
+	},
+	"proxyCheckerProxyReturnsOwnIp": {
+		"message": "Proxy returns its own IP"
+	},
+	"proxyCheckerProxyNotWorking": {
+		"message": "Proxy is not working"
+	},
+	"proxyCheckerUnknownIpOnly": {
+		"message": "Unknown (IP received, page not loaded)"
+	},
+	"localProxyCheckerEmptyTestUrl": {
+		"message": "Test URL is not specified"
+	},
+	"loadingMessage": {
+		"message": "Loading…"
+	},
+	"loadingErrorHint": {
+		"message": "If you can see this there must be an error while loading the page, try reloading and report the issue please."
+	},
+	"loadingReloadHint": {
+		"message": "Or the browser has loaded the page and not the ProxyMust extension. Just reload the page."
+	},
+	"footerBroughtBy": {
+		"message": "Brought to you by Salar,"
+	},
+	"footerVersionInfo": {
+		"message": "ProxyMust {0} (based on SmartProxy 2.1) – maintained by nana-xakep | Fork of SmartProxy"
+	},
+	"noProxiesSelected": {
+		"message": "No proxies selected."
+	},
+	"defaultProxyUpdated": {
+		"message": "Default proxy server updated."
+	},
+	"addSiteFailed": {
+		"message": "Failed to add site."
+	},
+	"popupAddProxySuccess": {
+		"message": "Proxy added successfully with rating and test results!"
+	},
+	"popupAddProxyFailed": {
+		"message": "Failed to add proxy."
+	},
+	"popupAddProxyExistsConfirm": {
+		"message": "This proxy already exists (rating: {0}).\n\nSwitch to it and change rating?"
+	},
+	"popupNoTestData": {
+		"message": "No test data available. Run a test first."
+	},
+	"popupNoNewSuccessfulProxies": {
+		"message": "No new successful subscription proxies to add."
+	},
+	"popupAddedProxiesCount": {
+		"message": "Added {0} proxy(ies){1}"
+	},
+	"popupAddSubscriptionTitle": {
+		"message": "Add to manual list?"
+	},
+	"popupAddSubscriptionConfirm": {
+		"message": "This will copy the proxy with all its settings and test results. Continue?"
+	},
+	"popupAddSubscriptionYes": {
+		"message": "Add"
+	},
+	"settingsContextMenuSelectedCount": {
+		"message": "Selected: {0}"
+	},
+			"settingsGeneralWebDavServerUrlPlaceholder": {
+		"message": "Enter WebDAV server URL"
+	},
+	"settingsGeneralWebDavServerUserPlaceholder": {
+		"message": "Enter username"
+	},
+	"settingsGeneralWebDavServerPasswordPlaceholder": {
+		"message": "Enter password"
+	},
+		"settingsContextMenuSetDefaultSingle": {
+		"message": "Please select exactly one proxy to set as default."
+	},
+	"popupAddProxiesPartialFail": {
+		"message": "Failed to add some proxies."
+	},
+		"settingsExpressCycleTestFailed": {
+		"message": "Express cycle test failed: {0}"
 	}
 }

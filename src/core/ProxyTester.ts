@@ -23,6 +23,7 @@ import { quickCheckProxy, forceCloseHiddenWindow as forceCloseExpressWindow } fr
 import { ProxyServer } from "./definitions";
 import { api } from "../lib/environment";
 import { sendProgress } from "./ResultSaver";
+import { Core } from "./Core";
 
 export const ProxyTester = {
     _isRunning: false,
@@ -59,10 +60,24 @@ export const ProxyTester = {
                     statusType: result.statusType,
                     testType: "standard"
                 });
+                // English: Send next step to log
+                // Russian: Отправляем шаг перехода к следующему прокси в лог
+                Core.sendTestLogStep({
+                    type: 'next',
+                    proxyId: proxy.id,
+                    current: completed,
+                    total: allProxies.length
+                });
             } catch {
                 completed++;
             }
         }
+        // English: Send complete message to log
+        // Russian: Отправляем сообщение о завершении в лог
+        Core.sendTestLogStep({
+            type: 'complete',
+            message: api.i18n.getMessage('testLogComplete') || 'Test completed – you may now start a new test.'
+        });
         api.runtime.sendMessage({ command: "CHECK_COMPLETE", total: allProxies.length });
     },
 
@@ -111,6 +126,16 @@ export const ProxyTester = {
                         "express"
                     );
                 }
+				                // English: Send next step to log
+                // Russian: Отправляем шаг перехода к следующему прокси в лог
+                if (!this._cancelRequested) {
+                    Core.sendTestLogStep({
+                        type: 'next',
+                        proxyId: proxy.id,
+                        current: this._completed,
+                        total: this._total
+                    });
+                }
             } catch (e) {
                 if (!this._cancelRequested) {
                     this._completed++;
@@ -137,9 +162,26 @@ export const ProxyTester = {
 
         if (wasCancelled) {
             console.log("[ProxyTester] Быстрый тест отменён, завершено:", this._completed);
+            // English: Send stop message to log
+            // Russian: Отправляем сообщение об остановке в лог
+            Core.sendTestLogStep({
+                type: 'stop',
+                message: api.i18n.getMessage('testLogStop') || 'Test stopped – please wait for current checks to finish before starting another test.'
+            });
+            // Также отправляем complete после остановки (тест завершён полностью)
+            Core.sendTestLogStep({
+                type: 'complete',
+                message: api.i18n.getMessage('testLogComplete') || 'Test completed – you may now start a new test.'
+            });
             api.runtime.sendMessage({ command: "TEST_CANCELLED", completed: this._completed, total: this._total, site: this._currentSite });
         } else {
             console.log("[ProxyTester] Быстрый тест завершён");
+            // English: Send complete message to log
+            // Russian: Отправляем сообщение о завершении в лог
+            Core.sendTestLogStep({
+                type: 'complete',
+                message: api.i18n.getMessage('testLogComplete') || 'Test completed – you may now start a new test.'
+            });
             api.runtime.sendMessage({ command: "CHECK_COMPLETE", total: this._total, site: this._currentSite });
         }
     },
@@ -181,6 +223,14 @@ export const ProxyTester = {
                         this._total,
                         "standard"
                     );
+                    // English: Send next step to log
+                    // Russian: Отправляем шаг перехода к следующему прокси в лог
+                    Core.sendTestLogStep({
+                        type: 'next',
+                        proxyId: proxy.id,
+                        current: this._completed,
+                        total: this._total
+                    });
                 }
             } catch (e) {
                 if (!this._cancelRequested) {
@@ -206,17 +256,33 @@ export const ProxyTester = {
 
         if (wasCancelled) {
             console.log("[ProxyTester] Тест отменён, завершено:", this._completed);
+            // English: Send stop and complete messages to log
+            // Russian: Отправляем сообщения об остановке и завершении в лог
+            Core.sendTestLogStep({
+                type: 'stop',
+                message: api.i18n.getMessage('testLogStop') || 'Test stopped – please wait for current checks to finish before starting another test.'
+            });
+            Core.sendTestLogStep({
+                type: 'complete',
+                message: api.i18n.getMessage('testLogComplete') || 'Test completed – you may now start a new test.'
+            });
             api.runtime.sendMessage({ command: "TEST_CANCELLED", completed: this._completed, total: this._total, site: this._currentSite });
         } else {
             console.log("[ProxyTester] Тест завершён");
+            // English: Send complete message to log
+            // Russian: Отправляем сообщение о завершении в лог
+            Core.sendTestLogStep({
+                type: 'complete',
+                message: api.i18n.getMessage('testLogComplete') || 'Test completed – you may now start a new test.'
+            });
             api.runtime.sendMessage({ command: "CHECK_COMPLETE", total: this._total, site: this._currentSite });
         }
     },
 
-    async cancelTestForSite() {
-        if (!this._isRunning) return;
-        console.log("[ProxyTester] cancelTestForSite вызван");
-        this._cancelRequested = true;
+	async cancelTestForSite() {
+		if (!this._isRunning) return;
+		console.log("[ProxyTester] cancelTestForSite вызван");
+		this._cancelRequested = true;
     },
 
     getStatus() {

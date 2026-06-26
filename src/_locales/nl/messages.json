@@ -1628,5 +1628,179 @@
 	},
 	"settingsGeneralEnableDirectIpDetectionDesc": {
 		"message": "Wanneer ingeschakeld, wordt uw echte IP-adres verzonden naar externe diensten voor een vergelijkende controle van de proxy-functionaliteit. Wanneer uitgeschakeld, vertrouwen de tests op het laden van sites en proxy-brondata (minder nauwkeurig maar privé)."
+	},
+		"testLogTitle": {
+		"message": "Proxy-testlog"
+	},
+	"testLogWaiting": {
+		"message": "Wachten op start van de test..."
+	},
+	"testLogStart": {
+		"message": "▶ {0} ({1}) wordt gecontroleerd"
+	},
+	"testLogIpSuccess": {
+		"message": "IP verkregen: {0}"
+	},
+	"testLogIpFail": {
+		"message": "IP niet verkregen"
+	},
+	"testLogPageSuccess": {
+		"message": "✓ {0} is bereikbaar"
+	},
+	"testLogPageFail": {
+		"message": "✗ {0} is niet bereikbaar"
+	},
+	"testLogStatus": {
+		"message": "Eindstatus: {0}"
+	},
+	"testLogNext": {
+		"message": "Naar volgende proxy"
+	},
+	"testLogStop": {
+		"message": "Test gestopt – wacht tot de huidige controles zijn voltooid voordat u een nieuwe test start."
+	},
+	"testLogComplete": {
+		"message": "Test voltooid – u kunt nu een nieuwe test starten."
+	},
+	"testLogClear": {
+		"message": "Wissen"
+	},
+	"testLogClose": {
+		"message": "Sluiten"
+	},
+	"testLogOpenButton": {
+		"message": "Testlog"
+	},
+	"testLogOpenFailed": {
+		"message": "Kan het logvenster niet openen."
+	},
+	"testLogStatusSuccess": {
+		"message": "SUCCES"
+	},
+	"testLogStatusIndirect": {
+		"message": "INDIRECT SUCCES"
+	},
+	"testLogStatusFail": {
+		"message": "MISLUKT"
+	},
+	"testLogStatusIpOnly": {
+		"message": "ALLEEN IP"
+	},
+	"testLogStatusUnknown": {
+		"message": "ONBEKEND"
+	},
+	"testLogPageAvailable": {
+		"message": "beschikbaar"
+	},
+	"testLogPageUnavailable": {
+		"message": "niet beschikbaar"
+	},
+	"settingsShowLog": {
+		"message": "Log weergeven"
+	},
+	"testLogLabelProxy": {
+		"message": "PROXY"
+	},
+	"testLogLabelSite": {
+		"message": "SITE"
+	},
+	"testLogLabelStatus": {
+		"message": "STATUS"
+	},
+	"settingsHideLog": {
+		"message": "Log verbergen"
+	},
+		"proxyCheckerEmptyUrl": {
+		"message": "Test-URL is leeg"
+	},
+	"proxyCheckerNoProxyApi": {
+		"message": "Proxy-API niet beschikbaar"
+	},
+	"proxyCheckerIndirectSuccessPageNotLoaded": {
+		"message": "Indirect succes (pagina niet geladen)"
+	},
+	"proxyCheckerProxyReturnsOwnIp": {
+		"message": "Proxy geeft eigen IP terug"
+	},
+	"proxyCheckerProxyNotWorking": {
+		"message": "Proxy werkt niet"
+	},
+	"proxyCheckerUnknownIpOnly": {
+		"message": "Onbekend (IP ontvangen, pagina niet geladen)"
+	},
+	"localProxyCheckerEmptyTestUrl": {
+		"message": "Test-URL niet opgegeven"
+	},
+	"loadingMessage": {
+		"message": "Laden…"
+	},
+	"loadingErrorHint": {
+		"message": "Als u dit ziet, is er een fout opgetreden tijdens het laden van de pagina. Probeer opnieuw te laden en meld het probleem."
+	},
+	"loadingReloadHint": {
+		"message": "Of de browser heeft de pagina geladen en niet de ProxyMust-extensie. Laad de pagina gewoon opnieuw."
+	},
+	"footerBroughtBy": {
+		"message": "Aangeboden door Salar,"
+	},
+	"footerVersionInfo": {
+		"message": "ProxyMust {0} (gebaseerd op SmartProxy 2.1) – onderhouden door nana-xakep | Fork van SmartProxy"
+	},
+	"noProxiesSelected": {
+		"message": "Geen proxy's geselecteerd."
+	},
+	"defaultProxyUpdated": {
+		"message": "Standaard proxy-server bijgewerkt."
+	},
+	"addSiteFailed": {
+		"message": "Site toevoegen mislukt."
+	},
+	"popupAddProxySuccess": {
+		"message": "Proxy succesvol toegevoegd met beoordeling en testresultaten!"
+	},
+	"popupAddProxyFailed": {
+		"message": "Proxy toevoegen mislukt."
+	},
+	"popupAddProxyExistsConfirm": {
+		"message": "Deze proxy bestaat al (beoordeling: {0}).\n\nWisselen en beoordeling wijzigen?"
+	},
+	"popupNoTestData": {
+		"message": "Geen testgegevens beschikbaar. Voer eerst een test uit."
+	},
+	"popupNoNewSuccessfulProxies": {
+		"message": "Geen nieuwe succesvolle abonnementsproxy's om toe te voegen."
+	},
+	"popupAddedProxiesCount": {
+		"message": "{0} proxy('s) toegevoegd{1}"
+	},
+	"popupAddSubscriptionTitle": {
+		"message": "Toevoegen aan handmatige lijst?"
+	},
+	"popupAddSubscriptionConfirm": {
+		"message": "Dit kopieert de proxy met al zijn instellingen en testresultaten. Doorgaan?"
+	},
+	"popupAddSubscriptionYes": {
+		"message": "Toevoegen"
+	},
+	"settingsContextMenuSelectedCount": {
+		"message": "Geselecteerd: {0}"
+	},
+		"settingsGeneralWebDavServerUrlPlaceholder": {
+		"message": "Voer de WebDAV-server-URL in"
+	},
+	"settingsGeneralWebDavServerUserPlaceholder": {
+		"message": "Voer gebruikersnaam in"
+	},
+	"settingsGeneralWebDavServerPasswordPlaceholder": {
+		"message": "Voer wachtwoord in"
+	},
+		"settingsContextMenuSetDefaultSingle": {
+		"message": "Selecteer exact één proxy om als standaard in te stellen."
+	},
+	"popupAddProxiesPartialFail": {
+		"message": "Sommige proxy's konden niet worden toegevoegd."
+	},
+	"settingsExpressCycleTestFailed": {
+		"message": "Express-cyclustest mislukt: {0}"
 	}
 }
