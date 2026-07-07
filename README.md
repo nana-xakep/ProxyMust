@@ -1,7 +1,7 @@
 # ProxyMust
 
 **Advanced selective proxy manager**  
-Version: 1.0.3 (based on SmartProxy 2.1)  
+Version: 1.0.4 (based on SmartProxy 2.1)  
 Fork maintainer: nana-xakep  
 Source code: [github.com/nana-xakep/ProxyMust](https://github.com/nana-xakep/ProxyMust)
 
@@ -17,15 +17,52 @@ ProxyMust works in **Chrome, Firefox, Edge, Opera, and Firefox for Android**, an
 
 ---
 
-## 🆕 What's New in Version 1.0.3
+## 🆕 What's New in Version 1.0.4
 
-- **Built-in test log viewer** – proxy test progress is now displayed in real-time both on the settings page and in a separate popup window. The log shows every step: start of check, IP retrieval, site availability, final status, and transition to the next proxy.
-- **Country flags in logs** – a country flag is displayed next to the proxy address (based on IP address).
-- **Full log localization** – all messages, labels, and statuses are translated into all supported languages.
-- **Instant stop feedback** – clicking the "Stop" button immediately displays a message in the log, informing you that cancellation has started.
-- **"Pin" button in the log window** – attempts to keep the window on top of others: the window automatically focuses when new messages appear (but does not guarantee persistent "always on top" due to browser limitations). The pinned state is preserved for the window session.
-- **Fixed duplicate stop messages** – now only one stop message is sent when "Stop" is clicked.
-- **Log now updates in real-time** – even when the viewer is hidden; all missed messages are displayed instantly when opened.
+### Automatic Protocol Switching
+- **Automatic detection of working protocol during testing** – if a proxy doesn't work with its declared protocol (SOCKS, HTTP, HTTPS), the extension automatically tries other protocols to find a working one. Saves manual trial and error.
+- **Two switch modes:**
+  - **"Probable" (recommended)** – SOCKS → HTTP, HTTP → HTTPS, HTTPS → HTTP.
+  - **"Full"** – HTTP → HTTPS → SOCKS4 → SOCKS5 (exhaustive, slower).
+- **Global toggle** – checkbox "Enable automatic protocol detection" and mode switcher (Probable / Full).
+- **Logging** – during protocol switching, the log shows attempts and successful changes.
+- **Indirect success preservation** – if IP is obtained during protocol detection (even if page doesn't load), the final status becomes `indirect` instead of `fail`, correctly reflecting proxy operability.
+
+### UI Improvements
+- **Automatic switch to Direct when saving subscriptions** – if you were on Always Enabled with a non‑working proxy, you no longer have to manually switch to Direct before saving a subscription. The extension now temporarily switches to Direct, loads the list, saves the subscription, and restores the original profile automatically.
+- **Auto‑save subscriptions** – after successful addition, changes are saved immediately, eliminating extra clicks.
+- **Embedded test log viewer** – integrated into the settings page (in the left menu column) and available as a separate floating window from the popup. Shows real‑time test progress with detailed steps: proxy start, IP detection, site availability, final status, and next proxy transition.
+- **Info message on test start** – whenever a test is launched, the log displays `🔍 Proxy Accessibility Check` so you know the process has begun.
+- **Direct IP display in log** – when `enableDirectIpDetection` is on, the log shows the direct IP at the start (colored `#00aaff`).
+- **IP comparison in log** – for each proxy, the IP step shows:  
+  - `☑️ differs from direct IP: ...` (blue) – proxy works.  
+  - `⚠️ matches direct IP (proxy not working)` (red) – proxy is not connected; it will be re‑applied and retested.
+- **Site check start message** – before requesting the target site, the log shows `🔍 Checking site: https://...` so you know active site checking is in progress.
+- **Country flags in test logs** – flags appear next to proxy hosts using the `Twemoji Country Flags` font (cross‑browser).
+- **Full localization** – all log messages, labels, and statuses are translated into all 21 supported languages.
+- **Instant stop feedback** – clicking the "Stop" button immediately shows a stop message in the log, confirming cancellation.
+- **"Log" toggle button** – in the proxy test block on the settings page, toggles the built‑in log viewer.
+- **"Pin" button in the log window** – attempts to keep the window on top of others (focuses on new messages), making it easier to monitor long tests.
+- **Log layout** – compact design with smaller font and padding; height increased to 550px, width default enlarged from 320 to 450px for better readability. Header centered; "Clear" and "Close" buttons placed next to each other.
+- **Centered test type menu in popup** – the menu that appears when clicking the **Test** button in the popup is now horizontally centered within the popup, improving UI and preventing misalignment.
+- **Vertical alignment of test controls in popup** – buttons, progress, and "Add working" are vertically centered for better UX.
+- **Export button disabled when no proxies** – instead of creating an empty file, the button is inactive when the proxy list is empty.
+
+### Fixes
+- **Loss of test buttons in popup when enabling "Enable direct IP detection"** – fixed by correctly reading general options with fallback to current values.
+- **HTML tags in floating log window** – fixed rendering so that IP steps show formatted text (colors and icons) correctly.
+- **Overlapping messages in floating log** – fixed display: text now wraps properly without overlapping, thanks to corrected CSS.
+- **Empty file on proxy export** – export button is now disabled when the list is empty.
+- **Version display in footer** – version number is now dynamically inserted via localization, ensuring correct display.
+- **Visual separation of manual and subscription proxies in popup** – subscription proxies are now grouped by subscription name (as in settings) with indentation; manual proxies are ungrouped.
+- **False error message when starting express‑cycle test in Firefox** – fixed by switching to a unified callback with success check, ensuring cross‑browser stability.
+- **Profile and proxy switching in cycle tests** – fixed order of settings updates to guarantee the browser applies the new proxy before the test.
+- **`ip-only` status no longer triggers protocol auto‑change** – protocol detection is only attempted on explicit `fail`, not on `ip-only`.
+- **Indirect success after protocol detection** – if IP was obtained and the retest fails, the final status becomes `indirect`, not `fail`.
+- **Retest after protocol detection now uses proxy with updated protocol** – previously, retest used the old protocol, causing wrong logs and tests. Now the retest uses the proxy object with the new protocol.
+- **Duplicate statuses in logs after protocol auto‑detection eliminated** – for precise/quick tests, only one final status is sent (with the correct protocol).
+- **Test launch blocking after standard tests fixed** – `try-finally` blocks ensure `_isRunning` is reset even on errors; no more manual reload required.
+- **Anti‑duplicate in log now compares displayed HTML, not message hash** – correctly removes exact consecutive duplicates regardless of source.
 
 ---
 
@@ -281,6 +318,6 @@ ProxyMust is distributed under the **GNU General Public License v3.0**. The orig
 ---
 
 **ProxyMust** – maintained by [nana-xakep](https://github.com/nana-xakep)  
-License [GPL-3.0](https://www.gnu.org/licenses/gpl-3.0.html). Version 1.0.3 (based on SmartProxy 2.1).  
+License [GPL-3.0](https://www.gnu.org/licenses/gpl-3.0.html). Version 1.0.4 (based on SmartProxy 2.1).  
 
-Documentation version: 1.0.3 (2026-06-26)
+Documentation version: 1.0.4 (2026-07-07)
