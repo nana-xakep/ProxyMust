@@ -29,11 +29,11 @@ export const IP_SERVICES: string[] = [
 	'http://ipecho.net/plain',
 	'http://whatismyip.akamai.com',
     'http://l2.io/ip',
-    'http://ip.tyk.nu',	
 	'http://wtfismyip.com/text',
 	'http://myexternalip.com/raw',
 	'http://ip-api.com/line?fields=query',	
 	'http://ipinfo.io/ip',
+	'http://ip.tyk.nu',	
     'http://ip.brightfur.net/',	
 ];
 

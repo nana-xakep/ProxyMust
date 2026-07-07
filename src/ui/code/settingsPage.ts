@@ -27,16 +27,18 @@ import { environment, api } from "../../lib/environment";
 import { Utils } from "../../lib/Utils";
 import { ProxyImporter } from "../../lib/ProxyImporter";
 import { RuleImporter } from "../../lib/RuleImporter";
-import { SettingsConfig, CommandMessages, SettingsPageInternalDataType, proxyServerProtocols, proxyServerSubscriptionObfuscate, ProxyServer, ProxyRule, ProxyRuleType, ProxyServerSubscription, GeneralOptions, UIOptions, ResultHolder, proxyServerSubscriptionFormat, SpecialRequestApplyProxyMode, specialRequestApplyProxyModeKeys, ProxyRulesSubscription, SmartProfile, SettingsPageSmartProfile, SmartProfileType, getSmartProfileTypeIcon, ProxyRuleSpecialProxyServer, getUserSmartProfileTypeConfig, themesCustomType, ThemeType, getSmartProfileTypeConfig, SubscriptionStats, getSmartProfileTypeName, ProxyRulesImportFromUI, ImportedProxyRule, ExternalRulesFormat } from "../../core/definitions";
+import { SettingsConfig, CommandMessages, SettingsPageInternalDataType, PopupInternalDataType, proxyServerProtocols, proxyServerSubscriptionObfuscate, ProxyServer, ProxyRule, ProxyRuleType, ProxyServerSubscription, GeneralOptions, UIOptions, ResultHolder, proxyServerSubscriptionFormat, SpecialRequestApplyProxyMode, specialRequestApplyProxyModeKeys, ProxyRulesSubscription, SmartProfile, SettingsPageSmartProfile, SmartProfileType, getSmartProfileTypeIcon, ProxyRuleSpecialProxyServer, getUserSmartProfileTypeConfig, themesCustomType, ThemeType, getSmartProfileTypeConfig, SubscriptionStats, getSmartProfileTypeName, ProxyRulesImportFromUI, ImportedProxyRule, ExternalRulesFormat, SmartProfileTypeBuiltinIds } from "../../core/definitions";
 import { Debug } from "../../lib/Debug";
 import { ProfileOperations } from "../../core/ProfileOperations";
 import { SettingsOperation } from "../../core/SettingsOperation";
 import { CountryCode } from "../../lib/CountryCode";
 import { getProxyStatus, ProxyStatusInfo } from "../../core/statusUtils";
+import { renderLogMessage, t, resetAntiDuplicate } from "./logRenderer";
+//import { ProxyEngine } from "../../core/ProxyEngine";
+//import { Core } from "../../core/Core"; // Удалить, если не используется
 //import { ProxyCycleTester } from "../../core/ProxyCycleTester";
 
 const jq = jQuery;
-
 export class settingsPage {
 	private static localized = false;
 	private static settingsLoaded = false;
@@ -221,12 +223,38 @@ else if (command === "CHECK_PROGRESS") {
             window.location.reload();
         }, 1000);
     }
-	// English: Render log messages in the viewer (always, even if hidden)
-    // Russian: Отобразить сообщения лога в просмотрщике (всегда, даже если скрыт)
-    else if (command === "PROXY_TEST_STEP") {
-        console.log("[Settings] PROXY_TEST_STEP received:", message.data);
-        settingsPage.renderLogMessage(message.data);
-    }
+		// English: Render log messages in the viewer (always, even if hidden)
+		// Russian: Отобразить сообщения лога в просмотрщике (всегда, даже если скрыт)
+		else if (command === "PROXY_TEST_STEP") {
+			console.log("[Settings] PROXY_TEST_STEP received:", message.data);
+			const container = document.getElementById('logContainer');
+			if (container) {
+				renderLogMessage(container, message.data);
+			}
+		}
+		else if (command === "PROXY_PROTOCOL_CHANGED") {
+		// English: Update proxy row in the table when protocol changes
+		// Russian: Обновляем строку прокси в таблице при изменении протокола
+		const proxyId = message.proxyId;
+		const newProtocol = message.newProtocol;
+		if (proxyId && settingsPage.grdServers) {
+			// English: Find and update the proxy in the table data
+			// Russian: Находим и обновляем прокси в данных таблицы
+			const rows = settingsPage.grdServers.rows();
+			const data = rows.data();
+			for (let i = 0; i < data.length; i++) {
+				if (data[i] && data[i].id === proxyId) {
+					data[i].protocol = newProtocol;
+					settingsPage.grdServers.row(i).data(data[i]).draw(false);
+					console.log(`[Settings] Протокол обновлён в таблице: ${proxyId} -> ${newProtocol}`);
+					break;
+				}
+			}
+			// English: Refresh the grid to show changes
+			// Russian: Обновляем отображение таблицы
+			settingsPage.grdServers.draw(false);
+		}
+	}
 }
 
 	private static registerMessageReader() {
@@ -377,6 +405,7 @@ else if (command === "CHECK_PROGRESS") {
 			this.attachPriorityClickHandler();
 		});
 		this.originalSettings.CopyFrom(this.currentSettings);
+		settingsPage.updateExportButtonsState();
 		settingsPage.restoreActiveTab();
 		        // English: If we need to switch to Proxy Servers tab after reload (set by cycle test completion)
         // Russian: Если нужно переключиться на вкладку Proxy Servers после перезагрузки (установлено при завершении циклического теста)
@@ -528,10 +557,25 @@ jq("#chkEnableRating").off('change').on('change', function () {
     );
 });
 
+// English: Handle auto-detect protocol checkbox change to show/hide mode selector
+// Russian: Обработка изменения чекбокса автоопределения протокола для показа/скрытия селектора режима
+jq("#chkAutoDetectProtocol").off("change").on("change", function() {
+    const enabled = jq(this).prop("checked");
+    settingsPage.toggleProtocolSwitchModeVisibility(enabled);
+    settingsPage.changeTracking.options = true;
+});
+
+// English: Handle protocol switch mode radio change
+// Russian: Обработка изменения радиокнопок режима перебора протоколов
+jq('input[name="protocolSwitchMode"]').off("change").on("change", function() {
+    settingsPage.changeTracking.options = true;
+});
+
 // English: Handle direct IP detection toggle
 // Russian: Обработка переключателя определения прямого IP
 jq("#chkEnableDirectIpDetection").off('change').on('change', function () {
     const enabled = jq(this).prop('checked');
+    console.log(`[ProxyMust] Чекбокс enableDirectIpDetection изменён: ${enabled}`);
     const generalOptions = settingsPage.readGeneralOptions();
     generalOptions.enableDirectIpDetection = enabled;
     
@@ -543,18 +587,22 @@ jq("#chkEnableDirectIpDetection").off('change').on('change', function () {
             options: generalOptions
         },
         (response: ResultHolder) => {
+            console.log(`[ProxyMust] Ответ на сохранение enableDirectIpDetection:`, response);
             if (response && response.success) {
                 api.storage.local.set({ options: generalOptions })
                     .catch((err: any) => console.error("[ProxyMust] Ошибка сохранения options в local storage:", err));
                 jq(this).prop('checked', enabled);
+                console.log(`[ProxyMust] enableDirectIpDetection успешно сохранён: ${enabled}`);
             } else {
                 if (response && response.message) messageBox.error(response.message);
                 jq(this).prop('checked', !enabled);
+                console.warn(`[ProxyMust] Не удалось сохранить enableDirectIpDetection`);
             }
         },
         (error: Error) => {
             messageBox.error(api.i18n.getMessage("settingsErrorFailedToSaveGeneral") + " " + error.message);
             jq(this).prop('checked', !enabled);
+            console.error(`[ProxyMust] Ошибка сохранения enableDirectIpDetection:`, error);
         }
     );
 });
@@ -656,17 +704,18 @@ jq("#staleHoursInput").off("change").on("change", function() {
 
         // English: Clear log button
         // Russian: Кнопка очистки лога
-        jq("#clearLogBtn").off("click").on("click", function() {
-            const container = document.getElementById('logContainer');
-            if (container) {
-                container.innerHTML = '';
-                const emptyState = document.getElementById('emptyState');
-                if (emptyState) {
-                    container.appendChild(emptyState);
-                    emptyState.style.display = 'block';
-                }
-            }
-        });
+		jq("#clearLogBtn").off("click").on("click", function() {
+			const container = document.getElementById('logContainer');
+			if (container) {
+				container.innerHTML = '';
+				resetAntiDuplicate();
+				const emptyState = document.getElementById('emptyState');
+				if (emptyState) {
+					container.appendChild(emptyState);
+					emptyState.style.display = 'block';
+				}
+			}
+		});
         // English: Close log viewer
         // Russian: Закрыть просмотрщик лога
         jq("#closeLogBtn").off("click").on("click", function() {
@@ -1103,6 +1152,10 @@ jq("#staleHoursInput").off("change").on("change", function() {
 		}
 
 		jq("#spanVersion").text("Version: " + currentSettings.version);
+		
+		// Update footer with version
+const version = currentSettings.version;
+jq('[data-localize="footerVersionInfo"]').text(t('footerVersionInfo', version));
 
 		// ProxyMust: disable update notifications
 		/*
@@ -1207,7 +1260,6 @@ jq("#staleHoursInput").off("change").on("change", function() {
 			modal.find("#chkServerProxyDNS-Control").show().removeClass('d-none');
 		else
 			modal.find("#chkServerProxyDNS-Control").hide();
-
 		if (serverInputInfo.protocol == "SOCKS4")
 			modal.find("#chkServerProxy-Authentication").hide();
 		else if (serverInputInfo.protocol == "SOCKS5") {
@@ -1632,7 +1684,27 @@ jq("#staleHoursInput").off("change").on("change", function() {
 
 		divGeneral.find("#chkEnableShortcuts").prop("checked", options.enableShortcuts || false);
 		divGeneral.find("#chkEnableRating").prop("checked", options.enableRating);
-		divGeneral.find("#chkEnableDirectIpDetection").prop("checked", options.enableDirectIpDetection === true);
+        console.log(`[ProxyMust] loadGeneralOptions: enableRating = ${options.enableRating}`);
+		        const directIpEnabled = options.enableDirectIpDetection === true;
+		divGeneral.find("#chkEnableDirectIpDetection").prop("checked", directIpEnabled);
+		console.log(`[ProxyMust] loadGeneralOptions: enableDirectIpDetection = ${directIpEnabled}`);
+
+		// English: Protocol auto-detection settings
+		// Russian: Настройки автоопределения протокола
+		const autoDetectEnabled = options.autoDetectProtocol !== false;
+		divGeneral.find("#chkAutoDetectProtocol").prop("checked", autoDetectEnabled);
+
+		const switchMode = options.protocolSwitchMode || 'probable';
+		if (switchMode === 'full') {
+			divGeneral.find("#rbtnProtocolFull").prop("checked", true);
+		} else {
+			divGeneral.find("#rbtnProtocolProbable").prop("checked", true);
+		}
+
+		// English: Show/hide mode selector based on auto-detect checkbox
+		// Russian: Показываем/скрываем переключатель режима в зависимости от чекбокса автоопределения
+		settingsPage.toggleProtocolSwitchModeVisibility(autoDetectEnabled);
+
 		jq("#proxyTestControlBlock").toggle(options.enableRating === true);
 		divGeneral.find("#chkShortcutNotification").prop("checked", options.shortcutNotification || false);
 		divGeneral.find("#chkDisplayAppliedProxyOnBadge").prop("checked", options.displayAppliedProxyOnBadge || false);
@@ -1699,50 +1771,90 @@ jq("#staleHoursInput").off("change").on("change", function() {
 		);
 	}
 
-	private static readGeneralOptions(generalOptions?: GeneralOptions): GeneralOptions {
-		if (!generalOptions)
-			generalOptions = new GeneralOptions();
-		let divGeneral = jq("#tab-general");
+    private static readGeneralOptions(generalOptions?: GeneralOptions): GeneralOptions {
+        // English: Start with a copy of current settings or a new instance
+        // Russian: Начинаем с копии текущих настроек или нового экземпляра
+        if (!generalOptions) {
+            generalOptions = new GeneralOptions();
+            // Copy from current options if available
+            if (settingsPage.currentSettings?.options) {
+                generalOptions.CopyFrom(settingsPage.currentSettings.options);
+            }
+        }
 
-		generalOptions.proxyPerOrigin = divGeneral.find("#chkProxyPerOrigin").prop("checked");
-		generalOptions.activeIncognitoProfileId = divGeneral.find("#cmbGeneralIncognitoProfile").val();
+        const divGeneral = jq("#tab-general");
 
-		generalOptions.syncSettings = divGeneral.find("#chkSyncSettings").prop("checked");
-		generalOptions.syncActiveProfile = divGeneral.find("#chkSyncProxyMode").prop("checked");
-		generalOptions.syncActiveProxy = divGeneral.find("#chkSyncActiveProxy").prop("checked");
+        // English: Read all values from DOM with fallback to current values if element not found
+        // Russian: Читаем все значения из DOM с запасным вариантом, если элемент не найден
+        const getChecked = (selector: string, fallback: boolean): boolean => {
+            const el = divGeneral.find(selector);
+            if (el.length) {
+                return el.prop("checked") === true;
+            }
+            return fallback;
+        };
 
-		generalOptions.syncWebDavServerEnabled = divGeneral.find("#chkSyncToWebDAV").prop("checked");
-		generalOptions.syncWebDavServerUrl = divGeneral.find("#txtWebDavServerUrl").val();
-		generalOptions.syncWebDavBackupFilename = divGeneral.find("#txtWebDavBackupFilename").val();
-		generalOptions.syncWebDavServerUser = divGeneral.find("#txtWebDavServerUser").val();
-		generalOptions.syncWebDavServerPassword = divGeneral.find("#txtWebDavServerPassword").val();
+        const getVal = (selector: string, fallback: any): any => {
+            const el = divGeneral.find(selector);
+            if (el.length) {
+                return el.val();
+            }
+            return fallback;
+        };
 
-		generalOptions.detectRequestFailures = divGeneral.find("#chkDetectRequestFailures").prop("checked");
-		generalOptions.displayFailedOnBadge = divGeneral.find("#chkDisplayFailedOnBadge").prop("checked");
+        generalOptions.proxyPerOrigin = getChecked("#chkProxyPerOrigin", generalOptions.proxyPerOrigin);
+        generalOptions.activeIncognitoProfileId = getVal("#cmbGeneralIncognitoProfile", generalOptions.activeIncognitoProfileId);
 
-		generalOptions.enableShortcuts = divGeneral.find("#chkEnableShortcuts").prop("checked");
-		generalOptions.enableRating = divGeneral.find("#chkEnableRating").prop("checked");
-		generalOptions.enableDirectIpDetection = divGeneral.find("#chkEnableDirectIpDetection").prop("checked");
-		generalOptions.shortcutNotification = divGeneral.find("#chkShortcutNotification").prop("checked");
-		generalOptions.displayAppliedProxyOnBadge = divGeneral.find("#chkDisplayAppliedProxyOnBadge").prop("checked");
-		generalOptions.displayMatchedRuleOnBadge = divGeneral.find("#chkDisplayMatchedRuleOnBadge").prop("checked");
-		generalOptions.refreshTabOnConfigChanges = divGeneral.find("#chkRefreshTabOnConfigChanges").prop("checked");
-		if (divGeneral.find("#rbtnThemesLight").prop("checked")) {
-			generalOptions.themeType = ThemeType.Light;
+        generalOptions.syncSettings = getChecked("#chkSyncSettings", generalOptions.syncSettings);
+        generalOptions.syncActiveProfile = getChecked("#chkSyncProxyMode", generalOptions.syncActiveProfile);
+        generalOptions.syncActiveProxy = getChecked("#chkSyncActiveProxy", generalOptions.syncActiveProxy);
+
+        generalOptions.syncWebDavServerEnabled = getChecked("#chkSyncToWebDAV", generalOptions.syncWebDavServerEnabled);
+        generalOptions.syncWebDavServerUrl = getVal("#txtWebDavServerUrl", generalOptions.syncWebDavServerUrl);
+        generalOptions.syncWebDavBackupFilename = getVal("#txtWebDavBackupFilename", generalOptions.syncWebDavBackupFilename);
+        generalOptions.syncWebDavServerUser = getVal("#txtWebDavServerUser", generalOptions.syncWebDavServerUser);
+        generalOptions.syncWebDavServerPassword = getVal("#txtWebDavServerPassword", generalOptions.syncWebDavServerPassword);
+
+        generalOptions.detectRequestFailures = getChecked("#chkDetectRequestFailures", generalOptions.detectRequestFailures);
+        generalOptions.displayFailedOnBadge = getChecked("#chkDisplayFailedOnBadge", generalOptions.displayFailedOnBadge);
+
+        generalOptions.enableShortcuts = getChecked("#chkEnableShortcuts", generalOptions.enableShortcuts);
+        generalOptions.enableRating = getChecked("#chkEnableRating", generalOptions.enableRating);
+		generalOptions.enableDirectIpDetection = getChecked("#chkEnableDirectIpDetection", generalOptions.enableDirectIpDetection);
+
+		// English: Protocol auto-detection settings
+		// Russian: Настройки автоопределения протокола
+		generalOptions.autoDetectProtocol = getChecked("#chkAutoDetectProtocol", generalOptions.autoDetectProtocol);
+
+		const switchModeRadio = divGeneral.find('input[name="protocolSwitchMode"]:checked');
+		if (switchModeRadio.length) {
+			generalOptions.protocolSwitchMode = switchModeRadio.val() as 'probable' | 'full';
+		} else {
+			generalOptions.protocolSwitchMode = 'probable';
 		}
-		else if (divGeneral.find("#rbtnThemesDark").prop("checked")) {
-			generalOptions.themeType = ThemeType.Dark;
-		}
-		else {
-			generalOptions.themeType = ThemeType.Auto;
-		}
-		generalOptions.themesLight = divGeneral.find("#cmbThemesLight").val();
-		generalOptions.themesLightCustomUrl = divGeneral.find("#txtThemesLightCustomUrl").val();
-		generalOptions.themesDark = divGeneral.find("#cmbThemesDark").val();
-		generalOptions.themesDarkCustomUrl = divGeneral.find("#txtThemesDarkCustomUrl").val();
 
-		return generalOptions;
-	}
+		generalOptions.shortcutNotification = getChecked("#chkShortcutNotification", generalOptions.shortcutNotification);
+        generalOptions.displayAppliedProxyOnBadge = getChecked("#chkDisplayAppliedProxyOnBadge", generalOptions.displayAppliedProxyOnBadge);
+        generalOptions.displayMatchedRuleOnBadge = getChecked("#chkDisplayMatchedRuleOnBadge", generalOptions.displayMatchedRuleOnBadge);
+        generalOptions.refreshTabOnConfigChanges = getChecked("#chkRefreshTabOnConfigChanges", generalOptions.refreshTabOnConfigChanges);
+
+        // Theme
+        if (divGeneral.find("#rbtnThemesLight").prop("checked")) {
+            generalOptions.themeType = ThemeType.Light;
+        } else if (divGeneral.find("#rbtnThemesDark").prop("checked")) {
+            generalOptions.themeType = ThemeType.Dark;
+        } else {
+            generalOptions.themeType = ThemeType.Auto;
+        }
+        generalOptions.themesLight = getVal("#cmbThemesLight", generalOptions.themesLight);
+        generalOptions.themesLightCustomUrl = getVal("#txtThemesLightCustomUrl", generalOptions.themesLightCustomUrl);
+        generalOptions.themesDark = getVal("#cmbThemesDark", generalOptions.themesDark);
+        generalOptions.themesDarkCustomUrl = getVal("#txtThemesDarkCustomUrl", generalOptions.themesDarkCustomUrl);
+
+        console.log(`[ProxyMust] readGeneralOptions: enableRating = ${generalOptions.enableRating}, enableDirectIpDetection = ${generalOptions.enableDirectIpDetection}`);
+
+        return generalOptions;
+    }
 
 	private static populateIncognitoProfileDropDown(selectedId?: string) {
 		const cmbGeneralIncognitoProfile = jq("#cmbGeneralIncognitoProfile");
@@ -1790,6 +1902,7 @@ private static loadServersGrid(servers: any[]) {
         const enableRating = this.currentSettings.options.enableRating !== false;
         this.grdServers.column(6).visible(enableRating);
     }
+	    settingsPage.updateExportButtonsState();
 }
 	private static loadDefaultProxyServer(proxyServers?: ProxyServer[], serverSubscriptions?: any[]) {
 		let defaultProxyServerId = this.currentSettings.defaultProxyServerId;
@@ -2865,21 +2978,22 @@ private static loadServersGrid(servers: any[]) {
 		}
 	}
 
-	private static uiEvents = {
-		onClickMenuOffCanvas() {
-			settingsPage.hideMenuOffCanvas();
-			settingsPage.windowScrollToTop(true);
-		},
-		onClickSkipWelcome() {
-			PolyFill.runtimeSendMessage({
-				command: CommandMessages.SettingsPageSkipWelcome
-			});
-		},
-		onGeneralIncognitoProfileFocus() {
-			settingsPage.populateIncognitoProfileDropDown();
-		},
-		onClickSaveGeneralOptions() {
-			let generalOptions = settingsPage.readGeneralOptions();
+private static uiEvents = {
+    onClickMenuOffCanvas() {
+        settingsPage.hideMenuOffCanvas();
+        settingsPage.windowScrollToTop(true);
+    },
+    onClickSkipWelcome() {
+        PolyFill.runtimeSendMessage({
+            command: CommandMessages.SettingsPageSkipWelcome
+        });
+    },
+    onGeneralIncognitoProfileFocus() {
+        settingsPage.populateIncognitoProfileDropDown();
+    },
+    onClickSaveGeneralOptions() {
+        let generalOptions = settingsPage.readGeneralOptions();
+        console.log(`[ProxyMust] onClickSaveGeneralOptions: enableDirectIpDetection = ${generalOptions.enableDirectIpDetection}`);
         const staleHoursInput = jq("#staleHoursInput").val();
         let newStaleHours = parseInt(staleHoursInput as string) || 6;
         if (newStaleHours < 1) newStaleHours = 1;
@@ -2889,1875 +3003,1912 @@ private static loadServersGrid(servers: any[]) {
         } else {
             settingsPage.currentSettings.userPrefs.staleHours = newStaleHours;
         }
-        // English: Save user preferences via dedicated method (handles local storage consistently)
-        // Russian: Сохраняем пользовательские настройки через выделенный метод (единообразно работает с локальным хранилищем)
         if (settingsPage.currentSettings.userPrefs) {
             api.storage.local.set({ userPrefs: settingsPage.currentSettings.userPrefs }).catch((err: any) => {
                 console.error("[ProxyMust] Failed to save userPrefs in onClickSaveGeneralOptions:", err);
             });
         }
-			if (generalOptions.syncWebDavServerEnabled) {
-				if (!Utils.isValidUrl(generalOptions.syncWebDavServerUrl)) {
-					messageBox.error(api.i18n.getMessage("settingsGeneralWebDav_ErrorValidUrl"));
-					return;
-				}
-				if (generalOptions.syncWebDavBackupFilename.trim() == "") {
-					messageBox.error(api.i18n.getMessage("settingsGeneralWebDav_ErrorEmptyFilename"));
-					return;
-					
-				}
-			}
-
-			if (generalOptions.themesLight == themesCustomType) {
-				if (!Utils.isValidUrl(generalOptions.themesLightCustomUrl)) {
-					messageBox.error(api.i18n.getMessage("settingsGeneralThemesLight_ErrorValidUrl"));
-					return;
-				}
-				if (!Utils.isUrlHttps(generalOptions.themesLightCustomUrl)) {
-					messageBox.error(api.i18n.getMessage("settingsGeneralThemesLight_ErrorValidUrl"));
-					return;
-				}
-			}
-			if (generalOptions.themesDark == themesCustomType) {
-				if (!Utils.isValidUrl(generalOptions.themesDarkCustomUrl)) {
-					messageBox.error(api.i18n.getMessage("settingsGeneralThemesDark_ErrorValidUrl"));
-					return;
-				}
-				if (!Utils.isUrlHttps(generalOptions.themesDarkCustomUrl)) {
-					messageBox.error(api.i18n.getMessage("settingsGeneralThemesDark_ErrorValidUrl"));
-					return;
-				}
-			}
-
-			PolyFill.runtimeSendMessage(
-				{
-					command: CommandMessages.SettingsPageSaveOptions,
-					options: generalOptions
-				},
-				(response: ResultHolder) => {
-					if (!response) return;
-					if (response.success) {
-						if (response.message)
-							messageBox.success(response.message);
-
-						settingsPage.currentSettings.options = generalOptions;
-						settingsPage.changeTracking.options = false;
-						settingsPage.changeTracking.servers = false;
-						settingsPage.changeTracking.activeProxy = false;
-						settingsPage.changeTracking.smartProfiles = false;
-						settingsPage.changeTracking.newSmartProfile = false;
-						settingsPage.changeTracking.rulesSubscriptions = false;
-						settingsPage.changeTracking.serverSubscriptions = false;
-						if (settingsPage.grdServers) {
-							const enableRating = settingsPage.currentSettings.options.enableRating;
-							settingsPage.grdServers.column(6).visible(enableRating);
-						}
-					} else {
-						if (response.message)
-							messageBox.error(response.message);
-					}
-				},
-				(error: Error) => {
-					messageBox.error(api.i18n.getMessage("settingsErrorFailedToSaveGeneral") + " " + error.message);
-				});
-		},
-		onClickRejectGeneralOptions() {
-			settingsPage.currentSettings.options = jQuery.extend({}, settingsPage.originalSettings.options);
-			settingsPage.loadGeneralOptions(settingsPage.currentSettings.options);
-
-			settingsPage.changeTracking.options = false;
-
-			messageBox.info(api.i18n.getMessage("settingsChangesReverted"));
-		},
-		onSyncSettingsChanged() {
-			var checked = jq("#chkSyncSettings").prop("checked")
-			if (checked) {
-				jq("#chkSyncProxyMode").removeAttr("disabled");
-				jq("#chkSyncActiveProxy").removeAttr("disabled");
-				jq("#chkSyncToBrowser").removeAttr("disabled");
-				jq("#chkSyncToWebDAV").removeAttr("disabled");
-				jq("#webDAVFields input,#webDAVFields button").removeAttr("disabled");
-			}
-			else {
-				jq("#chkSyncProxyMode").attr("disabled", "disabled");
-				jq("#chkSyncActiveProxy").attr("disabled", "disabled");
-				jq("#chkSyncToBrowser").attr("disabled", "disabled");
-				jq("#chkSyncToWebDAV").attr("disabled", "disabled");
-				jq("#webDAVFields input,#webDAVFields button").attr("disabled", "disabled");
-			}
-		},
-		onSyncDestinationChanged() {
-			let isWebDavSelected = jq("#chkSyncToWebDAV").prop("checked");
-			if (isWebDavSelected) {
-				const webDavDiv = jq("#webDAVFields");
-				webDavDiv.hide();
-				webDavDiv.removeClass("d-none");
-				webDavDiv.slideDown();
-			} else {
-				jq("#webDAVFields").addClass("d-none");
-			}
-		},
-		onClickWebDavBackupNow() {
-			let serverUrl = jq("#txtWebDavServerUrl").val();
-			let username = jq("#txtWebDavServerUser").val();
-			let password = jq("#txtWebDavServerPassword").val();
-			let backupFilename = jq("#txtWebDavBackupFilename").val();
-
-			if (!serverUrl || !username || !password) {
-				messageBox.error(api.i18n.getMessage("settingsGeneralWebDav_ErrorRequiredFields"));
-				return;
-			}
-
-			PolyFill.runtimeSendMessage(
-				{
-					command: CommandMessages.SettingsPageWebDavBackupNow,
-					serverUrl: serverUrl,
-					username: username,
-					password: password,
-					backupFilename: backupFilename,
-				},
-				(response) => {
-					if (response.success) {
-						messageBox.success(api.i18n.getMessage("settingsGeneralWebDavBackupNowSuccess"));
-					} else if (!response.success) {
-						messageBox.error(api.i18n.getMessage("settingsGeneralWebDavBackupNowFailed") + " " + response.message);
-					}
-				}
-			);
-		},
-		onClickWebDavRestoreNow() {
-			let serverUrl = jq("#txtWebDavServerUrl").val();
-			let username = jq("#txtWebDavServerUser").val();
-			let password = jq("#txtWebDavServerPassword").val();
-			let backupFilename = jq("#txtWebDavBackupFilename").val();
-
-			if (!serverUrl || !username || !password) {
-				messageBox.error(api.i18n.getMessage("settingsGeneralWebDav_ErrorRequiredFields"));
-				return;
-			}
-
-			messageBox.confirm(api.i18n.getMessage("settingsGeneralWebDavRestoreNowConfirm"),
-				() => {
-					PolyFill.runtimeSendMessage(
-						{
-							command: CommandMessages.SettingsPageWebDavRestoreNow,
-							serverUrl: serverUrl,
-							username: username,
-							password: password,
-							backupFilename: backupFilename,
-						},
-						(response) => {
-							if (response.success) {
-								messageBox.success(api.i18n.getMessage("settingsGeneralWebDavRestoreNowSuccess"));
-								setTimeout(() => window.location.reload(), 1000);
-							} else if (!response.success) {
-								messageBox.error(api.i18n.getMessage("settingsGeneralWebDavRestoreNowFailed") + " " + response.message);
-							}
-						}
-					);
-				});
-		},
-		onClickIgnoreRequestFailuresForDomains() {
-			let settings = settingsPage.currentSettings;
-
-			let pageSmartProfile = settingsPage.pageSmartProfiles.find(x => x.smartProfile.profileType == SmartProfileType.IgnoreFailureRules);
-			if (pageSmartProfile) {
-				settingsPage.showProfileTab(pageSmartProfile);
-			}
-			else {
-				let ignoreProfile = settings.proxyProfiles.find(x => x.profileType == SmartProfileType.IgnoreFailureRules);
-				if (ignoreProfile) {
-					pageSmartProfile = settingsPage.createProfileContainerAttached(ignoreProfile, false, false);
-					settingsPage.pageSmartProfiles.push(pageSmartProfile);
-
-					settingsPage.showProfileTab(pageSmartProfile);
-				}
-				else {
-					ignoreProfile = new SmartProfile();
-					ignoreProfile.profileType = SmartProfileType.IgnoreFailureRules;
-					ignoreProfile.profileTypeConfig = getSmartProfileTypeConfig(SmartProfileType.IgnoreFailureRules);
-					ignoreProfile.profileName = 'Ignore Failure Rules';
-					settings.proxyProfiles.push(ignoreProfile);
-					ProfileOperations.addUpdateProfile(ignoreProfile);
-
-					pageSmartProfile = settingsPage.createProfileContainerAttached(ignoreProfile, false, false);
-					settingsPage.pageSmartProfiles.push(pageSmartProfile);
-
-					settingsPage.showProfileTab(pageSmartProfile);
-				}
-			}
-		},
-		onClickViewShortcuts(): boolean {
-			if (environment.notSupported.keyboardShortcuts) {
-				messageBox.info("Keyboard shortcuts are not supported on mobile devices.");
-				return;
-			}
-
-			let modal = jq("#modalShortcuts");
-
-			PolyFill.browserCommandsGetAll((commands: any[]) => {
-				let content = `<dl>`;
-				for (const cmd of commands) {
-					content += `<dt>${cmd.description}</dt><dd>${api.i18n.getMessage("settingsGeneralViewShortcutKeys")} : <span class='text-primary'>${cmd.shortcut}</span></dd>`;
-				}
-				content += `</dl>`;
-				modal.find('.modal-body').html(content);
-
-				modal.modal("show");
-			});
-			return false;
-		},
-		onClickConfigureShortcuts() {
-			PolyFill.openShortcutSettings();
-			return false;
-		},
-		onChangeThemesLight() {
-			var value = jq("#cmbThemesLight").val();
-			if (value == themesCustomType) {
-				jq("#divThemesLightCustom").removeClass('d-none');
-			}
-			else {
-				jq("#divThemesLightCustom").addClass('d-none');
-			}
-		},
-		onChangeThemesDark() {
-			var value = jq("#cmbThemesDark").val();
-			if (value == themesCustomType) {
-				jq("#divThemesDarkCustom").removeClass('d-none');
-			}
-			else {
-				jq("#divThemesDarkCustom").addClass('d-none');
-			}
-		},
-		onRowSelectionChanged(datatable: any, button: any) {
-			let len = datatable.rows({ selected: true }).data().length;
-			let enable = len > 1;
-
-			settingsPage.enableGridMultipleDelete(button, enable);
-		},
-		onClickAddNewSmartProfile() {
-			let modal = jq("#modalAddNewSmartProfile");
-			modal.find("#rbtnNewSmartProfile_SmartRules").prop("checked", true);
-		},
-		onClickSubmitContinueAddingProfile() {
-			let modal = jq("#modalAddNewSmartProfile");
-			let profileTypeIsSmartRule = modal.find("#rbtnNewSmartProfile_SmartRules").prop("checked");
-			let profileTypeIsAlwaysEnabled = modal.find("#rbtnNewSmartProfile_AlwaysEnabled").prop("checked");
-
-			let profileType: SmartProfileType;
-
-			if (profileTypeIsSmartRule) {
-				profileType = SmartProfileType.SmartRules;
-			}
-			else if (profileTypeIsAlwaysEnabled) {
-				profileType = SmartProfileType.AlwaysEnabledBypassRules;
-			}
-			else {
-				messageBox.error(api.i18n.getMessage("settingsProfilesAddErrorTypeRequired"));
-				return;
-			}
-
-			let pageSmartProfile = settingsPage.createNewUnsavedProfile(profileType);
-
-			settingsPage.showProfileTab(pageSmartProfile);
-			settingsPage.updateProfileGridsLayout(pageSmartProfile);
-			settingsPage.selectAddNewProfileMenu();
-
-			settingsPage.changeTracking.newSmartProfile = true;
-			pageSmartProfile.htmlProfileMenu.one("hidden.bs.tab", () => {
-				settingsPage.changeTracking.newSmartProfile = false;
-			});
-			modal.modal("hide");
-		},
-		onChangeActiveProxyServer() {
-			let proxyServerId = jq("#cmbActiveProxyServer").val();
-
-			let server = settingsPage.findProxyServerById(proxyServerId);
-
-			if (server) {
-				settingsPage.currentSettings.defaultProxyServerId = server.id;
-				settingsPage.changeTracking.activeProxy = true;
-			} else {
-				Debug.warn(`Selected ActiveProxyServer ID ${proxyServerId} not found, resetting.`);
-				settingsPage.currentSettings.defaultProxyServerId = null;
-				settingsPage.changeTracking.activeProxy = true;
-				let cmbActiveProxyServer = jq("#cmbActiveProxyServer");
-				cmbActiveProxyServer.val(null);
-			}
-		},
-		onClickAddProxyServer() {
-			let modal = jq("#modalModifyProxyServer");
-			modal.data("editing", null);
-
-			settingsPage.populateServerModal(modal, null);
-
-			modal.modal("show");
-			modal.find("#txtServerAddress").focus();
-		},
-		onClickRemoveMultipleProxyServer() {
-			var rows = settingsPage.grdServers.rows({ selected: true });
-			if (!rows)
-				return;
-
-			const confirmMsg = api.i18n.getMessage("settingsConfirmRemoveMultipleProxyServer");
-			if (confirm(confirmMsg)) {
-				rows.remove().draw('full-hold');
-				settingsPage.changeTracking.servers = true;
-				settingsPage.loadDefaultProxyServer();
-				settingsPage.enableGridMultipleDelete(jq("#btnRemoveMultipleProxyServer"), false);
-			}
-		},
-		onChangeServerProtocol() {
-			settingsPage.populateServerProtocol();
-		},
-		onClickSubmitProxyServer() {
-			let modal = jq("#modalModifyProxyServer");
-			let editingModel: ProxyServer = modal.data("editing");
-
-			let serverInputInfo = settingsPage.readServerModel(modal);
-
-			if (!serverInputInfo.name) {
-				messageBox.error(api.i18n.getMessage("settingsServerNameRequired"));
-				return;
-			}
-
-			let editingServerName: string = null;
-			if (editingModel)
-				editingServerName = editingModel.name;
-
-			let existingServers = settingsPage.readServers();
-			let serverExists = existingServers.some(server => {
-				return (server.name === serverInputInfo.name && server.name != editingServerName);
-			});
-			if (serverExists) {
-				messageBox.error(api.i18n.getMessage("settingsServerNameExists"));
-				return;
-			}
-
-			if (!serverInputInfo.host) {
-				messageBox.error(api.i18n.getMessage("settingsServerServerAddressIsEmpty"));
-				return;
-			}
-			if (!serverInputInfo.port || serverInputInfo.port <= 0 || serverInputInfo.port > 65535) {
-				messageBox.error(api.i18n.getMessage("settingsServerPortNoInvalid"));
-				return;
-			}
-
-			if (!serverInputInfo.username && serverInputInfo.password) {
-				messageBox.error(api.i18n.getMessage("settingsServerAuthenticationInvalid"));
-				return;
-			}
-
-			if (editingModel) {
-				const proxyServerId = editingModel.id;
-				jQuery.extend(editingModel, serverInputInfo);
-				editingModel.id = proxyServerId;
-
-				settingsPage.refreshServersGrid();
-			} else {
-				settingsPage.insertNewServerInGrid(serverInputInfo);
-			}
-
-			settingsPage.changeTracking.servers = true;
-
-			modal.modal("hide");
-
-			settingsPage.loadDefaultProxyServer();
-		},
-		onServersEditClick(e: any) {
-			let item = settingsPage.readSelectedServer(e);
-			if (!item)
-				return;
-
-			let modal = jq("#modalModifyProxyServer");
-			modal.data("editing", item);
-
-			settingsPage.populateServerModal(modal, item);
-
-			modal.modal("show");
-			modal.find("#txtServerAddress").focus();
-		},
-		onServersRemoveClick(e: any) {
-			var row = settingsPage.readSelectedServerRow(e);
-			if (!row)
-				return;
-
-			messageBox.confirm(api.i18n.getMessage("settingsConfirmRemoveProxyServer"),
-				() => {
-					row.remove().draw('full-hold');
-
-					settingsPage.changeTracking.servers = true;
-
-					settingsPage.loadDefaultProxyServer();
-				});
-		},
-		onClickSaveProxyServers() {
-			jq("#cmbActiveProxyServer").trigger("change");
-			let saveData = {
-				proxyServers: settingsPage.readServers(),
-				defaultProxyServerId: settingsPage.currentSettings.defaultProxyServerId
-			};
-
-			PolyFill.runtimeSendMessage(
-				{
-					command: CommandMessages.SettingsPageSaveProxyServers,
-					saveData: saveData
-				},
-				(response: ResultHolder) => {
-					if (!response) return;
-					if (response.success) {
-						if (response.message)
-							messageBox.success(response.message);
-
-						settingsPage.currentSettings.proxyServers = saveData.proxyServers;
-						settingsPage.currentSettings.defaultProxyServerId = saveData.defaultProxyServerId;
-
-						settingsPage.changeTracking.servers = false;
-						settingsPage.changeTracking.activeProxy = false;
-						settingsPage.changeTracking.options = false;
-						settingsPage.changeTracking.smartProfiles = false;
-						settingsPage.changeTracking.newSmartProfile = false;
-						settingsPage.changeTracking.rulesSubscriptions = false;
-						settingsPage.changeTracking.serverSubscriptions = false;
-					} else {
-						if (response.message)
-							messageBox.error(response.message);
-					}
-				},
-				(error: Error) => {
-					messageBox.error(api.i18n.getMessage("settingsErrorFailedToSaveServers") + " " + error.message);
-				});
-		},
-		onClickRejectProxyServers() {
-			settingsPage.currentSettings.proxyServers = settingsPage.originalSettings.proxyServers.slice();
-			settingsPage.loadServersGrid(settingsPage.currentSettings.proxyServers);
-			settingsPage.loadDefaultProxyServer();
-
-			settingsPage.changeTracking.servers = false;
-
-			messageBox.info(api.i18n.getMessage("settingsChangesReverted"));
-		},
-		onClickClearProxyServers() {
-			messageBox.confirm(api.i18n.getMessage("settingsRemoveAllProxyServers"),
-				() => {
-					settingsPage.loadServersGrid([]);
-					settingsPage.loadDefaultProxyServer();
-
-					settingsPage.changeTracking.servers = true;
-
-					messageBox.info(api.i18n.getMessage("settingsRemoveAllProxyServersSuccess"));
-				});
-		},
-		onClickAddMultipleProxyRule(pageProfile: SettingsPageSmartProfile) {
-			let tabContainer = pageProfile.htmlProfileTab;
-
-			let modal = tabContainer.find("#modalAddMultipleRules");
-			modal.data("editing", null);
-
-			modal.find("#cmdMultipleRuleType").val(0);
-			modal.find("#txtMultipleRuleList").val("");
-
-			settingsPage.populateRuleModal(pageProfile, modal, null);
-
-			modal.modal("show");
-			modal.find("#txtMultipleRuleList").focus();
-		},
-		onClickRemoveMultipleProxyRule(pageProfile: SettingsPageSmartProfile) {
-			var rows = pageProfile.grdRules.rows({ selected: true });
-			if (!rows)
-				return;
-
-			messageBox.confirm(api.i18n.getMessage("settingsConfirmRemoveMultipleProxyRule"),
-				() => {
-					rows.remove().draw('full-hold');
-					settingsPage.changeTracking.smartProfiles = true;
-					settingsPage.enableGridMultipleDelete(
-						pageProfile.htmlProfileTab.find("#btnRemoveMultipleProxyRule"), false);
-				});
-		},
-		onClickSubmitMultipleRule(pageProfile: SettingsPageSmartProfile) {
-			let tabContainer = pageProfile.htmlProfileTab;
-
-			let modal = tabContainer.find("#modalAddMultipleRules");
-
-			let selectedProxyId = modal.find("#cmdRuleProxyServer").val();
-			let selectedProxy = null;
-
-			if (selectedProxyId)
-				selectedProxy = settingsPage.findProxyServerById(selectedProxyId);
-
-			let whiteList = parseInt(modal.find("#cmdRuleAction").val()) != 0;
-
-			let ruleType = +modal.find("#cmdMultipleRuleType").val();
-			let rulesStr = modal.find("#txtMultipleRuleList").val();
-
-			let ruleList = rulesStr.split(/[\r\n]+/);
-			let resultRuleList: ProxyRule[] = [];
-
-			let existingRules = settingsPage.readRules(pageProfile);
-			for (let ruleLine of ruleList) {
-				if (!ruleLine)
-					continue;
-				ruleLine = ruleLine.trim().toLowerCase();
-				let hostName: string;
-				let newRule = new ProxyRule();
-
-				if (ruleType == ProxyRuleType.Exact) {
-					if (!Utils.isValidUrl(ruleLine)) {
-						messageBox.error(
-							api.i18n.getMessage("settingsRuleExactUrlInvalid").replace("{0}", ruleLine)
-						);
-						return;
-					}
-					newRule.ruleExact = ruleLine;
-					hostName = Utils.extractHostFromUrl(ruleLine);
-				}
-				else if (ruleType == ProxyRuleType.MatchPatternHost) {
-					let ruleLineNormalized = ruleLine;
-					if (!Utils.urlHasSchema(ruleLineNormalized))
-						ruleLineNormalized = "http://" + ruleLineNormalized;
-
-					hostName = Utils.extractHostFromUrl(ruleLineNormalized);
-
-					if (!Utils.isNotInternalHostName(hostName)) {
-						messageBox.error(api.i18n.getMessage("settingsMultipleRuleInvalidHost").replace("{0}", hostName || ruleLine));
-						return;
-					}
-
-					newRule.rulePattern = Utils.hostToMatchPattern(hostName, false);
-				}
-				else if (ruleType == ProxyRuleType.MatchPatternUrl) {
-					if (!Utils.isValidUrl(ruleLine)) {
-						messageBox.error(api.i18n.getMessage("settingsRuleUrlInvalid").replace("{0}", ruleLine));
-						return;
-					}
-
-					hostName = Utils.extractHostFromUrl(ruleLine);
-					newRule.rulePattern = Utils.hostToMatchPattern(ruleLine, true);
-				}
-				else {
-					continue;
-				}
-
-				let ruleExists = existingRules.some(rule => {
-					return (rule.hostName === hostName);
-				});
-
-				if (ruleExists)
-					continue;
-
-				newRule.autoGeneratePattern = true;
-				newRule.enabled = true;
-				newRule.proxy = null;
-				newRule.hostName = hostName;
-				newRule.ruleType = ruleType;
-				newRule.proxy = selectedProxy;
-				newRule.proxyServerId = selectedProxyId;
-				newRule.whiteList = whiteList;
-
-				resultRuleList.push(newRule);
-			}
-
-			if (!resultRuleList.length) {
-				messageBox.error(api.i18n.getMessage("settingsMultipleRuleNoNewRuleAdded"));
-				return;
-			}
-
-			settingsPage.insertNewRuleListInGrid(pageProfile, resultRuleList);
-			settingsPage.changeTracking.smartProfiles = true;
-
-			modal.modal("hide");
-		},
-		onClickAddProxyRule(pageProfile: SettingsPageSmartProfile) {
-			let tabContainer = pageProfile.htmlProfileTab;
-
-			let modal = tabContainer.find("#modalModifyRule");
-			modal.data("editing", null);
-
-			settingsPage.populateRuleModal(pageProfile, modal, null);
-
-			modal.modal("show");
-			modal.find("#txtRuleSource").focus();
-		},
-		onClickImportRulesOpenDialog(pageProfile: SettingsPageSmartProfile) {
-			let tabContainer = pageProfile.htmlProfileTab;
-
-			let modal = tabContainer.find("#modalImportRules");
-			modal.data("editing", null);
-
-			modal.modal("show");
-			modal.find("#txtRuleSource").focus();
-
-			resetModal();
-
-			function resetModal() {
-				var file = modal.find("#rbtnImportRulesSelect_File");
-				var text = modal.find("#rbtnImportRulesSelect_Text");
-				if (!file.prop("checked") && !text.prop("checked")) {
-					file.prop("checked", true);
-				}
-				modal.find("#txtImportRulesSelectText").val("");
-
-				let append = modal.find("#cmbImportRulesOverride_Append");
-				let replace = modal.find("#cmbImportRulesOverride_Replace");
-				if (!append.prop("checked") && !replace.prop("checked")) {
-					append.prop("checked", true);
-				}
-			}
-		},
-		onClickImportRules(pageProfile: SettingsPageSmartProfile) {
-			let tabContainer = pageProfile.htmlProfileTab;
-			let modalContainer = tabContainer.find("#modalImportRules");
-			let selectFileElement = modalContainer.find("#btnImportRulesSelectFile")[0];
-			let file, text;
-
-			if (modalContainer.find("#rbtnImportRulesSelect_File").prop("checked")) {
-				if (selectFileElement.files.length == 0) {
-					messageBox.error(api.i18n.getMessage("settingsRulesFileNotSelected"));
-					return;
-				}
-				file = selectFileElement.files[0];
-			} else {
-				let proxyServerListText: string = modalContainer.find("#txtImportRulesSelectText").val().trim();
-				if (proxyServerListText == "") {
-					messageBox.error(api.i18n.getMessage("settingsImportRulesTextIsEmpty"));
-					return;
-				}
-				text = proxyServerListText;
-			}
-			let append = modalContainer.find("#cmbImportRulesOverride_Append").prop("checked");
-			let sourceType: ExternalRulesFormat = +modalContainer.find("#cmbImportRulesFormat").val();
-			let proxyRules = settingsPage.readRules(pageProfile);
-
-			let config = new ProxyRulesImportFromUI();
-			config.format = sourceType;
-
-			if (sourceType != ExternalRulesFormat.AutoProxy &&
-				sourceType != ExternalRulesFormat.SwitchyOmega) {
-				messageBox.warning(api.i18n.getMessage("settingsSourceTypeNotSelected"));
-				return;
-			}
-
-			RuleImporter.importRulesBatch(
-				config,
-				text,
-				file,
-				append,
-				proxyRules,
-				(importResult: {
-					success: boolean;
-					message: string;
-					rules: {
-						whiteList: ImportedProxyRule[];
-						blackList: ImportedProxyRule[];
-					};
-				}) => {
-					if (!importResult) return;
-
-					if (importResult.success) {
-						if (importResult.message)
-							messageBox.success(importResult.message);
-
-						selectFileElement.value = "";
-
-						doImport(importResult.rules);
-
-						modalContainer.modal("hide");
-					}
-					else {
-						if (importResult.message)
-							messageBox.error(importResult.message);
-					}
-				},
-				(error: Error) => {
-					let message = "";
-					if (error && error.message)
-						message = error.message;
-					messageBox.error(api.i18n.getMessage("settingsImportRulesFailed") + " " + message);
-				});
-
-			function doImport(rules: {
-				whiteList: ImportedProxyRule[];
-				blackList: ImportedProxyRule[];
-			}) {
-				let finalRules: ProxyRule[];
-				let mappedBlackRules = rules.blackList.map((rule) => rule.getProxyRule());
-				let mappedWhiteRules = rules.whiteList.map((rule) => {
-					let newRule = rule.getProxyRule();
-					newRule.whiteList = true;
-					return newRule;
-				});
-
-				if (append) {
-					finalRules = proxyRules.concat(mappedBlackRules).concat(mappedWhiteRules);
-				}
-				else
-					finalRules = mappedBlackRules.concat(mappedWhiteRules);
-
-				settingsPage.loadRules(pageProfile, finalRules);
-			}
-		},
-		onChangeRuleGeneratePattern(pageProfile: SettingsPageSmartProfile) {
-			settingsPage.updateProxyRuleModal(pageProfile.htmlProfileTab);
-		},
-		onChangeRuleType(pageProfile: SettingsPageSmartProfile) {
-			settingsPage.updateProxyRuleModal(pageProfile.htmlProfileTab);
-		},
-		onChangeRuleAction(pageProfile: SettingsPageSmartProfile) {
-			settingsPage.updateProxyRuleModal(pageProfile.htmlProfileTab);
-		},
-		onClickSubmitProxyRule(pageProfile: SettingsPageSmartProfile) {
-			let tabContainer = pageProfile.htmlProfileTab;
-
-			let modal = tabContainer.find("#modalModifyRule");
-			let editingModel: ProxyRule = modal.data("editing");
-
-			let ruleInfo = settingsPage.readProxyRuleModel(modal);
-			let hostName = ruleInfo.hostName;
-
-			function checkHostName(): boolean {
-				if (!hostName) {
-					messageBox.error(api.i18n.getMessage("settingsRuleSourceRequired"));
-					return false;
-				}
-				return true;
-			}
-
-			if (hostName) {
-				if (!Utils.isNotInternalHostName(hostName)) {
-					messageBox.error(api.i18n.getMessage("settingsRuleSourceInvalid"));
-					return;
-				}
-
-				let checkHostName = hostName;
-				if (!Utils.urlHasSchema(hostName)) {
-					checkHostName = "http://" + hostName;
-				}
-
-				let extractedHost = Utils.extractHostFromUrl(checkHostName);
-				if (extractedHost == null || !Utils.isNotInternalHostName(extractedHost)) {
-					messageBox.error(
-						api.i18n.getMessage("settingsRuleHostInvalid")
-							.replace("{0}", extractedHost || hostName)
-					);
-					return;
-				}
-				hostName = extractedHost;
-			}
-			ruleInfo.hostName = hostName;
-
-			if (ruleInfo.ruleType == ProxyRuleType.MatchPatternHost) {
-				if (ruleInfo.autoGeneratePattern) {
-					if (!checkHostName())
-						return;
-
-					ruleInfo.rulePattern = Utils.hostToMatchPattern(hostName, false);
-				}
-				else if (hostName && !ruleInfo.rulePattern.includes(hostName)) {
-					messageBox.error(
-						api.i18n.getMessage("settingsRuleDoesntIncludeDomain").replace("{0}", hostName)
-					);
-					return;
-				}
-			}
-			else if (ruleInfo.ruleType == ProxyRuleType.MatchPatternUrl) {
-				if (ruleInfo.autoGeneratePattern) {
-					if (!checkHostName())
-						return;
-
-					ruleInfo.rulePattern = Utils.hostToMatchPattern(hostName, true);
-				}
-				else if (hostName && !ruleInfo.rulePattern.includes(hostName)) {
-					messageBox.error(
-						api.i18n.getMessage("settingsRuleDoesntIncludeDomain").replace("{0}", hostName)
-					);
-					return;
-				}
-			}
-			else if (ruleInfo.ruleType == ProxyRuleType.RegexHost) {
-				try {
-					if (!ruleInfo.ruleRegex) {
-						messageBox.error(
-							api.i18n.getMessage("settingsRuleRegexInvalid").replace("{0}", ruleInfo.ruleRegex)
-						);
-						return;
-					}
-
-					let regex = new RegExp(ruleInfo.ruleRegex);
-					if (hostName) {
-						if (!regex.test(hostName)) {
-							messageBox.error(
-								api.i18n.getMessage("settingsRuleRegexNotMatchDomain").replace("{0}", hostName)
-							);
-							return;
-						}
-					}
-				} catch (error) {
-					messageBox.error(
-						api.i18n.getMessage("settingsRuleRegexInvalid").replace("{0}", ruleInfo.ruleRegex)
-					);
-					return;
-				}
-			}
-			else if (ruleInfo.ruleType == ProxyRuleType.RegexUrl) {
-				try {
-					if (!ruleInfo.ruleRegex) {
-						messageBox.error(
-							api.i18n.getMessage("settingsRuleRegexInvalid").replace("{0}", ruleInfo.ruleRegex)
-						);
-						return;
-					}
-
-					let regex = new RegExp(ruleInfo.ruleRegex);
-
-					if (hostName) {
-						if (!regex.test(hostName)) {
-							messageBox.error(
-								api.i18n.getMessage("settingsRuleRegexNotMatchDomain").replace("{0}", hostName)
-							);
-							return;
-						}
-					}
-				} catch (error) {
-					messageBox.error(
-						api.i18n.getMessage("settingsRuleRegexInvalid").replace("{0}", ruleInfo.ruleRegex)
-					);
-					return;
-				}
-			}
-			else if (ruleInfo.ruleType == ProxyRuleType.IpCidrNotation) {
-				let ipAddress = ruleInfo.ruleSearch;
-				let prefixLength = ruleInfo.rulePattern;
-				ruleInfo.hostName = hostName || ipAddress;
-
-				try {
-					if (!ipAddress || !modal.find("#txtRuleCidrIPAddress")[0].checkValidity()) {
-						messageBox.error(
-							api.i18n.getMessage("settingsRuleCidrIPInvalid").replace("{0}", ipAddress)
-						);
-						return;
-					}
-					if (!prefixLength || !modal.find("#txtRuleCidrPrefixLength")[0].checkValidity()) {
-						messageBox.error(
-							api.i18n.getMessage("settingsRuleCidrPrefixLengthInvalid").replace("{0}", prefixLength)
-						);
-						return;
-					}
-
-					let regex = Utils.ipCidrNotationToRegExp(ipAddress, prefixLength);
-					if (!regex) {
-						messageBox.error(
-							api.i18n.getMessage("settingsRuleCidrNotationInvalid").replace("{0}", ipAddress + "/" + prefixLength)
-						);
-						return;
-					}
-
-					if (hostName) {
-						let testHost = Utils.normalizeIpForMatching(hostName);
-						if (!regex.test(testHost)) {
-							messageBox.error(
-								api.i18n.getMessage("settingsRuleCidrNotationInvalidMatch").replace("{0}", hostName)
-							);
-							return;
-						}
-					}
-				} catch (error) {
-					messageBox.error(
-						api.i18n.getMessage("settingsRuleCidrNotationInvalid").replace("{0}", ipAddress + "/" + prefixLength)
-					);
-					return;
-				}
-			}
-			else if (ruleInfo.ruleType == ProxyRuleType.DomainSubdomain ||
-				ruleInfo.ruleType == ProxyRuleType.DomainSubdomainAndPath ||
-				ruleInfo.ruleType == ProxyRuleType.DomainAndPath ||
-				ruleInfo.ruleType == ProxyRuleType.DomainExact ||
-				ruleInfo.ruleType == ProxyRuleType.SearchUrl) {
-				if (!checkHostName())
-					return;
-
-				ruleInfo.ruleSearch = hostName;
-			}
-			else {
-				if (!Utils.isValidUrl(ruleInfo.ruleExact)) {
-					messageBox.error(
-						api.i18n.getMessage("settingsRuleExactUrlInvalid").replace("{0}", ruleInfo.ruleExact)
-					);
-					return;
-				}
-			}
-
-			let editingSource: string = null;
-			if (editingModel)
-				editingSource = editingModel.hostName;
-
-			let existingRules = settingsPage.readRules(pageProfile);
-			let ruleExists = false;
-			if (hostName)
-				ruleExists = existingRules.some(rule => {
-					return (rule.hostName === hostName && rule.hostName != editingSource);
-				});
-
-			if (ruleExists) {
-				messageBox.error(api.i18n.getMessage("settingsRuleSourceAlreadyExists"));
-				return;
-			}
-
-			if (!editingModel) {
-				do {
-					ruleExists = existingRules.some(rule => {
-						return (rule.ruleId === ruleInfo.ruleId);
-					});
-
-					if (ruleExists)
-						ruleInfo.ruleId = Utils.getNewUniqueIdNumber();
-				} while (ruleExists);
-			}
-
-			if (editingModel) {
-				jQuery.extend(editingModel, ruleInfo);
-				settingsPage.refreshRulesGrid(pageProfile);
-			} else {
-				settingsPage.insertNewRuleInGrid(pageProfile, ruleInfo);
-			}
-
-			settingsPage.changeTracking.smartProfiles = true;
-			modal.modal("hide");
-		},
-		onRulesEditClick(pageProfile: SettingsPageSmartProfile, e: any) {
-			let item = settingsPage.readSelectedRule(pageProfile, e);
-			if (!item)
-				return;
-			let tabContainer = pageProfile.htmlProfileTab;
-
-			let modal = tabContainer.find("#modalModifyRule");
-			modal.data("editing", item);
-
-			settingsPage.populateRuleModal(pageProfile, modal, item);
-
-			modal.modal("show");
-			modal.find("#txtRuleSource").focus();
-		},
-		onRuleEnabledToggleChange(pageProfile: SettingsPageSmartProfile, e: any) {
-			const checkbox = jq(e.target);
-			const isEnabled = checkbox.prop('checked');
-
-			const row = pageProfile.grdRules.row(checkbox.closest('tr'));
-			const ruleData: ProxyRule = row.data();
-
-			if (ruleData) {
-				ruleData.enabled = isEnabled;
-				settingsPage.changeTracking.smartProfiles = true;
-				settingsPage.refreshRulesGridRow(pageProfile, row);
-			}
-		},
-		onRulesRemoveClick(pageProfile: SettingsPageSmartProfile, e: any) {
-			var row = settingsPage.readSelectedRuleRow(pageProfile, e);
-			if (!row)
-				return;
-
-			messageBox.confirm(api.i18n.getMessage("settingsConfirmRemoveProxyRule"),
-				() => {
-					row.remove().draw('full-hold');
-					settingsPage.changeTracking.smartProfiles = true;
-				});
-		},
-		onClickClearProxyRules(pageProfile: SettingsPageSmartProfile) {
-			messageBox.confirm(api.i18n.getMessage("settingsRemoveAllRules"),
-				() => {
-					settingsPage.loadRules(pageProfile, []);
-					settingsPage.changeTracking.smartProfiles = true;
-					messageBox.info(api.i18n.getMessage("settingsRemoveAllRulesSuccess"));
-				});
-		},
-		onProfileNameClick(pageProfile: SettingsPageSmartProfile) {
-			let tabContainer = pageProfile.htmlProfileTab;
-			settingsPage.showProfileNameEdit(tabContainer);
-		},
-		onClickSaveSmartProfile(pageProfile: SettingsPageSmartProfile) {
-			let smartProfileModel = settingsPage.readSmartProfile(pageProfile);
-			let smartProfile = pageProfile.smartProfile;
-			Object.assign(smartProfile, smartProfileModel);
-
-			if (smartProfile.profileName.trim() == '') {
-				messageBox.error(api.i18n.getMessage("settingsProfilesAddErrorNameRequired"));
-				return;
-			}
-
-			if (settingsPage.currentSettings.proxyProfiles.find(x => x.profileName == smartProfile.profileName &&
-				x.profileId != smartProfile.profileId) != null) {
-				messageBox.error(api.i18n.getMessage("settingsProfilesAddErrorNameExists"));
-				return;
-			}
-
-			PolyFill.runtimeSendMessage(
-				{
-					command: CommandMessages.SettingsPageSaveSmartProfile,
-					smartProfile: smartProfile
-				},
-				(response: any) => {
-					if (!response) return;
-					if (response.success) {
-						if (response.message)
-							messageBox.success(response.message);
-						let updatedProfile: SmartProfile = response.smartProfile || smartProfile;
-
-						settingsPage.changeTracking.smartProfiles = false;
-						settingsPage.changeTracking.rulesSubscriptions = false;
-						settingsPage.changeTracking.options = false;
-						settingsPage.changeTracking.servers = false;
-						settingsPage.changeTracking.activeProxy = false;
-						settingsPage.changeTracking.newSmartProfile = false;
-						settingsPage.changeTracking.serverSubscriptions = false;
-
-						if (smartProfile.profileId || smartProfile.profileType == SmartProfileType.IgnoreFailureRules) {
-							settingsPage.updateProfileMenuName(pageProfile);
-						}
-						else {
-							settingsPage.currentSettings.proxyProfiles.push(updatedProfile);
-							settingsPage.removeUnsavedProfileAndReload(pageProfile, updatedProfile);
-						}
-					} else {
-						if (response.message)
-							messageBox.error(response.message);
-					}
-				},
-				(error: Error) => {
-					messageBox.error(api.i18n.getMessage("settingsErrorFailedToSaveSmartProfile") + " " + error.message);
-				});
-		},
-		saveUnsavedSmartProfile() {
-			let unsavedSmartProfileElement = jq(".tab-smart-profile-item" + ".tab-new-unsaved-smart-profile-item:visible");
-			if (!unsavedSmartProfileElement.length)
-				return;
-
-			let saveButton = unsavedSmartProfileElement.find("#btnSaveSmartProfile");
-			saveButton.trigger('click');
-		},
-		onClickRejectSmartProfile(pageProfile: SettingsPageSmartProfile) {
-		},
-		onClickDeleteSmartProfile(pageProfile: SettingsPageSmartProfile) {
-			let profile = pageProfile.smartProfile;
-			if (!profile.profileId)
-				return;
-
-			if (profile.profileTypeConfig.builtin)
-				return;
-
-			messageBox.confirm(api.i18n.getMessage("settingsProfilesDeleteConfirm"),
-				() => {
-					PolyFill.runtimeSendMessage(
-						{
-							command: CommandMessages.SettingsPageDeleteSmartProfile,
-							smartProfileId: profile.profileId
-						},
-						(response: any) => {
-							if (!response) return;
-							if (response.success) {
-								if (response.message)
-									messageBox.success(response.message);
-
-								settingsPage.removePageProfileAndReset(pageProfile);
-							} else {
-								if (response.message)
-									messageBox.error(response.message);
-							}
-						},
-						(error: Error) => {
-							messageBox.error(api.i18n.getMessage("settingsProfilesDeleteFailed") + " " + error.message);
-						});
-				});
-		},
-		onClickAddServerSubscription() {
-			let modal = jq("#modalServerSubscription");
-			modal.data("editing", null);
-
-			settingsPage.populateServerSubscriptionsModal(modal, null);
-
-			modal.modal("show");
-
-			function focusUrl() {
-				modal.off("shown.bs.modal", focusUrl);
-				modal.find("#txtUrl").focus();
-			}
-
-			modal.on("shown.bs.modal", focusUrl);
-		},
-		onClickRemoveMultipleServerSubscription() {
-			var rows = settingsPage.grdServerSubscriptions.rows({ selected: true });
-			if (!rows)
-				return;
-
-			messageBox.confirm(api.i18n.getMessage("settingsConfirmRemoveMultipleServerSubscription"),
-				() => {
-					rows.remove().draw('full-hold');
-
-					settingsPage.changeTracking.serverSubscriptions = true;
-					settingsPage.enableGridMultipleDelete(jq("#btnRemoveMultipleServerSubscription"), false);
-				});
-		},
-		onServerSubscriptionEditClick(e: any) {
-			let item = settingsPage.readSelectedServerSubscription(e);
-			if (!item)
-				return;
-
-			let modal = jq("#modalServerSubscription");
-			modal.data("editing", item);
-
-			settingsPage.populateServerSubscriptionsModal(modal, item);
-
-			modal.modal("show");
-		},
-		onServerSubscriptionRemoveClick(e: any) {
-			var row = settingsPage.readSelectedServerSubscriptionRow(e);
-			if (!row)
-				return;
-
-			messageBox.confirm(api.i18n.getMessage("settingsConfirmRemoveServerSubscription"),
-				() => {
-					row.remove().draw('full-hold');
-					settingsPage.changeTracking.serverSubscriptions = true;
-				});
-		},
-		onServerSubscriptionViewStatsClick(e: any) {
-			let status = e.currentTarget?.title;
-			if (status) {
-				status = status.replaceAll('\r\n', '<br\>').replaceAll('\n', '<br\>');
-				messageBox.info(status);
-			}
-		},
-		onClickSaveServerSubscription() {
-			let modal = jq("#modalServerSubscription");
-
-			if (!modal.find("form")[0].checkValidity()) {
-				messageBox.error(api.i18n.getMessage("settingsServerSubscriptionIncompleteForm"));
-				return;
-			}
-			let subscriptionModel = settingsPage.readServerSubscriptionModel(modal);
-			if (!subscriptionModel) {
-				messageBox.error(api.i18n.getMessage("settingsServerSubscriptionInvalidForm"));
-				return;
-			}
-
-			let subscriptionsList = settingsPage.readServerSubscriptions();
-			let editingSubscription = modal.data("editing");
-			let editingName = "";
-			if (editingSubscription)
-				editingName = editingSubscription.name;
-
-			if (editingSubscription) {
-				let nameIsDuplicate = false;
-				for (let item of subscriptionsList) {
-					if (item.name == subscriptionModel.name && subscriptionModel.name != editingName) {
-						nameIsDuplicate = true;
-					}
-				}
-				if (subscriptionModel.name != editingName)
-					if (nameIsDuplicate) {
-						messageBox.error(api.i18n.getMessage("settingsServerSubscriptionDuplicateName"));
-						return;
-					}
-			}
-
-			if (!subscriptionModel.stats) {
-				subscriptionModel.stats = new SubscriptionStats();
-			}
-
-			jq("#btnSaveServerSubscription").attr("data-loading-text", api.i18n.getMessage("settingsServerSubscriptionSavingButton"));
-			jq("#btnSaveServerSubscription").button("loading");
-
-			ProxyImporter.readFromServer(subscriptionModel,
-				(response: {
-					success: boolean,
-					message: string,
-					result: ProxyServer[]
-				}) => {
-					jq("#btnSaveServerSubscription").button('reset');
-
-					if (response.success) {
-						let count = response.result.length;
-
-						if (subscriptionModel.enabled)
-							subscriptionModel.proxies = response.result;
-						else
-							subscriptionModel.proxies = [];
-						subscriptionModel.totalCount = count;
-						SubscriptionStats.updateStats(subscriptionModel.stats, true);
-
-						if (editingSubscription) {
-							jQuery.extend(editingSubscription, subscriptionModel);
-							settingsPage.refreshServerSubscriptionsGrid();
-							messageBox.success(api.i18n.getMessage("settingsServerSubscriptionSaveUpdated").replace("{0}", count));
-						} else {
-							settingsPage.insertNewServerSubscriptionInGrid(subscriptionModel);
-							messageBox.success(api.i18n.getMessage("settingsServerSubscriptionSaveAdded").replace("{0}", count));
-						}
-
-						settingsPage.changeTracking.serverSubscriptions = true;
-						settingsPage.loadDefaultProxyServer();
-						modal.modal("hide");
-					} else {
-						SubscriptionStats.updateStats(subscriptionModel.stats, false);
-						messageBox.error(api.i18n.getMessage("settingsServerSubscriptionSaveFailedGet"));
-					}
-				},
-				(errorResult) => {
-					SubscriptionStats.updateStats(subscriptionModel.stats, false, errorResult);
-					messageBox.error(api.i18n.getMessage("settingsServerSubscriptionSaveFailedGet"));
-					jq("#btnSaveServerSubscription").button('reset');
-				});
-		},
-		onClickTestServerSubscription() {
-			let modal = jq("#modalServerSubscription");
-
-			if (!modal.find("form")[0].checkValidity()) {
-				messageBox.error(api.i18n.getMessage("settingsServerSubscriptionIncompleteForm"));
-				return;
-			}
-
-			let subscriptionModel = settingsPage.readServerSubscriptionModel(modal);
-
-			if (!subscriptionModel) {
-				messageBox.error(api.i18n.getMessage("settingsServerSubscriptionInvalidForm"));
-				return;
-			}
-
-			jq("#btnTestServerSubscription").attr("data-loading-text", api.i18n.getMessage("settingsServerSubscriptionTestingButton"));
-			jq("#btnTestServerSubscription").button("loading");
-
-			var applyProxyMode = subscriptionModel.applyProxy;
-			subscriptionModel.applyProxy = null;
-
-			PolyFill.runtimeSendMessage(
-				{
-					command: CommandMessages.SettingsPageMakeRequestSpecial,
-					url: subscriptionModel.url,
-					applyProxy: applyProxyMode,
-					selectedProxy: null
-				},
-				(response: any) => {
-					if (!response) return;
-					if (!response.success) {
-						if (response.message)
-							messageBox.error(response.message);
-						return;
-					}
-					if (response.message)
-						messageBox.success(response.message);
-
-					ProxyImporter.readFromServer(subscriptionModel,
-						(response: {
-							success: boolean,
-							message: string,
-							result: ProxyServer[]
-						}) => {
-							jq("#btnTestServerSubscription").button('reset');
-
-							if (response.success) {
-								let count = response.result.length;
-								messageBox.success(api.i18n.getMessage("settingsServerSubscriptionTestSuccess").replace("{0}", count));
-							} else {
-								messageBox.error(api.i18n.getMessage("settingsServerSubscriptionTestFailed"));
-							}
-						},
-						() => {
-							messageBox.error(api.i18n.getMessage("settingsServerSubscriptionTestFailed"));
-							jq("#btnTestServerSubscription").button('reset');
-						});
-				},
-				(error: Error) => {
-					messageBox.error(api.i18n.getMessage("settingsServerSubscriptionTestFailed"));
-					jq("#btnTestServerSubscription").button('reset');
-				});
-		},
-		onClickSaveServerSubscriptionsChanges() {
-			let proxyServerSubscriptions = settingsPage.readServerSubscriptions();
-
-			PolyFill.runtimeSendMessage(
-				{
-					command: CommandMessages.SettingsPageSaveProxySubscriptions,
-					proxyServerSubscriptions: proxyServerSubscriptions
-				},
-				(response: any) => {
-					if (!response) return;
-					if (response.success) {
-						if (response.message)
-							messageBox.success(response.message);
-
-						settingsPage.currentSettings.proxyServerSubscriptions = proxyServerSubscriptions;
-						settingsPage.changeTracking.serverSubscriptions = false;
-						settingsPage.changeTracking.options = false;
-						settingsPage.changeTracking.servers = false;
-						settingsPage.changeTracking.activeProxy = false;
-						settingsPage.changeTracking.smartProfiles = false;
-						settingsPage.changeTracking.newSmartProfile = false;
-						settingsPage.changeTracking.rulesSubscriptions = false;
-						settingsPage.loadDefaultProxyServer();
-					} else {
-						if (response.message)
-							messageBox.error(response.message);
-					}
-				},
-				(error: Error) => {
-					messageBox.error(api.i18n.getMessage("settingsFailedToSaveProxySubscriptions") + " " + error.message);
-				});
-		},
-		onClickRejectServerSubscriptionsChanges() {
-			settingsPage.currentSettings.proxyServerSubscriptions = settingsPage.originalSettings.proxyServerSubscriptions.slice();
-			settingsPage.loadServerSubscriptionsGrid(settingsPage.currentSettings.proxyServerSubscriptions);
-			settingsPage.loadDefaultProxyServer();
-
-			settingsPage.changeTracking.serverSubscriptions = false;
-
-			messageBox.info(api.i18n.getMessage("settingsChangesReverted"));
-		},
-		onClickClearServerSubscriptions() {
-			messageBox.confirm(api.i18n.getMessage("settingsRemoveAllProxyServerSubscriptions"),
-				() => {
-					settingsPage.loadServerSubscriptionsGrid([]);
-					settingsPage.loadDefaultProxyServer();
-
-					settingsPage.changeTracking.serverSubscriptions = true;
-
-					messageBox.info(api.i18n.getMessage("settingsRemoveAllProxyServerSubscriptionsSuccess"));
-				});
-		},
-		onClickAddRulesSubscription(pageProfile: SettingsPageSmartProfile) {
-			let tabContainer = pageProfile.htmlProfileTab;
-
-			let modal = tabContainer.find("#modalRulesSubscription");
-			modal.data("editing", null);
-
-			settingsPage.populateRulesSubscriptionsModal(pageProfile, modal, null);
-
-			modal.modal("show");
-
-			function focusUrl() {
-				modal.off("shown.bs.modal", focusUrl);
-				modal.find("#txtUrl").focus();
-			}
-
-			modal.on("shown.bs.modal", focusUrl);
-		},
-		onClickRemoveMultipleRulesSubscription(pageProfile: SettingsPageSmartProfile) {
-			var rows = pageProfile.grdRulesSubscriptions.rows({ selected: true });
-			if (!rows)
-				return;
-
-			messageBox.confirm(api.i18n.getMessage("settingsConfirmRemoveMultipleRulesSubscription"),
-				() => {
-					rows.remove().draw('full-hold');
-					settingsPage.changeTracking.rulesSubscriptions = true;
-
-					settingsPage.enableGridMultipleDelete(
-						pageProfile.htmlProfileTab.find("#btnRemoveMultipleRulesSubscription"), false);
-				});
-		},
-		onRulesSubscriptionEditClick(pageProfile: SettingsPageSmartProfile, e: any) {
-			let item = settingsPage.readSelectedRulesSubscription(pageProfile, e);
-			if (!item)
-				return;
-
-			let tabContainer = pageProfile.htmlProfileTab;
-
-			let modal = tabContainer.find("#modalRulesSubscription");
-			modal.data("editing", item);
-
-			settingsPage.populateRulesSubscriptionsModal(pageProfile, modal, item);
-
-			modal.modal("show");
-		},
-		onRulesSubscriptionRemoveClick(pageProfile: SettingsPageSmartProfile, e: any) {
-			var row = settingsPage.readSelectedRulesSubscriptionRow(pageProfile, e);
-			if (!row)
-				return;
-
-			messageBox.confirm(api.i18n.getMessage("settingsConfirmRemoveRulesSubscription"),
-				() => {
-					row.remove().draw('full-hold');
-					settingsPage.changeTracking.rulesSubscriptions = true;
-				});
-		},
-		onRulesSubscriptionRefreshClick(pageProfile: SettingsPageSmartProfile, e: any) {
-			var row = settingsPage.readSelectedRulesSubscriptionRow(pageProfile, e);
-			if (!row)
-				return;
-			let editingSubscription = settingsPage.readSelectedRulesSubscription(pageProfile, e);
-			if (!editingSubscription)
-				return;
-			if (!editingSubscription.enabled) {
-				messageBox.error(api.i18n.getMessage("settingsRulesSubscriptionRefreshOnDisabled"));
-				return;
-			}
-
-			if (!editingSubscription.stats) {
-				editingSubscription.stats = new SubscriptionStats();
-			}
-
-			RuleImporter.readFromServerAndImport(editingSubscription,
-				(importResult: {
-					success: boolean;
-					message: string;
-					rules: {
-						whiteList: ImportedProxyRule[];
-						blackList: ImportedProxyRule[];
-					};
-				}) => {
-					if (importResult.success) {
-						let count = importResult.rules.blackList.length + importResult.rules.whiteList.length;
-
-						if (editingSubscription.enabled) {
-							editingSubscription.proxyRules = importResult.rules.blackList;
-							editingSubscription.whitelistRules = importResult.rules.whiteList;
-						}
-						else {
-							editingSubscription.proxyRules = [];
-							editingSubscription.whitelistRules = [];
-						}
-
-						editingSubscription.totalCount = count;
-						SubscriptionStats.updateStats(editingSubscription.stats, true);
-
-						settingsPage.refreshRulesSubscriptionsGrid(pageProfile);
-
-						messageBox.success(api.i18n.getMessage("settingsRulesSubscriptionSaveUpdated")
-							.replace("{0}", importResult.rules.blackList.length)
-							.replace("{1}", importResult.rules.whiteList.length));
-
-						settingsPage.changeTracking.rulesSubscriptions = true;
-					} else {
-						SubscriptionStats.updateStats(editingSubscription.stats, false);
-						messageBox.error(api.i18n.getMessage("settingsRulesSubscriptionSaveFailedGet"));
-					}
-				},
-				(error) => {
-					SubscriptionStats.updateStats(editingSubscription.stats, false, error);
-					messageBox.error(api.i18n.getMessage("settingsRulesSubscriptionSaveFailedGet"));
-				});
-		},
-		onRulesSubscriptionViewStatsClick(pageProfile: SettingsPageSmartProfile, e: any) {
-			let status = e.currentTarget?.title;
-			if (status) {
-				status = status.replaceAll('\r\n', '<br\>').replaceAll('\n', '<br\>');
-				messageBox.info(status);
-			}
-		},
-		onClickSaveRulesSubscription(pageProfile: SettingsPageSmartProfile) {
-			let tabContainer = pageProfile.htmlProfileTab;
-			let modal = tabContainer.find("#modalRulesSubscription");
-			if (!modal.find("form")[0].checkValidity()) {
-				messageBox.error(api.i18n.getMessage("settingsRulesSubscriptionIncompleteForm"));
-				return;
-			}
-			let subscriptionModel = settingsPage.readRulesSubscriptionModel(modal);
-			if (!subscriptionModel) {
-				messageBox.error(api.i18n.getMessage("settingsRulesSubscriptionInvalidForm"));
-				return;
-			}
-
-			let subscriptionsList = settingsPage.readRulesSubscriptions(pageProfile);
-			let editingSubscription: ProxyRulesSubscription = modal.data("editing");
-			let editingName = "";
-			if (editingSubscription) {
-				editingName = editingSubscription.name;
-				subscriptionModel.id = editingSubscription.id;
-			}
-
-			if (editingSubscription) {
-				let nameIsDuplicate = false;
-				for (let item of subscriptionsList) {
-					if (item.name == subscriptionModel.name && subscriptionModel.name != editingName) {
-						nameIsDuplicate = true;
-					}
-				}
-				if (subscriptionModel.name != editingName)
-					if (nameIsDuplicate) {
-						messageBox.error(api.i18n.getMessage("settingsRulesSubscriptionDuplicateName"));
-						return;
-					}
-			}
-
-			if (!subscriptionModel.stats) {
-				subscriptionModel.stats = new SubscriptionStats();
-			}
-
-			tabContainer.find("#btnSaveRulesSubscriptions").attr("data-loading-text", api.i18n.getMessage("settingsRulesSubscriptionSavingButton"));
-			tabContainer.find("#btnSaveRulesSubscriptions").button("loading");
-
-			RuleImporter.readFromServerAndImport(subscriptionModel,
-				(importResult: {
-					success: boolean;
-					message: string;
-					rules: {
-						whiteList: ImportedProxyRule[];
-						blackList: ImportedProxyRule[];
-					};
-				}) => {
-					tabContainer.find("#btnSaveRulesSubscriptions").button('reset');
-
-					if (importResult.success) {
-						let count = importResult.rules.blackList.length + importResult.rules.whiteList.length;
-
-						if (subscriptionModel.enabled) {
-							subscriptionModel.proxyRules = importResult.rules.blackList;
-							subscriptionModel.whitelistRules = importResult.rules.whiteList;
-						}
-						else {
-							subscriptionModel.proxyRules = [];
-							subscriptionModel.whitelistRules = [];
-						}
-						subscriptionModel.totalCount = count;
-						SubscriptionStats.updateStats(subscriptionModel.stats, true);
-
-						if (editingSubscription) {
-							jQuery.extend(editingSubscription, subscriptionModel);
-							settingsPage.refreshRulesSubscriptionsGrid(pageProfile);
-							messageBox.success(api.i18n.getMessage("settingsRulesSubscriptionSaveUpdated")
-								.replace("{0}", importResult.rules.blackList.length)
-								.replace("{1}", importResult.rules.whiteList.length));
-						} else {
-							settingsPage.insertNewRulesSubscriptionInGrid(pageProfile, subscriptionModel);
-							messageBox.success(api.i18n.getMessage("settingsRulesSubscriptionSaveAdded")
-								.replace("{0}", importResult.rules.blackList.length)
-								.replace("{1}", importResult.rules.whiteList.length));
-						}
-
-						settingsPage.changeTracking.rulesSubscriptions = true;
-						modal.modal("hide");
-					} else {
-						SubscriptionStats.updateStats(subscriptionModel.stats, false);
-						messageBox.error(api.i18n.getMessage("settingsRulesSubscriptionSaveFailedGet"));
-					}
-				},
-				(error) => {
-					SubscriptionStats.updateStats(subscriptionModel.stats, false, error);
-					messageBox.error(api.i18n.getMessage("settingsRulesSubscriptionSaveFailedGet"));
-					tabContainer.find("#btnSaveRulesSubscriptions").button('reset');
-				});
-		},
-		onClickTestRulesSubscription(pageProfile: SettingsPageSmartProfile) {
-			let tabContainer = pageProfile.htmlProfileTab;
-			let modal = tabContainer.find("#modalRulesSubscription");
-
-			if (!modal.find("form")[0].checkValidity()) {
-				messageBox.error(api.i18n.getMessage("settingsRulesSubscriptionIncompleteForm"));
-				return;
-			}
-
-			let subscriptionModel = settingsPage.readRulesSubscriptionModel(modal);
-
-			if (!subscriptionModel) {
-				messageBox.error(api.i18n.getMessage("settingsRulesSubscriptionInvalidForm"));
-				return;
-			}
-
-			tabContainer.find("#btnTestRulesSubscriptions").attr("data-loading-text", api.i18n.getMessage("settingsRulesSubscriptionTestingButton"));
-			tabContainer.find("#btnTestRulesSubscriptions").button("loading");
-
-			var applyProxyMode = subscriptionModel.applyProxy;
-			subscriptionModel.applyProxy = null;
-
-			PolyFill.runtimeSendMessage(
-				{
-					command: CommandMessages.SettingsPageMakeRequestSpecial,
-					url: subscriptionModel.url,
-					applyProxy: applyProxyMode,
-					selectedProxy: null
-				},
-				(response: any) => {
-					if (!response) return;
-					if (!response.success) {
-						if (response.message)
-							messageBox.error(response.message);
-						return;
-					}
-					if (response.message)
-						messageBox.success(response.message);
-
-					RuleImporter.readFromServerAndImport(subscriptionModel,
-						(importResult: {
-							success: boolean;
-							message: string;
-							rules: {
-								whiteList: ImportedProxyRule[];
-								blackList: ImportedProxyRule[];
-							};
-						}) => {
-							tabContainer.find("#btnTestRulesSubscriptions").button('reset');
-
-							if (importResult.success) {
-								messageBox.success(api.i18n.getMessage("settingsRulesSubscriptionTestSuccess")
-									.replace("{0}", importResult.rules.blackList.length)
-									.replace("{1}", importResult.rules.whiteList.length));
-							} else {
-								messageBox.error(api.i18n.getMessage("settingsRulesSubscriptionTestFailed"));
-							}
-						},
-						() => {
-							messageBox.error(api.i18n.getMessage("settingsRulesSubscriptionTestFailed"));
-							tabContainer.find("#btnTestRulesSubscriptions").button('reset');
-						});
-				},
-				(error: Error) => {
-					messageBox.error(api.i18n.getMessage("settingsRulesSubscriptionTestFailed"));
-					tabContainer.find("#btnTestRulesSubscriptions").button('reset');
-				});
-		},
-		onClickClearRulesSubscriptions(pageProfile: SettingsPageSmartProfile) {
-			messageBox.confirm(api.i18n.getMessage("settingsRemoveAllProxyRulesSubscriptions"),
-				() => {
-					settingsPage.loadRulesSubscriptions(pageProfile, []);
-					settingsPage.changeTracking.rulesSubscriptions = true;
-					messageBox.info(api.i18n.getMessage("settingsRemoveAllProxyRulesSubscriptionsSuccess"));
-				});
-		},
-		onClickExportProxyServerOpenBackup() {
-			let proxyList = settingsPage.exportServersListFormatted();
-			CommonUi.downloadData(proxyList, "ProxyMust-Servers.txt");
-		},
-		onClickImportProxyServer() {
-			let modalContainer = jq("#modalImportProxyServer");
-			let file, text;
-
-			if (modalContainer.find("#rbtnImportProxyServer_File").prop("checked")) {
-				let selectFileElement = modalContainer.find("#btnImportProxyServerSelectFile")[0];
-
-				if (selectFileElement.files.length == 0) {
-					messageBox.error(api.i18n.getMessage("settingsImportProxiesFileNotSelected"));
-					return;
-				}
-				file = selectFileElement.files[0];
-			} else {
-				let proxyServerListText: string = modalContainer.find("#btnImportProxyServerListText").val().trim();
-				if (proxyServerListText == "") {
-					messageBox.error(api.i18n.getMessage("settingsImportProxyListTextIsEmpty"));
-					return;
-				}
-				text = proxyServerListText;
-			}
-			let append = modalContainer.find("#cmbImportProxyServerOverride_Append").prop("checked");
-			let proxyServers = settingsPage.readServers();
-
-			ProxyImporter.importText(text, file,
-				append,
-				proxyServers,
-				(response: {
-					success: boolean,
-					message: string,
-					result: ProxyServer[]
-				}) => {
-					if (!response) return;
-
-					if (response.success) {
-						if (response.message)
-							messageBox.info(response.message);
-						modalContainer.find("#btnImportProxyServerSelectFile")[0].value = "";
-						modalContainer.find("#btnImportProxyServerListText").val("");
-						let servers = response.result;
-						
-                        CountryCode.ensureInitialized(() => {
-                            settingsPage.loadServersGrid(servers);
-                            settingsPage.loadDefaultProxyServer();
-                        });
-                        
-                        settingsPage.changeTracking.servers = true;
-                        
-                        const saveData = {
-                            proxyServers: settingsPage.readServers(),
-                            defaultProxyServerId: settingsPage.currentSettings.defaultProxyServerId
-                        };
-                        PolyFill.runtimeSendMessage(
-                            { command: CommandMessages.SettingsPageSaveProxyServers, saveData },
-                            () => {
-                                settingsPage.currentSettings.proxyServers = saveData.proxyServers;
-                                settingsPage.changeTracking.servers = false;
-                            }
-                        );
-                        
-                        modalContainer.modal("hide");
-					} else {
-						if (response.message)
-							messageBox.error(response.message);
-					}
-				},
-				(error: Error) => {
-					let message = "";
-					if (error && error.message)
-						message = error.message;
-					messageBox.error(api.i18n.getMessage("settingsImportProxyServersFailed") + " " + message);
-				});
-		},
-		onClickFactoryReset() {
-			messageBox.confirm(api.i18n.getMessage("settingsFactoryResetConfirm"),
-				() => {
-					PolyFill.runtimeSendMessage(
-						{
-							command: CommandMessages.SettingsPageFactoryReset,
-						},
-						(response: ResultHolder) => {
-							if (response.success) {
-								jq(window).off("beforeunload");
-								if (response.message) {
-									messageBox.success(response.message,
-										800,
-										() => {
-											settingsPage.changeTracking.resetStats();
-											document.location.reload();
-										});
-								} else {
-									settingsPage.changeTracking.resetStats();
-									document.location.reload();
-								}
-							} else {
-								if (response.message) {
-									messageBox.error(response.message);
-								}
-							}
-						});
-				});
-		},
-		onClickBackupComplete() {
-			let backupSettings = SettingsOperation.getBackupOfSettings(settingsPage.currentSettings);
-			let data = JSON.stringify(backupSettings);
-			CommonUi.downloadData(data, "ProxyMust-FullBackup.json");
-		},
-		onClickRestoreBackup() {
-			function callRestoreSettings(fileData: any) {
-				PolyFill.runtimeSendMessage(
-					{
-						command: CommandMessages.SettingsPageRestoreSettings,
-						fileData: fileData
-					},
-					(response: ResultHolder) => {
-						if (response.success) {
-							jq(window).off("beforeunload");
-							if (response.message) {
-								messageBox.success(response.message,
-									500,
-									() => {
-										settingsPage.changeTracking.resetStats();
-										document.location.reload();
-									});
-							} else {
-								settingsPage.changeTracking.resetStats();
-								document.location.reload();
-							}
-						} else {
-							if (response.message) {
-								messageBox.error(response.message);
-							}
-						}
-					},
-					(error: Error) => {
-						messageBox.error(api.i18n.getMessage("settingsRestoreBackupFailed"));
-						PolyFill.runtimeSendMessage("restoreSettings failed with> " + error.message);
-					});
-			}
-
-			CommonUi.selectFileOnTheFly(jq("#frmRestoreBackup")[0],
-				"restore-file",
-				(inputElement: any, files: any[]) => {
-					let file = files[0];
-
-					let reader = new FileReader();
-					reader.onerror = event => {
-						messageBox.error(api.i18n.getMessage("settingsRestoreBackupFileError"));
-					};
-					reader.onload = event => {
-						let fileText = reader.result;
-						callRestoreSettings(fileText);
-					};
-					reader.readAsText(file);
-				},
-				"application/json");
-		},
-		onClickEnableDiagnostics() {
-			if (settingsPage.debugDiagnosticsRequested) {
-				PolyFill.runtimeSendMessage({ command: CommandMessages.DebugGetDiagnosticsLogs }, (result) => {
-					const fileName = `smartproxy-diag-${new Date().toISOString().replaceAll(':', '-').replaceAll('.', '-')}.json`;
-					CommonUi.downloadData(result, fileName);
-				});
-			}
-			else if (confirm("Are you sure to enable diagnostics?")) {
-				settingsPage.debugDiagnosticsRequested = true;
-				PolyFill.runtimeSendMessage({ command: CommandMessages.DebugEnableDiagnostics });
-				alert("Diagnostics are enabled for this session only. Check this page for more info.");
-				window.open("https://github.com/salarcode/SmartProxy/wiki/Enable-Diagnostics")
-			}
-		},
-		
-        /**
-         * English: Toggles the embedded test log viewer.
-         * Russian: Переключает встроенный просмотрщик лога тестирования.
-         */
-        onToggleLogViewer: function() {
-            const viewer = jq("#testLogViewer");
-            const btn = jq("#openTestLogBtn");
-            const container = document.getElementById('logContainer');
-            const emptyState = document.getElementById('emptyState');
-            
-            if (viewer.is(":visible")) {
-                viewer.slideUp(200);
-                btn.find("span").text(api.i18n.getMessage("settingsProxyMustOpenLog"));
-            } else {
-                viewer.slideDown(200);
-                btn.find("span").text(api.i18n.getMessage("settingsHideLog") || "Скрыть лог");
-                
-                // If container is empty, load history
-                if (container && container.children.length === 0) {
-                    PolyFill.runtimeSendMessage({ command: "GET_TEST_LOG_HISTORY" }, (response) => {
-                        if (response && response.history && response.history.length) {
-                            if (container) {
-                                if (emptyState) emptyState.style.display = 'none';
-                                response.history.forEach((msg) => settingsPage.renderLogMessage(msg));
-                            }
-                        } else {
-                            if (emptyState) emptyState.style.display = 'block';
-                        }
-                    });
+        if (generalOptions.syncWebDavServerEnabled) {
+            if (!Utils.isValidUrl(generalOptions.syncWebDavServerUrl)) {
+                messageBox.error(api.i18n.getMessage("settingsGeneralWebDav_ErrorValidUrl"));
+                return;
+            }
+            if (generalOptions.syncWebDavBackupFilename.trim() == "") {
+                messageBox.error(api.i18n.getMessage("settingsGeneralWebDav_ErrorEmptyFilename"));
+                return;
+            }
+        }
+
+        if (generalOptions.themesLight == themesCustomType) {
+            if (!Utils.isValidUrl(generalOptions.themesLightCustomUrl)) {
+                messageBox.error(api.i18n.getMessage("settingsGeneralThemesLight_ErrorValidUrl"));
+                return;
+            }
+            if (!Utils.isUrlHttps(generalOptions.themesLightCustomUrl)) {
+                messageBox.error(api.i18n.getMessage("settingsGeneralThemesLight_ErrorValidUrl"));
+                return;
+            }
+        }
+        if (generalOptions.themesDark == themesCustomType) {
+            if (!Utils.isValidUrl(generalOptions.themesDarkCustomUrl)) {
+                messageBox.error(api.i18n.getMessage("settingsGeneralThemesDark_ErrorValidUrl"));
+                return;
+            }
+            if (!Utils.isUrlHttps(generalOptions.themesDarkCustomUrl)) {
+                messageBox.error(api.i18n.getMessage("settingsGeneralThemesDark_ErrorValidUrl"));
+                return;
+            }
+        }
+
+        PolyFill.runtimeSendMessage(
+            {
+                command: CommandMessages.SettingsPageSaveOptions,
+                options: generalOptions
+            },
+            (response: ResultHolder) => {
+                if (!response) return;
+                if (response.success) {
+                    if (response.message)
+                        messageBox.success(response.message);
+
+                    settingsPage.currentSettings.options = generalOptions;
+                    settingsPage.changeTracking.options = false;
+                    settingsPage.changeTracking.servers = false;
+                    settingsPage.changeTracking.activeProxy = false;
+                    settingsPage.changeTracking.smartProfiles = false;
+                    settingsPage.changeTracking.newSmartProfile = false;
+                    settingsPage.changeTracking.rulesSubscriptions = false;
+                    settingsPage.changeTracking.serverSubscriptions = false;
+                    if (settingsPage.grdServers) {
+                        const enableRating = settingsPage.currentSettings.options.enableRating;
+                        settingsPage.grdServers.column(6).visible(enableRating);
+                    }
                 } else {
-                    // Already has messages, just show
-                    if (emptyState) emptyState.style.display = 'none';
+                    if (response.message)
+                        messageBox.error(response.message);
+                }
+            },
+            (error: Error) => {
+                messageBox.error(api.i18n.getMessage("settingsErrorFailedToSaveGeneral") + " " + error.message);
+            });
+    },
+    onClickRejectGeneralOptions() {
+        settingsPage.currentSettings.options = jQuery.extend({}, settingsPage.originalSettings.options);
+        settingsPage.loadGeneralOptions(settingsPage.currentSettings.options);
+
+        settingsPage.changeTracking.options = false;
+
+        messageBox.info(api.i18n.getMessage("settingsChangesReverted"));
+    },
+    onSyncSettingsChanged() {
+        var checked = jq("#chkSyncSettings").prop("checked")
+        if (checked) {
+            jq("#chkSyncProxyMode").removeAttr("disabled");
+            jq("#chkSyncActiveProxy").removeAttr("disabled");
+            jq("#chkSyncToBrowser").removeAttr("disabled");
+            jq("#chkSyncToWebDAV").removeAttr("disabled");
+            jq("#webDAVFields input,#webDAVFields button").removeAttr("disabled");
+        }
+        else {
+            jq("#chkSyncProxyMode").attr("disabled", "disabled");
+            jq("#chkSyncActiveProxy").attr("disabled", "disabled");
+            jq("#chkSyncToBrowser").attr("disabled", "disabled");
+            jq("#chkSyncToWebDAV").attr("disabled", "disabled");
+            jq("#webDAVFields input,#webDAVFields button").attr("disabled", "disabled");
+        }
+    },
+    onSyncDestinationChanged() {
+        let isWebDavSelected = jq("#chkSyncToWebDAV").prop("checked");
+        if (isWebDavSelected) {
+            const webDavDiv = jq("#webDAVFields");
+            webDavDiv.hide();
+            webDavDiv.removeClass("d-none");
+            webDavDiv.slideDown();
+        } else {
+            jq("#webDAVFields").addClass("d-none");
+        }
+    },
+    onClickWebDavBackupNow() {
+        let serverUrl = jq("#txtWebDavServerUrl").val();
+        let username = jq("#txtWebDavServerUser").val();
+        let password = jq("#txtWebDavServerPassword").val();
+        let backupFilename = jq("#txtWebDavBackupFilename").val();
+
+        if (!serverUrl || !username || !password) {
+            messageBox.error(api.i18n.getMessage("settingsGeneralWebDav_ErrorRequiredFields"));
+            return;
+        }
+
+        PolyFill.runtimeSendMessage(
+            {
+                command: CommandMessages.SettingsPageWebDavBackupNow,
+                serverUrl: serverUrl,
+                username: username,
+                password: password,
+                backupFilename: backupFilename,
+            },
+            (response) => {
+                if (response.success) {
+                    messageBox.success(api.i18n.getMessage("settingsGeneralWebDavBackupNowSuccess"));
+                } else if (!response.success) {
+                    messageBox.error(api.i18n.getMessage("settingsGeneralWebDavBackupNowFailed") + " " + response.message);
                 }
             }
-        },
-		
-		onWindowUnload(event) {
-			if (!settingsPage.readGeneralOptions().Equals(settingsPage.currentSettings.options)) {
-				settingsPage.changeTracking.options = true;
-			}
-			if (!settingsPage.changeTracking.isDirty())
-				return;
+        );
+    },
+    onClickWebDavRestoreNow() {
+        let serverUrl = jq("#txtWebDavServerUrl").val();
+        let username = jq("#txtWebDavServerUser").val();
+        let password = jq("#txtWebDavServerPassword").val();
+        let backupFilename = jq("#txtWebDavBackupFilename").val();
 
-			jq(window).one("focus", () => {
-				setTimeout(() => {
-					messageBox.confirm(api.i18n.getMessage("settingsConfirmSaveAllChanged"),
-						() => {
-							if (settingsPage.changeTracking.options) {
-								settingsPage.uiEvents.onClickSaveGeneralOptions();
-							}
-							if (settingsPage.changeTracking.smartProfiles || settingsPage.changeTracking.rulesSubscriptions) {
-								for (let pageProfile of settingsPage.pageSmartProfiles) {
-									settingsPage.uiEvents.onClickSaveSmartProfile(pageProfile);
-								}
-							}
+        if (!serverUrl || !username || !password) {
+            messageBox.error(api.i18n.getMessage("settingsGeneralWebDav_ErrorRequiredFields"));
+            return;
+        }
 
-							settingsPage.uiEvents.saveUnsavedSmartProfile();
+        messageBox.confirm(api.i18n.getMessage("settingsGeneralWebDavRestoreNowConfirm"),
+            () => {
+                PolyFill.runtimeSendMessage(
+                    {
+                        command: CommandMessages.SettingsPageWebDavRestoreNow,
+                        serverUrl: serverUrl,
+                        username: username,
+                        password: password,
+                        backupFilename: backupFilename,
+                    },
+                    (response) => {
+                        if (response.success) {
+                            messageBox.success(api.i18n.getMessage("settingsGeneralWebDavRestoreNowSuccess"));
+                            setTimeout(() => window.location.reload(), 1000);
+                        } else if (!response.success) {
+                            messageBox.error(api.i18n.getMessage("settingsGeneralWebDavRestoreNowFailed") + " " + response.message);
+                        }
+                    }
+                );
+            });
+    },
+    onClickIgnoreRequestFailuresForDomains() {
+        let settings = settingsPage.currentSettings;
 
-							if (settingsPage.changeTracking.servers || settingsPage.changeTracking.activeProxy) {
-								settingsPage.uiEvents.onClickSaveProxyServers();
-							}
-							if (settingsPage.changeTracking.serverSubscriptions) {
-								settingsPage.uiEvents.onClickSaveServerSubscriptionsChanges();
-							}
-						});
-				}, 200);
-			});
+        let pageSmartProfile = settingsPage.pageSmartProfiles.find(x => x.smartProfile.profileType == SmartProfileType.IgnoreFailureRules);
+        if (pageSmartProfile) {
+            settingsPage.showProfileTab(pageSmartProfile);
+        }
+        else {
+            let ignoreProfile = settings.proxyProfiles.find(x => x.profileType == SmartProfileType.IgnoreFailureRules);
+            if (ignoreProfile) {
+                pageSmartProfile = settingsPage.createProfileContainerAttached(ignoreProfile, false, false);
+                settingsPage.pageSmartProfiles.push(pageSmartProfile);
 
-			event.preventDefault();
-			event.returnValue = true;
-		}
-	};
+                settingsPage.showProfileTab(pageSmartProfile);
+            }
+            else {
+                ignoreProfile = new SmartProfile();
+                ignoreProfile.profileType = SmartProfileType.IgnoreFailureRules;
+                ignoreProfile.profileTypeConfig = getSmartProfileTypeConfig(SmartProfileType.IgnoreFailureRules);
+                ignoreProfile.profileName = 'Ignore Failure Rules';
+                settings.proxyProfiles.push(ignoreProfile);
+                ProfileOperations.addUpdateProfile(ignoreProfile);
+
+                pageSmartProfile = settingsPage.createProfileContainerAttached(ignoreProfile, false, false);
+                settingsPage.pageSmartProfiles.push(pageSmartProfile);
+
+                settingsPage.showProfileTab(pageSmartProfile);
+            }
+        }
+    },
+    onClickViewShortcuts(): boolean {
+        if (environment.notSupported.keyboardShortcuts) {
+            messageBox.info("Keyboard shortcuts are not supported on mobile devices.");
+            return;
+        }
+
+        let modal = jq("#modalShortcuts");
+
+        PolyFill.browserCommandsGetAll((commands: any[]) => {
+            let content = `<dl>`;
+            for (const cmd of commands) {
+                content += `<dt>${cmd.description}</dt><dd>${api.i18n.getMessage("settingsGeneralViewShortcutKeys")} : <span class='text-primary'>${cmd.shortcut}</span></dd>`;
+            }
+            content += `</dl>`;
+            modal.find('.modal-body').html(content);
+
+            modal.modal("show");
+        });
+        return false;
+    },
+    onClickConfigureShortcuts() {
+        PolyFill.openShortcutSettings();
+        return false;
+    },
+    onChangeThemesLight() {
+        var value = jq("#cmbThemesLight").val();
+        if (value == themesCustomType) {
+            jq("#divThemesLightCustom").removeClass('d-none');
+        }
+        else {
+            jq("#divThemesLightCustom").addClass('d-none');
+        }
+    },
+    onChangeThemesDark() {
+        var value = jq("#cmbThemesDark").val();
+        if (value == themesCustomType) {
+            jq("#divThemesDarkCustom").removeClass('d-none');
+        }
+        else {
+            jq("#divThemesDarkCustom").addClass('d-none');
+        }
+    },
+    onRowSelectionChanged(datatable: any, button: any) {
+        let len = datatable.rows({ selected: true }).data().length;
+        let enable = len > 1;
+
+        settingsPage.enableGridMultipleDelete(button, enable);
+    },
+    onClickAddNewSmartProfile() {
+        let modal = jq("#modalAddNewSmartProfile");
+        modal.find("#rbtnNewSmartProfile_SmartRules").prop("checked", true);
+    },
+    onClickSubmitContinueAddingProfile() {
+        let modal = jq("#modalAddNewSmartProfile");
+        let profileTypeIsSmartRule = modal.find("#rbtnNewSmartProfile_SmartRules").prop("checked");
+        let profileTypeIsAlwaysEnabled = modal.find("#rbtnNewSmartProfile_AlwaysEnabled").prop("checked");
+
+        let profileType: SmartProfileType;
+
+        if (profileTypeIsSmartRule) {
+            profileType = SmartProfileType.SmartRules;
+        }
+        else if (profileTypeIsAlwaysEnabled) {
+            profileType = SmartProfileType.AlwaysEnabledBypassRules;
+        }
+        else {
+            messageBox.error(api.i18n.getMessage("settingsProfilesAddErrorTypeRequired"));
+            return;
+        }
+
+        let pageSmartProfile = settingsPage.createNewUnsavedProfile(profileType);
+
+        settingsPage.showProfileTab(pageSmartProfile);
+        settingsPage.updateProfileGridsLayout(pageSmartProfile);
+        settingsPage.selectAddNewProfileMenu();
+
+        settingsPage.changeTracking.newSmartProfile = true;
+        pageSmartProfile.htmlProfileMenu.one("hidden.bs.tab", () => {
+            settingsPage.changeTracking.newSmartProfile = false;
+        });
+        modal.modal("hide");
+    },
+    onChangeActiveProxyServer() {
+        let proxyServerId = jq("#cmbActiveProxyServer").val();
+
+        let server = settingsPage.findProxyServerById(proxyServerId);
+
+        if (server) {
+            settingsPage.currentSettings.defaultProxyServerId = server.id;
+            settingsPage.changeTracking.activeProxy = true;
+        } else {
+            Debug.warn(`Selected ActiveProxyServer ID ${proxyServerId} not found, resetting.`);
+            settingsPage.currentSettings.defaultProxyServerId = null;
+            settingsPage.changeTracking.activeProxy = true;
+            let cmbActiveProxyServer = jq("#cmbActiveProxyServer");
+            cmbActiveProxyServer.val(null);
+        }
+    },
+    onClickAddProxyServer() {
+        let modal = jq("#modalModifyProxyServer");
+        modal.data("editing", null);
+
+        settingsPage.populateServerModal(modal, null);
+
+        modal.modal("show");
+        modal.find("#txtServerAddress").focus();
+    },
+    onClickRemoveMultipleProxyServer() {
+        var rows = settingsPage.grdServers.rows({ selected: true });
+        if (!rows)
+            return;
+
+        const confirmMsg = api.i18n.getMessage("settingsConfirmRemoveMultipleProxyServer");
+        if (confirm(confirmMsg)) {
+            rows.remove().draw('full-hold');
+            settingsPage.changeTracking.servers = true;
+            settingsPage.loadDefaultProxyServer();
+            settingsPage.enableGridMultipleDelete(jq("#btnRemoveMultipleProxyServer"), false);
+        }
+    },
+    onChangeServerProtocol() {
+        settingsPage.populateServerProtocol();
+    },
+    onClickSubmitProxyServer() {
+        let modal = jq("#modalModifyProxyServer");
+        let editingModel: ProxyServer = modal.data("editing");
+
+        let serverInputInfo = settingsPage.readServerModel(modal);
+
+        if (!serverInputInfo.name) {
+            messageBox.error(api.i18n.getMessage("settingsServerNameRequired"));
+            return;
+        }
+
+        let editingServerName: string = null;
+        if (editingModel)
+            editingServerName = editingModel.name;
+
+        let existingServers = settingsPage.readServers();
+        let serverExists = existingServers.some(server => {
+            return (server.name === serverInputInfo.name && server.name != editingServerName);
+        });
+        if (serverExists) {
+            messageBox.error(api.i18n.getMessage("settingsServerNameExists"));
+            return;
+        }
+
+        if (!serverInputInfo.host) {
+            messageBox.error(api.i18n.getMessage("settingsServerServerAddressIsEmpty"));
+            return;
+        }
+        if (!serverInputInfo.port || serverInputInfo.port <= 0 || serverInputInfo.port > 65535) {
+            messageBox.error(api.i18n.getMessage("settingsServerPortNoInvalid"));
+            return;
+        }
+
+        if (!serverInputInfo.username && serverInputInfo.password) {
+            messageBox.error(api.i18n.getMessage("settingsServerAuthenticationInvalid"));
+            return;
+        }
+
+        if (editingModel) {
+            const proxyServerId = editingModel.id;
+            jQuery.extend(editingModel, serverInputInfo);
+            editingModel.id = proxyServerId;
+
+            settingsPage.refreshServersGrid();
+        } else {
+            settingsPage.insertNewServerInGrid(serverInputInfo);
+        }
+
+        settingsPage.changeTracking.servers = true;
+
+        modal.modal("hide");
+
+        settingsPage.loadDefaultProxyServer();
+    },
+    onServersEditClick(e: any) {
+        let item = settingsPage.readSelectedServer(e);
+        if (!item)
+            return;
+
+        let modal = jq("#modalModifyProxyServer");
+        modal.data("editing", item);
+
+        settingsPage.populateServerModal(modal, item);
+
+        modal.modal("show");
+        modal.find("#txtServerAddress").focus();
+    },
+    onServersRemoveClick(e: any) {
+        var row = settingsPage.readSelectedServerRow(e);
+        if (!row)
+            return;
+
+        messageBox.confirm(api.i18n.getMessage("settingsConfirmRemoveProxyServer"),
+            () => {
+                row.remove().draw('full-hold');
+
+                settingsPage.changeTracking.servers = true;
+
+                settingsPage.loadDefaultProxyServer();
+            });
+    },
+    onClickSaveProxyServers() {
+        jq("#cmbActiveProxyServer").trigger("change");
+        let saveData = {
+            proxyServers: settingsPage.readServers(),
+            defaultProxyServerId: settingsPage.currentSettings.defaultProxyServerId
+        };
+
+        PolyFill.runtimeSendMessage(
+            {
+                command: CommandMessages.SettingsPageSaveProxyServers,
+                saveData: saveData
+            },
+            (response: ResultHolder) => {
+                if (!response) return;
+                if (response.success) {
+                    if (response.message)
+                        messageBox.success(response.message);
+
+                    settingsPage.currentSettings.proxyServers = saveData.proxyServers;
+                    settingsPage.currentSettings.defaultProxyServerId = saveData.defaultProxyServerId;
+
+                    settingsPage.changeTracking.servers = false;
+                    settingsPage.changeTracking.activeProxy = false;
+                    settingsPage.changeTracking.options = false;
+                    settingsPage.changeTracking.smartProfiles = false;
+                    settingsPage.changeTracking.newSmartProfile = false;
+                    settingsPage.changeTracking.rulesSubscriptions = false;
+                    settingsPage.changeTracking.serverSubscriptions = false;
+                } else {
+                    if (response.message)
+                        messageBox.error(response.message);
+                }
+            },
+            (error: Error) => {
+                messageBox.error(api.i18n.getMessage("settingsErrorFailedToSaveServers") + " " + error.message);
+            });
+    },
+    onClickRejectProxyServers() {
+        settingsPage.currentSettings.proxyServers = settingsPage.originalSettings.proxyServers.slice();
+        settingsPage.loadServersGrid(settingsPage.currentSettings.proxyServers);
+        settingsPage.loadDefaultProxyServer();
+
+        settingsPage.changeTracking.servers = false;
+
+        messageBox.info(api.i18n.getMessage("settingsChangesReverted"));
+    },
+    onClickClearProxyServers() {
+        messageBox.confirm(api.i18n.getMessage("settingsRemoveAllProxyServers"),
+            () => {
+                settingsPage.loadServersGrid([]);
+                settingsPage.loadDefaultProxyServer();
+
+                settingsPage.changeTracking.servers = true;
+
+                messageBox.info(api.i18n.getMessage("settingsRemoveAllProxyServersSuccess"));
+            });
+    },
+    onClickAddMultipleProxyRule(pageProfile: SettingsPageSmartProfile) {
+        let tabContainer = pageProfile.htmlProfileTab;
+
+        let modal = tabContainer.find("#modalAddMultipleRules");
+        modal.data("editing", null);
+
+        modal.find("#cmdMultipleRuleType").val(0);
+        modal.find("#txtMultipleRuleList").val("");
+
+        settingsPage.populateRuleModal(pageProfile, modal, null);
+
+        modal.modal("show");
+        modal.find("#txtMultipleRuleList").focus();
+    },
+    onClickRemoveMultipleProxyRule(pageProfile: SettingsPageSmartProfile) {
+        var rows = pageProfile.grdRules.rows({ selected: true });
+        if (!rows)
+            return;
+
+        messageBox.confirm(api.i18n.getMessage("settingsConfirmRemoveMultipleProxyRule"),
+            () => {
+                rows.remove().draw('full-hold');
+                settingsPage.changeTracking.smartProfiles = true;
+                settingsPage.enableGridMultipleDelete(
+                    pageProfile.htmlProfileTab.find("#btnRemoveMultipleProxyRule"), false);
+            });
+    },
+    onClickSubmitMultipleRule(pageProfile: SettingsPageSmartProfile) {
+        let tabContainer = pageProfile.htmlProfileTab;
+
+        let modal = tabContainer.find("#modalAddMultipleRules");
+
+        let selectedProxyId = modal.find("#cmdRuleProxyServer").val();
+        let selectedProxy = null;
+
+        if (selectedProxyId)
+            selectedProxy = settingsPage.findProxyServerById(selectedProxyId);
+
+        let whiteList = parseInt(modal.find("#cmdRuleAction").val()) != 0;
+
+        let ruleType = +modal.find("#cmdMultipleRuleType").val();
+        let rulesStr = modal.find("#txtMultipleRuleList").val();
+
+        let ruleList = rulesStr.split(/[\r\n]+/);
+        let resultRuleList: ProxyRule[] = [];
+
+        let existingRules = settingsPage.readRules(pageProfile);
+        for (let ruleLine of ruleList) {
+            if (!ruleLine)
+                continue;
+            ruleLine = ruleLine.trim().toLowerCase();
+            let hostName: string;
+            let newRule = new ProxyRule();
+
+            if (ruleType == ProxyRuleType.Exact) {
+                if (!Utils.isValidUrl(ruleLine)) {
+                    messageBox.error(
+                        api.i18n.getMessage("settingsRuleExactUrlInvalid").replace("{0}", ruleLine)
+                    );
+                    return;
+                }
+                newRule.ruleExact = ruleLine;
+                hostName = Utils.extractHostFromUrl(ruleLine);
+            }
+            else if (ruleType == ProxyRuleType.MatchPatternHost) {
+                let ruleLineNormalized = ruleLine;
+                if (!Utils.urlHasSchema(ruleLineNormalized))
+                    ruleLineNormalized = "http://" + ruleLineNormalized;
+
+                hostName = Utils.extractHostFromUrl(ruleLineNormalized);
+
+                if (!Utils.isNotInternalHostName(hostName)) {
+                    messageBox.error(api.i18n.getMessage("settingsMultipleRuleInvalidHost").replace("{0}", hostName || ruleLine));
+                    return;
+                }
+
+                newRule.rulePattern = Utils.hostToMatchPattern(hostName, false);
+            }
+            else if (ruleType == ProxyRuleType.MatchPatternUrl) {
+                if (!Utils.isValidUrl(ruleLine)) {
+                    messageBox.error(api.i18n.getMessage("settingsRuleUrlInvalid").replace("{0}", ruleLine));
+                    return;
+                }
+
+                hostName = Utils.extractHostFromUrl(ruleLine);
+                newRule.rulePattern = Utils.hostToMatchPattern(ruleLine, true);
+            }
+            else {
+                continue;
+            }
+
+            let ruleExists = existingRules.some(rule => {
+                return (rule.hostName === hostName);
+            });
+
+            if (ruleExists)
+                continue;
+
+            newRule.autoGeneratePattern = true;
+            newRule.enabled = true;
+            newRule.proxy = null;
+            newRule.hostName = hostName;
+            newRule.ruleType = ruleType;
+            newRule.proxy = selectedProxy;
+            newRule.proxyServerId = selectedProxyId;
+            newRule.whiteList = whiteList;
+
+            resultRuleList.push(newRule);
+        }
+
+        if (!resultRuleList.length) {
+            messageBox.error(api.i18n.getMessage("settingsMultipleRuleNoNewRuleAdded"));
+            return;
+        }
+
+        settingsPage.insertNewRuleListInGrid(pageProfile, resultRuleList);
+        settingsPage.changeTracking.smartProfiles = true;
+
+        modal.modal("hide");
+    },
+    onClickAddProxyRule(pageProfile: SettingsPageSmartProfile) {
+        let tabContainer = pageProfile.htmlProfileTab;
+
+        let modal = tabContainer.find("#modalModifyRule");
+        modal.data("editing", null);
+
+        settingsPage.populateRuleModal(pageProfile, modal, null);
+
+        modal.modal("show");
+        modal.find("#txtRuleSource").focus();
+    },
+    onClickImportRulesOpenDialog(pageProfile: SettingsPageSmartProfile) {
+        let tabContainer = pageProfile.htmlProfileTab;
+
+        let modal = tabContainer.find("#modalImportRules");
+        modal.data("editing", null);
+
+        modal.modal("show");
+        modal.find("#txtRuleSource").focus();
+
+        resetModal();
+
+        function resetModal() {
+            var file = modal.find("#rbtnImportRulesSelect_File");
+            var text = modal.find("#rbtnImportRulesSelect_Text");
+            if (!file.prop("checked") && !text.prop("checked")) {
+                file.prop("checked", true);
+            }
+            modal.find("#txtImportRulesSelectText").val("");
+
+            let append = modal.find("#cmbImportRulesOverride_Append");
+            let replace = modal.find("#cmbImportRulesOverride_Replace");
+            if (!append.prop("checked") && !replace.prop("checked")) {
+                append.prop("checked", true);
+            }
+        }
+    },
+    onClickImportRules(pageProfile: SettingsPageSmartProfile) {
+        let tabContainer = pageProfile.htmlProfileTab;
+        let modalContainer = tabContainer.find("#modalImportRules");
+        let selectFileElement = modalContainer.find("#btnImportRulesSelectFile")[0];
+        let file, text;
+
+        if (modalContainer.find("#rbtnImportRulesSelect_File").prop("checked")) {
+            if (selectFileElement.files.length == 0) {
+                messageBox.error(api.i18n.getMessage("settingsRulesFileNotSelected"));
+                return;
+            }
+            file = selectFileElement.files[0];
+        } else {
+            let proxyServerListText: string = modalContainer.find("#txtImportRulesSelectText").val().trim();
+            if (proxyServerListText == "") {
+                messageBox.error(api.i18n.getMessage("settingsImportRulesTextIsEmpty"));
+                return;
+            }
+            text = proxyServerListText;
+        }
+        let append = modalContainer.find("#cmbImportRulesOverride_Append").prop("checked");
+        let sourceType: ExternalRulesFormat = +modalContainer.find("#cmbImportRulesFormat").val();
+        let proxyRules = settingsPage.readRules(pageProfile);
+
+        let config = new ProxyRulesImportFromUI();
+        config.format = sourceType;
+
+        if (sourceType != ExternalRulesFormat.AutoProxy &&
+            sourceType != ExternalRulesFormat.SwitchyOmega) {
+            messageBox.warning(api.i18n.getMessage("settingsSourceTypeNotSelected"));
+            return;
+        }
+
+        RuleImporter.importRulesBatch(
+            config,
+            text,
+            file,
+            append,
+            proxyRules,
+            (importResult: {
+                success: boolean;
+                message: string;
+                rules: {
+                    whiteList: ImportedProxyRule[];
+                    blackList: ImportedProxyRule[];
+                };
+            }) => {
+                if (!importResult) return;
+
+                if (importResult.success) {
+                    if (importResult.message)
+                        messageBox.success(importResult.message);
+
+                    selectFileElement.value = "";
+
+                    doImport(importResult.rules);
+
+                    modalContainer.modal("hide");
+                }
+                else {
+                    if (importResult.message)
+                        messageBox.error(importResult.message);
+                }
+            },
+            (error: Error) => {
+                let message = "";
+                if (error && error.message)
+                    message = error.message;
+                messageBox.error(api.i18n.getMessage("settingsImportRulesFailed") + " " + message);
+            });
+
+        function doImport(rules: {
+            whiteList: ImportedProxyRule[];
+            blackList: ImportedProxyRule[];
+        }) {
+            let finalRules: ProxyRule[];
+            let mappedBlackRules = rules.blackList.map((rule) => rule.getProxyRule());
+            let mappedWhiteRules = rules.whiteList.map((rule) => {
+                let newRule = rule.getProxyRule();
+                newRule.whiteList = true;
+                return newRule;
+            });
+
+            if (append) {
+                finalRules = proxyRules.concat(mappedBlackRules).concat(mappedWhiteRules);
+            }
+            else
+                finalRules = mappedBlackRules.concat(mappedWhiteRules);
+
+            settingsPage.loadRules(pageProfile, finalRules);
+        }
+    },
+    onChangeRuleGeneratePattern(pageProfile: SettingsPageSmartProfile) {
+        settingsPage.updateProxyRuleModal(pageProfile.htmlProfileTab);
+    },
+    onChangeRuleType(pageProfile: SettingsPageSmartProfile) {
+        settingsPage.updateProxyRuleModal(pageProfile.htmlProfileTab);
+    },
+    onChangeRuleAction(pageProfile: SettingsPageSmartProfile) {
+        settingsPage.updateProxyRuleModal(pageProfile.htmlProfileTab);
+    },
+    onClickSubmitProxyRule(pageProfile: SettingsPageSmartProfile) {
+        let tabContainer = pageProfile.htmlProfileTab;
+
+        let modal = tabContainer.find("#modalModifyRule");
+        let editingModel: ProxyRule = modal.data("editing");
+
+        let ruleInfo = settingsPage.readProxyRuleModel(modal);
+        let hostName = ruleInfo.hostName;
+
+        function checkHostName(): boolean {
+            if (!hostName) {
+                messageBox.error(api.i18n.getMessage("settingsRuleSourceRequired"));
+                return false;
+            }
+            return true;
+        }
+
+        if (hostName) {
+            if (!Utils.isNotInternalHostName(hostName)) {
+                messageBox.error(api.i18n.getMessage("settingsRuleSourceInvalid"));
+                return;
+            }
+
+            let checkHostName = hostName;
+            if (!Utils.urlHasSchema(hostName)) {
+                checkHostName = "http://" + hostName;
+            }
+
+            let extractedHost = Utils.extractHostFromUrl(checkHostName);
+            if (extractedHost == null || !Utils.isNotInternalHostName(extractedHost)) {
+                messageBox.error(
+                    api.i18n.getMessage("settingsRuleHostInvalid")
+                        .replace("{0}", extractedHost || hostName)
+                );
+                return;
+            }
+            hostName = extractedHost;
+        }
+        ruleInfo.hostName = hostName;
+
+        if (ruleInfo.ruleType == ProxyRuleType.MatchPatternHost) {
+            if (ruleInfo.autoGeneratePattern) {
+                if (!checkHostName())
+                    return;
+
+                ruleInfo.rulePattern = Utils.hostToMatchPattern(hostName, false);
+            }
+            else if (hostName && !ruleInfo.rulePattern.includes(hostName)) {
+                messageBox.error(
+                    api.i18n.getMessage("settingsRuleDoesntIncludeDomain").replace("{0}", hostName)
+                );
+                return;
+            }
+        }
+        else if (ruleInfo.ruleType == ProxyRuleType.MatchPatternUrl) {
+            if (ruleInfo.autoGeneratePattern) {
+                if (!checkHostName())
+                    return;
+
+                ruleInfo.rulePattern = Utils.hostToMatchPattern(hostName, true);
+            }
+            else if (hostName && !ruleInfo.rulePattern.includes(hostName)) {
+                messageBox.error(
+                    api.i18n.getMessage("settingsRuleDoesntIncludeDomain").replace("{0}", hostName)
+                );
+                return;
+            }
+        }
+        else if (ruleInfo.ruleType == ProxyRuleType.RegexHost) {
+            try {
+                if (!ruleInfo.ruleRegex) {
+                    messageBox.error(
+                        api.i18n.getMessage("settingsRuleRegexInvalid").replace("{0}", ruleInfo.ruleRegex)
+                    );
+                    return;
+                }
+
+                let regex = new RegExp(ruleInfo.ruleRegex);
+                if (hostName) {
+                    if (!regex.test(hostName)) {
+                        messageBox.error(
+                            api.i18n.getMessage("settingsRuleRegexNotMatchDomain").replace("{0}", hostName)
+                        );
+                        return;
+                    }
+                }
+            } catch (error) {
+                messageBox.error(
+                    api.i18n.getMessage("settingsRuleRegexInvalid").replace("{0}", ruleInfo.ruleRegex)
+                );
+                return;
+            }
+        }
+        else if (ruleInfo.ruleType == ProxyRuleType.RegexUrl) {
+            try {
+                if (!ruleInfo.ruleRegex) {
+                    messageBox.error(
+                        api.i18n.getMessage("settingsRuleRegexInvalid").replace("{0}", ruleInfo.ruleRegex)
+                    );
+                    return;
+                }
+
+                let regex = new RegExp(ruleInfo.ruleRegex);
+
+                if (hostName) {
+                    if (!regex.test(hostName)) {
+                        messageBox.error(
+                            api.i18n.getMessage("settingsRuleRegexNotMatchDomain").replace("{0}", hostName)
+                        );
+                        return;
+                    }
+                }
+            } catch (error) {
+                messageBox.error(
+                    api.i18n.getMessage("settingsRuleRegexInvalid").replace("{0}", ruleInfo.ruleRegex)
+                );
+                return;
+            }
+        }
+        else if (ruleInfo.ruleType == ProxyRuleType.IpCidrNotation) {
+            let ipAddress = ruleInfo.ruleSearch;
+            let prefixLength = ruleInfo.rulePattern;
+            ruleInfo.hostName = hostName || ipAddress;
+
+            try {
+                if (!ipAddress || !modal.find("#txtRuleCidrIPAddress")[0].checkValidity()) {
+                    messageBox.error(
+                        api.i18n.getMessage("settingsRuleCidrIPInvalid").replace("{0}", ipAddress)
+                    );
+                    return;
+                }
+                if (!prefixLength || !modal.find("#txtRuleCidrPrefixLength")[0].checkValidity()) {
+                    messageBox.error(
+                        api.i18n.getMessage("settingsRuleCidrPrefixLengthInvalid").replace("{0}", prefixLength)
+                    );
+                    return;
+                }
+
+                let regex = Utils.ipCidrNotationToRegExp(ipAddress, prefixLength);
+                if (!regex) {
+                    messageBox.error(
+                        api.i18n.getMessage("settingsRuleCidrNotationInvalid").replace("{0}", ipAddress + "/" + prefixLength)
+                    );
+                    return;
+                }
+
+                if (hostName) {
+                    let testHost = Utils.normalizeIpForMatching(hostName);
+                    if (!regex.test(testHost)) {
+                        messageBox.error(
+                            api.i18n.getMessage("settingsRuleCidrNotationInvalidMatch").replace("{0}", hostName)
+                        );
+                        return;
+                    }
+                }
+            } catch (error) {
+                messageBox.error(
+                    api.i18n.getMessage("settingsRuleCidrNotationInvalid").replace("{0}", ipAddress + "/" + prefixLength)
+                );
+                return;
+            }
+        }
+        else if (ruleInfo.ruleType == ProxyRuleType.DomainSubdomain ||
+            ruleInfo.ruleType == ProxyRuleType.DomainSubdomainAndPath ||
+            ruleInfo.ruleType == ProxyRuleType.DomainAndPath ||
+            ruleInfo.ruleType == ProxyRuleType.DomainExact ||
+            ruleInfo.ruleType == ProxyRuleType.SearchUrl) {
+            if (!checkHostName())
+                return;
+
+            ruleInfo.ruleSearch = hostName;
+        }
+        else {
+            if (!Utils.isValidUrl(ruleInfo.ruleExact)) {
+                messageBox.error(
+                    api.i18n.getMessage("settingsRuleExactUrlInvalid").replace("{0}", ruleInfo.ruleExact)
+                );
+                return;
+            }
+        }
+
+        let editingSource: string = null;
+        if (editingModel)
+            editingSource = editingModel.hostName;
+
+        let existingRules = settingsPage.readRules(pageProfile);
+        let ruleExists = false;
+        if (hostName)
+            ruleExists = existingRules.some(rule => {
+                return (rule.hostName === hostName && rule.hostName != editingSource);
+            });
+
+        if (ruleExists) {
+            messageBox.error(api.i18n.getMessage("settingsRuleSourceAlreadyExists"));
+            return;
+        }
+
+        if (!editingModel) {
+            do {
+                ruleExists = existingRules.some(rule => {
+                    return (rule.ruleId === ruleInfo.ruleId);
+                });
+
+                if (ruleExists)
+                    ruleInfo.ruleId = Utils.getNewUniqueIdNumber();
+            } while (ruleExists);
+        }
+
+        if (editingModel) {
+            jQuery.extend(editingModel, ruleInfo);
+            settingsPage.refreshRulesGrid(pageProfile);
+        } else {
+            settingsPage.insertNewRuleInGrid(pageProfile, ruleInfo);
+        }
+
+        settingsPage.changeTracking.smartProfiles = true;
+        modal.modal("hide");
+    },
+    onRulesEditClick(pageProfile: SettingsPageSmartProfile, e: any) {
+        let item = settingsPage.readSelectedRule(pageProfile, e);
+        if (!item)
+            return;
+        let tabContainer = pageProfile.htmlProfileTab;
+
+        let modal = tabContainer.find("#modalModifyRule");
+        modal.data("editing", item);
+
+        settingsPage.populateRuleModal(pageProfile, modal, item);
+
+        modal.modal("show");
+        modal.find("#txtRuleSource").focus();
+    },
+    onRuleEnabledToggleChange(pageProfile: SettingsPageSmartProfile, e: any) {
+        const checkbox = jq(e.target);
+        const isEnabled = checkbox.prop('checked');
+
+        const row = pageProfile.grdRules.row(checkbox.closest('tr'));
+        const ruleData: ProxyRule = row.data();
+
+        if (ruleData) {
+            ruleData.enabled = isEnabled;
+            settingsPage.changeTracking.smartProfiles = true;
+            settingsPage.refreshRulesGridRow(pageProfile, row);
+        }
+    },
+    onRulesRemoveClick(pageProfile: SettingsPageSmartProfile, e: any) {
+        var row = settingsPage.readSelectedRuleRow(pageProfile, e);
+        if (!row)
+            return;
+
+        messageBox.confirm(api.i18n.getMessage("settingsConfirmRemoveProxyRule"),
+            () => {
+                row.remove().draw('full-hold');
+                settingsPage.changeTracking.smartProfiles = true;
+            });
+    },
+    onClickClearProxyRules(pageProfile: SettingsPageSmartProfile) {
+        messageBox.confirm(api.i18n.getMessage("settingsRemoveAllRules"),
+            () => {
+                settingsPage.loadRules(pageProfile, []);
+                settingsPage.changeTracking.smartProfiles = true;
+                messageBox.info(api.i18n.getMessage("settingsRemoveAllRulesSuccess"));
+            });
+    },
+    onProfileNameClick(pageProfile: SettingsPageSmartProfile) {
+        let tabContainer = pageProfile.htmlProfileTab;
+        settingsPage.showProfileNameEdit(tabContainer);
+    },
+    onClickSaveSmartProfile(pageProfile: SettingsPageSmartProfile) {
+        let smartProfileModel = settingsPage.readSmartProfile(pageProfile);
+        let smartProfile = pageProfile.smartProfile;
+        Object.assign(smartProfile, smartProfileModel);
+
+        if (smartProfile.profileName.trim() == '') {
+            messageBox.error(api.i18n.getMessage("settingsProfilesAddErrorNameRequired"));
+            return;
+        }
+
+        if (settingsPage.currentSettings.proxyProfiles.find(x => x.profileName == smartProfile.profileName &&
+            x.profileId != smartProfile.profileId) != null) {
+            messageBox.error(api.i18n.getMessage("settingsProfilesAddErrorNameExists"));
+            return;
+        }
+
+        PolyFill.runtimeSendMessage(
+            {
+                command: CommandMessages.SettingsPageSaveSmartProfile,
+                smartProfile: smartProfile
+            },
+            (response: any) => {
+                if (!response) return;
+                if (response.success) {
+                    if (response.message)
+                        messageBox.success(response.message);
+                    let updatedProfile: SmartProfile = response.smartProfile || smartProfile;
+
+                    settingsPage.changeTracking.smartProfiles = false;
+                    settingsPage.changeTracking.rulesSubscriptions = false;
+                    settingsPage.changeTracking.options = false;
+                    settingsPage.changeTracking.servers = false;
+                    settingsPage.changeTracking.activeProxy = false;
+                    settingsPage.changeTracking.newSmartProfile = false;
+                    settingsPage.changeTracking.serverSubscriptions = false;
+
+                    if (smartProfile.profileId || smartProfile.profileType == SmartProfileType.IgnoreFailureRules) {
+                        settingsPage.updateProfileMenuName(pageProfile);
+                    }
+                    else {
+                        settingsPage.currentSettings.proxyProfiles.push(updatedProfile);
+                        settingsPage.removeUnsavedProfileAndReload(pageProfile, updatedProfile);
+                    }
+                } else {
+                    if (response.message)
+                        messageBox.error(response.message);
+                }
+            },
+            (error: Error) => {
+                messageBox.error(api.i18n.getMessage("settingsErrorFailedToSaveSmartProfile") + " " + error.message);
+            });
+    },
+    saveUnsavedSmartProfile() {
+        let unsavedSmartProfileElement = jq(".tab-smart-profile-item" + ".tab-new-unsaved-smart-profile-item:visible");
+        if (!unsavedSmartProfileElement.length)
+            return;
+
+        let saveButton = unsavedSmartProfileElement.find("#btnSaveSmartProfile");
+        saveButton.trigger('click');
+    },
+    onClickRejectSmartProfile(pageProfile: SettingsPageSmartProfile) {
+    },
+    onClickDeleteSmartProfile(pageProfile: SettingsPageSmartProfile) {
+        let profile = pageProfile.smartProfile;
+        if (!profile.profileId)
+            return;
+
+        if (profile.profileTypeConfig.builtin)
+            return;
+
+        messageBox.confirm(api.i18n.getMessage("settingsProfilesDeleteConfirm"),
+            () => {
+                PolyFill.runtimeSendMessage(
+                    {
+                        command: CommandMessages.SettingsPageDeleteSmartProfile,
+                        smartProfileId: profile.profileId
+                    },
+                    (response: any) => {
+                        if (!response) return;
+                        if (response.success) {
+                            if (response.message)
+                                messageBox.success(response.message);
+
+                            settingsPage.removePageProfileAndReset(pageProfile);
+                        } else {
+                            if (response.message)
+                                messageBox.error(response.message);
+                        }
+                    },
+                    (error: Error) => {
+                        messageBox.error(api.i18n.getMessage("settingsProfilesDeleteFailed") + " " + error.message);
+                    });
+            });
+    },
+    onClickAddServerSubscription() {
+        let modal = jq("#modalServerSubscription");
+        modal.data("editing", null);
+
+        settingsPage.populateServerSubscriptionsModal(modal, null);
+
+        modal.modal("show");
+
+        function focusUrl() {
+            modal.off("shown.bs.modal", focusUrl);
+            modal.find("#txtUrl").focus();
+        }
+
+        modal.on("shown.bs.modal", focusUrl);
+    },
+    onClickRemoveMultipleServerSubscription() {
+        var rows = settingsPage.grdServerSubscriptions.rows({ selected: true });
+        if (!rows)
+            return;
+
+        messageBox.confirm(api.i18n.getMessage("settingsConfirmRemoveMultipleServerSubscription"),
+            () => {
+                rows.remove().draw('full-hold');
+
+                settingsPage.changeTracking.serverSubscriptions = true;
+                settingsPage.enableGridMultipleDelete(jq("#btnRemoveMultipleServerSubscription"), false);
+            });
+    },
+    onServerSubscriptionEditClick(e: any) {
+        let item = settingsPage.readSelectedServerSubscription(e);
+        if (!item)
+            return;
+
+        let modal = jq("#modalServerSubscription");
+        modal.data("editing", item);
+
+        settingsPage.populateServerSubscriptionsModal(modal, item);
+
+        modal.modal("show");
+    },
+    onServerSubscriptionRemoveClick(e: any) {
+        var row = settingsPage.readSelectedServerSubscriptionRow(e);
+        if (!row)
+            return;
+
+        messageBox.confirm(api.i18n.getMessage("settingsConfirmRemoveServerSubscription"),
+            () => {
+                row.remove().draw('full-hold');
+                settingsPage.changeTracking.serverSubscriptions = true;
+            });
+    },
+    onServerSubscriptionViewStatsClick(e: any) {
+        let status = e.currentTarget?.title;
+        if (status) {
+            status = status.replaceAll('\r\n', '<br\>').replaceAll('\n', '<br\>');
+            messageBox.info(status);
+        }
+    },
+    onClickSaveServerSubscription() {
+        let modal = jq("#modalServerSubscription");
+
+        if (!modal.find("form")[0].checkValidity()) {
+            messageBox.error(api.i18n.getMessage("settingsServerSubscriptionIncompleteForm"));
+            return;
+        }
+        let subscriptionModel = settingsPage.readServerSubscriptionModel(modal);
+        if (!subscriptionModel) {
+            messageBox.error(api.i18n.getMessage("settingsServerSubscriptionInvalidForm"));
+            return;
+        }
+
+        let subscriptionsList = settingsPage.readServerSubscriptions();
+        let editingSubscription = modal.data("editing");
+        let editingName = "";
+        if (editingSubscription)
+            editingName = editingSubscription.name;
+
+        if (editingSubscription) {
+            let nameIsDuplicate = false;
+            for (let item of subscriptionsList) {
+                if (item.name == subscriptionModel.name && subscriptionModel.name != editingName) {
+                    nameIsDuplicate = true;
+                }
+            }
+            if (subscriptionModel.name != editingName)
+                if (nameIsDuplicate) {
+                    messageBox.error(api.i18n.getMessage("settingsServerSubscriptionDuplicateName"));
+                    return;
+                }
+        }
+
+        if (!subscriptionModel.stats) {
+            subscriptionModel.stats = new SubscriptionStats();
+        }
+
+        jq("#btnSaveServerSubscription").attr("data-loading-text", api.i18n.getMessage("settingsServerSubscriptionSavingButton"));
+        jq("#btnSaveServerSubscription").button("loading");
+
+        // Temporarily switch to Direct to fetch the list
+        settingsPage.temporarilySwitchToDirect(async () => {
+            return new Promise((resolve, reject) => {
+                ProxyImporter.readFromServer(subscriptionModel,
+                    (response: {
+                        success: boolean,
+                        message: string,
+                        result: ProxyServer[]
+                    }) => {
+                        jq("#btnSaveServerSubscription").button('reset');
+
+                        if (response.success) {
+                            let count = response.result.length;
+
+                            if (subscriptionModel.enabled)
+                                subscriptionModel.proxies = response.result;
+                            else
+                                subscriptionModel.proxies = [];
+                            subscriptionModel.totalCount = count;
+                            SubscriptionStats.updateStats(subscriptionModel.stats, true);
+
+                            if (editingSubscription) {
+                                jQuery.extend(editingSubscription, subscriptionModel);
+                                settingsPage.refreshServerSubscriptionsGrid();
+                                messageBox.success(api.i18n.getMessage("settingsServerSubscriptionSaveUpdated").replace("{0}", count));
+                            } else {
+                                settingsPage.insertNewServerSubscriptionInGrid(subscriptionModel);
+                                messageBox.success(api.i18n.getMessage("settingsServerSubscriptionSaveAdded").replace("{0}", count));
+                            }
+
+                            settingsPage.changeTracking.serverSubscriptions = true;
+                            settingsPage.loadDefaultProxyServer();
+                            modal.modal("hide");
+
+                            // Auto-save subscription changes
+                            settingsPage.uiEvents.onClickSaveServerSubscriptionsChanges();
+                            resolve(undefined);
+                        } else {
+                            SubscriptionStats.updateStats(subscriptionModel.stats, false);
+                            messageBox.error(api.i18n.getMessage("settingsServerSubscriptionSaveFailedGet"));
+                            reject(response.message);
+                        }
+                    },
+                    (errorResult) => {
+                        SubscriptionStats.updateStats(subscriptionModel.stats, false, errorResult);
+                        messageBox.error(api.i18n.getMessage("settingsServerSubscriptionSaveFailedGet"));
+                        jq("#btnSaveServerSubscription").button('reset');
+                        reject(errorResult);
+                    });
+            });
+        }).catch(() => {});
+    },
+    onClickTestServerSubscription() {
+        let modal = jq("#modalServerSubscription");
+
+        if (!modal.find("form")[0].checkValidity()) {
+            messageBox.error(api.i18n.getMessage("settingsServerSubscriptionIncompleteForm"));
+            return;
+        }
+
+        let subscriptionModel = settingsPage.readServerSubscriptionModel(modal);
+
+        if (!subscriptionModel) {
+            messageBox.error(api.i18n.getMessage("settingsServerSubscriptionInvalidForm"));
+            return;
+        }
+
+        jq("#btnTestServerSubscription").attr("data-loading-text", api.i18n.getMessage("settingsServerSubscriptionTestingButton"));
+        jq("#btnTestServerSubscription").button("loading");
+
+        var applyProxyMode = subscriptionModel.applyProxy;
+        subscriptionModel.applyProxy = null;
+
+        // Temporarily switch to Direct to test
+        settingsPage.temporarilySwitchToDirect(async () => {
+            return new Promise((resolve, reject) => {
+                PolyFill.runtimeSendMessage(
+                    {
+                        command: CommandMessages.SettingsPageMakeRequestSpecial,
+                        url: subscriptionModel.url,
+                        applyProxy: applyProxyMode,
+                        selectedProxy: null
+                    },
+                    (response: any) => {
+                        if (!response || !response.success) {
+                            if (response && response.message)
+                                messageBox.error(response.message);
+                            jq("#btnTestServerSubscription").button('reset');
+                            reject(response?.message || "Request failed");
+                            return;
+                        }
+                        if (response.message)
+                            messageBox.success(response.message);
+
+                        ProxyImporter.readFromServer(subscriptionModel,
+                            (response: {
+                                success: boolean,
+                                message: string,
+                                result: ProxyServer[]
+                            }) => {
+                                jq("#btnTestServerSubscription").button('reset');
+
+                                if (response.success) {
+                                    let count = response.result.length;
+                                    messageBox.success(api.i18n.getMessage("settingsServerSubscriptionTestSuccess").replace("{0}", count));
+                                    resolve(undefined);
+                                } else {
+                                    messageBox.error(api.i18n.getMessage("settingsServerSubscriptionTestFailed"));
+                                    reject(response.message);
+                                }
+                            },
+                            () => {
+                                messageBox.error(api.i18n.getMessage("settingsServerSubscriptionTestFailed"));
+                                jq("#btnTestServerSubscription").button('reset');
+                                reject("Test failed");
+                            });
+                    },
+                    (error: Error) => {
+                        messageBox.error(api.i18n.getMessage("settingsServerSubscriptionTestFailed"));
+                        jq("#btnTestServerSubscription").button('reset');
+                        reject(error);
+                    });
+            });
+        }).catch(() => {});
+    },
+    onClickSaveServerSubscriptionsChanges() {
+        let proxyServerSubscriptions = settingsPage.readServerSubscriptions();
+
+        PolyFill.runtimeSendMessage(
+            {
+                command: CommandMessages.SettingsPageSaveProxySubscriptions,
+                proxyServerSubscriptions: proxyServerSubscriptions
+            },
+            (response: any) => {
+                if (!response) return;
+                if (response.success) {
+                    if (response.message)
+                        messageBox.success(response.message);
+
+                    settingsPage.currentSettings.proxyServerSubscriptions = proxyServerSubscriptions;
+                    settingsPage.changeTracking.serverSubscriptions = false;
+                    settingsPage.changeTracking.options = false;
+                    settingsPage.changeTracking.servers = false;
+                    settingsPage.changeTracking.activeProxy = false;
+                    settingsPage.changeTracking.smartProfiles = false;
+                    settingsPage.changeTracking.newSmartProfile = false;
+                    settingsPage.changeTracking.rulesSubscriptions = false;
+                    settingsPage.loadDefaultProxyServer();
+                } else {
+                    if (response.message)
+                        messageBox.error(response.message);
+                }
+            },
+            (error: Error) => {
+                messageBox.error(api.i18n.getMessage("settingsFailedToSaveProxySubscriptions") + " " + error.message);
+            });
+    },
+    onClickRejectServerSubscriptionsChanges() {
+        settingsPage.currentSettings.proxyServerSubscriptions = settingsPage.originalSettings.proxyServerSubscriptions.slice();
+        settingsPage.loadServerSubscriptionsGrid(settingsPage.currentSettings.proxyServerSubscriptions);
+        settingsPage.loadDefaultProxyServer();
+
+        settingsPage.changeTracking.serverSubscriptions = false;
+
+        messageBox.info(api.i18n.getMessage("settingsChangesReverted"));
+    },
+    onClickClearServerSubscriptions() {
+        messageBox.confirm(api.i18n.getMessage("settingsRemoveAllProxyServerSubscriptions"),
+            () => {
+                settingsPage.loadServerSubscriptionsGrid([]);
+                settingsPage.loadDefaultProxyServer();
+
+                settingsPage.changeTracking.serverSubscriptions = true;
+
+                messageBox.info(api.i18n.getMessage("settingsRemoveAllProxyServerSubscriptionsSuccess"));
+            });
+    },
+    onClickAddRulesSubscription(pageProfile: SettingsPageSmartProfile) {
+        let tabContainer = pageProfile.htmlProfileTab;
+
+        let modal = tabContainer.find("#modalRulesSubscription");
+        modal.data("editing", null);
+
+        settingsPage.populateRulesSubscriptionsModal(pageProfile, modal, null);
+
+        modal.modal("show");
+
+        function focusUrl() {
+            modal.off("shown.bs.modal", focusUrl);
+            modal.find("#txtUrl").focus();
+        }
+
+        modal.on("shown.bs.modal", focusUrl);
+    },
+    onClickRemoveMultipleRulesSubscription(pageProfile: SettingsPageSmartProfile) {
+        var rows = pageProfile.grdRulesSubscriptions.rows({ selected: true });
+        if (!rows)
+            return;
+
+        messageBox.confirm(api.i18n.getMessage("settingsConfirmRemoveMultipleRulesSubscription"),
+            () => {
+                rows.remove().draw('full-hold');
+                settingsPage.changeTracking.rulesSubscriptions = true;
+
+                settingsPage.enableGridMultipleDelete(
+                    pageProfile.htmlProfileTab.find("#btnRemoveMultipleRulesSubscription"), false);
+            });
+    },
+    onRulesSubscriptionEditClick(pageProfile: SettingsPageSmartProfile, e: any) {
+        let item = settingsPage.readSelectedRulesSubscription(pageProfile, e);
+        if (!item)
+            return;
+
+        let tabContainer = pageProfile.htmlProfileTab;
+
+        let modal = tabContainer.find("#modalRulesSubscription");
+        modal.data("editing", item);
+
+        settingsPage.populateRulesSubscriptionsModal(pageProfile, modal, item);
+
+        modal.modal("show");
+    },
+    onRulesSubscriptionRemoveClick(pageProfile: SettingsPageSmartProfile, e: any) {
+        var row = settingsPage.readSelectedRulesSubscriptionRow(pageProfile, e);
+        if (!row)
+            return;
+
+        messageBox.confirm(api.i18n.getMessage("settingsConfirmRemoveRulesSubscription"),
+            () => {
+                row.remove().draw('full-hold');
+                settingsPage.changeTracking.rulesSubscriptions = true;
+            });
+    },
+    onRulesSubscriptionRefreshClick(pageProfile: SettingsPageSmartProfile, e: any) {
+        var row = settingsPage.readSelectedRulesSubscriptionRow(pageProfile, e);
+        if (!row)
+            return;
+        let editingSubscription = settingsPage.readSelectedRulesSubscription(pageProfile, e);
+        if (!editingSubscription)
+            return;
+        if (!editingSubscription.enabled) {
+            messageBox.error(api.i18n.getMessage("settingsRulesSubscriptionRefreshOnDisabled"));
+            return;
+        }
+
+        if (!editingSubscription.stats) {
+            editingSubscription.stats = new SubscriptionStats();
+        }
+
+        RuleImporter.readFromServerAndImport(editingSubscription,
+            (importResult: {
+                success: boolean;
+                message: string;
+                rules: {
+                    whiteList: ImportedProxyRule[];
+                    blackList: ImportedProxyRule[];
+                };
+            }) => {
+                if (importResult.success) {
+                    let count = importResult.rules.blackList.length + importResult.rules.whiteList.length;
+
+                    if (editingSubscription.enabled) {
+                        editingSubscription.proxyRules = importResult.rules.blackList;
+                        editingSubscription.whitelistRules = importResult.rules.whiteList;
+                    }
+                    else {
+                        editingSubscription.proxyRules = [];
+                        editingSubscription.whitelistRules = [];
+                    }
+
+                    editingSubscription.totalCount = count;
+                    SubscriptionStats.updateStats(editingSubscription.stats, true);
+
+                    settingsPage.refreshRulesSubscriptionsGrid(pageProfile);
+
+                    messageBox.success(api.i18n.getMessage("settingsRulesSubscriptionSaveUpdated")
+                        .replace("{0}", importResult.rules.blackList.length)
+                        .replace("{1}", importResult.rules.whiteList.length));
+
+                    settingsPage.changeTracking.rulesSubscriptions = true;
+                } else {
+                    SubscriptionStats.updateStats(editingSubscription.stats, false);
+                    messageBox.error(api.i18n.getMessage("settingsRulesSubscriptionSaveFailedGet"));
+                }
+            },
+            (error) => {
+                SubscriptionStats.updateStats(editingSubscription.stats, false, error);
+                messageBox.error(api.i18n.getMessage("settingsRulesSubscriptionSaveFailedGet"));
+            });
+    },
+    onRulesSubscriptionViewStatsClick(pageProfile: SettingsPageSmartProfile, e: any) {
+        let status = e.currentTarget?.title;
+        if (status) {
+            status = status.replaceAll('\r\n', '<br\>').replaceAll('\n', '<br\>');
+            messageBox.info(status);
+        }
+    },
+    onClickSaveRulesSubscription(pageProfile: SettingsPageSmartProfile) {
+        let tabContainer = pageProfile.htmlProfileTab;
+        let modal = tabContainer.find("#modalRulesSubscription");
+        if (!modal.find("form")[0].checkValidity()) {
+            messageBox.error(api.i18n.getMessage("settingsRulesSubscriptionIncompleteForm"));
+            return;
+        }
+        let subscriptionModel = settingsPage.readRulesSubscriptionModel(modal);
+        if (!subscriptionModel) {
+            messageBox.error(api.i18n.getMessage("settingsRulesSubscriptionInvalidForm"));
+            return;
+        }
+
+        let subscriptionsList = settingsPage.readRulesSubscriptions(pageProfile);
+        let editingSubscription: ProxyRulesSubscription = modal.data("editing");
+        let editingName = "";
+        if (editingSubscription) {
+            editingName = editingSubscription.name;
+            subscriptionModel.id = editingSubscription.id;
+        }
+
+        if (editingSubscription) {
+            let nameIsDuplicate = false;
+            for (let item of subscriptionsList) {
+                if (item.name == subscriptionModel.name && subscriptionModel.name != editingName) {
+                    nameIsDuplicate = true;
+                }
+            }
+            if (subscriptionModel.name != editingName)
+                if (nameIsDuplicate) {
+                    messageBox.error(api.i18n.getMessage("settingsRulesSubscriptionDuplicateName"));
+                    return;
+                }
+        }
+
+        if (!subscriptionModel.stats) {
+            subscriptionModel.stats = new SubscriptionStats();
+        }
+
+        tabContainer.find("#btnSaveRulesSubscriptions").attr("data-loading-text", api.i18n.getMessage("settingsRulesSubscriptionSavingButton"));
+        tabContainer.find("#btnSaveRulesSubscriptions").button("loading");
+
+        // Temporarily switch to Direct to fetch rules
+        settingsPage.temporarilySwitchToDirect(async () => {
+            return new Promise((resolve, reject) => {
+                RuleImporter.readFromServerAndImport(subscriptionModel,
+                    (importResult: {
+                        success: boolean;
+                        message: string;
+                        rules: {
+                            whiteList: ImportedProxyRule[];
+                            blackList: ImportedProxyRule[];
+                        };
+                    }) => {
+                        tabContainer.find("#btnSaveRulesSubscriptions").button('reset');
+
+                        if (importResult.success) {
+                            let count = importResult.rules.blackList.length + importResult.rules.whiteList.length;
+
+                            if (subscriptionModel.enabled) {
+                                subscriptionModel.proxyRules = importResult.rules.blackList;
+                                subscriptionModel.whitelistRules = importResult.rules.whiteList;
+                            }
+                            else {
+                                subscriptionModel.proxyRules = [];
+                                subscriptionModel.whitelistRules = [];
+                            }
+                            subscriptionModel.totalCount = count;
+                            SubscriptionStats.updateStats(subscriptionModel.stats, true);
+
+                            if (editingSubscription) {
+                                jQuery.extend(editingSubscription, subscriptionModel);
+                                settingsPage.refreshRulesSubscriptionsGrid(pageProfile);
+                                messageBox.success(api.i18n.getMessage("settingsRulesSubscriptionSaveUpdated")
+                                    .replace("{0}", importResult.rules.blackList.length)
+                                    .replace("{1}", importResult.rules.whiteList.length));
+                            } else {
+                                settingsPage.insertNewRulesSubscriptionInGrid(pageProfile, subscriptionModel);
+                                messageBox.success(api.i18n.getMessage("settingsRulesSubscriptionSaveAdded")
+                                    .replace("{0}", importResult.rules.blackList.length)
+                                    .replace("{1}", importResult.rules.whiteList.length));
+                            }
+
+                            settingsPage.changeTracking.rulesSubscriptions = true;
+                            modal.modal("hide");
+                            resolve(undefined);
+                        } else {
+                            SubscriptionStats.updateStats(subscriptionModel.stats, false);
+                            messageBox.error(api.i18n.getMessage("settingsRulesSubscriptionSaveFailedGet"));
+                            reject(importResult.message);
+                        }
+                    },
+                    (error) => {
+                        SubscriptionStats.updateStats(subscriptionModel.stats, false, error);
+                        messageBox.error(api.i18n.getMessage("settingsRulesSubscriptionSaveFailedGet"));
+                        tabContainer.find("#btnSaveRulesSubscriptions").button('reset');
+                        reject(error);
+                    });
+            });
+        }).catch(() => {});
+    },
+    onClickTestRulesSubscription(pageProfile: SettingsPageSmartProfile) {
+        let tabContainer = pageProfile.htmlProfileTab;
+        let modal = tabContainer.find("#modalRulesSubscription");
+
+        if (!modal.find("form")[0].checkValidity()) {
+            messageBox.error(api.i18n.getMessage("settingsRulesSubscriptionIncompleteForm"));
+            return;
+        }
+
+        let subscriptionModel = settingsPage.readRulesSubscriptionModel(modal);
+
+        if (!subscriptionModel) {
+            messageBox.error(api.i18n.getMessage("settingsRulesSubscriptionInvalidForm"));
+            return;
+        }
+
+        tabContainer.find("#btnTestRulesSubscriptions").attr("data-loading-text", api.i18n.getMessage("settingsRulesSubscriptionTestingButton"));
+        tabContainer.find("#btnTestRulesSubscriptions").button("loading");
+
+        var applyProxyMode = subscriptionModel.applyProxy;
+        subscriptionModel.applyProxy = null;
+
+        // Temporarily switch to Direct to test
+        settingsPage.temporarilySwitchToDirect(async () => {
+            return new Promise((resolve, reject) => {
+                PolyFill.runtimeSendMessage(
+                    {
+                        command: CommandMessages.SettingsPageMakeRequestSpecial,
+                        url: subscriptionModel.url,
+                        applyProxy: applyProxyMode,
+                        selectedProxy: null
+                    },
+                    (response: any) => {
+                        if (!response || !response.success) {
+                            if (response && response.message)
+                                messageBox.error(response.message);
+                            tabContainer.find("#btnTestRulesSubscriptions").button('reset');
+                            reject(response?.message || "Request failed");
+                            return;
+                        }
+                        if (response.message)
+                            messageBox.success(response.message);
+
+                        RuleImporter.readFromServerAndImport(subscriptionModel,
+                            (importResult: {
+                                success: boolean;
+                                message: string;
+                                rules: {
+                                    whiteList: ImportedProxyRule[];
+                                    blackList: ImportedProxyRule[];
+                                };
+                            }) => {
+                                tabContainer.find("#btnTestRulesSubscriptions").button('reset');
+
+                                if (importResult.success) {
+                                    messageBox.success(api.i18n.getMessage("settingsRulesSubscriptionTestSuccess")
+                                        .replace("{0}", importResult.rules.blackList.length)
+                                        .replace("{1}", importResult.rules.whiteList.length));
+                                    resolve(undefined);
+                                } else {
+                                    messageBox.error(api.i18n.getMessage("settingsRulesSubscriptionTestFailed"));
+                                    reject(importResult.message);
+                                }
+                            },
+                            () => {
+                                messageBox.error(api.i18n.getMessage("settingsRulesSubscriptionTestFailed"));
+                                tabContainer.find("#btnTestRulesSubscriptions").button('reset');
+                                reject("Test failed");
+                            });
+                    },
+                    (error: Error) => {
+                        messageBox.error(api.i18n.getMessage("settingsRulesSubscriptionTestFailed"));
+                        tabContainer.find("#btnTestRulesSubscriptions").button('reset');
+                        reject(error);
+                    });
+            });
+        }).catch(() => {});
+    },
+    onClickClearRulesSubscriptions(pageProfile: SettingsPageSmartProfile) {
+        messageBox.confirm(api.i18n.getMessage("settingsRemoveAllProxyRulesSubscriptions"),
+            () => {
+                settingsPage.loadRulesSubscriptions(pageProfile, []);
+                settingsPage.changeTracking.rulesSubscriptions = true;
+                messageBox.info(api.i18n.getMessage("settingsRemoveAllProxyRulesSubscriptionsSuccess"));
+            });
+    },
+    onClickExportProxyServerOpenBackup() {
+        let proxyList = settingsPage.exportServersListFormatted();
+        CommonUi.downloadData(proxyList, "ProxyMust-Servers.txt");
+    },
+    onClickImportProxyServer() {
+        let modalContainer = jq("#modalImportProxyServer");
+        let file, text;
+
+        if (modalContainer.find("#rbtnImportProxyServer_File").prop("checked")) {
+            let selectFileElement = modalContainer.find("#btnImportProxyServerSelectFile")[0];
+
+            if (selectFileElement.files.length == 0) {
+                messageBox.error(api.i18n.getMessage("settingsImportProxiesFileNotSelected"));
+                return;
+            }
+            file = selectFileElement.files[0];
+        } else {
+            let proxyServerListText: string = modalContainer.find("#btnImportProxyServerListText").val().trim();
+            if (proxyServerListText == "") {
+                messageBox.error(api.i18n.getMessage("settingsImportProxyListTextIsEmpty"));
+                return;
+            }
+            text = proxyServerListText;
+        }
+        let append = modalContainer.find("#cmbImportProxyServerOverride_Append").prop("checked");
+        let proxyServers = settingsPage.readServers();
+
+        ProxyImporter.importText(text, file,
+            append,
+            proxyServers,
+            (response: {
+                success: boolean,
+                message: string,
+                result: ProxyServer[]
+            }) => {
+                if (!response) return;
+
+                if (response.success) {
+                    if (response.message)
+                        messageBox.info(response.message);
+                    modalContainer.find("#btnImportProxyServerSelectFile")[0].value = "";
+                    modalContainer.find("#btnImportProxyServerListText").val("");
+                    let servers = response.result;
+                    
+                    CountryCode.ensureInitialized(() => {
+                        settingsPage.loadServersGrid(servers);
+                        settingsPage.loadDefaultProxyServer();
+                    });
+                    
+                    settingsPage.changeTracking.servers = true;
+                    
+                    const saveData = {
+                        proxyServers: settingsPage.readServers(),
+                        defaultProxyServerId: settingsPage.currentSettings.defaultProxyServerId
+                    };
+                    PolyFill.runtimeSendMessage(
+                        { command: CommandMessages.SettingsPageSaveProxyServers, saveData },
+                        () => {
+                            settingsPage.currentSettings.proxyServers = saveData.proxyServers;
+                            settingsPage.changeTracking.servers = false;
+                        }
+                    );
+                    
+                    modalContainer.modal("hide");
+                } else {
+                    if (response.message)
+                        messageBox.error(response.message);
+                }
+            },
+            (error: Error) => {
+                let message = "";
+                if (error && error.message)
+                    message = error.message;
+                messageBox.error(api.i18n.getMessage("settingsImportProxyServersFailed") + " " + message);
+            });
+    },
+    onClickFactoryReset() {
+        messageBox.confirm(api.i18n.getMessage("settingsFactoryResetConfirm"),
+            () => {
+                PolyFill.runtimeSendMessage(
+                    {
+                        command: CommandMessages.SettingsPageFactoryReset,
+                    },
+                    (response: ResultHolder) => {
+                        if (response.success) {
+                            jq(window).off("beforeunload");
+                            if (response.message) {
+                                messageBox.success(response.message,
+                                    800,
+                                    () => {
+                                        settingsPage.changeTracking.resetStats();
+                                        document.location.reload();
+                                    });
+                            } else {
+                                settingsPage.changeTracking.resetStats();
+                                document.location.reload();
+                            }
+                        } else {
+                            if (response.message) {
+                                messageBox.error(response.message);
+                            }
+                        }
+                    });
+            });
+    },
+    onClickBackupComplete() {
+        let backupSettings = SettingsOperation.getBackupOfSettings(settingsPage.currentSettings);
+        let data = JSON.stringify(backupSettings);
+        CommonUi.downloadData(data, "ProxyMust-FullBackup.json");
+    },
+    onClickRestoreBackup() {
+        function callRestoreSettings(fileData: any) {
+            PolyFill.runtimeSendMessage(
+                {
+                    command: CommandMessages.SettingsPageRestoreSettings,
+                    fileData: fileData
+                },
+                (response: ResultHolder) => {
+                    if (response.success) {
+                        jq(window).off("beforeunload");
+                        if (response.message) {
+                            messageBox.success(response.message,
+                                500,
+                                () => {
+                                    settingsPage.changeTracking.resetStats();
+                                    document.location.reload();
+                                });
+                        } else {
+                            settingsPage.changeTracking.resetStats();
+                            document.location.reload();
+                        }
+                    } else {
+                        if (response.message) {
+                            messageBox.error(response.message);
+                        }
+                    }
+                },
+                (error: Error) => {
+                    messageBox.error(api.i18n.getMessage("settingsRestoreBackupFailed"));
+                    PolyFill.runtimeSendMessage("restoreSettings failed with> " + error.message);
+                });
+        }
+
+        CommonUi.selectFileOnTheFly(jq("#frmRestoreBackup")[0],
+            "restore-file",
+            (inputElement: any, files: any[]) => {
+                let file = files[0];
+
+                let reader = new FileReader();
+                reader.onerror = event => {
+                    messageBox.error(api.i18n.getMessage("settingsRestoreBackupFileError"));
+                };
+                reader.onload = event => {
+                    let fileText = reader.result;
+                    callRestoreSettings(fileText);
+                };
+                reader.readAsText(file);
+            },
+            "application/json");
+    },
+    onClickEnableDiagnostics() {
+        if (settingsPage.debugDiagnosticsRequested) {
+            PolyFill.runtimeSendMessage({ command: CommandMessages.DebugGetDiagnosticsLogs }, (result) => {
+                const fileName = `smartproxy-diag-${new Date().toISOString().replaceAll(':', '-').replaceAll('.', '-')}.json`;
+                CommonUi.downloadData(result, fileName);
+            });
+        }
+        else if (confirm("Are you sure to enable diagnostics?")) {
+            settingsPage.debugDiagnosticsRequested = true;
+            PolyFill.runtimeSendMessage({ command: CommandMessages.DebugEnableDiagnostics });
+            alert("Diagnostics are enabled for this session only. Check this page for more info.");
+            window.open("https://github.com/salarcode/SmartProxy/wiki/Enable-Diagnostics")
+        }
+    },
+    
+    /**
+     * English: Toggles the embedded test log viewer.
+     * Russian: Переключает встроенный просмотрщик лога тестирования.
+     */
+    onToggleLogViewer: function() {
+        const viewer = jq("#testLogViewer");
+        const btn = jq("#openTestLogBtn");
+        const container = document.getElementById('logContainer');
+        const emptyState = document.getElementById('emptyState');
+        
+        if (viewer.is(":visible")) {
+            viewer.slideUp(200);
+            btn.find("span").text(api.i18n.getMessage("settingsProxyMustOpenLog"));
+        } else {
+            viewer.slideDown(200);
+            btn.find("span").text(api.i18n.getMessage("settingsHideLog") || "Скрыть лог");
+            
+            if (container && container.children.length === 0) {
+                PolyFill.runtimeSendMessage({ command: "GET_TEST_LOG_HISTORY" }, (response) => {
+                    if (response && response.history && response.history.length) {
+                        if (container) {
+                            if (emptyState) emptyState.style.display = 'none';
+                            const container = document.getElementById('logContainer');
+							if (container) {
+								response.history.forEach((msg) => renderLogMessage(container, msg));
+							}
+                        }
+                    } else {
+                        if (emptyState) emptyState.style.display = 'block';
+                    }
+                });
+            } else {
+                if (emptyState) emptyState.style.display = 'none';
+            }
+        }
+    },
+    
+    onWindowUnload(event) {
+        if (!settingsPage.readGeneralOptions().Equals(settingsPage.currentSettings.options)) {
+            settingsPage.changeTracking.options = true;
+        }
+        if (!settingsPage.changeTracking.isDirty())
+            return;
+
+        jq(window).one("focus", () => {
+            setTimeout(() => {
+                messageBox.confirm(api.i18n.getMessage("settingsConfirmSaveAllChanged"),
+                    () => {
+                        if (settingsPage.changeTracking.options) {
+                            settingsPage.uiEvents.onClickSaveGeneralOptions();
+                        }
+                        if (settingsPage.changeTracking.smartProfiles || settingsPage.changeTracking.rulesSubscriptions) {
+                            for (let pageProfile of settingsPage.pageSmartProfiles) {
+                                settingsPage.uiEvents.onClickSaveSmartProfile(pageProfile);
+                            }
+                        }
+
+                        settingsPage.uiEvents.saveUnsavedSmartProfile();
+
+                        if (settingsPage.changeTracking.servers || settingsPage.changeTracking.activeProxy) {
+                            settingsPage.uiEvents.onClickSaveProxyServers();
+                        }
+                        if (settingsPage.changeTracking.serverSubscriptions) {
+                            settingsPage.uiEvents.onClickSaveServerSubscriptionsChanges();
+                        }
+                    });
+            }, 200);
+        });
+
+        event.preventDefault();
+        event.returnValue = true;
+    }
+};
 
 	private static generateNewServerName(): string {
 		let servers = this.readServers();
@@ -4834,149 +4985,7 @@ private static loadServersGrid(servers: any[]) {
 		return result;
 	}
 	
-	    // ==================== Log Viewer Helpers ====================
-    // English: Format timestamp (HH:MM:SS) / Russian: Форматирование времени
-    private static formatTime(ts: number): string {
-        const d = new Date(ts);
-        return d.toTimeString().slice(0, 8);
-    }
-
-    // English: Escape HTML entities / Russian: Экранирование HTML
-    private static escapeHtml(str: string): string {
-        if (!str) return '';
-        return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-    }
-
-    // English: Get flag emoji / Russian: Получить эмодзи флага
-    private static getFlagEmoji(countryCode: string): string {
-        if (!countryCode) return '';
-        const code = countryCode.toUpperCase();
-        if (code.length !== 2) return '';
-        const base = 0x1F1E6;
-        return String.fromCodePoint(
-            base + code.charCodeAt(0) - 65,
-            base + code.charCodeAt(1) - 65
-        );
-    }
-
-    // English: Localization helper with parameter substitution / Russian: Вспомогательная функция локализации с подстановкой параметров
-    private static t(key: string, ...args: any[]): string {
-        let msg = api.i18n.getMessage(key) || key;
-        if (args.length) {
-            msg = msg.replace(/\{(\d+)\}/g, (match, num) => {
-                const idx = parseInt(num, 10);
-                return args[idx] !== undefined ? String(args[idx]) : match;
-            });
-        }
-        return msg;
-    }
-
-    // English: Get localized status text / Russian: Получить локализованный текст статуса
-    private static getStatusText(status: string): string {
-        switch (status) {
-            case 'success': return settingsPage.t('testLogStatusSuccess');
-            case 'indirect': return settingsPage.t('testLogStatusIndirect');
-            case 'fail': return settingsPage.t('testLogStatusFail');
-            case 'ip-only': return settingsPage.t('testLogStatusIpOnly');
-            default: return settingsPage.t('testLogStatusUnknown');
-        }
-    }
-
-    // English: Render a log message in the viewer / Russian: Отобразить сообщение лога в просмотрщике
-    private static renderLogMessage(msg: any): void {
-        console.log("[Settings] renderLogMessage called with:", msg);
-        const container = document.getElementById('logContainer');
-        if (!container) {
-            console.warn("[Settings] logContainer not found!");
-            return;
-        }
-
-        const emptyState = document.getElementById('emptyState');
-        if (emptyState) emptyState.style.display = 'none';
-
-        const timeStr = settingsPage.formatTime(msg.timestamp || Date.now());
-        let messageHtml = '';
-        let entryClass = '';
-
-        switch (msg.type) {
-            case 'start': {
-                const proxyLabel = `${msg.host}:${msg.port}`;
-                const countryCode = msg.countryCode ? msg.countryCode.toUpperCase() : '';
-                const flag = countryCode ? settingsPage.getFlagEmoji(countryCode) : '';
-                const flagHtml = flag ? `<span class="flag-emoji">${flag}</span> <span class="color-start">${settingsPage.escapeHtml(countryCode)}</span>` : '';
-                const proto = msg.protocol || 'HTTP';
-                const progress = msg.total ? ` (${msg.current}/${msg.total})` : '';
-                const labelProxy = settingsPage.t('testLogLabelProxy');
-                messageHtml = `<span class="log-time">${timeStr}</span><span class="log-message"><span class="action-label color-start">${settingsPage.escapeHtml(labelProxy)}</span><span class="color-start">${settingsPage.escapeHtml(proxyLabel)}</span>${flagHtml ? `<span class="color-start"> ${flagHtml}</span>` : ''}<span class="color-progress"> ${settingsPage.escapeHtml(proto)}</span><span class="color-progress">${settingsPage.escapeHtml(progress)}</span></span>`;
-                break;
-            }
-            case 'ip': {
-                if (msg.ip) {
-                    messageHtml = `<span class="log-time">${timeStr}</span><span class="log-message"><span class="color-ip-success">${settingsPage.escapeHtml(settingsPage.t('testLogIpSuccess', msg.ip))}</span></span>`;
-                } else {
-                    messageHtml = `<span class="log-time">${timeStr}</span><span class="log-message"><span class="color-ip-fail">${settingsPage.escapeHtml(settingsPage.t('testLogIpFail'))}</span></span>`;
-                }
-                break;
-            }
-            case 'page': {
-                const site = msg.site ? msg.site.replace(/^https?:\/\//, '').replace(/\/.*$/, '') : '';
-                const labelSite = settingsPage.t('testLogLabelSite');
-                if (msg.pageSuccess) {
-                    messageHtml = `<span class="log-time">${timeStr}</span><span class="log-message"><span class="action-label color-page-success">${settingsPage.escapeHtml(labelSite)}</span><span class="color-page-success">${settingsPage.escapeHtml(site)} — ${settingsPage.escapeHtml(settingsPage.t('testLogPageAvailable'))}</span></span>`;
-                } else {
-                    messageHtml = `<span class="log-time">${timeStr}</span><span class="log-message"><span class="action-label color-page-fail">${settingsPage.escapeHtml(labelSite)}</span><span class="color-page-fail">${settingsPage.escapeHtml(site)} — ${settingsPage.escapeHtml(settingsPage.t('testLogPageUnavailable'))}</span></span>`;
-                }
-                break;
-            }
-            case 'status': {
-                const localizedStatus = settingsPage.getStatusText(msg.status);
-                let colorClass = 'color-status-unknown';
-                let icon = '❔';
-                if (msg.status === 'success') {
-                    colorClass = 'color-status-success';
-                    icon = '✅';
-                } else if (msg.status === 'indirect') {
-                    colorClass = 'color-status-indirect';
-                    icon = '☑️';
-                } else if (msg.status === 'fail') {
-                    colorClass = 'color-status-fail';
-                    icon = '❌';
-                } else {
-                    colorClass = 'color-status-unknown';
-                    icon = '❔';
-                }
-                const labelStatus = settingsPage.t('testLogLabelStatus');
-                messageHtml = `<span class="log-time">${timeStr}</span><span class="log-message"><span class="action-label ${colorClass}">${settingsPage.escapeHtml(labelStatus)}</span><span class="${colorClass}">${icon} ${settingsPage.escapeHtml(localizedStatus)}</span></span>`;
-                break;
-            }
-            case 'next': {
-                // Стрелка — символ, не локализуется
-                messageHtml = `<span class="log-time">${timeStr}</span><span class="log-message"><span class="action-label color-progress">→</span><span class="color-progress">${settingsPage.escapeHtml(settingsPage.t('testLogNext'))}</span></span>`;
-                break;
-            }
-            case 'stop': {
-                entryClass = 'stop-message';
-                messageHtml = `<span class="log-time">${timeStr}</span><span class="log-message"><span class="color-stop">⏹ ${settingsPage.escapeHtml(settingsPage.t('testLogStop'))}</span></span>`;
-                break;
-            }
-            case 'complete': {
-                entryClass = 'complete-message';
-                messageHtml = `<span class="log-time">${timeStr}</span><span class="log-message"><span class="color-complete">🏁 ${settingsPage.escapeHtml(settingsPage.t('testLogComplete'))}</span></span>`;
-                break;
-            }
-            default: {
-                messageHtml = `<span class="log-time">${timeStr}</span><span class="log-message">${settingsPage.escapeHtml(msg.message || '')}</span>`;
-            }
-        }
-
-        const entry = document.createElement('div');
-        entry.className = 'log-entry' + (entryClass ? ' ' + entryClass : '');
-        entry.innerHTML = messageHtml;
-        container.appendChild(entry);
-        container.scrollTop = container.scrollHeight;
-    }
-	
-    // ========================
+	// ========================
     // ProxyMust: site list and test functions
     // English: Site list building, test running and priority handling
     // Russian: Построение списка сайтов, запуск тестов и обработка приоритетов
@@ -5024,7 +5033,7 @@ private static loadServersGrid(servers: any[]) {
         return new Promise((resolve) => {
             PolyFill.runtimeSendMessage({ command: "UpdateProxyRating", proxyId, delta }, () => {
                 settingsPage.refreshSettingsData();
-                resolve();
+                resolve(undefined);
             });
         });
     }
@@ -5045,7 +5054,7 @@ private static loadServersGrid(servers: any[]) {
         return new Promise((resolve) => {
             PolyFill.runtimeSendMessage({ command: "SetProxyPriority", proxyId, priority }, () => {
                 settingsPage.refreshSettingsData();
-                resolve();
+                resolve(undefined);
             });
         });
     }
@@ -5190,6 +5199,139 @@ private static loadServersGrid(servers: any[]) {
             });
     }
 
+    /**
+     * English: Updates the state of export buttons based on proxy count
+     * Russian: Обновляет состояние кнопок экспорта в зависимости от количества прокси
+     */
+    private static updateExportButtonsState(): void {
+        const servers = settingsPage.readServers();
+        const hasProxies = servers.length > 0;
+        jq("#btnExportProxyServerOpen, #btnExportProxyServerOpenBackup").prop("disabled", !hasProxies);
+    }
+	
+    /**
+     * English: Waits until the active profile ID (from background) matches the expected profile ID.
+     * Russian: Ожидает, пока идентификатор активного профиля (из фона) не совпадёт с ожидаемым.
+     * @param profileId - Expected profile ID / Ожидаемый ID профиля
+     * @param timeoutMs - Maximum wait time in milliseconds / Максимальное время ожидания в мс
+     * @throws Error if timeout is reached / Выбрасывает ошибку при таймауте
+     */
+    private static async waitForProfile(profileId: string, timeoutMs: number = 10000): Promise<void> {
+        const start = Date.now();
+        let lastCheckedProfile: string | null = null;
+        while (Date.now() - start < timeoutMs) {
+            // English: Request fresh data from background to get the actual active profile
+            // Russian: Запрашиваем свежие данные из фона, чтобы получить актуальный активный профиль
+            const freshData = await new Promise<PopupInternalDataType>((resolve) => {
+                PolyFill.runtimeSendMessage(CommandMessages.PopupGetInitialData, (data: PopupInternalDataType) => {
+                    resolve(data);
+                });
+            });
+            if (freshData && freshData.activeProfileId === profileId) {
+                // English: Also update local Settings to keep in sync
+                // Russian: Также обновляем локальные Settings для синхронизации
+                if (settingsPage.currentSettings) {
+                    settingsPage.currentSettings.activeProfileId = profileId;
+                }
+                console.log(`[waitForProfile] Профиль успешно сменился на ${profileId} за ${Date.now() - start}мс`);
+                return;
+            }
+            if (freshData && freshData.activeProfileId !== lastCheckedProfile) {
+                lastCheckedProfile = freshData.activeProfileId;
+                console.log(`[waitForProfile] Текущий профиль в фоне: ${freshData.activeProfileId}, ожидаем: ${profileId}`);
+            }
+            await new Promise(resolve => setTimeout(resolve, 200));
+        }
+        console.error(`[waitForProfile] Таймаут ожидания профиля ${profileId}`);
+        throw new Error(`Timeout waiting for profile ${profileId}`);
+    }
+
+    /**
+     * English: Temporarily switches to Direct profile, executes an async action, then restores original profile.
+     * Russian: Временно переключает на профиль Direct, выполняет действие, затем восстанавливает исходный профиль.
+     * Uses the same reliable mechanism as ProxyCycleTester (background command + waitForProfile).
+     * Использует тот же надёжный механизм, что и ProxyCycleTester (команда в фон + waitForProfile).
+     */
+    private static async temporarilySwitchToDirect(action: () => Promise<any>): Promise<any> {
+        const originalProfileId = settingsPage.currentSettings?.activeProfileId;
+        console.log("[temporarilySwitchToDirect] Начало. Исходный профиль:", originalProfileId);
+
+        // If already Direct or no profile, just execute action
+        if (originalProfileId === SmartProfileTypeBuiltinIds.Direct || !originalProfileId) {
+            console.log("[temporarilySwitchToDirect] Уже Direct, выполняем действие без переключения.");
+            return action();
+        }
+
+        const directProfileId = SmartProfileTypeBuiltinIds.Direct;
+        console.log("[temporarilySwitchToDirect] Переключаем на Direct через команду в фон...");
+
+        // 1. Отправляем команду в фон на переключение профиля
+        await new Promise<void>((resolve) => {
+            PolyFill.runtimeSendMessage({
+                command: CommandMessages.PopupChangeActiveProfile,
+                profileId: directProfileId
+            }, () => {
+                console.log("[temporarilySwitchToDirect] Команда отправлена в фон.");
+                resolve();
+            });
+        });
+
+        // 2. Ждём, пока профиль действительно станет Direct (проверяем через фон)
+        await settingsPage.waitForProfile(directProfileId);
+
+        // 3. Обновляем локальное состояние
+        settingsPage.currentSettings.activeProfileId = directProfileId;
+
+        // 4. Выполняем действие
+        let result: any;
+        let firstError: any = null;
+
+        console.log("[temporarilySwitchToDirect] Выполняем действие (попытка 1)...");
+        try {
+            result = await action();
+            console.log("[temporarilySwitchToDirect] Первая попытка успешна.");
+        } catch (error) {
+            firstError = error;
+            console.log("[temporarilySwitchToDirect] Первая попытка не удалась:", error);
+        }
+
+        // Если первая попытка не удалась, делаем вторую через 1 секунду
+        if (firstError) {
+            console.log("[temporarilySwitchToDirect] Повторяем через 1 секунду (как второе нажатие)...");
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            console.log("[temporarilySwitchToDirect] Выполняем действие (попытка 2)...");
+            try {
+                result = await action();
+                console.log("[temporarilySwitchToDirect] Вторая попытка успешна.");
+                firstError = null;
+            } catch (error2) {
+                console.log("[temporarilySwitchToDirect] Вторая попытка тоже не удалась:", error2);
+                throw error2;
+            }
+        }
+
+        // 5. Восстанавливаем исходный профиль
+        console.log("[temporarilySwitchToDirect] Восстанавливаем исходный профиль:", originalProfileId);
+        await new Promise<void>((resolve) => {
+            PolyFill.runtimeSendMessage({
+                command: CommandMessages.PopupChangeActiveProfile,
+                profileId: originalProfileId
+            }, () => {
+                console.log("[temporarilySwitchToDirect] Команда на восстановление отправлена в фон.");
+                resolve();
+            });
+        });
+
+        // 6. Ждём, пока профиль восстановится
+        await settingsPage.waitForProfile(originalProfileId);
+
+        // 7. Обновляем локальное состояние обратно
+        settingsPage.currentSettings.activeProfileId = originalProfileId;
+        console.log("[temporarilySwitchToDirect] Восстановление завершено.");
+
+        return result;
+    }
+	
     private static showTableContextMenu(clientX: number, clientY: number, selectedProxyIds: string[]): void {
         const existing = document.getElementById("tableContextMenu");
         if (existing) existing.remove();
@@ -6131,10 +6273,10 @@ private static loadServersGrid(servers: any[]) {
         if (settingsPage.isTestingForSite) {
             // English: Immediately show stop message in the log
             // Russian: Немедленно показываем сообщение об остановке в логе
-            settingsPage.renderLogMessage({
-                type: 'stop',
-                timestamp: Date.now()
-            });
+            const container = document.getElementById('logContainer');
+			if (container) {
+				renderLogMessage(container, { type: 'stop', timestamp: Date.now() });
+			}
             // English: Send cancel commands for all possible test types
             // Russian: Отправляем команды отмены для всех возможных типов тестов
             PolyFill.runtimeSendMessage({ command: "CANCEL_PROXY_TEST_FOR_SITE" });
@@ -6330,6 +6472,18 @@ private static loadServersGrid(servers: any[]) {
             $removeSiteBtn.off("click").on("click", () => {
                 settingsPage.removeManualSite();
             });
+        }
+    }
+    /**
+     * English: Toggles visibility of protocol switch mode selector based on auto-detect checkbox state
+     * Russian: Переключает видимость селектора режима перебора протоколов в зависимости от состояния чекбокса автоопределения
+     */
+    private static toggleProtocolSwitchModeVisibility(enabled: boolean): void {
+        const $container = jq("#protocolSwitchModeContainer");
+        if (enabled) {
+            $container.slideDown(200);
+        } else {
+            $container.slideUp(200);
         }
     }
 }

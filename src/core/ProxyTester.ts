@@ -24,6 +24,7 @@ import { ProxyServer } from "./definitions";
 import { api } from "../lib/environment";
 import { sendProgress } from "./ResultSaver";
 import { Core } from "./Core";
+import { IpServiceManager } from "./IpServiceManager";
 
 export const ProxyTester = {
     _isRunning: false,
@@ -35,12 +36,14 @@ export const ProxyTester = {
     _windowRemovedListener: null as ((windowId: number) => void) | null,
 
     async startCheck(testUrls: string[]) {
+        // English: Reset protocol detection attempts counter at the start of each test
+        // Russian: Сбрасываем счётчик попыток автоопределения протокола в начале каждого теста
+        (global as any).__protocolAutoDetectionAttempts = {};
+
         const urls = testUrls.filter(u => u?.trim());
         if (!urls.length) return;
         const allProxies = Settings.current?.proxyServers || [];
         if (!allProxies.length) return;
-
-       // await IpServiceManager.ensureInitialized();
 
         api.runtime.sendMessage({ command: "CHECK_START", total: allProxies.length });
 
@@ -60,8 +63,6 @@ export const ProxyTester = {
                     statusType: result.statusType,
                     testType: "standard"
                 });
-                // English: Send next step to log
-                // Russian: Отправляем шаг перехода к следующему прокси в лог
                 Core.sendTestLogStep({
                     type: 'next',
                     proxyId: proxy.id,
@@ -72,8 +73,6 @@ export const ProxyTester = {
                 completed++;
             }
         }
-        // English: Send complete message to log
-        // Russian: Отправляем сообщение о завершении в лог
         Core.sendTestLogStep({
             type: 'complete',
             message: api.i18n.getMessage('testLogComplete') || 'Test completed – you may now start a new test.'
@@ -81,11 +80,11 @@ export const ProxyTester = {
         api.runtime.sendMessage({ command: "CHECK_COMPLETE", total: allProxies.length });
     },
 
-    /**
-     * English: Starts quick (express) test for a specific site using ExpressProxyChecker.
-     * Russian: Запускает быстрый (экспресс) тест для конкретного сайта, используя ExpressProxyChecker.
-     */
     async startQuickTestForSite(site: string, proxies: ProxyServer[]) {
+        // English: Reset protocol detection attempts counter at the start of each test
+        // Russian: Сбрасываем счётчик попыток автоопределения протокола в начале каждого теста
+        (global as any).__protocolAutoDetectionAttempts = {};
+
         if (this._isRunning) {
             console.log("[ProxyTester] Быстрый тест уже запущен, игнорируем новый запуск");
             return;
@@ -93,100 +92,115 @@ export const ProxyTester = {
         this._isRunning = true;
         this._cancelRequested = false;
         this._currentSite = site;
+        console.log(`[ProxyTester] startQuickTestForSite: enableDirectIpDetection = ${Settings.current?.options?.enableDirectIpDetection}`);
+        Core.sendTestLogStep({
+            type: 'info',
+            message: api.i18n.getMessage('settingsProxyTestTitle') || 'Quick proxy test started',
+            timestamp: Date.now()
+        });
+        if (Settings.current?.options?.enableDirectIpDetection) {
+            try {
+                const directIp = await IpServiceManager.getDirectIp();
+                if (directIp) {
+                    Core.sendTestLogStep({
+                        type: 'direct-ip',
+                        ip: directIp,
+                        timestamp: Date.now()
+                    });
+                }
+            } catch (e) {
+                console.warn("[ProxyTester] Failed to get direct IP:", e);
+            }
+        }
         this._total = proxies.length;
         this._completed = 0;
-
-       // await IpServiceManager.ensureInitialized();
 
         this._registerWindowCloseListener();
 
         api.runtime.sendMessage({ command: "CHECK_START", total: this._total, completed: 0 });
 
-        for (let i = 0; i < proxies.length; i++) {
-            if (this._cancelRequested) {
-                console.log("[ProxyTester] Быстрый тест отменён, прерываем на индексе", i);
-                break;
+        try {
+            for (let i = 0; i < proxies.length; i++) {
+                if (this._cancelRequested) {
+                    console.log("[ProxyTester] Быстрый тест отменён, прерываем на индексе", i);
+                    break;
+                }
+                const proxy = proxies[i];
+
+                try {
+                    const result = await quickCheckProxy(proxy, site, true);
+                    if (result.error === "DIRECT_IP") {
+                        console.log(`[ProxyTester] Прокси ${proxy.host}:${proxy.port} вернул прямой IP, пропускаем`);
+                    }
+                    if (!this._cancelRequested) {
+                        this._completed++;
+                        sendProgress(
+                            proxy.id,
+                            `${proxy.host}:${proxy.port}`,
+                            site,
+                            result.statusType,
+                            this._completed,
+                            this._total,
+                            "express"
+                        );
+                    }
+                    if (!this._cancelRequested) {
+                        Core.sendTestLogStep({
+                            type: 'next',
+                            proxyId: proxy.id,
+                            current: this._completed,
+                            total: this._total
+                        });
+                    }
+                } catch (e) {
+                    if (!this._cancelRequested) {
+                        this._completed++;
+                        sendProgress(
+                            proxy.id,
+                            `${proxy.host}:${proxy.port}`,
+                            site,
+                            "fail",
+                            this._completed,
+                            this._total,
+                            "express"
+                        );
+                    }
+                }
             }
-            const proxy = proxies[i];
+        } finally {
+            // English: Always reset running state, even if an error occurs
+            // Russian: Всегда сбрасываем состояние выполнения, даже если произошла ошибка
+            const wasCancelled = this._cancelRequested;
+            this._isRunning = false;
+            this._cancelRequested = false;
 
-            try {
-                const result = await quickCheckProxy(proxy, site);
-                if (result.error === "DIRECT_IP") {
-                    console.log(`[ProxyTester] Прокси ${proxy.host}:${proxy.port} вернул прямой IP, пропускаем`);
-                }
-                if (!this._cancelRequested) {
-                    this._completed++;
-                    sendProgress(
-                        proxy.id,
-                        `${proxy.host}:${proxy.port}`,
-                        site,
-                        result.statusType,
-                        this._completed,
-                        this._total,
-                        "express"
-                    );
-                }
-				                // English: Send next step to log
-                // Russian: Отправляем шаг перехода к следующему прокси в лог
-                if (!this._cancelRequested) {
-                    Core.sendTestLogStep({
-                        type: 'next',
-                        proxyId: proxy.id,
-                        current: this._completed,
-                        total: this._total
-                    });
-                }
-            } catch (e) {
-                if (!this._cancelRequested) {
-                    this._completed++;
-                    sendProgress(
-                        proxy.id,
-                        `${proxy.host}:${proxy.port}`,
-                        site,
-                        "fail",
-                        this._completed,
-                        this._total,
-                        "express"
-                    );
-                }
+            await SettingsOperation.saveAllLocal(true);
+
+            this._unregisterWindowCloseListener();
+
+            if (wasCancelled) {
+                console.log("[ProxyTester] Быстрый тест отменён, завершено:", this._completed);
+                Core.sendTestLogStep({
+                    type: 'complete',
+                    message: api.i18n.getMessage('testLogComplete') || 'Test completed – you may now start a new test.'
+                });
+                api.runtime.sendMessage({ command: "TEST_CANCELLED", completed: this._completed, total: this._total, site: this._currentSite });
+            } else {
+                console.log("[ProxyTester] Быстрый тест завершён");
+                Core.sendTestLogStep({
+                    type: 'complete',
+                    message: api.i18n.getMessage('testLogComplete') || 'Test completed – you may now start a new test.'
+                });
+                api.runtime.sendMessage({ command: "CHECK_COMPLETE", total: this._total, site: this._currentSite });
             }
-        }
-
-        const wasCancelled = this._cancelRequested;
-        this._isRunning = false;
-        this._cancelRequested = false;
-
-        await SettingsOperation.saveAllLocal(true);
-
-        this._unregisterWindowCloseListener();
-
-        if (wasCancelled) {
-            console.log("[ProxyTester] Быстрый тест отменён, завершено:", this._completed);
-            // English: Send stop message to log
-            // Russian: Отправляем сообщение об остановке в лог
-            Core.sendTestLogStep({
-                type: 'stop',
-                message: api.i18n.getMessage('testLogStop') || 'Test stopped – please wait for current checks to finish before starting another test.'
-            });
-            // Также отправляем complete после остановки (тест завершён полностью)
-            Core.sendTestLogStep({
-                type: 'complete',
-                message: api.i18n.getMessage('testLogComplete') || 'Test completed – you may now start a new test.'
-            });
-            api.runtime.sendMessage({ command: "TEST_CANCELLED", completed: this._completed, total: this._total, site: this._currentSite });
-        } else {
-            console.log("[ProxyTester] Быстрый тест завершён");
-            // English: Send complete message to log
-            // Russian: Отправляем сообщение о завершении в лог
-            Core.sendTestLogStep({
-                type: 'complete',
-                message: api.i18n.getMessage('testLogComplete') || 'Test completed – you may now start a new test.'
-            });
-            api.runtime.sendMessage({ command: "CHECK_COMPLETE", total: this._total, site: this._currentSite });
         }
     },
 
     async startCheckForSite(site: string, proxies: ProxyServer[]) {
+        // English: Reset protocol detection attempts counter at the start of each test
+        // Russian: Сбрасываем счётчик попыток автоопределения протокола в начале каждого теста
+        (global as any).__protocolAutoDetectionAttempts = {};
+
         if (this._isRunning) {
             console.log("[ProxyTester] Тест уже запущен, игнорируем новый запуск");
             return;
@@ -194,95 +208,106 @@ export const ProxyTester = {
         this._isRunning = true;
         this._cancelRequested = false;
         this._currentSite = site;
+        Core.sendTestLogStep({
+            type: 'info',
+            message: api.i18n.getMessage('settingsProxyTestTitle') || 'Proxy test started',
+            timestamp: Date.now()
+        });
+        if (Settings.current?.options?.enableDirectIpDetection) {
+            try {
+                const directIp = await IpServiceManager.getDirectIp();
+                if (directIp) {
+                    Core.sendTestLogStep({
+                        type: 'direct-ip',
+                        ip: directIp,
+                        timestamp: Date.now()
+                    });
+                }
+            } catch (e) {
+                console.warn("[ProxyTester] Failed to get direct IP:", e);
+            }
+        }
         this._total = proxies.length;
         this._completed = 0;
-
-       // await IpServiceManager.ensureInitialized();
 
         this._registerWindowCloseListener();
 
         api.runtime.sendMessage({ command: "CHECK_START", total: this._total, completed: 0 });
 
-        for (let i = 0; i < proxies.length; i++) {
-            if (this._cancelRequested) {
-                console.log("[ProxyTester] Отмена теста, прерываем на индексе", i);
-                break;
-            }
-            const proxy = proxies[i];
-
-            try {
-                const result = await LocalProxyChecker.checkProxy(proxy, [site], false, 8000);
-                if (!this._cancelRequested) {
-                    this._completed++;
-                    sendProgress(
-                        proxy.id,
-                        `${proxy.host}:${proxy.port}`,
-                        site,
-                        result.statusType,
-                        this._completed,
-                        this._total,
-                        "standard"
-                    );
-                    // English: Send next step to log
-                    // Russian: Отправляем шаг перехода к следующему прокси в лог
-                    Core.sendTestLogStep({
-                        type: 'next',
-                        proxyId: proxy.id,
-                        current: this._completed,
-                        total: this._total
-                    });
+        try {
+            for (let i = 0; i < proxies.length; i++) {
+                if (this._cancelRequested) {
+                    console.log("[ProxyTester] Отмена теста, прерываем на индексе", i);
+                    break;
                 }
-            } catch (e) {
-                if (!this._cancelRequested) {
-                    this._completed++;
-                    sendProgress(
-                        proxy.id,
-                        `${proxy.host}:${proxy.port}`,
-                        site,
-                        "fail",
-                        this._completed,
-                        this._total,
-                        "standard"
-                    );
+                const proxy = proxies[i];
+
+                try {
+                    const result = await LocalProxyChecker.checkProxy(proxy, [site], false, 8000, true);
+                    if (!this._cancelRequested) {
+                        this._completed++;
+                        sendProgress(
+                            proxy.id,
+                            `${proxy.host}:${proxy.port}`,
+                            site,
+                            result.statusType,
+                            this._completed,
+                            this._total,
+                            "standard"
+                        );
+                        Core.sendTestLogStep({
+                            type: 'next',
+                            proxyId: proxy.id,
+                            current: this._completed,
+                            total: this._total
+                        });
+                    }
+                } catch (e) {
+                    if (!this._cancelRequested) {
+                        this._completed++;
+                        sendProgress(
+                            proxy.id,
+                            `${proxy.host}:${proxy.port}`,
+                            site,
+                            "fail",
+                            this._completed,
+                            this._total,
+                            "standard"
+                        );
+                    }
                 }
             }
-        }
+        } finally {
+            // English: Always reset running state, even if an error occurs
+            // Russian: Всегда сбрасываем состояние выполнения, даже если произошла ошибка
+            const wasCancelled = this._cancelRequested;
+            this._isRunning = false;
+            this._cancelRequested = false;
 
-        const wasCancelled = this._cancelRequested;
-        this._isRunning = false;
-        this._cancelRequested = false;
+            this._unregisterWindowCloseListener();
 
-        this._unregisterWindowCloseListener();
-
-        if (wasCancelled) {
-            console.log("[ProxyTester] Тест отменён, завершено:", this._completed);
-            // English: Send stop and complete messages to log
-            // Russian: Отправляем сообщения об остановке и завершении в лог
-            Core.sendTestLogStep({
-                type: 'stop',
-                message: api.i18n.getMessage('testLogStop') || 'Test stopped – please wait for current checks to finish before starting another test.'
-            });
-            Core.sendTestLogStep({
-                type: 'complete',
-                message: api.i18n.getMessage('testLogComplete') || 'Test completed – you may now start a new test.'
-            });
-            api.runtime.sendMessage({ command: "TEST_CANCELLED", completed: this._completed, total: this._total, site: this._currentSite });
-        } else {
-            console.log("[ProxyTester] Тест завершён");
-            // English: Send complete message to log
-            // Russian: Отправляем сообщение о завершении в лог
-            Core.sendTestLogStep({
-                type: 'complete',
-                message: api.i18n.getMessage('testLogComplete') || 'Test completed – you may now start a new test.'
-            });
-            api.runtime.sendMessage({ command: "CHECK_COMPLETE", total: this._total, site: this._currentSite });
+            if (wasCancelled) {
+                console.log("[ProxyTester] Тест отменён, завершено:", this._completed);
+                Core.sendTestLogStep({
+                    type: 'complete',
+                    message: api.i18n.getMessage('testLogComplete') || 'Test completed – you may now start a new test.'
+                });
+                api.runtime.sendMessage({ command: "TEST_CANCELLED", completed: this._completed, total: this._total, site: this._currentSite });
+            } else {
+                console.log("[ProxyTester] Тест завершён");
+                Core.sendTestLogStep({
+                    type: 'complete',
+                    message: api.i18n.getMessage('testLogComplete') || 'Test completed – you may now start a new test.'
+                });
+                api.runtime.sendMessage({ command: "CHECK_COMPLETE", total: this._total, site: this._currentSite });
+            }
         }
     },
 
-	async cancelTestForSite() {
-		if (!this._isRunning) return;
-		console.log("[ProxyTester] cancelTestForSite вызван");
-		this._cancelRequested = true;
+    async cancelTestForSite() {
+        if (!this._isRunning) return;
+        console.log("[ProxyTester] cancelTestForSite вызван");
+        this._cancelRequested = true;
     },
 
     getStatus() {

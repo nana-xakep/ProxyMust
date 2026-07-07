@@ -1695,6 +1695,15 @@
 	"testLogPageUnavailable": {
 		"message": "niedostępny"
 	},
+	"testLogDirectIp": {
+		"message": "Bezpośrednie IP (bez proxy): {0}"
+	},
+	"testLogIpMatch": {
+		"message": "zgodne z bezpośrednim IP (proxy nie działa)"
+	},
+	"testLogIpMismatch": {
+		"message": "różni się od bezpośredniego IP: {0}"
+	},
 	"settingsShowLog": {
 		"message": "Pokaż dziennik"
 	},
@@ -1802,5 +1811,44 @@
 	},
 	"settingsExpressCycleTestFailed": {
 		"message": "Test cykliczny ekspresowy nie powiódł się: {0}"
+	},
+		"settingsAutoDetectProtocol": {
+		"message": "Automatycznie wykrywaj i przełączaj na działający protokół podczas testów"
+	},
+	"settingsAutoDetectProtocolDesc": {
+		"message": "Wydłuża czas testowania."
+	},
+	"settingsProtocolSwitchMode": {
+		"message": "Tryb przełączania protokołów:"
+	},
+	"settingsProtocolSwitchProbable": {
+		"message": "Prawdopodobny (zalecany)"
+	},
+	"settingsProtocolSwitchProbableDesc": {
+		"message": "SOCKS → HTTP, HTTP → HTTPS, HTTPS → HTTP"
+	},
+	"settingsProtocolSwitchFull": {
+		"message": "Pełny"
+	},
+	"settingsProtocolSwitchFullDesc": {
+		"message": "HTTP → HTTPS → SOCKS4 → SOCKS5"
+	},
+	"testLogProtocolRetry": {
+		"message": "🔄 Proxy {0}:{1} zadeklarowany jako {2}, ale nie działa. Próba {3}..."
+	},
+	"testLogProtocolChanged": {
+		"message": "✅ Protokół automatycznie zmieniony na {0} dla {1}:{2}"
+	},
+	"testLogProtocolChangeFailed": {
+		"message": "❌ Nie znaleziono działającego protokołu dla {0}:{1}. Próbowano: {2}"
+	},
+	"testLogProtocolRetryFull": {
+		"message": "🔄 Próba {0} dla {1}:{2}..."
+	},
+	"testLogReadiness": {
+		"message": "Gotowość dla {0}: {1}/{2} kontroli zaliczonych — {3}"
+	},
+	"proxyCheckerCheckingSite": {
+		"message": "Sprawdzanie strony: {0}..."
 	}
 }

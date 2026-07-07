@@ -1695,6 +1695,15 @@
 	"testLogPageUnavailable": {
 		"message": "tidak tersedia"
 	},
+	"testLogDirectIp": {
+		"message": "IP langsung (tanpa proxy): {0}"
+	},
+	"testLogIpMatch": {
+		"message": "cocok dengan IP langsung (proxy tidak berfungsi)"
+	},
+	"testLogIpMismatch": {
+		"message": "berbeda dari IP langsung: {0}"
+	},
 	"settingsShowLog": {
 		"message": "Tampilkan Log"
 	},
@@ -1802,5 +1811,44 @@
 	},
 	"settingsExpressCycleTestFailed": {
 		"message": "Tes siklus ekspres gagal: {0}"
+	},
+		"settingsAutoDetectProtocol": {
+		"message": "Deteksi secara otomatis dan beralih ke protokol yang berfungsi selama pengujian"
+	},
+	"settingsAutoDetectProtocolDesc": {
+		"message": "Meningkatkan waktu pengujian."
+	},
+	"settingsProtocolSwitchMode": {
+		"message": "Mode peralihan protokol:"
+	},
+	"settingsProtocolSwitchProbable": {
+		"message": "Kemungkinan (direkomendasikan)"
+	},
+	"settingsProtocolSwitchProbableDesc": {
+		"message": "SOCKS → HTTP, HTTP → HTTPS, HTTPS → HTTP"
+	},
+	"settingsProtocolSwitchFull": {
+		"message": "Penuh"
+	},
+	"settingsProtocolSwitchFullDesc": {
+		"message": "HTTP → HTTPS → SOCKS4 → SOCKS5"
+	},
+	"testLogProtocolRetry": {
+		"message": "🔄 Proxy {0}:{1} dinyatakan sebagai {2}, tetapi tidak berfungsi. Mencoba {3}..."
+	},
+	"testLogProtocolChanged": {
+		"message": "✅ Protokol otomatis diubah menjadi {0} untuk {1}:{2}"
+	},
+	"testLogProtocolChangeFailed": {
+		"message": "❌ Tidak ditemukan protokol yang berfungsi untuk {0}:{1}. Dicoba: {2}"
+	},
+	"testLogProtocolRetryFull": {
+		"message": "🔄 Mencoba {0} untuk {1}:{2}..."
+	},
+	"testLogReadiness": {
+		"message": "Kesiapan untuk {0}: {1}/{2} pemeriksaan lulus — {3}"
+	},
+	"proxyCheckerCheckingSite": {
+		"message": "Memeriksa situs: {0}..."
 	}
 }

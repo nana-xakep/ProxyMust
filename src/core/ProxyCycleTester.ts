@@ -152,16 +152,16 @@ export const ProxyCycleTester = {
                 console.log(`[CycleTester] Слушатель отмены зарегистрирован`);
             }
 
-			// English: Get direct IP only if enabled in settings
-			// Russian: Получаем прямой IP только если включено в настройках
-			if (Settings.current?.options?.enableDirectIpDetection === true) {
-				await IpServiceManager.ensureInitialized();
-				this._directIp = await IpServiceManager.getDirectIp();
-				console.log(`[CycleTester] Прямой IP: ${this._directIp || "не получен"}`);
-			} else {
-				this._directIp = null;
-				console.log(`[CycleTester] Определение прямого IP отключено в настройках.`);
-			}
+            // English: Get direct IP only if enabled in settings
+            // Russian: Получаем прямой IP только если включено в настройках
+            if (Settings.current?.options?.enableDirectIpDetection === true) {
+                await IpServiceManager.ensureInitialized();
+                this._directIp = await IpServiceManager.getDirectIp();
+                console.log(`[CycleTester] Прямой IP: ${this._directIp || "не получен"}`);
+            } else {
+                this._directIp = null;
+                console.log(`[CycleTester] Определение прямого IP отключено в настройках.`);
+            }
 
             api.runtime.sendMessage({
                 command: "CHECK_START",
@@ -186,14 +186,14 @@ export const ProxyCycleTester = {
         const subscribedProxies = SettingsOperation.getAllSubscribedProxyServers();
         const allProxies = [...manualProxies, ...subscribedProxies];
         console.log(`[CycleTester] Прочитано ${manualProxies.length} ручных + ${subscribedProxies.length} подписочных = ${allProxies.length} всего`);
-		const proxies: ProxyListItem[] = allProxies.map((proxy: any) => ({
-			id: proxy.id,
-			name: `${proxy.countryCode || ''} ${proxy.host}:${proxy.port}`,
-			protocol: proxy.protocol,
-			host: proxy.host,
-			port: proxy.port,
-			countryCode: proxy.countryCode || ''
-		}));
+        const proxies: ProxyListItem[] = allProxies.map((proxy: any) => ({
+            id: proxy.id,
+            name: `${proxy.countryCode || ''} ${proxy.host}:${proxy.port}`,
+            protocol: proxy.protocol,
+            host: proxy.host,
+            port: proxy.port,
+            countryCode: proxy.countryCode || ''
+        }));
         return proxies;
     },
 
@@ -211,7 +211,7 @@ export const ProxyCycleTester = {
             // Переключаем профиль и прокси
             await this.switchToProxy(proxy);
 
-            // Проверяем прокси через CycleProxyChecker
+            // Проверяем прокси через CycleProxyChecker (skipApplyProxy: true, так как прокси уже применён)
             const result = await this.testCurrentProxy(proxy);
             console.log(`[CycleTester] Результат для ${proxy.name}:`, result);
 
@@ -237,14 +237,17 @@ export const ProxyCycleTester = {
                 this._totalProxies,
                 "cycle"
             );
-			            // English: Send next step to log (cycle)
+            // English: Send next step to log (cycle)
             // Russian: Отправляем шаг перехода к следующему прокси в лог (цикл)
-            Core.sendTestLogStep({
-                type: 'next',
-                proxyId: proxy.id,
-                current: this._completedProxies,
-                total: this._totalProxies
-            });
+            // Отправляем next только если это не последний прокси
+            if (i < this._proxiesList.length - 1) {
+                Core.sendTestLogStep({
+                    type: 'next',
+                    proxyId: proxy.id,
+                    current: this._completedProxies,
+                    total: this._totalProxies
+                });
+            }
         }
 
         const wasCancelled = this._cancelRequested;
@@ -281,16 +284,7 @@ export const ProxyCycleTester = {
     },
 
     async switchToProxy(proxy: ProxyListItem): Promise<void> {
-        await TestManager.switchToAlwaysEnabledProfile();
-        await TestManager.setProxyAndWait(proxy.id);
-
-        const protocolUpper = (proxy.protocol || 'HTTP').toUpperCase();
-        let delay = 1500;
-        if (protocolUpper.includes('SOCKS5')) delay = 3000;
-        else if (protocolUpper.includes('SOCKS4')) delay = 2500;
-        else if (protocolUpper === 'HTTPS') delay = 2000;
-        console.log(`%c[CycleTester] Ожидание применения прокси (${delay}мс для ${protocolUpper})...`, 'color: #ffaa00');
-        await new Promise(resolve => setTimeout(resolve, delay));
+        await TestManager.applyProxyAndWait(proxy.id, proxy.protocol);
     },
 
     async testCurrentProxy(proxy: ProxyListItem): Promise<TestResult> {
@@ -298,14 +292,14 @@ export const ProxyCycleTester = {
             return { proxyId: proxy.id, proxyName: proxy.name, status: "cancelled", latencyMs: 0 };
         }
 
-		const result = await checkCycleProxy(
-			{
-				id: proxy.id,
-				name: proxy.name,
-				host: proxy.host || '',
-				port: proxy.port || 0,
-				protocol: proxy.protocol || 'HTTP',
-				countryCode: proxy.countryCode || ''
+        const result = await checkCycleProxy(
+            {
+                id: proxy.id,
+                name: proxy.name,
+                host: proxy.host || '',
+                port: proxy.port || 0,
+                protocol: proxy.protocol || 'HTTP',
+                countryCode: proxy.countryCode || ''
             },
             this._testSite,
             this._directIp,
@@ -314,7 +308,9 @@ export const ProxyCycleTester = {
                 extendedTimeout: 30000,
                 faviconInterval: 300,
                 ipCheckDelay: 70,
-                retryOnDirectIp: true
+                retryOnDirectIp: true,
+                skipProtocolDetection: false,
+                skipApplyProxy: true   // <--- прокси уже применён в switchToProxy
             },
             () => this._cancelRequested
         );
@@ -328,12 +324,12 @@ export const ProxyCycleTester = {
         };
     },
 
-	async cancelTest(): Promise<void> {
-		if (!this._isRunning) return;
-		console.log("[CycleTester] Отмена запрошена - текущий прокси завершится, следующие не запустятся");
-		this._cancelRequested = true;
-		await SettingsOperation.saveAllLocal(true);
-		await SettingsOperation.saveAllSync(false);
+    async cancelTest(): Promise<void> {
+        if (!this._isRunning) return;
+        console.log("[CycleTester] Отмена запрошена - текущий прокси завершится, следующие не запустятся");
+        this._cancelRequested = true;
+        await SettingsOperation.saveAllLocal(true);
+        await SettingsOperation.saveAllSync(false);
     },
 
     getStatus(): { isRunning: boolean; total: number; completed: number; site: string } {

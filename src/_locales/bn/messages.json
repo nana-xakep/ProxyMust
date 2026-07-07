@@ -1695,6 +1695,15 @@
 	"testLogPageUnavailable": {
 		"message": "অনুপলব্ধ"
 	},
+	"testLogDirectIp": {
+		"message": "সরাসরি IP (প্রক্সি ছাড়া): {0}"
+	},
+	"testLogIpMatch": {
+		"message": "সরাসরি IP-এর সাথে মেলে (প্রক্সি কাজ করছে না)"
+	},
+	"testLogIpMismatch": {
+		"message": "সরাসরি IP থেকে আলাদা: {0}"
+	},
 	"settingsShowLog": {
 		"message": "লগ দেখান"
 	},
@@ -1802,5 +1811,44 @@
 	},
 	"settingsExpressCycleTestFailed": {
 		"message": "এক্সপ্রেস সাইকেল পরীক্ষা ব্যর্থ হয়েছে: {0}"
+	},
+		"settingsAutoDetectProtocol": {
+		"message": "পরীক্ষার সময় স্বয়ংক্রিয়ভাবে কার্যকরী প্রোটোকল সনাক্ত করুন এবং স্যুইচ করুন"
+	},
+	"settingsAutoDetectProtocolDesc": {
+		"message": "পরীক্ষার সময় বাড়ায়।"
+	},
+	"settingsProtocolSwitchMode": {
+		"message": "প্রোটোকল স্যুইচ মোড:"
+	},
+	"settingsProtocolSwitchProbable": {
+		"message": "সম্ভাব্য (সুপারিশকৃত)"
+	},
+	"settingsProtocolSwitchProbableDesc": {
+		"message": "SOCKS → HTTP, HTTP → HTTPS, HTTPS → HTTP"
+	},
+	"settingsProtocolSwitchFull": {
+		"message": "সম্পূর্ণ"
+	},
+	"settingsProtocolSwitchFullDesc": {
+		"message": "HTTP → HTTPS → SOCKS4 → SOCKS5"
+	},
+	"testLogProtocolRetry": {
+		"message": "🔄 প্রক্সি {0}:{1} কে {2} হিসেবে ঘোষণা করা হয়েছে, কিন্তু কাজ করছে না। {3} চেষ্টা করা হচ্ছে..."
+	},
+	"testLogProtocolChanged": {
+		"message": "✅ {1}:{2} এর জন্য প্রোটোকল স্বয়ংক্রিয়ভাবে {0} এ পরিবর্তিত হয়েছে"
+	},
+	"testLogProtocolChangeFailed": {
+		"message": "❌ {0}:{1} এর জন্য কোনো কার্যকরী প্রোটোকল পাওয়া যায়নি। চেষ্টা করা হয়েছে: {2}"
+	},
+	"testLogProtocolRetryFull": {
+		"message": "🔄 {1}:{2} এর জন্য {0} চেষ্টা করা হচ্ছে..."
+	},
+	"testLogReadiness": {
+		"message": "{0} এর জন্য প্রস্তুতি: {1}/{2} চেক পাস হয়েছে — {3}"
+	},
+	"proxyCheckerCheckingSite": {
+		"message": "সাইট পরীক্ষা করা হচ্ছে: {0}..."
 	}
 }

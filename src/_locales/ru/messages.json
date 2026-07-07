@@ -1701,6 +1701,15 @@
 	"testLogPageUnavailable": {
 		"message": "недоступен"
 	},
+	"testLogDirectIp": {
+		"message": "Прямой IP (без прокси): {0}"
+	},
+	"testLogIpMatch": {
+		"message": "совпадает с прямым IP (прокси не работает)"
+	},
+	"testLogIpMismatch": {
+		"message": "отличается от прямого IP: {0}"
+	},
 	"settingsShowLog": {
     "message": "Показать лог"
 	},
@@ -1808,5 +1817,44 @@
 	},
 		"settingsExpressCycleTestFailed": {
 		"message": "Экспресс-циклический тест не удался: {0}"
+	},
+		"settingsAutoDetectProtocol": {
+		"message": "Автоматически определять и переключать рабочий протокол во время тестирования"
+	},
+	"settingsAutoDetectProtocolDesc": {
+		"message": "Увеличивает время тестирования"
+	},
+	"settingsProtocolSwitchMode": {
+		"message": "Режим переключения протоколов:"
+	},
+	"settingsProtocolSwitchProbable": {
+		"message": "Вероятностный (рекомендуется)"
+	},
+	"settingsProtocolSwitchProbableDesc": {
+		"message": "SOCKS → HTTP, HTTP → HTTPS, HTTPS → HTTP"
+	},
+	"settingsProtocolSwitchFull": {
+		"message": "Полный"
+	},
+	"settingsProtocolSwitchFullDesc": {
+		"message": "HTTP → HTTPS → SOCKS4 → SOCKS5"
+	},
+	"testLogProtocolRetry": {
+		"message": "🔄 Прокси {0}:{1} заявлен как {2}, но не работает. Пробуем {3}..."
+	},
+	"testLogProtocolChanged": {
+		"message": "✅ Протокол автоматически изменён на {0} для {1}:{2}"
+	},
+	"testLogProtocolChangeFailed": {
+		"message": "❌ Рабочий протокол для {0}:{1} не найден. Попробованы: {2}"
+	},
+	"testLogProtocolRetryFull": {
+		"message": "🔄 Пробуем {0} для {1}:{2}..."
+	},
+	"testLogReadiness": {
+		"message": "Готовность для {0}: {1}/{2} проверок пройдено — {3}"
+	},
+		"proxyCheckerCheckingSite": {
+		"message": "Проверка сайта: {0}..."
 	}
 }

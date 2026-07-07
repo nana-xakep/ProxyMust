@@ -1695,6 +1695,15 @@
 	"testLogPageUnavailable": {
 		"message": "mevcut değil"
 	},
+	"testLogDirectIp": {
+		"message": "Doğrudan IP (proxy olmadan): {0}"
+	},
+	"testLogIpMatch": {
+		"message": "doğrudan IP ile eşleşiyor (proxy çalışmıyor)"
+	},
+	"testLogIpMismatch": {
+		"message": "doğrudan IP'den farklı: {0}"
+	},
 	"settingsShowLog": {
 		"message": "Günlüğü Göster"
 	},
@@ -1802,5 +1811,44 @@
 	},
 	"settingsExpressCycleTestFailed": {
 		"message": "Ekspres döngü testi başarısız oldu: {0}"
+	},
+		"settingsAutoDetectProtocol": {
+		"message": "Test sırasında otomatik olarak çalışan protokolü algıla ve geçiş yap"
+	},
+	"settingsAutoDetectProtocolDesc": {
+		"message": "Test süresini artırır."
+	},
+	"settingsProtocolSwitchMode": {
+		"message": "Protokol geçiş modu:"
+	},
+	"settingsProtocolSwitchProbable": {
+		"message": "Olası (önerilir)"
+	},
+	"settingsProtocolSwitchProbableDesc": {
+		"message": "SOCKS → HTTP, HTTP → HTTPS, HTTPS → HTTP"
+	},
+	"settingsProtocolSwitchFull": {
+		"message": "Tam"
+	},
+	"settingsProtocolSwitchFullDesc": {
+		"message": "HTTP → HTTPS → SOCKS4 → SOCKS5"
+	},
+	"testLogProtocolRetry": {
+		"message": "🔄 Proxy {0}:{1} {2} olarak bildirildi, ancak çalışmıyor. {3} deneniyor..."
+	},
+	"testLogProtocolChanged": {
+		"message": "✅ {1}:{2} için protokol otomatik olarak {0} olarak değiştirildi"
+	},
+	"testLogProtocolChangeFailed": {
+		"message": "❌ {0}:{1} için çalışan bir protokol bulunamadı. Denenenler: {2}"
+	},
+	"testLogProtocolRetryFull": {
+		"message": "🔄 {1}:{2} için {0} deneniyor..."
+	},
+	"testLogReadiness": {
+		"message": "{0} için hazırlık: {1}/{2} kontrol başarılı — {3}"
+	},
+	"proxyCheckerCheckingSite": {
+		"message": "Site kontrol ediliyor: {0}..."
 	}
 }

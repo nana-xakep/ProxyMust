@@ -1695,6 +1695,15 @@
 	"testLogPageUnavailable": {
 		"message": "अनुपलब्ध"
 	},
+	"testLogDirectIp": {
+		"message": "प्रत्यक्ष IP (प्रॉक्सी के बिना): {0}"
+	},
+	"testLogIpMatch": {
+		"message": "प्रत्यक्ष IP से मेल खाता है (प्रॉक्सी काम नहीं कर रहा है)"
+	},
+	"testLogIpMismatch": {
+		"message": "प्रत्यक्ष IP से भिन्न: {0}"
+	},
 	"settingsShowLog": {
 		"message": "लॉग दिखाएँ"
 	},
@@ -1802,5 +1811,44 @@
 	},
 	"settingsExpressCycleTestFailed": {
 		"message": "एक्सप्रेस साइकल परीक्षण विफल: {0}"
+	},
+		"settingsAutoDetectProtocol": {
+		"message": "परीक्षण के दौरान स्वचालित रूप से कार्यशील प्रोटोकॉल का पता लगाएँ और स्विच करें"
+	},
+	"settingsAutoDetectProtocolDesc": {
+		"message": "परीक्षण का समय बढ़ाता है।"
+	},
+	"settingsProtocolSwitchMode": {
+		"message": "प्रोटोकॉल स्विच मोड:"
+	},
+	"settingsProtocolSwitchProbable": {
+		"message": "संभावित (अनुशंसित)"
+	},
+	"settingsProtocolSwitchProbableDesc": {
+		"message": "SOCKS → HTTP, HTTP → HTTPS, HTTPS → HTTP"
+	},
+	"settingsProtocolSwitchFull": {
+		"message": "पूर्ण"
+	},
+	"settingsProtocolSwitchFullDesc": {
+		"message": "HTTP → HTTPS → SOCKS4 → SOCKS5"
+	},
+	"testLogProtocolRetry": {
+		"message": "🔄 प्रॉक्सी {0}:{1} को {2} घोषित किया गया, लेकिन काम नहीं कर रहा। {3} आज़माया जा रहा है..."
+	},
+	"testLogProtocolChanged": {
+		"message": "✅ {1}:{2} के लिए प्रोटोकॉल स्वचालित रूप से {0} में बदल गया"
+	},
+	"testLogProtocolChangeFailed": {
+		"message": "❌ {0}:{1} के लिए कोई कार्यशील प्रोटोकॉल नहीं मिला। आज़माया गया: {2}"
+	},
+	"testLogProtocolRetryFull": {
+		"message": "🔄 {1}:{2} के लिए {0} आज़माया जा रहा है..."
+	},
+	"testLogReadiness": {
+		"message": "{0} के लिए तत्परता: {1}/{2} जाँच उत्तीर्ण — {3}"
+	},
+	"proxyCheckerCheckingSite": {
+		"message": "साइट की जाँच की जा रही है: {0}..."
 	}
 }

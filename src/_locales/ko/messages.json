@@ -1695,6 +1695,15 @@
 	"testLogPageUnavailable": {
 		"message": "사용 불가"
 	},
+	"testLogDirectIp": {
+		"message": "직접 IP (프록시 없음): {0}"
+	},
+	"testLogIpMatch": {
+		"message": "직접 IP와 일치 (프록시 작동 안 함)"
+	},
+	"testLogIpMismatch": {
+		"message": "직접 IP와 다름: {0}"
+	},
 	"settingsShowLog": {
 		"message": "로그 표시"
 	},
@@ -1802,5 +1811,44 @@
 	},
 	"settingsExpressCycleTestFailed": {
 		"message": "익스프레스 사이클 테스트 실패: {0}"
+	},
+		"settingsAutoDetectProtocol": {
+		"message": "테스트 중 자동으로 작동 프로토콜 감지 및 전환"
+	},
+	"settingsAutoDetectProtocolDesc": {
+		"message": "테스트 시간이 증가합니다."
+	},
+	"settingsProtocolSwitchMode": {
+		"message": "프로토콜 전환 모드:"
+	},
+	"settingsProtocolSwitchProbable": {
+		"message": "확률적 (권장)"
+	},
+	"settingsProtocolSwitchProbableDesc": {
+		"message": "SOCKS → HTTP, HTTP → HTTPS, HTTPS → HTTP"
+	},
+	"settingsProtocolSwitchFull": {
+		"message": "전체"
+	},
+	"settingsProtocolSwitchFullDesc": {
+		"message": "HTTP → HTTPS → SOCKS4 → SOCKS5"
+	},
+	"testLogProtocolRetry": {
+		"message": "🔄 프록시 {0}:{1}이(가) {2}(으)로 선언되었지만 작동하지 않음. {3} 시도 중..."
+	},
+	"testLogProtocolChanged": {
+		"message": "✅ {1}:{2}의 프로토콜이 자동으로 {0}(으)로 변경됨"
+	},
+	"testLogProtocolChangeFailed": {
+		"message": "❌ {0}:{1}에 대한 작동 프로토콜을 찾을 수 없음. 시도됨: {2}"
+	},
+	"testLogProtocolRetryFull": {
+		"message": "🔄 {1}:{2}에 대해 {0} 시도 중..."
+	},
+	"testLogReadiness": {
+		"message": "{0} 준비 상태: {1}/{2} 검사 통과 — {3}"
+	},
+	"proxyCheckerCheckingSite": {
+		"message": "사이트 확인 중: {0}..."
 	}
 }

@@ -1695,6 +1695,15 @@
 	"testLogPageUnavailable": {
 		"message": "不可用"
 	},
+	"testLogDirectIp": {
+		"message": "直連 IP（無代理）：{0}"
+	},
+	"testLogIpMatch": {
+		"message": "與直連 IP 匹配（代理不工作）"
+	},
+	"testLogIpMismatch": {
+		"message": "與直連 IP 不同：{0}"
+	},
 	"settingsShowLog": {
 		"message": "顯示日誌"
 	},
@@ -1802,5 +1811,44 @@
 	},
 	"settingsExpressCycleTestFailed": {
 		"message": "快速循環測試失敗：{0}"
+	},
+		"settingsAutoDetectProtocol": {
+		"message": "在測試期間自動偵測並切換到有效協定"
+	},
+	"settingsAutoDetectProtocolDesc": {
+		"message": "增加測試時間。"
+	},
+	"settingsProtocolSwitchMode": {
+		"message": "協定切換模式："
+	},
+	"settingsProtocolSwitchProbable": {
+		"message": "可能（推薦）"
+	},
+	"settingsProtocolSwitchProbableDesc": {
+		"message": "SOCKS → HTTP、HTTP → HTTPS、HTTPS → HTTP"
+	},
+	"settingsProtocolSwitchFull": {
+		"message": "完整"
+	},
+	"settingsProtocolSwitchFullDesc": {
+		"message": "HTTP → HTTPS → SOCKS4 → SOCKS5"
+	},
+	"testLogProtocolRetry": {
+		"message": "🔄 代理 {0}:{1} 被宣告為 {2}，但不起作用。正在嘗試 {3}..."
+	},
+	"testLogProtocolChanged": {
+		"message": "✅ {1}:{2} 的協定已自動變更為 {0}"
+	},
+	"testLogProtocolChangeFailed": {
+		"message": "❌ 未找到 {0}:{1} 的有效協定。已嘗試：{2}"
+	},
+	"testLogProtocolRetryFull": {
+		"message": "🔄 正在為 {1}:{2} 嘗試 {0}..."
+	},
+	"testLogReadiness": {
+		"message": "{0} 的準備狀態：{1}/{2} 次檢查通過 — {3}"
+	},
+	"proxyCheckerCheckingSite": {
+		"message": "正在檢查網站：{0}..."
 	}
 }

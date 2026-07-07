@@ -44,11 +44,12 @@ export async function quickCheckProxy(
         faviconInterval: 150,
         ipCheckDelay: 70,
         retryOnDirectIp: retryForDirectIp,
-        useExpressMode: true
+        useExpressMode: true,
+        skipProtocolDetection: false
     };
 
     const result: CheckResult = await checkProxy(proxy, testUrl, options);
-    const status = result.status; // use status directly from checkProxy
+    const status = result.status;
     await saveResult(proxy.id, testUrl, status);
 
     return {

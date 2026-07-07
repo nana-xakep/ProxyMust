@@ -1262,6 +1262,53 @@ export class SettingsOperation {
 			);
 		});
 	}
+	    /**
+     * English: Updates the protocol of a proxy (manual or subscription) and saves changes.
+     * Russian: Обновляет протокол прокси (ручного или подписочного) и сохраняет изменения.
+     */
+    public static updateProxyProtocol(proxyId: string, newProtocol: string): boolean {
+        let found = false;
+
+        // Search in manual proxies
+        // Поиск в ручных прокси
+        for (let proxy of Settings.current.proxyServers) {
+            if (proxy.id === proxyId) {
+                if (proxy.protocol !== newProtocol) {
+                    proxy.protocol = newProtocol;
+                    found = true;
+                }
+                break;
+            }
+        }
+
+        if (!found) {
+            // Search in subscribed proxies
+            // Поиск в подписочных прокси
+            for (let sub of Settings.current.proxyServerSubscriptions) {
+                for (let proxy of sub.proxies) {
+                    if (proxy.id === proxyId) {
+                        if (proxy.protocol !== newProtocol) {
+                            proxy.protocol = newProtocol;
+                            found = true;
+                        }
+                        break;
+                    }
+                }
+                if (found) break;
+            }
+        }
+
+        if (found) {
+            // Save all local settings and update active config
+            // Сохраняем все локальные настройки и обновляем активную конфигурацию
+            SettingsOperation.saveAllLocal(true);
+            SettingsOperation.saveAllSync(false);
+            Settings.updateActiveSettings();
+            ProxyEngine.updateBrowsersProxyConfig(); // force re-apply proxy config
+            return true;
+        }
+        return false;
+    }
 }
 
 let me = SettingsOperation;

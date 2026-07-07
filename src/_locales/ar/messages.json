@@ -1695,6 +1695,15 @@
 	"testLogPageUnavailable": {
 		"message": "غير متاح"
 	},
+	"testLogDirectIp": {
+		"message": "IP المباشر (بدون بروكسي): {0}"
+	},
+	"testLogIpMatch": {
+		"message": "يطابق IP المباشر (البروكسي لا يعمل)"
+	},
+	"testLogIpMismatch": {
+		"message": "يختلف عن IP المباشر: {0}"
+	},
 	"settingsShowLog": {
 		"message": "إظهار السجل"
 	},
@@ -1802,5 +1811,44 @@
 	},
 	"settingsExpressCycleTestFailed": {
 		"message": "فشل اختبار الدورة السريعة: {0}"
+	},
+		"settingsAutoDetectProtocol": {
+		"message": "اكتشاف البروتوكول والتبديل تلقائياً إلى البروتوكول العامل أثناء الاختبار"
+	},
+	"settingsAutoDetectProtocolDesc": {
+		"message": "يزيد من وقت الاختبار."
+	},
+	"settingsProtocolSwitchMode": {
+		"message": "وضع تبديل البروتوكول:"
+	},
+	"settingsProtocolSwitchProbable": {
+		"message": "احتمالي (موصى به)"
+	},
+	"settingsProtocolSwitchProbableDesc": {
+		"message": "SOCKS → HTTP، HTTP → HTTPS، HTTPS → HTTP"
+	},
+	"settingsProtocolSwitchFull": {
+		"message": "كامل"
+	},
+	"settingsProtocolSwitchFullDesc": {
+		"message": "HTTP → HTTPS → SOCKS4 → SOCKS5"
+	},
+	"testLogProtocolRetry": {
+		"message": "🔄 تم إعلان البروكسي {0}:{1} كـ {2}، لكنه لا يعمل. جاري تجربة {3}..."
+	},
+	"testLogProtocolChanged": {
+		"message": "✅ تم تغيير البروتوكول تلقائياً إلى {0} لـ {1}:{2}"
+	},
+	"testLogProtocolChangeFailed": {
+		"message": "❌ لم يتم العثور على بروتوكول عامل لـ {0}:{1}. تمت تجربة: {2}"
+	},
+	"testLogProtocolRetryFull": {
+		"message": "🔄 جاري تجربة {0} لـ {1}:{2}..."
+	},
+	"testLogReadiness": {
+		"message": "جاهزية {0}: اجتاز {1}/{2} فحصاً — {3}"
+	},
+	"proxyCheckerCheckingSite": {
+		"message": "جاري فحص الموقع: {0}..."
 	}
 }

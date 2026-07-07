@@ -1695,6 +1695,15 @@
 	"testLogPageUnavailable": {
 		"message": "利用不可"
 	},
+	"testLogDirectIp": {
+		"message": "直接IP（プロキシなし）：{0}"
+	},
+	"testLogIpMatch": {
+		"message": "直接IPと一致（プロキシは機能していません）"
+	},
+	"testLogIpMismatch": {
+		"message": "直接IPと異なる：{0}"
+	},
 	"settingsShowLog": {
 		"message": "ログを表示"
 	},
@@ -1802,5 +1811,44 @@
 	},
 	"settingsExpressCycleTestFailed": {
 		"message": "エクスプレスサイクルテストに失敗しました: {0}"
+	},
+		"settingsAutoDetectProtocol": {
+		"message": "テスト中に自動的に動作するプロトコルを検出して切り替える"
+	},
+	"settingsAutoDetectProtocolDesc": {
+		"message": "テスト時間が増加します。"
+	},
+	"settingsProtocolSwitchMode": {
+		"message": "プロトコル切替モード："
+	},
+	"settingsProtocolSwitchProbable": {
+		"message": "推定（推奨）"
+	},
+	"settingsProtocolSwitchProbableDesc": {
+		"message": "SOCKS → HTTP、HTTP → HTTPS、HTTPS → HTTP"
+	},
+	"settingsProtocolSwitchFull": {
+		"message": "完全"
+	},
+	"settingsProtocolSwitchFullDesc": {
+		"message": "HTTP → HTTPS → SOCKS4 → SOCKS5"
+	},
+	"testLogProtocolRetry": {
+		"message": "🔄 プロキシ {0}:{1} は {2} として宣言されていますが、機能しません。{3} を試行中..."
+	},
+	"testLogProtocolChanged": {
+		"message": "✅ {1}:{2} のプロトコルが自動的に {0} に変更されました"
+	},
+	"testLogProtocolChangeFailed": {
+		"message": "❌ {0}:{1} で動作するプロトコルが見つかりませんでした。試行済み: {2}"
+	},
+	"testLogProtocolRetryFull": {
+		"message": "🔄 {1}:{2} で {0} を試行中..."
+	},
+	"testLogReadiness": {
+		"message": "{0} の準備状況: {1}/{2} チェック合格 — {3}"
+	},
+	"proxyCheckerCheckingSite": {
+		"message": "サイトをチェック中: {0}..."
 	}
 }

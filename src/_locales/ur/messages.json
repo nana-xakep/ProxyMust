@@ -1695,6 +1695,15 @@
 	"testLogPageUnavailable": {
 		"message": "دستیاب نہیں"
 	},
+	"testLogDirectIp": {
+		"message": "براہ راست IP (پراکسی کے بغیر): {0}"
+	},
+	"testLogIpMatch": {
+		"message": "براہ راست IP سے مماثل ہے (پراکسی کام نہیں کر رہی)"
+	},
+	"testLogIpMismatch": {
+		"message": "براہ راست IP سے مختلف ہے: {0}"
+	},
 	"settingsShowLog": {
 		"message": "لاگ دکھائیں"
 	},
@@ -1802,5 +1811,44 @@
 	},
 	"settingsExpressCycleTestFailed": {
 		"message": "ایکسپریس سائیکل ٹیسٹ ناکام: {0}"
+	},
+		"settingsAutoDetectProtocol": {
+		"message": "ٹیسٹ کے دوران خودکار طور پر کام کرنے والے پروٹوکول کا پتہ لگائیں اور سوئچ کریں"
+	},
+	"settingsAutoDetectProtocolDesc": {
+		"message": "ٹیسٹ کا وقت بڑھاتا ہے۔"
+	},
+	"settingsProtocolSwitchMode": {
+		"message": "پروٹوکول سوئچ موڈ:"
+	},
+	"settingsProtocolSwitchProbable": {
+		"message": "ممکنہ (تجویز کردہ)"
+	},
+	"settingsProtocolSwitchProbableDesc": {
+		"message": "SOCKS → HTTP، HTTP → HTTPS، HTTPS → HTTP"
+	},
+	"settingsProtocolSwitchFull": {
+		"message": "مکمل"
+	},
+	"settingsProtocolSwitchFullDesc": {
+		"message": "HTTP → HTTPS → SOCKS4 → SOCKS5"
+	},
+	"testLogProtocolRetry": {
+		"message": "🔄 پراکسی {0}:{1} کو {2} قرار دیا گیا، لیکن کام نہیں کر رہی۔ {3} آزما رہے ہیں..."
+	},
+	"testLogProtocolChanged": {
+		"message": "✅ {1}:{2} کے لیے پروٹوکول خودکار طور پر {0} میں تبدیل ہو گیا"
+	},
+	"testLogProtocolChangeFailed": {
+		"message": "❌ {0}:{1} کے لیے کوئی کام کرنے والا پروٹوکول نہیں ملا۔ آزمانے کی کوشش کی گئی: {2}"
+	},
+	"testLogProtocolRetryFull": {
+		"message": "🔄 {1}:{2} کے لیے {0} آزما رہے ہیں..."
+	},
+	"testLogReadiness": {
+		"message": "{0} کے لیے تیاری: {1}/{2} جانیں پاس ہوئیں — {3}"
+	},
+	"proxyCheckerCheckingSite": {
+		"message": "سائٹ کی جانچ ہو رہی ہے: {0}..."
 	}
 }

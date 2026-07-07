@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+﻿﻿<!DOCTYPE html>
 <!--
   This file is part of ProxyMust.
   Copyright (C) 2026 nana-xakep <xakep.nana@gmail.com>
@@ -10,13 +10,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title data-localize="testLogTitle">Proxy Test Log</title>
-	<link href="css/common.css" rel="stylesheet" />
+    <link href="css/common.css" rel="stylesheet" />
 <style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
+    * { margin:0; padding:0; box-sizing:border-box; }
     body {
         background: #0c0c0c;
         color: #d4d4d4;
@@ -62,13 +58,6 @@
         background: #2a2a2a;
         border-color: #888;
     }
-	    #pinLogBtn {
-        transition: all 0.2s;
-    }
-    #pinLogBtn:hover {
-        background: #2a2a2a;
-        border-color: #888;
-    }
     #pinLogBtn.pinned {
         border-color: #ffaa00;
         color: #ffaa00;
@@ -81,9 +70,6 @@
         flex: 1;
         overflow-y: auto;
         padding-right: 2px;
-        display: flex;
-        flex-direction: column;
-        gap: 0px;
     }
     #logContainer::-webkit-scrollbar {
         width: 4px;
@@ -98,63 +84,6 @@
     #logContainer::-webkit-scrollbar-thumb:hover {
         background: #666;
     }
-    .log-entry {
-        display: flex;
-        flex-direction: row;          /* строки горизонтально */
-        gap: 4px;                     /* маленький отступ между временем и сообщением */
-        padding: 1px 0;
-        border-bottom: 1px solid #1a1a1a;
-        animation: fadeIn 0.15s ease-in;
-        line-height: 1.2;
-        align-items: baseline;
-        flex-wrap: nowrap;
-        min-height: 16px;
-    }
-    .log-time {
-        color: #aaa;
-        flex-shrink: 0;
-        min-width: 44px;
-        font-size: 9px;
-        user-select: none;
-        opacity: 0.9;
-    }
-    .log-message {
-        flex: 1;
-        word-break: break-word;
-        white-space: pre-wrap;
-        /* display: inline; – убрали, чтобы не конфликтовать с flex */
-    }
-    .action-label {
-        font-weight: bold;
-        margin-right: 4px;
-        display: inline;
-    }
-    /* Colors */
-    .color-start { color: #ffd700; }
-    .color-success { color: #00ff88; }
-    .color-fail { color: #ff5555; }
-    .color-indirect { color: #66b3ff; }
-    .color-ip-success { color: #66b3ff; }
-    .color-ip-fail { color: #ff5555; }
-    .color-page-success { color: #00ff88; }
-    .color-page-fail { color: #ff5555; }
-    .color-status-success { color: #00ff88; font-weight: bold; }
-    .color-status-fail { color: #ff5555; font-weight: bold; }
-    .color-status-indirect { color: #66b3ff; font-weight: bold; }
-    .color-status-unknown { color: #d4d4d4; font-weight: bold; }
-    .color-stop { color: #ffaa00; font-weight: bold; }
-    .color-complete { color: #00ff88; font-weight: bold; }
-    .color-progress { color: #d4d4d4; }
-    .log-entry.stop-message {
-        border-left: 3px solid #ffaa00;
-        padding-left: 4px;
-        background: rgba(255,170,0,0.05);
-    }
-    .log-entry.complete-message {
-        border-left: 3px solid #00ff88;
-        padding-left: 4px;
-        background: rgba(0,255,136,0.05);
-    }
     @keyframes fadeIn {
         from { opacity: 0.4; transform: translateY(-2px); }
         to   { opacity: 1; transform: translateY(0); }
@@ -166,13 +95,11 @@
         font-size: 12px;
         font-style: italic;
     }
-	/* English: Ensure flag emojis render correctly in Chrome using Twemoji font */
-/* Russian: Обеспечиваем корректное отображение флагов в Chrome через шрифт Twemoji */
-.flag-emoji {
-    font-family: 'Twemoji Country Flags', 'Segoe UI Emoji', 'Apple Color Emoji', 'Noto Color Emoji', sans-serif;
-    font-size: 1.1em; /* чуть увеличим для лучшей видимости */
-    display: inline-block;
-}
+    .flag-emoji {
+        font-family: 'Twemoji Country Flags', 'Segoe UI Emoji', 'Apple Color Emoji', 'Noto Color Emoji', sans-serif;
+        font-size: 1.1em;
+        display: inline-block;
+    }
 </style>
 </head>
 <body>
@@ -185,6 +112,7 @@
         </div>
     </div>
     <div id="logContainer">
+        <span data-localize="testLogReadiness" style="display:none;">Readiness for {0}: {1}% ({2}/{3})</span>
         <div id="emptyState" data-localize="testLogWaiting">Waiting for test to start...</div>
     </div>
 

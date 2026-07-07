@@ -1456,9 +1456,18 @@ private static async handleAddSubscriptionProxyToManual(message: any, sendRespon
 	// Russian: Максимальное количество записей в логе
 	private static readonly MAX_LOG_BUFFER = 200;
 
-	// English: Whether the test log window is pinned (always on top via focus)
-	// Russian: Закреплено ли окно лога (поверх всех через фокусировку)
-	private static _testLogPinned: boolean = false;
+    // English: Whether the test log window is pinned (always on top via focus)
+    // Russian: Закреплено ли окно лога (поверх всех через фокусировку)
+    private static _testLogPinned: boolean = false;
+
+    /**
+     * English: Resets the flags that prevent duplicate stop/complete messages.
+     * Russian: Сбрасывает флаги, предотвращающие дублирование сообщений stop/complete.
+     */
+    public static resetTestLogFlags(): void {
+        Core._stopSent = false;
+        Core._completeSent = false;
+    }
 
 	private static normalizeHost(host: string): string | null {
 		if (!host || typeof host !== 'string') return null;
@@ -1701,6 +1710,8 @@ private static async handleAddSubscriptionProxyToManual(message: any, sendRespon
 		dataForPopup.notAllowedSetProxySettings = environment.notAllowed.setProxySettings;
 		dataForPopup.refreshTabOnConfigChanges = settings.options.refreshTabOnConfigChanges;
 		dataForPopup.enableRating = settings.options.enableRating;
+        dataForPopup.enableDirectIpDetection = settings.options.enableDirectIpDetection === true;
+        console.log(`[Core] getPopupInitialData: enableDirectIpDetection = ${dataForPopup.enableDirectIpDetection}`);		
 		// English: stale hours from user preferences (staleHours)
 		// Russian: время устаревания из пользовательских настроек (staleHours)
 		dataForPopup.staleHours = settings.userPrefs?.staleHours ?? 6;

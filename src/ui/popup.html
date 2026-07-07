@@ -88,10 +88,10 @@
 			</div>
 		</div>
 		<div class="popup-menu-contents p-1 list-group">
-		<!-- ProxyMust: current site and controls -->
+<!-- ProxyMust: current site and controls -->
 <div id="proxyMustHeader" class="px-2 mb-2">
     <div class="row align-items-center mb-1">
-        <div class="col-8">
+        <div class="col-8 text-start">
             <small class="text-muted" data-localize="popupCurrentSite">Current site:</small>
             <strong id="currentSiteLabel" class="ms-1">—</strong>
         </div>
@@ -99,15 +99,13 @@
             <button id="addCurrentSiteBtn" class="btn btn-sm btn-outline-primary" title="Add current site to test list">➕</button>
         </div>
     </div>
-    <div class="row align-items-center" id="testControlsRow">
-        <div class="col-12 d-flex justify-content-between align-items-center">
-                <div>
-                    <button id="quickTestBtn" class="btn btn-sm btn-outline-success">⚡ <span data-localize="popupQuickTestButton">Test</span></button>
-                    <button id="addAllSuccessfulSubsBtn" class="btn btn-sm btn-outline-info ms-1">📋 <span data-localize="popupAddAllSuccessfulSubs">Add working</span></button>
-                    <button id="openTestLogBtn" class="btn btn-sm btn-outline-secondary ms-1" style="display:none;">📋 <span data-localize="popupOpenTestLog">Log</span></button>
-                </div>
-            <span id="quickTestProgress" class="small text-muted ms-2" style="display:none;"></span>
-        </div>
+    <div class="d-flex justify-content-center gap-2 mt-2" id="testControlsRow">
+        <button id="quickTestBtn" class="btn btn-sm btn-outline-success" style="min-width:80px;">⚡ <span data-localize="popupQuickTestButton">Test</span></button>
+        <button id="openTestLogBtn" class="btn btn-sm btn-outline-secondary" style="min-width:80px; display:none;">📋 <span data-localize="popupOpenTestLog">Log</span></button>
+    </div>
+    <div id="quickTestProgress" class="small text-muted mt-1 text-center" style="display:none;"></div>
+    <div class="text-center mt-2">
+        <button id="addAllSuccessfulSubsBtn" class="btn btn-sm btn-outline-info" style="display:none;">📋 <span data-localize="popupAddAllSuccessfulSubs">Add working</span></button>
     </div>
 </div>
 			<div id="divUpdateIsAvailable" style="display: none" class="alert alert-success" role="alert">

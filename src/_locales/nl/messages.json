@@ -1695,6 +1695,15 @@
 	"testLogPageUnavailable": {
 		"message": "niet beschikbaar"
 	},
+	"testLogDirectIp": {
+		"message": "Direct IP (zonder proxy): {0}"
+	},
+	"testLogIpMatch": {
+		"message": "komt overeen met direct IP (proxy werkt niet)"
+	},
+	"testLogIpMismatch": {
+		"message": "wijkt af van direct IP: {0}"
+	},
 	"settingsShowLog": {
 		"message": "Log weergeven"
 	},
@@ -1802,5 +1811,44 @@
 	},
 	"settingsExpressCycleTestFailed": {
 		"message": "Express-cyclustest mislukt: {0}"
+	},
+		"settingsAutoDetectProtocol": {
+		"message": "Automatisch het werkende protocol detecteren en overschakelen tijdens testen"
+	},
+	"settingsAutoDetectProtocolDesc": {
+		"message": "Verlengt de testtijd."
+	},
+	"settingsProtocolSwitchMode": {
+		"message": "Protocolschakelmodus:"
+	},
+	"settingsProtocolSwitchProbable": {
+		"message": "Waarschijnlijk (aanbevolen)"
+	},
+	"settingsProtocolSwitchProbableDesc": {
+		"message": "SOCKS → HTTP, HTTP → HTTPS, HTTPS → HTTP"
+	},
+	"settingsProtocolSwitchFull": {
+		"message": "Volledig"
+	},
+	"settingsProtocolSwitchFullDesc": {
+		"message": "HTTP → HTTPS → SOCKS4 → SOCKS5"
+	},
+	"testLogProtocolRetry": {
+		"message": "🔄 Proxy {0}:{1} is gedeclareerd als {2}, maar werkt niet. Probeer {3}..."
+	},
+	"testLogProtocolChanged": {
+		"message": "✅ Protocol automatisch gewijzigd naar {0} voor {1}:{2}"
+	},
+	"testLogProtocolChangeFailed": {
+		"message": "❌ Geen werkend protocol gevonden voor {0}:{1}. Geprobeerd: {2}"
+	},
+	"testLogProtocolRetryFull": {
+		"message": "🔄 Probeer {0} voor {1}:{2}..."
+	},
+	"testLogReadiness": {
+		"message": "Gereedheid voor {0}: {1}/{2} controles geslaagd — {3}"
+	},
+	"proxyCheckerCheckingSite": {
+		"message": "Site controleren: {0}..."
 	}
 }

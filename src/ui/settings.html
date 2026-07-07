@@ -534,8 +534,44 @@
 						</div>
 						<div>
 							<hr class="afshin-line" />
+
 <h3 data-localize="settingsGeneralOtherSettings">Other Settings</h3>
 
+<!-- ==================== Protocol Auto-Detection ==================== -->
+<div class="mt-3">
+    <h5 data-localize="settingsAutoDetectProtocolTitle">🔄 Protocol Auto-Detection</h5>
+    
+    <label class="mx-2 form-label">
+        <input id="chkAutoDetectProtocol" checked type="checkbox" class="form-check-input" />
+        <span data-localize="settingsAutoDetectProtocol">Enable automatic protocol detection during testing</span>
+        <div class="form-text text-muted" data-localize="settingsAutoDetectProtocolDesc">
+            If a proxy doesn't work with its declared protocol, the extension will try other protocols to find a working one.
+        </div>
+    </label>
+    
+    <div id="protocolSwitchModeContainer" class="mx-4 mt-2">
+        <label class="form-label" data-localize="settingsProtocolSwitchMode">Protocol switch mode:</label>
+        <div class="form-check">
+            <input type="radio" name="protocolSwitchMode" id="rbtnProtocolProbable" value="probable" checked class="form-check-input" />
+            <label class="form-check-label" for="rbtnProtocolProbable">
+                <strong data-localize="settingsProtocolSwitchProbable">Probable (recommended)</strong>
+                <div class="form-text text-muted" data-localize="settingsProtocolSwitchProbableDesc">
+                    SOCKS → HTTP, HTTP → HTTPS, HTTPS → HTTP
+                </div>
+            </label>
+        </div>
+        <div class="form-check">
+            <input type="radio" name="protocolSwitchMode" id="rbtnProtocolFull" value="full" class="form-check-input" />
+            <label class="form-check-label" for="rbtnProtocolFull">
+                <strong data-localize="settingsProtocolSwitchFull">Full</strong>
+                <div class="form-text text-muted" data-localize="settingsProtocolSwitchFullDesc">
+                    HTTP → HTTPS → SOCKS4 → SOCKS5 (exhaustive, slower)
+                </div>
+            </label>
+        </div>
+    </div>
+</div>
+<!-- ==================== End Protocol Auto-Detection ==================== -->
 
 <br />
 

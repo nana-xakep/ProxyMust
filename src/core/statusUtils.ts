@@ -72,12 +72,12 @@ export function getProxyStatus(
     // Russian: Нормализуем ключ сайта для единообразного поиска
     const normalizedSite = normalizeSite(site);
     
-    console.log(`[statusUtils] getProxyStatus: proxyId=${proxyId}, site=${normalizedSite}, autoStatus keys:`, Object.keys(autoStatus || {}));
+//    console.log(`[statusUtils] getProxyStatus: proxyId=${proxyId}, site=${normalizedSite}, autoStatus keys:`, Object.keys(autoStatus || {}));
 
     // English: If no autoStatus data for this proxy, return unknown
     // Russian: Если нет данных autoStatus для этого прокси, возвращаем unknown
     if (!autoStatus || !autoStatus[proxyId]) {
-        console.log(`[statusUtils] Нет данных для прокси ${proxyId}, возвращаем unknown`);
+//        console.log(`[statusUtils] Нет данных для прокси ${proxyId}, возвращаем unknown`);
         return { type: "unknown", symbol: "❓", cssClass: "status-unknown", weight: 3 };
     }
 

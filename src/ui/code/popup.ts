@@ -31,6 +31,8 @@ import { ProfileOperations } from "../../core/ProfileOperations";
 import { CountryCode } from "../../lib/CountryCode";
 import { getProxyStatus, ProxyStatusInfo } from "../../core/statusUtils";
 import { IP_SERVICES } from "../../core/TestConstants";
+// Core import removed – we don't call Core.sendTestLogStep from popup
+
 type JQuery = typeof jQuery;
 
 export class popup {
@@ -45,16 +47,11 @@ export class popup {
     private static addAllSuccessfulSubsBtn: JQuery;
     private static openTestLogBtn: JQuery;
     private static quickTestInProgress: boolean = false;
+    private static isOpeningLog: boolean = false;
 
     // English: Last tested site for status display after test completion
     // Russian: Последний тестированный сайт для отображения статусов после завершения теста
     private static lastTestSite: string = '';
-    // English: Cache for sorted proxies to avoid expensive sorting on every popup open
-    // Russian: Кэш отсортированных прокси для избежания долгой сортировки при каждом открытии попапа
-    private static cachedSortedProxies: ProxyServer[] | null = null;
-    private static cachedSortedProxiesTime: number = 0;
-    private static cachedCurrentSite: string = '';
-    private static cachedStaleHours: number = 0;
 
     public static initialize() {
         popup.onDocumentReady(popup.bindEvents);
@@ -91,6 +88,26 @@ export class popup {
             console.log("[ProxyMust] Restored lastTestSite from sessionStorage:", popup.lastTestSite);
         }
         popup.onDocumentReady(CommonUi.localizeHtmlPage);
+		        // ========== ProxyMust: listen to storage changes for rating toggle ==========
+        // English: Listen to storage changes to update UI when rating setting changes
+        // Russian: Слушаем изменения хранилища, чтобы обновлять UI при изменении настройки рейтинга
+        api.storage.onChanged.addListener((changes, area) => {
+            if (area === 'local' && changes.options) {
+                const newOptions = changes.options.newValue;
+                if (newOptions && typeof newOptions.enableRating === 'boolean') {
+                    console.log("[Popup] Rating setting changed to:", newOptions.enableRating);
+                    // Update popupData and UI
+                    if (popup.popupData) {
+                        popup.popupData.enableRating = newOptions.enableRating;
+                        popup.updateRatingDependentUI(newOptions.enableRating);
+                        popup.updateAddAllSuccessfulSubsButtonVisibility();
+                        // Also refresh proxy list because rating affects sorting
+                        popup.populateActiveProxy(popup.popupData);
+                    }
+                }
+            }
+        });
+        // ========== END ==========
     }
 
     /**
@@ -277,6 +294,7 @@ export class popup {
     }
 
     private static bindEvents() {
+        console.log("[Popup] bindEvents вызван, время:", Date.now());
         jQuery("#openSettings").click(() => {
             PolyFill.runtimeOpenOptionsPage();
             popup.closeSelf();
@@ -322,9 +340,11 @@ export class popup {
             popup.addCurrentSiteBtn.attr("title", api.i18n.getMessage("popupAddCurrentSiteTooltip") || "Add current site to test list");
         }
         if (popup.addAllSuccessfulSubsBtn.length) {
+            console.log("[Popup] Привязываем обработчик для addAllSuccessfulSubsBtn");
             popup.addAllSuccessfulSubsBtn.off("click").on("click", popup.onAddAllSuccessfulSubscriptionsClick);
         }
         if (popup.openTestLogBtn.length) {
+            console.log("[Popup] Привязываем обработчик для openTestLogBtn");
             popup.openTestLogBtn.off("click").on("click", popup.onOpenTestLogClick);
         }
 
@@ -334,8 +354,7 @@ export class popup {
         if (popup.quickTestBtn.length) {
             popup.quickTestBtn.off("click").on("click", popup.onQuickTestClick);
         }
-        // English: After UI is ready, check if any test is already running in background
-        // Russian: После готовности UI, проверяем, запущен ли уже какой-либо тест в фоне
+        console.log("[Popup] bindEvents завершён");
         popup.checkRunningTests();
     }
 
@@ -368,10 +387,6 @@ export class popup {
     }
 
     private static populateDataForPopup(dataForPopup: PopupInternalDataType) {
-        // English: Invalidate proxy cache when new data arrives
-        // Russian: Инвалидируем кэш прокси при поступлении новых данных
-        popup.cachedSortedProxies = null;
-        popup.cachedSortedProxiesTime = 0;
         CommonUi.applyThemes(dataForPopup.themeData);
         CommonUi.applyThemes(dataForPopup.themeData);
         popup.updateActiveProfile(dataForPopup);
@@ -401,8 +416,14 @@ export class popup {
         const $addAllSuccessfulSubsBtn = jQuery("#addAllSuccessfulSubsBtn");
         const $proxyMustHeader = jQuery("#proxyMustHeader");
         const $quickTestProgress = jQuery("#quickTestProgress");
+        const $openTestLogBtn = jQuery("#openTestLogBtn");
 
-        if (enableRating) {
+        // English: Show test UI if either rating is enabled OR direct IP detection is enabled
+        // Russian: Показываем интерфейс тестирования, если включен рейтинг ИЛИ прямое IP
+        const enableRatingOrDirectIp = enableRating || popup.popupData?.enableDirectIpDetection === true;
+        console.log(`[Popup] updateRatingDependentUI: enableRating=${enableRating}, enableDirectIpDetection=${popup.popupData?.enableDirectIpDetection}, show=${enableRatingOrDirectIp}`);
+
+        if (enableRatingOrDirectIp) {
             $quickTestBtn.show();
             $proxyMustHeader.show();
             $quickTestProgress.hide(); // initially hidden
@@ -447,7 +468,6 @@ export class popup {
             }
             // English: Show/hide log button
             // Russian: Показать/скрыть кнопку лога
-            const $openTestLogBtn = jQuery("#openTestLogBtn");
             if (enableRating) {
                 $openTestLogBtn.show();
             } else {
@@ -458,6 +478,7 @@ export class popup {
             $addAllSuccessfulSubsBtn.hide();
             $proxyMustHeader.hide();
             $quickTestProgress.hide();
+            $openTestLogBtn.hide();
         }
     }
 
@@ -515,19 +536,19 @@ export class popup {
         popup.currentSiteLabel.text(site || "—");
     }
 
-private static populateUpdateAvailable(dataForPopup: PopupInternalDataType) {
-    // ProxyMust: disable update notifications
-    /*
-    const updateInfo = dataForPopup.updateInfo;
-    if (updateInfo && updateInfo.updateIsAvailable) {
-        const updateAvailableText = api.i18n.getMessage('popupUpdateText').replace('{0}', updateInfo.versionName);
-        jQuery("#divUpdateIsAvailable").show()
-            .find("a")
-            .text(updateAvailableText)
-            .attr("href", dataForPopup.updateInfo.downloadPage);
+    private static populateUpdateAvailable(dataForPopup: PopupInternalDataType) {
+        // ProxyMust: disable update notifications
+        /*
+        const updateInfo = dataForPopup.updateInfo;
+        if (updateInfo && updateInfo.updateIsAvailable) {
+            const updateAvailableText = api.i18n.getMessage('popupUpdateText').replace('{0}', updateInfo.versionName);
+            jQuery("#divUpdateIsAvailable").show()
+                .find("a")
+                .text(updateAvailableText)
+                .attr("href", dataForPopup.updateInfo.downloadPage);
+        }
+        */
     }
-    */
-}
 
     private static populateUnsupportedFeatures(dataForPopup: PopupInternalDataType) {
         if (dataForPopup.notSupportedSetProxySettings) {
@@ -651,8 +672,12 @@ private static populateUpdateAvailable(dataForPopup: PopupInternalDataType) {
     }
 
     /**
-     * English: Populates proxy dropdown with status symbols and proper sorting.
-     * Russian: Заполняет выпадающий список прокси символами статусов и правильной сортировкой.
+     * English: Populates proxy dropdown with status symbols and proper sorting, grouping subscriptions.
+     * Russian: Заполняет выпадающий список прокси символами статусов и правильной сортировкой, группируя подписки.
+     */
+    /**
+     * English: Populates proxy dropdown with status symbols and proper sorting, grouped by source (manual / subscriptions).
+     * Russian: Заполняет выпадающий список прокси символами статусов и правильной сортировкой, с группировкой по источнику (ручные / подписки).
      */
     private static populateProxyServerOptions(
         selectElement: any,
@@ -665,78 +690,132 @@ private static populateUpdateAvailable(dataForPopup: PopupInternalDataType) {
         staleHours: number
     ) {
         const enableRating = popup.popupData?.enableRating ?? true;
-        const allProxies: ProxyServer[] = [...proxyServers, ...proxyServersSubscribed];
-
-        let sortedProxies: ProxyServer[];
-
-        const now = Date.now();
-        const cacheValid = popup.cachedSortedProxies !== null &&
-            (now - popup.cachedSortedProxiesTime) < 3000 &&
-            popup.cachedCurrentSite === currentSite &&
-            popup.cachedStaleHours === staleHours;
-
-        if (enableRating && cacheValid) {
-            sortedProxies = popup.cachedSortedProxies!;
-        } else if (enableRating) {
-            const getSortWeight = (proxy: ProxyServer): number => {
-                let priorityWeight = 1;
-                const prio = priorityMap?.[proxy.id] || proxy.priority;
-                if (prio === 'pin') priorityWeight = 3;
-                else if (prio === 'star') priorityWeight = 2;
-
-                let statusWeight = 3;
-                if (autoStatus) {
-                    const statusInfo = getProxyStatus(proxy.id, currentSite || "", autoStatus, staleHours);
-                    statusWeight = statusInfo.weight;
-                }
-                const rating = proxy.rating ?? 0;
-                return (priorityWeight * 1000) + (statusWeight * 100) + rating;
-            };
-            sortedProxies = [...allProxies].sort((a, b) => getSortWeight(b) - getSortWeight(a));
-
-            popup.cachedSortedProxies = sortedProxies;
-            popup.cachedSortedProxiesTime = now;
-            popup.cachedCurrentSite = currentSite;
-            popup.cachedStaleHours = staleHours;
-        } else {
-            sortedProxies = allProxies;
-            popup.cachedSortedProxies = null;
-        }
-
         selectElement.empty();
 
-        for (const proxy of sortedProxies) {
-            const flag = CountryCode.getCountryFlagEmoji(proxy.countryCode || CountryCode.getCountryCode(proxy.host));
-            const isSubscription = proxyServersSubscribed.includes(proxy as ProxyServerFromSubscription);
-            const priority = priorityMap?.[proxy.id] || proxy.priority;
+        // English: Add manual proxies first (without optgroup)
+        // Russian: Добавляем ручные прокси первыми (без optgroup)
+        if (proxyServers && proxyServers.length > 0) {
+            // English: Sort manual proxies by rating/priority/status
+            // Russian: Сортируем ручные прокси по рейтингу/приоритету/статусу
+            const sortedManual = this.sortProxiesByPriority(proxyServers, priorityMap, autoStatus, currentSite, staleHours);
+            for (const proxy of sortedManual) {
+                const option = this.createProxyOption(proxy, selectedProxyId, enableRating, priorityMap, autoStatus, currentSite, staleHours);
+                selectElement.append(option);
+            }
+        }
 
-            let displayName: string;
-            if (enableRating) {
-                let statusInfo: ProxyStatusInfo;
-                if (autoStatus) {
-                    statusInfo = getProxyStatus(proxy.id, currentSite || "", autoStatus, staleHours);
-                } else {
-                    statusInfo = { type: "unknown", symbol: "❓", cssClass: "status-unknown", weight: 3 };
-                }
-                const statusHtml = `<span class="${statusInfo.cssClass}">${statusInfo.symbol}</span>`;
-                const rating = proxy.rating ?? 0;
-                const ratingText = rating === 0 ? "(0)" : (rating > 0 ? `(+${rating})` : `(${rating})`);
-                let priorityIcon = "";
-                if (priority === 'pin') priorityIcon = "📌 ";
-                else if (priority === 'star') priorityIcon = "⭐ ";
-                displayName = `${flag} ${priorityIcon}${proxy.name}${ratingText} ${statusHtml}`;
-            } else {
-                displayName = `${flag} ${proxy.name}`;
+        // English: Add subscription proxies grouped by subscription name
+        // Russian: Добавляем подписочные прокси, сгруппированные по названию подписки
+        if (proxyServersSubscribed && proxyServersSubscribed.length > 0) {
+            // English: Group subscribed proxies by subscriptionName
+            // Russian: Группируем подписочные прокси по subscriptionName
+            const grouped: { [name: string]: ProxyServerFromSubscription[] } = {};
+            for (const proxy of proxyServersSubscribed) {
+                const subName = (proxy as any).subscriptionName || 'Subscription';
+                if (!grouped[subName]) grouped[subName] = [];
+                grouped[subName].push(proxy);
             }
 
-            const option = jQuery("<option>")
-                .attr("value", proxy.id)
-                .attr("title", proxy.protocol)
-                .attr("data-is-subscription", isSubscription ? "true" : "false")
-                .html(displayName);
-            if (selectedProxyId === proxy.id) option.prop("selected", true);
-            selectElement.append(option);
+            // English: Sort group names alphabetically
+            // Russian: Сортируем названия групп по алфавиту
+            const groupNames = Object.keys(grouped).sort((a, b) => a.localeCompare(b));
+
+            for (const groupName of groupNames) {
+                const groupProxies = grouped[groupName];
+                // English: Sort proxies inside group by rating/priority/status
+                // Russian: Сортируем прокси внутри группы по рейтингу/приоритету/статусу
+                const sortedGroup = this.sortProxiesByPriority(groupProxies, priorityMap, autoStatus, currentSite, staleHours);
+                const optGroup = jQuery('<optgroup>')
+                    .attr('label', groupName)
+                    .appendTo(selectElement);
+                for (const proxy of sortedGroup) {
+                    const option = this.createProxyOption(proxy, selectedProxyId, enableRating, priorityMap, autoStatus, currentSite, staleHours);
+                    // English: Mark as subscription for future reference
+                    // Russian: Помечаем как подписочный для будущих ссылок
+                    option.attr('data-is-subscription', 'true');
+                    optGroup.append(option);
+                }
+            }
         }
+
+        // English: If no proxies at all, add placeholder
+        // Russian: Если нет ни одного прокси, добавляем заглушку
+        if (selectElement.children().length === 0) {
+            selectElement.append(jQuery('<option>')
+                .attr('value', '0')
+                .text(api.i18n.getMessage('settingsServersGridNoDataContent') || 'No proxies defined'));
+        }
+    }
+
+    /**
+     * English: Sorts proxies by priority (pin > star > none), then status weight, then rating.
+     * Russian: Сортирует прокси по приоритету (pin > star > none), затем весу статуса, затем рейтингу.
+     */
+    private static sortProxiesByPriority(
+        proxies: ProxyServer[],
+        priorityMap: { [id: string]: 'pin' | 'star' | null },
+        autoStatus: AutoStatusMap,
+        currentSite: string,
+        staleHours: number
+    ): ProxyServer[] {
+        const getSortWeight = (proxy: ProxyServer): number => {
+            let priorityWeight = 1;
+            const prio = priorityMap?.[proxy.id] || proxy.priority;
+            if (prio === 'pin') priorityWeight = 3;
+            else if (prio === 'star') priorityWeight = 2;
+
+            let statusWeight = 3;
+            if (autoStatus) {
+                const statusInfo = getProxyStatus(proxy.id, currentSite || '', autoStatus, staleHours);
+                statusWeight = statusInfo.weight;
+            }
+            const rating = proxy.rating ?? 0;
+            return (priorityWeight * 1000) + (statusWeight * 100) + rating;
+        };
+        return [...proxies].sort((a, b) => getSortWeight(b) - getSortWeight(a));
+    }
+
+    /**
+     * English: Creates an <option> element for a proxy with rating, status, and flag.
+     * Russian: Создаёт элемент <option> для прокси с рейтингом, статусом и флагом.
+     */
+    private static createProxyOption(
+        proxy: ProxyServer,
+        selectedProxyId: string,
+        enableRating: boolean,
+        priorityMap: { [id: string]: 'pin' | 'star' | null },
+        autoStatus: AutoStatusMap,
+        currentSite: string,
+        staleHours: number
+    ): JQuery {
+        const flag = CountryCode.getCountryFlagEmoji(proxy.countryCode || CountryCode.getCountryCode(proxy.host));
+        const priority = priorityMap?.[proxy.id] || proxy.priority;
+
+        let displayName: string;
+        if (enableRating) {
+            let statusInfo: ProxyStatusInfo;
+            if (autoStatus) {
+                statusInfo = getProxyStatus(proxy.id, currentSite || '', autoStatus, staleHours);
+            } else {
+                statusInfo = { type: "unknown", symbol: "❓", cssClass: "status-unknown", weight: 3 };
+            }
+            const statusHtml = `<span class="${statusInfo.cssClass}">${statusInfo.symbol}</span>`;
+            const rating = proxy.rating ?? 0;
+            const ratingText = rating === 0 ? "(0)" : (rating > 0 ? `(+${rating})` : `(${rating})`);
+            let priorityIcon = "";
+            if (priority === 'pin') priorityIcon = "📌 ";
+            else if (priority === 'star') priorityIcon = "⭐ ";
+            displayName = `${flag} ${priorityIcon}${proxy.name}${ratingText} ${statusHtml}`;
+        } else {
+            displayName = `${flag} ${proxy.name}`;
+        }
+
+        const option = jQuery("<option>")
+            .attr("value", proxy.id)
+            .attr("title", proxy.protocol)
+            .html(displayName);
+        if (selectedProxyId === proxy.id) option.prop("selected", true);
+        return option;
     }
 
     /**
@@ -973,11 +1052,23 @@ private static populateUpdateAvailable(dataForPopup: PopupInternalDataType) {
      * Russian: Открывает окно лога тестирования.
      */
     private static onOpenTestLogClick() {
+        console.log("[Popup] Кнопка 'Лог' нажата, время:", Date.now());
+        if (popup.isOpeningLog) {
+            console.log("[Popup] isOpeningLog уже true, пропускаем");
+            return;
+        }
+        popup.isOpeningLog = true;
+        console.log("[Popup] Отправка команды OPEN_TEST_LOG, isOpeningLog установлен в true");
         PolyFill.runtimeSendMessage({ command: "OPEN_TEST_LOG" }, (response) => {
+            console.log("[Popup] Получен ответ на OPEN_TEST_LOG:", response);
+            setTimeout(() => {
+                popup.isOpeningLog = false;
+                console.log("[Popup] isOpeningLog сброшен в false");
+            }, 500);
             if (response && response.success) {
-                console.log("[Popup] Test log window opened/focused.");
+                console.log("[Popup] Окно лога открыто/сфокусировано, alreadyOpen:", response.alreadyOpen);
             } else {
-                console.warn("[Popup] Failed to open test log window:", response?.error);
+                console.warn("[Popup] Не удалось открыть окно лога:", response?.error);
                 messageBox.error(api.i18n.getMessage("testLogOpenFailed") || "Failed to open log window.");
             }
         });
@@ -1030,44 +1121,23 @@ private static populateUpdateAvailable(dataForPopup: PopupInternalDataType) {
 
         document.documentElement.classList.add("wide-mode");
 
-        let themeBg = "#fff";
-        let themeText = "#212529";
-        let themeBorder = "#ccc";
-        let themeHoverBg = "#f5f5f5";
-
-        if (document.body.classList.contains("theme-dark")) {
-            themeBg = "#2d2d2d";
-            themeText = "#e0e0e0";
-            themeBorder = "#444";
-            themeHoverBg = "#3a3a3a";
-        } else if (document.body.classList.contains("theme-auto")) {
-            const isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-            if (isDark) {
-                themeBg = "#2d2d2d";
-                themeText = "#e0e0e0";
-                themeBorder = "#444";
-                themeHoverBg = "#3a3a3a";
-            }
-        }
-
         const button = popup.quickTestBtn[0];
         const rect = button.getBoundingClientRect();
 
         const menu = document.createElement("div");
         menu.id = "quickTestMenu";
-        menu.style.cssText = `position:fixed; background:${themeBg}; color:${themeText}; border:1px solid ${themeBorder}; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.15); z-index:1000000; min-width:320px; max-width:360px; white-space:normal;`;
+        // Все стили задаются через CSS, здесь только позиционирование и z-index
+        menu.style.cssText = "position:fixed; z-index:1000000;";
 
         let menuHtml = '';
         
-        // English: In Firefox, only cycle tests work (quick tests rely on direct proxy API which is not reliable)
-        // Russian: В Firefox работают только циклические тесты (быстрые тесты полагаются на прямой API прокси, который ненадёжен)
         if (environment.name !== "Firefox") {
             menuHtml += `
-                <div class="quick-test-menu-item" data-test-type="all" style="padding:12px 16px; cursor:pointer; border-bottom:1px solid ${themeBorder}; transition:background-color 0.1s ease;">
+                <div class="quick-test-menu-item" data-test-type="all" style="padding:12px 16px; cursor:pointer; border-bottom:1px solid var(--bs-border-color, #dee2e6); transition:background-color 0.1s ease;">
                     <div style="font-weight:500; font-size:14px;">⚡ ${api.i18n.getMessage("popupTestMenuAllProxies") || "Express test for all proxies"}</div>
                     <div style="font-size:11px; color:#888; margin-top:4px;">${api.i18n.getMessage("popupTestMenuAllProxiesDesc") || "Manual + subscription proxies"}</div>
                 </div>
-                <div class="quick-test-menu-item" data-test-type="subscriptions" style="padding:12px 16px; cursor:pointer; border-bottom:1px solid ${themeBorder}; transition:background-color 0.1s ease;">
+                <div class="quick-test-menu-item" data-test-type="subscriptions" style="padding:12px 16px; cursor:pointer; border-bottom:1px solid var(--bs-border-color, #dee2e6); transition:background-color 0.1s ease;">
                     <div style="font-weight:500; font-size:14px;">📦 ${api.i18n.getMessage("popupTestMenuSubscriptionsOnly") || "Express test for subscriptions only"}</div>
                     <div style="font-size:11px; color:#888; margin-top:4px;">${api.i18n.getMessage("popupTestMenuSubscriptionsOnlyDesc") || "Then add working ones to manual list"}</div>
                 </div>
@@ -1075,7 +1145,7 @@ private static populateUpdateAvailable(dataForPopup: PopupInternalDataType) {
         }
         
         menuHtml += `
-            <div class="quick-test-menu-item" data-test-type="express-cycle-all" style="padding:12px 16px; cursor:pointer; border-bottom:1px solid ${themeBorder}; transition:background-color 0.1s ease;">
+            <div class="quick-test-menu-item" data-test-type="express-cycle-all" style="padding:12px 16px; cursor:pointer; border-bottom:1px solid var(--bs-border-color, #dee2e6); transition:background-color 0.1s ease;">
                 <div style="font-weight:500; font-size:14px;">⚡🔄 ${api.i18n.getMessage("popupTestMenuExpressCycleAll") || "Express cycle test (all proxies)"}</div>
                 <div style="font-size:11px; color:#888; margin-top:4px;">${api.i18n.getMessage("popupTestMenuExpressCycleAllDesc") || "Manual + subscription proxies"}</div>
             </div>
@@ -1088,20 +1158,16 @@ private static populateUpdateAvailable(dataForPopup: PopupInternalDataType) {
         menu.innerHTML = menuHtml;
         document.body.appendChild(menu);
 
-        let left = rect.left;
+        // Позиционируем меню под кнопкой
         let top = rect.bottom + 5;
-        const menuRect = menu.getBoundingClientRect();
-        if (left + menuRect.width > window.innerWidth) {
-            left = window.innerWidth - menuRect.width - 10;
+        if (top + 300 > window.innerHeight) {
+            top = rect.top - 300 - 5;
         }
-        if (top + menuRect.height > window.innerHeight) {
-            top = rect.top - menuRect.height - 5;
-        }
-        if (left < 5) {
-            left = 5;
-        }
-        menu.style.left = left + "px";
+        if (top < 5) top = 5;
         menu.style.top = top + "px";
+        // left задаётся через CSS (в wide-mode: left:10px; right:10px;)
+        // для страховки оставим left:0, чтобы меню не съезжало влево
+        menu.style.left = "0px";
 
         const cleanupMenu = () => {
             menu.remove();
@@ -1160,14 +1226,6 @@ private static populateUpdateAvailable(dataForPopup: PopupInternalDataType) {
 
         menu.addEventListener("click", handleClick);
 
-        const style = document.createElement('style');
-        style.textContent = `
-            .quick-test-menu-item:hover {
-                background-color: ${themeHoverBg} !important;
-            }
-        `;
-        menu.appendChild(style);
-
         const closeHandler = (e: MouseEvent) => {
             if (!menu.contains(e.target as Node)) {
                 cleanupMenu();
@@ -1186,6 +1244,7 @@ private static populateUpdateAvailable(dataForPopup: PopupInternalDataType) {
             messageBox.warning(api.i18n.getMessage("settingsProxyMustNoProxies"));
             return;
         }
+        console.log(`[Popup] DEBUG: enableDirectIpDetection = ${popup.popupData?.enableDirectIpDetection}`);
         popup.quickTestInProgress = true;
         popup.quickTestBtn.html("⚡ <span>" + api.i18n.getMessage("popupQuickTestStopButton") + "</span>");
         popup.quickTestBtn.removeClass("btn-outline-success").addClass("btn-danger");
@@ -1252,13 +1311,22 @@ private static populateUpdateAvailable(dataForPopup: PopupInternalDataType) {
                 protocol: p.protocol
             }));
         }
-        PolyFill.runtimeSendMessage(message, null, (err: Error) => {
-            console.error("[ProxyMust] Express cycle test start failed:", err);
-            messageBox.error(api.i18n.getMessage("settingsExpressCycleTestFailed", err.message));
-            popup.quickTestInProgress = false;
-            popup.quickTestBtn.html("⚡ <span>" + api.i18n.getMessage("popupQuickTestButton") + "</span>");
-            popup.quickTestBtn.removeClass("btn-danger").addClass("btn-outline-success");
-            popup.quickTestProgress.hide();
+        PolyFill.runtimeSendMessage(message, (response: any) => {
+            if (response && response.success) {
+                // English: Test started successfully
+                // Russian: Тест успешно запущен
+                console.log("[ProxyMust] Express cycle test started successfully");
+            } else {
+                // English: Test failed to start
+                // Russian: Не удалось запустить тест
+                const errorMsg = response?.message || "Unknown error";
+                console.error("[ProxyMust] Express cycle test start failed:", errorMsg);
+                messageBox.error(api.i18n.getMessage("settingsExpressCycleTestFailed", errorMsg));
+                popup.quickTestInProgress = false;
+                popup.quickTestBtn.html("⚡ <span>" + api.i18n.getMessage("popupQuickTestButton") + "</span>");
+                popup.quickTestBtn.removeClass("btn-danger").addClass("btn-outline-success");
+                popup.quickTestProgress.hide();
+            }
         });
     }
 
@@ -1502,10 +1570,20 @@ private static populateUpdateAvailable(dataForPopup: PopupInternalDataType) {
         let cmbActiveProxy = jQuery("#divActiveProxy #cmbActiveProxy");
         let id = cmbActiveProxy.val();
         if (!id) return;
-        PolyFill.runtimeSendMessage({ command: CommandMessages.PopupChangeActiveProxyServer, id });
-        popup.refreshActiveTabIfNeeded();
+        PolyFill.runtimeSendMessage(
+            { command: CommandMessages.PopupChangeActiveProxyServer, id },
+            (response) => {
+                if (response && response.success) {
+                    // Refresh popup data to reflect the change immediately
+                    popup.refreshPopupData();
+                    popup.refreshActiveTabIfNeeded();
+                } else {
+                    console.warn("[Popup] Failed to change active proxy server");
+                }
+            }
+        );
     }
-
+	
     private static getSelectedFailedRequests(): string[] {
         let domainList: string[] = [];
         jQuery(".failed-request-container .request-box input:checked").each((index: number, e: any) => {
@@ -1589,8 +1667,6 @@ private static populateUpdateAvailable(dataForPopup: PopupInternalDataType) {
         PolyFill.runtimeSendMessage(CommandMessages.PopupGetInitialData,
             (dataForPopup: PopupInternalDataType) => {
                 if (dataForPopup) {
-                    popup.cachedSortedProxies = null;
-                    popup.cachedSortedProxiesTime = 0;
                     console.log("[ProxyMust] Получены свежие данные попапа, currentSite =", dataForPopup.currentSite, "staleHours =", dataForPopup.staleHours);
                     console.log("[ProxyMust] autoStatus keys:", Object.keys(dataForPopup.autoStatus || {}));
                     console.log("[ProxyMust] autoStatus sample:", dataForPopup.autoStatus ? JSON.stringify(dataForPopup.autoStatus).substring(0, 500) : 'empty');
@@ -1666,7 +1742,7 @@ private static populateUpdateAvailable(dataForPopup: PopupInternalDataType) {
                     </div>
                     <div class="modal-footer" style="padding: 8px 12px; justify-content: center; border-top: none;">
                         <button type="button" class="btn btn-success btn-sm" id="rating-works" style="font-size: 1rem; padding: 4px 12px; margin: 0 4px;">${escapeHtml(worksText)}</button>
-                        <button type="button" class="btn btn-danger btn-sm" id="rating-fails" style="font-size: 1em; padding: 4px 12px; margin: 0 4px;">${escapeHtml(failsText)}</button>
+                        <button type="button" class="btn btn-danger btn-sm" id="rating-fails" style="font-size: 1rem; padding: 4px 12px; margin: 0 4px;">${escapeHtml(failsText)}</button>
                     </div>
                 </div>
             </div>
@@ -1756,8 +1832,8 @@ private static populateUpdateAvailable(dataForPopup: PopupInternalDataType) {
                     return;
                 }
                 if (response?.alreadyExists) {
-						const confirmMessage = api.i18n.getMessage("popupAddProxyExistsConfirm", response.existingProxyRating);
-						messageBox.confirm(confirmMessage, () => {
+                        const confirmMessage = api.i18n.getMessage("popupAddProxyExistsConfirm", response.existingProxyRating);
+                        messageBox.confirm(confirmMessage, () => {
                         PolyFill.runtimeSendMessage({ command: CommandMessages.PopupChangeActiveProxyServer, id: response.existingProxyId });
                         popup.showRatingDialog(proxyName, (delta: number) => {
                             if (delta !== 0) {

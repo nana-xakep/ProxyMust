@@ -142,16 +142,14 @@ export const ExpressProxyCycleTester = {
                 api.runtime.onMessage.addListener(this._cancelMessageListener);
             }
 
-			// English: Get direct IP only if enabled in settings
-			// Russian: Получаем прямой IP только если включено в настройках
-			if (Settings.current?.options?.enableDirectIpDetection === true) {
-				await IpServiceManager.ensureInitialized();
-				this._directIp = await IpServiceManager.getDirectIp();
-				console.log(`[ExpressCycleTester] Прямой IP: ${this._directIp || "не получен"}`);
-			} else {
-				this._directIp = null;
-				console.log(`[ExpressCycleTester] Определение прямого IP отключено в настройках.`);
-			}
+            if (Settings.current?.options?.enableDirectIpDetection === true) {
+                await IpServiceManager.ensureInitialized();
+                this._directIp = await IpServiceManager.getDirectIp();
+                console.log(`[ExpressCycleTester] Прямой IP: ${this._directIp || "не получен"}`);
+            } else {
+                this._directIp = null;
+                console.log(`[ExpressCycleTester] Определение прямого IP отключено в настройках.`);
+            }
 
             api.runtime.sendMessage({
                 command: "CHECK_START",
@@ -176,14 +174,14 @@ export const ExpressProxyCycleTester = {
         const subscribedProxies = SettingsOperation.getAllSubscribedProxyServers();
         const allProxies = [...manualProxies, ...subscribedProxies];
         console.log(`[ExpressCycleTester] Прочитано ${manualProxies.length} ручных + ${subscribedProxies.length} подписочных = ${allProxies.length} всего`);
-		const proxies: ProxyListItem[] = allProxies.map((proxy: any) => ({
-			id: proxy.id,
-			name: `${proxy.countryCode || ''} ${proxy.host}:${proxy.port}`,
-			protocol: proxy.protocol,
-			host: proxy.host,
-			port: proxy.port,
-			countryCode: proxy.countryCode || ''
-		}));
+        const proxies: ProxyListItem[] = allProxies.map((proxy: any) => ({
+            id: proxy.id,
+            name: `${proxy.countryCode || ''} ${proxy.host}:${proxy.port}`,
+            protocol: proxy.protocol,
+            host: proxy.host,
+            port: proxy.port,
+            countryCode: proxy.countryCode || ''
+        }));
         return proxies;
     },
 
@@ -214,7 +212,6 @@ export const ExpressProxyCycleTester = {
 
             this._completedProxies = i + 1;
 
-            // Сохраняем результат через ResultSaver
             await saveResult(proxy.id, this._testSite, result.status);
             sendProgress(
                 proxy.id,
@@ -225,14 +222,15 @@ export const ExpressProxyCycleTester = {
                 this._totalProxies,
                 "express-cycle"
             );
-            // English: Send next step to log (express-cycle)
-            // Russian: Отправляем шаг перехода к следующему прокси в лог (экспресс-цикл)
-            Core.sendTestLogStep({
-                type: 'next',
-                proxyId: proxy.id,
-                current: this._completedProxies,
-                total: this._totalProxies
-            });
+            // Отправляем next только если это не последний прокси
+            if (i < this._proxiesList.length - 1) {
+                Core.sendTestLogStep({
+                    type: 'next',
+                    proxyId: proxy.id,
+                    current: this._completedProxies,
+                    total: this._totalProxies
+                });
+            }
         }
 
         const wasCancelled = this._cancelRequested;
@@ -243,12 +241,6 @@ export const ExpressProxyCycleTester = {
 
         if (wasCancelled) {
             console.log("[ExpressCycleTester] Тест отменён");
-            // English: Send stop and complete messages to log (express-cycle)
-            // Russian: Отправляем сообщения об остановке и завершении в лог (экспресс-цикл)
-            Core.sendTestLogStep({
-                type: 'stop',
-                message: api.i18n.getMessage('testLogStop') || 'Test stopped – please wait for current checks to finish before starting another test.'
-            });
             Core.sendTestLogStep({
                 type: 'complete',
                 message: api.i18n.getMessage('testLogComplete') || 'Test completed – you may now start a new test.'
@@ -256,8 +248,6 @@ export const ExpressProxyCycleTester = {
             api.runtime.sendMessage({ command: "TEST_CANCELLED", completed: this._completedProxies, total: this._totalProxies, site: this._testSite, testType: "express-cycle" });
         } else {
             console.log(`%c[ExpressCycleTester] ========== ТЕСТ ЗАВЕРШЁН ==========`, 'color: #00ff00; font-weight: bold; font-size: 1.2em');
-            // English: Send complete message to log (express-cycle)
-            // Russian: Отправляем сообщение о завершении в лог (экспресс-цикл)
             Core.sendTestLogStep({
                 type: 'complete',
                 message: api.i18n.getMessage('testLogComplete') || 'Test completed – you may now start a new test.'
@@ -268,16 +258,7 @@ export const ExpressProxyCycleTester = {
     },
 
     async switchToProxy(proxy: ProxyListItem): Promise<void> {
-        await TestManager.switchToAlwaysEnabledProfile();
-        await TestManager.setProxyAndWait(proxy.id);
-
-        const protocolUpper = (proxy.protocol || 'HTTP').toUpperCase();
-        let delay = 1500;
-        if (protocolUpper.includes('SOCKS5')) delay = 3000;
-        else if (protocolUpper.includes('SOCKS4')) delay = 2500;
-        else if (protocolUpper === 'HTTPS') delay = 2000;
-        console.log(`%c[ExpressCycleTester] Ожидание применения прокси (${delay}мс для ${protocolUpper})...`, 'color: #ffaa00');
-        await new Promise(resolve => setTimeout(resolve, delay));
+        await TestManager.applyProxyAndWait(proxy.id, proxy.protocol);
     },
 
     async testCurrentProxy(proxy: ProxyListItem): Promise<TestResult> {
@@ -285,14 +266,14 @@ export const ExpressProxyCycleTester = {
             return { proxyId: proxy.id, proxyName: proxy.name, status: "cancelled", latencyMs: 0 };
         }
 
-		const result = await checkCycleProxy(
-			{
-				id: proxy.id,
-				name: proxy.name,
-				host: proxy.host || '',
-				port: proxy.port || 0,
-				protocol: proxy.protocol || 'HTTP',
-				countryCode: proxy.countryCode || ''
+        const result = await checkCycleProxy(
+            {
+                id: proxy.id,
+                name: proxy.name,
+                host: proxy.host || '',
+                port: proxy.port || 0,
+                protocol: proxy.protocol || 'HTTP',
+                countryCode: proxy.countryCode || ''
             },
             this._testSite,
             this._directIp,
@@ -301,7 +282,9 @@ export const ExpressProxyCycleTester = {
                 extendedTimeout: 20000,
                 faviconInterval: 150,
                 ipCheckDelay: 70,
-                retryOnDirectIp: true
+                retryOnDirectIp: true,
+                skipProtocolDetection: false,
+                skipApplyProxy: true   // <--- прокси уже применён в switchToProxy
             },
             () => this._cancelRequested
         );
@@ -315,12 +298,17 @@ export const ExpressProxyCycleTester = {
         };
     },
 
-	async cancelTest(): Promise<void> {
-		if (!this._isRunning) return;
-		console.log("[ExpressCycleTester] Отмена запрошена - текущий прокси завершится, следующие не запустятся");
-		this._cancelRequested = true;
-		await SettingsOperation.saveAllLocal(true);
-		await SettingsOperation.saveAllSync(false);
+    async cancelTest(): Promise<boolean> {
+        if (!this._isRunning) return false;
+        if (this._cancelRequested) {
+            console.log("[ExpressCycleTester] Отмена уже запрошена, игнорируем повторный вызов");
+            return false;
+        }
+        console.log("[ExpressCycleTester] Отмена запрошена - текущий прокси завершится, следующие не запустятся");
+        this._cancelRequested = true;
+        await SettingsOperation.saveAllLocal(true);
+        await SettingsOperation.saveAllSync(false);
+        return true;
     },
 
     getStatus(): { isRunning: boolean; total: number; completed: number; site: string } {

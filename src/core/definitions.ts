@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Original SmartProxy copyright:
  * This file is part of SmartProxy <https://github.com/salarcode/SmartProxy>,
  * Copyright (C) 2023 Salar Khalilzadeh <salar2k@gmail.com>
@@ -249,6 +249,8 @@ export class PopupInternalDataType {
 	public themeData: PartialThemeDataType;
 	public refreshTabOnConfigChanges: boolean;
 	public enableRating: boolean = false;
+    // ProxyMust: direct IP detection setting for popup
+    public enableDirectIpDetection: boolean = false;
 	    // ProxyMust: auto-test statuses for each proxy and site
     public autoStatus: AutoStatusMap = {};
 
@@ -714,22 +716,22 @@ export class UIOptions implements Cloneable, Comparable {
 }
 
 export class GeneralOptions implements Cloneable, Comparable {
-	public static defaultDarkThemeName: string = "themes-cosmo-dark";
+    public static defaultDarkThemeName: string = "themes-cosmo-dark";
 
-	public syncSettings: boolean = false;
-	public syncActiveProfile: boolean = true;
-	public syncActiveProxy: boolean = true;
-	public syncWebDavServerEnabled: boolean = false;
-	public syncWebDavServerUrl: string = null;
-	public syncWebDavBackupFilename: string = 'smartproxy_settings.json';
-	public syncWebDavServerUser: string = null;
-	public syncWebDavServerPassword: string = null;
-	public detectRequestFailures: boolean = true;
-	public displayFailedOnBadge: boolean = true;
-	public displayAppliedProxyOnBadge: boolean = environment.initialConfig.displayTooltipOnBadge;
-	public displayMatchedRuleOnBadge: boolean = environment.initialConfig.displayTooltipOnBadge;
-	public refreshTabOnConfigChanges: boolean = false;
-	public enableRating: boolean = false;
+    public syncSettings: boolean = false;
+    public syncActiveProfile: boolean = true;
+    public syncActiveProxy: boolean = true;
+    public syncWebDavServerEnabled: boolean = false;
+    public syncWebDavServerUrl: string = null;
+    public syncWebDavBackupFilename: string = 'smartproxy_settings.json';
+    public syncWebDavServerUser: string = null;
+    public syncWebDavServerPassword: string = null;
+    public detectRequestFailures: boolean = true;
+    public displayFailedOnBadge: boolean = true;
+    public displayAppliedProxyOnBadge: boolean = environment.initialConfig.displayTooltipOnBadge;
+    public displayMatchedRuleOnBadge: boolean = environment.initialConfig.displayTooltipOnBadge;
+    public refreshTabOnConfigChanges: boolean = false;
+    public enableRating: boolean = false;
     // Proxy Test settings
     // Настройки проверки прокси через тестовые сайты
     public enableProxyTest: boolean = false;
@@ -737,15 +739,23 @@ export class GeneralOptions implements Cloneable, Comparable {
     // English: Enable direct IP detection for proxy testing (sends real IP to external services)
     // Russian: Включить определение прямого IP для проверки прокси (отправляет реальный IP внешним сервисам)
     public enableDirectIpDetection: boolean = false;
-	public proxyPerOrigin: boolean = true;
-	public activeIncognitoProfileId: string;
-	public enableShortcuts: boolean = true;
-	public shortcutNotification: boolean = true;
-	public themeType: ThemeType = ThemeType.Auto;
-	public themesLight: string;
-	public themesLightCustomUrl: string;
-	public themesDark: string = GeneralOptions.defaultDarkThemeName;
-	public themesDarkCustomUrl: string;
+    // English: Automatically replace proxy protocol when a working one is detected during testing
+    // Russian: Автоматически заменять протокол прокси при обнаружении работающего во время тестирования
+    // English: Disabled by default to avoid slowing down tests; user can enable if needed.
+    // Russian: Отключён по умолчанию, чтобы не замедлять тесты; пользователь может включить при необходимости.
+    public autoDetectProtocol: boolean = false;
+    // English: Protocol switch mode: 'probable' or 'full'
+    // Russian: Режим перебора протоколов: 'probable' или 'full'
+    public protocolSwitchMode: 'probable' | 'full' = 'probable';
+    public proxyPerOrigin: boolean = true;
+    public activeIncognitoProfileId: string;
+    public enableShortcuts: boolean = true;
+    public shortcutNotification: boolean = true;
+    public themeType: ThemeType = ThemeType.Auto;
+    public themesLight: string;
+    public themesLightCustomUrl: string;
+    public themesDark: string = GeneralOptions.defaultDarkThemeName;
+    public themesDarkCustomUrl: string;
 
 	CopyFrom(source: any) {
 		if (source['syncSettings'] != null) this.syncSettings = source['syncSettings'] == true ? true : false;
@@ -771,6 +781,14 @@ export class GeneralOptions implements Cloneable, Comparable {
 			this.refreshTabOnConfigChanges = source['refreshTabOnConfigChanges'] == true ? true : false;
 		if (source['enableRating'] != null) this.enableRating = source['enableRating'] == true ? true : false;
 		if (source['enableDirectIpDetection'] != null) this.enableDirectIpDetection = source['enableDirectIpDetection'] == true ? true : false;
+		// English: Protocol auto-detection settings
+		// Russian: Настройки автоопределения протокола
+		if (source['autoDetectProtocol'] != null) {
+			this.autoDetectProtocol = source['autoDetectProtocol'] === true;
+		}
+		if (source['protocolSwitchMode'] === 'full' || source['protocolSwitchMode'] === 'probable') {
+			this.protocolSwitchMode = source['protocolSwitchMode'];
+		}
 		if (source['proxyPerOrigin'] != null) this.proxyPerOrigin = source['proxyPerOrigin'] == true ? true : false;
 		if (source['enableShortcuts'] != null) this.enableShortcuts = source['enableShortcuts'] == true ? true : false;
 		if (source['shortcutNotification'] != null)
@@ -802,6 +820,10 @@ export class GeneralOptions implements Cloneable, Comparable {
 		if (neq(other.refreshTabOnConfigChanges, this.refreshTabOnConfigChanges)) return false;
 		if (neq(other.enableRating, this.enableRating)) return false;
 		if (neq(other.enableDirectIpDetection, this.enableDirectIpDetection)) return false;
+		// English: Protocol auto-detection settings
+		// Russian: Настройки автоопределения протокола
+		if (neq(other.autoDetectProtocol, this.autoDetectProtocol)) return false;
+		if (neq(other.protocolSwitchMode, this.protocolSwitchMode)) return false;
 		if (neq(other.proxyPerOrigin, this.proxyPerOrigin)) return false;
 		if (neq(other.activeIncognitoProfileId, this.activeIncognitoProfileId)) return false;
 		if (neq(other.enableShortcuts, this.enableShortcuts)) return false;
@@ -1419,6 +1441,29 @@ export class UpdateInfo {
  * This file is part of SmartProxy (ProxyMust fork)
  * Copyright (C) 2025-2026 nana-xakep
  */
+ 
+ // ========================
+// English: Test log step types for logging proxy test progress
+// Russian: Типы шагов лога для логирования прогресса тестирования прокси
+// ========================
+
+/**
+ * English: Types of log steps for proxy testing progress
+ * Russian: Типы шагов лога для прогресса тестирования прокси
+ */
+export type TestLogStepType = 
+    | 'info'           // English: Informational message / Russian: Информационное сообщение
+    | 'direct-ip'      // English: Direct IP detection result / Russian: Результат определения прямого IP
+    | 'start'          // English: Proxy test started / Russian: Начало теста прокси
+    | 'ip'             // English: IP detection result / Russian: Результат определения IP
+    | 'page'           // English: Page loading result / Russian: Результат загрузки страницы
+    | 'status'         // English: Final status / Russian: Финальный статус
+    | 'next'           // English: Moving to next proxy / Russian: Переход к следующему прокси
+    | 'stop'           // English: Test stopped / Russian: Тест остановлен
+    | 'complete'       // English: Test completed / Russian: Тест завершён
+    | 'protocol-retry' // English: Protocol retry attempt / Russian: Попытка смены протокола
+    | 'protocol-changed' // English: Protocol changed / Russian: Протокол изменён
+    | 'readiness';     // English: Readiness check results / Russian: Результаты проверки готовности
 
 // ========================
 // ProxyMust additions: auto‑test statuses, priorities, manual sites, settings

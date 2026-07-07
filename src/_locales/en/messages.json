@@ -1021,22 +1021,22 @@
 		"message": "Test"
 	},
 	"settingsProxyTestStopButton": {
-    "message": "Stop"
+		"message": "Stop"
 	},
 	"settingsProxyTestCancelled": {
-    "message": "Test stopped by user"
+		"message": "Test stopped by user"
 	},
 	"settingsProxyTestResumeDialogTitle": {
-    "message": "Proxy Test"
+		"message": "Proxy Test"
 	},
 	"settingsProxyTestResumeDialogMessage": {
-    "message": "There are untested proxies. What do you want to do?"
+		"message": "There are untested proxies. What do you want to do?"
 	},
 	"settingsProxyTestResumeContinue": {
-    "message": "Continue from where stopped"
+		"message": "Continue from where stopped"
 	},
 	"settingsProxyTestResumeRestart": {
-    "message": "Restart from beginning"
+		"message": "Restart from beginning"
 	},
 	"settingsServerSubscriptionTestingButton": {
 		"message": "Testing..."
@@ -1363,10 +1363,10 @@
         "message": "Add site"
     },
 	"settingsProxyMustTestCondition": {
-    "message": "If nothing is selected, the test runs for all proxies in the table."
+		"message": "If nothing is selected, the test runs for all proxies in the table."
 	},
 	"settingsProxyMustTestResults": {
-    "message": "Results: ✅ = definitely works for this site, ☑️ = likely works (stale data or success on other sites), ❓ = no data, ⛔ = does not work."
+		"message": "Results: ✅ = definitely works for this site, ☑️ = likely works (stale data or success on other sites), ❓ = no data, ⛔ = does not work."
     },
     "settingsServersRatingPriority": {
         "message": "Rating + Priority"
@@ -1380,7 +1380,7 @@
     "settingsContextMenuMinus1": {
         "message": "(-1)"
     },
-	    "settingsContextMenuRatingTitle": {
+	"settingsContextMenuRatingTitle": {
         "message": "Manual rating"
     },
     "settingsContextMenuPlus1Desc": {
@@ -1398,7 +1398,7 @@
     "settingsContextMenuSetPin": {
         "message": "Pin"
     },
-	    "settingsContextMenuRemoveFavorite": {
+	"settingsContextMenuRemoveFavorite": {
         "message": "Remove from favorite"
     },
     "settingsContextMenuUnpin": {
@@ -1435,10 +1435,10 @@
         "message": "Invalid domain. Please enter a valid domain (e.g. youtube.com)."
     },
 	"popupCurrentSite": {
-    "message": "Current site:"
+		"message": "Current site:"
 	},
 	"settingsProxyMustRemoveSite": {
-    "message": "Remove site"
+		"message": "Remove site"
 	},
     "settingsContextMenuMoveToTop": {
         "message": "Move to top"
@@ -1447,16 +1447,16 @@
         "message": "Move to down"
     },
 	"settingsProxyMustCannotRemoveAutoSite": {
-    "message": "This site is from rules and cannot be removed manually."
+		"message": "This site is from rules and cannot be removed manually."
 	},
 	"settingsProxyMustConfirmRemoveSite": {
-    "message": "Remove \"{0}\" from test sites?"
+		"message": "Remove \"{0}\" from test sites?"
 	},
 	"settingsProxyMustSiteRemoved": {
-    "message": "Site \"{0}\" removed."
+		"message": "Site \"{0}\" removed."
 	},
 	"settingsProxyMustStaleHours": {
-    "message": "Stale hours:"
+		"message": "Stale hours:"
 	},
 	"settingsContextMenuPreciseTest": {
 		"message": "Precise test (slower, more accurate)"
@@ -1464,7 +1464,7 @@
 	"settingsContextMenuExpressTest": {
 		"message": "Express test (fast, less accurate)"
 	},
-		"popupQuickTestButton": {
+	"popupQuickTestButton": {
 		"message": "Test"
 	},
 	"popupQuickTestStopButton": {
@@ -1488,7 +1488,7 @@
 	"settingsCancelButton": {
 		"message": "Cancel"
 	},
-		"popupAddAllSuccessfulSubs": {
+	"popupAddAllSuccessfulSubs": {
 		"message": "Add working"
 	},
     "settingsContextMenuClearStatuses": {
@@ -1524,7 +1524,7 @@
     "popupTestMenuSubscriptionsOnly": {
         "message": "Express test for subscriptions only"
     },
-	    "popupTestMenuAllProxiesDesc": {
+	"popupTestMenuAllProxiesDesc": {
         "message": "Manual + subscription proxies"
     },
     "popupTestMenuSubscriptionsOnlyDesc": {
@@ -1564,10 +1564,10 @@
         "message": "No subscription proxies to test."
     },
 	"settingsCopiedAddresses": {
-    "message": "Addresses copied"
+		"message": "Addresses copied"
 	},
 	"settingsCopyFailed": {
-    "message": "Failed to copy"
+		"message": "Failed to copy"
 	},
 	"settingsAnotherTestRunning": {
 		"message": "Another test is already running. If you think it's stuck, please reload the settings page (F5) and try again."
@@ -1582,10 +1582,10 @@
 		"message": "Site \"{0}\" added."
 	},
 	"testingExplanationTitle": {
-    "message": "How proxy testing works"
+		"message": "How proxy testing works"
 	},
 	"testingExplanationText": {
-    "message": "Proxy testing uses external IP detection services (ipify.org, ifconfig.me, etc.) to verify proxy connectivity. Your IP address may be transmitted to these services solely for test purposes, and only if you choose to enable precise testing for better accuracy. No data is stored. You can safely minimize the browser while tests are running, since testing interferes with your web browsing by switching the proxies being tested. If you want to continue browsing during tests, you can use the browser's incognito/private mode."
+		"message": "Proxy testing uses external IP detection services (ipify.org, ifconfig.me, etc.) to verify proxy connectivity. Your IP address may be transmitted to these services solely for test purposes, and only if you choose to enable precise testing for better accuracy. No data is stored. You can safely minimize the browser while tests are running, since testing interferes with your web browsing by switching the proxies being tested. If you want to continue browsing during tests, you can use the browser's incognito/private mode."
 	},
 	"settingsGeneralEnableRating": {
 		"message": "Enable rating for proxies"
@@ -1633,7 +1633,7 @@
 		"message": "When enabled, your real IP address is sent to external services for comparative checking of proxy functionality. When disabled, tests will rely on site loading and proxy source data (less accurate but more private)."
 	},
 	"testLogTitle": {
-    "message": "Proxy Test Log"
+		"message": "Proxy Test Log"
 	},
 	"testLogWaiting": {
 		"message": "Waiting for test to start..."
@@ -1672,7 +1672,7 @@
 		"message": "Close"
 	},
 	"testLogOpenButton": {
-    "message": "Test Log"
+		"message": "Test Log"
 	},
 	"testLogOpenFailed": {
 		"message": "Failed to open log window."
@@ -1693,16 +1693,25 @@
 		"message": "UNKNOWN"
 	},
 	"testLogPageAvailable": {
-    "message": "available"
+		"message": "available"
 	},
 	"testLogPageUnavailable": {
 		"message": "unavailable"
 	},
+	"testLogDirectIp": {
+		"message": "Direct IP (without proxy): {0}"
+	},
+	"testLogIpMatch": {
+		"message": "matches direct IP (proxy is not working)"
+	},
+	"testLogIpMismatch": {
+		"message": "differs from direct IP: {0}"
+	},
 	"settingsShowLog": {
-    "message": "Show Log"
+		"message": "Show Log"
 	},
 	"testLogLabelProxy": {
-    "message": "PROXY"
+		"message": "PROXY"
 	},
 	"testLogLabelSite": {
 		"message": "SITE"
@@ -1713,7 +1722,7 @@
 	"settingsHideLog": {
 		"message": "Hide Log"
 	},
-		"proxyCheckerEmptyUrl": {
+	"proxyCheckerEmptyUrl": {
 		"message": "Test URL is empty"
 	},
 	"proxyCheckerNoProxyApi": {
@@ -1788,7 +1797,7 @@
 	"settingsContextMenuSelectedCount": {
 		"message": "Selected: {0}"
 	},
-			"settingsGeneralWebDavServerUrlPlaceholder": {
+	"settingsGeneralWebDavServerUrlPlaceholder": {
 		"message": "Enter WebDAV server URL"
 	},
 	"settingsGeneralWebDavServerUserPlaceholder": {
@@ -1797,13 +1806,52 @@
 	"settingsGeneralWebDavServerPasswordPlaceholder": {
 		"message": "Enter password"
 	},
-		"settingsContextMenuSetDefaultSingle": {
+	"settingsContextMenuSetDefaultSingle": {
 		"message": "Please select exactly one proxy to set as default."
 	},
 	"popupAddProxiesPartialFail": {
 		"message": "Failed to add some proxies."
 	},
-		"settingsExpressCycleTestFailed": {
+	"settingsExpressCycleTestFailed": {
 		"message": "Express cycle test failed: {0}"
+	},
+	"settingsAutoDetectProtocol": {
+		"message": "Automatically detect and switch to working protocol during testing"
+	},
+	"settingsAutoDetectProtocolDesc": {
+		"message": "Increases testing time."
+	},
+	"settingsProtocolSwitchMode": {
+		"message": "Protocol switch mode:"
+	},
+	"settingsProtocolSwitchProbable": {
+		"message": "Probable (recommended)"
+	},
+	"settingsProtocolSwitchProbableDesc": {
+		"message": "SOCKS → HTTP, HTTP → HTTPS, HTTPS → HTTP"
+	},
+	"settingsProtocolSwitchFull": {
+		"message": "Full"
+	},
+	"settingsProtocolSwitchFullDesc": {
+		"message": "HTTP → HTTPS → SOCKS4 → SOCKS5"
+	},
+	"testLogProtocolRetry": {
+		"message": "🔄 Proxy {0}:{1} declared as {2}, but not working. Trying {3}..."
+	},
+	"testLogProtocolChanged": {
+		"message": "✅ Protocol automatically changed to {0} for {1}:{2}"
+	},
+	"testLogProtocolChangeFailed": {
+		"message": "❌ No working protocol found for {0}:{1}. Tried: {2}"
+	},
+	"testLogProtocolRetryFull": {
+		"message": "🔄 Trying {0} for {1}:{2}..."
+	},
+	"testLogReadiness": {
+		"message": "Readiness for {0}: {1}/{2} checks passed — {3}"
+	},
+		"proxyCheckerCheckingSite": {
+		"message": "Checking site: {0}..."
 	}
 }

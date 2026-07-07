@@ -18,17 +18,17 @@
  */
 
 import { ProxyServer } from "./definitions";
-import { api } from "../lib/environment";
+import { api, environment } from "../lib/environment";
 import { IpServiceManager } from "./IpServiceManager";
 import { Settings } from "./Settings";
 import { Core } from "./Core";
 import { CountryCode } from "../lib/CountryCode";
+import { detectWorkingProtocol } from "./ProtocolTester";
+import { SettingsOperation } from "./SettingsOperation";
+import { TestManager } from "./TestManager";
 
 // ==================== Utility functions ====================
-// English: Checks if a string is a valid IPv4 or IPv6 address
-// Russian: Проверяет, является ли строка корректным IPv4 или IPv6 адресом
 function isValidIp(ip: string): boolean {
-    // IPv4 pattern
     const ipv4Pattern = /^(\d{1,3}\.){3}\d{1,3}$/;
     if (ipv4Pattern.test(ip)) {
         const parts = ip.split('.');
@@ -37,13 +37,10 @@ function isValidIp(ip: string): boolean {
             return num >= 0 && num <= 255 && part === String(num);
         });
     }
-    // IPv6 pattern (simplified)
     const ipv6Pattern = /^([0-9a-f]{1,4}:){1,7}[0-9a-f]{1,4}$/i;
     return ipv6Pattern.test(ip);
 }
 
-// English: Checks if two IP addresses belong to the same subnet with given prefix length (default /24)
-// Russian: Проверяет, принадлежат ли два IP-адреса одной подсети с заданной длиной префикса (по умолчанию /24)
 function isSameSubnet(ip1: string, ip2: string, prefixLength: number = 24): boolean {
     if (!isValidIp(ip1) || !isValidIp(ip2)) return false;
     const parts1 = ip1.split('.').map(Number);
@@ -63,6 +60,8 @@ export interface CheckerOptions {
     ipCheckDelay: number;
     retryOnDirectIp: boolean;
     useExpressMode: boolean;
+    skipApplyProxy?: boolean;
+    skipProtocolDetection?: boolean;
 }
 
 export interface CheckResult {
@@ -72,12 +71,16 @@ export interface CheckResult {
     latencyMs: number;
     ip?: string | null;
     error?: string;
+    detectedProtocol?: string;
+    protocolChanged?: boolean;
 }
 
 export interface CycleCheckResult {
     status: "success" | "indirect" | "ip-only" | "fail";
     latencyMs: number;
     error?: string;
+    detectedProtocol?: string;
+    protocolChanged?: boolean;
 }
 
 export interface CycleCheckOptions {
@@ -86,14 +89,13 @@ export interface CycleCheckOptions {
     faviconInterval: number;
     ipCheckDelay: number;
     retryOnDirectIp: boolean;
+    skipProtocolDetection?: boolean;
+    skipApplyProxy?: boolean;
 }
 
 // ==================== Прокси-конфиг: установка и восстановление ====================
+// (Оставляем для checkProxy, но в cycle не используем)
 
-/**
- * English: Applies a proxy configuration for testing.
- * Russian: Применяет конфигурацию прокси для тестирования.
- */
 async function applyProxyConfig(
     proxy: { host: string; port: number; protocol: string },
     useExpressMode: boolean
@@ -103,7 +105,6 @@ async function applyProxyConfig(
         throw new Error(api.i18n.getMessage('proxyCheckerNoProxyApi'));
     }
 
-    // Расчёт задержки
     let initialDelay = useExpressMode ? 1500 : 2000;
     const protocolUpper = (proxy.protocol || 'HTTP').toUpperCase();
     if (protocolUpper.includes('SOCKS5')) initialDelay = useExpressMode ? 3000 : 6500;
@@ -111,7 +112,6 @@ async function applyProxyConfig(
     else if (protocolUpper === 'HTTPS') initialDelay = useExpressMode ? 2000 : 3500;
     console.log(`[ProxyCheckerCore] Протокол ${protocolUpper}, задержка ${initialDelay}мс`);
 
-    // Сохраняем оригинальную конфигурацию
     let originalConfig: any = null;
     try {
         originalConfig = await new Promise<any>((resolve, reject) => {
@@ -128,7 +128,6 @@ async function applyProxyConfig(
         console.error(`[ProxyCheckerCore] Ошибка получения оригинальной конфигурации:`, err);
     }
 
-    // Формируем временную конфигурацию
     let scheme = (proxy.protocol || 'HTTP').toLowerCase();
     if (scheme === 'socks') scheme = 'socks5';
     const tempConfig = {
@@ -140,7 +139,6 @@ async function applyProxyConfig(
     };
     console.log(`[ProxyCheckerCore] Временная конфигурация:`, tempConfig);
 
-    // Устанавливаем
     await new Promise<void>((resolve, reject) => {
         proxyAPI.settings.set({ value: tempConfig, scope: "regular" }, () => {
             if (api.runtime?.lastError) {
@@ -155,10 +153,6 @@ async function applyProxyConfig(
     return { originalConfig, initialDelay };
 }
 
-/**
- * English: Restores the original proxy configuration.
- * Russian: Восстанавливает оригинальную конфигурацию прокси.
- */
 async function restoreProxyConfig(originalConfig: any): Promise<void> {
     const proxyAPI = api.proxy;
     if (!proxyAPI || !originalConfig) return;
@@ -204,29 +198,45 @@ export async function checkProxy(
         console.log(`[ProxyCheckerCore] Определение прямого IP отключено в настройках.`);
     }
 
-    // Применяем прокси
     let originalConfig: any = null;
     let initialDelay: number = 2000;
-    try {
-        const result = await applyProxyConfig(proxy, options.useExpressMode);
-        originalConfig = result.originalConfig;
-        initialDelay = result.initialDelay;
-    } catch (err) {
-        return { alive: false, exact: false, status: "fail", latencyMs: 0, error: String(err) };
+
+    if (options.skipApplyProxy) {
+        console.log(`[ProxyCheckerCore] skipApplyProxy=true, пропускаем применение прокси`);
+        try {
+            const proxyAPI = api.proxy;
+            if (proxyAPI) {
+                originalConfig = await new Promise<any>((resolve, reject) => {
+                    proxyAPI.settings.get({}, (d: any) => {
+                        if (api.runtime?.lastError) {
+                            reject(new Error(api.runtime.lastError.message));
+                        } else {
+                            resolve(d?.value);
+                        }
+                    });
+                });
+                console.log(`[ProxyCheckerCore] Оригинальная конфигурация сохранена (skipApplyProxy)`);
+            }
+        } catch (err) {
+            console.error(`[ProxyCheckerCore] Ошибка получения оригинальной конфигурации:`, err);
+        }
+    } else {
+        try {
+            const result = await applyProxyConfig(proxy, options.useExpressMode);
+            originalConfig = result.originalConfig;
+            initialDelay = result.initialDelay;
+        } catch (err) {
+            return { alive: false, exact: false, status: "fail", latencyMs: 0, error: String(err) };
+        }
     }
 
-    // Прозвон (knock) – короткий fetch к основному URL
     try {
         await fetch(mainUrl, { method: 'HEAD', signal: AbortSignal.timeout(5000) });
     } catch (_) { /* ignore */ }
     console.log(`[ProxyCheckerCore] Прозвон выполнен`);
 
-    // English: Ensure CountryCode is initialized for flag detection
-    // Russian: Инициализируем CountryCode для определения флага
     await CountryCode.ensureInitialized();
 
-    // English: Send start log step
-    // Russian: Отправляем шаг начала в лог
     Core.sendTestLogStep({
         type: 'start',
         proxyId: proxy.id || 'unknown',
@@ -236,22 +246,31 @@ export async function checkProxy(
         countryCode: proxy.countryCode || CountryCode.getCountryCode(proxy.host) || '',
     });
 
-    // Ожидание оседания
     await new Promise(r => setTimeout(r, initialDelay));
 
     let testCompleted = false;
+    let isMatch = false;
     let hasIndirectSuccess = false;
     let directIpDetected = false;
     let exactSuccessTriggered = false;
     let mainTabFailed = false;
     let ipCheckCompleted = false;
     let retrievedIp: string | null = null;
-    let isMatchHost: boolean = false; // English: true if IP matched proxy host (when direct IP detection disabled)
+    let isMatchHost: boolean = false;
     let finalResult: CheckResult = { alive: false, exact: false, status: "fail", latencyMs: 0 };
+    let skipRestore = false;
+//    let protocolDetectionInProgress = false; // English: flag to suppress status log during protocol detection / Russian: флаг для подавления лога статуса во время автоопределения протокола
 
-    // IP-проверка через fetch (без вкладок)
-    const ipCheckTimer = setTimeout(async () => {
-        if (testCompleted) return;
+    let ipCheckResolve: (() => void) | null = null;
+    const ipCheckPromise = new Promise<void>((resolve) => {
+        ipCheckResolve = resolve;
+    });
+
+    const performIpCheck = async () => {
+        if (testCompleted) {
+            if (ipCheckResolve) ipCheckResolve();
+            return;
+        }
         console.log(`%c[ProxyCheckerCore] Запуск проверки IP через прокси...`, 'color: #ff8800');
         let ip: string | null = null;
         try {
@@ -261,19 +280,10 @@ export async function checkProxy(
             console.error(`[ProxyCheckerCore] Ошибка fetchIpViaProxy:`, err);
         }
         ipCheckCompleted = true;
-        if (testCompleted) return;
+        retrievedIp = ip;
 
-        if (ip) {
-            retrievedIp = ip;
-            // English: Send IP obtained to log
-            // Russian: Отправляем полученный IP в лог
-            Core.sendTestLogStep({
-                type: 'ip',
-                proxyId: proxy.id || 'unknown',
-                ip: ip,
-                success: true
-            });
-            let isMatch = false;
+        if (!testCompleted && ip) {
+            isMatch = false;
             let isSameSubnetMatch = false;
             if (directIpStr !== null) {
                 if (ip === directIpStr) {
@@ -293,10 +303,8 @@ export async function checkProxy(
                     directIpDetected = true;
                     console.log(`%c[ProxyCheckerCore] ⚠️ Прямой IP (эталон) обнаружен: ${ip}`, 'color: #ff0000');
                 } else {
-                    // English: IP matches proxy host (or same subnet) – this is indirect success
-                    // Russian: IP совпадает с хостом прокси (или подсетью) – это косвенный успех
                     hasIndirectSuccess = true;
-                    isMatchHost = true; // remember that this was a host match
+                    isMatchHost = true;
                     if (!isSameSubnetMatch) {
                         console.log(`%c[ProxyCheckerCore] ☑️ Косвенный успех (прокси вернул свой IP): ${ip}`, 'color: #ffa500');
                     }
@@ -308,26 +316,34 @@ export async function checkProxy(
                 } else {
                     console.log(`%c[ProxyCheckerCore] IP через прокси: ${ip} (неизвестно, прямой или через прокси)`, 'color: #ffa500');
                 }
-                // We still set hasIndirectSuccess to true so the test doesn't fail prematurely
-                // but we will later decide between indirect and ip-only based on isMatchHost
                 hasIndirectSuccess = true;
                 isMatchHost = false;
             }
-        } else {
+            Core.sendTestLogStep({
+                type: 'ip',
+                proxyId: proxy.id || 'unknown',
+                ip: ip,
+                directIp: directIpStr,
+                isMatch: isMatch,
+                success: true
+            });
+        } else if (!testCompleted) {
             console.log(`[ProxyCheckerCore] IP не получен`);
-            // English: Send IP not obtained to log
-            // Russian: Отправляем отсутствие IP в лог
             Core.sendTestLogStep({
                 type: 'ip',
                 proxyId: proxy.id || 'unknown',
                 ip: null,
+                directIp: directIpStr,
+                isMatch: false,
                 success: false
             });
         }
-        await decideFinalResult();
-    }, options.ipCheckDelay);
 
-    // Fetch основного URL и фавикона
+        if (ipCheckResolve) ipCheckResolve();
+    };
+
+    performIpCheck();
+
     const mainFetch = async (url: string, timeoutMs: number): Promise<boolean> => {
         console.log(`[ProxyCheckerCore] ⏳ Fetch основного URL: ${url}`);
         const controller = new AbortController();
@@ -373,13 +389,18 @@ export async function checkProxy(
 
     const decideFinalResult = async () => {
         if (testCompleted) return;
-        // English: If IP check is not completed, wait 100ms and try again
-        // Russian: Если IP-проверка не завершена, ждём 100мс и повторяем
         if (!ipCheckCompleted) {
             setTimeout(() => decideFinalResult(), 100);
             return;
         }
         if (testCompleted) return;
+
+        // English: Determine if protocol auto-detection will be attempted
+        // Russian: Определяем, будет ли выполнено автоопределение протокола
+        const willAutoDetect = !options.skipProtocolDetection &&
+                               Settings.current?.options?.autoDetectProtocol !== false &&
+                               finalResult?.status === "fail" &&
+                               !finalResult?.protocolChanged;
 
         if (exactSuccessTriggered) {
             await finishTest("success");
@@ -388,17 +409,11 @@ export async function checkProxy(
 
         if (hasIndirectSuccess) {
             if (mainTabFailed) {
-                // English: Determine if this is a real indirect success or just unknown
-                // Russian: Определяем, является ли это реальным косвенным успехом или просто неизвестно
                 const directIpEnabled = Settings.current?.options?.enableDirectIpDetection === true;
                 let isRealIndirect = false;
                 if (directIpEnabled) {
-                    // English: If direct IP detection is enabled and IP differs from direct IP, it's indirect success
-                    // Russian: Если определение прямого IP включено и IP отличается от прямого, это косвенный успех
-                    isRealIndirect = true; // hasIndirectSuccess already means it differs from direct IP
+                    isRealIndirect = true;
                 } else {
-                    // English: If direct IP detection is disabled, only host match is real indirect success
-                    // Russian: Если определение прямого IP отключено, только совпадение с хостом — реальный косвенный успех
                     isRealIndirect = isMatchHost;
                 }
 
@@ -425,48 +440,51 @@ export async function checkProxy(
 
         if (directIpDetected) {
             if (Settings.current?.options?.enableDirectIpDetection === false) {
-                await finishTest("fail", api.i18n.getMessage('proxyCheckerProxyReturnsOwnIp'));
+                await finishTest("fail", api.i18n.getMessage('proxyCheckerProxyReturnsOwnIp'), !willAutoDetect);
                 return;
             }
             if (options.retryOnDirectIp) {
                 console.log(`[ProxyCheckerCore] Прямой IP, повторная проверка`);
-                await finishTest("fail", "DIRECT_IP_RETRY");
+                skipRestore = true;
+                await finishTest("fail", "DIRECT_IP_RETRY", !willAutoDetect);
                 return;
             }
         }
 
         if (mainTabFailed && ipCheckCompleted) {
-            // English: If IP was retrieved even though main tab failed, treat as ip-only (unknown)
-            // Russian: Если IP был получен, даже если основная вкладка не загрузилась, считаем неизвестным (ip-only)
             if (retrievedIp !== null) {
                 await finishTest("ip-only", api.i18n.getMessage('proxyCheckerUnknownIpOnly'));
             } else {
-                await finishTest("fail", api.i18n.getMessage('proxyCheckerProxyNotWorking'));
+                await finishTest("fail", api.i18n.getMessage('proxyCheckerProxyNotWorking'), !willAutoDetect);
             }
         }
     };
 
-    const finishTest = async (status: "success" | "indirect" | "ip-only" | "fail", error?: string) => {
+    const finishTest = async (status: "success" | "indirect" | "ip-only" | "fail", error?: string, sendLog: boolean = true, protocolOverride?: string) => {
         if (testCompleted) return;
         testCompleted = true;
-        // English: Send final status to log
-        // Russian: Отправляем финальный статус в лог
-        Core.sendTestLogStep({
-            type: 'status',
-            proxyId: proxy.id || 'unknown',
-            status: status,
-            statusText: status
-        });
+        if (sendLog) {
+            Core.sendTestLogStep({
+                type: 'status',
+                proxyId: proxy.id || 'unknown',
+                status: status,
+                statusText: status,
+                host: proxy.host,
+                port: proxy.port,
+                protocol: protocolOverride || proxy.protocol,
+                countryCode: proxy.countryCode || CountryCode.getCountryCode(proxy.host) || ''
+            });
+        }
         const alive = status === "success" || status === "indirect" || status === "ip-only";
         const exact = status === "success";
         finalResult = { alive, exact, status, latencyMs: Date.now() - startTime, ip: retrievedIp, error };
 
         clearTimeout(mainTimeoutId);
         clearTimeout(extendedTimer);
-        clearTimeout(ipCheckTimer);
 
-        // Восстанавливаем оригинальный прокси
-        await restoreProxyConfig(originalConfig);
+        if (!skipRestore) {
+            await restoreProxyConfig(originalConfig);
+        }
 
         const latency = finalResult.latencyMs;
         if (alive && exact) {
@@ -484,8 +502,15 @@ export async function checkProxy(
     let mainTimeoutId: any = null;
 
     try {
-        // Запускаем основные fetch запросы
         console.log(`[ProxyCheckerCore] 🌐 Запрос к основному URL: ${mainUrl}`);
+        // English: Send log message that site check is starting
+        // Russian: Отправляем сообщение о начале проверки сайта
+        Core.sendTestLogStep({
+            type: 'info',
+            message: api.i18n.getMessage('proxyCheckerCheckingSite').replace('{0}', mainUrl),
+            timestamp: Date.now()
+        });
+
         const mainFetchPromise = mainFetch(mainUrl, options.mainTimeout);
         console.log(`[ProxyCheckerCore] 🌐 Запрос к фавикону: ${faviconUrl}`);
         const faviconFetchPromise = faviconFetch(faviconUrl, options.mainTimeout);
@@ -504,8 +529,6 @@ export async function checkProxy(
             mainTabFailed = true;
         }
 
-        // English: Send page availability to log
-        // Russian: Отправляем доступность страницы в лог
         Core.sendTestLogStep({
             type: 'page',
             proxyId: proxy.id || 'unknown',
@@ -513,9 +536,9 @@ export async function checkProxy(
             pageSuccess: mainSuccess || faviconSuccess
         });
 
+        await ipCheckPromise;
         await decideFinalResult();
 
-        // Основной таймаут
         mainTimeoutId = setTimeout(() => {
             if (!testCompleted) {
                 console.log(`%c[ProxyCheckerCore] Таймаут ${options.mainTimeout}мс`, 'color: #ffaa00');
@@ -528,11 +551,146 @@ export async function checkProxy(
             await new Promise(r => setTimeout(r, 100));
         }
 
-        if (!finalResult.alive && finalResult.error === "DIRECT_IP_RETRY" && options.retryOnDirectIp) {
-            console.log(`[ProxyCheckerCore] Повторная проверка без retry`);
-            const newOptions = { ...options, retryOnDirectIp: false };
-            return checkProxy(proxy, testUrl, newOptions);
+        // ==================== Обработка прямого IP с переключением профиля ====================
+        if (finalResult.error === "DIRECT_IP_RETRY" && options.retryOnDirectIp) {
+            console.log(`[ProxyCheckerCore] DIRECT_IP_RETRY detected, forcing proxy application and retesting...`);
+            const proxyId = proxy.id || `${proxy.host}:${proxy.port}`;
+            await TestManager.switchToAlwaysEnabledProfile();
+            await TestManager.setProxyAndWait(proxyId);
+            await new Promise(r => setTimeout(r, 1500));
+
+            const retestOptions: CheckerOptions = {
+                ...options,
+                skipApplyProxy: true,
+                retryOnDirectIp: false
+            };
+            console.log(`[ProxyCheckerCore] 🔁 Retesting ${proxy.host}:${proxy.port} after forcing proxy application...`);
+            const retestResult = await checkProxy(proxy, testUrl, retestOptions);
+            finalResult = {
+                ...retestResult,
+                detectedProtocol: retestResult.detectedProtocol,
+                protocolChanged: retestResult.protocolChanged
+            };
+            await restoreProxyConfig(originalConfig);
         }
+        // ==================== End обработки прямого IP ====================
+
+        // ==================== Protocol Auto-Detection ====================
+        if (!options.skipProtocolDetection &&
+            Settings.current?.options?.autoDetectProtocol !== false &&
+            finalResult.status === "fail" &&
+            !finalResult.protocolChanged) {
+
+            // English: Set flag to suppress status logging from finishTest during detection
+            // Russian: Устанавливаем флаг, чтобы подавить логирование статуса из finishTest во время поиска
+//            protocolDetectionInProgress = true;
+
+            const proxyId = proxy.id || `${proxy.host}:${proxy.port}`;
+            const attempts = (global as any).__protocolAutoDetectionAttempts?.[proxyId] || 0;
+
+            if (attempts < 1) {
+                if (!(global as any).__protocolAutoDetectionAttempts) {
+                    (global as any).__protocolAutoDetectionAttempts = {};
+                }
+                (global as any).__protocolAutoDetectionAttempts[proxyId] = attempts + 1;
+
+                console.log(`[ProxyCheckerCore] 🔁 Proxy ${proxy.host}:${proxy.port} failed with protocol ${proxy.protocol}. Trying to detect working protocol... (attempt ${attempts + 1})`);
+
+                const detectionResult = await detectWorkingProtocol(
+                    proxy,
+                    testUrl,
+                    options,
+                    finalResult,
+                    true,
+                    attempts,
+                    () => false
+                );
+
+                if (detectionResult && detectionResult.switched) {
+                    const newProtocol = detectionResult.protocol;
+                    console.log(`%c[ProxyCheckerCore] ✅ Working protocol found: ${newProtocol} for ${proxy.host}:${proxy.port}`, 'color: #00ff88; font-weight: bold');
+
+                    if (proxyId) {
+                        const settingsProxy = Settings.current?.proxyServers?.find((p: any) => p.id === proxyId);
+                        if (settingsProxy) {
+                            settingsProxy.protocol = newProtocol;
+                            console.log(`[ProxyCheckerCore] ✅ Protocol saved in Settings: ${proxy.host}:${proxy.port} -> ${newProtocol}`);
+                            SettingsOperation.saveProxyServers();
+                            SettingsOperation.saveAllSync(false);
+                            Settings.updateActiveSettings();
+                            try {
+                                api.runtime.sendMessage({
+                                    command: "PROXY_PROTOCOL_CHANGED",
+                                    proxyId: proxyId,
+                                    newProtocol: newProtocol
+                                });
+                            } catch (e) { /* ignore */ }
+                        } else {
+                            console.warn(`[ProxyCheckerCore] ⚠️ Proxy ${proxyId} not found in Settings`);
+                        }
+                    }
+
+                    // Применяем прокси через стандартный механизм
+                    await TestManager.switchToAlwaysEnabledProfile();
+                    const updatedProxy = SettingsOperation.findProxyServerById(proxyId);
+                    if (updatedProxy) {
+                        await TestManager.setProxyAndWait(updatedProxy.id);
+                        await new Promise(r => setTimeout(r, 1500));
+                    } else {
+                        await TestManager.setProxyAndWait(proxy.id);
+                    }
+
+                    const retestOptions: CheckerOptions = {
+                        ...options,
+                        skipProtocolDetection: true,
+                        skipApplyProxy: true
+                    };
+                    // English: Use updatedProxy for retest (with new protocol) if available, otherwise create a copy with new protocol
+                    // Russian: Используем updatedProxy для ретеста (с новым протоколом) если доступен, иначе создаём копию с новым протоколом
+                    const retestProxy = updatedProxy || Object.assign({}, proxy, { protocol: newProtocol });
+                    console.log(`[ProxyCheckerCore] 🔁 Retesting ${retestProxy.host}:${retestProxy.port} with new protocol ${newProtocol}...`);
+                    const retestResult = await checkProxy(retestProxy, testUrl, retestOptions);
+
+                    let finalStatus = retestResult.status;
+                    let finalIp = retestResult.ip;
+                    if (detectionResult.switched) {
+                        if (retestResult.status === "fail") {
+                            finalStatus = "indirect";
+                            if (detectionResult.result && detectionResult.result.ip) {
+                                finalIp = detectionResult.result.ip;
+                            }
+                        } else {
+                            finalStatus = retestResult.status;
+                            finalIp = retestResult.ip || (detectionResult.result ? detectionResult.result.ip : null);
+                        }
+                    }
+
+                    finalResult = {
+                        ...retestResult,
+                        status: finalStatus,
+                        alive: finalStatus === "success" || finalStatus === "indirect" || finalStatus === "ip-only",
+                        ip: finalIp,
+                        detectedProtocol: newProtocol,
+                        protocolChanged: true
+                    };
+                    delete (global as any).__protocolAutoDetectionAttempts[proxyId];
+
+                    // English: Finish test with corrected status and new protocol
+                    // Russian: Завершаем тест с исправленным статусом и новым протоколом
+                    await finishTest(finalStatus, undefined, true, newProtocol);
+                } else {
+                    console.log(`[ProxyCheckerCore] ❌ No working protocol found for ${proxy.host}:${proxy.port}`);
+                    // English: Finish test with fail status and old protocol
+                    // Russian: Завершаем тест со статусом fail и старым протоколом
+                    await finishTest("fail", undefined, true);
+                }
+            }
+
+            // English: Reset protocol detection flag after detection attempt
+            // Russian: Сбрасываем флаг поиска протокола после попытки
+ //           protocolDetectionInProgress = false;
+        }
+        // ==================== End Protocol Auto-Detection ====================
 
         return finalResult;
 
@@ -541,12 +699,14 @@ export async function checkProxy(
         await finishTest("fail", err.message);
         return finalResult;
     } finally {
-        await restoreProxyConfig(originalConfig);
+        if (!skipRestore) {
+            await restoreProxyConfig(originalConfig);
+        }
     }
 }
 
 // ==================== Проверка для циклических тестов (Cycle / Express-Cycle) ====================
-
+// В этом варианте мы НЕ используем applyProxyConfig, а полагаемся на TestManager
 export async function checkCycleProxy(
     proxy: { id: string; name: string; host: string; port: number; protocol: string; countryCode?: string },
     testUrl: string,
@@ -567,26 +727,19 @@ export async function checkCycleProxy(
 
     console.log(`[ProxyCheckerCore][Cycle] Проверка ${proxy.host}:${proxy.port} для ${mainUrl}`);
 
-    // English: Send start log step for cycle test
-    // Russian: Отправляем шаг начала для циклического теста
-// Ensure CountryCode is initialized
-await CountryCode.ensureInitialized();
-const countryCode = (proxy as any).countryCode || CountryCode.getCountryCode(proxy.host) || '';
-console.log(`[ProxyCheckerCore][Cycle] 🔍 countryCode for ${proxy.host}:`, {
-    fromProxy: (proxy as any).countryCode,
-    fromCountryCode: CountryCode.getCountryCode(proxy.host),
-    final: countryCode
-});
-Core.sendTestLogStep({
-    type: 'start',
-    proxyId: proxy.id || 'unknown',
-    host: proxy.host,
-    port: proxy.port,
-    protocol: proxy.protocol,
-    countryCode: countryCode,
-});
+    await CountryCode.ensureInitialized();
+    const countryCode = (proxy as any).countryCode || CountryCode.getCountryCode(proxy.host) || '';
+    Core.sendTestLogStep({
+        type: 'start',
+        proxyId: proxy.id || 'unknown',
+        host: proxy.host,
+        port: proxy.port,
+        protocol: proxy.protocol,
+        countryCode: countryCode,
+    });
 
     let testCompleted = false;
+    let isMatch = false;
     let hasIndirectSuccess = false;
     let directIpDetected = false;
     let exactSuccessTriggered = false;
@@ -595,10 +748,20 @@ Core.sendTestLogStep({
     let retrievedIp: string | null = null;
     let isMatchHost: boolean = false;
     let finalResult: CycleCheckResult = { status: "fail", latencyMs: 0 };
+    let protocolDetectionInProgress = false; // English: flag to suppress status log during protocol detection / Russian: флаг для подавления лога статуса во время автоопределения протокола
 
-    // IP-проверка через fetch (без вкладок)
-    const ipCheckTimer = setTimeout(async () => {
-        if (testCompleted) return;
+    // Здесь НЕТ применения прокси через applyProxyConfig
+
+    let ipCheckResolve: (() => void) | null = null;
+    const ipCheckPromise = new Promise<void>((resolve) => {
+        ipCheckResolve = resolve;
+    });
+
+    const performIpCheck = async () => {
+        if (testCompleted) {
+            if (ipCheckResolve) ipCheckResolve();
+            return;
+        }
         console.log(`[ProxyCheckerCore][Cycle] Запуск проверки IP...`);
         let ip: string | null = null;
         try {
@@ -608,18 +771,10 @@ Core.sendTestLogStep({
             console.error(`[ProxyCheckerCore][Cycle] Ошибка fetchIpViaProxy:`, err);
         }
         ipCheckCompleted = true;
-        if (testCompleted) return;
-        if (ip) {
-            retrievedIp = ip;
-            // English: Send IP obtained to log (cycle)
-            // Russian: Отправляем полученный IP в лог (цикл)
-            Core.sendTestLogStep({
-                type: 'ip',
-                proxyId: proxy.id || 'unknown',
-                ip: ip,
-                success: true
-            });
-            let isMatch = false;
+        retrievedIp = ip;
+
+        if (!testCompleted && ip) {
+            isMatch = false;
             let isSameSubnetMatch = false;
             if (directIp !== null) {
                 if (ip === directIp) {
@@ -655,21 +810,31 @@ Core.sendTestLogStep({
                 hasIndirectSuccess = true;
                 isMatchHost = false;
             }
-        } else {
+            Core.sendTestLogStep({
+                type: 'ip',
+                proxyId: proxy.id || 'unknown',
+                ip: ip,
+                directIp: directIp,
+                isMatch: isMatch,
+                success: true
+            });
+        } else if (!testCompleted) {
             console.log(`[ProxyCheckerCore][Cycle] IP не получен`);
-            // English: Send IP not obtained to log (cycle)
-            // Russian: Отправляем отсутствие IP в лог (цикл)
             Core.sendTestLogStep({
                 type: 'ip',
                 proxyId: proxy.id || 'unknown',
                 ip: null,
+                directIp: directIp,
+                isMatch: false,
                 success: false
             });
         }
-        await decideFinalResult();
-    }, options.ipCheckDelay);
 
-    // Fetch основного URL и фавикона
+        if (ipCheckResolve) ipCheckResolve();
+    };
+
+    performIpCheck();
+
     const mainFetch = async (url: string, timeoutMs: number): Promise<boolean> => {
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
@@ -708,8 +873,6 @@ Core.sendTestLogStep({
 
     const decideFinalResult = async () => {
         if (testCompleted) return;
-        // English: If IP check is not completed, wait 100ms and try again
-        // Russian: Если IP-проверка не завершена, ждём 100мс и повторяем
         if (!ipCheckCompleted) {
             setTimeout(() => decideFinalResult(), 100);
             return;
@@ -723,17 +886,11 @@ Core.sendTestLogStep({
 
         if (hasIndirectSuccess) {
             if (mainTabFailed) {
-                // English: Determine if this is a real indirect success or just unknown
-                // Russian: Определяем, является ли это реальным косвенным успехом или просто неизвестно
                 const directIpEnabled = Settings.current?.options?.enableDirectIpDetection === true;
                 let isRealIndirect = false;
                 if (directIpEnabled) {
-                    // English: If direct IP detection is enabled and IP differs from direct IP, it's indirect success
-                    // Russian: Если определение прямого IP включено и IP отличается от прямого, это косвенный успех
-                    isRealIndirect = true; // hasIndirectSuccess already means it differs from direct IP
+                    isRealIndirect = true;
                 } else {
-                    // English: If direct IP detection is disabled, only host match is real indirect success
-                    // Russian: Если определение прямого IP отключено, только совпадение с хостом — реальный косвенный успех
                     isRealIndirect = isMatchHost;
                 }
 
@@ -771,8 +928,6 @@ Core.sendTestLogStep({
         }
 
         if (mainTabFailed && ipCheckCompleted) {
-            // English: If IP was retrieved even though main tab failed, treat as ip-only (unknown)
-            // Russian: Если IP был получен, даже если основная вкладка не загрузилась, считаем неизвестным (ip-only)
             if (retrievedIp !== null) {
                 await finishTest("ip-only", api.i18n.getMessage('proxyCheckerUnknownIpOnly'));
             } else {
@@ -784,19 +939,24 @@ Core.sendTestLogStep({
     const finishTest = async (status: "success" | "indirect" | "ip-only" | "fail", error?: string) => {
         if (testCompleted) return;
         testCompleted = true;
-        // English: Send final status to log (cycle)
-        // Russian: Отправляем финальный статус в лог (цикл)
-        Core.sendTestLogStep({
-            type: 'status',
-            proxyId: proxy.id || 'unknown',
-            status: status,
-            statusText: status
-        });
+        // English: Do not send status log if protocol detection is in progress (will be sent after retest)
+        // Russian: Не отправляем лог статуса, если идёт поиск протокола (будет отправлен после ретеста)
+        if (!protocolDetectionInProgress) {
+            Core.sendTestLogStep({
+                type: 'status',
+                proxyId: proxy.id || 'unknown',
+                status: status,
+                statusText: status,
+                host: proxy.host,
+                port: proxy.port,
+                protocol: proxy.protocol,
+                countryCode: (proxy as any).countryCode || CountryCode.getCountryCode(proxy.host) || ''
+            });
+        }
         finalResult = { status, latencyMs: Date.now() - startTime, error };
 
         clearTimeout(mainTimeoutId);
         clearTimeout(extendedTimer);
-        clearTimeout(ipCheckTimer);
 
         const latency = finalResult.latencyMs;
         if (status === "success") {
@@ -818,8 +978,15 @@ Core.sendTestLogStep({
             return { status: "fail", latencyMs: 0, error: "CANCELLED" };
         }
 
-        // Запускаем основные fetch запросы
         console.log(`[ProxyCheckerCore][Cycle] 🌐 Запрос к основному URL: ${mainUrl}`);
+        // English: Send log message that site check is starting
+        // Russian: Отправляем сообщение о начале проверки сайта
+        Core.sendTestLogStep({
+            type: 'info',
+            message: api.i18n.getMessage('proxyCheckerCheckingSite').replace('{0}', mainUrl),
+            timestamp: Date.now()
+        });
+
         const mainFetchPromise = mainFetch(mainUrl, options.mainTimeout);
         console.log(`[ProxyCheckerCore][Cycle] 🌐 Запрос к фавикону: ${faviconUrl}`);
         const faviconFetchPromise = faviconFetch(faviconUrl, options.mainTimeout);
@@ -838,8 +1005,6 @@ Core.sendTestLogStep({
             mainTabFailed = true;
         }
 
-        // English: Send page availability to log (cycle)
-        // Russian: Отправляем доступность страницы в лог (цикл)
         Core.sendTestLogStep({
             type: 'page',
             proxyId: proxy.id || 'unknown',
@@ -847,9 +1012,9 @@ Core.sendTestLogStep({
             pageSuccess: mainSuccess || faviconSuccess
         });
 
+        await ipCheckPromise;
         await decideFinalResult();
 
-        // Основной таймаут
         mainTimeoutId = setTimeout(() => {
             if (!testCompleted) {
                 console.log(`[ProxyCheckerCore][Cycle] Таймаут ${options.mainTimeout}мс`);
@@ -866,11 +1031,211 @@ Core.sendTestLogStep({
             await new Promise(r => setTimeout(r, 100));
         }
 
+        // ==================== Обработка прямого IP с переключением профиля для цикла ====================
         if (finalResult.error === "DIRECT_IP_RETRY" && options.retryOnDirectIp) {
-            console.log(`[ProxyCheckerCore][Cycle] Повторная проверка без retry`);
-            const newOptions = { ...options, retryOnDirectIp: false };
-            return checkCycleProxy(proxy, testUrl, directIp, newOptions, cancelRequested);
+            console.log(`[ProxyCheckerCore][Cycle] DIRECT_IP_RETRY detected, forcing proxy application and retesting...`);
+            const proxyId = proxy.id || `${proxy.host}:${proxy.port}`;
+            await TestManager.switchToAlwaysEnabledProfile();
+            await TestManager.setProxyAndWait(proxyId);
+            await new Promise(r => setTimeout(r, 1500));
+
+            const retestOptions: CycleCheckOptions = {
+                ...options,
+                skipApplyProxy: true,
+                retryOnDirectIp: false
+            };
+            console.log(`[ProxyCheckerCore][Cycle] 🔁 Retesting ${proxy.host}:${proxy.port} after forcing proxy application...`);
+            const retestResult = await checkCycleProxy(proxy, testUrl, directIp, retestOptions, cancelRequested);
+            finalResult = {
+                ...retestResult,
+                detectedProtocol: retestResult.detectedProtocol,
+                protocolChanged: retestResult.protocolChanged
+            };
         }
+        // ==================== End обработки прямого IP для цикла ====================
+
+        // ==================== Protocol Auto-Detection for Cycle ====================
+        if (!options.skipProtocolDetection &&
+            Settings.current?.options?.autoDetectProtocol !== false &&
+            finalResult.status === "fail" &&
+            !finalResult.protocolChanged) {
+
+            // English: Set flag to suppress status logging from finishTest during detection
+            // Russian: Устанавливаем флаг, чтобы подавить логирование статуса из finishTest во время поиска
+            protocolDetectionInProgress = true;
+
+            const cycleProxyId = proxy.id || `${proxy.host}:${proxy.port}`;
+            const attempts = (global as any).__protocolAutoDetectionAttempts?.[cycleProxyId] || 0;
+
+            if (attempts < 1) {
+                if (environment.name === "Firefox") {
+                    console.log(`[ProxyCheckerCore][Cycle] Firefox: forcing proxy ${proxy.host}:${proxy.port} (${proxy.protocol}) before detection`);
+                    await TestManager.switchToAlwaysEnabledProfile();
+                    await TestManager.setProxyAndWait(proxy.id);
+                    await new Promise(r => setTimeout(r, 500));
+                }
+
+                if (!(global as any).__protocolAutoDetectionAttempts) {
+                    (global as any).__protocolAutoDetectionAttempts = {};
+                }
+                (global as any).__protocolAutoDetectionAttempts[cycleProxyId] = attempts + 1;
+
+                console.log(`[ProxyCheckerCore][Cycle] 🔁 Proxy ${proxy.host}:${proxy.port} failed. Trying protocol detection... (attempt ${attempts + 1})`);
+
+                const cycleResult: CheckResult = {
+                    alive: true,
+                    exact: false,
+                    status: finalResult.status,
+                    latencyMs: finalResult.latencyMs,
+                    ip: retrievedIp,
+                    error: finalResult.error
+                };
+
+                const checkerOptions: CheckerOptions = {
+                    mainTimeout: options.mainTimeout,
+                    extendedTimeout: options.extendedTimeout,
+                    faviconInterval: options.faviconInterval,
+                    ipCheckDelay: options.ipCheckDelay,
+                    retryOnDirectIp: options.retryOnDirectIp,
+                    useExpressMode: false,
+                    skipApplyProxy: false, // не используется, но оставим
+                    skipProtocolDetection: true
+                };
+
+                const proxyForDetection: ProxyServer = {
+                    ...proxy,
+                    rating: 0,
+                    failoverTimeout: 0,
+                    priority: null,
+                    createdAt: Date.now(),
+                    CopyFrom: function() {},
+                    isValid: function() { return true; }
+                } as unknown as ProxyServer;
+
+                const detectionResult = await detectWorkingProtocol(
+                    proxyForDetection,
+                    testUrl,
+                    checkerOptions,
+                    cycleResult,
+                    true,
+                    attempts,
+                    cancelRequested
+                );
+
+                if (detectionResult && detectionResult.switched) {
+                    const newProtocol = detectionResult.protocol;
+                    console.log(`%c[ProxyCheckerCore][Cycle] ✅ Working protocol found: ${newProtocol} for ${proxy.host}:${proxy.port}`, 'color: #00ff88; font-weight: bold');
+
+                    let updatedProxy: ProxyServer | null = null;
+                    if (cycleProxyId) {
+                        const settingsProxy = Settings.current?.proxyServers?.find((p: any) => p.id === cycleProxyId);
+                        if (settingsProxy) {
+                            settingsProxy.protocol = newProtocol;
+                            console.log(`[ProxyCheckerCore][Cycle] ✅ Protocol saved in Settings: ${proxy.host}:${proxy.port} -> ${newProtocol}`);
+                            SettingsOperation.saveProxyServers();
+                            SettingsOperation.saveAllSync(false);
+                            Settings.updateActiveSettings();
+                            try {
+                                api.runtime.sendMessage({
+                                    command: "PROXY_PROTOCOL_CHANGED",
+                                    proxyId: cycleProxyId,
+                                    newProtocol: newProtocol
+                                });
+                            } catch (e) { /* ignore */ }
+                            updatedProxy = Settings.current?.proxyServers?.find((p: any) => p.id === cycleProxyId) || null;
+                        } else {
+                            console.warn(`[ProxyCheckerCore][Cycle] ⚠️ Proxy ${cycleProxyId} not found in Settings`);
+                        }
+                    }
+
+                    const retestProxy = updatedProxy || Object.assign({}, proxy, { protocol: newProtocol });
+
+                    // ---- Применяем прокси через унифицированный метод TestManager ----
+                    await TestManager.applyProxyAndWait(retestProxy.id, retestProxy.protocol);
+
+                    // Дополнительная проверка готовности (опционально, но оставим)
+                    let proxyReady = false;
+                    let attempts = 0;
+                    while (attempts < 3 && !proxyReady) {
+                        await new Promise(r => setTimeout(r, 1000));
+                        try {
+                            const ip = await IpServiceManager.fetchIpViaProxy(
+                                { host: retestProxy.host, port: retestProxy.port, protocol: newProtocol },
+                                true,
+                                true // skipDirectIp
+                            );
+                            if (ip) {
+                                proxyReady = true;
+                                console.log(`[ProxyCheckerCore][Cycle] ✅ Proxy ${retestProxy.host}:${retestProxy.port} ready with IP: ${ip}`);
+                            }
+                        } catch (e) {
+                            console.log(`[ProxyCheckerCore][Cycle] ⏳ Waiting for proxy to be ready (attempt ${attempts + 1})...`);
+                        }
+                        attempts++;
+                    }
+                    if (!proxyReady) {
+                        console.warn(`[ProxyCheckerCore][Cycle] ⚠️ Proxy ${retestProxy.host}:${retestProxy.port} not ready after ${attempts} attempts, proceeding anyway...`);
+                    }
+
+                    const retestOptions: CycleCheckOptions = {
+                        ...options,
+                        skipProtocolDetection: true,
+                        skipApplyProxy: true
+                    };
+                    console.log(`[ProxyCheckerCore][Cycle] 🔁 Retesting ${retestProxy.host}:${retestProxy.port} with new protocol ${newProtocol} (skipApplyProxy=true)...`);
+                    const retestResult = await checkCycleProxy(retestProxy, testUrl, directIp, retestOptions, cancelRequested);
+
+                    let finalStatus = retestResult.status;
+                    if (detectionResult.switched) {
+                        if (retestResult.status === "fail") {
+                            finalStatus = "indirect";
+                        } else {
+                            finalStatus = retestResult.status;
+                        }
+                    }
+
+                    finalResult = {
+                        ...retestResult,
+                        status: finalStatus,
+                        detectedProtocol: newProtocol,
+                        protocolChanged: true
+                    };
+                    delete (global as any).__protocolAutoDetectionAttempts[cycleProxyId];
+
+                    // English: Send corrected status to log if protocol was switched
+                    // Russian: Отправляем исправленный статус в лог, если протокол был переключён
+                    Core.sendTestLogStep({
+                        type: 'status',
+                        proxyId: proxy.id || 'unknown',
+                        status: finalStatus,
+                        statusText: finalStatus,
+                        host: proxy.host,
+                        port: proxy.port,
+                        protocol: newProtocol,
+                        countryCode: (proxy as any).countryCode || CountryCode.getCountryCode(proxy.host) || ''
+                    });
+                } else {
+                    console.log(`[ProxyCheckerCore][Cycle] ❌ No working protocol found for ${proxy.host}:${proxy.port}`);
+                    // English: Send fail status to log if detection failed
+                    // Russian: Отправляем статус fail в лог, если поиск не удался
+                    Core.sendTestLogStep({
+                        type: 'status',
+                        proxyId: proxy.id || 'unknown',
+                        status: "fail",
+                        statusText: "fail",
+                        host: proxy.host,
+                        port: proxy.port,
+                        protocol: proxy.protocol,
+                        countryCode: (proxy as any).countryCode || CountryCode.getCountryCode(proxy.host) || ''
+                    });
+                }
+            }
+
+            // English: Reset protocol detection flag after detection attempt
+            // Russian: Сбрасываем флаг поиска протокола после попытки
+            protocolDetectionInProgress = false;
+        }
+        // ==================== End Protocol Auto-Detection for Cycle ====================
 
         return finalResult;
 
@@ -878,5 +1243,7 @@ Core.sendTestLogStep({
         console.error(`[ProxyCheckerCore][Cycle] Ошибка:`, err);
         await finishTest("fail", err.message);
         return finalResult;
+    } finally {
+        // Ничего не восстанавливаем, т.к. не применяли proxy через applyProxyConfig
     }
 }

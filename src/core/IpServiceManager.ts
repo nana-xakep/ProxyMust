@@ -19,6 +19,11 @@
 
 import { api, environment } from "../lib/environment";
 import { IP_SERVICES } from "./TestConstants";
+import { Settings } from "./Settings";
+import { ProxyEngine } from "./ProxyEngine";
+import { SmartProfileTypeBuiltinIds } from "./definitions";
+import { SettingsOperation } from "./SettingsOperation";
+import { Core } from "./Core";
 
 // ==================== Type Definitions ====================
 
@@ -93,26 +98,57 @@ async function getRankedIpServicesInternal(): Promise<IpServiceResult[]> {
  * English: Executes a function while temporarily switching proxy to direct (system) mode.
  * Russian: Выполняет функцию, временно переключив прокси на прямой доступ (system).
  */
+/**
+ * English: Executes a function while temporarily switching proxy to Direct (no proxy).
+ * Uses the same reliable mechanism as ProxyCycleTester (Settings + ProxyEngine).
+ * Russian: Выполняет функцию, временно переключив прокси на Direct (без прокси).
+ * Использует тот же надёжный механизм, что и ProxyCycleTester (Settings + ProxyEngine).
+ */
 async function withDirectProxy<T>(fn: () => Promise<T>): Promise<T> {
     const proxyAPI = api.proxy;
     if (!proxyAPI) return fn();
 
-    const originalConfig = await new Promise<any>(resolve => {
-        proxyAPI.settings.get({}, (d: any) => resolve(d?.value));
-    });
+    // Save original profile ID
+    const originalProfileId = Settings.current?.activeProfileId;
+    let originalProxyConfig: any = null;
 
     try {
-        await new Promise<void>((resolve, reject) => {
-            proxyAPI.settings.set({ value: { mode: "system" }, scope: "regular" }, () => {
-                if (api.runtime?.lastError) reject(new Error(api.runtime.lastError.message));
-                else resolve();
-            });
+        // Get original proxy config
+        originalProxyConfig = await new Promise<any>(resolve => {
+            proxyAPI.settings.get({}, (d: any) => resolve(d?.value));
         });
+
+        // Switch to Direct via ProxyEngine
+        Settings.current.activeProfileId = SmartProfileTypeBuiltinIds.Direct;
+        SettingsOperation.saveActiveProfile();
+        SettingsOperation.saveAllSync(false);
+        Settings.updateActiveSettings();
+        ProxyEngine.updateBrowsersProxyConfig();
+
+        // Wait for proxy to apply
+        await new Promise(resolve => setTimeout(resolve, 1500));
+
+        // Execute the function
         return await fn();
+    } catch (err) {
+        console.error("[withDirectProxy] Error:", err);
+        throw err;
     } finally {
-        await new Promise<void>(resolve => {
-            proxyAPI.settings.set({ value: originalConfig || { mode: "system" }, scope: "regular" }, () => resolve());
-        });
+        // Restore original profile
+        if (originalProfileId) {
+            Settings.current.activeProfileId = originalProfileId;
+            SettingsOperation.saveActiveProfile();
+            SettingsOperation.saveAllSync(false);
+            Settings.updateActiveSettings();
+            ProxyEngine.updateBrowsersProxyConfig();
+        } else if (originalProxyConfig) {
+            // Fallback: restore via proxy API
+            await new Promise<void>(resolve => {
+                proxyAPI.settings.set({ value: originalProxyConfig, scope: "regular" }, () => resolve());
+            });
+        }
+        // Wait for restore
+        await new Promise(resolve => setTimeout(resolve, 1000));
     }
 }
 
@@ -177,18 +213,85 @@ async function ensureInitialized(): Promise<void> {
             let services: string[] = [];
 
             if (environment.name === "Firefox") {
-                // For Firefox: use popup method
-                const result = await getDirectIpViaPopup();
-                ip = result.directIp;
-                if (result.workingServices && result.workingServices.length) {
-                    services = result.workingServices;
-                } else {
-                    // Fallback: try to get services directly
+                // English: For Firefox, we switch to Direct profile using the same reliable mechanism as in settingsPage.
+                // Russian: Для Firefox мы переключаемся на профиль Direct, используя тот же надёжный механизм, что и в settingsPage.
+                const originalProfileId = Settings.current?.activeProfileId;
+                try {
+                    // Switch to Direct using PopupChangeActiveProfile command (works reliably in Firefox)
+                    await new Promise<void>((resolve) => {
+                        api.runtime.sendMessage({
+                            command: "PopupChangeActiveProfile",
+                            profileId: SmartProfileTypeBuiltinIds.Direct
+                        }, () => {
+                            resolve();
+                        });
+                    });
+                    // Wait for profile to actually change (polling via PopupGetInitialData)
+                    let attempts = 0;
+                    const maxAttempts = 30; // 30 * 200ms = 6 seconds
+                    let profileChanged = false;
+                    while (attempts < maxAttempts) {
+                        await new Promise(resolve => setTimeout(resolve, 200));
+                        const data = await new Promise<any>((resolve) => {
+                            api.runtime.sendMessage("PopupGetInitialData", resolve);
+                        });
+                        if (data && data.activeProfileId === SmartProfileTypeBuiltinIds.Direct) {
+                            profileChanged = true;
+                            break;
+                        }
+                        attempts++;
+                    }
+                    if (!profileChanged) {
+                        console.warn("[IpServiceManager] Не удалось переключиться на Direct через команду, пробуем прямой switch");
+                        // Fallback: direct switch
+                        Settings.current.activeProfileId = SmartProfileTypeBuiltinIds.Direct;
+                        SettingsOperation.saveActiveProfile();
+                        SettingsOperation.saveAllSync(false);
+                        Settings.updateActiveSettings();
+                        ProxyEngine.updateBrowsersProxyConfig();
+                        await new Promise(resolve => setTimeout(resolve, 1500));
+                    }
+                    // Get IP services
                     const results = await getRankedIpServicesInternal();
-                    services = results.map(r => r.url);
-                    // If we got IP from results, use the fastest one
                     if (results.length > 0) {
+                        services = results.map(r => r.url);
                         ip = results[0].ip;
+                        console.log(`%c[IpServiceManager] Прямой IP (Firefox, команда): ${ip} (через ${results[0].url} за ${results[0].time}мс)`, 'color: #00aaff; font-weight: bold; font-size: 1.2em');
+                    } else {
+                        console.warn("[IpServiceManager] Не удалось получить прямой IP через команду");
+                    }
+                } catch (err) {
+                    console.error("[IpServiceManager] Ошибка при получении прямого IP через команду:", err);
+                } finally {
+                    // Restore original profile
+                    if (originalProfileId) {
+                        await new Promise<void>((resolve) => {
+                            api.runtime.sendMessage({
+                                command: "PopupChangeActiveProfile",
+                                profileId: originalProfileId
+                            }, () => resolve());
+                        });
+                        // Wait for restore
+                        let attempts = 0;
+                        while (attempts < 30) {
+                            await new Promise(resolve => setTimeout(resolve, 200));
+                            const data = await new Promise<any>((resolve) => {
+                                api.runtime.sendMessage("PopupGetInitialData", resolve);
+                            });
+                            if (data && data.activeProfileId === originalProfileId) break;
+                            attempts++;
+                        }
+                    }
+                }
+                // If still no IP, try old popup method as fallback
+                if (!ip && !services.length) {
+                    console.log("[IpServiceManager] Команда не дала IP, пробуем попап...");
+                    const result = await getDirectIpViaPopup();
+                    ip = result.directIp;
+                    if (result.workingServices && result.workingServices.length) {
+                        services = result.workingServices;
+                    } else if (ip) {
+                        services = [...IP_SERVICES];
                     }
                 }
             } else {
@@ -218,6 +321,13 @@ async function ensureInitialized(): Promise<void> {
             }
 
             console.log(`[IpServiceManager] Инициализация завершена: прямой IP=${directIp}, сервисов=${ipServicesRanked.length}`);
+			// English: Send direct IP to log
+			// Russian: Отправляем прямой IP в лог
+			Core.sendTestLogStep({
+				type: 'direct-ip',
+				ip: ip,
+				timestamp: Date.now()
+			});
         } catch (err) {
             console.error("[IpServiceManager] Ошибка инициализации:", err);
             // Set fallback to avoid blocking
@@ -313,7 +423,7 @@ async function fetchIpViaProxy(
     }
 
     const proxyKey = `${proxy.host}:${proxy.port}`;
-    const servicesToTry = services.slice(0, 3); // Use top 3 fastest (or just first 3 if fixed)
+    const servicesToTry = services.slice(0, 9); // Use top 9 fastest (or just first 9 if fixed)
 
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout per service
@@ -366,11 +476,20 @@ async function fetchIpViaProxy(
     };
 
     // Try services sequentially (or in parallel with Promise.any)
-    const promises = servicesToTry.map(service => testService(service));
-    const result = await Promise.any(promises.map(p => p.then(ip => {
-        if (ip !== null) return ip;
-        throw new Error('no_ip');
-    }))).catch(() => null);
+    // English: Wrap each service promise to abort all others on first success
+    // Russian: Оборачиваем каждый промис сервиса, чтобы прервать все остальные при первом успехе
+    const wrappedPromises = servicesToTry.map(service => {
+        return testService(service).then(ip => {
+            if (ip !== null) {
+                // Abort all other pending requests
+                // Прерываем все остальные ожидающие запросы
+                controller.abort();
+                return ip;
+            }
+            throw new Error('no_ip');
+        });
+    });
+    const result = await Promise.any(wrappedPromises).catch(() => null);
     clearTimeout(timeoutId);
     return result;
 }

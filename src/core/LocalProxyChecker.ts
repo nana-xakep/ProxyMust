@@ -52,11 +52,12 @@ export const LocalProxyChecker = {
             faviconInterval: 300,
             ipCheckDelay: 70,
             retryOnDirectIp: retryForDirectIp,
-            useExpressMode: false
+            useExpressMode: false,
+            skipProtocolDetection: false
         };
 
         const result: CheckResult = await checkProxy(proxy, testUrl, options);
-        const status = result.status; // use status directly from checkProxy
+        const status = result.status;
         await saveResult(proxy.id, testUrl, status);
 
         return {

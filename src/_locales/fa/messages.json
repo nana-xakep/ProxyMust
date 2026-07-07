@@ -1695,6 +1695,15 @@
 	"testLogPageUnavailable": {
 		"message": "در دسترس نیست"
 	},
+	"testLogDirectIp": {
+		"message": "IP مستقیم (بدون پروکسی): {0}"
+	},
+	"testLogIpMatch": {
+		"message": "با IP مستقیم مطابقت دارد (پروکسی کار نمی‌کند)"
+	},
+	"testLogIpMismatch": {
+		"message": "با IP مستقیم متفاوت است: {0}"
+	},
 	"settingsShowLog": {
 		"message": "نمایش گزارش"
 	},
@@ -1802,5 +1811,44 @@
 	},
 	"settingsExpressCycleTestFailed": {
 		"message": "آزمایش چرخه‌ای سریع ناموفق بود: {0}"
+	},
+		"settingsAutoDetectProtocol": {
+		"message": "تشخیص و تغییر خودکار به پروتکل فعال در طول تست"
+	},
+	"settingsAutoDetectProtocolDesc": {
+		"message": "زمان تست را افزایش می‌دهد."
+	},
+	"settingsProtocolSwitchMode": {
+		"message": "حالت تغییر پروتکل:"
+	},
+	"settingsProtocolSwitchProbable": {
+		"message": "محتمل (توصیه می‌شود)"
+	},
+	"settingsProtocolSwitchProbableDesc": {
+		"message": "SOCKS → HTTP، HTTP → HTTPS، HTTPS → HTTP"
+	},
+	"settingsProtocolSwitchFull": {
+		"message": "کامل"
+	},
+	"settingsProtocolSwitchFullDesc": {
+		"message": "HTTP → HTTPS → SOCKS4 → SOCKS5"
+	},
+	"testLogProtocolRetry": {
+		"message": "🔄 پروکسی {0}:{1} به عنوان {2} اعلام شده است، اما کار نمی‌کند. در حال امتحان {3}..."
+	},
+	"testLogProtocolChanged": {
+		"message": "✅ پروتکل به طور خودکار به {0} برای {1}:{2} تغییر یافت"
+	},
+	"testLogProtocolChangeFailed": {
+		"message": "❌ هیچ پروتکل فعالی برای {0}:{1} یافت نشد. امتحان شد: {2}"
+	},
+	"testLogProtocolRetryFull": {
+		"message": "🔄 در حال امتحان {0} برای {1}:{2}..."
+	},
+	"testLogReadiness": {
+		"message": "آمادگی برای {0}: {1}/{2} بررسی قبول شد — {3}"
+	},
+	"proxyCheckerCheckingSite": {
+		"message": "در حال بررسی سایت: {0}..."
 	}
 }

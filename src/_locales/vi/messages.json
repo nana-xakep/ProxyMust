@@ -1695,6 +1695,15 @@
 	"testLogPageUnavailable": {
 		"message": "không có sẵn"
 	},
+	"testLogDirectIp": {
+		"message": "IP trực tiếp (không proxy): {0}"
+	},
+	"testLogIpMatch": {
+		"message": "khớp với IP trực tiếp (proxy không hoạt động)"
+	},
+	"testLogIpMismatch": {
+		"message": "khác với IP trực tiếp: {0}"
+	},
 	"settingsShowLog": {
 		"message": "Hiển thị nhật ký"
 	},
@@ -1802,5 +1811,44 @@
 	},
 	"settingsExpressCycleTestFailed": {
 		"message": "Kiểm tra chu kỳ nhanh thất bại: {0}"
+	},
+		"settingsAutoDetectProtocol": {
+		"message": "Tự động phát hiện và chuyển sang giao thức hoạt động trong quá trình kiểm tra"
+	},
+	"settingsAutoDetectProtocolDesc": {
+		"message": "Tăng thời gian kiểm tra."
+	},
+	"settingsProtocolSwitchMode": {
+		"message": "Chế độ chuyển đổi giao thức:"
+	},
+	"settingsProtocolSwitchProbable": {
+		"message": "Có thể (được khuyến nghị)"
+	},
+	"settingsProtocolSwitchProbableDesc": {
+		"message": "SOCKS → HTTP, HTTP → HTTPS, HTTPS → HTTP"
+	},
+	"settingsProtocolSwitchFull": {
+		"message": "Đầy đủ"
+	},
+	"settingsProtocolSwitchFullDesc": {
+		"message": "HTTP → HTTPS → SOCKS4 → SOCKS5"
+	},
+	"testLogProtocolRetry": {
+		"message": "🔄 Proxy {0}:{1} được khai báo là {2}, nhưng không hoạt động. Đang thử {3}..."
+	},
+	"testLogProtocolChanged": {
+		"message": "✅ Giao thức tự động chuyển sang {0} cho {1}:{2}"
+	},
+	"testLogProtocolChangeFailed": {
+		"message": "❌ Không tìm thấy giao thức hoạt động cho {0}:{1}. Đã thử: {2}"
+	},
+	"testLogProtocolRetryFull": {
+		"message": "🔄 Đang thử {0} cho {1}:{2}..."
+	},
+	"testLogReadiness": {
+		"message": "Sẵn sàng cho {0}: {1}/{2} lần kiểm tra đã qua — {3}"
+	},
+	"proxyCheckerCheckingSite": {
+		"message": "Đang kiểm tra trang: {0}..."
 	}
 }
