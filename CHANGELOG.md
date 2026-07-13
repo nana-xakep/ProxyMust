@@ -5,6 +5,33 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.5] – 2026-07-13
+
+### Changed
+- **Codebase updated to SmartProxy 2.2.1** – all improvements and fixes from upstream integrated.
+
+### Added
+- **Rule management directly from the popup** – now you can delete, enable/disable a rule, and also enable **"Proxy per tab"** mode (Firefox only) without going to settings.
+- **"Proxy per tab" mode for individual rules** – if a rule matches one request, enabling this mode will proxy the whole tab through the same proxy (available only in Firefox).
+- **Display and editing of the "Proxy per tab" mode in rule settings** – added a checkbox "Proxy per origin (Firefox only)" in the rule edit modal.
+- **Automatic settings update** – no need to reload the page to see changes made in the popup.
+- **Synchronization safety** – prevented accidental overwriting of local settings when first enabling sync.
+- **Fixed import of rules from SwitchyOmega** – CIDR/IP rules are now correctly handled.
+- **New option in general settings** – `deleteRuleWhenDisabledFromPopup` (controls behaviour when disabling a rule from the popup).
+- **Automatic import mode switching for rules** – now when you paste text in the "Rules backup text" field, the "Text" mode activates; when selecting a file, the "File" mode activates. A similar improvement was previously made for proxy import.
+- **Localised tooltips for new popup buttons** – tooltips now appear in the interface language.
+
+### Fixed
+- **Chromium fix (v2.2.1)** – exception rules (whitelist) from subscriptions now correctly apply proxies in Chrome/Edge.
+- **Fixed restoration of `ProxyServerId` when importing a backup** – relationships between rules and proxy servers are now restored correctly.
+- **Fixed compilation error** related to missing `noProxyPerOrigin` field – replaced with `enableProxyPerOrigin` with correct logic.
+- **Fixed `ProfileRules` method calls in `Core.ts`** to work with the new rule structure.
+
+### Removed
+- Deprecated `noProxyPerOrigin` field (replaced with `enableProxyPerOrigin`).
+
+---
+
 ## [1.0.4] – 2026-07-07
 
 ### Added
