@@ -1753,7 +1753,7 @@
 		"message": "আপনার জন্য নিয়ে এসেছেন সালার,"
 	},
 	"footerVersionInfo": {
-		"message": "ProxyMust {0} (SmartProxy 2.1-এর ভিত্তিতে) – nana-xakep দ্বারা রক্ষণাবেক্ষণকৃত | SmartProxy-এর একটি ফর্ক"
+		"message": "ProxyMust {0} (SmartProxy 2.2.1-এর ভিত্তিতে) – nana-xakep দ্বারা রক্ষণাবেক্ষণকৃত | SmartProxy-এর একটি ফর্ক"
 	},
 	"noProxiesSelected": {
 		"message": "কোন প্রক্সি নির্বাচিত হয়নি।"
@@ -1850,5 +1850,20 @@
 	},
 	"proxyCheckerCheckingSite": {
 		"message": "সাইট পরীক্ষা করা হচ্ছে: {0}..."
-	}
+	},
+	"settingsRuleProxyPerOrigin": {
+		"message": "প্রতি উৎসে প্রক্সি (শুধু Firefox)"
+	},
+	"popupRemoveRuleTooltip": {
+		"message": "নিয়ম সরান"
+	},
+	"popupDisableRuleTooltip": {
+		"message": "নিয়ম নিষ্ক্রিয় করুন"
+	},
+	"popupEnableRuleTooltip": {
+		"message": "নিয়ম সক্রিয় করুন"
+	},
+	"popupProxyPerOriginTooltip": {
+		"message": "প্রতি উৎসে প্রক্সি টগল করুন (শুধু Firefox)"
+	}	
 }

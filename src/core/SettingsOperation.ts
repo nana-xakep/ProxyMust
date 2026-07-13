@@ -125,9 +125,15 @@ export class SettingsOperation {
 		
 		// English: Copy non-syncable ProxyMust fields from source to destination
 		// Russian: Копируем несинхронизируемые поля ProxyMust из источника в получатель
-		destSettings.autoStatus = sourceSettings.autoStatus ? JSON.parse(JSON.stringify(sourceSettings.autoStatus)) : {};
-		destSettings.proxyPriority = sourceSettings.proxyPriority ? { ...sourceSettings.proxyPriority } : {};
-		destSettings.userPrefs = sourceSettings.userPrefs ? { ...sourceSettings.userPrefs } : { staleHours: 6, manualSites: [] };
+        destSettings.autoStatus = sourceSettings.autoStatus ? JSON.parse(JSON.stringify(sourceSettings.autoStatus)) : {};
+        destSettings.proxyPriority = sourceSettings.proxyPriority ? { ...sourceSettings.proxyPriority } : {};
+        destSettings.userPrefs = sourceSettings.userPrefs ? { ...sourceSettings.userPrefs } : { staleHours: 6, manualSites: [] };
+
+        // English: Copy enableProxyPerOriginRule from source to destination (non-syncable)
+        // Russian: Копируем enableProxyPerOriginRule из источника в получатель (не синхронизируется)
+        if (destSettings.options && sourceSettings.options) {
+            destSettings.options.enableProxyPerOriginRule = sourceSettings.options.enableProxyPerOriginRule;
+        }
 	}
 
 	public static getBackupOfSettings(settings: SettingsConfig): SettingsConfig {
@@ -174,48 +180,47 @@ export class SettingsOperation {
 		}
 	}
 
-	public static applySyncSettings(restoredSyncedSettings: SettingsConfig) {
-		if (!restoredSyncedSettings) {
-			return;
-		}
+public static applySyncSettings(restoredSyncedSettings: SettingsConfig) {
+    // English: Do not apply empty sync settings to prevent overwriting local data on first sync
+    // Russian: Не применяем пустые синхронизированные настройки, чтобы не перезаписать локальные данные при первом включении синхронизации
+    if (!restoredSyncedSettings || !restoredSyncedSettings.proxyProfiles || restoredSyncedSettings.proxyProfiles.length === 0) {
+        console.warn('SettingsOperation.applySyncSettings: received empty settings, ignoring sync.');
+        return;
+    }
 
-		// ProxyMust: preserve local-only fields and rating state
-		// Russian: сохраняем локальные поля и состояние рейтинга
-		// const currentProxyMustSettings = Settings.current.proxyMustSettings; // deprecated
-		const currentAutoStatus = Settings.current.autoStatus;
-		// const currentManualSites = Settings.current.manualSites; // deprecated
-		const currentProxyPriority = Settings.current.proxyPriority;
-		const currentEnableRating = Settings.current.options?.enableRating;
-		const currentUserPrefs = Settings.current.userPrefs;
+    // ProxyMust: preserve local-only fields and rating state
+    // Russian: сохраняем локальные поля и состояние рейтинга
+    const currentAutoStatus = Settings.current.autoStatus;
+    const currentProxyPriority = Settings.current.proxyPriority;
+    const currentEnableRating = Settings.current.options?.enableRating;
+    const currentUserPrefs = Settings.current.userPrefs;
 
-		// use synced settings
-		restoredSyncedSettings = Settings.getRestorableSettings(restoredSyncedSettings);
-		me.revertSyncOptions(restoredSyncedSettings);
-		me.copyNonSyncableSettings(restoredSyncedSettings, Settings.current);
+    // use synced settings
+    restoredSyncedSettings = Settings.getRestorableSettings(restoredSyncedSettings);
+    me.revertSyncOptions(restoredSyncedSettings);
+    me.copyNonSyncableSettings(restoredSyncedSettings, Settings.current);
 
-		Settings.current = restoredSyncedSettings;
+    Settings.current = restoredSyncedSettings;
 
-		// restore local-only fields
-		// Settings.current.proxyMustSettings = currentProxyMustSettings ?? { staleHours: 6 }; // deprecated
-		Settings.current.autoStatus = currentAutoStatus ?? {};
-		// Settings.current.manualSites = currentManualSites ?? []; // deprecated
-		Settings.current.proxyPriority = currentProxyPriority ?? {};
+    // restore local-only fields
+    Settings.current.autoStatus = currentAutoStatus ?? {};
+    Settings.current.proxyPriority = currentProxyPriority ?? {};
 
-		// restore rating state if it was changed locally
-		if (currentEnableRating !== undefined && Settings.current.options) {
-			Settings.current.options.enableRating = currentEnableRating;
-		}
+    // restore rating state if it was changed locally
+    if (currentEnableRating !== undefined && Settings.current.options) {
+        Settings.current.options.enableRating = currentEnableRating;
+    }
 
-		// English: restore user preferences (staleHours, manualSites) from local before sync
-		// Russian: восстанавливаем пользовательские настройки (staleHours, manualSites) из локальных до синхронизации
-		if (currentUserPrefs) {
-			Settings.current.userPrefs = currentUserPrefs;
-		} else if (!Settings.current.userPrefs) {
-			Settings.current.userPrefs = { staleHours: 6, manualSites: [] };
-		}
+    // English: restore user preferences (staleHours, manualSites) from local before sync
+    // Russian: восстанавливаем пользовательские настройки (staleHours, manualSites) из локальных до синхронизации
+    if (currentUserPrefs) {
+        Settings.current.userPrefs = currentUserPrefs;
+    } else if (!Settings.current.userPrefs) {
+        Settings.current.userPrefs = { staleHours: 6, manualSites: [] };
+    }
 
-		Settings.updateActiveSettings();
-	}
+    Settings.updateActiveSettings();
+}
 	/** In local options if sync is disabled for these particular options, don't update them from sync server */
 	private static revertSyncOptions(syncedConfig: SettingsConfig) {
 		let settings = Settings.current;

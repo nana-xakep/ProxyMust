@@ -1753,7 +1753,7 @@
 		"message": "由 Salar 提供，"
 	},
 	"footerVersionInfo": {
-		"message": "ProxyMust {0}（基於 SmartProxy 2.1） – 由 nana-xakep 維護 | SmartProxy 的分支"
+		"message": "ProxyMust {0}（基於 SmartProxy 2.2.1） – 由 nana-xakep 維護 | SmartProxy 的分支"
 	},
 	"noProxiesSelected": {
 		"message": "未選取代理。"
@@ -1850,5 +1850,20 @@
 	},
 	"proxyCheckerCheckingSite": {
 		"message": "正在檢查網站：{0}..."
-	}
+	},
+	"settingsRuleProxyPerOrigin": {
+		"message": "按來源代理（僅限Firefox）"
+	},
+	"popupRemoveRuleTooltip": {
+		"message": "刪除規則"
+	},
+	"popupDisableRuleTooltip": {
+		"message": "停用規則"
+	},
+	"popupEnableRuleTooltip": {
+		"message": "啟用規則"
+	},
+	"popupProxyPerOriginTooltip": {
+		"message": "切換按來源代理（僅限Firefox）"
+	}	
 }

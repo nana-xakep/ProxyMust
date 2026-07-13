@@ -401,6 +401,18 @@ export class Core {
 			
 			case "TOGGLE_TEST_LOG_PIN":
 				return Core.handleToggleTestLogPin(sendResponse);
+			
+            case CommandMessages.PopupRemoveProxyRule:
+                console.log("[Core] Получена команда PopupRemoveProxyRule, message:", message);
+                return Core.handlePopupRemoveProxyRule(message, sendResponse);
+
+            case CommandMessages.PopupDisableProxyRule:
+                console.log("[Core] Получена команда PopupDisableProxyRule, message:", message);
+                return Core.handlePopupDisableProxyRule(message, sendResponse);
+
+            case CommandMessages.PopupToggleProxyPerOriginForRule:
+                console.log("[Core] Получена команда PopupToggleProxyPerOriginForRule, message:", message);
+                return Core.handlePopupToggleProxyPerOriginForRule(message, sendResponse);			
 				
 			default:
 				if (sendResponse) sendResponse(null);
@@ -558,12 +570,12 @@ export class Core {
 
 	private static handlePopupToggleProxyForDomain(message: any): void {
 		if (!message.domain) return;
-		
 		ProfileRules.toggleRule(message.domain, message.ruleId);
 		settingsOperationLib.saveSmartProfiles();
 		settingsOperationLib.saveAllSync();
 		proxyEngineLib.notifyProxyRulesChanged();
 		Core.setBrowserActionStatus();
+		PolyFill.runtimeSendMessage({ command: "REFRESH_SETTINGS_PAGE_RELOAD" });
 	}
 
 	private static handlePopupChangeProxyForRule(message: any, sendResponse: Function): boolean {
@@ -1800,6 +1812,7 @@ private static async handleAddSubscriptionProxyToManual(message: any, sendRespon
 					ruleMatchSource: testResult.matchedRuleSource,
 					ruleHasWhiteListMatch: ruleIsWhitelist,
 					proxyServerId: actualRule?.proxyServerId ?? null,
+					enableProxyPerOrigin: actualRule?.enableProxyPerOrigin ?? false,
 				});
 			} else {
 				result.push({
@@ -1848,6 +1861,7 @@ private static async handleAddSubscriptionProxyToManual(message: any, sendRespon
 						ruleMatchSource: resultRuleInfo.matchedRuleSource,
 						ruleHasWhiteListMatch: ruleIsWhitelist,
 						proxyServerId: actualRule?.proxyServerId ?? null,
+						enableProxyPerOrigin: actualRule?.enableProxyPerOrigin ?? false,
 					});
 				} else {
 					result.push({
@@ -2057,19 +2071,115 @@ public static sendTestLogStep(data: any): void {
         }
     }
 
+    /**
+     * English: Handles removal of a proxy rule from popup.
+     * Russian: Обрабатывает удаление правила прокси из попапа.
+     */
+    /**
+     * English: Handles removal of a proxy rule from popup.
+     * Russian: Обрабатывает удаление правила прокси из попапа.
+     */
+    private static handlePopupRemoveProxyRule(message: any, sendResponse: Function): boolean {
+        console.log("[Core] handlePopupRemoveProxyRule вызван, ruleId:", message.ruleId);
+        if (!message.ruleId) {
+            if (sendResponse) sendResponse({ success: false, error: 'Missing ruleId' });
+            return false;
+        }
+        let found = false;
+        for (const profile of Settings.current.proxyProfiles) {
+            const index = profile.proxyRules?.findIndex(r => r.ruleId === message.ruleId);
+            if (index !== undefined && index !== -1) {
+                console.log("[Core] Найдено правило в профиле:", profile.profileId);
+                profile.proxyRules.splice(index, 1);
+                found = true;
+                break;
+            }
+        }
+        if (found) {
+            console.log("[Core] Правило удалено, сохраняем настройки...");
+            settingsOperationLib.saveSmartProfiles();
+            settingsOperationLib.saveAllSync();
+            proxyEngineLib.notifyProxyRulesChanged();
+            Core.setBrowserActionStatus();
+            PolyFill.runtimeSendMessage({ command: "REFRESH_SETTINGS_PAGE_RELOAD" });
+            if (sendResponse) sendResponse({ success: true });
+        } else {
+            console.warn("[Core] Правило не найдено!");
+            if (sendResponse) sendResponse({ success: false, error: 'Rule not found' });
+        }
+        return false;
+    }
+
+    /**
+     * English: Handles toggling enable state of a proxy rule from popup.
+     * Russian: Обрабатывает переключение состояния правила прокси из попапа.
+     */
+    private static handlePopupDisableProxyRule(message: any, sendResponse: Function): boolean {
+        console.log("[Core] handlePopupDisableProxyRule вызван, ruleId:", message.ruleId, "enabled:", message.enabled);
+        if (!message.ruleId || message.enabled === undefined) {
+            if (sendResponse) sendResponse({ success: false, error: 'Missing ruleId or enabled' });
+            return false;
+        }
+        let found = false;
+        for (const profile of Settings.current.proxyProfiles) {
+            const rule = profile.proxyRules?.find(r => r.ruleId === message.ruleId);
+            if (rule) {
+                console.log("[Core] Найдено правило в профиле:", profile.profileId);
+                rule.enabled = message.enabled;
+                found = true;
+                break;
+            }
+        }
+        if (found) {
+            console.log("[Core] Состояние правила изменено, сохраняем настройки...");
+            settingsOperationLib.saveSmartProfiles();
+            settingsOperationLib.saveAllSync();
+            proxyEngineLib.notifyProxyRulesChanged();
+            Core.setBrowserActionStatus();
+            PolyFill.runtimeSendMessage({ command: "REFRESH_SETTINGS_PAGE_RELOAD" });	
+            if (sendResponse) sendResponse({ success: true });
+        } else {
+            console.warn("[Core] Правило не найдено!");
+            if (sendResponse) sendResponse({ success: false, error: 'Rule not found' });
+        }
+        return false;
+    }
+
+    /**
+     * English: Handles toggling proxy-per-origin mode for a specific rule from popup.
+     * Russian: Обрабатывает переключение режима "прокси на вкладку" для конкретного правила из попапа.
+     */
+    private static handlePopupToggleProxyPerOriginForRule(message: any, sendResponse: Function): boolean {
+        console.log("[Core] handlePopupToggleProxyPerOriginForRule вызван, ruleId:", message.ruleId, "enableProxyPerOrigin:", message.enableProxyPerOrigin);
+        if (!message.ruleId || message.enableProxyPerOrigin === undefined) {
+            if (sendResponse) sendResponse({ success: false, error: 'Missing ruleId or enableProxyPerOrigin' });
+            return false;
+        }
+        let found = false;
+        for (const profile of Settings.current.proxyProfiles) {
+            const rule = profile.proxyRules?.find(r => r.ruleId === message.ruleId);
+            if (rule) {
+                console.log("[Core] Найдено правило в профиле:", profile.profileId);
+                rule.enableProxyPerOrigin = message.enableProxyPerOrigin;
+                found = true;
+                break;
+            }
+        }
+        if (found) {
+            console.log("[Core] Режим per-origin изменён, сохраняем настройки...");
+            settingsOperationLib.saveSmartProfiles();
+            settingsOperationLib.saveAllSync();
+            proxyEngineLib.notifyProxyRulesChanged();
+            Core.setBrowserActionStatus();
+            if (sendResponse) sendResponse({ success: true });
+        } else {
+            console.warn("[Core] Правило не найдено!");
+            if (sendResponse) sendResponse({ success: false, error: 'Rule not found' });
+        }
+        return false;
+    }
+
 	/**
-	 * English: Handles autoStatus update from popup (cycle tester)
-	 * Russian: Обрабатывает обновление autoStatus из попапа (циклический тестер)
-	 */
-    /**
-     * English: Handles autoStatus update from popup (cycle tester)
-     * Russian: Обрабатывает обновление autoStatus из попапа (циклический тестер)
-     */
-    /**
-     * English: Handles autoStatus update from popup (cycle tester)
-     * Russian: Обрабатывает обновление autoStatus из попапа (циклический тестер)
-     */
-    /**
      * English: Handles autoStatus update from popup (cycle tester)
      * Russian: Обрабатывает обновление autoStatus из попапа (циклический тестер)
      */

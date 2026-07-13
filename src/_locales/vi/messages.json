@@ -1753,7 +1753,7 @@
 		"message": "Được cung cấp bởi Salar,"
 	},
 	"footerVersionInfo": {
-		"message": "ProxyMust {0} (dựa trên SmartProxy 2.1) – được duy trì bởi nana-xakep | Fork của SmartProxy"
+		"message": "ProxyMust {0} (dựa trên SmartProxy 2.2.1) – được duy trì bởi nana-xakep | Fork của SmartProxy"
 	},
 	"noProxiesSelected": {
 		"message": "Chưa chọn proxy nào."
@@ -1850,5 +1850,20 @@
 	},
 	"proxyCheckerCheckingSite": {
 		"message": "Đang kiểm tra trang: {0}..."
-	}
+	},
+	"settingsRuleProxyPerOrigin": {
+		"message": "Proxy theo nguồn (chỉ Firefox)"
+	},
+	"popupRemoveRuleTooltip": {
+		"message": "Xóa quy tắc"
+	},
+	"popupDisableRuleTooltip": {
+		"message": "Vô hiệu hóa quy tắc"
+	},
+	"popupEnableRuleTooltip": {
+		"message": "Kích hoạt quy tắc"
+	},
+	"popupProxyPerOriginTooltip": {
+		"message": "Chuyển đổi proxy theo nguồn (chỉ Firefox)"
+	}	
 }

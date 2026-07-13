@@ -1753,7 +1753,7 @@
 		"message": "Salar 제공,"
 	},
 	"footerVersionInfo": {
-		"message": "ProxyMust {0} (SmartProxy 2.1 기반) – nana-xakep 유지 관리 | SmartProxy의 포크"
+		"message": "ProxyMust {0} (SmartProxy 2.2.1 기반) – nana-xakep 유지 관리 | SmartProxy의 포크"
 	},
 	"noProxiesSelected": {
 		"message": "선택된 프록시가 없습니다."
@@ -1850,5 +1850,20 @@
 	},
 	"proxyCheckerCheckingSite": {
 		"message": "사이트 확인 중: {0}..."
-	}
+	},
+	"settingsRuleProxyPerOrigin": {
+		"message": "원본별 프록시 (Firefox만)"
+	},
+	"popupRemoveRuleTooltip": {
+		"message": "규칙 제거"
+	},
+	"popupDisableRuleTooltip": {
+		"message": "규칙 비활성화"
+	},
+	"popupEnableRuleTooltip": {
+		"message": "규칙 활성화"
+	},
+	"popupProxyPerOriginTooltip": {
+		"message": "원본별 프록시 전환 (Firefox만)"
+	}	
 }

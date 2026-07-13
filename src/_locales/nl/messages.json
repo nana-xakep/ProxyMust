@@ -1753,7 +1753,7 @@
 		"message": "Aangeboden door Salar,"
 	},
 	"footerVersionInfo": {
-		"message": "ProxyMust {0} (gebaseerd op SmartProxy 2.1) – onderhouden door nana-xakep | Fork van SmartProxy"
+		"message": "ProxyMust {0} (gebaseerd op SmartProxy 2.2.1) – onderhouden door nana-xakep | Fork van SmartProxy"
 	},
 	"noProxiesSelected": {
 		"message": "Geen proxy's geselecteerd."
@@ -1850,5 +1850,20 @@
 	},
 	"proxyCheckerCheckingSite": {
 		"message": "Site controleren: {0}..."
-	}
+	},
+	"settingsRuleProxyPerOrigin": {
+		"message": "Proxy per oorsprong (alleen Firefox)"
+	},
+	"popupRemoveRuleTooltip": {
+		"message": "Regel verwijderen"
+	},
+	"popupDisableRuleTooltip": {
+		"message": "Regel uitschakelen"
+	},
+	"popupEnableRuleTooltip": {
+		"message": "Regel inschakelen"
+	},
+	"popupProxyPerOriginTooltip": {
+		"message": "Proxy per oorsprong omschakelen (alleen Firefox)"
+	}	
 }

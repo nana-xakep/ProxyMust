@@ -20,6 +20,14 @@ import { Utils } from "../lib/Utils";
 import { SettingsOperation } from "./SettingsOperation";
 import { api } from "../lib/environment";
 
+function regexHostMatches(rule: CompiledProxyRule, host: string): boolean {
+	if (rule.regex.test(host))
+		return true;
+
+	let normalizedHost = Utils.normalizeIpForMatching(host);
+	return normalizedHost != null && normalizedHost !== host && rule.regex.test(normalizedHost);
+}
+
 export class ProxyRules {
 
 	public static compileRules(profile: SmartProfileBase, proxyRules: ProxyRule[]): {
@@ -42,6 +50,7 @@ export class ProxyRules {
 
 			newCompiled.ruleId = rule.ruleId;
 			newCompiled.whiteList = rule.whiteList;
+			newCompiled.enableProxyPerOrigin = rule.enableProxyPerOrigin || false;
 			newCompiled.hostName = rule.hostName;
 			newCompiled.proxy = rule.proxy;
 			if (rule.proxyServerId == ProxyRuleSpecialProxyServer.DefaultGeneral) {
@@ -369,7 +378,7 @@ export class ProxyRules {
 							}
 						}
 
-						if (rule.regex.test(domainHostLowerCase))
+						if (regexHostMatches(rule, domainHostLowerCase))
 							return rule;
 						break;
 
@@ -447,7 +456,7 @@ export class ProxyRules {
 
 							case CompiledProxyRuleType.RegexHost:
 
-								if (rule.regex.test(domainHostLowerCase))
+								if (regexHostMatches(rule, domainHostLowerCase))
 									return rule;
 								break;
 

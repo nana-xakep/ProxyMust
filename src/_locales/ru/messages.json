@@ -1759,7 +1759,7 @@
 		"message": "Создано при участии Salar,"
 	},
 	"footerVersionInfo": {
-		"message": "ProxyMust {0} (на основе SmartProxy 2.1) – поддерживается nana-xakep | Форк SmartProxy"
+		"message": "ProxyMust {0} (на основе SmartProxy 2.2.1) – поддерживается nana-xakep | Форк SmartProxy"
 	},
 	"noProxiesSelected": {
 		"message": "Прокси не выбраны."
@@ -1854,7 +1854,22 @@
 	"testLogReadiness": {
 		"message": "Готовность для {0}: {1}/{2} проверок пройдено — {3}"
 	},
-		"proxyCheckerCheckingSite": {
+	"proxyCheckerCheckingSite": {
 		"message": "Проверка сайта: {0}..."
-	}
+	},
+    "settingsRuleProxyPerOrigin": {
+        "message": "Прокси для вкладки (только Firefox)"
+    },
+	    "popupRemoveRuleTooltip": {
+        "message": "Удалить правило"
+    },
+    "popupDisableRuleTooltip": {
+        "message": "Отключить правило"
+    },
+    "popupEnableRuleTooltip": {
+        "message": "Включить правило"
+    },
+    "popupProxyPerOriginTooltip": {
+        "message": "Переключить прокси для вкладки (только Firefox)"
+    }
 }

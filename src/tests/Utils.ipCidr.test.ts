@@ -33,6 +33,16 @@ describe('Utils.ipCidrNotationToRegExp', () => {
     expect(r.test('192.168.2.1')).toBe(false);
   });
 
+  test('IPv4 partial range (/11) keeps second octet constrained', () => {
+    const r = Utils.ipCidrNotationToRegExp('10.32.0.0', '11');
+    expect(r).not.toBeNull();
+    expect(r.test('10.32.0.0')).toBe(true);
+    expect(r.test('10.63.255.255')).toBe(true);
+    expect(r.test('10.31.255.255')).toBe(false);
+    expect(r.test('10.64.0.0')).toBe(false);
+    expect(r.test('11.32.0.0')).toBe(false);
+  });
+
   test('IPv6 /32 matches expanded form (use expandIPv6ToGroups)', () => {
     const cidr = Utils.ipCidrNotationToRegExp('2001:db8::', '32');
     expect(cidr).not.toBeNull();
@@ -132,5 +142,9 @@ describe('Utils.ipCidrNotationToRegExp edge cases', () => {
     expect(normalized).not.toBeNull();
     expect(r.test(normalized)).toBe(true);
   });
-});
 
+  test('normalizeIpForMatching preserves trailing IPv6 hextet and strips bracketed port', () => {
+    expect(Utils.normalizeIpForMatching('2001:db8::1')).toBe('2001:0db8:0000:0000:0000:0000:0000:0001');
+    expect(Utils.normalizeIpForMatching('[2001:db8::1]:443')).toBe('2001:0db8:0000:0000:0000:0000:0000:0001');
+  });
+});

@@ -232,6 +232,11 @@ else if (command === "CHECK_PROGRESS") {
 				renderLogMessage(container, message.data);
 			}
 		}
+		else if (command === "REFRESH_SETTINGS_PAGE_RELOAD") {
+			// English: Reload settings page to reflect changes made in popup
+			// Russian: Перезагружаем страницу настроек, чтобы отразить изменения из попапа
+			window.location.reload();
+		}
 		else if (command === "PROXY_PROTOCOL_CHANGED") {
 		// English: Update proxy row in the table when protocol changes
 		// Russian: Обновляем строку прокси в таблице при изменении протокола
@@ -698,6 +703,42 @@ jq("#staleHoursInput").off("change").on("change", function() {
                 jq("#rbtnImportProxyServer_File").prop("checked", true);
             }
         });
+		
+        // English: Auto-switch between text/file modes for import rules modal (delegated, context-aware)
+        // Russian: Автоматическое переключение между текстовым и файловым режимом для модального окна импорта правил (делегирование, с учётом контекста)
+        jq(document).on("shown.bs.modal", "#modalImportRules", function() {
+            console.log("[ImportRules] modal shown");
+            const $modal = jq(this);
+            const $textArea = $modal.find("#txtImportRulesSelectText");
+            const $fileInput = $modal.find("#btnImportRulesSelectFile");
+            const $textRadio = $modal.find("#rbtnImportRulesSelect_Text");
+            const $fileRadio = $modal.find("#rbtnImportRulesSelect_File");
+
+            // Если элементы не найдены — выходим (для безопасности)
+            if (!$textArea.length || !$fileInput.length || !$textRadio.length || !$fileRadio.length) {
+                console.warn("[ImportRules] elements not found inside modal");
+                return;
+            }
+
+            // Привязываем обработчики с отключением предыдущих (чтобы избежать дублирования)
+            $textArea.off("input.importRules").on("input.importRules", function() {
+                const textValue = jq(this).val();
+                console.log("[ImportRules] input event fired, textValue:", textValue);
+                if (textValue && textValue.trim() !== "") {
+                    console.log("[ImportRules] switching to Text mode");
+                    $textRadio.prop("checked", true);
+                }
+            });
+
+            $fileInput.off("change.importRules").on("change.importRules", function() {
+                console.log("[ImportRules] change event fired, files:", this.files);
+                if (this.files && this.files.length > 0) {
+                    console.log("[ImportRules] switching to File mode");
+                    $fileRadio.prop("checked", true);
+                }
+            });
+        });
+		
 		// English: Open test log window
         // Russian: Открыть окно лога тестирования
         jq("#openTestLogBtn").off("click").on("click", settingsPage.uiEvents.onToggleLogViewer);
@@ -1354,6 +1395,7 @@ jq('[data-localize="footerVersionInfo"]').text(t('footerVersionInfo', version));
 			modalContainer.find("#txtRuleUrlRegex").val(proxyRule.ruleRegex);
 			modalContainer.find("#txtRuleUrlExact").val(proxyRule.ruleExact);
 			modalContainer.find("#chkRuleEnabled").prop('checked', proxyRule.enabled);
+			modalContainer.find("#chkRuleProxyPerOrigin").prop('checked', proxyRule.enableProxyPerOrigin || false);
 			modalContainer.find("#txtRuleCidrIPAddress").val(proxyRule.ruleSearch);
 			modalContainer.find("#txtRuleCidrPrefixLength").val(proxyRule.rulePattern);
 			cmdRuleAction.val(proxyRule.whiteList ? "1" : "0");
@@ -1375,6 +1417,7 @@ jq('[data-localize="footerVersionInfo"]').text(t('footerVersionInfo', version));
 			modalContainer.find("#txtRuleUrlRegex").val("");
 			modalContainer.find("#txtRuleUrlExact").val("");
 			modalContainer.find("#chkRuleEnabled").prop('checked', true);
+			modalContainer.find("#chkRuleProxyPerOrigin").prop('checked', false);
 			modalContainer.find("#txtRuleCidrIPAddress").val("");
 			modalContainer.find("#txtRuleCidrPrefixLength").val("");
 
@@ -1466,6 +1509,7 @@ jq('[data-localize="footerVersionInfo"]').text(t('footerVersionInfo', version));
 		ruleInfo.proxy = selectedProxy;
 		ruleInfo.proxyServerId = selectedProxyId;
 		ruleInfo.enabled = modalContainer.find("#chkRuleEnabled").prop("checked");
+		ruleInfo.enableProxyPerOrigin = modalContainer.find("#chkRuleProxyPerOrigin").prop("checked");
 		ruleInfo.whiteList = parseInt(modalContainer.find("#cmdRuleAction").val()) != 0;
 		if (ruleInfo.ruleType == ProxyRuleType.IpCidrNotation) {
 			ruleInfo.ruleSearch = modalContainer.find("#txtRuleCidrIPAddress").val().trim();
@@ -5185,11 +5229,41 @@ private static uiEvents = {
         PolyFill.runtimeSendMessage(CommandMessages.SettingsPageGetInitialData,
             (dataForSettings: SettingsPageInternalDataType) => {
                 if (dataForSettings) {
-                    console.log("[ProxyMust] refreshSettingsData: данные получены, autoStatus =", JSON.stringify(dataForSettings.settings.autoStatus, null, 2));
                     settingsPage.currentSettings = dataForSettings.settings;
+                    // Обновляем все основные компоненты
                     settingsPage.loadServersGrid(settingsPage.currentSettings.proxyServers);
+                    settingsPage.loadServerSubscriptionsGrid(settingsPage.currentSettings.proxyServerSubscriptions);
+                    settingsPage.loadSmartProfiles(settingsPage.currentSettings.proxyProfiles);
+                    settingsPage.loadGeneralOptions(settingsPage.currentSettings.options);
+                    settingsPage.loadDefaultProxyServer(settingsPage.currentSettings.proxyServers, settingsPage.currentSettings.proxyServerSubscriptions);
                     settingsPage.buildSitesDropdown();
-                    console.log("[ProxyMust] refreshSettingsData: таблица обновлена");
+                    settingsPage.loadAllProfilesProxyServers();
+                    
+                    // Принудительно обновляем DataTables
+                    if (settingsPage.grdServers) {
+                        settingsPage.grdServers.clear();
+                        settingsPage.grdServers.rows.add(settingsPage.currentSettings.proxyServers);
+                        settingsPage.grdServers.draw('full-hold');
+                        settingsPage.grdServers.columns.adjust().draw();
+                    }
+                    // Обновляем таблицы правил для каждого профиля
+                    for (const pageProfile of settingsPage.pageSmartProfiles) {
+                        if (pageProfile.grdRules) {
+                            pageProfile.grdRules.clear();
+                            pageProfile.grdRules.rows.add(pageProfile.smartProfile.proxyRules || []);
+                            pageProfile.grdRules.draw('full-hold');
+                            pageProfile.grdRules.columns.adjust().draw();
+                        }
+                    }
+                    
+                    // Обновляем состояние кнопки рейтинга
+                    const ratingEnabled = settingsPage.currentSettings.options.enableRating;
+                    jq("#chkEnableRating").prop("checked", ratingEnabled);
+                    jq("#proxyTestControlBlock").toggle(ratingEnabled);
+                    if (settingsPage.grdServers) {
+                        settingsPage.grdServers.column(6).visible(ratingEnabled);
+                    }
+                    console.log("[ProxyMust] refreshSettingsData: все данные обновлены");
                 } else {
                     console.log("[ProxyMust] refreshSettingsData: данные НЕ получены (dataForSettings = null)");
                 }
@@ -5198,7 +5272,6 @@ private static uiEvents = {
                 console.error("[ProxyMust] refreshSettingsData ОШИБКА:", error);
             });
     }
-
     /**
      * English: Updates the state of export buttons based on proxy count
      * Russian: Обновляет состояние кнопок экспорта в зависимости от количества прокси

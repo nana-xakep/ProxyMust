@@ -1753,7 +1753,7 @@
 		"message": "Dipersembahkan oleh Salar,"
 	},
 	"footerVersionInfo": {
-		"message": "ProxyMust {0} (berbasis SmartProxy 2.1) – dikelola oleh nana-xakep | Fork dari SmartProxy"
+		"message": "ProxyMust {0} (berbasis SmartProxy 2.2.1) – dikelola oleh nana-xakep | Fork dari SmartProxy"
 	},
 	"noProxiesSelected": {
 		"message": "Tidak ada proxy yang dipilih."
@@ -1850,5 +1850,20 @@
 	},
 	"proxyCheckerCheckingSite": {
 		"message": "Memeriksa situs: {0}..."
-	}
+	},
+	"settingsRuleProxyPerOrigin": {
+		"message": "Proxy per origin (hanya Firefox)"
+	},
+	"popupRemoveRuleTooltip": {
+		"message": "Hapus aturan"
+	},
+	"popupDisableRuleTooltip": {
+		"message": "Nonaktifkan aturan"
+	},
+	"popupEnableRuleTooltip": {
+		"message": "Aktifkan aturan"
+	},
+	"popupProxyPerOriginTooltip": {
+		"message": "Alihkan proxy per origin (hanya Firefox)"
+	}	
 }

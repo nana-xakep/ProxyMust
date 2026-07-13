@@ -198,10 +198,13 @@ export class CommandMessages {
 	// Debug
 	public static DebugEnableDiagnostics = 'Debug_EnableDiagnostics';
 	public static DebugGetDiagnosticsLogs = 'Debug_GetDiagnosticsLogs';
-	    // English: Popup active tab changed (used for dynamic updates)
+	// English: Popup active tab changed (used for dynamic updates)
     // Russian: Активная вкладка попапа изменена (используется для динамических обновлений)
     public static PopupActiveTabChanged = 'Popup_ActiveTabChanged';
-
+    public static PopupRemoveProxyRule = 'Popup_RemoveProxyRule';
+    public static PopupDisableProxyRule = 'Popup_DisableProxyRule';
+    public static PopupToggleProxyPerOriginForRule = 'Popup_ToggleProxyPerOriginForRule';
+	
 }
 export enum BrowserProxySettingsType {
 	none = 'none',
@@ -292,6 +295,7 @@ export type ProxyableDomainType = {
 	ruleMatchSource: CompiledProxyRulesMatchedSource;
 	ruleHasWhiteListMatch?: boolean;
 	proxyServerId?: string;
+    enableProxyPerOrigin?: boolean;	
 };
 
 export type SettingsPageInternalDataType = {
@@ -747,7 +751,9 @@ export class GeneralOptions implements Cloneable, Comparable {
     // English: Protocol switch mode: 'probable' or 'full'
     // Russian: Режим перебора протоколов: 'probable' или 'full'
     public protocolSwitchMode: 'probable' | 'full' = 'probable';
+    public enableProxyPerOriginRule: boolean = false;
     public proxyPerOrigin: boolean = true;
+	public deleteRuleWhenDisabledFromPopup: boolean = false;
     public activeIncognitoProfileId: string;
     public enableShortcuts: boolean = true;
     public shortcutNotification: boolean = true;
@@ -961,7 +967,8 @@ export class ProxyRule implements Cloneable {
 	public proxyServerId: string;
 	public enabled: boolean = true;
 	public whiteList: boolean = false;
-
+    public enableProxyPerOrigin: boolean = false;
+	
 	get ruleTypeName(): string {
 		return ProxyRuleType[this.ruleType];
 	}
@@ -1093,11 +1100,10 @@ export class CompiledProxyRule {
 	public compiledRuleSource: CompiledProxyRuleSource;
 	public regex?: RegExp;
 	public search?: string;
-
 	public hostName: string;
-
 	public proxy: ProxyServer;
 	public whiteList: boolean = false;
+	public enableProxyPerOrigin: boolean = false;
 
 	/**getting rule text */
 	get ruleText(): string {

@@ -96,7 +96,7 @@ export class SubscriptionUpdater {
 					firstFetchTimeoutMs = 0;
 				}
 
-				let timerId: NodeJS.Timer;
+				let timerId: NodeJS.Timeout;
 
 				if (firstFetchTimeoutMs) {
 					// This is like `setInterval`, but with an offset first invocation.
@@ -279,7 +279,7 @@ export class SubscriptionUpdater {
 						firstFetchTimeoutMs = 0;
 					}
 
-					let timerId: NodeJS.Timer;
+					let timerId: NodeJS.Timeout;
 
 					if (firstFetchTimeoutMs) {
 						// This is like `setInterval`, but with an offset first invocation.
@@ -507,4 +507,4 @@ export class SubscriptionUpdater {
 	}
 }
 
-type SubscriptionTimerType = { timerId: NodeJS.Timer, subscriptionId: string, refreshRate: number };
+type SubscriptionTimerType = { timerId: NodeJS.Timeout, subscriptionId: string, refreshRate: number };

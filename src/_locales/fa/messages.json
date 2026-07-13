@@ -1753,7 +1753,7 @@
 		"message": "ارائه شده توسط سالار،"
 	},
 	"footerVersionInfo": {
-		"message": "ProxyMust {0} (بر اساس SmartProxy 2.1) – نگهداری شده توسط nana-xakep | انشعابی از SmartProxy"
+		"message": "ProxyMust {0} (بر اساس SmartProxy 2.2.1) – نگهداری شده توسط nana-xakep | انشعابی از SmartProxy"
 	},
 	"noProxiesSelected": {
 		"message": "هیچ پروکسی انتخاب نشده است."
@@ -1850,5 +1850,20 @@
 	},
 	"proxyCheckerCheckingSite": {
 		"message": "در حال بررسی سایت: {0}..."
-	}
+	},
+	"settingsRuleProxyPerOrigin": {
+		"message": "پروکسی به ازای مبدأ (فقط فایرفاکس)"
+	},
+	"popupRemoveRuleTooltip": {
+		"message": "حذف قانون"
+	},
+	"popupDisableRuleTooltip": {
+		"message": "غیرفعال کردن قانون"
+	},
+	"popupEnableRuleTooltip": {
+		"message": "فعال کردن قانون"
+	},
+	"popupProxyPerOriginTooltip": {
+		"message": "تغییر وضعیت پروکسی به ازای مبدأ (فقط فایرفاکس)"
+	}	
 }

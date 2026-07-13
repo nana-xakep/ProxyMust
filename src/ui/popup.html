@@ -181,18 +181,23 @@
 				<ul id="divProxyableDomains" class="nav flex-column nav-pills interactive direction-ltr">
 					<li id="divProxyableDomainItem" style="display: none">
 						<a class="nav-link list-group-item list-group-item-action" href="#">
-							<div class="row proxyable-item">
-								<div class="col-9 text-nowrap">
+							<div class="row proxyable-item align-items-center">
+								<div class="col-7 text-nowrap">
 									<i class="fas fa-globe-americas fa-lg text-primary"></i>
 									<span class="proxyable-host-name font-url">-</span>
 									<div class="proxyable-is-subscription" style="display: none;"
 										data-localize="popupRuleIsFromSubscription">(From subscription)</div>
 								</div>
-								<div class="col-3 text-center d-flex align-items-center justify-content-end">
+								<div class="col-5 text-center d-flex align-items-center justify-content-end">
 									<i class="proxyable-status-icon far fa-square fa-lg background-white mr-1"></i>
 									<button class="btn btn-sm btn-link proxyable-arrow-btn" type="button" style="display: none;">
 										<i class="fas fa-chevron-down fa-sm text-muted"></i>
 									</button>
+									<span class="proxyable-actions" style="display: none;">
+										<button class="btn btn-sm btn-outline-danger proxyable-remove-btn">🗑️</button>
+										<button class="btn btn-sm btn-outline-secondary proxyable-disable-btn">⏸️</button>
+										<button class="btn btn-sm btn-outline-info proxyable-perorigin-btn">🌐</button>
+									</span>
 								</div>
 							</div>
 						</a>

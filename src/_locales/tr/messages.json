@@ -1753,7 +1753,7 @@
 		"message": "Salar tarafından sunulmuştur,"
 	},
 	"footerVersionInfo": {
-		"message": "ProxyMust {0} (SmartProxy 2.1 tabanlı) – nana-xakep tarafından bakımı yapılıyor | SmartProxy çatalı"
+		"message": "ProxyMust {0} (SmartProxy 2.2.1 tabanlı) – nana-xakep tarafından bakımı yapılıyor | SmartProxy çatalı"
 	},
 	"noProxiesSelected": {
 		"message": "Hiçbir proxy seçilmedi."
@@ -1850,5 +1850,20 @@
 	},
 	"proxyCheckerCheckingSite": {
 		"message": "Site kontrol ediliyor: {0}..."
-	}
+	},
+	"settingsRuleProxyPerOrigin": {
+		"message": "Kaynak başına proxy (yalnızca Firefox)"
+	},
+	"popupRemoveRuleTooltip": {
+		"message": "Kuralı kaldır"
+	},
+	"popupDisableRuleTooltip": {
+		"message": "Kuralı devre dışı bırak"
+	},
+	"popupEnableRuleTooltip": {
+		"message": "Kuralı etkinleştir"
+	},
+	"popupProxyPerOriginTooltip": {
+		"message": "Kaynak başına proxy'yi değiştir (yalnızca Firefox)"
+	}	
 }

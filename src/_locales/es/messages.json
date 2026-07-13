@@ -1753,7 +1753,7 @@
 		"message": "Presentado por Salar,"
 	},
 	"footerVersionInfo": {
-		"message": "ProxyMust {0} (basado en SmartProxy 2.1) – mantenido por nana-xakep | Fork de SmartProxy"
+		"message": "ProxyMust {0} (basado en SmartProxy 2.2.1) – mantenido por nana-xakep | Fork de SmartProxy"
 	},
 	"noProxiesSelected": {
 		"message": "No se seleccionaron proxies."
@@ -1850,5 +1850,20 @@
 	},
 	"proxyCheckerCheckingSite": {
 		"message": "Comprobando sitio: {0}..."
-	}
+	},
+	"settingsRuleProxyPerOrigin": {
+		"message": "Proxy por origen (solo Firefox)"
+	},
+	"popupRemoveRuleTooltip": {
+		"message": "Eliminar regla"
+	},
+	"popupDisableRuleTooltip": {
+		"message": "Desactivar regla"
+	},
+	"popupEnableRuleTooltip": {
+		"message": "Activar regla"
+	},
+	"popupProxyPerOriginTooltip": {
+		"message": "Alternar proxy por origen (solo Firefox)"
+	}	
 }

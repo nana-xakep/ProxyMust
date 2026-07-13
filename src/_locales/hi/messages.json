@@ -1753,7 +1753,7 @@
 		"message": "सलार द्वारा प्रस्तुत,"
 	},
 	"footerVersionInfo": {
-		"message": "ProxyMust {0} (SmartProxy 2.1 पर आधारित) – nana-xakep द्वारा अनुरक्षित | SmartProxy का एक शाखा"
+		"message": "ProxyMust {0} (SmartProxy 2.2.1 पर आधारित) – nana-xakep द्वारा अनुरक्षित | SmartProxy का एक शाखा"
 	},
 	"noProxiesSelected": {
 		"message": "कोई प्रॉक्सी चयनित नहीं है।"
@@ -1850,5 +1850,20 @@
 	},
 	"proxyCheckerCheckingSite": {
 		"message": "साइट की जाँच की जा रही है: {0}..."
-	}
+	},
+	"settingsRuleProxyPerOrigin": {
+		"message": "प्रति मूल प्रॉक्सी (केवल Firefox)"
+	},
+	"popupRemoveRuleTooltip": {
+		"message": "नियम हटाएँ"
+	},
+	"popupDisableRuleTooltip": {
+		"message": "नियम अक्षम करें"
+	},
+	"popupEnableRuleTooltip": {
+		"message": "नियम सक्षम करें"
+	},
+	"popupProxyPerOriginTooltip": {
+		"message": "प्रति मूल प्रॉक्सी टॉगल करें (केवल Firefox)"
+	}	
 }

@@ -1753,7 +1753,7 @@
 		"message": "سالار کی طرف سے پیش کردہ،"
 	},
 	"footerVersionInfo": {
-		"message": "ProxyMust {0} (SmartProxy 2.1 پر مبنی) – nana-xakep کے زیر انتظام | SmartProxy کی ایک شاخ"
+		"message": "ProxyMust {0} (SmartProxy 2.2.1 پر مبنی) – nana-xakep کے زیر انتظام | SmartProxy کی ایک شاخ"
 	},
 	"noProxiesSelected": {
 		"message": "کوئی پراکسی منتخب نہیں کی گئی۔"
@@ -1850,5 +1850,20 @@
 	},
 	"proxyCheckerCheckingSite": {
 		"message": "سائٹ کی جانچ ہو رہی ہے: {0}..."
-	}
+	},
+	"settingsRuleProxyPerOrigin": {
+		"message": "فی ماخذ پراکسی (صرف Firefox)"
+	},
+	"popupRemoveRuleTooltip": {
+		"message": "اصول ہٹائیں"
+	},
+	"popupDisableRuleTooltip": {
+		"message": "اصول غیر فعال کریں"
+	},
+	"popupEnableRuleTooltip": {
+		"message": "اصول فعال کریں"
+	},
+	"popupProxyPerOriginTooltip": {
+		"message": "فی ماخذ پراکسی ٹوگل کریں (صرف Firefox)"
+	}	
 }

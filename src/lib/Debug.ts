@@ -47,37 +47,37 @@ export class Debug {
 
 	public static log(msg: string, ...args: any) {
 		if (!this.enabled) return;
-		console.log.apply(null, arguments);
+		console.log(msg, ...args);
 		if (DiagDebug && !DiagDebug.consoleOutput)
-			DiagDebug.log.apply(DiagDebug, arguments);
+			DiagDebug.log(msg, ...args);
 	}
 
 	public static info(msg: string, ...args: any) {
 		if (!this.enabled) return;
-		console.info.apply(null, arguments);
+		console.info(msg, ...args);
 		if (DiagDebug && !DiagDebug.consoleOutput)
-			DiagDebug.info.apply(DiagDebug, arguments);
+			DiagDebug.info(msg, ...args);
 	}
 
 	public static trace(msg: string, ...args: any) {
 		if (!this.enabled) return;
-		console.trace.apply(null, arguments);
+		console.trace(msg, ...args);
 		if (DiagDebug && !DiagDebug.consoleOutput)
-			DiagDebug.trace.apply(DiagDebug, arguments);
+			DiagDebug.trace(msg, ...args);
 	}
 
 	public static warn(msg: string, ...args: any) {
 		// warn should be always output
-		console.warn.apply(null, arguments);
+		console.warn(msg, ...args);
 		if (DiagDebug && !DiagDebug.consoleOutput)
-			DiagDebug.warn.apply(DiagDebug, arguments);
+			DiagDebug.warn(msg, ...args);
 	}
 
 	public static error(msg: string, ...args: any) {
 		// error should be always output
-		console.error.apply(null, arguments);
+		console.error(msg, ...args);
 		if (DiagDebug && !DiagDebug.consoleOutput)
-			DiagDebug.error.apply(DiagDebug, arguments);
+			DiagDebug.error(msg, ...args);
 	}
 }
 
@@ -105,34 +105,33 @@ class Diagnostics {
 
 	public log(msg: string, ...args: any) {
 		if (!this.enabled) return;
-		this.addToLog('log', msg, arguments);
+		this.addToLog('log', msg, args);
 	}
 
 	public error(msg: string, ...args: any) {
 		if (!this.enabled) return;
-		this.addToLog('error', msg, arguments);
+		this.addToLog('error', msg, args);
 	}
 
 	public info(msg: string, ...args: any) {
 		if (!this.enabled) return;
-		this.addToLog('info', msg, arguments);
+		this.addToLog('info', msg, args);
 	}
 
 	public warn(msg: string, ...args: any) {
 		if (!this.enabled) return;
-		this.addToLog('warn', msg, arguments);
+		this.addToLog('warn', msg, args);
 	}
 
 	public trace(msg: string, ...args: any) {
 		if (!this.enabled) return;
-		this.addToLog('trace', msg, arguments);
+		this.addToLog('trace', msg, args);
 	}
 
-	private addToLog(level: string, msg: string, args: any) {
+	private addToLog(level: string, msg: string, args: any[]) {
 		let text = `${formatTime(new Date())} [${level}] ` + msg;
 
-		for (let index = 1; index < args.length; index++) {
-			const arg = args[index];
+		for (const arg of args) {
 			if (arg == null) {
 				text += ' NULL';
 			}

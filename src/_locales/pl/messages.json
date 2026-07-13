@@ -1753,7 +1753,7 @@
 		"message": "Dostarczone przez Salara,"
 	},
 	"footerVersionInfo": {
-		"message": "ProxyMust {0} (oparty na SmartProxy 2.1) – utrzymywany przez nana-xakep | Fork SmartProxy"
+		"message": "ProxyMust {0} (oparty na SmartProxy 2.2.1) – utrzymywany przez nana-xakep | Fork SmartProxy"
 	},
 	"noProxiesSelected": {
 		"message": "Nie wybrano żadnych proxy."
@@ -1850,5 +1850,20 @@
 	},
 	"proxyCheckerCheckingSite": {
 		"message": "Sprawdzanie strony: {0}..."
-	}
+	},
+	"settingsRuleProxyPerOrigin": {
+		"message": "Proxy na źródło (tylko Firefox)"
+	},
+	"popupRemoveRuleTooltip": {
+		"message": "Usuń regułę"
+	},
+	"popupDisableRuleTooltip": {
+		"message": "Wyłącz regułę"
+	},
+	"popupEnableRuleTooltip": {
+		"message": "Włącz regułę"
+	},
+	"popupProxyPerOriginTooltip": {
+		"message": "Przełącz proxy na źródło (tylko Firefox)"
+	}	
 }

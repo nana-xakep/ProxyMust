@@ -1753,7 +1753,7 @@
 		"message": "Salar より提供"
 	},
 	"footerVersionInfo": {
-		"message": "ProxyMust {0}（SmartProxy 2.1ベース） – nana-xakep によって保守 | SmartProxyのフォーク"
+		"message": "ProxyMust {0}（SmartProxy 2.2.1ベース） – nana-xakep によって保守 | SmartProxyのフォーク"
 	},
 	"noProxiesSelected": {
 		"message": "プロキシが選択されていません。"
@@ -1850,5 +1850,20 @@
 	},
 	"proxyCheckerCheckingSite": {
 		"message": "サイトをチェック中: {0}..."
-	}
+	},
+	"settingsRuleProxyPerOrigin": {
+		"message": "オリジンごとのプロキシ (Firefoxのみ)"
+	},
+	"popupRemoveRuleTooltip": {
+		"message": "ルールを削除"
+	},
+	"popupDisableRuleTooltip": {
+		"message": "ルールを無効化"
+	},
+	"popupEnableRuleTooltip": {
+		"message": "ルールを有効化"
+	},
+	"popupProxyPerOriginTooltip": {
+		"message": "オリジンごとのプロキシを切り替え (Firefoxのみ)"
+	}	
 }

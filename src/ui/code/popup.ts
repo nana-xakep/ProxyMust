@@ -354,6 +354,63 @@ export class popup {
         if (popup.quickTestBtn.length) {
             popup.quickTestBtn.off("click").on("click", popup.onQuickTestClick);
         }
+		// English: Delegate events for proxyable action buttons (remove, disable, per-origin)
+        // Russian: Делегируем события для кнопок действий в проксируемых элементах (удалить, отключить, режим вкладки)
+        jQuery("#divProxyableDomains").on("click", ".proxyable-remove-btn", function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            const item = jQuery(this).closest("li");
+            const proxyableDomain: ProxyableDomainType = item.data("proxyable-domain-type");
+            if (!proxyableDomain || !proxyableDomain.ruleId) return;
+            const confirmMessage = api.i18n.getMessage("proxyableDeleteRuleConfirm") + " " + proxyableDomain.domain + "?";
+            messageBox.confirm(confirmMessage, () => {
+                popup.onProxyableAction(proxyableDomain.ruleId, "remove");
+            });
+        });
+
+        jQuery("#divProxyableDomains").on("click", ".proxyable-disable-btn", function(e) {
+            e.stopPropagation();
+            const item = jQuery(this).closest("li");
+            const proxyableDomain: ProxyableDomainType = item.data("proxyable-domain-type");
+            console.log("[Popup] Кнопка disable/enable нажата, ruleId:", proxyableDomain?.ruleId);
+            if (!proxyableDomain || !proxyableDomain.ruleId) return;
+            const currentlyEnabled = proxyableDomain.ruleMatched;
+            const newEnabled = !currentlyEnabled;
+            console.log("[Popup] Текущее состояние:", currentlyEnabled, "новое:", newEnabled);
+            popup.onProxyableAction(proxyableDomain.ruleId, "disable", newEnabled);
+            // Update UI immediately
+            const btn = jQuery(this);
+            if (newEnabled) {
+                btn.text("⏸️").attr("title", api.i18n.getMessage("popupDisableRuleTooltip"));
+            } else {
+                btn.text("▶️").attr("title", api.i18n.getMessage("popupEnableRuleTooltip"));
+            }
+            // Toggle status icon
+            popup.toggleProxyableItemUI(item, newEnabled);
+            proxyableDomain.ruleMatched = newEnabled;
+            item.data("proxyable-domain-type", proxyableDomain);
+        });
+
+        jQuery("#divProxyableDomains").on("click", ".proxyable-perorigin-btn", function(e) {
+            e.stopPropagation();
+            const item = jQuery(this).closest("li");
+            const proxyableDomain: ProxyableDomainType = item.data("proxyable-domain-type");
+            console.log("[Popup] Кнопка per-origin нажата, ruleId:", proxyableDomain?.ruleId);
+            if (!proxyableDomain || !proxyableDomain.ruleId) return;
+            const current = proxyableDomain.enableProxyPerOrigin || false;
+            const newValue = !current;
+            console.log("[Popup] Текущее per-origin:", current, "новое:", newValue);
+            popup.onProxyableAction(proxyableDomain.ruleId, "perorigin", newValue);
+            // Update UI
+            const btn = jQuery(this);
+            if (newValue) {
+                btn.addClass("active");
+            } else {
+                btn.removeClass("active");
+            }
+            proxyableDomain.enableProxyPerOrigin = newValue;
+            item.data("proxyable-domain-type", proxyableDomain);
+        });
         console.log("[Popup] bindEvents завершён");
         popup.checkRunningTests();
     }
@@ -1375,6 +1432,41 @@ export class popup {
             } else {
                 popup.toggleProxyableItemUI(item, false);
             }
+			
+            // English: Show action buttons for non-subscription rules
+            // Russian: Показываем кнопки действий для правил, не из подписки
+            const actions = item.find(".proxyable-actions");
+            if (proxyableDomain.ruleSource != CompiledProxyRuleSource.Subscriptions) {
+                actions.show();
+                // Set localized tooltip for remove button
+                const removeBtn = actions.find(".proxyable-remove-btn");
+                removeBtn.attr("title", api.i18n.getMessage("popupRemoveRuleTooltip"));
+                // Set initial state for disable button
+                const disableBtn = actions.find(".proxyable-disable-btn");
+                if (proxyableDomain.ruleMatched) {
+                    disableBtn.text("⏸️").attr("title", api.i18n.getMessage("popupDisableRuleTooltip"));
+                } else {
+                    disableBtn.text("▶️").attr("title", api.i18n.getMessage("popupEnableRuleTooltip"));
+                }
+                // Proxy per origin button visibility (Firefox only)
+                // English: Hide proxy-per-origin button in non-Firefox browsers
+                // Russian: Скрываем кнопку "прокси на вкладку" в браузерах, отличных от Firefox
+                if (environment.name !== "Firefox") {
+                    actions.find(".proxyable-perorigin-btn").hide();
+                } else {
+                    // Set initial state for per-origin button
+                    const perOriginBtn = actions.find(".proxyable-perorigin-btn");
+                    perOriginBtn.attr("title", api.i18n.getMessage("popupProxyPerOriginTooltip"));
+                    if (proxyableDomain.enableProxyPerOrigin) {
+                        perOriginBtn.text("🌐").addClass("active");
+                    } else {
+                        perOriginBtn.text("🌐").removeClass("active");
+                    }
+                }
+            } else {
+                actions.hide();
+            }
+			
             item.on("click", popup.onProxyableDomainClick);
             item.find(".proxyable-arrow-btn").on("click", function (e) {
                 e.preventDefault();
@@ -1397,10 +1489,17 @@ export class popup {
         }
     }
 
-    private static onProxyableDomainClick() {
-        let clickedItem = jQuery(this);
-        let proxyableDomain: ProxyableDomainType = clickedItem.data("proxyable-domain-type");
-        if (proxyableDomain.ruleSource == CompiledProxyRuleSource.Subscriptions) return;
+	private static onProxyableDomainClick(e: any) {
+		// English: Ignore clicks on action buttons inside the proxyable domain item
+		// Russian: Игнорируем клики по кнопкам действий внутри элемента проксируемого домена
+		const target = e.target;
+		if (jQuery(target).closest(".proxyable-remove-btn, .proxyable-disable-btn, .proxyable-perorigin-btn, .proxyable-arrow-btn").length) {
+			return;
+		}
+
+		let clickedItem = jQuery(this);
+		let proxyableDomain: ProxyableDomainType = clickedItem.data("proxyable-domain-type");
+		if (proxyableDomain.ruleSource == CompiledProxyRuleSource.Subscriptions) return;
 
         let domain = proxyableDomain.domain;
         let hasMatchingRule = proxyableDomain.ruleMatched;
@@ -1660,6 +1759,42 @@ export class popup {
                 });
             }
         }
+    }
+	
+	    /**
+     * English: Sends action command for a proxy rule (remove, disable, toggle per-origin).
+     * Russian: Отправляет команду действия для правила прокси (удалить, отключить, переключить режим вкладки).
+     */
+    private static onProxyableAction(ruleId: number, action: "remove" | "disable" | "perorigin", value?: boolean) {
+        console.log("[Popup] onProxyableAction вызван, ruleId:", ruleId, "action:", action, "value:", value);
+        let command: string;
+        let message: any = { ruleId };
+        switch (action) {
+            case "remove":
+                command = CommandMessages.PopupRemoveProxyRule;
+                break;
+            case "disable":
+                command = CommandMessages.PopupDisableProxyRule;
+                message.enabled = value;
+                break;
+            case "perorigin":
+                command = CommandMessages.PopupToggleProxyPerOriginForRule;
+                message.enableProxyPerOrigin = value;
+                break;
+            default:
+                return;
+        }
+        console.log("[Popup] Отправка сообщения в Core:", { command, ...message });
+        PolyFill.runtimeSendMessage({ command, ...message }, (response) => {
+            console.log("[Popup] Ответ от Core:", response);
+            if (response && response.success) {
+                // Refresh popup data to reflect changes
+                popup.refreshPopupData();
+            } else {
+                console.warn("Action failed:", action, response?.error);
+            }
+        });
+        popup.closeSelfWhenRefreshTabNeeded();
     }
 
     private static refreshPopupData() {

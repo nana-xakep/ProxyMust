@@ -60,6 +60,7 @@ export let environment = {
 
 export var api: any = {};
 declare var chrome: any;
+declare var browser: any;
 
 if (isGecko()) {
 	api = browser;

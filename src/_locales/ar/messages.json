@@ -1753,7 +1753,7 @@
 		"message": "مقدّم لكم بواسطة سالار،"
 	},
 	"footerVersionInfo": {
-		"message": "ProxyMust {0} (بناءً على SmartProxy 2.1) – يُصان بواسطة nana-xakep | شوكة من SmartProxy"
+		"message": "ProxyMust {0} (بناءً على SmartProxy 2.2.1) – يُصان بواسطة nana-xakep | شوكة من SmartProxy"
 	},
 	"noProxiesSelected": {
 		"message": "لم يتم تحديد أي بروكسي."
@@ -1850,5 +1850,20 @@
 	},
 	"proxyCheckerCheckingSite": {
 		"message": "جاري فحص الموقع: {0}..."
+	},
+	"settingsRuleProxyPerOrigin": {
+		"message": "وكيل لكل مصدر (فايرفوكس فقط)"
+	},
+	"popupRemoveRuleTooltip": {
+		"message": "إزالة القاعدة"
+	},
+	"popupDisableRuleTooltip": {
+		"message": "تعطيل القاعدة"
+	},
+	"popupEnableRuleTooltip": {
+		"message": "تفعيل القاعدة"
+	},
+	"popupProxyPerOriginTooltip": {
+		"message": "تبديل الوكيل لكل مصدر (فايرفوكس فقط)"
 	}
 }
