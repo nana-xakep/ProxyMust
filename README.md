@@ -1,6 +1,6 @@
 # ProxyMust
 
-**Advanced selective proxy manager**  
+**Advanced selective Proxy Checker & Manager**  
 Version: 1.0.5 (based on SmartProxy 2.2.1)  
 Fork maintainer: nana-xakep  
 Source code: [github.com/nana-xakep/ProxyMust](https://github.com/nana-xakep/ProxyMust)
