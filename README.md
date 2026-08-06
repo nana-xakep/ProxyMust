@@ -1,7 +1,7 @@
 # ProxyMust
 
-**Advanced selective proxy manager**  
-Version: 1.0.5 (based on SmartProxy 2.2.1)  
+**Advanced selective Proxy Checker & Manager**  
+Version: 1.0.6 (based on SmartProxy 2.2.1)  
 Fork maintainer: nana-xakep  
 Source code: [github.com/nana-xakep/ProxyMust](https://github.com/nana-xakep/ProxyMust)
 
@@ -17,21 +17,47 @@ ProxyMust works in **Chrome, Firefox, Edge, Opera, and Firefox for Android** and
 
 ---
 
-## 🆕 What's new in version 1.0.5
+## 🆕 What's new in version 1.0.6
 
-- **Codebase updated to SmartProxy 2.2.1** – all improvements and fixes from upstream integrated.
-- **Rule management directly from the popup** – now you can delete, enable/disable a rule, and also enable **"Proxy per tab"** mode (Firefox only) without going to settings.
-- **"Proxy per tab" mode for individual rules** – if a rule matches one request, enabling this mode will proxy the whole tab through the same proxy (available only in Firefox).
-- **Display and editing of the "Proxy per tab" mode in rule settings** – added a checkbox in the rule edit modal.
-- **Automatic import mode switching for rules** – now when you paste text, the "Text" mode activates; when you select a file, the "File" mode activates.
-- **Automatic reload of settings page** after rule changes from the popup – no need to manually press F5.
-- **Localised tooltips for new popup buttons**.
-- **Fixed import of rules from SwitchyOmega** – CIDR/IP rules are now correctly handled.
-- **Chromium fix** – exception rules (whitelist) from subscriptions now correctly apply proxies in Chrome/Edge.
-- **Fixed restoration of rule-to-proxy relationships** when importing a backup.
-- **Fixed deletion and enabling/disabling rules from the popup** – all buttons now work correctly.
+- **AutoProxy – automatic proxy selection for Selective profile** – rules without an explicit proxy now automatically pick the best proxy based on test results (rating, statuses, freshness). Users can enable Auto mode in the profile settings via the “Manual / Automatic” toggle.
+- **Centralised status management** – `AutoStatusService` provides a single point of access for reading and updating proxy statuses.
+- **Proxy selection logic** – `ProxySelector` implements a hierarchy: **success → indirect → ip‑only → unknown → fail**, with priority (`pin`/`star`), rating, and freshness. `getBestProxyForSite` and `getNextProxyForSite` methods support failover.
+- **Unified proxy application** – `ProxySwitcher` extracts switching logic, reused for tests and AutoProxy.
+- **Dynamic proxy override in ProxyEngine** – `setDynamicProxyForSite`, `clearDynamicProxyForSite` allow temporary proxy substitution per site without changing rules.
+- **Failover in WebFailedRequestMonitor** – on connection errors in Auto mode (main_frame only), the system switches to the next proxy from the priority-sorted list and reloads the tab.
+- **Auto‑rule creation** – after a successful test (status success, indirect, or ip‑only), a disabled rule is automatically created in the Selective profile with the `isAuto` flag. If Auto mode is active, the rule is enabled automatically.
+- **Working proxy caching** – after a successful page load (status 200), the current proxy is cached for the site; subsequent errors on sub‑resources do not trigger new switches. The cache is cleared when switching profiles, manually changing proxy, or after 5 minutes.
+- **Proxy information in the rules table** – for auto‑rules, the “Proxy server” column now shows:
+  - Country flag
+  - Proxy name, protocol, rating
+  - Current status (✅ ☑️ ❔ ❌)
+  - Remaining status lifetime (with colour indication: green, yellow, red)
+  - `auto` / `manual` tag
+- **Context menu for rule rows** – right‑click a rule to:
+  - Assign a proxy (opens a filtered list for that site)
+  - Re‑test (current proxy, all successful, or all proxies)
+  - Exclude a proxy (globally or for this site)
+  - Delete the rule
+  - Batch operations (select multiple rules → apply action to all)
+- **AutoProxy settings in the profile** – in Selective profile settings, added:
+  - Selection mode toggle (Manual / Auto)
+  - “Max failover attempts” field (number of full‑list retries, default 3)
+  - “Suggest adding unreachable sites to AutoProxy” checkbox – when a page fails to load without a proxy, a dialog offers to add it to AutoProxy.
+- **Auto‑mode indication in profile name** – when Auto is enabled, a 🔄 icon is added to the profile name.
+- **Real‑time status updates in the rules table** – during tests, the table automatically redraws, showing current statuses and lifetimes for auto‑rules.
+- **Support for all proxies in failover** – now includes `ip‑only` and `unknown` proxies, excluding only those with explicit `fail` status, significantly improving fault tolerance.
+- **Site locking after successful load** – `siteLock` prevents repeated switches when the site is already loaded; errors on sub‑resources no longer trigger failover.
+- **Lock reset on tab change, profile switch, or timeout** – ensures the lock does not interfere when navigating to another site or changing settings.
+- **Priority of manual rules** – manual rules (with explicit proxy) always have priority over auto‑rules.
+- **Status update to `success` on successful load** – after page load with status 200, the proxy status for this site is updated to `success`, increasing the rating and improving future selection.
+- **Status lifetime displayed in the table** – remaining time until staleness is shown next to the proxy in the “Proxy server” column with colour indication.
+- **`auto`/`manual` tags in the rules table** – each auto‑rule is marked with `auto`, manual with `manual`.
+- **Dialog for adding an unreachable site to AutoProxy** – if the option is enabled and a site fails to load without a proxy, a dialog offers to add it to AutoProxy.
+- **CSV subscription support** – new `ProxyImporter.parseCsv` parses proxy lists in CSV format (separators: comma, semicolon, tab). Supports both headers and plain order (host, port, protocol, username, password, country).
+- **Auto‑detection of import format** – during manual import, the extension sequentially tries **JSON → CSV → TXT**, ensuring correct handling of any list, including those starting with markers like `[ProxyMust Servers]`.
+- **Improved auto‑detection for proxy import** – fields like `ip` → `host`, `country`/`country_code` → `countryCode`, `user` → `username`, `pass` → `password` are mapped correctly, restoring compatibility with services like proxyscrape.
 
-All previous features (proxy testing, rating, auto‑protocol detection, statuses, context menu, test log, etc.) are retained and improved.
+All previous features (testing, rating, auto‑protocol detection, statuses, context menu, test log, etc.) are retained and improved.
 
 For a detailed list of changes, see [CHANGELOG.md](CHANGELOG.md).
 
@@ -40,7 +66,7 @@ For a detailed list of changes, see [CHANGELOG.md](CHANGELOG.md).
 ## 📦 Installation
 
 ### From the store (recommended)
-- **Firefox Add-ons:** go to the store, search for "ProxyMust", and click "Install".
+- **Firefox Add‑ons:** go to the store, search for "ProxyMust", and click "Install".
 - **Chrome Web Store:** similarly.
 - **Edge, Opera:** through their respective extension stores.
 
@@ -57,7 +83,7 @@ For a detailed list of changes, see [CHANGELOG.md](CHANGELOG.md).
 In the popup (toolbar icon) you can switch between modes:
 
 - **Direct (no proxy)** – all requests go direct, no proxy is used.
-- **Selective proxy** – proxy is enabled only for sites that match the rules (blacklist).
+- **Selective proxy** – proxy is enabled only for sites that match the rules (blacklist). This profile now supports **Auto mode** – rules without an explicit proxy automatically choose the best working proxy based on test results.
 - **Always on** – proxy works for all sites except those added to exclusions (whitelist).
 - **System proxy** – the decision to use a proxy is delegated to the operating system (system settings).
 
@@ -82,8 +108,9 @@ On the settings page (tab "Proxy Servers") you can manage your proxy list.
 ### Importing a list
 - Click "Import Proxies".
 - Paste the proxy list text or upload a file.
-- Supported formats: `host:port`, `host:port [protocol]`, `protocol://user:pass@host:port`.
-- The extension automatically detects protocols and removes duplicates.
+- Supported formats: `host:port`, `host:port [protocol]`, `protocol://user:pass@host:port`, **CSV** (with or without headers).
+- The extension automatically detects the format (JSON → CSV → TXT) and removes duplicates.
+- Auto‑mapping of fields: `ip` → `host`, `country` → `countryCode`, `user` → `username`, `pass` → `password`.
 
 ### Export
 - Click "Export Proxies" – the entire list will be saved.
@@ -167,6 +194,12 @@ Rules determine for which sites to enable or disable the proxy. They are configu
 
 **Priority:** whitelist rules always have higher priority and disable the proxy for the specified sites.
 
+### AutoProxy behaviour
+- For rules with **Auto** mode, the system automatically selects the best proxy based on test results and freshness.
+- If a page fails to load without a proxy, a dialog suggests adding the site to AutoProxy (can be disabled in profile settings).
+- After a successful test for a site, an auto‑rule is created (disabled) and, if Auto mode is active, automatically enabled.
+- Manual rules (with an explicit proxy) always take precedence over auto‑rules.
+
 ---
 
 ## 🖱 Context menu
@@ -196,6 +229,8 @@ In addition to the basic import/export of the proxy list, the following improvem
 
 - **Automatic mode switching:** when you type text in the input field, the "Text proxy list" mode activates; when selecting a file, the "File proxy list" mode activates.
 - **Export selected:** in the table context menu you can export only the checked servers.
+- **CSV import support** – parse lists in CSV format with automatic field mapping.
+- **Auto‑detection of format** – the extension sequentially tries JSON, CSV, and TXT to ensure correct parsing.
 
 ---
 
@@ -266,7 +301,7 @@ This is due to browser API limitations. Use cyclic tests – they work in all br
 Enable the option "Enable rating for proxies" on the "Proxy Servers" tab, or press F5 to refresh the page.
 
 ### Unable to import a proxy list
-Make sure the list conforms to supported formats. Use the automatic mode switching (text/file).
+Make sure the list conforms to supported formats. Use the automatic mode switching (text/file). CSV files should have proper separators.
 
 ### Error during WebDAV synchronization
 - Check the URL and credentials.
@@ -289,6 +324,6 @@ ProxyMust is distributed under the **GNU General Public License v3.0**. Original
 ---
 
 **ProxyMust** – maintained by [nana-xakep](https://github.com/nana-xakep)  
-License [GPL-3.0](https://www.gnu.org/licenses/gpl-3.0.html). Version 1.0.5 (based on SmartProxy 2.2.1).
+License [GPL-3.0](https://www.gnu.org/licenses/gpl-3.0.html). Version 1.0.6 (based on SmartProxy 2.2.1).
 
-Documentation version: 1.0.5 (2026-07-12)
+Documentation version: 1.0.6 (2026-08-05)
