@@ -20,6 +20,10 @@
 import { Settings } from "./Settings";
 import { SettingsOperation } from "./SettingsOperation";
 import { api } from "../lib/environment";
+import { AutoStatusService } from './AutoStatusService';
+import { SmartProfileType, ProxyRule, ProxyRuleType } from './definitions';
+import { ProxyEngine } from './ProxyEngine';
+import { Core } from "./Core";
 
 // ==================== Types ====================
 
@@ -77,13 +81,69 @@ export async function saveResult(
     }
     // 'ip-only' – no rating change
 
-    // Update autoStatus
-    if (!Settings.current.autoStatus) Settings.current.autoStatus = {};
-    if (!Settings.current.autoStatus[proxyId]) Settings.current.autoStatus[proxyId] = {};
-    Settings.current.autoStatus[proxyId][normalizedSite] = {
-        status: status,
-        timestamp: timestamp
-    };
+    // Update autoStatus via central service
+    const statusService = AutoStatusService.getInstance();
+    statusService.setStatus(proxyId, normalizedSite, status, timestamp);
+	
+    // English: Auto-create rule for SmartRules profile regardless of active profile.
+    // Russian: Авто-создание правила в профиле SmartRules независимо от активного профиля.
+    if (status === "success" || status === "indirect" || status === "ip-only") {
+                // Find the SmartRules profile (it's built-in, should always exist)
+                const smartRulesProfile = Settings.current?.proxyProfiles?.find(p => p.profileType === SmartProfileType.SmartRules);
+                if (!smartRulesProfile) {
+                    console.warn("[ResultSaver] SmartRules profile not found, cannot auto-create rule");
+                } else {
+                    // English: Normalize site using Core.normalizeSite to ensure consistency (removes www.)
+                    // Russian: Нормализуем сайт через Core.normalizeSite для единообразия (удаляет www.)
+                    const coreNormalizedSite = Core.normalizeSite(normalizedSite);
+                    const siteToUse = coreNormalizedSite || normalizedSite;
+                    
+                    // Check if rule already exists for this site (use normalized host)
+                    const existingRule = smartRulesProfile.proxyRules?.find(r => r.hostName === siteToUse);
+                    if (!existingRule) {
+                        // Create new rule (disabled by default)
+                        const newRule = new ProxyRule();
+                        newRule.ruleType = ProxyRuleType.DomainSubdomain;
+                        newRule.hostName = siteToUse;
+                        newRule.ruleSearch = siteToUse;
+                        newRule.enabled = false; // disabled until auto mode is active
+                        newRule.whiteList = false;
+                        newRule.proxyServerId = null;
+                        newRule.autoGeneratePattern = true;
+                        newRule.isAuto = true;
+                        if (!smartRulesProfile.proxyRules) smartRulesProfile.proxyRules = [];
+                        smartRulesProfile.proxyRules.push(newRule);
+                        // Save profile and apply changes immediately
+                        SettingsOperation.saveSmartProfiles();
+                        SettingsOperation.saveAllSync(false);
+                        // English: Update active settings and notify ProxyEngine so the rule is compiled immediately
+                        // Russian: Обновляем активные настройки и уведомляем ProxyEngine, чтобы правило скомпилировалось сразу
+                        Settings.updateActiveSettings();
+                        ProxyEngine.notifyProxyRulesChanged();
+                        console.log(`[ResultSaver] Auto-created rule for site ${siteToUse} (disabled by default)`);
+                    }
+
+            // Now, if active profile is SmartRules and auto mode is enabled, enable the rule
+            const activeProfile = Settings.active?.activeProfile;
+            if (activeProfile && activeProfile.profileType === SmartProfileType.SmartRules) {
+                const profile = Settings.current?.proxyProfiles?.find(p => p.profileId === activeProfile.profileId);
+                if (profile && (profile as any).selectionMode === 'auto') {
+                    // Find the rule and enable it
+                    const rule = smartRulesProfile.proxyRules?.find(r => r.hostName === normalizedSite);
+                    if (rule && !rule.enabled) {
+                        rule.enabled = true;
+                        SettingsOperation.saveSmartProfiles();
+                        SettingsOperation.saveAllSync(false);
+                        // English: Also update active settings and notify ProxyEngine
+                        // Russian: Также обновляем активные настройки и уведомляем ProxyEngine
+                        Settings.updateActiveSettings();
+                        ProxyEngine.notifyProxyRulesChanged();
+                        console.log(`[ResultSaver] Enabled auto-created rule for site ${normalizedSite} (auto mode active)`);
+                    }
+                }
+            }
+        }
+    }
 
     console.log(`[ResultSaver] autoStatus после сохранения:`, JSON.stringify(Settings.current.autoStatus[proxyId]));
 

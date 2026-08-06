@@ -10,7 +10,7 @@
 		"message": "ProxyMust"
 	},
 	"extensionDescription": {
-		"message": "ProxyMust – selectieve proxymanager (fork van SmartProxy). Schakelt automatisch de proxy in/uit voor bezochte websites op basis van aanpasbare patronen."
+		"message": "ProxyMust – AutoProxymanager (fork van SmartProxy). Schakelt automatisch de proxy in/uit voor bezochte websites op basis van aanpasbare patronen."
 	},
 	"toolbarTooltipEffectiveRule": {
 		"message": "Bron van overeenkomende regel:"
@@ -31,7 +31,7 @@
 		"message": "Direct (geen Proxy)"
 	},
 	"popupSmartProxy": {
-		"message": "Selectieve Proxy"
+		"message": "AutoProxy"
 	},
 	"popupAlwaysEnable": {
 		"message": "Altijd Ingeschakeld"
@@ -1237,7 +1237,7 @@
 		"message": "Welkom bij ProxyMust"
 	},
 	"settingsWelcomeMessage": {
-		"message": "<p>\n\tProxyMust, selectieve proxymanager met proxytestmogelijkheden.<br>\n\tVolg deze stappen om te beginnen:\n</p>\n<ol>\n\t<li>\n\t\tVoeg een proxyserver of een lijst met proxy's toe\n\t\t<br>\n\t\t<small>(Ga naar het tabblad Proxyservers en voeg daar toe)</small>\n\t</li>\n\t<li>\n\t\tStel de modus in op Selectieve Proxy\n\t\t<br>\n\t\t<small>(Gebruik het pop-upmenu op de werkbalk om de actieve modus te wijzigen naar Selectieve Proxy)</small>\n\t</li>\n\t<li>\n\t\tDefinieer proxyregels\n\t\t<br>\n\t\t<small>(Gebruik het pop-upmenu op de werkbalk om regels toe te voegen, of het tabblad Proxyregels om regels toe te voegen/wijzigen)</small>\n\t</li>\n\t<li>\n\t\tU bent klaar.\n\t</li>\n</ol>"
+		"message": "<p>ProxyMust — selectieve proxymanager met automatische selectie van werkende proxies voor sites.<br>Volg deze stappen om te beginnen:</p>\n<ol>\n  <li>\n    <strong>Voeg proxies toe</strong><br>\n    <small>Handmatig: ga naar het tabblad Proxy Servers en voeg uw proxies toe.<br>\n    of<br>\n    Via abonnementen: geef op het tabblad Proxy Server Abonnementen de URL van een proxylijst op – de extensie laadt en werkt deze automatisch bij.</small>\n  </li>\n  <li>\n    <strong>Schakel proxy-testen in</strong><br>\n    <small>Testen is nodig zodat het systeem werkende proxies kan identificeren. Schakel hiervoor de optie \"Proxy-beoordeling inschakelen\" in de instellingen (sectie Proxy Servers) in. Daarna is de testinterface beschikbaar en kunt u proxies voor uw sites testen.</small>\n  </li>\n  <li>\n    <strong>Configureer Auto Proxy-regels</strong><br>\n    <small>Voor sites die een proxy moeten gebruiken, maakt u regels op het tabblad Auto Proxy. Voor elke regel kunt u de modus \"Auto\" selecteren – het systeem schakelt dan bij fouten automatisch over naar een werkende proxy.<br>\n    Regels kunnen handmatig worden toegevoegd of via de knop \"Site toevoegen\" in de popup. Als een pagina zonder proxy niet laadt, biedt de extensie aan om deze automatisch aan de auto proxy toe te voegen (deze functie kan worden uitgeschakeld in de profielinstellingen). Ook wordt bij het testen van een proxy voor een site automatisch een regel voor die site aangemaakt.<br>\n    Of schakel gewoon de modus \"Auto Proxy\" in en begin met surfen – voor alle sites die in uw regio worden geopend, wordt geen proxy toegepast, en voor beperkte sites vindt het systeem een werkende proxy en verbindt u.</small>\n  </li>\n  <li>\n    <strong>Klaar!</strong><br>\n    <small>Bij het bezoeken van sites met regels in de automatische modus, vindt ProxyMust automatisch een werkende proxy en schakelt deze bij fouten. Testresultaten en proxystatussen worden weergegeven in de regeltabel.</small>\n  </li>\n</ol>"
 	},
 	"settingsWelcomeSkipButton": {
 		"message": "Begrepen"
@@ -1865,5 +1865,92 @@
 	},
 	"popupProxyPerOriginTooltip": {
 		"message": "Proxy per oorsprong omschakelen (alleen Firefox)"
+	},
+	"settingsAutoProxyTitle": {
+		"message": "Auto-proxy-instellingen"
+	},
+	"settingsRulesGridColMode": {
+		"message": "Modus"
+	},
+	"settingsAutoProxySelectionMode": {
+		"message": "Selectiemodus:"
+	},
+	"settingsAutoProxyManual": {
+		"message": "Handmatig"
+	},
+	"settingsAutoProxyAuto": {
+		"message": "Automatisch"
+	},
+	"settingsAutoProxyModeDesc": {
+		"message": "In de automatische modus worden proxies automatisch geselecteerd op basis van testresultaten."
+	},
+	"settingsAutoProxyMaxFailover": {
+		"message": "Aantal schakelpogingen:"
+	},
+	"settingsAutoProxyMaxFailoverDesc": {
+		"message": "Aantal herhaalde schakelingen van de volledige proxylijst (1-10)."
+	},
+	"settingsAutoProxyShowDialog": {
+		"message": "Dialoog voor auto-proxy-wisseling weergeven"
+	},
+	"settingsAutoProxyAutoPin": {
+		"message": "Succesvolle proxy automatisch vastzetten (zonder bevestiging)"
+	},
+	"settingsAutoProxyExcludedProxies": {
+		"message": "Uitgesloten proxies:"
+	},
+	"settingsAutoProxyExcludedProxiesDesc": {
+		"message": "Deze proxies worden niet gebruikt in de automatische modus."
+	},
+	"dialogPinTitle": {
+		"message": "Proxy vastzetten?"
+	},
+	"dialogPinMessage": {
+		"message": "Proxy \"{1}\" werkt voor site {0}. Vastzetten voor deze site?"
+	},
+	"dialogPinConfirm": {
+		"message": "Ja, vastzetten"
+	},
+	"dialogPinCancel": {
+		"message": "Zoeken voortzetten"
+	},
+	"dialogPinCheckbox": {
+		"message": "Niet meer vragen voor deze site"
+	},
+	"dialogChangeTitle": {
+		"message": "Proxy wijzigen?"
+	},
+	"dialogChangeMessage": {
+		"message": "De ingestelde proxy voor site {0} wijzigen?"
+	},
+	"dialogChangeConfirm": {
+		"message": "Wijzigen"
+	},
+	"dialogChangeCancel": {
+		"message": "Behouden"
+	},
+	"dialogChangeCheckbox": {
+		"message": "Niet meer vragen voor deze site"
+	},
+	"popupNoProxyFound": {
+		"message": "Geen proxy gevonden voor deze site."
+	},
+	"popupAddUnreachableSiteTitle": {
+		"message": "Site wordt niet geladen"
+	},
+	"popupAddUnreachableSiteMessage": {
+		"message": "Site {0} wordt zonder proxy niet geladen. Toevoegen aan auto-proxy?"
+	},
+	"popupAddUnreachableSiteConfirm": {
+		"message": "Toevoegen"
+	},
+	"popupAddUnreachableSiteCancel": {
+		"message": "Nu niet"
+	},
+	"settingsAutoAddUnreachableSites": {
+		"message": "Voorstellen om onbereikbare sites aan de auto-proxy toe te voegen"
+	},
+	"settingsAutoAddUnreachableSitesDesc": {
+		"message": "Wanneer een pagina niet wordt geladen, wordt een dialoog weergegeven die voorstelt de site aan de auto-proxy toe te voegen."
 	}	
 }

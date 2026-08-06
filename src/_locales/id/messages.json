@@ -10,7 +10,7 @@
 		"message": "ProxyMust"
 	},
 	"extensionDescription": {
-		"message": "ProxyMust – pengelola proksi selektif (cabang dari SmartProxy). Secara otomatis mengaktifkan/menonaktifkan proksi untuk situs yang Anda kunjungi berdasarkan pola yang dapat disesuaikan."
+		"message": "ProxyMust – pengelola AutoProxy (cabang dari SmartProxy). Secara otomatis mengaktifkan/menonaktifkan proksi untuk situs yang Anda kunjungi berdasarkan pola yang dapat disesuaikan."
 	},
 	"toolbarTooltipEffectiveRule": {
 		"message": "Sumber aturan yang cocok:"
@@ -31,7 +31,7 @@
 		"message": "Langsung (Tanpa Proksi)"
 	},
 	"popupSmartProxy": {
-		"message": "Proksi Selektif"
+		"message": "AutoProxy"
 	},
 	"popupAlwaysEnable": {
 		"message": "Selalu Diaktifkan"
@@ -1237,7 +1237,7 @@
 		"message": "Selamat datang di ProxyMust"
 	},
 	"settingsWelcomeMessage": {
-		"message": "<p>\n\tProxyMust, pengelola proksi selektif dengan kemampuan pengujian proksi.<br>\n\tSilakan ikuti langkah-langkah berikut untuk memulai:\n</p>\n<ol>\n\t<li>\n\t\tTambahkan server proksi atau daftar proksi\n\t\t<br>\n\t\t<small>(Buka tab Server Proksi dan tambahkan di sana)</small>\n\t</li>\n\t<li>\n\t\tAtur mode ke Proksi Selektif\n\t\t<br>\n\t\t<small>(Gunakan menu popup pada bilah alat untuk mengubah mode aktif ke Proksi Selektif)</small>\n\t</li>\n\t<li>\n\t\tTentukan Aturan Proksi\n\t\t<br>\n\t\t<small>(Gunakan menu popup pada bilah alat untuk menambah aturan atau tab Aturan Proksi untuk menambah/mengubah aturan server proksi)</small>\n\t</li>\n\t<li>\n\t\tSelesai.\n\t</li>\n</ol>"
+		 "message": "<p>ProxyMust — pengelola proksi selektif dengan pemilihan otomatis proksi yang berfungsi untuk situs.<br>Silakan ikuti langkah-langkah berikut untuk memulai:</p>\n<ol>\n  <li>\n    <strong>Tambahkan proksi</strong><br>\n    <small>Secara manual: buka tab Server Proksi dan tambahkan proksi Anda.<br>\n    atau<br>\n    Melalui langganan: pada tab Langganan Server Proksi, tentukan URL daftar proksi – ekstensi akan secara otomatis memuat dan memperbaruinya.</small>\n  </li>\n  <li>\n    <strong>Aktifkan pengujian proksi</strong><br>\n    <small>Pengujian diperlukan agar sistem dapat mengidentifikasi proksi yang berfungsi. Untuk itu, aktifkan kotak centang \"Aktifkan peringkat proksi\" di pengaturan (bagian Server Proksi). Setelah itu, antarmuka pengujian akan tersedia dan Anda dapat menguji proksi untuk situs Anda.</small>\n  </li>\n  <li>\n    <strong>Konfigurasikan aturan Proksi Otomatis</strong><br>\n    <small>Untuk situs yang harus menggunakan proksi, buat aturan di tab Proksi Otomatis. Untuk setiap aturan, Anda dapat memilih mode \"Otomatis\" – sistem akan secara otomatis beralih ke proksi yang berfungsi jika terjadi kesalahan.<br>\n    Aturan dapat ditambahkan secara manual atau melalui tombol \"Tambahkan situs\" di popup. Jika halaman tidak dimuat tanpa proksi, ekstensi akan menawarkan untuk menambahkannya secara otomatis ke proksi otomatis (fitur ini dapat dinonaktifkan di pengaturan profil). Juga, saat menguji proksi untuk suatu situs, aturan untuk situs tersebut akan dibuat secara otomatis.<br>\n    Atau cukup aktifkan mode \"Proksi Otomatis\" dan mulailah menjelajah – untuk semua situs yang terbuka di wilayah Anda, tidak ada proksi yang akan diterapkan, dan untuk situs yang dibatasi, sistem akan menemukan proksi yang berfungsi dan menghubungkan Anda.</small>\n  </li>\n  <li>\n    <strong>Selesai!</strong><br>\n    <small>Saat mengunjungi situs dengan aturan dalam mode otomatis, ProxyMust akan secara otomatis menemukan proksi yang berfungsi dan menggantinya jika terjadi kesalahan. Hasil pengujian dan status proksi ditampilkan dalam tabel aturan.</small>\n  </li>\n</ol>"
 	},
 	"settingsWelcomeSkipButton": {
 		"message": "Mengerti"
@@ -1865,5 +1865,92 @@
 	},
 	"popupProxyPerOriginTooltip": {
 		"message": "Alihkan proxy per origin (hanya Firefox)"
+	},
+	"settingsAutoProxyTitle": {
+		"message": "Pengaturan auto-proxy"
+	},
+	"settingsRulesGridColMode": {
+		"message": "Mode"
+	},
+	"settingsAutoProxySelectionMode": {
+		"message": "Mode pemilihan:"
+	},
+	"settingsAutoProxyManual": {
+		"message": "Manual"
+	},
+	"settingsAutoProxyAuto": {
+		"message": "Otomatis"
+	},
+	"settingsAutoProxyModeDesc": {
+		"message": "Dalam mode otomatis, proxy akan dipilih secara otomatis berdasarkan hasil pengujian."
+	},
+	"settingsAutoProxyMaxFailover": {
+		"message": "Jumlah upaya pengalihan:"
+	},
+	"settingsAutoProxyMaxFailoverDesc": {
+		"message": "Jumlah pengalihan berulang dari seluruh daftar proxy (1-10)."
+	},
+	"settingsAutoProxyShowDialog": {
+		"message": "Tampilkan dialog perubahan auto-proxy"
+	},
+	"settingsAutoProxyAutoPin": {
+		"message": "Sematkan proxy yang berhasil secara otomatis (tanpa konfirmasi)"
+	},
+	"settingsAutoProxyExcludedProxies": {
+		"message": "Proxy yang dikecualikan:"
+	},
+	"settingsAutoProxyExcludedProxiesDesc": {
+		"message": "Proxy ini tidak akan digunakan dalam mode otomatis."
+	},
+	"dialogPinTitle": {
+		"message": "Sematkan proxy?"
+	},
+	"dialogPinMessage": {
+		"message": "Proxy \"{1}\" berfungsi untuk situs {0}. Sematkan untuk situs ini?"
+	},
+	"dialogPinConfirm": {
+		"message": "Ya, sematkan"
+	},
+	"dialogPinCancel": {
+		"message": "Lanjutkan pencarian"
+	},
+	"dialogPinCheckbox": {
+		"message": "Jangan tanya lagi untuk situs ini"
+	},
+	"dialogChangeTitle": {
+		"message": "Ganti proxy?"
+	},
+	"dialogChangeMessage": {
+		"message": "Ganti proxy yang ditetapkan untuk situs {0}?"
+	},
+	"dialogChangeConfirm": {
+		"message": "Ganti"
+	},
+	"dialogChangeCancel": {
+		"message": "Pertahankan"
+	},
+	"dialogChangeCheckbox": {
+		"message": "Jangan tanya lagi untuk situs ini"
+	},
+	"popupNoProxyFound": {
+		"message": "Tidak ada proxy yang ditemukan untuk situs ini."
+	},
+	"popupAddUnreachableSiteTitle": {
+		"message": "Situs tidak dimuat"
+	},
+	"popupAddUnreachableSiteMessage": {
+		"message": "Situs {0} tidak dimuat tanpa proxy. Tambahkan ke auto-proxy?"
+	},
+	"popupAddUnreachableSiteConfirm": {
+		"message": "Tambah"
+	},
+	"popupAddUnreachableSiteCancel": {
+		"message": "Tidak sekarang"
+	},
+	"settingsAutoAddUnreachableSites": {
+		"message": "Sarankan menambahkan situs yang tidak dapat dijangkau ke auto-proxy"
+	},
+	"settingsAutoAddUnreachableSitesDesc": {
+		"message": "Saat halaman tidak dimuat, dialog akan muncul dengan saran untuk menambahkan situs ke auto-proxy."
 	}	
 }

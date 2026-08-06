@@ -10,7 +10,7 @@
 		"message": "ProxyMust"
 	},
 	"extensionDescription": {
-		"message": "ProxyMust – gestionnaire de proxy sélectif (fork de SmartProxy). Active/désactive automatiquement le proxy pour les sites que vous visitez en fonction de motifs personnalisables."
+		"message": "ProxyMust – gestionnaire de AutoProxy (fork de SmartProxy). Active/désactive automatiquement le proxy pour les sites que vous visitez en fonction de motifs personnalisables."
 	},
 	"toolbarTooltipEffectiveRule": {
 		"message": "Source de la règle correspondante :"
@@ -31,7 +31,7 @@
 		"message": "Direct (sans proxy)"
 	},
 	"popupSmartProxy": {
-		"message": "Proxy sélectif"
+		"message": "AutoProxy"
 	},
 	"popupAlwaysEnable": {
 		"message": "Toujours activé"
@@ -1237,7 +1237,7 @@
 		"message": "Bienvenue dans ProxyMust"
 	},
 	"settingsWelcomeMessage": {
-		"message": "<p>\n\tProxyMust, gestionnaire de proxy sélectif avec capacités de test des proxys.<br>\n\tVeuillez suivre ces étapes pour commencer :\n</p>\n<ol>\n\t<li>\n\t\tAjoutez un serveur proxy ou une liste de proxys\n\t\t<br>\n\t\t<small>(Allez dans l’onglet « Serveurs proxy » et ajoutez‑les)</small>\n\t</li>\n\t<li>\n\t\tRéglez le mode sur « Proxy sélectif »\n\t\t<br>\n\t\t<small>(Utilisez le menu contextuel de la barre d’outils pour passer le mode actif à « Proxy sélectif »)</small>\n\t</li>\n\t<li>\n\t\tDéfinissez les règles de proxy\n\t\t<br>\n\t\t<small>(Utilisez le menu contextuel de la barre d’outils pour ajouter des règles ou l’onglet « Règles de proxy » pour ajouter/modifier des règles)</small>\n\t</li>\n\t<li>\n\t\tVous êtes prêt.\n\t</li>\n</ol>"
+		"message": "<p>ProxyMust — gestionnaire de proxy sélectif avec sélection automatique de proxies fonctionnels pour les sites.<br>Veuillez suivre ces étapes pour commencer :</p>\n<ol>\n  <li>\n    <strong>Ajouter des proxies</strong><br>\n    <small>Manuellement : allez dans l'onglet Serveurs proxy et ajoutez vos proxies.<br>\n    ou<br>\n    Via les abonnements : dans l'onglet Abonnements aux serveurs proxy, spécifiez l'URL d'une liste de proxies – l'extension les chargera et les mettra à jour automatiquement.</small>\n  </li>\n  <li>\n    <strong>Activer les tests de proxy</strong><br>\n    <small>Les tests sont nécessaires pour que le système identifie les proxies fonctionnels. Pour ce faire, cochez la case \"Activer la notation des proxies\" dans les paramètres (section Serveurs proxy). Ensuite, l'interface de test sera disponible et vous pourrez tester les proxies pour vos sites.</small>\n  </li>\n  <li>\n    <strong>Configurer les règles d'Auto Proxy</strong><br>\n    <small>Pour les sites qui doivent utiliser un proxy, créez des règles dans l'onglet Auto Proxy. Pour chaque règle, vous pouvez sélectionner le mode \"Auto\" – le système basculera automatiquement sur un proxy fonctionnel en cas d'erreurs.<br>\n    Les règles peuvent être ajoutées manuellement ou via le bouton \"Ajouter un site\" dans le popup. Si une page ne se charge pas sans proxy, l'extension proposera de l'ajouter automatiquement à l'auto proxy (cette fonction peut être désactivée dans les paramètres de profil). De plus, lors du test d'un proxy pour un site, une règle sera automatiquement créée pour celui-ci.<br>\n    Ou activez simplement le mode \"Auto Proxy\" et commencez à naviguer – pour tous les sites ouverts dans votre région, aucun proxy ne sera appliqué, et pour les sites restreints, le système trouvera un proxy fonctionnel et vous connectera.</small>\n  </li>\n  <li>\n    <strong>Vous êtes prêt !</strong><br>\n    <small>Lors de la visite de sites avec des règles en mode automatique, ProxyMust trouvera automatiquement un proxy fonctionnel et le changera en cas d'erreurs. Les résultats des tests et les statuts des proxies sont affichés dans le tableau des règles.</small>\n  </li>\n</ol>"
 	},
 	"settingsWelcomeSkipButton": {
 		"message": "Compris"
@@ -1865,5 +1865,92 @@
 	},
 	"popupProxyPerOriginTooltip": {
 		"message": "Basculer le proxy par origine (Firefox uniquement)"
+	},
+	"settingsAutoProxyTitle": {
+		"message": "Paramètres de l'auto-proxy"
+	},
+	"settingsRulesGridColMode": {
+		"message": "Mode"
+	},
+	"settingsAutoProxySelectionMode": {
+		"message": "Mode de sélection :"
+	},
+	"settingsAutoProxyManual": {
+		"message": "Manuel"
+	},
+	"settingsAutoProxyAuto": {
+		"message": "Automatique"
+	},
+	"settingsAutoProxyModeDesc": {
+		"message": "En mode automatique, les proxies seront sélectionnés automatiquement en fonction des résultats des tests."
+	},
+	"settingsAutoProxyMaxFailover": {
+		"message": "Nombre de tentatives de basculement :"
+	},
+	"settingsAutoProxyMaxFailoverDesc": {
+		"message": "Nombre de basculements répétés de la liste complète des proxies (1-10)."
+	},
+	"settingsAutoProxyShowDialog": {
+		"message": "Afficher la boîte de dialogue de changement d'auto-proxy"
+	},
+	"settingsAutoProxyAutoPin": {
+		"message": "Épingler automatiquement le proxy réussi (sans confirmation)"
+	},
+	"settingsAutoProxyExcludedProxies": {
+		"message": "Proxies exclus :"
+	},
+	"settingsAutoProxyExcludedProxiesDesc": {
+		"message": "Ces proxies ne seront pas utilisés en mode automatique."
+	},
+	"dialogPinTitle": {
+		"message": "Épingler le proxy ?"
+	},
+	"dialogPinMessage": {
+		"message": "Le proxy \"{1}\" fonctionne pour le site {0}. L'épingler pour ce site ?"
+	},
+	"dialogPinConfirm": {
+		"message": "Oui, épingler"
+	},
+	"dialogPinCancel": {
+		"message": "Continuer la recherche"
+	},
+	"dialogPinCheckbox": {
+		"message": "Ne plus demander pour ce site"
+	},
+	"dialogChangeTitle": {
+		"message": "Changer de proxy ?"
+	},
+	"dialogChangeMessage": {
+		"message": "Changer le proxy défini pour le site {0} ?"
+	},
+	"dialogChangeConfirm": {
+		"message": "Changer"
+	},
+	"dialogChangeCancel": {
+		"message": "Conserver"
+	},
+	"dialogChangeCheckbox": {
+		"message": "Ne plus demander pour ce site"
+	},
+	"popupNoProxyFound": {
+		"message": "Aucun proxy trouvé pour ce site."
+	},
+	"popupAddUnreachableSiteTitle": {
+		"message": "Le site ne se charge pas"
+	},
+	"popupAddUnreachableSiteMessage": {
+		"message": "Le site {0} ne se charge pas sans proxy. L'ajouter à l'auto-proxy ?"
+	},
+	"popupAddUnreachableSiteConfirm": {
+		"message": "Ajouter"
+	},
+	"popupAddUnreachableSiteCancel": {
+		"message": "Pas maintenant"
+	},
+	"settingsAutoAddUnreachableSites": {
+		"message": "Suggérer d'ajouter les sites inaccessibles à l'auto-proxy"
+	},
+	"settingsAutoAddUnreachableSitesDesc": {
+		"message": "Lorsqu'une page ne se charge pas, une boîte de dialogue s'affiche pour suggérer d'ajouter le site à l'auto-proxy."
 	}	
 }

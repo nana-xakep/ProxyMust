@@ -1,6 +1,7 @@
-﻿/*
+/*
+ * Original SmartProxy copyright:
  * This file is part of SmartProxy <https://github.com/salarcode/SmartProxy>,
- * Copyright (C) 2022 Salar Khalilzadeh <salar2k@gmail.com>
+ * Copyright (C) 2023 Salar Khalilzadeh <salar2k@gmail.com>
  *
  * SmartProxy is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
@@ -13,6 +14,12 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with SmartProxy.  If not, see <http://www.gnu.org/licenses/>.
+ */
+/*
+ * Modifications for ProxyMust:
+ * Copyright (C) 2026 nana-xakep <xakep.nana@gmail.com>
+ * - Added rating system, proxy testing, country flags, etc.
+ * - Added dynamic proxy override support for AutoProxy in Firefox.
  */
 import { api, environment } from '../lib/environment';
 import { Debug, DiagDebug } from '../lib/Debug';
@@ -34,6 +41,9 @@ import { PolyFill } from '../lib/PolyFill';
 import { Settings } from './Settings';
 import { ProxyEngineSpecialRequests } from './ProxyEngineSpecialRequests';
 import { TabRequestLogger } from './TabRequestLogger';
+import { Utils } from '../lib/Utils';
+import { ProxyEngine } from './ProxyEngine';
+import { SettingsOperation } from './SettingsOperation';
 
 const apiLib = api;
 
@@ -143,6 +153,24 @@ export class ProxyEngineFirefox {
 		proxyLog.matchedRuleStatus = ProxyableMatchedRuleStatus.NoneMatched;
 		proxyLog.proxifiedStatus = ProxyableProxifiedStatus.NoProxy;
 
+		// English: Check for dynamic proxy override for this site (AutoProxy)
+		// Russian: Проверяем динамическое переопределение прокси для этого сайта (AutoProxy)
+		const site = Utils.extractHostFromUrl(requestDetails.url);
+		if (site) {
+			const overrideProxyId = ProxyEngine.getDynamicProxyForSite(site);
+			if (overrideProxyId) {
+				const overrideProxy = SettingsOperation.findProxyServerById(overrideProxyId);
+				if (overrideProxy) {
+					proxyLog.proxifiedStatus = ProxyableProxifiedStatus.Special;
+					proxyLog.matchedRuleStatus = ProxyableMatchedRuleStatus.Special;
+					DiagDebug?.trace("FF.handleProxyRequest <DynamicOverride>", 't=' + proxyLog.tabId, requestDetails.url, overrideProxyId);
+					// English: Return the override proxy directly
+					// Russian: Возвращаем прокси из переопределения напрямую
+					return ProxyEngineFirefox.getResultProxyInfo(overrideProxy);
+				}
+			}
+		}
+
 		let settings = Settings.current;
 		let settingsActive = Settings.active;
 		let currentProxyServer = settingsActive.currentProxyServer;
@@ -216,40 +244,34 @@ export class ProxyEngineFirefox {
 						// document url is being changed, resetting the settings for that
 						tabData.resetTabState();
 					} else {
-						if (!tabData.proxyMatchedRule?.enableProxyPerOrigin) {
-							DiagDebug?.trace("FF.handleProxyRequest <ProxyPerOrigin skipped by rule>", 't=' + proxyLog.tabId, `OriginTab: ${tabData.url}`, proxyLog.url, "continuing with regular rule evaluation");
-							// Intentionally skip the tab/origin shortcut and continue with regular per-request rule matching below.
+						proxyLog.ruleHostName = tabData.proxyRuleHostName;
+
+						if (tabData.proxyMatchedRule) {
+							proxyLog.ruleSource = CompiledProxyRuleSource.Rules;
+
+							proxyLog.applyFromRule(tabData.proxyMatchedRule);
 						}
-						else {
-							proxyLog.ruleHostName = tabData.proxyRuleHostName;
 
-							if (tabData.proxyMatchedRule) {
-								proxyLog.ruleSource = CompiledProxyRuleSource.Rules;
+						if (tabData.proxyServerFromRule) {
+							if (tabData.proxyServerFromRule.username)
+								// Requires authentication. Mark as special and store authentication info.
+								ProxyEngineSpecialRequests.setSpecialUrl(
+									`${tabData.proxyServerFromRule.host}:${tabData.proxyServerFromRule.port}`,
+									null,
+									tabData.proxyServerFromRule,
+								);
 
-								proxyLog.applyFromRule(tabData.proxyMatchedRule);
-							}
-
-							if (tabData.proxyServerFromRule) {
-								if (tabData.proxyServerFromRule.username)
-									// Requires authentication. Mark as special and store authentication info.
-									ProxyEngineSpecialRequests.setSpecialUrl(
-										`${tabData.proxyServerFromRule.host}:${tabData.proxyServerFromRule.port}`,
-										null,
-										tabData.proxyServerFromRule,
-									);
-
-								// changing the active proxy server
-								currentProxyServer = tabData.proxyServerFromRule;
-							}
-
-							proxyLog.matchedRuleStatus = ProxyableMatchedRuleStatus.ProxyPerOrigin;
-							proxyLog.proxifiedStatus = ProxyableProxifiedStatus.ProxyPerOrigin;
-
-							DiagDebug?.trace("FF.handleProxyRequest <ProxyPerOrigin>", 't=' + proxyLog.tabId, `OriginTab: ${tabData.url}`, proxyLog.url, SmartProfileType[activeProfileType]);
-
-							// TODO: this branch still returns here; check the effects of `proxyLog.proxied = true` for this early-return path
-							return ProxyEngineFirefox.getResultProxyInfo(currentProxyServer);
+							// changing the active proxy server
+							currentProxyServer = tabData.proxyServerFromRule;
 						}
+
+						proxyLog.matchedRuleStatus = ProxyableMatchedRuleStatus.ProxyPerOrigin;
+						proxyLog.proxifiedStatus = ProxyableProxifiedStatus.ProxyPerOrigin;
+
+						DiagDebug?.trace("FF.handleProxyRequest <ProxyPerOrigin>", 't=' + proxyLog.tabId, `OriginTab: ${tabData.url}`, proxyLog.url, SmartProfileType[activeProfileType]);
+
+						// TODO: since we do not return here anymore, check effects of `proxyLog.proxied = true`
+						return ProxyEngineFirefox.getResultProxyInfo(currentProxyServer);
 					}
 				}
 			}

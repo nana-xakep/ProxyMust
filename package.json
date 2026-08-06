@@ -1,6 +1,6 @@
 {
   "name": "proxymust",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "ProxyMust – extended selective proxy manager (fork of SmartProxy). Automatically enables/disables proxy for sites you visit based on customizable rules.",
   "author": "nana-xakep <xakep.nana@gmail.com>",
   "homepage": "https://github.com/nana-xakep/ProxyMust",

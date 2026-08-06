@@ -10,7 +10,7 @@
 		"message": "ProxyMust"
 	},
 	"extensionDescription": {
-		"message": "ProxyMust – gestore proxy selettivo (fork di SmartProxy). Abilita/disabilita automaticamente il proxy per i siti visitati in base a modelli personalizzabili."
+		"message": "ProxyMust – gestore AutoProxy (fork di SmartProxy). Abilita/disabilita automaticamente il proxy per i siti visitati in base a modelli personalizzabili."
 	},
 	"toolbarTooltipEffectiveRule": {
 		"message": "Origine regola corrispondente:"
@@ -31,7 +31,7 @@
 		"message": "Diretto (Nessun Proxy)"
 	},
 	"popupSmartProxy": {
-		"message": "Proxy Selettivo"
+		"message": "AutoProxy"
 	},
 	"popupAlwaysEnable": {
 		"message": "Sempre Abilitato"
@@ -1237,7 +1237,7 @@
 		"message": "Benvenuto in ProxyMust"
 	},
 	"settingsWelcomeMessage": {
-		"message": "<p>\n\tProxyMust, gestore proxy selettivo con capacità di test dei proxy.<br>\n\tSegui questi passaggi per iniziare:\n</p>\n<ol>\n\t<li>\n\t\tAggiungi un server proxy o un elenco di proxy\n\t\t<br>\n\t\t<small>(Vai alla scheda Server Proxy e aggiungili lì)</small>\n\t</li>\n\t<li>\n\t\tImposta la modalità su Proxy Selettivo\n\t\t<br>\n\t\t<small>(Usa il menu popup della barra degli strumenti per cambiare la modalità attiva in Proxy Selettivo)</small>\n\t</li>\n\t<li>\n\t\tDefinisci le regole proxy\n\t\t<br>\n\t\t<small>(Usa il menu popup della barra degli strumenti per aggiungere regole o la scheda Regole Proxy per aggiungere/modificare le regole del server proxy)</small>\n\t</li>\n\t<li>\n\t\tSei pronto.\n\t</li>\n</ol>"
+		"message": "<p>ProxyMust — gestore di proxy selettivo con selezione automatica di proxy funzionanti per i siti.<br>Segui questi passaggi per iniziare:</p>\n<ol>\n  <li>\n    <strong>Aggiungi proxy</strong><br>\n    <small>Manualmente: vai alla scheda Server Proxy e aggiungi i tuoi proxy.<br>\n    o<br>\n    Tramite abbonamenti: nella scheda Abbonamenti ai server proxy, specifica l'URL di un elenco di proxy – l'estensione li caricherà e aggiornerà automaticamente.</small>\n  </li>\n  <li>\n    <strong>Attiva il test dei proxy</strong><br>\n    <small>Il test è necessario affinché il sistema identifichi i proxy funzionanti. Per farlo, attiva la casella \"Abilita valutazione proxy\" nelle impostazioni (sezione Server Proxy). Successivamente, l'interfaccia di test sarà disponibile e potrai testare i proxy per i tuoi siti.</small>\n  </li>\n  <li>\n    <strong>Configura le regole di Auto Proxy</strong><br>\n    <small>Per i siti che devono utilizzare un proxy, crea regole nella scheda Auto Proxy. Per ogni regola, puoi selezionare la modalità \"Auto\" – il sistema passerà automaticamente a un proxy funzionante in caso di errori.<br>\n    Le regole possono essere aggiunte manualmente o tramite il pulsante \"Aggiungi sito\" nel popup. Se una pagina non si carica senza proxy, l'estensione offrirà di aggiungerla automaticamente all'auto proxy (questa funzione può essere disabilitata nelle impostazioni del profilo). Inoltre, quando si testa un proxy per un sito, verrà creata automaticamente una regola per esso.<br>\n    Oppure attiva semplicemente la modalità \"Auto Proxy\" e inizia a navigare – per tutti i siti aperti nella tua regione, non verrà applicato alcun proxy, e per i siti limitati, il sistema troverà un proxy funzionante e ti collegherà.</small>\n  </li>\n  <li>\n    <strong>Pronto!</strong><br>\n    <small>Visitando siti con regole in modalità automatica, ProxyMust troverà automaticamente un proxy funzionante e lo cambierà in caso di errori. I risultati dei test e gli stati dei proxy vengono visualizzati nella tabella delle regole.</small>\n  </li>\n</ol>"
 	},
 	"settingsWelcomeSkipButton": {
 		"message": "Capito"
@@ -1865,5 +1865,92 @@
 	},
 	"popupProxyPerOriginTooltip": {
 		"message": "Attiva/disattiva proxy per origine (solo Firefox)"
+	},
+	"settingsAutoProxyTitle": {
+		"message": "Impostazioni auto-proxy"
+	},
+	"settingsRulesGridColMode": {
+		"message": "Modalità"
+	},
+	"settingsAutoProxySelectionMode": {
+		"message": "Modalità di selezione:"
+	},
+	"settingsAutoProxyManual": {
+		"message": "Manuale"
+	},
+	"settingsAutoProxyAuto": {
+		"message": "Automatico"
+	},
+	"settingsAutoProxyModeDesc": {
+		"message": "In modalità automatica, i proxy verranno selezionati automaticamente in base ai risultati dei test."
+	},
+	"settingsAutoProxyMaxFailover": {
+		"message": "Numero di tentativi di commutazione:"
+	},
+	"settingsAutoProxyMaxFailoverDesc": {
+		"message": "Numero di commutazioni ripetute dell'elenco completo dei proxy (1-10)."
+	},
+	"settingsAutoProxyShowDialog": {
+		"message": "Mostra dialogo di cambio auto-proxy"
+	},
+	"settingsAutoProxyAutoPin": {
+		"message": "Fissa automaticamente il proxy riuscito (senza conferma)"
+	},
+	"settingsAutoProxyExcludedProxies": {
+		"message": "Proxy esclusi:"
+	},
+	"settingsAutoProxyExcludedProxiesDesc": {
+		"message": "Questi proxy non verranno utilizzati in modalità automatica."
+	},
+	"dialogPinTitle": {
+		"message": "Fissare il proxy?"
+	},
+	"dialogPinMessage": {
+		"message": "Il proxy \"{1}\" funziona per il sito {0}. Vuoi fissarlo per questo sito?"
+	},
+	"dialogPinConfirm": {
+		"message": "Sì, fissa"
+	},
+	"dialogPinCancel": {
+		"message": "Continua la ricerca"
+	},
+	"dialogPinCheckbox": {
+		"message": "Non chiedere più per questo sito"
+	},
+	"dialogChangeTitle": {
+		"message": "Cambiare proxy?"
+	},
+	"dialogChangeMessage": {
+		"message": "Cambiare il proxy impostato per il sito {0}?"
+	},
+	"dialogChangeConfirm": {
+		"message": "Cambia"
+	},
+	"dialogChangeCancel": {
+		"message": "Mantieni"
+	},
+	"dialogChangeCheckbox": {
+		"message": "Non chiedere più per questo sito"
+	},
+	"popupNoProxyFound": {
+		"message": "Nessun proxy trovato per questo sito."
+	},
+	"popupAddUnreachableSiteTitle": {
+		"message": "Il sito non si carica"
+	},
+	"popupAddUnreachableSiteMessage": {
+		"message": "Il sito {0} non si carica senza proxy. Aggiungerlo all'auto-proxy?"
+	},
+	"popupAddUnreachableSiteConfirm": {
+		"message": "Aggiungi"
+	},
+	"popupAddUnreachableSiteCancel": {
+		"message": "Non ora"
+	},
+	"settingsAutoAddUnreachableSites": {
+		"message": "Suggerisci di aggiungere siti non raggiungibili all'auto-proxy"
+	},
+	"settingsAutoAddUnreachableSitesDesc": {
+		"message": "Quando una pagina non viene caricata, verrà mostrato un dialogo che suggerisce di aggiungere il sito all'auto-proxy."
 	}	
 }

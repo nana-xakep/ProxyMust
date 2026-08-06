@@ -1,9 +1,52 @@
+/*
+ * Original SmartProxy copyright:
+ * This file is part of SmartProxy <https://github.com/salarcode/SmartProxy>,
+ * Copyright (C) 2023 Salar Khalilzadeh <salar2k@gmail.com>
+ *
+ * SmartProxy is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 3 as
+ * published by the Free Software Foundation.
+ *
+ * SmartProxy is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with SmartProxy.  If not, see <http://www.gnu.org/licenses/>.
+ */
+/*
+ * Modifications for ProxyMust:
+ * Copyright (C) 2026 nana-xakep <xakep.nana@gmail.com>
+ * - Added rating system, proxy testing, country flags, etc.
+ */
 import { ProxyServer, CompiledProxyRule, SmartProfileType, CompiledProxyRuleType } from "./definitions";
 import { api } from "../lib/environment";
 import { Debug, DiagDebug } from "../lib/Debug";
 import { Settings } from "./Settings";
+import { SettingsOperation } from './SettingsOperation';
+import { ProxyEngine } from './ProxyEngine';
 
 export class ProxyEngineChrome {
+	
+	    private static buildDynamicProxyMapForPAC(): { [site: string]: string } {
+        const map: { [site: string]: string } = {};
+        const overrides = ProxyEngine.getAllDynamicProxies();
+//console.log(`[ProxyEngineChrome] buildDynamicProxyMapForPAC: overrides =`, JSON.stringify(overrides))
+        for (const site in overrides) {
+            const proxyId = overrides[site];
+            const proxy = SettingsOperation.findProxyServerById(proxyId);
+            if (proxy) {
+                const proxyString = ProxyEngineChrome.convertActiveProxyServer(proxy);
+//console.log(`[ProxyEngineChrome] site=${site}, proxyId=${proxyId}, proxyString=${proxyString}`)
+                if (proxyString !== "DIRECT") {
+                    map[site] = proxyString;
+                }
+            }
+        }
+//console.log(`[ProxyEngineChrome] buildDynamicProxyMapForPAC: map =`, JSON.stringify(map))
+        return map;
+    }
 
 	/**  Chrome only. Updating Chrome proxy config. */
 	public static updateChromeProxyConfig() {
@@ -37,7 +80,11 @@ export class ProxyEngineChrome {
 			return;
 		}
 		// generate PAC script specific to Chrome
+//console.log(`[ProxyEngineChrome] updateChromeProxyConfig: generating PAC script`)
+//		const dynamicMap = ProxyEngineChrome.buildDynamicProxyMapForPAC();
+//console.log(`[ProxyEngineChrome] dynamicProxyMap для PAC:`, dynamicMap)
 		let pacScript = this.generateChromePacScript();
+//console.log(`[ProxyEngineChrome] PAC script length: ${pacScript.length}`)
 
 		let config = {
 			mode: "pac_script",
@@ -50,6 +97,8 @@ export class ProxyEngineChrome {
 			function () {
 				if (api.runtime.lastError) {
 					Debug.error("updateChromeProxyConfig failed with ", api.runtime.lastError);
+				} else {
+//console.log(`[ProxyEngineChrome] PAC script applied successfully`)
 				}
 			});
 	}
@@ -78,6 +127,7 @@ const compiledRules = {
 	/** Subscription rules. P4 */
 	SubscriptionRules: [${compiledRules_SubscriptionRules}]
 };
+const dynamicProxyMap = ${JSON.stringify(ProxyEngineChrome.buildDynamicProxyMapForPAC())};
 const SmartProfileType = {
 	Direct: ${SmartProfileType.Direct},
 	SystemProxy: ${SmartProfileType.SystemProxy},
@@ -117,6 +167,11 @@ function FindProxyForURL(url, host, noDiagnostics) {
 		return resultDirect;
 
 	host = host.toLowerCase();
+	
+    // Check dynamic proxy override
+    if (dynamicProxyMap[host]) {
+        return dynamicProxyMap[host];
+    }	
 
 	// applying ProxyPerOrigin
 	// is not applicable for Chromium

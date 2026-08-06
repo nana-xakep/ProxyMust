@@ -10,7 +10,7 @@
 		"message": "ProxyMust"
 	},
 	"extensionDescription": {
-		"message": "ProxyMust – 選擇性代理管理員（SmartProxy 的分支）。根據可自訂的模式自動為造訪的網站啟用/停用代理。"
+		"message": "ProxyMust – AutoProxy管理員（SmartProxy 的分支）。根據可自訂的模式自動為造訪的網站啟用/停用代理。"
 	},
 	"toolbarTooltipEffectiveRule": {
 		"message": "匹配的規則來源："
@@ -31,7 +31,7 @@
 		"message": "直接連線（無代理）"
 	},
 	"popupSmartProxy": {
-		"message": "選擇性代理"
+		"message": "AutoProxy"
 	},
 	"popupAlwaysEnable": {
 		"message": "總是啟用"
@@ -1237,7 +1237,7 @@
 		"message": "歡迎使用 ProxyMust"
 	},
 	"settingsWelcomeMessage": {
-		"message": "<p>\n\t歡迎！很高興您選擇了 ProxyMust，一款具有代理測試功能的選擇性代理管理器。<br>\n\t請按照以下步驟開始：\n</p>\n<ol>\n\t<li>\n\t\t新增代理伺服器或代理清單\n\t\t<br>\n\t\t<small>（轉到「代理伺服器」頁並在其中新增）</small>\n\t</li>\n\t<li>\n\t\t設定代理模式為「選擇性代理」模式\n\t\t<br>\n\t\t<small>（使用工具列彈出選單來更改激活模式為「選擇性代理」）</small>\n\t</li>\n\t<li>\n\t\t定義代理規則\n\t\t<br>\n\t\t<small>（使用工具列彈出選單來新增規則或是從「代理規則」頁中新增/修改規則）</small>\n\t</li>\n\t<li>\n\t\t設定完畢。\n\t</li>\n</ol>"
+		"message": "<p>ProxyMust — 選擇性代理管理器，為網站自動選擇可用的代理。<br>請按照以下步驟開始：</p>\n<ol>\n  <li>\n    <strong>新增代理</strong><br>\n    <small>手動：轉到“代理伺服器”標籤並新增您的代理。<br>\n    或<br>\n    透過訂閱：在“代理伺服器訂閱”標籤中，指定代理清單的URL – 擴充功能將自動載入並更新它們。</small>\n  </li>\n  <li>\n    <strong>啟用代理測試</strong><br>\n    <small>系統需要透過測試來識別可用的代理。為此，請在設定（代理伺服器部分）中啟用“啟用代理評分”核取方塊。之後，測試介面將可用，您可以為您要造訪的網站測試代理。</small>\n  </li>\n  <li>\n    <strong>設定自動代理規則</strong><br>\n    <small>對於需要使用代理的網站，請在“自動代理”標籤中建立規則。對於每個規則，您可以選擇“自動”模式 – 系統會在出錯時自動切換到可用的代理。<br>\n    規則可以手動新增，也可以透過彈出視窗中的“新增網站”按鈕新增。如果頁面在沒有代理的情況下無法載入，擴充功能將自動建議將其新增到自動代理（此功能可以在設定檔設定中停用）。此外，在為網站測試代理時，會自動為該網站建立一條規則。<br>\n    或者，只需啟用“自動代理”模式並開始瀏覽 – 對於您所在地區能開啟的所有網站，不會套用任何代理，而對於受限制的網站，系統會找到一個可用的代理並連接您。</small>\n  </li>\n  <li>\n    <strong>準備就緒！</strong><br>\n    <small>當造訪具有自動模式規則的網站時，ProxyMust會自動找到一個可用的代理，並在出錯時進行切換。測試結果和代理狀態顯示在規則表中。</small>\n  </li>\n</ol>"
 	},
 	"settingsWelcomeSkipButton": {
 		"message": "明白"
@@ -1865,5 +1865,92 @@
 	},
 	"popupProxyPerOriginTooltip": {
 		"message": "切換按來源代理（僅限Firefox）"
+	},
+	"settingsAutoProxyTitle": {
+		"message": "自動代理設定"
+	},
+	"settingsRulesGridColMode": {
+		"message": "模式"
+	},
+	"settingsAutoProxySelectionMode": {
+		"message": "選擇模式："
+	},
+	"settingsAutoProxyManual": {
+		"message": "手動"
+	},
+	"settingsAutoProxyAuto": {
+		"message": "自動"
+	},
+	"settingsAutoProxyModeDesc": {
+		"message": "在自動模式下，將根據測試結果自動選擇代理。"
+	},
+	"settingsAutoProxyMaxFailover": {
+		"message": "切換嘗試次數："
+	},
+	"settingsAutoProxyMaxFailoverDesc": {
+		"message": "完整代理清單的重複切換次數（1-10）。"
+	},
+	"settingsAutoProxyShowDialog": {
+		"message": "顯示自動代理變更對話框"
+	},
+	"settingsAutoProxyAutoPin": {
+		"message": "自動固定成功的代理（無需確認）"
+	},
+	"settingsAutoProxyExcludedProxies": {
+		"message": "排除的代理："
+	},
+	"settingsAutoProxyExcludedProxiesDesc": {
+		"message": "這些代理不會在自動模式下使用。"
+	},
+	"dialogPinTitle": {
+		"message": "固定代理？"
+	},
+	"dialogPinMessage": {
+		"message": "代理 \"{1}\" 對網站 {0} 有效。是否為此網站固定該代理？"
+	},
+	"dialogPinConfirm": {
+		"message": "是，固定"
+	},
+	"dialogPinCancel": {
+		"message": "繼續搜尋"
+	},
+	"dialogPinCheckbox": {
+		"message": "不再為此網站詢問"
+	},
+	"dialogChangeTitle": {
+		"message": "更換代理？"
+	},
+	"dialogChangeMessage": {
+		"message": "是否更換為網站 {0} 設定的代理？"
+	},
+	"dialogChangeConfirm": {
+		"message": "更換"
+	},
+	"dialogChangeCancel": {
+		"message": "保留"
+	},
+	"dialogChangeCheckbox": {
+		"message": "不再為此網站詢問"
+	},
+	"popupNoProxyFound": {
+		"message": "未找到此網站的代理。"
+	},
+	"popupAddUnreachableSiteTitle": {
+		"message": "網站無法載入"
+	},
+	"popupAddUnreachableSiteMessage": {
+		"message": "網站 {0} 在沒有代理的情況下無法載入。是否將其新增到自動代理？"
+	},
+	"popupAddUnreachableSiteConfirm": {
+		"message": "新增"
+	},
+	"popupAddUnreachableSiteCancel": {
+		"message": "現在不了"
+	},
+	"settingsAutoAddUnreachableSites": {
+		"message": "建議將無法存取的網站新增到自動代理"
+	},
+	"settingsAutoAddUnreachableSitesDesc": {
+		"message": "當偵測到頁面無法載入時，將顯示一個對話框，建議將該網站新增到自動代理。"
 	}	
 }

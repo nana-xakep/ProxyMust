@@ -34,6 +34,10 @@ import { SettingsOperation } from "../../core/SettingsOperation";
 import { CountryCode } from "../../lib/CountryCode";
 import { getProxyStatus, ProxyStatusInfo } from "../../core/statusUtils";
 import { renderLogMessage, t, resetAntiDuplicate } from "./logRenderer";
+import { ProxySelector } from '../../core/ProxySelector';
+import { Settings } from "../../core/Settings";
+
+//import { AutoStatusService } from '../../core/AutoStatusService';
 //import { ProxyEngine } from "../../core/ProxyEngine";
 //import { Core } from "../../core/Core"; // Удалить, если не используется
 //import { ProxyCycleTester } from "../../core/ProxyCycleTester";
@@ -91,14 +95,22 @@ export class settingsPage {
 		CommonUi.onDocumentReady(this.initializeUi);
 
 		settingsPage.readSettingsPageData();
+
+		// English: Ensure ProxySelector is used to avoid TS6133
+		// Russian: Убеждаемся, что ProxySelector используется, чтобы избежать TS6133
+		if (typeof ProxySelector !== 'undefined') {
+			void ProxySelector; // фиктивное использование
+		}
 	}
 
 private static handleMessages(message: any, sender: any, sendResponse: Function) {
-    console.log("[Settings] handleMessages received:", message);
     let command: string;
     if (typeof message == 'string') command = message;
     else {
         command = message['command'];
+    }
+    if (command !== CommandMessages.WebFailedRequestNotification) {
+        console.log("[Settings] handleMessages received:", message);
     }
 
     if (command === CommandMessages.SettingsPageGetInitialDataResponse) {
@@ -131,66 +143,80 @@ private static handleMessages(message: any, sender: any, sendResponse: Function)
         if ($progressText.length) $progressText.text(`${completed}/${total}`);
         if ($checkProgress.length) $checkProgress.show();
     }
-else if (command === "CHECK_PROGRESS") {
-    // English: Ensure button shows "Stop" if test is running
-    // Russian: Убеждаемся, что кнопка показывает "Stop", если тест запущен
-    if (!settingsPage.isTestingForSite) {
-        settingsPage.isTestingForSite = true;
-        const $testBtn = jq("#runTestForAllBtn");
-        $testBtn.text(api.i18n.getMessage("settingsProxyTestStopButton") || "Stop");
-        $testBtn.removeClass("btn-primary").addClass("btn-danger");
-        jq("#checkProgress").show();
-    }
-    // English: Update progress bar and proxy status in real-time
-    // Russian: Обновляем индикатор прогресса и статус прокси в реальном времени
-    const $progressBar = jq("#progressBar");
-    const $progressText = jq("#progressText");
-    const total = message.total ?? 0;
-    const completed = message.completed ?? 0;
-    if ($progressBar.length) $progressBar.val(completed).attr("max", total);
-    if ($progressText.length) {
-        $progressText.text(`${completed}/${total} — ${message.proxyHost}: ${message.alive ? "✓" : "✗"}`);
-    }
-
-    const proxyId = message.proxyId;
-    const site = message.site || (jq("#testSiteSelect").val() as string);
-
-    if (proxyId && site) {
-        // English: Normalize site (remove protocol and trailing slash) for consistent keys
-        // Russian: Нормализуем сайт (удаляем протокол и завершающий слэш) для единообразных ключей
-        const normalizedSite = site.replace(/^https?:\/\//, '').replace(/\/$/, '');
-        
-        // English: Determine status from message (use statusType if provided, otherwise derive from alive)
-        // Russian: Определяем статус из сообщения (используем statusType, если он есть, иначе выводим из alive)
-        let statusValue: 'success' | 'indirect' | 'fail' = message.alive ? "success" : "fail";
-        if (message.statusType === "indirect") {
-            statusValue = "indirect";
-        } else if (message.statusType === "success") {
-            statusValue = "success";
-        } else if (message.statusType === "fail") {
-            statusValue = "fail";
+    else if (command === "CHECK_PROGRESS") {
+        // English: Ensure button shows "Stop" if test is running
+        // Russian: Убеждаемся, что кнопка показывает "Stop", если тест запущен
+        if (!settingsPage.isTestingForSite) {
+            settingsPage.isTestingForSite = true;
+            const $testBtn = jq("#runTestForAllBtn");
+            $testBtn.text(api.i18n.getMessage("settingsProxyTestStopButton") || "Stop");
+            $testBtn.removeClass("btn-primary").addClass("btn-danger");
+            jq("#checkProgress").show();
         }
-        
-        // English: Update autoStatus in currentSettings
-        // Russian: Обновляем autoStatus в currentSettings
-        if (!settingsPage.currentSettings.autoStatus) settingsPage.currentSettings.autoStatus = {};
-        if (!settingsPage.currentSettings.autoStatus[proxyId]) settingsPage.currentSettings.autoStatus[proxyId] = {};
-        settingsPage.currentSettings.autoStatus[proxyId][normalizedSite] = {
-            status: statusValue,
-            timestamp: Date.now()
-        };
-
-        // English: Update only the affected proxy row instead of rebuilding entire table
-        // Russian: Обновляем только строку затронутого прокси вместо полной перестройки таблицы
-        if (settingsPage.grdServers && proxyId) {
-            settingsPage.updateProxyRowById(proxyId);
+        // English: Update progress bar and proxy status in real-time
+        // Russian: Обновляем индикатор прогресса и статус прокси в реальном времени
+        const $progressBar = jq("#progressBar");
+        const $progressText = jq("#progressText");
+        const total = message.total ?? 0;
+        const completed = message.completed ?? 0;
+        if ($progressBar.length) $progressBar.val(completed).attr("max", total);
+        if ($progressText.length) {
+            $progressText.text(`${completed}/${total} — ${message.proxyHost}: ${message.alive ? "✓" : "✗"}`);
         }
-    }
 
-    // English: Update popup if open
-    // Russian: Обновляем попап, если открыт
-    PolyFill.runtimeSendMessage({ command: CommandMessages.PopupGetInitialData });
-}
+        const proxyId = message.proxyId;
+        const site = message.site || (jq("#testSiteSelect").val() as string);
+
+        if (proxyId && site) {
+            // English: Normalize site (remove protocol and trailing slash) for consistent keys
+            // Russian: Нормализуем сайт (удаляем протокол и завершающий слэш) для единообразных ключей
+            const normalizedSite = site.replace(/^https?:\/\//, '').replace(/\/$/, '');
+            
+            // English: Determine status from message (use statusType if provided, otherwise derive from alive)
+            // Russian: Определяем статус из сообщения (используем statusType, если он есть, иначе выводим из alive)
+            let statusValue: 'success' | 'indirect' | 'fail' = message.alive ? "success" : "fail";
+            if (message.statusType === "indirect") {
+                statusValue = "indirect";
+            } else if (message.statusType === "success") {
+                statusValue = "success";
+            } else if (message.statusType === "fail") {
+                statusValue = "fail";
+            }
+            
+            // English: Update autoStatus in currentSettings (local copy for UI)
+            // Russian: Обновляем autoStatus в currentSettings (локальная копия для UI)
+            if (!settingsPage.currentSettings.autoStatus) settingsPage.currentSettings.autoStatus = {};
+            if (!settingsPage.currentSettings.autoStatus[proxyId]) settingsPage.currentSettings.autoStatus[proxyId] = {};
+            settingsPage.currentSettings.autoStatus[proxyId][normalizedSite] = {
+                status: statusValue,
+                timestamp: Date.now()
+            };
+            console.log(`[CHECK_PROGRESS] updated autoStatus for proxy ${proxyId}, site ${normalizedSite}, status ${statusValue}`);
+            console.log(`[CHECK_PROGRESS] currentSettings.autoStatus keys:`, Object.keys(settingsPage.currentSettings.autoStatus || {}));
+            // Перерисовываем таблицы правил, чтобы отобразить актуальный прокси для авто-правил
+            for (const pageProfile of settingsPage.pageSmartProfiles) {
+                if (pageProfile.grdRules && pageProfile.smartProfile) {
+                    // Обновляем данные таблицы из текущего состояния профиля
+                    const fixedRules = ProxyRule.assignArray(pageProfile.smartProfile.proxyRules || []);
+                    pageProfile.grdRules.clear();
+                    pageProfile.grdRules.rows.add(fixedRules);
+                    pageProfile.grdRules.draw('full-hold');
+                    // Перепривязываем обработчики (если нужно)
+                    settingsPage.refreshRulesGridAllRows(pageProfile);
+                }
+            }
+
+            // English: Update only the affected proxy row instead of rebuilding entire table
+            // Russian: Обновляем только строку затронутого прокси вместо полной перестройки таблицы
+            if (settingsPage.grdServers && proxyId) {
+                settingsPage.updateProxyRowById(proxyId);
+            }
+        }
+
+        // English: Update popup if open
+        // Russian: Обновляем попап, если открыт
+        PolyFill.runtimeSendMessage({ command: CommandMessages.PopupGetInitialData });
+    }
     // English: Test completed successfully
     // Russian: Тест успешно завершён
     else if (command === "CHECK_COMPLETE") {
@@ -203,6 +229,17 @@ else if (command === "CHECK_PROGRESS") {
         sessionStorage.setItem('proxyMust_switchToProxyServers', 'true');
         jq(window).off("beforeunload");
         settingsPage.changeTracking.resetStats();
+        // Обновляем таблицы правил после завершения теста
+        for (const pageProfile of settingsPage.pageSmartProfiles) {
+            if (pageProfile.grdRules && pageProfile.smartProfile) {
+                const fixedRules = ProxyRule.assignArray(pageProfile.smartProfile.proxyRules || []);
+                pageProfile.grdRules.clear();
+                pageProfile.grdRules.rows.add(fixedRules);
+                pageProfile.grdRules.draw('full-hold');
+                settingsPage.refreshRulesGridAllRows(pageProfile);
+            }
+        }
+        console.log(`[CHECK_COMPLETE] Обновление таблиц, pageSmartProfiles count: ${settingsPage.pageSmartProfiles.length}`);
         setTimeout(() => {
             window.location.reload();
         }, 1000);
@@ -219,47 +256,58 @@ else if (command === "CHECK_PROGRESS") {
         sessionStorage.setItem('proxyMust_switchToProxyServers', 'true');
         jq(window).off("beforeunload");
         settingsPage.changeTracking.resetStats();
+        // Обновляем таблицы правил после завершения теста
+        for (const pageProfile of settingsPage.pageSmartProfiles) {
+            if (pageProfile.grdRules && pageProfile.smartProfile) {
+                const fixedRules = ProxyRule.assignArray(pageProfile.smartProfile.proxyRules || []);
+                pageProfile.grdRules.clear();
+                pageProfile.grdRules.rows.add(fixedRules);
+                pageProfile.grdRules.draw('full-hold');
+                settingsPage.refreshRulesGridAllRows(pageProfile);
+            }
+        }
+        console.log(`[TEST_CANCELLED] Обновление таблиц, pageSmartProfiles count: ${settingsPage.pageSmartProfiles.length}`);
         setTimeout(() => {
             window.location.reload();
         }, 1000);
     }
-		// English: Render log messages in the viewer (always, even if hidden)
-		// Russian: Отобразить сообщения лога в просмотрщике (всегда, даже если скрыт)
-		else if (command === "PROXY_TEST_STEP") {
-			console.log("[Settings] PROXY_TEST_STEP received:", message.data);
-			const container = document.getElementById('logContainer');
-			if (container) {
-				renderLogMessage(container, message.data);
-			}
-		}
-		else if (command === "REFRESH_SETTINGS_PAGE_RELOAD") {
-			// English: Reload settings page to reflect changes made in popup
-			// Russian: Перезагружаем страницу настроек, чтобы отразить изменения из попапа
-			window.location.reload();
-		}
-		else if (command === "PROXY_PROTOCOL_CHANGED") {
-		// English: Update proxy row in the table when protocol changes
-		// Russian: Обновляем строку прокси в таблице при изменении протокола
-		const proxyId = message.proxyId;
-		const newProtocol = message.newProtocol;
-		if (proxyId && settingsPage.grdServers) {
-			// English: Find and update the proxy in the table data
-			// Russian: Находим и обновляем прокси в данных таблицы
-			const rows = settingsPage.grdServers.rows();
-			const data = rows.data();
-			for (let i = 0; i < data.length; i++) {
-				if (data[i] && data[i].id === proxyId) {
-					data[i].protocol = newProtocol;
-					settingsPage.grdServers.row(i).data(data[i]).draw(false);
-					console.log(`[Settings] Протокол обновлён в таблице: ${proxyId} -> ${newProtocol}`);
-					break;
-				}
-			}
-			// English: Refresh the grid to show changes
-			// Russian: Обновляем отображение таблицы
-			settingsPage.grdServers.draw(false);
-		}
-	}
+    // English: Render log messages in the viewer (always, even if hidden)
+    // Russian: Отобразить сообщения лога в просмотрщике (всегда, даже если скрыт)
+    else if (command === "PROXY_TEST_STEP") {
+        console.log("[Settings] PROXY_TEST_STEP received:", message.data);
+        const container = document.getElementById('logContainer');
+        if (container) {
+            renderLogMessage(container, message.data);
+        }
+    }
+    else if (command === "REFRESH_SETTINGS_PAGE_RELOAD") {
+        // English: Reload settings page to reflect changes made in popup
+        // Russian: Перезагружаем страницу настроек, чтобы отразить изменения из попапа
+        window.location.reload();
+    }
+    else if (command === "PROXY_PROTOCOL_CHANGED") {
+        // English: Update proxy row in the table when protocol changes
+        // Russian: Обновляем строку прокси в таблице при изменении протокола
+        const proxyId = message.proxyId;
+        const newProtocol = message.newProtocol;
+        if (proxyId && settingsPage.grdServers) {
+            // English: Find and update the proxy in the table data
+            // Russian: Находим и обновляем прокси в данных таблицы
+            const rows = settingsPage.grdServers.rows();
+            const data = rows.data();
+            for (let i = 0; i < data.length; i++) {
+                if (data[i] && data[i].id === proxyId) {
+                    data[i].protocol = newProtocol;
+                    settingsPage.grdServers.row(i).data(data[i]).draw(false);
+                    console.log(`[Settings] Протокол обновлён в таблице: ${proxyId} -> ${newProtocol}`);
+                    break;
+                }
+            }
+            // English: Refresh the grid to show changes
+            // Russian: Обновляем отображение таблицы
+            settingsPage.grdServers.draw(false);
+        }
+    }
 }
 
 	private static registerMessageReader() {
@@ -305,8 +353,13 @@ else if (command === "CHECK_PROGRESS") {
 
 	private static populateDataForSettings(settingsData: SettingsPageInternalDataType) {
 		this.currentSettings = settingsData.settings;
+		// English: Sync global Settings.current with local copy
+		// Russian: Синхронизируем глобальный Settings.current с локальной копией
+		if (Settings && this.currentSettings) {
+			Settings.current = this.currentSettings;
+		}
 		
-		// English: load userPrefs directly from local storage (bypass background's cached value)
+		// English: load userPrefs directly from local storage...
 		// Russian: загружаем userPrefs напрямую из локального хранилища (минуя кэшированное значение фона)
 		api.storage.local.get("userPrefs").then((result: any) => {
 			if (result && result.userPrefs && typeof result.userPrefs === 'object') {
@@ -406,6 +459,19 @@ else if (command === "CHECK_PROGRESS") {
 		CountryCode.ensureInitialized(() => {
 			this.loadServersGrid(this.currentSettings.proxyServers);
 			this.loadAllProfilesProxyServers();
+			
+			// English: Reload rules grids for all profiles after CountryCode is ready to show flags
+			// Russian: Перезагружаем таблицы правил для всех профилей после готовности CountryCode для отображения флагов
+			for (const pageProfile of this.pageSmartProfiles) {
+				if (pageProfile.grdRules && pageProfile.smartProfile) {
+					const fixedRules = ProxyRule.assignArray(pageProfile.smartProfile.proxyRules || []);
+					pageProfile.grdRules.clear();
+					pageProfile.grdRules.rows.add(fixedRules);
+					pageProfile.grdRules.draw('full-hold');
+					this.refreshRulesGridAllRows(pageProfile);
+				}
+			}
+			
 			this.initTestControl();
 			this.attachPriorityClickHandler();
 		});
@@ -1400,6 +1466,16 @@ jq('[data-localize="footerVersionInfo"]').text(t('footerVersionInfo', version));
 			modalContainer.find("#txtRuleCidrPrefixLength").val(proxyRule.rulePattern);
 			cmdRuleAction.val(proxyRule.whiteList ? "1" : "0");
 
+			// English: If rule is whitelist, hide proxy server selection
+			// Russian: Если правило whitelist, скрываем выбор прокси
+			if (proxyRule.whiteList) {
+				modalContainer.find("#divRuleProxyServer").hide();
+				modalContainer.find("#divRuleActionWhitelistDesc").show();
+			} else {
+				modalContainer.find("#divRuleProxyServer").show();
+				modalContainer.find("#divRuleActionWhitelistDesc").hide();
+			}
+
 			let proxyServerId = proxyRule.proxyServerId;
 			if (proxyRule.proxy)
 				proxyServerId = proxyRule.proxy.id;
@@ -1424,10 +1500,15 @@ jq('[data-localize="footerVersionInfo"]').text(t('footerVersionInfo', version));
 			if (cmdRuleAction.length) {
 				if (pageProfile.smartProfile.profileTypeConfig.defaultRuleActionIsWhitelist == true) {
 					cmdRuleAction[0].selectedIndex = 1;
-					modalContainer.find("#divRuleActionWhitelistDesc").remove();
+					modalContainer.find("#divRuleActionWhitelistDesc").show();
+					// English: Hide proxy server selection for whitelist rules
+					// Russian: Скрываем выбор прокси для whitelist-правил
+					modalContainer.find("#divRuleProxyServer").hide();
 				}
 				else {
 					cmdRuleAction[0].selectedIndex = 0;
+					modalContainer.find("#divRuleActionWhitelistDesc").hide();
+					modalContainer.find("#divRuleProxyServer").show();
 				}
 			}
 
@@ -1486,8 +1567,12 @@ jq('[data-localize="footerVersionInfo"]').text(t('footerVersionInfo', version));
 		let whiteList = parseInt(tabContainer.find("#cmdRuleAction").val()) != 0
 		if (whiteList) {
 			tabContainer.find("#divRuleActionWhitelistDesc").show();
+			// English: Hide proxy server selection for whitelist rules
+			// Russian: Скрываем выбор прокси для whitelist-правил
+			tabContainer.find("#divRuleProxyServer").hide();
 		}
 		else {
+			tabContainer.find("#divRuleActionWhitelistDesc").hide();
 			tabContainer.find("#divRuleProxyServer").show();
 		}
 	}
@@ -1520,7 +1605,12 @@ jq('[data-localize="footerVersionInfo"]').text(t('footerVersionInfo', version));
 		if (!isEditing) {
 			settingsPage.lastNewRuleType = ruleInfo.ruleType;
 		}
-
+		// English: For whitelist rules, proxyServerId must be null
+		// Russian: Для правил-исключений proxyServerId должен быть null
+		if (ruleInfo.whiteList) {
+			ruleInfo.proxyServerId = null;
+			ruleInfo.proxy = null;
+		}
 		return ruleInfo;
 	}
 
@@ -2138,6 +2228,30 @@ private static loadServersGrid(servers: any[]) {
 		if (chkSmartProfileEnabled.length)
 			smartProfile.enabled = chkSmartProfileEnabled.prop('checked');
 
+		// Read AutoProxy settings
+		const autoProxyDiv = tabContainer.find("#divAutoProxySettings");
+		if (autoProxyDiv.length) {
+			const maxAttempts = parseInt(autoProxyDiv.find("#numMaxFailoverAttempts").val() as string) || 3;
+			if (!smartProfile.autoProxySettings) {
+				smartProfile.autoProxySettings = {};
+			}
+			smartProfile.autoProxySettings.maxFailoverAttempts = maxAttempts;
+			const showAutoDialog = autoProxyDiv.find("#chkShowAutoDialog").prop("checked");
+			smartProfile.showAutoDialog = showAutoDialog;
+			smartProfile.autoPinSuccess = autoProxyDiv.find("#chkAutoPinSuccess").prop("checked");
+			smartProfile.autoAddUnreachableSites = autoProxyDiv.find("#chkAutoAddUnreachableSites").prop("checked");
+			// English: If user enables the global auto-dialog, clear all suppressed sites for this profile
+			// Russian: Если пользователь включает глобальный показ диалогов, очищаем все подавленные сайты для этого профиля
+			if (showAutoDialog) {
+				if (smartProfile.suppressPinDialogForSites) {
+					smartProfile.suppressPinDialogForSites = [];
+				}
+				if (smartProfile.suppressChangeDialogForSites) {
+					smartProfile.suppressChangeDialogForSites = [];
+				}
+			}
+		}
+
 		return smartProfile;
 	}
 
@@ -2158,6 +2272,16 @@ private static loadServersGrid(servers: any[]) {
 			let pageSmartProfile = this.createProfileContainer(profile, false, true);
 			let profileMenu = pageSmartProfile.htmlProfileMenu;
 			let profileTab = pageSmartProfile.htmlProfileTab;
+
+			// Load AutoProxy settings
+			const autoProxyDiv = profileTab.find("#divAutoProxySettings");
+			if (autoProxyDiv.length) {
+				const maxAttempts = profile.autoProxySettings?.maxFailoverAttempts ?? 3;
+				autoProxyDiv.find("#numMaxFailoverAttempts").val(maxAttempts);
+				autoProxyDiv.find("#chkShowAutoDialog").prop("checked", profile.showAutoDialog !== false);
+				autoProxyDiv.find("#chkAutoPinSuccess").prop("checked", profile.autoPinSuccess === true);
+				autoProxyDiv.find("#chkAutoAddUnreachableSites").prop("checked", profile.autoAddUnreachableSites !== false);
+			}
 
 			let newProfileMenuList = profileMenu.insertBefore(btnAddNewSmartProfile);
 			pageSmartProfile.htmlProfileMenu = newProfileMenuList;
@@ -2317,7 +2441,15 @@ private static loadServersGrid(servers: any[]) {
 		profileTab.find("#lblProfileTypeIcon").addClass(getSmartProfileTypeIcon(profile.profileType));
 		profileTab.find(".label-profile-type-description").hide();
 		profileTab.find(`.label-profile-type-description-for-${SmartProfileType[profile.profileType]}`).show();
-		profileTab.find("#chkSmartProfileEnabled").prop("checked", profile.enabled);
+					profileTab.find("#chkSmartProfileEnabled").prop("checked", profile.enabled);
+
+			// AutoProxy settings: show only for SmartRules profiles
+			const autoProxyDiv = profileTab.find("#divAutoProxySettings");
+			if (profile.profileType === SmartProfileType.SmartRules) {
+				autoProxyDiv.show();
+			} else {
+				autoProxyDiv.hide();
+			}
 
 		if (isNewProfile) {
 			this.showProfileNameEdit(profileTab);
@@ -2407,19 +2539,32 @@ private static loadServersGrid(servers: any[]) {
 
 		let grdRulesColumns = [
 			{
-				name: "ruleType", data: "ruleTypeName", title: api.i18n.getMessage("settingsRulesGridColRuleType"), responsivePriority: 3,
+				name: "ruleType",
+				data: "ruleTypeName",
+				title: api.i18n.getMessage("settingsRulesGridColRuleType"),
+				responsivePriority: 3,
 				render: (data, type, row: ProxyRule) => {
-					return `<i class="fas fa-bars fa-xs px-2 cursor-move"></i>  ` + (row.ruleTypeName || '')
+					return `<i class="fas fa-bars fa-xs px-2 cursor-move"></i>  ` + (data || '')
 				},
 			},
 			{
-				name: "hostName", data: "hostName", title: api.i18n.getMessage("settingsRulesGridColSource"), responsivePriority: 1
+				name: "hostName",
+				data: "hostName",
+				title: api.i18n.getMessage("settingsRulesGridColSource"),
+				responsivePriority: 1
 			},
 			{
-				name: "rule", data: "rule", title: api.i18n.getMessage("settingsRulesGridColRule")
+				name: "rule",
+				data: "rule",
+				title: api.i18n.getMessage("settingsRulesGridColRule"),
+				render: (data, type, row: ProxyRule) => {
+					return data || '';
+				},
 			},
 			{
-				name: "enabled", data: "enabled", title: api.i18n.getMessage("settingsRulesGridColEnabled"),
+				name: "enabled",
+				data: "enabled",
+				title: api.i18n.getMessage("settingsRulesGridColEnabled"),
 				render: function (data, type, row: ProxyRule) {
 					const uniqueId = `ruleToggle_${row.ruleId}_${Utils.getNewUniqueIdString()}`;
 					const checkedAttr = data ? 'checked' : '';
@@ -2434,8 +2579,86 @@ private static loadServersGrid(servers: any[]) {
 						</div>${whiteListIcon}`;
 				},
 			},
+			// English: New column for rule mode (Auto/Manual)
+			// Russian: Новая колонка для режима правила (Auto/Manual)
 			{
-				name: "proxy", data: "proxyName", title: api.i18n.getMessage("settingsRulesGridColProxy"),
+				name: "mode",
+				data: "mode",
+				title: api.i18n.getMessage("settingsRulesGridColMode"),
+				render: function(data, type, row: ProxyRule) {
+					// English: For whitelist rules, mode is disabled (no proxy applies)
+					// Russian: Для правил-исключений режим отключён (прокси не применяется)
+					if (row.whiteList) {
+						return `<span class="text-muted small">—</span>`;
+					}
+					const mode = data || 'auto';
+					return `<select class="form-select form-select-sm rule-mode-select" data-rule-id="${row.ruleId}">
+								<option value="auto" ${mode === 'auto' ? 'selected' : ''}>Auto</option>
+								<option value="manual" ${mode === 'manual' ? 'selected' : ''}>Manual</option>
+							</select>`;
+				},
+				responsivePriority: 4
+			},
+			{
+				name: "proxy",
+				data: "proxyName",
+				title: api.i18n.getMessage("settingsRulesGridColProxy"),
+				render: function(data, type, row: ProxyRule) {
+					// English: For whitelist rules, show "Exclusion" and no proxy selection
+					// Russian: Для правил-исключений показываем "Исключение" и не даём выбирать прокси
+					if (row.whiteList) {
+						return `<span class="text-muted">${api.i18n.getMessage("settingsRuleActionWhitelist") || "Exclusion"}</span>`;
+					}
+					
+					try {
+						const site = row.hostName;
+						// English: Get sorted proxies for this site using the same logic as popup
+						// Russian: Получаем отсортированные прокси для этого сайта, используя ту же логику, что и в попапе
+						const sortedProxies = ProxySelector.getSortedProxiesForSite(site, true);
+						
+						let currentProxyId = row.proxyServerId;
+						if (!currentProxyId && row.proxy) {
+							currentProxyId = row.proxy.id;
+						}
+						
+						let optionsHtml = '<option value="">' + api.i18n.getMessage("settingsRulesProxyDefault") + '</option>';
+						// English: Add "Whitelist (no proxy)" option
+						// Russian: Добавляем опцию "Whitelist (no proxy)"
+						optionsHtml += `<option value="whitelist">${api.i18n.getMessage("settingsRuleActionWhitelist") || "Whitelist (no proxy)"}</option>`;
+						
+						// English: Add options for each sorted proxy
+						// Russian: Добавляем опции для каждого отсортированного прокси
+						for (const p of sortedProxies) {
+							const flag = CountryCode.getCountryFlagEmoji(p.countryCode || CountryCode.getCountryCode(p.host));
+							const rating = p.rating ?? 0;
+							const ratingText = rating === 0 ? "" : (rating > 0 ? `(+${rating})` : `(${rating})`);
+							const staleHours = settingsPage.currentSettings?.userPrefs?.staleHours ?? 6;
+							const autoStatus = settingsPage.currentSettings?.autoStatus || {};
+							const statusInfo = getProxyStatus(p.id, site, autoStatus, staleHours);
+							const symbol = statusInfo.symbol;
+							
+							const selected = (p.id === currentProxyId) ? 'selected' : '';
+							const label = `${flag} ${p.name} (${p.protocol}) ${ratingText} ${symbol}`;
+							optionsHtml += `<option value="${p.id}" ${selected}>${label}</option>`;
+						}
+						
+						return `<div class="proxy-cell" style="display:flex; align-items:center; gap:4px;">
+									<select class="form-select form-select-sm has-country-flags proxy-select-for-rule" data-rule-id="${row.ruleId}" style="width:100%; font-size:0.8rem;">
+										${optionsHtml}
+									</select>
+								</div>`;
+					} catch (err) {
+						console.error('[Proxy column] Error rendering proxy select:', err);
+						// English: Fallback: show a simple select with default option
+						// Russian: Fallback: показываем простой select с опцией по умолчанию
+						return `<div class="proxy-cell" style="display:flex; align-items:center; gap:4px;">
+									<select class="form-select form-select-sm has-country-flags proxy-select-for-rule" data-rule-id="${row.ruleId}" style="width:100%; font-size:0.8rem;">
+										<option value="">${api.i18n.getMessage("settingsRulesProxyDefault")}</option>
+										<option value="whitelist">${api.i18n.getMessage("settingsRuleActionWhitelist") || "Whitelist (no proxy)"}</option>
+									</select>
+								</div>`;
+					}
+				},
 				defaultContent: api.i18n.getMessage("settingsRulesProxyDefault")
 			},
 			{
@@ -2620,7 +2843,7 @@ private static loadServersGrid(servers: any[]) {
 				.appendTo(cmbRulesSubscriptionApplyProxy);
 		});
 		if (environment.chrome)
-			cmbRulesSubscriptionApplyProxy.attr("disabled", "disabled");
+						cmbRulesSubscriptionApplyProxy.attr("disabled", "disabled");
 	}
 
 	private static bindSmartProfileEvents(pageProfile: SettingsPageSmartProfile) {
@@ -2686,9 +2909,18 @@ private static loadServersGrid(servers: any[]) {
 				settingsPage.changeTracking.smartProfiles = true;
 			}
 		});
+
+		// AutoProxy settings change tracking
+		const autoProxyDiv = tabContainer.find("#divAutoProxySettings");
+		if (autoProxyDiv.length) {
+			autoProxyDiv.find("#numMaxFailoverAttempts, #chkShowAutoDialog, #chkAutoPinSuccess").on("change input", () => {
+				settingsPage.changeTracking.smartProfiles = true;
+			});
+		}
 	}
 
 	private static loadRules(pageProfile: SettingsPageSmartProfile, rules: ProxyRule[]) {
+		console.log(`[loadRules] profile ${pageProfile.smartProfile.profileName}, rules count: ${rules.length}, isAuto count: ${rules.filter(r => r.isAuto).length}`);		
 		if (!pageProfile.grdRules)
 			return;
 		pageProfile.grdRules.clear();
@@ -2769,6 +3001,7 @@ private static loadServersGrid(servers: any[]) {
 	}
 
 	private static refreshRulesGridAllRows(pageProfile: SettingsPageSmartProfile) {
+		console.log(`[refreshRulesGridAllRows] profile ${pageProfile.smartProfile.profileName}, rows count: ${pageProfile.grdRules.rows().count()}`);		
 		var nodes = pageProfile.grdRules.rows().nodes();
 		for (let index = 0; index < nodes.length; index++) {
 			const rowElement = jq(nodes[index]);
@@ -2776,6 +3009,80 @@ private static loadServersGrid(servers: any[]) {
 			rowElement.find("#btnRulesRemove").on("click", (e: any) => settingsPage.uiEvents.onRulesRemoveClick(pageProfile, e));
 			rowElement.find("#btnRulesEdit").on("click", (e: any) => settingsPage.uiEvents.onRulesEditClick(pageProfile, e));
 			rowElement.find(".rule-enabled-toggle").on("change", (e: any) => settingsPage.uiEvents.onRuleEnabledToggleChange(pageProfile, e));
+			
+			// English: Handler for mode change
+			// Russian: Обработчик изменения режима
+			rowElement.find(".rule-mode-select").off("change").on("change", function(this: HTMLSelectElement) {
+				// const ruleId = parseInt(this.dataset.ruleId); // not needed;
+				const newMode = this.value as 'auto' | 'manual';
+				const rowData = pageProfile.grdRules.row(jq(this).closest('tr')).data();
+				if (rowData) {
+					rowData.mode = newMode;
+					settingsPage.changeTracking.smartProfiles = true;
+				}
+			});
+			
+			// English: Handler for proxy selection (manual override)
+			// Russian: Обработчик выбора прокси (ручное переопределение)
+			rowElement.find(".proxy-select-for-rule").off("change").on("change", function(this: HTMLSelectElement) {
+				const newValue = this.value;
+				const rowData = pageProfile.grdRules.row(jq(this).closest('tr')).data();
+				if (!rowData) return;
+				
+				if (newValue === "whitelist") {
+					// English: Switch to whitelist (no proxy)
+					// Russian: Переключаем в белый список (без прокси)
+					PolyFill.runtimeSendMessage({
+						command: "PopupSetRuleWhitelist",
+						ruleId: rowData.ruleId,
+						whiteList: true
+					}, (response) => {
+						if (response && response.success) {
+							rowData.whiteList = true;
+							rowData.proxyServerId = null;
+							rowData.proxy = null;
+							settingsPage.changeTracking.smartProfiles = true;
+							settingsPage.refreshRulesGridRow(pageProfile, pageProfile.grdRules.row(jq(this).closest('tr')));
+						} else {
+							console.warn("[Settings] Failed to set whitelist for rule:", rowData.ruleId);
+							// Revert selection
+							jq(this).val(rowData.proxyServerId || '');
+						}
+					});
+				} else if (newValue === "") {
+					// English: Use active proxy
+					// Russian: Использовать активный прокси
+					rowData.proxyServerId = null;
+					if (rowData.whiteList) {
+						// If currently whitelist, switch to normal rule
+						rowData.whiteList = false;
+					}
+					settingsPage.changeTracking.smartProfiles = true;
+					PolyFill.runtimeSendMessage({
+						command: CommandMessages.PopupChangeProxyForRule,
+						ruleId: rowData.ruleId,
+						proxyServerId: null
+					}, () => {
+						settingsPage.refreshRulesGridRow(pageProfile, pageProfile.grdRules.row(jq(this).closest('tr')));
+					});
+				} else {
+					// English: Select a specific proxy
+					// Russian: Выбор конкретного прокси
+					const newProxyId = newValue;
+					rowData.proxyServerId = newProxyId;
+					if (rowData.whiteList) {
+						rowData.whiteList = false;
+					}
+					settingsPage.changeTracking.smartProfiles = true;
+					PolyFill.runtimeSendMessage({
+						command: CommandMessages.PopupChangeProxyForRule,
+						ruleId: rowData.ruleId,
+						proxyServerId: newProxyId
+					}, () => {
+						settingsPage.refreshRulesGridRow(pageProfile, pageProfile.grdRules.row(jq(this).closest('tr')));
+					});
+				}
+			});
 		}
 	}
 
@@ -5249,9 +5556,10 @@ private static uiEvents = {
                     // Обновляем таблицы правил для каждого профиля
                     for (const pageProfile of settingsPage.pageSmartProfiles) {
                         if (pageProfile.grdRules) {
-                            pageProfile.grdRules.clear();
-                            pageProfile.grdRules.rows.add(pageProfile.smartProfile.proxyRules || []);
-                            pageProfile.grdRules.draw('full-hold');
+							const fixedRules = ProxyRule.assignArray(pageProfile.smartProfile.proxyRules || []);
+							pageProfile.grdRules.clear();
+							pageProfile.grdRules.rows.add(fixedRules);
+							pageProfile.grdRules.draw('full-hold');
                             pageProfile.grdRules.columns.adjust().draw();
                         }
                     }

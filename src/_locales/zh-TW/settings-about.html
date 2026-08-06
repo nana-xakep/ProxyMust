@@ -5,23 +5,20 @@
 	<em>ProxyMust 是 SmartProxy 擴充功能的一個分支。我們尊重並感謝原作者 <strong>Salar Khalilzadeh</strong> 的出色工作。
 	原始 SmartProxy 可在 <a href="https://github.com/salarcode/SmartProxy" target="_blank">https://github.com/salarcode/SmartProxy</a> 找到。</em>
 </p>
-<p data-localize="settingsTabAboutDescription">
-	將其視為一次設定即可忘記的解決方案。使用 ProxyMust 讓代理從未如此簡單。
-	使用 ProxyMust，您無需手動更改代理設定或開關它。
-	只需告訴 ProxyMust 為您所需的網站啟用代理，只需一鍵即可。
-	之後，每當您造訪該特定網站時，ProxyMust 將自動透過代理路由您的所有資料，無需您採取任何進一步的操作。
+<p>
+	ProxyMust 讓您完全控制代理連線。您可以手動或透過訂閱新增自己的代理伺服器，內建的自動測試系統會檢查每個代理在您造訪的網站上的表現，選出最佳代理，並根據評分、優先級和結果的時效性進行排序。透過這些設定，您可以將代理自動切換的任務交給 ProxyMust —— 自動代理模式會為無法直接開啟的網站找到可用的代理並連線您，無需任何額外操作。
 </p>
 <p>
-	ProxyMust 提供適合初學者和進階使用者的各種功能，包括：
+	ProxyMust 為新手和進階使用者提供了多種功能，包括：
 </p>
 <ul>
-	<li>為分頁上的單個網站啟用代理，該分頁上的所有內容都將自動使用代理。此功能稱為「按分頁代理」。</li>
-	<li>根據規則模式自動偵測何時為某些網站啟用或停用代理。</li>
-	<li>輕鬆在多個代理伺服器之間切換作為您的活動代理伺服器設定。</li>
-	<li>只需一鍵即可為您目前所在的網站啟用代理。</li>
-	<li>檢視目前網站的資源和請求，並一鍵決定是否為它們啟用代理。</li>
-	<li>輕鬆在代理模式之間切換或為所有網域啟用代理。</li>
-	<li>備份/還原設定和規則。</li>
+	<li>在單一分頁中為某個網站啟用代理 – 該分頁中開啟的所有內容都會自動使用代理。此功能稱為「每個分頁的代理」。</li>
+	<li>根據規則自動偵測是否應為某些網站啟用或停用代理。</li>
+	<li>在多個代理伺服器之間快速切換活動代理。</li>
+	<li>一鍵為目前網站啟用代理。</li>
+	<li>檢視目前網站的資源與請求，並一鍵為它們啟用代理。</li>
+	<li>輕鬆切換代理模式或為所有網域啟用代理。</li>
+	<li>備份和還原設定與規則。</li>
 </ul>
 <br />
 
@@ -29,7 +26,7 @@
 <p>
 <div class="text-info">
 	<i class="fas fa-info-circle" aria-hidden="true"></i>
-	ProxyMust 不提供任何類型的代理伺服器。
+	ProxyMust 不提供任何代理伺服器。
 </div>
 <div class="text-danger">
 	<i class="fas fa-eye-slash" aria-hidden="true"></i>
@@ -37,21 +34,21 @@
 </div>
 <div class="text-warning">
 	<i class="fas fa-eye-slash" aria-hidden="true"></i>
-	ProxyMust 無廣告且不會干擾網頁和內容。
+	ProxyMust 無廣告，且不會干擾網頁內容。
 </div>
 </p>
 <br />
 
-<h3>您的回饋很重要</h3>
+<h3>您的回饋非常重要</h3>
 <p>
 <div>
 	<i class="fas fa-star text-warning"></i>
 	如果您 <i class="fas fa-heart text-danger"></i> 喜歡 ProxyMust，請在
-	<a id="linkAddonsMarket" href="#" target="_blank">擴充功能</a> 頁面為它評分。
+	<a id="linkAddonsMarket" href="#" target="_blank">擴充功能頁面</a> 上評分。
 </div>
-<div>
+<div class="">
 	<i class="fas fa-question-circle text-primary"></i>
-	如果您有問題或疑問，請造訪問題頁面並開啟票證以
+	如果您有任何問題或故障，請造訪問題追蹤器並開啟一個工單以
 	<a href="https://github.com/nana-xakep/ProxyMust/issues" target="_blank">回報問題</a>。
 </div>
 </p>
@@ -63,46 +60,55 @@
 <ul>
 	<li>對於每個代理和每個測試過的網站，會顯示狀態：
 		<ul>
-			<li>✅ – 對這個網站肯定有效（最近的測試成功）</li>
-			<li>☑️ – 可能有效（成功較早或在對其他網站測試時成功）</li>
-			<li>❓ – 無資料（尚未測試該代理對此網站的有效性）</li>
-			<li>⛔ – 無效（最近的測試失敗）</li>
+			<li>✅ – 對該網站肯定有效（近期成功）</li>
+			<li>☑️ – 可能有效（成功較舊或從其他網站獲得）</li>
+			<li>❓ – 無資料（該代理未對該網站測試）</li>
+			<li>⛔ – 無效（近期失敗）</li>
 		</ul>
 	</li>
 	<li>每個代理的評分會根據測試結果自動變化：<strong>成功 +1</strong>，<strong>失敗 -1</strong>。</li>
-	<li>您還可以透過右鍵選單（在表格中的代理列或工具列彈窗中的目前代理上右鍵單擊）手動更改評分。</li>
-	<li>狀態在可設定的小時數內（預設 6 小時）視為「新鮮」。如果資料過期，會使用間接狀態（☑️）。</li>
+	<li>您也可以透過右鍵選單（在表格中的代理列或工具列彈出視窗中的活動代理上按右鍵）手動更改評分。</li>
+	<li>狀態在可設定的小時數（預設 6 小時）內視為「新鮮」。如果資料過期，會使用間接狀態 (☑️)。</li>
 </ul>
 
-<h4>📋 管理代理清單</h4>
+<h4>📋 代理清單管理</h4>
 <ul>
-	<li><strong>代理表格中的右鍵選單（右鍵單擊）</strong> – 快速更改評分、優先級（釘選、星標）、匯出所選、複製位址、刪除、清除狀態和評分、對選中的代理執行測試。</li>
-	<li><strong>工具列彈窗中的排序</strong> – 按評分和優先級排序（📌 釘選的在最上面，⭐ 收藏的）。</li>
+	<li><strong>代理表格中的右鍵選單（按右鍵）</strong> – 快速更改評分、優先級（固定、星標）、匯出所選、複製位址、刪除、清除狀態和評分、為所選代理執行測試。</li>
+	<li><strong>工具列彈出視窗中的排序</strong> – 按評分和優先級排序（📌 固定在頂部，⭐ 收藏）。</li>
 	<li><strong>設定表格中的排序</strong> – 按國家、協定、評分排序。</li>
 </ul>
 
 <h4>🚀 代理測試</h4>
 <ul>
-	<li><strong>循環測試</strong> – 依次切換活動方案和代理，檢查網站載入情況。可靠但速度較慢。</li>
-	<li><strong>快速循環測試</strong> – 加速測試，在第一次成功時停止。適合快速評估。</li>
-	<li><strong>精確測試（慢速）</strong> – 更徹底，耗時更長，結果更可靠（在 Firefox 中不可用）。</li>
-	<li><strong>快速測試</strong> – 速度快但可能會遺漏一些有效的代理。適合快速概覽（在 Firefox 中不可用）。</li>
-	<li><strong>工具列彈窗中的快速測試</strong> – 對所有代理或僅對訂閱代理測試當前網站。</li>
+	<li><strong>循環測試</strong> – 依次切換活動設定檔和代理，檢查網站載入情況。可靠但慢。</li>
+	<li><strong>快速循環測試</strong> – 加速測試，遇到任何成功即停止。適合初步評估。</li>
+	<li><strong>精確（慢速）測試</strong> – 更徹底，耗時更長，結果更可靠（在 Firefox 中無效）。</li>
+	<li><strong>快速測試</strong> – 速度快但可能遺漏一些可用代理。適合初步評估（在 Firefox 中無效）。</li>
+	<li><strong>從工具列彈出視窗快速測試</strong> – 測試目前網站的所有代理，或僅測試訂閱代理。</li>
+</ul>
+
+<h4>🤖 自動代理模式</h4>
+<ul>
+	<li>對於無法直接存取的網站（例如由於區域限制），自動代理會在選擇性設定檔中自動建立規則並選擇一個可用的代理。</li>
+	<li>當您首次造訪此類網站時，會彈出一個對話框建議將其新增到自動代理。您同意後，系統會根據評分、狀態和優先級立即找到最佳代理。</li>
+	<li>頁面成功載入後，您可以將找到的代理固定到該網站（暫時，直到瀏覽器關閉）或繼續搜尋其他代理。</li>
+	<li>在設定檔設定中，您可以停用自動固定（預設關閉）或完全停用代理變更對話框。</li>
+	<li>自動代理僅在選擇性設定檔中有效，並且僅適用於 <strong>Auto</strong> 模式的規則（您可以手動切換任何規則）。</li>
 </ul>
 
 <p>
-	<strong>⚠️ 重要提示：</strong> 測試期間，活動方案和代理會被實際切換。
-	這可能會干擾正常的瀏覽。請在瀏覽器未用於其他活動時執行測試。
+	<strong>⚠️ 使用者重要提示：</strong> 測試期間，活動設定檔和代理會被實際切換。
+	這可能會干擾正常瀏覽。請在瀏覽器未用於其他活動時執行測試。
 </p>
 
 <br />
-<h3>工具列操作圖示圖例</h3>
+<h3>工具列圖示圖例</h3>
 <p>
-	瀏覽器工具列中的圖示會根據 ProxyMust 的狀態而變化。下面是不同圖示的含義：
+	瀏覽器工具列中的圖示會變更以反映 ProxyMust 的狀態。不同圖示的含義：
 	<br />
 
 <div class="table-responsive">
-	<table class="table table-sm table-striped caption-top table-borderless align-middle">
+	<table class="table table-sm table table-striped caption-top table-borderless align-middle table-responsive">
 		<caption><b>圖示圖例（所有瀏覽器）：</b></caption>
 		<thead>
 			<tr>
@@ -119,35 +125,34 @@
 				<td class="p-2"><img src="../icons/smartproxy.svg" class=""></td>
 				<td>
 					代理已套用或將套用於符合已定義規則的請求。
-					<br /> 或分頁沒有符合的規則。
+					<br /> 或者目前分頁沒有匹配的規則。
 					<br />
-					方案：<i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i>
+					設定檔：<i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i>
 					選擇性規則
-					nil
+				</td>
 			</tr>
 			<tr>
 				<td class="p-2"><img src="../icons/profile-always.svg" class=""></td>
 				<td>
-					代理套用於目前分頁內的所有請求。（在基於 Chrome 的瀏覽器中，白名單網域會單獨顯示。）
+					代理套用於目前分頁中的所有請求。（在基於 Chrome 的瀏覽器中，白名單網域會單獨顯示。）
 					<br />
-					方案：<i class="icon fa-sm fas fa-globe-americas text-success" aria-hidden="true"></i>
-					總是啟用
-					nil
+					設定檔：<i class="icon fa-sm fas fa-globe-americas text-success" aria-hidden="true"></i>
+					始終啟用
+				</td>
 			</tr>
 			<tr>
 				<td class="p-2"><img src="../icons/profile-system.svg" class=""></td>
 				<td>
-					關於使用任何代理的決定傳遞給作業系統。
-					<br />
-					方案：系統
-					nil
+					是否使用代理的決定交給作業系統。
+					<br/> 設定檔：系統
+				</td>
 			</tr>
 		</tbody>
 	</table>
 </div>
 
 <div class="table-responsive">
-	<table class="table table-sm table-striped caption-top table-borderless align-middle">
+	<table class="table table-sm table table-striped caption-top table-borderless align-middle table-responsive">
 		<caption><b>圖示圖例（僅限 Firefox）：</b></caption>
 		<thead>
 			<tr>
@@ -159,50 +164,50 @@
 			<tr>
 				<td class="p-2"><img src="../icons/profile-smartrules-green.svg" class=""></td>
 				<td>
-					規則符合目前分頁。所有後續請求都通過代理。
+					目前分頁匹配到一個規則。所有後續請求都通過代理。
 					<br />
-					方案：<i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> 選擇性規則
-					nil
+					設定檔：<i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> 選擇性規則
+				</td>
 			</tr>
 			<tr>
 				<td class="p-2"><img src="../icons/profile-smartrules-has-failed.svg" class=""></td>
 				<td>
-					規則符合目前分頁。至少有一個無回應/失敗的請求。
+					目前分頁匹配到一個規則。至少有一個請求失敗/無回應。
 					<br />
-					方案：<i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> 選擇性規則
-					nil
-			</td>
+					設定檔：<i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> 選擇性規則
+				</td>
+			</tr>
 			<tr>
 				<td class="p-2"><img src="../icons/profile-smartrules-has-bypassed.svg" class=""></td>
 				<td>
-					規則符合目前分頁。至少有一個後續請求透過規則繞過了代理。
+					目前分頁匹配到一個規則。至少有一個後續請求透過某個規則繞過了代理。
 					<br />
-					方案：<i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> 選擇性規則
-					nil
+					設定檔：<i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> 選擇性規則
+				</td>
 			</tr>
 			<tr>
 				<td class="p-2"><img src="../icons/profile-smartrules-has-unmatched.svg" class=""></td>
 				<td>
-					規則符合目前分頁。至少有一個後續請求沒有符合任何規則且不通過代理。
+					目前分頁匹配到一個規則。至少有一個後續請求不匹配任何規則且未通過代理。
 					<br />
-					方案：<i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> 選擇性規則
-					nil
+					設定檔：<i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> 選擇性規則
+				</td>
 			</tr>
 			<tr>
 				<td class="p-2"><img src="../icons/profile-smartrules-noproxy-has-matched.svg" class=""></td>
 				<td>
-					目前分頁沒有符合的規則。至少有一個後續請求符合規則且正通過代理。
+					目前分頁沒有匹配的規則。至少有一個後續請求匹配到某個規則並通過代理。
 					<br />
-					方案：<i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> 選擇性規則
-					nil
+					設定檔：<i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> 選擇性規則
+				</td>
 			</tr>
 			<tr>
 				<td class="p-2"><img src="../icons/profile-always-bypassed.svg" class=""></td>
 				<td>
-					代理套用於目前分頁內的所有請求。至少有一個後續請求透過規則繞過了代理。
+					代理套用於目前分頁中的所有請求。至少有一個後續請求透過某個規則繞過了代理。
 					<br />
-					方案：<i class="icon fa-sm fas fa-globe-americas text-success" aria-hidden="true"></i> 總是啟用
-					nil
+					設定檔：<i class="icon fa-sm fas fa-globe-americas text-success" aria-hidden="true"></i> 始終啟用
+				</td>
 			</tr>
 		</tbody>
 	</table>

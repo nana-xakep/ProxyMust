@@ -38,16 +38,19 @@ import { WebFailedRequestMonitor } from './WebFailedRequestMonitor';
 import { SubscriptionUpdater } from './SubscriptionUpdater';
 import { Settings } from './Settings';
 import {
-	CommandMessages,
-	SettingsPageInternalDataType,
-	PopupInternalDataType,
-	ProxyableInternalDataType,
-	ProxyServer,
-	ResultHolderGeneric,
-	CompiledProxyRulesMatchedSource,
-	SmartProfile,
-	PartialThemeDataType,
-	TabProxyStatus,
+    CommandMessages,
+    SettingsPageInternalDataType,
+    PopupInternalDataType,
+    ProxyableInternalDataType,
+    ProxyServer,
+    ResultHolderGeneric,
+    CompiledProxyRulesMatchedSource,
+    SmartProfile,
+    SmartProfileType,
+    ProxyRule,
+    ProxyRuleType,
+    PartialThemeDataType,
+    TabProxyStatus,
 } from './definitions';
 import { KeyboardShortcuts } from './KeyboardShortcuts';
 import { ProxyEngineSpecialRequests } from './ProxyEngineSpecialRequests';
@@ -55,12 +58,14 @@ import { ProfileOperations } from './ProfileOperations';
 import { ProfileRules } from './ProfileRules';
 import { Icons } from './Icons';
 import { TestManager } from './TestManager';
+import { AutoStatusService } from './AutoStatusService';
 
 const subscriptionUpdaterLib = SubscriptionUpdater;
 const proxyEngineLib = ProxyEngine;
 const settingsLib = Settings;
 const settingsOperationLib = SettingsOperation;
 const iconsLib = Icons;
+
 
 /**
  * Cross-browser runtime detection - use instead of direct chrome checks
@@ -115,9 +120,9 @@ export class Core {
 		// start handling messages
 		Core.registerMessageReader();
 
-		// tracking active tab
-		TabManager.initializeTracking();
-		        // English: Listen to active tab changes to update popup dynamically
+        // tracking active tab
+        TabManager.initializeTracking();
+        // English: Listen to active tab changes to update popup dynamically
         // Russian: Слушаем изменения активной вкладки для динамического обновления попапа
         api.tabs.onActivated.addListener((activeInfo: any) => {
             // English: Send message to popup (if open) to refresh data
@@ -127,6 +132,19 @@ export class Core {
                 tabId: activeInfo.tabId
             });
         });
+        // English: Listen to webNavigation events to detect user-initiated reloads and typed navigations
+        // Russian: Слушаем события webNavigation для обнаружения перезагрузок и ввода адреса пользователем
+        if (api.webNavigation) {
+            api.webNavigation.onCommitted.addListener((details: any) => {
+                const tabId = details.tabId;
+                if (tabId < 0) return;
+                // English: Detect reload (F5) or typed (address bar entry)
+                // Russian: Определяем перезагрузку (F5) или ввод адреса
+                if (details.transitionType === 'reload' || details.transitionType === 'typed') {
+                    WebFailedRequestMonitor.setUserInitiatedNavigation(tabId, details.transitionType);
+                }
+            });
+        }
 		// English: Listen for test log window closure to reset the reference
 		// Russian: Слушаем закрытие окна лога для сброса ссылки
 		api.windows.onRemoved.addListener((windowId) => {
@@ -153,6 +171,10 @@ export class Core {
 	public static initializeFromServiceWorker() {
 		// nothing yet!
 	}
+	
+	// English: Track open dialogs to prevent duplicates (site -> dialog window id)
+    // Russian: Отслеживаем открытые диалоги, чтобы предотвратить дублирование (сайт -> id окна диалога)
+    private static _openDialogs: Map<string, number> = new Map();
 
 	/**
 	 * Unified message handler with cross-browser support
@@ -248,9 +270,12 @@ export class Core {
 				Core.handlePopupToggleProxyForDomain(message);
 				return false;
 
-			case CommandMessages.PopupChangeProxyForRule:
-				return Core.handlePopupChangeProxyForRule(message, sendResponse);
-
+            case CommandMessages.PopupChangeProxyForRule:
+                return Core.handlePopupChangeProxyForRule(message, sendResponse);
+                
+            case "PopupSetRuleWhitelist":
+                return Core.handlePopupSetRuleWhitelist(message, sendResponse);
+				
 			case CommandMessages.PopupAddDomainListToProxyRule:
 				return Core.handlePopupAddDomainListToProxyRule(message, sendResponse);
 
@@ -371,12 +396,21 @@ export class Core {
 			case "CANCEL_PROXY_TEST_FOR_SITE":
 				return Core.handleCancelProxyTestForSite(message, sendResponse);
 				
-			case "AddSubscriptionProxyToManual":
-				Core.handleAddSubscriptionProxyToManual(message, sendResponse);
-				
-				return true;
+            case "AddSubscriptionProxyToManual":
+                Core.handleAddSubscriptionProxyToManual(message, sendResponse);
+                
+                return true;
+            case "AddSiteToAutoRules":
+                return Core.handleAddSiteToAutoRules(message, sendResponse);
+            case "ForceAutoProxyRefresh":
+                return Core.handleForceAutoProxyRefresh(message, sendResponse);
+            case "SaveProfileAndRefresh":
+                return Core.handleSaveProfileAndRefresh(message, sendResponse);
             case "ClearProxyAutoStatus":
                 Core.handleClearProxyAutoStatus(message, sendResponse);
+                return false;
+            case "ClearProxyAutoStatusForSite":
+                Core.handleClearProxyAutoStatusForSite(message, sendResponse);
                 return false;
 				
             case "DIRECT_IP_RESULT":
@@ -403,16 +437,45 @@ export class Core {
 				return Core.handleToggleTestLogPin(sendResponse);
 			
             case CommandMessages.PopupRemoveProxyRule:
-                console.log("[Core] Получена команда PopupRemoveProxyRule, message:", message);
+//console.log("[Core] Получена команда PopupRemoveProxyRule, message:", message)
                 return Core.handlePopupRemoveProxyRule(message, sendResponse);
 
             case CommandMessages.PopupDisableProxyRule:
-                console.log("[Core] Получена команда PopupDisableProxyRule, message:", message);
+//console.log("[Core] Получена команда PopupDisableProxyRule, message:", message)
                 return Core.handlePopupDisableProxyRule(message, sendResponse);
 
             case CommandMessages.PopupToggleProxyPerOriginForRule:
-                console.log("[Core] Получена команда PopupToggleProxyPerOriginForRule, message:", message);
-                return Core.handlePopupToggleProxyPerOriginForRule(message, sendResponse);			
+//console.log("[Core] Получена команда PopupToggleProxyPerOriginForRule, message:", message)
+                return Core.handlePopupToggleProxyPerOriginForRule(message, sendResponse);
+				
+            case CommandMessages.AutoProxyDialogResponse:
+                return Core.handleAutoProxyDialogResponse(message, sendResponse);				
+
+            case "ClearSiteLockForSite":
+                return Core.handleClearSiteLockForSite(message, sendResponse);
+                
+            case "SetUserSelectedProxy":
+                Core.handleSetUserSelectedProxy(message, sendResponse);
+                return false;
+                
+            case "AddToTempSkipList":
+                Core.handleAddToTempSkipList(message, sendResponse);
+                return false;
+				
+            case 'DIALOG_RESPONSE':
+                return Core.handleDialogResponse(message, sendResponse);
+				
+            case CommandMessages.OpenChangeDialog:
+                return Core.handleOpenChangeDialog(message, sendResponse);
+                
+            case "HandleAutoRefresh":
+                return Core.handleAutoRefresh(message, sendResponse);
+                
+            case "SetRuleMode":
+                return Core.handleSetRuleMode(message, sendResponse);
+
+            case "ADD_UNREACHABLE_SITE":
+                return Core.handleAddUnreachableSite(message, sendResponse);				
 				
 			default:
 				if (sendResponse) sendResponse(null);
@@ -453,10 +516,31 @@ export class Core {
             type: 'stop',
             timestamp: Date.now()
         });
+        // English: Cancel failover as well
+        // Russian: Отменяем также failover
+        WebFailedRequestMonitor.cancelFailover();
         ExpressProxyCycleTester.cancelTest();
         if (sendResponse) sendResponse({ success: true });
         return false;
     }
+	
+    private static handleCancelProxyTestForSite(message: any, sendResponse: Function): boolean {
+        // English: Immediately send stop message to log
+        // Russian: Немедленно отправляем сообщение об остановке в лог
+        Core.sendTestLogStep({
+            type: 'stop',
+            timestamp: Date.now()
+        });
+        // English: Cancel failover
+        // Russian: Отменяем failover
+        WebFailedRequestMonitor.cancelFailover();
+        ProxyTester.cancelTestForSite().then(() => {
+            if (sendResponse) sendResponse({ success: true });
+        }).catch((err) => {
+            if (sendResponse) sendResponse({ success: false, error: err.message });
+        });
+        return true;
+    }	
 	
 	/**
  * English: Opens the test log window.
@@ -584,15 +668,66 @@ export class Core {
 		const result = ProfileRules.changeProxyForRule(message.ruleId, message.proxyServerId);
 		
 		if (result.success) {
+			// Find the site for this rule to clear lock
+			let site = null;
+			for (const profile of settingsLib.current.proxyProfiles) {
+				const rule = profile.proxyRules.find(r => r.ruleId === message.ruleId);
+				if (rule) {
+					site = rule.hostName;
+					break;
+				}
+			}
+			if (site) {
+				WebFailedRequestMonitor.clearSuccessfulProxyCacheForSite(site);
+				WebFailedRequestMonitor.clearSiteLock();
+				ProxyEngine.clearDynamicProxyForSite(site);
+//console.log(`[Core] Cleared lock and cache for site ${site} after rule proxy change`)
+			}
+			
 			settingsOperationLib.saveSmartProfiles();
 			settingsOperationLib.saveAllSync();
 			proxyEngineLib.notifyProxyRulesChanged();
 			Core.setBrowserActionStatus();
 		}
 		
-		if (sendResponse) sendResponse(result);
-		return false;
-	}
+        if (sendResponse) sendResponse(result);
+        return false;
+    }
+
+    /**
+     * English: Handles setting a rule to whitelist (no proxy)
+     * Russian: Обрабатывает установку правила в белый список (без прокси)
+     */
+    private static handlePopupSetRuleWhitelist(message: any, sendResponse: Function): boolean {
+        const { ruleId, whiteList } = message;
+        if (!ruleId) {
+            if (sendResponse) sendResponse({ success: false, error: 'Missing ruleId' });
+            return false;
+        }
+        let found = false;
+        for (const profile of Settings.current.proxyProfiles) {
+            const rule = profile.proxyRules?.find(r => r.ruleId === ruleId);
+            if (rule) {
+                rule.whiteList = whiteList;
+                if (whiteList) {
+                    rule.proxyServerId = null;
+                    rule.proxy = null;
+                }
+                found = true;
+                break;
+            }
+        }
+        if (found) {
+            settingsOperationLib.saveSmartProfiles();
+            settingsOperationLib.saveAllSync();
+            proxyEngineLib.notifyProxyRulesChanged();
+            Core.setBrowserActionStatus();
+            if (sendResponse) sendResponse({ success: true });
+        } else {
+            if (sendResponse) sendResponse({ success: false, error: 'Rule not found' });
+        }
+        return false;
+    }
 
 	private static handlePopupAddDomainListToProxyRule(message: any, sendResponse: Function): boolean {
 		if (!message.domainList) return false;
@@ -967,6 +1102,10 @@ export class Core {
             }
             
             const { site, proxies } = message;
+			            // Clear dynamic override for this site before testing
+            if (site) {
+                ProxyEngine.clearDynamicProxyForSite(site);
+            }
             if (!site || !proxies || !proxies.length) {
                 TestManager.finishTest();
                 if (sendResponse) sendResponse({ success: false, message: "Invalid site or proxies" });
@@ -1008,6 +1147,10 @@ export class Core {
             }
             
             const { site, proxies } = message;
+			            // Clear dynamic override for this site before testing
+            if (site) {
+                ProxyEngine.clearDynamicProxyForSite(site);
+            }
             if (!site || !proxies || !proxies.length) {
                 TestManager.finishTest();
                 if (sendResponse) sendResponse({ success: false, message: "Invalid site or proxies" });
@@ -1087,6 +1230,10 @@ export class Core {
             }
             
             const { site, proxies } = message;
+			            // Clear dynamic override for this site before testing
+            if (site) {
+                ProxyEngine.clearDynamicProxyForSite(site);
+            }
             if (!site || !proxies || !proxies.length) {
                 TestManager.finishTest();
                 if (sendResponse) sendResponse({ success: false, message: "Invalid site or proxies" });
@@ -1194,6 +1341,9 @@ export class Core {
 			type: 'stop',
 			timestamp: Date.now()
 		});
+		// English: Cancel failover as well
+		// Russian: Отменяем также failover
+		WebFailedRequestMonitor.cancelFailover();
 		ProxyCycleTester.cancelTest();
 		if (sendResponse) sendResponse({ success: true });
 		return false;
@@ -1226,23 +1376,68 @@ export class Core {
     }
 	
     /**
-     * Handles cancellation of proxy test for a specific site
-     * Обрабатывает отмену теста прокси для конкретного сайта
+     * English: Handles adding an unreachable site to auto-proxy rules and starting failover
+     * Russian: Обрабатывает добавление недоступного сайта в правила автопрокси и запуск failover
      */
-    private static handleCancelProxyTestForSite(message: any, sendResponse: Function): boolean {
-        // English: Immediately send stop message to log
-        // Russian: Немедленно отправляем сообщение об остановке в лог
-        Core.sendTestLogStep({
-            type: 'stop',
-            timestamp: Date.now()
-        });
-        ProxyTester.cancelTestForSite().then(() => {
-            if (sendResponse) sendResponse({ success: true });
-        }).catch((err) => {
-            if (sendResponse) sendResponse({ success: false, error: err.message });
-        });
-        return true;
-    }
+    private static handleAddUnreachableSite(message: any, sendResponse: Function): boolean {
+        const site = message.site;
+        const tabId = message.tabId || -1;
+        if (!site) {
+            if (sendResponse) sendResponse({ success: false, error: 'No site' });
+            return false;
+        }
+
+        // Find SmartRules profile
+        const smartRulesProfile = settingsLib.current.proxyProfiles.find(p => p.profileType === SmartProfileType.SmartRules);
+        if (!smartRulesProfile) {
+            if (sendResponse) sendResponse({ success: false, error: 'SmartRules profile not found' });
+            return false;
+        }
+
+        // Normalize site
+        const normalizedSite = Core.normalizeSite(site);
+        if (!normalizedSite) {
+            if (sendResponse) sendResponse({ success: false, error: 'Invalid site' });
+            return false;
+        }
+
+        // Check if rule already exists
+        let rule = smartRulesProfile.proxyRules.find(r => r.hostName === normalizedSite);
+        if (!rule) {
+            // Create new rule
+            rule = new ProxyRule();
+            rule.ruleType = ProxyRuleType.DomainSubdomain;
+            rule.hostName = normalizedSite;
+            rule.ruleSearch = normalizedSite;
+            rule.enabled = true;
+            rule.mode = 'auto';
+            rule.isAuto = true;
+            rule.proxyServerId = null;
+            smartRulesProfile.proxyRules.push(rule);
+            settingsOperationLib.saveSmartProfiles();
+            settingsOperationLib.saveAllSync(false);
+            proxyEngineLib.notifyProxyRulesChanged();
+//console.log(`[Core] Added auto-rule for ${normalizedSite}`)
+        } else {
+            // Ensure it's enabled and mode is auto
+            rule.enabled = true;
+            rule.mode = 'auto';
+            settingsOperationLib.saveSmartProfiles();
+            settingsOperationLib.saveAllSync(false);
+            proxyEngineLib.notifyProxyRulesChanged();
+//console.log(`[Core] Enabled auto-rule for ${normalizedSite}`)
+        }
+
+        // Switch to SmartRules profile if not already
+        Core.ChangeActiveProfileId(smartRulesProfile.profileId);
+
+        // Trigger failover for this site
+        WebFailedRequestMonitor.triggerFailoverForSite(normalizedSite, null, tabId);
+
+        if (sendResponse) sendResponse({ success: true });
+        return false;
+    }	
+	
 /**
  * Handles adding a subscription proxy to manual list
  * Обрабатывает добавление прокси из подписки в ручной список
@@ -1485,6 +1680,28 @@ private static async handleAddSubscriptionProxyToManual(message: any, sendRespon
 		if (!host || typeof host !== 'string') return null;
 		return host.trim().toLowerCase();
 	}
+	
+    /**
+     * English: Normalizes site domain (removes protocol, www., trailing slash)
+     * Russian: Нормализует домен сайта (удаляет протокол, www., завершающий слэш)
+     */
+    public static normalizeSite(site: string): string | null {
+        if (!site) return null;
+        let normalized = site.trim().toLowerCase();
+        // Remove protocol
+        normalized = normalized.replace(/^https?:\/\//, '');
+        // Remove trailing slash
+        normalized = normalized.replace(/\/$/, '');
+        // Remove www.
+        if (normalized.startsWith('www.')) {
+            normalized = normalized.substring(4);
+        }
+        // Validate that it's a valid domain (contains at least one dot and no slashes)
+        if (!normalized.includes('.') || normalized.includes('/') || normalized.includes(':')) {
+            return null;
+        }
+        return normalized;
+    }	
 
 	private static toPort(port: any): number {
 		const parsed = parseInt(port, 10);
@@ -1593,6 +1810,12 @@ private static async handleAddSubscriptionProxyToManual(message: any, sendRespon
 			return;
 		}
 
+		// Clear all dynamic proxy overrides when switching profiles
+		ProxyEngine.clearAllDynamicProxies();
+		
+		// Clear site lock when switching profiles
+		WebFailedRequestMonitor.clearSiteLock();		
+
 		settingsLib.current.activeProfileId = profileId;
 		settingsOperationLib.saveActiveProfile();
 		settingsOperationLib.saveAllSync();
@@ -1602,6 +1825,10 @@ private static async handleAddSubscriptionProxyToManual(message: any, sendRespon
 	}
 
 	public static ChangeActiveProxy(proxy: ProxyServer) {
+		// Clear dynamic override for all sites when manually changing proxy
+		ProxyEngine.clearAllDynamicProxies();
+		// Clear site lock when manually changing proxy
+		WebFailedRequestMonitor.clearSiteLock();
 		const smartProfile = ProfileOperations.getActiveSmartProfile();
 		
 		if (smartProfile == null) {
@@ -1711,7 +1938,33 @@ private static async handleAddSubscriptionProxyToManual(message: any, sendRespon
 		dataForPopup.activeProfileId = settings.activeProfileId;
 		dataForPopup.activeIncognitoProfileId = settings.options.activeIncognitoProfileId;
 		dataForPopup.proxyServers = settings.proxyServers;
-		dataForPopup.currentProxyServerId = (settingsActive.activeProfile?.profileProxyServerId) || settings.defaultProxyServerId;
+		// English: For SmartRules profile, try to get proxy for current site
+		// Russian: Для профиля SmartRules пытаемся получить прокси для текущего сайта
+		let currentProxyId = (settingsActive.activeProfile?.profileProxyServerId) || settings.defaultProxyServerId;
+		const activeProfile = settingsActive.activeProfile;
+		if (activeProfile && activeProfile.profileType === SmartProfileType.SmartRules) {
+			const currentTabData = TabManager.getCurrentTab();
+			if (currentTabData && currentTabData.url) {
+				const site = Utils.extractHostFromUrl(currentTabData.url);
+				if (site) {
+					// First check dynamic override
+					const dynamicProxyId = ProxyEngine.getDynamicProxyForSite(site);
+					if (dynamicProxyId) {
+						currentProxyId = dynamicProxyId;
+					} else {
+						// Check rule
+						const profile = settings.proxyProfiles.find(p => p.profileId === settings.activeProfileId);
+						if (profile) {
+							const rule = profile.proxyRules.find(r => r.hostName === site);
+							if (rule && rule.proxyServerId) {
+								currentProxyId = rule.proxyServerId;
+							}
+						}
+					}
+				}
+			}
+		}
+		dataForPopup.currentProxyServerId = currentProxyId;
 		dataForPopup.currentTabId = null;
 		dataForPopup.currentTabIndex = null;
 		dataForPopup.proxyServersSubscribed = settingsOperationLib.getAllSubscribedProxyServers();
@@ -1723,15 +1976,15 @@ private static async handleAddSubscriptionProxyToManual(message: any, sendRespon
 		dataForPopup.refreshTabOnConfigChanges = settings.options.refreshTabOnConfigChanges;
 		dataForPopup.enableRating = settings.options.enableRating;
         dataForPopup.enableDirectIpDetection = settings.options.enableDirectIpDetection === true;
-        console.log(`[Core] getPopupInitialData: enableDirectIpDetection = ${dataForPopup.enableDirectIpDetection}`);		
+//console.log(`[Core] getPopupInitialData: enableDirectIpDetection = ${dataForPopup.enableDirectIpDetection}`)
 		// English: stale hours from user preferences (staleHours)
 		// Russian: время устаревания из пользовательских настроек (staleHours)
 		dataForPopup.staleHours = settings.userPrefs?.staleHours ?? 6;
         dataForPopup.autoStatus = settings.autoStatus || {};
 	   // 	console.log("[DEBUG] getPopupInitialData: settings.autoStatus =", JSON.stringify(settings.autoStatus));
         dataForPopup.proxyPriority = settings.proxyPriority || {};
-        //         // console.log("[Core] getPopupInitialData: autoStatus keys =", Object.keys(dataForPopup.autoStatus));
-        //         // console.log("[Core] getPopupInitialData: autoStatus sample =", JSON.stringify(dataForPopup.autoStatus).substring(0, 300));
+//console.log("[Core] getPopupInitialData: autoStatus keys =", Object.keys(dataForPopup.autoStatus))
+//console.log("[Core] getPopupInitialData: autoStatus sample =", JSON.stringify(dataForPopup.autoStatus).substring(0, 300))
 		
 		const themeData = new PartialThemeDataType();
 		themeData.themeType = settings.options.themeType;
@@ -2047,40 +2300,51 @@ public static sendTestLogStep(data: any): void {
 	 * Russian: Обрабатывает очистку autoStatus для прокси со страницы настроек
 	 */
     private static async handleClearProxyAutoStatus(message: any, sendResponse: Function): Promise<void> {
-            //        //        console.log("[ProxyMust] handleClearProxyAutoStatus: получены данные", message.autoStatus);
-        
         try {
-            // English: Update autoStatus in current settings
-            // Russian: Обновляем autoStatus в текущих настройках
+            // English: Use AutoStatusService to replace the entire map
+            // Russian: Используем AutoStatusService для замены всей карты
+            const statusService = AutoStatusService.getInstance();
             if (message.autoStatus !== undefined) {
-                Settings.current.autoStatus = message.autoStatus;
-                
-                // English: Save to local storage via unified method
-                // Russian: Сохраняем в локальное хранилище через унифицированный метод
-                await SettingsOperation.saveAllLocal(true);
-                //        //        console.log("[ProxyMust] autoStatus сохранён через SettingsOperation.saveAllLocal");
+                statusService.replaceAllStatuses(message.autoStatus);
                 if (sendResponse) sendResponse({ success: true });
             } else {
-                console.warn("[ProxyMust] handleClearProxyAutoStatus: message.autoStatus отсутствует");
+                console.warn("[Core] handleClearProxyAutoStatus: message.autoStatus отсутствует");
                 if (sendResponse) sendResponse({ success: false, error: "No autoStatus data provided" });
             }
         } catch (e) {
             const errorMessage = e instanceof Error ? e.message : String(e);
-            console.error("[ProxyMust] handleClearProxyAutoStatus ошибка:", errorMessage);
+            console.error("[Core] handleClearProxyAutoStatus ошибка:", errorMessage);
             if (sendResponse) sendResponse({ success: false, error: errorMessage });
         }
     }
-
-    /**
-     * English: Handles removal of a proxy rule from popup.
-     * Russian: Обрабатывает удаление правила прокси из попапа.
+	
+	    /**
+     * English: Clears site lock and cache for a specific site.
+     * Russian: Очищает блокировку и кэш для конкретного сайта.
      */
+    private static handleClearProxyAutoStatusForSite(message: any, sendResponse: Function): boolean {
+        const site = message.site;
+        if (!site) {
+            if (sendResponse) sendResponse({ success: false, error: 'No site' });
+            return false;
+        }
+        // Clear dynamic override
+        ProxyEngine.clearDynamicProxyForSite(site);
+        // Clear site lock
+        WebFailedRequestMonitor.clearSiteLock();
+        // Clear successful proxy cache for this site
+        WebFailedRequestMonitor.clearSuccessfulProxyCache();
+//console.log(`[Core] Cleared lock and cache for site ${site}`)
+        if (sendResponse) sendResponse({ success: true });
+        return false;
+    }
+	
     /**
      * English: Handles removal of a proxy rule from popup.
      * Russian: Обрабатывает удаление правила прокси из попапа.
      */
     private static handlePopupRemoveProxyRule(message: any, sendResponse: Function): boolean {
-        console.log("[Core] handlePopupRemoveProxyRule вызван, ruleId:", message.ruleId);
+//console.log("[Core] handlePopupRemoveProxyRule вызван, ruleId:", message.ruleId)
         if (!message.ruleId) {
             if (sendResponse) sendResponse({ success: false, error: 'Missing ruleId' });
             return false;
@@ -2089,14 +2353,14 @@ public static sendTestLogStep(data: any): void {
         for (const profile of Settings.current.proxyProfiles) {
             const index = profile.proxyRules?.findIndex(r => r.ruleId === message.ruleId);
             if (index !== undefined && index !== -1) {
-                console.log("[Core] Найдено правило в профиле:", profile.profileId);
+//console.log("[Core] Найдено правило в профиле:", profile.profileId)
                 profile.proxyRules.splice(index, 1);
                 found = true;
                 break;
             }
         }
         if (found) {
-            console.log("[Core] Правило удалено, сохраняем настройки...");
+//console.log("[Core] Правило удалено, сохраняем настройки...")
             settingsOperationLib.saveSmartProfiles();
             settingsOperationLib.saveAllSync();
             proxyEngineLib.notifyProxyRulesChanged();
@@ -2115,7 +2379,7 @@ public static sendTestLogStep(data: any): void {
      * Russian: Обрабатывает переключение состояния правила прокси из попапа.
      */
     private static handlePopupDisableProxyRule(message: any, sendResponse: Function): boolean {
-        console.log("[Core] handlePopupDisableProxyRule вызван, ruleId:", message.ruleId, "enabled:", message.enabled);
+//console.log("[Core] handlePopupDisableProxyRule вызван, ruleId:", message.ruleId, "enabled:", message.enabled)
         if (!message.ruleId || message.enabled === undefined) {
             if (sendResponse) sendResponse({ success: false, error: 'Missing ruleId or enabled' });
             return false;
@@ -2124,14 +2388,14 @@ public static sendTestLogStep(data: any): void {
         for (const profile of Settings.current.proxyProfiles) {
             const rule = profile.proxyRules?.find(r => r.ruleId === message.ruleId);
             if (rule) {
-                console.log("[Core] Найдено правило в профиле:", profile.profileId);
+//console.log("[Core] Найдено правило в профиле:", profile.profileId)
                 rule.enabled = message.enabled;
                 found = true;
                 break;
             }
         }
         if (found) {
-            console.log("[Core] Состояние правила изменено, сохраняем настройки...");
+//console.log("[Core] Состояние правила изменено, сохраняем настройки...")
             settingsOperationLib.saveSmartProfiles();
             settingsOperationLib.saveAllSync();
             proxyEngineLib.notifyProxyRulesChanged();
@@ -2150,7 +2414,7 @@ public static sendTestLogStep(data: any): void {
      * Russian: Обрабатывает переключение режима "прокси на вкладку" для конкретного правила из попапа.
      */
     private static handlePopupToggleProxyPerOriginForRule(message: any, sendResponse: Function): boolean {
-        console.log("[Core] handlePopupToggleProxyPerOriginForRule вызван, ruleId:", message.ruleId, "enableProxyPerOrigin:", message.enableProxyPerOrigin);
+//console.log("[Core] handlePopupToggleProxyPerOriginForRule вызван, ruleId:", message.ruleId, "enableProxyPerOrigin:", message.enableProxyPerOrigin)
         if (!message.ruleId || message.enableProxyPerOrigin === undefined) {
             if (sendResponse) sendResponse({ success: false, error: 'Missing ruleId or enableProxyPerOrigin' });
             return false;
@@ -2159,14 +2423,14 @@ public static sendTestLogStep(data: any): void {
         for (const profile of Settings.current.proxyProfiles) {
             const rule = profile.proxyRules?.find(r => r.ruleId === message.ruleId);
             if (rule) {
-                console.log("[Core] Найдено правило в профиле:", profile.profileId);
+//console.log("[Core] Найдено правило в профиле:", profile.profileId)
                 rule.enableProxyPerOrigin = message.enableProxyPerOrigin;
                 found = true;
                 break;
             }
         }
         if (found) {
-            console.log("[Core] Режим per-origin изменён, сохраняем настройки...");
+//console.log("[Core] Режим per-origin изменён, сохраняем настройки...")
             settingsOperationLib.saveSmartProfiles();
             settingsOperationLib.saveAllSync();
             proxyEngineLib.notifyProxyRulesChanged();
@@ -2179,15 +2443,12 @@ public static sendTestLogStep(data: any): void {
         return false;
     }
 
-	/**
+    /**
      * English: Handles autoStatus update from popup (cycle tester)
      * Russian: Обрабатывает обновление autoStatus из попапа (циклический тестер)
      */
     private static async handleUpdateAutoStatus(message: any, sendResponse: Function): Promise<boolean> {
         const { proxyId, site, status, timestamp } = message;
-        
-                // console.log("[Core] handleUpdateAutoStatus called:", { proxyId, site, status, timestamp });
-                // console.log("[Core] BEFORE update, autoStatus =", JSON.stringify(Settings.current.autoStatus));
         
         if (!proxyId || !site) {
             console.warn("[Core] handleUpdateAutoStatus: missing proxyId or site");
@@ -2195,42 +2456,21 @@ public static sendTestLogStep(data: any): void {
             return false;
         }
         
-        // English: Normalize site (remove protocol and trailing slash) for consistent keys
-        // Russian: Нормализуем сайт (удаляем протокол и завершающий слэш) для единообразных ключей
         const normalizedSite = site.replace(/^https?:\/\//, '').replace(/\/$/, '');
         
         try {
-            // English: Update autoStatus in Settings.current
-            // Russian: Обновляем autoStatus в Settings.current
-            if (!Settings.current.autoStatus) Settings.current.autoStatus = {};
-            if (!Settings.current.autoStatus[proxyId]) Settings.current.autoStatus[proxyId] = {};
+            // Use AutoStatusService to set the status
+            const statusService = AutoStatusService.getInstance();
+            statusService.setStatus(proxyId, normalizedSite, status, timestamp || Date.now());
             
-            Settings.current.autoStatus[proxyId][normalizedSite] = {
-                status: status,
-                timestamp: timestamp || Date.now()
-            };
-            
-                    // console.log("[Core] AFTER update, autoStatus =", JSON.stringify(Settings.current.autoStatus));
-		   // 	console.log("[DEBUG] handleUpdateAutoStatus: proxyId =", proxyId, "site =", normalizedSite, "status =", status);
-            //  console.log("[DEBUG] handleUpdateAutoStatus: full autoStatus after update =", JSON.stringify(Settings.current.autoStatus, null, 2));
-            
-            // English: Save entire settings to ensure autoStatus is persisted across page reloads
-            // Russian: Сохраняем все настройки, чтобы autoStatus сохранился при перезагрузке страницы
-            await SettingsOperation.saveAllLocal(true);
-            SettingsOperation.saveAllSync(false);
-            
-            // English: Update rating based on status (success or indirect = +1, fail = -1)
-            // Russian: Обновляем рейтинг на основе статуса (success или indirect = +1, fail = -1)
+            // Update rating based on status (success or indirect = +1, fail = -1)
             if (status === "success" || status === "indirect") {
                 SettingsOperation.updateProxyRating(proxyId, 1);
-                        // console.log("[Core] Updated rating +1 for proxy", proxyId);
             } else if (status === "fail") {
                 SettingsOperation.updateProxyRating(proxyId, -1);
-                        // console.log("[Core] Updated rating -1 for proxy", proxyId);
             }
             
-            // English: Notify popup if open to refresh data
-            // Russian: Уведомляем попап, если открыт, об обновлении данных
+            // Notify popup if open to refresh data
             PolyFill.runtimeSendMessage({ command: CommandMessages.PopupActiveTabChanged, tabId: -1 });
             
             if (sendResponse) sendResponse({ success: true });
@@ -2240,6 +2480,676 @@ public static sendTestLogStep(data: any): void {
         }
         
         return false;
+    }
+
+    /**
+     * English: Adds a site to the SmartRules profile with mode='auto'.
+     * Russian: Добавляет сайт в профиль SmartRules с режимом 'auto'.
+     */
+    private static handleAddSiteToAutoRules(message: any, sendResponse: Function): boolean {
+        const site = message.site;
+        if (!site) {
+            if (sendResponse) sendResponse({ success: false, error: 'No site' });
+            return false;
+        }
+        // English: Normalize site (remove www., protocol, trailing slash)
+        // Russian: Нормализуем сайт (убираем www., протокол, завершающий слэш)
+        const normalizedSite = Core.normalizeSite(site);
+        if (!normalizedSite) {
+            if (sendResponse) sendResponse({ success: false, error: 'Invalid site' });
+            return false;
+        }
+
+        // Find SmartRules profile
+        const smartRulesProfile = settingsLib.current.proxyProfiles.find(p => p.profileType === SmartProfileType.SmartRules);
+        if (!smartRulesProfile) {
+            if (sendResponse) sendResponse({ success: false, error: 'SmartRules profile not found' });
+            return false;
+        }
+        // Check if rule already exists (using normalized host)
+        let rule = smartRulesProfile.proxyRules.find(r => r.hostName === normalizedSite);
+        if (!rule) {
+            rule = new ProxyRule();
+            rule.ruleType = ProxyRuleType.DomainSubdomain;
+            rule.hostName = normalizedSite;
+            rule.ruleSearch = normalizedSite;
+            rule.enabled = true;
+            rule.mode = 'auto';
+            rule.isAuto = true;
+            rule.proxyServerId = null;
+            smartRulesProfile.proxyRules.push(rule);
+            settingsOperationLib.saveSmartProfiles();
+            settingsOperationLib.saveAllSync(false);
+            proxyEngineLib.notifyProxyRulesChanged();
+        }
+        // Switch to this profile if not already
+        Core.ChangeActiveProfileId(smartRulesProfile.profileId);
+        if (sendResponse) sendResponse({ success: true });
+        return false;
+    }
+
+    /**
+     * English: Forces refresh of AutoProxy for a site (clears dynamic override).
+     * Russian: Принудительно обновляет AutoProxy для сайта (очищает динамическое переопределение).
+     */
+    private static handleForceAutoProxyRefresh(message: any, sendResponse: Function): boolean {
+        const site = message.site;
+        if (!site) {
+            if (sendResponse) sendResponse({ success: false });
+            return false;
+        }
+		// Clear dynamic override and force re-selection
+		proxyEngineLib.clearDynamicProxyForSite(site);
+		// Clear site lock and cache for this site
+		WebFailedRequestMonitor.clearSuccessfulProxyCacheForSite(site);
+		WebFailedRequestMonitor.clearSiteLock();
+//console.log(`[Core] Cleared lock and cache for site ${site} on force refresh`)
+		// Reload tab if needed
+		const tabData = TabManager.getCurrentTab();
+		if (tabData && tabData.url && Utils.extractHostFromUrl(tabData.url) === site) {
+			PolyFill.tabsReload(tabData.tabId);
+		}
+        if (sendResponse) sendResponse({ success: true });
+        return false;
+    }
+
+    /**
+     * English: Saves profile and refreshes proxy rules.
+     * Russian: Сохраняет профиль и обновляет правила прокси.
+     */
+    private static handleSaveProfileAndRefresh(message: any, sendResponse: Function): boolean {
+        const profileId = message.profileId;
+        if (profileId) {
+            settingsOperationLib.saveSmartProfiles();
+            settingsOperationLib.saveAllSync(false);
+            proxyEngineLib.notifyProxyRulesChanged();
+        }
+        if (sendResponse) sendResponse({ success: true });
+        return false;
+    }
+	
+    /**
+     * English: Clears site lock and successful proxy cache for a specific site.
+     * Russian: Очищает блокировку сайта и кэш успешных прокси для конкретного сайта.
+     */
+    private static handleClearSiteLockForSite(message: any, sendResponse: Function): boolean {
+        const site = message.site;
+        if (!site) {
+            if (sendResponse) sendResponse({ success: false });
+            return false;
+        }
+        // Clear site lock
+        WebFailedRequestMonitor.clearSiteLock();
+        // Clear successful proxy cache for this site
+        // We need to access the static cache directly
+        // Since it's private, we need a method in WebFailedRequestMonitor
+        // We'll use a helper method
+        WebFailedRequestMonitor.clearSuccessfulProxyCacheForSite(site);
+        // Also clear dynamic override
+        ProxyEngine.clearDynamicProxyForSite(site);
+//console.log(`[Core] Cleared lock and cache for site ${site}`)
+        if (sendResponse) sendResponse({ success: true });
+        return false;
+    }	
+	
+	    /**
+     * English: Handles setting user-selected proxy for a site
+     * Russian: Обрабатывает установку выбранного пользователем прокси для сайта
+     */
+    private static handleSetUserSelectedProxy(message: any, sendResponse: Function): void {
+        const { site, proxyId } = message;
+        if (!site || !proxyId) {
+            if (sendResponse) sendResponse({ success: false });
+            return;
+        }
+        WebFailedRequestMonitor.setUserSelectedProxy(site, proxyId);
+        if (sendResponse) sendResponse({ success: true });
+    }
+	
+	    /**
+     * English: Handles adding a proxy to the temp skip list
+     * Russian: Обрабатывает добавление прокси во временный список пропуска
+     */
+    private static handleAddToTempSkipList(message: any, sendResponse: Function): void {
+        const { site, proxyId } = message;
+        if (!site || !proxyId) {
+            if (sendResponse) sendResponse({ success: false });
+            return;
+        }
+        WebFailedRequestMonitor.addToTempSkipList(site, proxyId);
+        if (sendResponse) sendResponse({ success: true });
+    }
+	
+    /**
+     * English: Handles user response to auto-proxy dialog.
+     * Russian: Обрабатывает ответ пользователя на диалог автопрокси.
+     */
+    private static handleAutoProxyDialogResponse(message: any, sendResponse: Function): boolean {
+        const site = message.site;
+        const response = message.response; // 'switch' or 'keep'
+        if (!site || !response) {
+            if (sendResponse) sendResponse({ success: false });
+            return false;
+        }
+        
+        if (response === 'switch') {
+            // English: User wants to switch to a better proxy
+            // Russian: Пользователь хочет сменить прокси
+            const currentProxyId = ProxyEngine.getDynamicProxyForSite(site);
+            const tabData = TabManager.getCurrentTab();
+            const tabId = tabData ? tabData.tabId : -1;
+            
+            // Clear cache and lock
+            WebFailedRequestMonitor.clearSuccessfulProxyCacheForSite(site);
+            WebFailedRequestMonitor.clearSiteLock();
+            ProxyEngine.clearDynamicProxyForSite(site);
+            
+            // Trigger failover with next proxy
+            WebFailedRequestMonitor.triggerFailoverForSite(site, currentProxyId, tabId);
+            
+//console.log(`[Core] User switched proxy for site ${site}, failover triggered`)
+        } else {
+            // English: User wants to keep current proxy
+            // Russian: Пользователь хочет оставить текущий прокси
+            // We can lock it if needed, but auto-pin may be disabled
+            // Just log and do nothing
+//console.log(`[Core] User kept current proxy for site ${site}`)
+        }
+        
+        if (sendResponse) sendResponse({ success: true });
+        return false;
+    }	
+    /**
+     * English: Handles response from dialog window (pin, change, or add_site dialogs)
+     * Russian: Обрабатывает ответ из окна диалога (диалоги закрепления, смены или добавления сайта)
+     */
+    private static handleDialogResponse(message: any, sendResponse: Function): boolean {
+        const { type, site, proxyId, response, dontAsk } = message;
+        if (!site || !type || !response) {
+            if (sendResponse) sendResponse({ success: false, error: 'Missing parameters' });
+            return false;
+        }
+
+//console.log(`[Core] Dialog response: type=${type}, site=${site}, proxyId=${proxyId}, response=${response}, dontAsk=${dontAsk}`)
+
+        // English: Find the active SmartRules profile (if any)
+        // Russian: Находим активный профиль SmartRules (если есть)
+        const settings = Settings.current;
+        const activeProfileId = settings?.activeProfileId;
+        if (!activeProfileId) {
+            if (sendResponse) sendResponse({ success: false, error: 'No active profile' });
+            return false;
+        }
+        const profile = settings?.proxyProfiles?.find(p => p.profileId === activeProfileId);
+        if (!profile) {
+            if (sendResponse) sendResponse({ success: false, error: 'Profile not found' });
+            return false;
+        }
+        if (profile.profileType !== SmartProfileType.SmartRules) {
+            if (sendResponse) sendResponse({ success: false, error: 'Not a SmartRules profile' });
+            return false;
+        }
+
+        // English: If user checked "don't ask again", store the site in appropriate list
+        // Russian: Если пользователь отметил "больше не спрашивать", сохраняем сайт в соответствующий список
+        if (dontAsk) {
+            if (type === 'pin') {
+                if (!profile.suppressPinDialogForSites) profile.suppressPinDialogForSites = [];
+                if (!profile.suppressPinDialogForSites.includes(site)) {
+                    profile.suppressPinDialogForSites.push(site);
+                }
+//console.log(`[Core] Added ${site} to suppressPinDialogForSites`)
+            } else if (type === 'change') {
+                if (!profile.suppressChangeDialogForSites) profile.suppressChangeDialogForSites = [];
+                if (!profile.suppressChangeDialogForSites.includes(site)) {
+                    profile.suppressChangeDialogForSites.push(site);
+                }
+//console.log(`[Core] Added ${site} to suppressChangeDialogForSites`)
+            }
+            // English: Also disable the global auto-dialog setting to suppress all future dialogs
+            // Russian: Также отключаем глобальную настройку показа диалогов, чтобы подавить все будущие диалоги
+            profile.showAutoDialog = false;
+            // English: Save profile changes
+            // Russian: Сохраняем изменения профиля
+            SettingsOperation.saveSmartProfiles();
+            SettingsOperation.saveAllSync(false);
+        }
+
+        // English: Handle the actual response
+        // Russian: Обрабатываем фактический ответ
+        if (type === 'pin') {
+            if (response === 'yes') {
+                // English: Pin the proxy for this site (session-only)
+                // Russian: Закрепляем прокси для этого сайта (на сессию)
+                const statusService = AutoStatusService.getInstance();
+                statusService.pinProxy(site, proxyId);
+                // English: Clear skip-auto-pin flag for this site
+                // Russian: Очищаем флаг пропуска авто-закрепления для этого сайта
+                WebFailedRequestMonitor.clearSkipAutoPinForSite(site);
+//console.log(`[Core] Pinned proxy ${proxyId} for site ${site}`)
+
+                // ===== Обновляем правило для этого сайта, чтобы отображать закреплённый прокси в таблице =====
+                // English: Update the rule for this site to reflect the pinned proxy (keep mode='auto')
+                // Russian: Обновляем правило для этого сайта, чтобы отображать закреплённый прокси (режим остаётся 'auto')
+                const proxyServer = SettingsOperation.findProxyServerById(proxyId);
+                if (proxyServer) {
+                    const rule = profile.proxyRules?.find(r => r.hostName === site);
+                    if (rule) {
+                        // English: Set the proxyServerId and proxy object, but keep mode as 'auto'
+                        // Russian: Устанавливаем proxyServerId и объект прокси, но оставляем режим 'auto'
+                        rule.proxyServerId = proxyId;
+                        rule.proxy = proxyServer;
+                        // English: Ensure mode is 'auto' (just in case)
+                        // Russian: Убеждаемся, что режим 'auto' (на всякий случай)
+                        rule.mode = 'auto';
+                        // English: Save profile changes
+                        // Russian: Сохраняем изменения профиля
+                        SettingsOperation.saveSmartProfiles();
+                        SettingsOperation.saveAllSync(false);
+                        // English: Notify settings page to refresh
+                        // Russian: Уведомляем страницу настроек об обновлении
+                        PolyFill.runtimeSendMessage({ command: "REFRESH_SETTINGS_PAGE_RELOAD" });
+//console.log(`[Core] Updated rule for site ${site} with proxy ${proxyId} (mode auto)`)
+                    } else {
+                        console.warn(`[Core] Rule not found for site ${site}, cannot update proxyServerId`);
+                    }
+                } else {
+                    console.warn(`[Core] Proxy ${proxyId} not found, cannot update rule`);
+                }
+                // ===== Конец обновления правила =====
+
+                // English: Clear any failover in progress for this site
+                // Russian: Очищаем любой выполняющийся failover для этого сайта
+                WebFailedRequestMonitor.clearSuccessfulProxyCacheForSite(site);
+                WebFailedRequestMonitor.clearSiteLock();
+                ProxyEngine.clearDynamicProxyForSite(site);
+                // English: Ensure the pinned proxy is applied immediately
+                // Russian: Убеждаемся, что закреплённый прокси применяется немедленно
+                ProxyEngine.setDynamicProxyForSite(site, proxyId);
+            } else {
+                // English: User said "no" – start failover to next proxy (skip current)
+                // Russian: Пользователь сказал "нет" – запускаем failover к следующему прокси (пропускаем текущий)
+                const tabId = message.tabId || -1;
+                // English: Clear cache and lock, then trigger failover
+                // Russian: Очищаем кэш и блокировку, затем запускаем failover
+                WebFailedRequestMonitor.clearSuccessfulProxyCacheForSite(site);
+                WebFailedRequestMonitor.clearSiteLock();
+                ProxyEngine.clearDynamicProxyForSite(site);
+                // English: Add current proxy to temp skip list so it's skipped in this cycle
+                // Russian: Добавляем текущий прокси во временный список пропуска, чтобы он был пропущен в этом цикле
+                WebFailedRequestMonitor.addToTempSkipList(site, proxyId);
+                // English: Do NOT clear temp skip list – we want to continue from where we left off
+                // Russian: НЕ очищаем временный список пропуска – мы хотим продолжить с того места, где остановились
+                WebFailedRequestMonitor.triggerFailoverForSite(site, proxyId, tabId);
+//console.log(`[Core] User rejected pin, starting failover for site ${site} (skipping ${proxyId})`)
+            }
+        } else if (type === 'change') {
+            if (response === 'yes') {
+                // English: User wants to change proxy – unpin and continue failover from next proxy
+                // Russian: Пользователь хочет сменить прокси – снимаем закрепление и продолжаем failover со следующего прокси
+                const statusService = AutoStatusService.getInstance();
+                statusService.unpinProxy(site);
+                // English: Mark that user initiated change via 🔄
+                // Russian: Отмечаем, что пользователь инициировал смену через 🔄
+                WebFailedRequestMonitor.setUserInitiatedChange(site);
+//console.log(`[Core] Unpinned site ${site} before failover`)
+
+                // ===== Сбрасываем proxyServerId в правиле при смене =====
+                // English: Reset proxyServerId in the rule when user chooses to change
+                // Russian: Сбрасываем proxyServerId в правиле, когда пользователь решает сменить
+                const rule = profile.proxyRules?.find(r => r.hostName === site);
+                if (rule) {
+                    rule.proxyServerId = null;
+                    rule.proxy = null;
+                    // English: Keep mode as 'auto' (or we can set to 'auto' explicitly)
+                    // Russian: Оставляем режим 'auto' (или явно устанавливаем)
+                    rule.mode = 'auto';
+                    SettingsOperation.saveSmartProfiles();
+                    SettingsOperation.saveAllSync(false);
+                    // English: Notify settings page to refresh
+                    // Russian: Уведомляем страницу настроек об обновлении
+                    PolyFill.runtimeSendMessage({ command: "REFRESH_SETTINGS_PAGE_RELOAD" });
+//console.log(`[Core] Reset proxyServerId for rule of site ${site}`)
+                } else {
+                    console.warn(`[Core] Rule not found for site ${site}, cannot reset proxyServerId`);
+                }
+                // ===== Конец сброса правила =====
+
+                const tabId = message.tabId || -1;
+                WebFailedRequestMonitor.clearSuccessfulProxyCacheForSite(site);
+                WebFailedRequestMonitor.clearSiteLock();
+                ProxyEngine.clearDynamicProxyForSite(site);
+                // English: Do NOT reset failover state – we want to continue from where we left off
+                // Russian: НЕ сбрасываем состояние failover – мы хотим продолжить с того места, где остановились
+                // WebFailedRequestMonitor.resetFailoverStateForSite(site); // REMOVED
+                // English: Add current proxy to temp skip list so it's skipped in the current cycle
+                // Russian: Добавляем текущий прокси во временный список пропуска, чтобы он был пропущен в текущем цикле
+                WebFailedRequestMonitor.addToTempSkipList(site, proxyId);
+                // English: Pass current proxyId as the one to skip, failover will continue from the next index
+                // Russian: Передаём текущий proxyId как тот, который нужно пропустить, failover продолжит со следующего индекса
+                WebFailedRequestMonitor.triggerFailoverForSite(site, proxyId, tabId);
+//console.log(`[Core] User requested change, continuing failover for site ${site}`)
+            } else {
+                // English: User wants to keep current proxy – do nothing, just log
+                // Russian: Пользователь хочет оставить текущий прокси – ничего не делаем, просто логируем
+//console.log(`[Core] User kept current proxy for site ${site}`)
+            }
+        } else if (type === 'add_site') {
+            // English: User responded to "add unreachable site" dialog
+            // Russian: Ответ пользователя на диалог добавления недоступного сайта
+            if (response === 'yes') {
+                // English: Add site to auto-proxy and trigger failover
+                // Russian: Добавить сайт в автопрокси и запустить failover
+                const tabId = message.tabId || -1;
+                // Use existing handler to add rule and start failover
+                // Используем существующий обработчик для добавления правила и запуска failover
+                Core.handleAddUnreachableSite({ site: site, tabId: tabId }, () => {});
+            } else {
+                // English: User declined – just log
+                // Russian: Пользователь отказался – просто логируем
+//console.log(`[Core] User declined to add site ${site} to auto-proxy`)
+            }
+            // English: For add_site we don't have a "dontAsk" checkbox, so ignore the flag
+            // Russian: Для add_site у нас нет чекбокса "не спрашивать", поэтому игнорируем флаг
+        }
+
+        if (sendResponse) sendResponse({ success: true });
+        return false;
+    }	
+	
+    /**
+     * English: Handles request to open change dialog from popup
+     * Russian: Обрабатывает запрос на открытие диалога смены из попапа
+     */
+    private static handleOpenChangeDialog(message: any, sendResponse: Function): boolean {
+        const { site, proxyId, proxyName } = message;
+        if (!site || !proxyId) {
+            if (sendResponse) sendResponse({ success: false, error: 'Missing parameters' });
+            return false;
+        }
+
+        // English: Check if dialog is suppressed for this site or globally disabled
+        // Russian: Проверяем, подавлен ли диалог для этого сайта или глобально отключён
+        const settings = Settings.current;
+        const activeProfileId = settings?.activeProfileId;
+        if (activeProfileId) {
+            const profile = settings?.proxyProfiles?.find(p => p.profileId === activeProfileId);
+            if (profile) {
+                const isGloballyDisabled = profile.showAutoDialog === false;
+                const isSuppressedForSite = profile.suppressChangeDialogForSites && profile.suppressChangeDialogForSites.includes(site);
+                if (isGloballyDisabled || isSuppressedForSite) {
+                    // English: Dialog suppressed – directly trigger failover
+                    // Russian: Диалог подавлен – сразу запускаем failover
+                    const tabId = message.tabId || -1;
+                    WebFailedRequestMonitor.clearSuccessfulProxyCacheForSite(site);
+                    WebFailedRequestMonitor.clearSiteLock();
+                    ProxyEngine.clearDynamicProxyForSite(site);
+                    // English: Add current proxy to temp skip list so it's skipped in the first cycle
+                    // Russian: Добавляем текущий прокси во временный список пропуска, чтобы он был пропущен в первом цикле
+                    WebFailedRequestMonitor.addToTempSkipList(site, proxyId);
+                    WebFailedRequestMonitor.triggerFailoverForSite(site, proxyId, tabId);
+//console.log(`[Core] Change dialog suppressed (globally or for site) for ${site}, starting failover directly`)
+                    if (sendResponse) sendResponse({ success: true, suppressed: true });
+                    return false;
+                }
+            }
+        }
+
+        // English: Open change dialog
+        // Russian: Открываем диалог смены
+        Core.openDialog(
+            'change',
+            site,
+            proxyId,
+            proxyName || proxyId,
+            'dialogChangeTitle',
+            'dialogChangeMessage',
+            'dialogChangeConfirm',
+            'dialogChangeCancel',
+            'dialogChangeCheckbox',
+            'btn-danger' // красный для действия "сменить"
+        );
+
+        if (sendResponse) sendResponse({ success: true });
+        return false;
+    }
+	
+    /**
+     * English: Opens a dialog window with the given parameters.
+     * Russian: Открывает окно диалога с заданными параметрами.
+     */
+    /**
+     * English: Opens a dialog window with the given parameters.
+     * Russian: Открывает окно диалога с заданными параметрами.
+     */
+    public static openDialog(
+        type: 'pin' | 'change' | 'add_site',
+        site: string,
+        proxyId: string | null,
+        proxyName: string,
+        titleKey: string,
+        messageKey: string,
+        confirmKey: string,
+        cancelKey: string,
+        checkboxKey: string,
+        confirmClass: string = 'btn-primary',
+        tabId: number = -1
+    ): void {
+        // English: Get localized strings with parameter substitution
+        // Russian: Получаем локализованные строки с подстановкой параметров
+        const title = api.i18n.getMessage(titleKey) || titleKey;
+        // English: Manually replace placeholders {0} and {1} with site and proxyName
+        // Russian: Вручную заменяем плейсхолдеры {0} и {1} на site и proxyName
+        let message = api.i18n.getMessage(messageKey) || messageKey;
+        message = message.replace(/\{0\}/g, site).replace(/\{1\}/g, proxyName);
+        const confirmText = api.i18n.getMessage(confirmKey) || confirmKey;
+        const cancelText = api.i18n.getMessage(cancelKey) || cancelKey;
+        const checkboxLabel = api.i18n.getMessage(checkboxKey) || checkboxKey;
+
+        // English: Build URL parameters
+        // Russian: Формируем параметры URL
+        const params = new URLSearchParams({
+            type: type,
+            site: site,
+            proxyId: proxyId,
+            proxyName: proxyName,
+            title: title,
+            message: message,
+            confirmText: confirmText,
+            cancelText: cancelText,
+            checkboxLabel: checkboxLabel,
+            confirmClass: confirmClass,
+            showCheckbox: 'true',
+            tabId: String(tabId)
+        });
+
+        const url = api.runtime.getURL('ui/dialog.html') + '?' + params.toString();
+
+        // English: Check if dialog already open for this site and type
+        // Russian: Проверяем, не открыт ли уже диалог для этого сайта и типа
+        const dialogKey = `${type}_${site}`;
+        if (Core._openDialogs.has(dialogKey)) {
+            const existingWindowId = Core._openDialogs.get(dialogKey);
+            if (existingWindowId) {
+                // English: Focus existing dialog window
+                // Russian: Фокусируем существующее окно диалога
+                api.windows.update(existingWindowId, { focused: true }, () => {
+                    if (api.runtime.lastError) {
+                        // English: Window no longer exists, remove from tracking and open new
+                        // Russian: Окно больше не существует, удаляем из отслеживания и открываем новое
+                        Core._openDialogs.delete(dialogKey);
+                        Core._createDialogWindow(url, dialogKey);
+                    }
+                });
+//console.log(`[Core] Dialog already open for ${dialogKey}, focusing existing window`)
+                return;
+            }
+        }
+
+        Core._createDialogWindow(url, dialogKey);
+    }
+
+    /**
+     * English: Handles auto-refresh button click from popup
+     * Russian: Обрабатывает нажатие кнопки автообновления из попапа
+     */
+    private static handleAutoRefresh(message: any, sendResponse: Function): boolean {
+        const site = message.site;
+        if (!site) {
+            sendResponse({ success: false, error: 'No site provided' });
+            return false;
+        }
+
+        // English: Find SmartRules profile
+        // Russian: Находим профиль SmartRules
+        const settings = Settings.current;
+        if (!settings) {
+            sendResponse({ success: false, error: 'Settings not initialized' });
+            return false;
+        }
+
+        const smartRulesProfile = settings.proxyProfiles.find(p => p.profileType === SmartProfileType.SmartRules);
+        if (!smartRulesProfile) {
+            sendResponse({ success: false, error: 'SmartRules profile not found' });
+            return false;
+        }
+
+        // English: Normalize site (remove www.)
+        // Russian: Нормализуем сайт (убираем www.)
+        let normalizedSite = site.toLowerCase();
+        if (normalizedSite.startsWith('www.')) {
+            normalizedSite = normalizedSite.substring(4);
+        }
+
+        // English: Find existing rule
+        // Russian: Ищем существующее правило
+        const existingRule = smartRulesProfile.proxyRules.find(r => r.hostName === normalizedSite);
+
+        if (existingRule) {
+            const currentMode = existingRule.mode || 'auto';
+            if (currentMode === 'auto') {
+                // English: Rule exists and mode is auto – return proxy info for change dialog
+                // Russian: Правило существует и режим auto – возвращаем информацию о прокси для диалога смены
+                let proxyId = existingRule.proxyServerId;
+                if (!proxyId) {
+                    // Try pinned or dynamic
+                    const statusService = AutoStatusService.getInstance();
+                    const pinned = statusService.getPinnedProxy(normalizedSite);
+                    if (pinned) proxyId = pinned;
+                    else {
+                        const dynamic = ProxyEngine.getDynamicProxyForSite(normalizedSite);
+                        if (dynamic) proxyId = dynamic;
+                        else {
+                            // fallback to default proxy
+                            const defaultProxy = settings.defaultProxyServerId;
+                            if (defaultProxy) proxyId = defaultProxy;
+                        }
+                    }
+                }
+                if (proxyId) {
+                    const proxyServer = SettingsOperation.findProxyServerById(proxyId);
+                    const proxyName = proxyServer ? (proxyServer.name || `${proxyServer.host}:${proxyServer.port}`) : proxyId;
+                    sendResponse({
+                        success: true,
+                        action: 'changeDialog',
+                        proxyId: proxyId,
+                        proxyName: proxyName
+                    });
+                } else {
+                    sendResponse({ success: false, error: 'No proxy found for this site' });
+                }
+                return false;
+            } else {
+                // English: Mode is manual – suggest switching to auto
+                // Russian: Режим manual – предлагаем переключить на auto
+                sendResponse({
+                    success: true,
+                    action: 'switchToAuto'
+                });
+                return false;
+            }
+        } else {
+            // English: No rule – suggest adding
+            // Russian: Нет правила – предлагаем добавить
+            sendResponse({
+                success: true,
+                action: 'addRule'
+            });
+            return false;
+        }
+    }
+
+    /**
+     * English: Sets rule mode for a site
+     * Russian: Устанавливает режим правила для сайта
+     */
+    private static handleSetRuleMode(message: any, sendResponse: Function): boolean {
+        const { site, mode } = message;
+        if (!site || !mode) {
+            sendResponse({ success: false, error: 'Missing site or mode' });
+            return false;
+        }
+
+        const settings = Settings.current;
+        if (!settings) {
+            sendResponse({ success: false, error: 'Settings not initialized' });
+            return false;
+        }
+
+        const smartRulesProfile = settings.proxyProfiles.find(p => p.profileType === SmartProfileType.SmartRules);
+        if (!smartRulesProfile) {
+            sendResponse({ success: false, error: 'SmartRules profile not found' });
+            return false;
+        }
+
+        let normalizedSite = site.toLowerCase();
+        if (normalizedSite.startsWith('www.')) {
+            normalizedSite = normalizedSite.substring(4);
+        }
+
+        const rule = smartRulesProfile.proxyRules.find(r => r.hostName === normalizedSite);
+        if (!rule) {
+            sendResponse({ success: false, error: 'Rule not found' });
+            return false;
+        }
+
+        rule.mode = mode;
+        SettingsOperation.saveSmartProfiles();
+        SettingsOperation.saveAllSync(false);
+        ProxyEngine.notifyProxyRulesChanged();
+
+        sendResponse({ success: true });
+        return false;
+    }
+
+    private static _createDialogWindow(url: string, dialogKey: string): void {
+        const width = 480;
+        const height = 320;
+        api.windows.create({
+            url: url,
+            type: 'popup',
+            width: width,
+            height: height,
+            focused: true,
+            state: 'normal'
+        }, (win) => {
+            if (win) {
+                Core._openDialogs.set(dialogKey, win.id);
+//console.log(`[Core] Dialog window opened (id: ${win.id}) for ${dialogKey}`)
+                // English: Listen for window removal to clean up tracking
+                // Russian: Слушаем удаление окна для очистки отслеживания
+                const removeListener = (windowId: number) => {
+                    if (windowId === win.id) {
+                        Core._openDialogs.delete(dialogKey);
+                        api.windows.onRemoved.removeListener(removeListener);
+//console.log(`[Core] Dialog window ${windowId} closed, removed from tracking`)
+                    }
+                };
+                api.windows.onRemoved.addListener(removeListener);
+            } else {
+                console.warn('[Core] Failed to open dialog window');
+            }
+        });
     }
 }
 

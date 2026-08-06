@@ -1,6 +1,7 @@
 /*
+ * Original SmartProxy copyright:
  * This file is part of SmartProxy <https://github.com/salarcode/SmartProxy>,
- * Copyright (C) 2022 Salar Khalilzadeh <salar2k@gmail.com>
+ * Copyright (C) 2023 Salar Khalilzadeh <salar2k@gmail.com>
  *
  * SmartProxy is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
@@ -14,6 +15,11 @@
  * You should have received a copy of the GNU General Public License
  * along with SmartProxy.  If not, see <http://www.gnu.org/licenses/>.
  */
+/*
+ * Modifications for ProxyMust:
+ * Copyright (C) 2026 nana-xakep <xakep.nana@gmail.com>
+ * - Added rating system, proxy testing, country flags, etc.
+ */
 import { ProxyEngineFirefox } from "./ProxyEngineFirefox";
 import { environment } from "../lib/environment";
 import { ProxyEngineChrome } from "./ProxyEngineChrome";
@@ -21,7 +27,33 @@ import { Settings } from "./Settings";
 import { DiagDebug } from "../lib/Debug";
 
 export class ProxyEngine {
+	
+    private static _dynamicProxyOverride: { [site: string]: string } = {};
 
+    public static setDynamicProxyForSite(site: string, proxyId: string): void {
+//console.log(`[ProxyEngine] setDynamicProxyForSite: site="${site}", proxyId="${proxyId}"`)
+        ProxyEngine._dynamicProxyOverride[site] = proxyId;
+        ProxyEngine.updateBrowsersProxyConfig();
+    }
+
+    public static clearDynamicProxyForSite(site: string): void {
+        delete ProxyEngine._dynamicProxyOverride[site];
+        ProxyEngine.updateBrowsersProxyConfig();
+    }
+
+    public static clearAllDynamicProxies(): void {
+        ProxyEngine._dynamicProxyOverride = {};
+        ProxyEngine.updateBrowsersProxyConfig();
+    }
+
+    public static getDynamicProxyForSite(site: string): string | null {
+        return ProxyEngine._dynamicProxyOverride[site] || null;
+    }	
+	
+	public static getAllDynamicProxies(): { [site: string]: string } {
+		return { ...ProxyEngine._dynamicProxyOverride };
+	}
+	
     /** Firefox specific. Because of delay in settings load, 
      * the requests will wait using `Promise` until they are loaded */
     public static configureEnginePrematurely() {

@@ -2,34 +2,31 @@
 	ProxyMust
 </h2>
 <p>
-	<em>ProxyMust adalah cabang (fork) dari ekstensi SmartProxy. Kami menghormati dan berterima kasih kepada penulis asli <strong>Salar Khalilzadeh</strong> atas karya luar biasanya.
+	<em>ProxyMust adalah cabang dari ekstensi SmartProxy. Kami menghormati dan berterima kasih kepada penulis asli <strong>Salar Khalilzadeh</strong> atas karya luar biasanya.
 	SmartProxy asli dapat ditemukan di <a href="https://github.com/salarcode/SmartProxy" target="_blank">https://github.com/salarcode/SmartProxy</a>.</em>
 </p>
-<p data-localize="settingsTabAboutDescription">
-	Menggunakan proksi tidak pernah semudah ini dengan ProxyMust. Anggap saja sebagai solusi "atur sekali dan lupakan".
-	Dengan ProxyMust, Anda tidak perlu mengubah proksi secara manual atau menyalakan dan mematikannya.
-	Cukup beri tahu ProxyMust untuk mengaktifkan proksi untuk situs web yang Anda inginkan dengan sekali klik.
-	Setelah itu, setiap kali Anda mengunjungi situs tersebut, ProxyMust akan secara otomatis mengarahkan semua data Anda melalui proksi tanpa tindakan lebih lanjut dari Anda.
+<p>
+	ProxyMust memberi Anda kendali penuh atas koneksi proxy. Anda menambahkan server proxy sendiri secara manual atau melalui langganan, dan sistem pengujian otomatis terintegrasi memeriksa kinerjanya untuk setiap situs, memilih yang terbaik, dan mengurutkannya berdasarkan peringkat, prioritas, dan kesegaran hasil. Dengan pengaturan ini, Anda dapat mempercayakan ProxyMust untuk mengganti proxy secara otomatis untuk situs yang tidak terbuka tanpa proxy – mode Auto Proxy akan menemukan proxy yang berfungsi dan menghubungkan Anda ke situs yang diinginkan, tanpa usaha ekstra dari pihak Anda.
 </p>
 <p>
 	ProxyMust menawarkan berbagai fitur yang cocok untuk pemula dan pengguna tingkat lanjut, termasuk:
 </p>
 <ul>
-	<li>Aktifkan proksi untuk satu situs pada sebuah tab, dan semua yang ada di tab tersebut akan otomatis menggunakan proksi. Fitur ini disebut proksi-per-tab.</li>
-	<li>Secara otomatis mendeteksi kapan harus mengaktifkan atau menonaktifkan proksi untuk situs web tertentu berdasarkan pola aturan.</li>
-	<li>Dengan mudah beralih antara beberapa server proksi sebagai pengaturan server proksi aktif.</li>
-	<li>Aktifkan proksi untuk situs saat ini hanya dengan satu klik.</li>
-	<li>Lihat sumber daya dan permintaan situs web saat ini dan putuskan apakah akan mengaktifkan proksi untuk mereka dengan satu klik.</li>
-	<li>Dengan mudah beralih antara mode proksi atau mengaktifkan proksi untuk semua domain.</li>
-	<li>Cadangkan dan pulihkan pengaturan serta aturan.</li>
+	<li>Mengaktifkan proxy untuk satu situs di tab – semua yang dibuka di tab tersebut secara otomatis menggunakan proxy. Fitur ini disebut "proxy per tab".</li>
+	<li>Mendeteksi secara otomatis apakah akan mengaktifkan atau menonaktifkan proxy untuk situs tertentu berdasarkan aturan.</li>
+	<li>Beralih dengan cepat di antara beberapa server proxy sebagai proxy aktif.</li>
+	<li>Mengaktifkan proxy untuk situs saat ini dengan satu klik.</li>
+	<li>Melihat sumber daya dan permintaan situs saat ini dan mengaktifkan proxy untuk mereka dengan satu klik.</li>
+	<li>Beralih dengan mudah antara mode proxy atau mengaktifkan proxy untuk semua domain.</li>
+	<li>Cadangan dan pemulihan pengaturan dan aturan.</li>
 </ul>
 <br />
 
-<h3>Harap perhatikan bahwa:</h3>
+<h3>Harap diperhatikan:</h3>
 <p>
 <div class="text-info">
 	<i class="fas fa-info-circle" aria-hidden="true"></i>
-	ProxyMust tidak menyediakan server proksi jenis apa pun.
+	ProxyMust tidak menyediakan server proxy apa pun.
 </div>
 <div class="text-danger">
 	<i class="fas fa-eye-slash" aria-hidden="true"></i>
@@ -37,7 +34,7 @@
 </div>
 <div class="text-warning">
 	<i class="fas fa-eye-slash" aria-hidden="true"></i>
-	ProxyMust bebas iklan dan tidak mengganggu halaman web dan konten.
+	ProxyMust bebas iklan dan tidak mengganggu konten halaman web.
 </div>
 </p>
 <br />
@@ -46,64 +43,73 @@
 <p>
 <div>
 	<i class="fas fa-star text-warning"></i>
-	Jika Anda <i class="fas fa-heart text-danger"></i> menyukai ProxyMust, silakan beri nilai di
-	halaman <a id="linkAddonsMarket" href="#" target="_blank">Ekstensi</a>.
+	Jika Anda <i class="fas fa-heart text-danger"></i> menyukai ProxyMust, silakan beri peringkat di
+	<a id="linkAddonsMarket" href="#" target="_blank">halaman ekstensi</a>.
 </div>
-<div>
+<div class="">
 	<i class="fas fa-question-circle text-primary"></i>
-	Jika Anda memiliki pertanyaan atau masalah, silakan kunjungi halaman pelacak masalah dan buka tiket untuk
+	Jika Anda memiliki pertanyaan atau masalah, kunjungi pelacak masalah dan buka tiket untuk
 	<a href="https://github.com/nana-xakep/ProxyMust/issues" target="_blank">melaporkan masalah</a>.
 </div>
 </p>
 <br />
 
-<h3>Fitur Baru ProxyMust</h3>
+<h3>Fitur baru ProxyMust</h3>
 
-<h4>📊 Sistem Peringkat dan Status</h4>
+<h4>📊 Sistem peringkat dan status</h4>
 <ul>
-	<li>Untuk setiap proksi dan setiap situs yang diuji, status ditampilkan:
+	<li>Untuk setiap proxy dan setiap situs yang diuji, status ditampilkan:
 		<ul>
-			<li>✅ – pasti berfungsi untuk situs ini (keberhasilan baru)</li>
+			<li>✅ – pasti berfungsi untuk situs ini (keberhasilan segar)</li>
 			<li>☑️ – kemungkinan berfungsi (keberhasilan sebelumnya atau diperoleh untuk situs lain)</li>
-			<li>❓ – tidak ada data (proksi belum diuji untuk situs ini)</li>
-			<li>⛔ – tidak berfungsi (kegagalan baru)</li>
+			<li>❓ – tidak ada data (proxy belum diuji untuk situs ini)</li>
+			<li>⛔ – tidak berfungsi (kegagalan segar)</li>
 		</ul>
 	</li>
-	<li>Peringkat setiap proksi berubah secara otomatis berdasarkan hasil uji: <strong>+1 jika berhasil</strong>, <strong>-1 jika gagal</strong>.</li>
-	<li>Anda juga dapat mengubah peringkat secara manual melalui menu konteks (klik kanan pada baris proksi di tabel atau pada proksi aktif di popup bilah alat).</li>
-	<li>Status dianggap "baru" selama jumlah jam yang dapat dikonfigurasi (standar 6). Jika data sudah basi, status tidak langsung (☑️) digunakan.</li>
+	<li>Peringkat setiap proxy berubah secara otomatis berdasarkan hasil tes: <strong>+1 jika berhasil</strong>, <strong>-1 jika gagal</strong>.</li>
+	<li>Anda juga dapat mengubah peringkat secara manual melalui menu konteks (klik kanan pada baris proxy di tabel atau pada proxy aktif di popup toolbar).</li>
+	<li>Status dianggap "segar" selama sejumlah jam yang dapat dikonfigurasi (default 6). Jika data basi, status tidak langsung (☑️) digunakan.</li>
 </ul>
 
-<h4>📋 Mengelola Daftar Proksi</h4>
+<h4>📋 Mengelola daftar proxy</h4>
 <ul>
-	<li><strong>Menu konteks di tabel proksi (klik kanan)</strong> – ubah peringkat dengan cepat, prioritas (sematkan, bintang), ekspor yang dipilih, salin alamat, hapus, bersihkan status dan peringkat, jalankan uji untuk proksi yang dipilih.</li>
-	<li><strong>Pengurutan di popup bilah alat</strong> – berdasarkan peringkat dan prioritas (📌 yang disematkan di atas, ⭐ favorit).</li>
+	<li><strong>Menu konteks di tabel proxy (klik kanan)</strong> – ubah peringkat dengan cepat, prioritas (pin, bintang), ekspor yang dipilih, salin alamat, hapus, hapus status dan peringkat, jalankan tes untuk proxy yang dipilih.</li>
+	<li><strong>Pengurutan di popup toolbar</strong> – berdasarkan peringkat dan prioritas (📌 disematkan di atas, ⭐ favorit).</li>
 	<li><strong>Pengurutan di tabel pengaturan</strong> – berdasarkan negara, protokol, peringkat.</li>
 </ul>
 
-<h4>🚀 Pengujian Proksi</h4>
+<h4>🚀 Pengujian proxy</h4>
 <ul>
-	<li><strong>Uji siklus</strong> – mengalihkan profil aktif dan proksi secara berurutan, memeriksa pemuatan situs. Andal tetapi lambat.</li>
-	<li><strong>Uji siklus ekspres</strong> – pengujian dipercepat yang berhenti pada keberhasilan pertama. Baik untuk penilaian cepat.</li>
-	<li><strong>Uji presisi (lambat)</strong> – lebih teliti, memakan waktu lebih lama, memberikan hasil yang lebih dapat diandalkan (tidak berfungsi di Firefox).</li>
-	<li><strong>Uji ekspres</strong> – cepat tetapi mungkin melewatkan beberapa proksi yang berfungsi. Baik untuk gambaran cepat (tidak berfungsi di Firefox).</li>
-	<li><strong>Uji cepat dari popup bilah alat</strong> – uji situs saat ini untuk semua proksi atau hanya untuk proksi langganan.</li>
+	<li><strong>Uji siklus</strong> – mengalihkan profil aktif dan proxy secara berurutan, memeriksa pemuatan situs. Andal tetapi lambat.</li>
+	<li><strong>Uji siklus ekspres</strong> – pengujian dipercepat yang berhenti pada keberhasilan apa pun. Cocok untuk penilaian awal.</li>
+	<li><strong>Uji presisi (lambat)</strong> – pemeriksaan lebih teliti, memakan waktu lebih lama, tetapi memberikan hasil lebih andal (tidak berfungsi di Firefox).</li>
+	<li><strong>Uji ekspres</strong> – pemeriksaan cepat, tetapi mungkin melewatkan beberapa proxy yang berfungsi. Cocok untuk penilaian awal (tidak berfungsi di Firefox).</li>
+	<li><strong>Uji cepat dari toolbar</strong> – periksa situs saat ini untuk semua proxy atau hanya untuk proxy langganan.</li>
+</ul>
+
+<h4>🤖 Mode Auto Proxy</h4>
+<ul>
+	<li>Untuk situs yang tidak dapat diakses secara langsung (misalnya karena pembatasan regional), Auto Proxy secara otomatis membuat aturan di profil selektif dan memilih proxy yang berfungsi.</li>
+	<li>Saat Anda pertama kali mengunjungi situs tersebut, dialog muncul menyarankan untuk menambahkannya ke Auto Proxy. Anda setuju – dan sistem segera menemukan proxy terbaik berdasarkan peringkat, status, dan prioritas.</li>
+	<li>Setelah halaman berhasil dimuat, Anda dapat menyematkan proxy yang ditemukan untuk situs ini (sementara, hingga browser ditutup) atau melanjutkan pencarian yang lain.</li>
+	<li>Di pengaturan profil, Anda dapat menonaktifkan penyematan otomatis (default nonaktif) atau menonaktifkan sepenuhnya dialog perubahan proxy.</li>
+	<li>Auto Proxy hanya berfungsi di profil selektif dan hanya untuk aturan dengan mode <strong>Auto</strong> (Anda dapat mengganti aturan apa pun secara manual).</li>
 </ul>
 
 <p>
-	<strong>⚠️ Penting bagi pengguna:</strong> Selama pengujian, profil aktif dan proksi benar-benar dialihkan.
-	Ini dapat mengganggu penjelajahan normal. Jalankan pengujian saat peramban tidak digunakan untuk aktivitas lain.
+	<strong>⚠️ Penting bagi pengguna:</strong> Selama pengujian, profil aktif dan proxy benar-benar dialihkan.
+	Ini dapat mengganggu penjelajahan normal. Jalankan pengujian saat browser tidak digunakan untuk aktivitas lain.
 </p>
 
 <br />
-<h3>Keterangan Ikon Bilah Alat</h3>
+<h3>Legenda ikon toolbar</h3>
 <p>
-	Ikon pada bilah alat peramban Anda akan berubah untuk menunjukkan status ProxyMust. Berikut arti dari berbagai ikon tersebut:
+	Ikon di toolbar browser Anda berubah untuk mencerminkan status ProxyMust. Inilah arti dari berbagai ikon:
 	<br />
 
 <div class="table-responsive">
-	<table class="table table-sm table-striped caption-top table-borderless align-middle">
-		<caption><b>Keterangan Ikon (semua peramban):</b></caption>
+	<table class="table table-sm table table-striped caption-top table-borderless align-middle table-responsive">
+		<caption><b>Legenda ikon (semua browser):</b></caption>
 		<thead>
 			<tr>
 				<th style="width: 70px;">Ikon</th>
@@ -113,31 +119,31 @@
 		<tbody>
 			<tr>
 				<td class="p-2"><img src="../icons/profile-disabled.svg" class=""></td>
-				<td>Permintaan tidak akan menggunakan proksi.</td>
+				<td>Permintaan tidak akan menggunakan proxy.</td>
 			</tr>
 			<tr>
 				<td class="p-2"><img src="../icons/smartproxy.svg" class=""></td>
 				<td>
-					Proksi diterapkan atau akan diterapkan pada permintaan yang sesuai dengan aturan yang ditentukan.
-					<br />Atau tidak ada aturan yang cocok untuk tab tersebut.
+					Proxy diterapkan atau akan diterapkan pada permintaan yang cocok dengan aturan yang ditentukan.
+					<br /> Atau tidak ada aturan yang cocok dengan tab saat ini.
 					<br />
 					Profil: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i>
-					Aturan Selektif
+					Aturan selektif
 				</td>
 			</tr>
 			<tr>
 				<td class="p-2"><img src="../icons/profile-always.svg" class=""></td>
 				<td>
-					Proksi diterapkan pada semua permintaan dalam tab saat ini. (Domain dalam daftar putih ditampilkan secara terpisah di peramban berbasis Chrome.)
+					Proxy diterapkan pada semua permintaan di tab saat ini. (Di browser berbasis Chrome, domain dalam daftar putih ditampilkan secara terpisah.)
 					<br />
 					Profil: <i class="icon fa-sm fas fa-globe-americas text-success" aria-hidden="true"></i>
-					Selalu Diaktifkan
+					Selalu diaktifkan
 				</td>
 			</tr>
 			<tr>
 				<td class="p-2"><img src="../icons/profile-system.svg" class=""></td>
 				<td>
-					Keputusan tentang penggunaan proksi diserahkan ke sistem operasi.
+					Keputusan untuk menggunakan proxy diserahkan ke sistem operasi.
 					<br/> Profil: Sistem
 				</td>
 			</tr>
@@ -146,8 +152,8 @@
 </div>
 
 <div class="table-responsive">
-	<table class="table table-sm table-striped caption-top table-borderless align-middle">
-		<caption><b>Keterangan Ikon (Khusus Firefox):</b></caption>
+	<table class="table table-sm table table-striped caption-top table-borderless align-middle table-responsive">
+		<caption><b>Legenda ikon (khusus Firefox):</b></caption>
 		<thead>
 			<tr>
 				<th style="width: 70px;">Ikon</th>
@@ -158,49 +164,49 @@
 			<tr>
 				<td class="p-2"><img src="../icons/profile-smartrules-green.svg" class=""></td>
 				<td>
-					Sebuah aturan cocok untuk tab saat ini. Semua permintaan selanjutnya melewati proksi.
+					Aturan cocok dengan tab saat ini. Semua permintaan berikutnya melalui proxy.
 					<br />
-					Profil: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> Aturan Selektif
+					Profil: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> Aturan selektif
 				</td>
 			</tr>
 			<tr>
 				<td class="p-2"><img src="../icons/profile-smartrules-has-failed.svg" class=""></td>
 				<td>
-					Sebuah aturan cocok untuk tab saat ini. Ada setidaknya satu permintaan yang tidak responsif atau gagal.
+					Aturan cocok dengan tab saat ini. Ada setidaknya satu permintaan gagal / tidak responsif.
 					<br />
-					Profil: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> Aturan Selektif
+					Profil: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> Aturan selektif
 				</td>
-			</td>
+			</tr>
 			<tr>
 				<td class="p-2"><img src="../icons/profile-smartrules-has-bypassed.svg" class=""></td>
 				<td>
-					Sebuah aturan cocok untuk tab saat ini. Setidaknya satu permintaan selanjutnya melewati proksi karena aturan.
+					Aturan cocok dengan tab saat ini. Setidaknya satu permintaan berikutnya melewati proxy melalui aturan.
 					<br />
-					Profil: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> Aturan Selektif
+					Profil: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> Aturan selektif
 				</td>
 			</tr>
 			<tr>
 				<td class="p-2"><img src="../icons/profile-smartrules-has-unmatched.svg" class=""></td>
 				<td>
-					Sebuah aturan cocok untuk tab saat ini. Setidaknya satu permintaan selanjutnya tidak cocok dengan aturan mana pun dan tidak melewati proksi.
+					Aturan cocok dengan tab saat ini. Setidaknya satu permintaan berikutnya tidak cocok dengan aturan apa pun dan tidak melalui proxy.
 					<br />
-					Profil: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> Aturan Selektif
+					Profil: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> Aturan selektif
 				</td>
 			</tr>
 			<tr>
 				<td class="p-2"><img src="../icons/profile-smartrules-noproxy-has-matched.svg" class=""></td>
 				<td>
-					Tidak ada aturan yang cocok untuk tab saat ini. Setidaknya satu permintaan selanjutnya cocok dengan sebuah aturan dan melewati proksi.
+					Tidak ada aturan yang cocok dengan tab saat ini. Setidaknya satu permintaan berikutnya cocok dengan aturan dan melalui proxy.
 					<br />
-					Profil: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> Aturan Selektif
+					Profil: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> Aturan selektif
 				</td>
 			</tr>
 			<tr>
 				<td class="p-2"><img src="../icons/profile-always-bypassed.svg" class=""></td>
 				<td>
-					Proksi diterapkan pada semua permintaan dalam tab saat ini. Setidaknya satu permintaan selanjutnya melewati proksi karena aturan.
+					Proxy diterapkan pada semua permintaan di tab saat ini. Setidaknya satu permintaan berikutnya melewati proxy melalui aturan.
 					<br />
-					Profil: <i class="icon fa-sm fas fa-globe-americas text-success" aria-hidden="true"></i> Selalu Diaktifkan
+					Profil: <i class="icon fa-sm fas fa-globe-americas text-success" aria-hidden="true"></i> Selalu diaktifkan
 				</td>
 			</tr>
 		</tbody>

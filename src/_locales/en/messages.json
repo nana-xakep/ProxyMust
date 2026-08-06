@@ -1,4 +1,4 @@
-﻿{
+{
 	"uiDirection": {
 		"message": "ltr"
 	},
@@ -10,7 +10,7 @@
 		"message": "ProxyMust"
 	},
 	"extensionDescription": {
-		"message": "ProxyMust – selective proxy manager (fork of SmartProxy). Automatically enables/disables proxy for sites you visit based on customizable patterns."
+		"message": "ProxyMust – AutoProxy manager (fork of SmartProxy). Automatically enables/disables proxy for sites you visit based on customizable patterns."
 	},
 	"toolbarTooltipEffectiveRule": {
 		"message": "Matched rule source:"
@@ -31,7 +31,7 @@
 		"message": "Direct (No Proxy)"
 	},
 	"popupSmartProxy": {
-		"message": "Selective Proxy"
+		"message": "AutoProxy"
 	},
 	"popupAlwaysEnable": {
 		"message": "Always Enabled"
@@ -1237,7 +1237,7 @@
 		"message": "Welcome to ProxyMust"
 	},
 	"settingsWelcomeMessage": {
-			"message": "<p>\n\tProxyMust, selective proxy manager with proxy testing capabilities.<br>\n\tPlease follow these steps to get started:\n</p>\n<ol>\n\t<li>\n\t\tAdd a proxy server or a list of proxies\n\t\t<br>\n\t\t<small>(Go to the Proxy Servers tab and add there)</small>\n\t</li>\n\t<li>\n\t\tSet the mode to Selective Proxy\n\t\t<br>\n\t\t<small>(Use the toolbar popup menu to change the active mode to Selective Proxy)</small>\n\t</li>\n\t<li>\n\t\tDefine proxy rules\n\t\t<br>\n\t\t<small>(Use the toolbar popup menu to add rules or the Proxy Rules tab to add/modify proxy server rules)</small>\n\t</li>\n\t<li>\n\t\tYou're all set.\n\t</li>\n</ol>"
+			"message": "<p>ProxyMust — selective proxy manager with automatic selection of working proxies for sites.<br>Please follow these steps to get started:</p>\n<ol>\n  <li>\n    <strong>Add proxies</strong><br>\n    <small>Manually: go to the Proxy Servers tab and add your proxies.<br>\n    or<br>\n    Via subscriptions: on the Proxy Server Subscriptions tab, specify the URL of a proxy list – the extension will automatically load and update them.</small>\n  </li>\n  <li>\n    <strong>Enable proxy testing</strong><br>\n    <small>Testing is required for the system to identify working proxies. To do this, enable the \"Enable proxy rating\" checkbox in the settings (Proxy Servers section). After that, the testing interface will become available, and you can test proxies for your sites.</small>\n  </li>\n  <li>\n    <strong>Configure Auto Proxy rules</strong><br>\n    <small>For sites that should use a proxy, create rules in the Auto Proxy tab. For each rule, you can select the \"Auto\" mode – the system will then automatically switch to a working proxy on errors.<br>\n    Rules can be added manually or via the \"Add site\" button in the popup. If a page fails to load without a proxy, the extension will offer to add it to auto proxy automatically (this feature can be disabled in profile settings). Also, when testing a proxy for a site, a rule for it will be created automatically.<br>\n    Or simply enable the \"Auto Proxy\" mode and start browsing – for all sites that open in your region, no proxy will be applied, and for restricted sites, the system will find a working proxy and connect you.</small>\n  </li>\n  <li>\n    <strong>You're all set!</strong><br>\n    <small>When visiting sites with rules in auto mode, ProxyMust will automatically find a working proxy and switch it on errors. Test results and proxy statuses are displayed in the rules table.</small>\n  </li>\n</ol>"
 	},
 	"settingsWelcomeSkipButton": {
 		"message": "Got it"
@@ -1868,5 +1868,92 @@
     },
     "popupProxyPerOriginTooltip": {
         "message": "Toggle proxy per origin (Firefox only)"
-    }
+    },
+	"settingsAutoProxyTitle": {
+	  "message": "AutoProxy Settings"
+	},
+	"settingsRulesGridColMode": {
+	  "message": "Mode"
+	},
+	"settingsAutoProxySelectionMode": {
+	  "message": "Selection Mode:"
+	},
+	"settingsAutoProxyManual": {
+	  "message": "Manual"
+	},
+	"settingsAutoProxyAuto": {
+	  "message": "Automatic"
+	},
+	"settingsAutoProxyModeDesc": {
+	  "message": "In auto mode, proxies will be selected automatically based on test results."
+	},
+	"settingsAutoProxyMaxFailover": {
+	  "message": "Number of switch attempts:"
+	},
+	"settingsAutoProxyMaxFailoverDesc": {
+	  "message": "Number of repeated switches across the full proxy list (1-10)."
+	},
+	"settingsAutoProxyShowDialog": {
+	  "message": "Show auto-proxy change dialog"
+	},
+	"settingsAutoProxyAutoPin": {
+	  "message": "Automatically pin successful proxy (without confirmation)"
+	},
+	"settingsAutoProxyExcludedProxies": {
+	  "message": "Excluded proxies:"
+	},
+	"settingsAutoProxyExcludedProxiesDesc": {
+	  "message": "These proxies will not be used in auto mode."
+	},
+    "dialogPinTitle": {
+        "message": "Pin proxy?"
+    },
+    "dialogPinMessage": {
+        "message": "Proxy \"{1}\" works for {0}. Pin it for this site?"
+    },
+    "dialogPinConfirm": {
+        "message": "Yes, pin"
+    },
+    "dialogPinCancel": {
+        "message": "Continue search"
+    },
+    "dialogPinCheckbox": {
+        "message": "Don't ask again for this site"
+    },
+    "dialogChangeTitle": {
+        "message": "Change proxy?"
+    },
+    "dialogChangeMessage": {
+        "message": "Change assigned proxy for site {0}?"
+    },
+    "dialogChangeConfirm": {
+        "message": "Change"
+    },
+    "dialogChangeCancel": {
+        "message": "Keep"
+    },
+    "dialogChangeCheckbox": {
+        "message": "Don't ask again for this site"
+    },
+    "popupNoProxyFound": {
+        "message": "No proxy found for this site."
+	},
+	"popupAddUnreachableSiteTitle": {
+		"message": "Site not loading"
+	},
+	"popupAddUnreachableSiteMessage": {
+		"message": "Site {0} does not load without a proxy. Add it to AutoProxy?"
+	},
+	"popupAddUnreachableSiteConfirm": {
+		"message": "Add"
+	},
+	"popupAddUnreachableSiteCancel": {
+		"message": "Not now"
+	},
+	"settingsAutoAddUnreachableSites": {
+		"message": "Prompt to add unreachable sites to AutoProxy"
+	},
+	"settingsAutoAddUnreachableSitesDesc": {
+		"message": "When a page fails to load, a dialog will be shown suggesting to add the site to AutoProxy."
+	}	
 }

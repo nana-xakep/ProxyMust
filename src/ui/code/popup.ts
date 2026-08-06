@@ -19,11 +19,12 @@
  * Modifications for ProxyMust:
  * Copyright (C) 2026 nana-xakep <xakep.nana@gmail.com>
  * - Added rating system, proxy testing, country flags, etc.
+ * - Fixed type issues with SmartProfileBase vs SmartProfile.
  */
 
 import { api, environment } from "../../lib/environment";
 import { jQuery, messageBox } from "../../lib/External";
-import { CommandMessages, PopupInternalDataType, ProxyableDomainType, FailedRequestType, ProxyServer, CompiledProxyRuleSource, SmartProfileBase, SmartProfileType, SmartProfileTypeBuiltinIds, getSmartProfileTypeIcon, ProxyServerFromSubscription, ProxyRuleSpecialProxyServer, AutoStatusMap } from "../../core/definitions";
+import { CommandMessages, PopupInternalDataType, ProxyableDomainType, FailedRequestType, ProxyServer, CompiledProxyRuleSource, SmartProfileBase, SmartProfile, SmartProfileType, SmartProfileTypeBuiltinIds, getSmartProfileTypeIcon, ProxyServerFromSubscription, ProxyRuleSpecialProxyServer, AutoStatusMap } from "../../core/definitions";
 import { PolyFill } from "../../lib/PolyFill";
 import { CommonUi } from "./CommonUi";
 import { Utils } from "../../lib/Utils";
@@ -31,7 +32,10 @@ import { ProfileOperations } from "../../core/ProfileOperations";
 import { CountryCode } from "../../lib/CountryCode";
 import { getProxyStatus, ProxyStatusInfo } from "../../core/statusUtils";
 import { IP_SERVICES } from "../../core/TestConstants";
-// Core import removed – we don't call Core.sendTestLogStep from popup
+import { ProxyEngine } from "../../core/ProxyEngine";
+import { AutoStatusService } from '../../core/AutoStatusService';
+//import { Settings } from "../../core/Settings";
+//import { SettingsOperation } from "../../core/SettingsOperation";
 
 type JQuery = typeof jQuery;
 
@@ -88,7 +92,7 @@ export class popup {
             console.log("[ProxyMust] Restored lastTestSite from sessionStorage:", popup.lastTestSite);
         }
         popup.onDocumentReady(CommonUi.localizeHtmlPage);
-		        // ========== ProxyMust: listen to storage changes for rating toggle ==========
+        // ========== ProxyMust: listen to storage changes for rating toggle ==========
         // English: Listen to storage changes to update UI when rating setting changes
         // Russian: Слушаем изменения хранилища, чтобы обновлять UI при изменении настройки рейтинга
         api.storage.onChanged.addListener((changes, area) => {
@@ -247,6 +251,52 @@ export class popup {
                 if (sendResponse) sendResponse(null);
                 return;
             }
+			
+            if (command === CommandMessages.ShowAutoProxyDialog) {
+                // English: Show dialog asking user if they want to switch proxy
+                // Russian: Показываем диалог с вопросом о смене прокси
+                const site = message.site;
+                const currentProxyId = message.currentProxyId;
+                if (!site || !currentProxyId) return;
+                
+                // Find proxy name for display
+                let proxyName = "Current proxy";
+                const proxy = popup.popupData?.proxyServers?.find(p => p.id === currentProxyId);
+                if (proxy) {
+                    proxyName = proxy.name || `${proxy.host}:${proxy.port}`;
+                }
+                
+                const confirmMsg = `Current proxy "${proxyName}" is working. Do you want to search for a better one for ${site}?`;
+                // const switchText = "🔁 Switch to better";
+                // const keepText = "Keep current";
+                
+                // Use messageBox.confirm with custom buttons
+                // Since messageBox.confirm may not support custom buttons, we'll use native confirm for simplicity
+                // But we need "Don't ask again" checkbox.
+                // Let's implement a custom dialog using jQuery modal or use a simple confirm with checkbox (not possible natively)
+                // For now, we'll use a simple confirm and later add a checkbox in settings.
+                // Actually, the plan says dialog has checkbox "Don't ask again for this site".
+                // We'll store this in profile settings.
+                
+                // For now, we'll use a simple confirm and if user says "Switch", we trigger failover.
+                if (confirm(`${confirmMsg}\n\nClick OK to search for a better proxy, Cancel to keep current.`)) {
+                    // User wants to switch
+                    PolyFill.runtimeSendMessage({
+                        command: CommandMessages.AutoProxyDialogResponse,
+                        site: site,
+                        response: 'switch'
+                    });
+                } else {
+                    // User wants to keep
+                    PolyFill.runtimeSendMessage({
+                        command: CommandMessages.AutoProxyDialogResponse,
+                        site: site,
+                        response: 'keep'
+                    });
+                }
+                if (sendResponse) sendResponse(null);
+                return;
+            }			
 
             if (command === "CHECK_PROGRESS") {
                 // English: Ensure button shows "Stop" if test is running
@@ -351,10 +401,15 @@ export class popup {
         if (popup.addCurrentSiteBtn.length) {
             popup.addCurrentSiteBtn.off("click").on("click", popup.onAddCurrentSiteClick);
         }
+        // English: AutoRefresh button (🔄)
+        // Russian: Кнопка AutoRefresh (🔄)
+        if (jQuery("#autoRefreshBtn").length) {
+            jQuery("#autoRefreshBtn").off("click").on("click", popup.onAutoRefreshClick);
+        }
         if (popup.quickTestBtn.length) {
             popup.quickTestBtn.off("click").on("click", popup.onQuickTestClick);
         }
-		// English: Delegate events for proxyable action buttons (remove, disable, per-origin)
+        // English: Delegate events for proxyable action buttons (remove, disable, per-origin)
         // Russian: Делегируем события для кнопок действий в проксируемых элементах (удалить, отключить, режим вкладки)
         jQuery("#divProxyableDomains").on("click", ".proxyable-remove-btn", function(e) {
             e.preventDefault();
@@ -681,6 +736,36 @@ export class popup {
         if (dataForPopup.proxyServers.length > 1 || dataForPopup.proxyServersSubscribed.length) {
             divActiveProxy.show();
             let currentProxyServerId = dataForPopup.currentProxyServerId;
+            // English: If selective profile, try to show proxy for current site
+            // Russian: Если выборочный профиль, пытаемся показать прокси для текущего сайта
+            const activeProfile = popup.activeProfile;
+            if (activeProfile && activeProfile.profileType === SmartProfileType.SmartRules) {
+                const site = dataForPopup.currentSite;
+                if (site) {
+                    // First check pinned proxy (session)
+                    const statusService = AutoStatusService.getInstance();
+                    const pinnedProxyId = statusService.getPinnedProxy(site);
+                    if (pinnedProxyId) {
+                        currentProxyServerId = pinnedProxyId;
+                        console.log(`[Popup] Using pinned proxy ${pinnedProxyId} for site ${site}`);
+                    } else {
+                        // Then check dynamic override
+                        let dynamicProxyId = ProxyEngine.getDynamicProxyForSite(site);
+                        if (dynamicProxyId) {
+                            currentProxyServerId = dynamicProxyId;
+                        } else {
+                            // Check rule - need to cast to SmartProfile
+                            const profile = dataForPopup.proxyProfiles.find(p => p.profileId === activeProfile.profileId) as SmartProfile;
+                            if (profile) {
+                                const rule = (profile as SmartProfile).proxyRules?.find(r => r.hostName === site);
+                                if (rule && rule.proxyServerId) {
+                                    currentProxyServerId = rule.proxyServerId;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
 
             CountryCode.ensureInitialized(() => {
                 popup.populateProxyServerOptions(cmbActiveProxy, dataForPopup.proxyServers, dataForPopup.proxyServersSubscribed, currentProxyServerId,
@@ -728,10 +813,6 @@ export class popup {
         }
     }
 
-    /**
-     * English: Populates proxy dropdown with status symbols and proper sorting, grouping subscriptions.
-     * Russian: Заполняет выпадающий список прокси символами статусов и правильной сортировкой, группируя подписки.
-     */
     /**
      * English: Populates proxy dropdown with status symbols and proper sorting, grouped by source (manual / subscriptions).
      * Russian: Заполняет выпадающий список прокси символами статусов и правильной сортировкой, с группировкой по источнику (ручные / подписки).
@@ -995,6 +1076,105 @@ export class popup {
                 messageBox.success(msg);
             } else {
                 messageBox.error(api.i18n.getMessage('popupAddCurrentSiteFailed') || "Failed to add site.");
+            }
+        });
+    }
+
+    /**
+     * English: Handles click on the 🔄 button (AutoProxy refresh action)
+     * Russian: Обрабатывает клик по кнопке 🔄 (действие AutoProxy)
+     */
+    /**
+     * English: Handles click on the 🔄 button (AutoProxy refresh action)
+     * Russian: Обрабатывает клик по кнопке 🔄 (действие AutoProxy)
+     */
+    private static onAutoRefreshClick() {
+        const siteRaw = popup.currentSiteLabel ? popup.currentSiteLabel.text() : "";
+        if (!siteRaw || siteRaw === "—") {
+            // No site, maybe prompt?
+            return;
+        }
+
+        // Normalize site (remove www.)
+        let site = siteRaw.toLowerCase();
+        if (site.startsWith('www.')) {
+            site = site.substring(4);
+        }
+
+        console.log(`[Popup] AutoRefresh: site normalized to "${site}"`);
+
+        // English: Ask background to check if rule exists and handle accordingly
+        // Russian: Просим фон проверить наличие правила и обработать соответственно
+        PolyFill.runtimeSendMessage({
+            command: "HandleAutoRefresh",
+            site: site
+        }, (response: any) => {
+            if (!response) {
+                messageBox.error("Failed to process AutoRefresh request.");
+                return;
+            }
+            if (response.success) {
+                if (response.action === 'changeDialog') {
+                    // English: Rule exists and mode is auto – open change dialog
+                    // Russian: Правило существует и режим auto – открываем диалог смены
+                    const proxyId = response.proxyId;
+                    const proxyName = response.proxyName || proxyId;
+                    // English: Add current proxy to temp skip list so it's skipped in the first cycle
+                    // Russian: Добавляем текущий прокси во временный список пропуска, чтобы он был пропущен в первом цикле
+                    PolyFill.runtimeSendMessage({
+                        command: "AddToTempSkipList",
+                        site: site,
+                        proxyId: proxyId
+                    }, () => {});
+
+                    PolyFill.runtimeSendMessage({
+                        command: CommandMessages.OpenChangeDialog,
+                        site: site,
+                        proxyId: proxyId,
+                        proxyName: proxyName,
+                        tabId: popup.popupData?.currentTabId
+                    }, () => {
+                        popup.closeSelf();
+                    });
+                } else if (response.action === 'switchToAuto') {
+                    // English: Rule exists but mode is manual – confirm switch to auto
+                    // Russian: Правило существует, но режим manual – подтверждение переключения на auto
+                    const confirmMsg = api.i18n.getMessage("popupSwitchToAutoMode") || "Switch to Auto mode for this site?";
+                    messageBox.confirm(confirmMsg, () => {
+                        PolyFill.runtimeSendMessage({
+                            command: "SetRuleMode",
+                            site: site,
+                            mode: 'auto'
+                        }, (resp) => {
+                            if (resp?.success) {
+                                messageBox.success(api.i18n.getMessage("popupSwitchedToAutoMode") || "Switched to Auto mode.");
+                                popup.refreshPopupData();
+                            } else {
+                                messageBox.error(api.i18n.getMessage("popupSwitchToAutoModeFailed") || "Failed to switch mode.");
+                            }
+                        });
+                    });
+                } else if (response.action === 'addRule') {
+                    // English: No rule – ask to add
+                    // Russian: Нет правила – спрашиваем о добавлении
+                    const confirmMsg = api.i18n.getMessage("popupAddSiteToAutoRules") || "Add this site to AutoProxy rules?";
+                    messageBox.confirm(confirmMsg, () => {
+                        PolyFill.runtimeSendMessage({
+                            command: "AddSiteToAutoRules",
+                            site: site,
+                            mode: 'auto'
+                        }, (resp) => {
+                            if (resp?.success) {
+                                messageBox.success(api.i18n.getMessage("popupSiteAddedToAutoRules") || "Site added to AutoProxy rules.");
+                                popup.refreshPopupData();
+                            } else {
+                                messageBox.error(api.i18n.getMessage("popupAddSiteToAutoRulesFailed") || "Failed to add site.");
+                            }
+                        });
+                    });
+                }
+            } else {
+                messageBox.error(response.error || "Unknown error.");
             }
         });
     }
@@ -1489,17 +1669,17 @@ export class popup {
         }
     }
 
-	private static onProxyableDomainClick(e: any) {
-		// English: Ignore clicks on action buttons inside the proxyable domain item
-		// Russian: Игнорируем клики по кнопкам действий внутри элемента проксируемого домена
-		const target = e.target;
-		if (jQuery(target).closest(".proxyable-remove-btn, .proxyable-disable-btn, .proxyable-perorigin-btn, .proxyable-arrow-btn").length) {
-			return;
-		}
+    private static onProxyableDomainClick(e: any) {
+        // English: Ignore clicks on action buttons inside the proxyable domain item
+        // Russian: Игнорируем клики по кнопкам действий внутри элемента проксируемого домена
+        const target = e.target;
+        if (jQuery(target).closest(".proxyable-remove-btn, .proxyable-disable-btn, .proxyable-perorigin-btn, .proxyable-arrow-btn").length) {
+            return;
+        }
 
-		let clickedItem = jQuery(this);
-		let proxyableDomain: ProxyableDomainType = clickedItem.data("proxyable-domain-type");
-		if (proxyableDomain.ruleSource == CompiledProxyRuleSource.Subscriptions) return;
+        let clickedItem = jQuery(this);
+        let proxyableDomain: ProxyableDomainType = clickedItem.data("proxyable-domain-type");
+        if (proxyableDomain.ruleSource == CompiledProxyRuleSource.Subscriptions) return;
 
         let domain = proxyableDomain.domain;
         let hasMatchingRule = proxyableDomain.ruleMatched;
@@ -1669,6 +1849,46 @@ export class popup {
         let cmbActiveProxy = jQuery("#divActiveProxy #cmbActiveProxy");
         let id = cmbActiveProxy.val();
         if (!id) return;
+        
+        // English: If user manually changes proxy, clear site lock and cache for this site
+        // Russian: Если пользователь вручную меняет прокси, снимаем блокировку и кэш для этого сайта
+        const site = popup.popupData?.currentSite;
+        if (site) {
+            // Clear dynamic override, site lock and cache for this site
+            PolyFill.runtimeSendMessage({
+                command: "ClearProxyAutoStatusForSite",
+                site: site
+            });
+        }
+        
+        // English: Check if we are in SmartRules profile and have a rule for current site
+        // Russian: Проверяем, находимся ли в профиле SmartRules и есть ли правило для текущего сайта
+        const activeProfile = popup.activeProfile;
+        if (activeProfile && activeProfile.profileType === SmartProfileType.SmartRules && site) {
+            // Find rule for this site (use proxyProfiles from popupData with correct type)
+            const profile = popup.popupData?.proxyProfiles?.find(p => p.profileId === activeProfile.profileId) as SmartProfile;
+            if (profile) {
+                const rule = (profile as SmartProfile).proxyRules?.find((r: any) => r.hostName === site);
+                if (rule) {
+                    // Change proxy for this rule
+                    PolyFill.runtimeSendMessage({
+                        command: CommandMessages.PopupChangeProxyForRule,
+                        ruleId: rule.ruleId,
+                        proxyServerId: id
+                    }, (response) => {
+                        if (response && response.success) {
+                            popup.refreshPopupData();
+                            popup.refreshActiveTabIfNeeded();
+                        } else {
+                            console.warn("[Popup] Failed to change proxy for rule");
+                        }
+                    });
+                    return;
+                }
+            }
+        }
+        
+        // Fallback: change global active proxy
         PolyFill.runtimeSendMessage(
             { command: CommandMessages.PopupChangeActiveProxyServer, id },
             (response) => {

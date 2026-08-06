@@ -2,34 +2,31 @@
 	ProxyMust
 </h2>
 <p>
-	<em>O ProxyMust é um fork da extensão SmartProxy. Respeitamos e agradecemos ao autor original <strong>Salar Khalilzadeh</strong> pelo seu excelente trabalho.
+	<em>ProxyMust é um fork da extensão SmartProxy. Respeitamos e agradecemos ao autor original <strong>Salar Khalilzadeh</strong> pelo seu excelente trabalho.
 	O SmartProxy original pode ser encontrado em <a href="https://github.com/salarcode/SmartProxy" target="_blank">https://github.com/salarcode/SmartProxy</a>.</em>
 </p>
-<p data-localize="settingsTabAboutDescription">
-	Usar proxies não poderia ser mais fácil com o ProxyMust. Pense nele como uma solução de configurar uma vez e esquecer.
-	Com o ProxyMust não precisa de alterar manualmente o seu proxy ou ligá-lo e desligá-lo.
-	Tudo o que precisa fazer é dizer ao ProxyMust que pretende ativar o proxy para o site desejado com apenas um clique.
-	Depois disso, quando visitar esse site específico, o ProxyMust atuará e todos os seus dados para esse site serão transferidos através do proxy, sem que faça nada.
+<p>
+	ProxyMust dá-lhe controlo total sobre as ligações proxy. Você adiciona os seus próprios servidores proxy manualmente ou através de assinaturas, e o sistema de teste automático integrado verifica o desempenho de cada um para cada site, seleciona os melhores e ordena-os por classificação, prioridade e frescura dos resultados. Com estas definições, pode confiar ao ProxyMust a mudança automática de proxies para sites que não abrem sem proxy – o modo Auto Proxy encontrará um proxy funcional e ligá-lo-á ao site pretendido, sem esforço extra da sua parte.
 </p>
 <p>
-	O ProxyMust oferece uma variedade de funcionalidades adequadas tanto para principiantes como para utilizadores avançados, incluindo:
+	ProxyMust oferece uma variedade de funcionalidades adequadas tanto para principiantes como para utilizadores avançados, incluindo:
 </p>
 <ul>
-	<li>Ativar o proxy para um único site num separador – tudo nesse separador usará automaticamente o proxy. Esta funcionalidade chama-se proxy-por-separador.</li>
-	<li>Detetar automaticamente quando ativar ou desativar o proxy para certos sites com base em padrões de regras.</li>
-	<li>Alternar facilmente entre vários servidores proxy como o seu servidor proxy ativo.</li>
-	<li>Ativar o proxy para o site atual com apenas um clique.</li>
-	<li>Ver os recursos e pedidos do site atual e decidir se ativa o proxy para eles com um clique.</li>
-	<li>Alternar facilmente entre modos de proxy ou ativar o proxy para todos os domínios.</li>
+	<li>Ativar proxy para um único site num separador – tudo o que for aberto nesse separador usa automaticamente o proxy. Esta funcionalidade chama-se "proxy por separador".</li>
+	<li>Detetar automaticamente se deve ativar ou desativar o proxy para determinados sites com base em regras.</li>
+	<li>Mudar rapidamente entre vários servidores proxy como proxy ativo.</li>
+	<li>Ativar proxy para o site atual com um único clique.</li>
+	<li>Ver os recursos e pedidos do site atual e ativar proxy para eles com um clique.</li>
+	<li>Mudar facilmente entre modos de proxy ou ativar proxy para todos os domínios.</li>
 	<li>Cópia de segurança e restauro de definições e regras.</li>
 </ul>
 <br />
 
-<h3>Por favor, note que:</h3>
+<h3>Nota:</h3>
 <p>
 <div class="text-info">
 	<i class="fas fa-info-circle" aria-hidden="true"></i>
-	O ProxyMust não fornece qualquer tipo de servidores proxy.
+	O ProxyMust não fornece quaisquer servidores proxy.
 </div>
 <div class="text-danger">
 	<i class="fas fa-eye-slash" aria-hidden="true"></i>
@@ -37,7 +34,7 @@
 </div>
 <div class="text-warning">
 	<i class="fas fa-eye-slash" aria-hidden="true"></i>
-	O ProxyMust é livre de anúncios e não interfere com páginas web e conteúdos.
+	O ProxyMust é livre de anúncios e não interfere com o conteúdo das páginas web.
 </div>
 </p>
 <br />
@@ -46,13 +43,13 @@
 <p>
 <div>
 	<i class="fas fa-star text-warning"></i>
-	Se <i class="fas fa-heart text-danger"></i> gosta do ProxyMust, por favor avalie-o na página
-	<a id="linkAddonsMarket" href="#" target="_blank">Extensões</a>.
+	Se <i class="fas fa-heart text-danger"></i> gosta do ProxyMust, por favor avalie-o na
+	<a id="linkAddonsMarket" href="#" target="_blank">página de extensões</a>.
 </div>
-<div>
+<div class="">
 	<i class="fas fa-question-circle text-primary"></i>
-	Se tiver perguntas ou problemas, visite a página de issues e abra um ticket para
-	<a href="https://github.com/nana-xakep/ProxyMust/issues" target="_blank">reportar problemas</a>.
+	Se tiver perguntas ou problemas, visite o rastreador de problemas e abra um ticket para
+	<a href="https://github.com/nana-xakep/ProxyMust/issues" target="_blank">reportar um problema</a>.
 </div>
 </p>
 <br />
@@ -63,8 +60,8 @@
 <ul>
 	<li>Para cada proxy e cada site testado, é mostrado o estado:
 		<ul>
-			<li>✅ – definitivamente funciona para este site (sucesso recente)</li>
-			<li>☑️ – provavelmente funciona (sucesso foi anterior ou obtido para outro site)</li>
+			<li>✅ – funciona definitivamente para este site (sucesso recente)</li>
+			<li>☑️ – provavelmente funciona (sucesso anterior ou obtido para outro site)</li>
 			<li>❓ – sem dados (proxy não testado para este site)</li>
 			<li>⛔ – não funciona (falha recente)</li>
 		</ul>
@@ -74,7 +71,7 @@
 	<li>Os estados são considerados "frescos" durante um número configurável de horas (padrão 6). Se os dados estiverem desatualizados, é usado um estado indireto (☑️).</li>
 </ul>
 
-<h4>📋 Gerir a lista de proxies</h4>
+<h4>📋 Gestão da lista de proxies</h4>
 <ul>
 	<li><strong>Menu de contexto na tabela de proxies (clique direito)</strong> – alterar rapidamente a classificação, prioridade (fixar, favorito), exportar selecionados, copiar endereços, eliminar, limpar estados e classificações, executar testes para os proxies selecionados.</li>
 	<li><strong>Ordenação no popup da barra de ferramentas</strong> – por classificação e prioridade (📌 fixados no topo, ⭐ favoritos).</li>
@@ -83,27 +80,36 @@
 
 <h4>🚀 Testes de proxy</h4>
 <ul>
-	<li><strong>Teste cíclico</strong> – comuta sequencialmente o perfil ativo e o proxy, verificando o carregamento do site. Fiável mas lento.</li>
+	<li><strong>Teste cíclico</strong> – comutação sequencial do perfil ativo e do proxy, verificando o carregamento do site. Fiável mas lento.</li>
 	<li><strong>Teste cíclico rápido</strong> – teste acelerado que para no primeiro sucesso. Bom para uma avaliação rápida.</li>
 	<li><strong>Teste preciso (lento)</strong> – mais completo, demora mais tempo, dá resultados mais fiáveis (não funciona no Firefox).</li>
-	<li><strong>Teste rápido</strong> – rápido mas pode ignorar alguns proxies funcionais. Bom para uma visão geral rápida (não funciona no Firefox).</li>
-	<li><strong>Testes rápidos a partir do popup da barra de ferramentas</strong> – testar o site atual para todos os proxies ou apenas para proxies de subscrição.</li>
+	<li><strong>Teste rápido</strong> – rápido, mas pode ignorar alguns proxies funcionais. Bom para uma visão geral rápida (não funciona no Firefox).</li>
+	<li><strong>Testes rápidos a partir do popup da barra de ferramentas</strong> – testar o site atual para todos os proxies ou apenas para proxies de assinatura.</li>
+</ul>
+
+<h4>🤖 Modo Auto Proxy</h4>
+<ul>
+	<li>Para sites que não estão diretamente acessíveis (por exemplo, devido a restrições regionais), o Auto Proxy cria automaticamente uma regra no perfil seletivo e seleciona um proxy funcional.</li>
+	<li>Quando visita um desses sites pela primeira vez, aparece um diálogo sugerindo adicioná-lo ao Auto Proxy. Aceita – e o sistema encontra imediatamente o melhor proxy com base na classificação, estados e prioridade.</li>
+	<li>Após o carregamento bem-sucedido da página, pode fixar o proxy encontrado para este site (temporariamente, até fechar o navegador) ou continuar a procurar outro.</li>
+	<li>Nas definições do perfil, pode desativar a fixação automática (desativada por padrão) ou desativar completamente os diálogos de mudança de proxy.</li>
+	<li>O Auto Proxy funciona apenas no perfil seletivo e apenas para regras com o modo <strong>Auto</strong> (pode alternar manualmente qualquer regra).</li>
 </ul>
 
 <p>
-	<strong>⚠️ Importante para os utilizadores:</strong> Durante os testes, o perfil ativo e o proxy são efetivamente trocados.
-	Isto pode interferir com a navegação normal. Execute os testes quando o browser não estiver a ser usado para outras atividades.
+	<strong>⚠️ Importante para utilizadores:</strong> Durante os testes, o perfil ativo e o proxy são efetivamente trocados.
+	Isso pode interferir com a navegação normal. Execute os testes quando o navegador não estiver a ser utilizado para outras atividades.
 </p>
 
 <br />
-<h3>Legenda dos ícones da barra de ferramentas</h3>
+<h3>Legendas dos ícones da barra de ferramentas</h3>
 <p>
-	O ícone na barra de ferramentas do seu browser muda para refletir o estado do ProxyMust. Eis o significado dos diferentes ícones:
+	O ícone na barra de ferramentas do seu navegador muda para refletir o estado do ProxyMust. Eis o que significam os diferentes ícones:
 	<br />
 
 <div class="table-responsive">
-	<table class="table table-sm table-striped caption-top table-borderless align-middle">
-		<caption><b>Legenda dos ícones (todos os browsers):</b></caption>
+	<table class="table table-sm table table-striped caption-top table-borderless align-middle table-responsive">
+		<caption><b>Legendas dos ícones (todos os navegadores):</b></caption>
 		<thead>
 			<tr>
 				<th style="width: 70px;">Ícone</th>
@@ -113,7 +119,7 @@
 		<tbody>
 			<tr>
 				<td class="p-2"><img src="../icons/profile-disabled.svg" class=""></td>
-				<td>Os pedidos não usarão proxies.顶}
+				<td>Os pedidos não usarão proxy.</td>
 			</tr>
 			<tr>
 				<td class="p-2"><img src="../icons/smartproxy.svg" class=""></td>
@@ -122,32 +128,32 @@
 					<br /> Ou nenhuma regra corresponde ao separador atual.
 					<br />
 					Perfil: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i>
-					Regras Seletivas
-				顶}
+					Regras seletivas
+				</td>
 			</tr>
 			<tr>
-				<td class="p-2"><img src="../icons/profile-always.svg" class="">顶}
+				<td class="p-2"><img src="../icons/profile-always.svg" class=""></td>
 				<td>
-					O proxy é aplicado a todos os pedidos no separador atual. (Em browsers baseados em Chrome, os domínios na lista de permissões são mostrados separadamente.)
+					O proxy é aplicado a todos os pedidos no separador atual. (Em navegadores baseados em Chrome, os domínios na lista de permissões são mostrados separadamente.)
 					<br />
 					Perfil: <i class="icon fa-sm fas fa-globe-americas text-success" aria-hidden="true"></i>
 					Sempre ativado
-				顶}
+				</td>
 			</tr>
 			<tr>
-				<td class="p-2"><img src="../icons/profile-system.svg" class="">顶}
+				<td class="p-2"><img src="../icons/profile-system.svg" class=""></td>
 				<td>
 					A decisão de usar um proxy é delegada ao sistema operativo.
 					<br/> Perfil: Sistema
-				顶}
+				</td>
 			</tr>
 		</tbody>
 	</table>
 </div>
 
 <div class="table-responsive">
-	<table class="table table-sm table-striped caption-top table-borderless align-middle">
-		<caption><b>Legenda dos ícones (apenas Firefox):</b></caption>
+	<table class="table table-sm table table-striped caption-top table-borderless align-middle table-responsive">
+		<caption><b>Legendas dos ícones (apenas Firefox):</b></caption>
 		<thead>
 			<tr>
 				<th style="width: 70px;">Ícone</th>
@@ -156,52 +162,52 @@
 		</thead>
 		<tbody>
 			<tr>
-				<td class="p-2"><img src="../icons/profile-smartrules-green.svg" class="">顶}
+				<td class="p-2"><img src="../icons/profile-smartrules-green.svg" class=""></td>
 				<td>
 					Uma regra corresponde ao separador atual. Todos os pedidos subsequentes passam pelo proxy.
 					<br />
-					Perfil: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> Regras Seletivas
-				顶}
+					Perfil: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> Regras seletivas
+				</td>
 			</tr>
 			<tr>
-				<td class="p-2"><img src="../icons/profile-smartrules-has-failed.svg" class="">顶}
+				<td class="p-2"><img src="../icons/profile-smartrules-has-failed.svg" class=""></td>
 				<td>
-					Uma regra corresponde ao separador atual. Existe pelo menos um pedido sem resposta / falhado.
+					Uma regra corresponde ao separador atual. Há pelo menos um pedido falhado / sem resposta.
 					<br />
-					Perfil: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> Regras Seletivas
-				顶}
+					Perfil: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> Regras seletivas
+				</td>
 			</tr>
 			<tr>
-				<td class="p-2"><img src="../icons/profile-smartrules-has-bypassed.svg" class="">顶}
+				<td class="p-2"><img src="../icons/profile-smartrules-has-bypassed.svg" class=""></td>
 				<td>
 					Uma regra corresponde ao separador atual. Pelo menos um pedido subsequente contornou o proxy através de uma regra.
 					<br />
-					Perfil: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> Regras Seletivas
-				顶}
+					Perfil: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> Regras seletivas
+				</td>
 			</tr>
 			<tr>
-				<td class="p-2"><img src="../icons/profile-smartrules-has-unmatched.svg" class="">顶}
+				<td class="p-2"><img src="../icons/profile-smartrules-has-unmatched.svg" class=""></td>
 				<td>
 					Uma regra corresponde ao separador atual. Pelo menos um pedido subsequente não corresponde a nenhuma regra e não passa pelo proxy.
 					<br />
-					Perfil: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> Regras Seletivas
-				顶}
+					Perfil: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> Regras seletivas
+				</td>
 			</tr>
 			<tr>
-				<td class="p-2"><img src="../icons/profile-smartrules-noproxy-has-matched.svg" class="">顶}
+				<td class="p-2"><img src="../icons/profile-smartrules-noproxy-has-matched.svg" class=""></td>
 				<td>
-					Nenhuma regra corresponde ao separador atual. Pelo menos um pedido subsequente corresponde a uma regra e passa por um proxy.
+					Nenhuma regra corresponde ao separador atual. Pelo menos um pedido subsequente corresponde a uma regra e passa pelo proxy.
 					<br />
-					Perfil: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> Regras Seletivas
-				顶}
+					Perfil: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> Regras seletivas
+				</td>
 			</tr>
 			<tr>
-				<td class="p-2"><img src="../icons/profile-always-bypassed.svg" class="">顶}
+				<td class="p-2"><img src="../icons/profile-always-bypassed.svg" class=""></td>
 				<td>
 					O proxy é aplicado a todos os pedidos no separador atual. Pelo menos um pedido subsequente contornou o proxy através de uma regra.
 					<br />
 					Perfil: <i class="icon fa-sm fas fa-globe-americas text-success" aria-hidden="true"></i> Sempre ativado
-				顶}
+				</td>
 			</tr>
 		</tbody>
 	</table>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<!--
+ * This file is part of ProxyMust – a fork of SmartProxy <https://github.com/salarcode/SmartProxy>.
+ * Copyright (C) 2026 nana-xakep <xakep.nana@gmail.com>
+ *
+ * ProxyMust is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, version 3 of the License.
+ *
+ * ProxyMust is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with ProxyMust. If not, see <http://www.gnu.org/licenses/>.
+ -->
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ProxyMust Dialog</title>
+  <style>
+    /* English: Base styles for dialog window, adapts to system dark/light theme */
+    /* Russian: Базовые стили для окна диалога, адаптируется к системной тёмной/светлой теме */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+      background: #f5f7fa;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      color: #1a2b4a;
+      transition: background 0.2s, color 0.2s;
+    }
+    .dialog-box {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+      padding: 24px 28px;
+      max-width: 420px;
+      width: 100%;
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+    .dialog-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-top: 0;
+      margin-bottom: 12px;
+    }
+    .dialog-message {
+      font-size: 1rem;
+      line-height: 1.5;
+      margin-bottom: 18px;
+      word-break: break-word;
+    }
+    .dialog-message .site-name {
+      font-weight: 600;
+      color: #0a2a4a;
+    }
+    .dialog-message .proxy-name {
+      font-weight: 600;
+      color: #2a7de1;
+    }
+    .dialog-checkbox {
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .dialog-checkbox input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .dialog-checkbox label {
+      font-size: 0.9rem;
+      color: #4a5a6a;
+      cursor: pointer;
+      user-select: none;
+    }
+    .dialog-buttons {
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+    }
+    .dialog-buttons button {
+      padding: 8px 20px;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      min-width: 80px;
+    }
+    .dialog-buttons button:active {
+      transform: scale(0.96);
+    }
+    .btn-primary {
+      background: #2a7de1;
+      color: white;
+    }
+    .btn-primary:hover {
+      background: #1a5fb0;
+    }
+    .btn-secondary {
+      background: #e9edf4;
+      color: #1a2b4a;
+    }
+    .btn-secondary:hover {
+      background: #d5dbe6;
+    }
+    .btn-danger {
+      background: #dc3545;
+      color: white;
+    }
+    .btn-danger:hover {
+      background: #b02a37;
+    }
+    .btn-success {
+      background: #28a745;
+      color: white;
+    }
+    .btn-success:hover {
+      background: #1e7e34;
+    }
+
+    /* English: Dark theme support (follows system preference) */
+    /* Russian: Поддержка тёмной темы (следует за системными настройками) */
+    @media (prefers-color-scheme: dark) {
+      body { background: #1e1e2a; color: #e0e0e0; }
+      .dialog-box { background: #2d2d3a; box-shadow: 0 8px 30px rgba(0,0,0,0.5); }
+      .dialog-message .site-name { color: #8ab4f8; }
+      .dialog-message .proxy-name { color: #6ab0f7; }
+      .dialog-checkbox label { color: #aaa; }
+      .btn-secondary { background: #3a3a4a; color: #e0e0e0; }
+      .btn-secondary:hover { background: #4a4a5a; }
+    }
+  </style>
+</head>
+<body>
+  <div class="dialog-box">
+    <div class="dialog-title" id="dialogTitle">Dialog</div>
+    <div class="dialog-message" id="dialogMessage">Loading...</div>
+    <div class="dialog-checkbox" id="checkboxContainer">
+      <input type="checkbox" id="dontAskCheckbox">
+      <label for="dontAskCheckbox" id="dontAskLabel">Don't ask again for this site</label>
+    </div>
+    <div class="dialog-buttons" id="buttonContainer">
+      <button class="btn-secondary" id="btnCancel">Cancel</button>
+      <button class="btn-primary" id="btnConfirm">OK</button>
+    </div>
+  </div>
+  <script src="js/dialog.js"></script>
+</body>
+</html>

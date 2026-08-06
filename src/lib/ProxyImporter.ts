@@ -19,12 +19,53 @@
  * Modifications for ProxyMust:
  * Copyright (C) 2026 nana-xakep <xakep.nana@gmail.com>
  * - Added rating system, proxy testing, country flags, etc.
- */	
+ * - Added CSV import support with auto-detection.
+ * - Fixed JSON import to map fields (ip → host, country → countryCode, etc.)
+ * - Fixed auto-detection order: JSON → CSV → TXT.
+ */
 import { Utils } from "./Utils";
 import { api } from "./environment";
 import { ProxyServerSubscription, ProxyServer, ProxyServerSubscriptionFormat } from "../core/definitions";
 import { Debug } from "./Debug";
 import { ProxyEngineSpecialRequests } from "../core/ProxyEngineSpecialRequests";
+
+/**
+ * Нормализует поля прокси из произвольного объекта.
+ * Маппит: ip → host, country → countryCode, user → username, pass → password и т.д.
+ * Также генерирует name, если отсутствует.
+ */
+function normalizeProxyFields(raw: any): any {
+    const host = raw.host || raw.ip;
+    if (!host) return null; // без хоста невозможно
+
+    const port = parseInt(raw.port, 10);
+    if (isNaN(port) || port < 1 || port > 65535) return null;
+
+    let protocol = (raw.protocol || 'HTTP').toUpperCase();
+    if (!['HTTP', 'HTTPS', 'SOCKS4', 'SOCKS5'].includes(protocol)) {
+        protocol = 'HTTP';
+    }
+
+    const name = raw.name || `${host}:${port}`;
+    // countryCode может быть в полях: countryCode, country, country_code, country_name
+    const countryCode = raw.countryCode || raw.country || raw.country_code || raw.country_name || '';
+    const username = raw.username || raw.user || '';
+    const password = raw.password || raw.pass || '';
+
+    return {
+        host,
+        port,
+        protocol,
+        name,
+        countryCode,
+        username,
+        password,
+        order: raw.order ?? 999999,
+        rating: raw.rating ?? 0,
+        // proxyDNS и другие поля можно тоже копировать, если есть
+        proxyDNS: raw.proxyDNS !== undefined ? raw.proxyDNS : undefined,
+    };
+}
 
 export const ProxyImporter = {
     /**
@@ -161,11 +202,34 @@ export const ProxyImporter = {
         }
 
         function doImport(text: string, options?: ProxyServerSubscription) {
-            let parsedProxies: ProxyServer[] = (options && options.format === ProxyServerSubscriptionFormat.Json)
-                ? ProxyImporter.parseJson(text, options)
-                : ProxyImporter.parseText(text, options);
+            let parsedProxies: ProxyServer[] | null = null;
 
-            if (parsedProxies == null) {
+            // Если формат явно задан — используем его
+            if (options && options.format !== undefined) {
+                switch (options.format) {
+                    case ProxyServerSubscriptionFormat.Json:
+                        parsedProxies = ProxyImporter.parseJson(text, options);
+                        break;
+                    case ProxyServerSubscriptionFormat.Csv:
+                        parsedProxies = ProxyImporter.parseCsv(text, options);
+                        break;
+                    case ProxyServerSubscriptionFormat.PlainText:
+                    default:
+                        parsedProxies = ProxyImporter.parseText(text, options);
+                        break;
+                }
+            } else {
+                // Автоопределение: пробуем JSON → CSV → TXT
+                parsedProxies = ProxyImporter.parseJson(text, options);
+                if (!parsedProxies || parsedProxies.length === 0) {
+                    parsedProxies = ProxyImporter.parseCsv(text, options);
+                }
+                if (!parsedProxies || parsedProxies.length === 0) {
+                    parsedProxies = ProxyImporter.parseText(text, options);
+                }
+            }
+
+            if (!parsedProxies || parsedProxies.length === 0) {
                 if (fail) fail();
                 return;
             }
@@ -425,21 +489,32 @@ export const ProxyImporter = {
     /**
      * Parse JSON proxy list / Парсинг JSON списка прокси
      * Cross-browser: Standard JSON.parse works everywhere
+     * Now supports field mapping: ip→host, country→countryCode, etc.
      */
     parseJson: (jsonText: string, options?: ProxyServerSubscription): ProxyServer[] => {
+        if (options?.obfuscation?.toLowerCase() === "base64") {
+            try {
+                jsonText = atob(jsonText);
+            } catch (e) {
+                return null;
+            }
+        }
+
         try {
             const data = JSON.parse(jsonText);
-            if (!Array.isArray(data)) return null;
+            if (!data) return null;
 
+            const items = Array.isArray(data) ? data : [data];
             const proxies: ProxyServer[] = [];
-            for (const item of data) {
-                if (typeof item === 'object' && item !== null) {
-                    const proxy = new ProxyServer();
-                    proxy.CopyFrom({
-                        ...item,
-                        rating: item.rating ?? 0,
-                        order: item.order ?? 999999
-                    });
+
+            for (const raw of items) {
+                if (typeof raw !== 'object' || raw === null) continue;
+                const normalized = normalizeProxyFields(raw);
+                if (!normalized) continue;
+
+                const proxy = new ProxyServer();
+                proxy.CopyFrom(normalized);
+                if (proxy.isValid()) {
                     proxies.push(proxy);
                 }
             }
@@ -448,5 +523,74 @@ export const ProxyImporter = {
             Debug.error("ProxyImporter.parseJson failed", e);
             return null;
         }
+    },
+
+    /**
+     * Parse CSV proxy list / Парсинг CSV списка прокси
+     * Supports auto-detection of delimiter (comma, semicolon, tab).
+     * Handles headers; if no headers, assumes order: host, port, protocol, username, password, country.
+     */
+    parseCsv: (csvText: string, options?: ProxyServerSubscription): ProxyServer[] => {
+        if (options?.obfuscation?.toLowerCase() === "base64") {
+            try {
+                csvText = atob(csvText);
+            } catch (e) {
+                return null;
+            }
+        }
+
+        const lines = csvText.split(/\r?\n/).filter(line => line.trim().length > 0);
+        if (lines.length < 2) return null; // need at least header + one data row
+
+        // Determine delimiter
+        let delimiter = ',';
+        const firstLine = lines[0];
+        if (options?.csvFormat === 'semicolon') delimiter = ';';
+        else if (options?.csvFormat === 'comma') delimiter = ',';
+        else {
+            // auto-detect
+            if (firstLine.includes('\t')) delimiter = '\t';
+            else if (firstLine.includes(';')) delimiter = ';';
+            // else keep ','
+        }
+
+        // Parse headers
+        const headerLine = lines[0];
+        const headers = headerLine.split(delimiter).map(h => h.trim().toLowerCase());
+        // Check if it looks like headers: contains 'ip', 'host', 'port', etc.
+        const hasHeader = headers.some(h => ['ip', 'host', 'port', 'protocol', 'username', 'password', 'country', 'country_code', 'country_name'].includes(h));
+
+        let startIndex = hasHeader ? 1 : 0;
+        const proxies: ProxyServer[] = [];
+
+        for (let i = startIndex; i < lines.length; i++) {
+            const values = lines[i].split(delimiter).map(v => v.trim());
+            if (values.length === 0) continue;
+
+            let raw: any = {};
+            if (hasHeader) {
+                headers.forEach((h, idx) => {
+                    if (idx < values.length) raw[h] = values[idx];
+                });
+            } else {
+                // Default order: host, port, protocol, username, password, country
+                raw.host = values[0] || '';
+                raw.port = values[1] || '';
+                raw.protocol = values[2] || '';
+                raw.username = values[3] || '';
+                raw.password = values[4] || '';
+                raw.country = values[5] || '';
+            }
+
+            const normalized = normalizeProxyFields(raw);
+            if (!normalized) continue;
+
+            const proxy = new ProxyServer();
+            proxy.CopyFrom(normalized);
+            if (proxy.isValid()) {
+                proxies.push(proxy);
+            }
+        }
+        return proxies;
     }
 };

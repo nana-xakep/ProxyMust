@@ -5,23 +5,20 @@
 	<em>ProxyMust is a fork of the SmartProxy extension. We respect and thank the original author <strong>Salar Khalilzadeh</strong> for his excellent work.
 	The original SmartProxy can be found at <a href="https://github.com/salarcode/SmartProxy" target="_blank">https://github.com/salarcode/SmartProxy</a>.</em>
 </p>
-<p data-localize="settingsTabAboutDescription">
-	Using proxies couldn't be easier with ProxyMust. Think of it as a "configure once and forget" solution.
-	With ProxyMust, you don't need to manually change your proxy settings or turn them on and off.
-	Just tell ProxyMust to enable the proxy for the website you need with one click.
-	After that, whenever you visit that website, ProxyMust will automatically route all your data through the proxy – without any additional action on your part.
+<p>
+	ProxyMust gives you full control over proxy connections. You add your own proxy servers manually or via subscriptions, and the built-in automatic testing system checks their performance for each website, selects the best ones, and sorts them by rating, priority, and freshness of results. With these settings, you can trust ProxyMust to automatically switch proxies for sites that don't open without a proxy – the Auto Proxy mode will find a working proxy and connect you to the desired site, without extra effort on your part.
 </p>
 <p>
-	ProxyMust offers many features for both beginners and advanced users, including:
+	ProxyMust offers a variety of features suitable for both beginners and advanced users, including:
 </p>
 <ul>
-	<li>Enabling the proxy for a specific site on a tab – everything opened in that tab automatically uses the proxy. This feature is called "proxy per tab".</li>
-	<li>Automatically detecting whether to enable or disable the proxy for certain sites based on rules.</li>
-	<li>Quickly switching between multiple proxy servers as the active proxy.</li>
-	<li>Enabling the proxy for the current site with a single click.</li>
-	<li>Viewing resources and requests of the current site, and enabling the proxy for them with one click.</li>
-	<li>Easy switching between proxy modes or enabling the proxy for all domains.</li>
-	<li>Backup and restore of settings and rules.</li>
+	<li>Enable proxy for a single site in a tab – everything opened in that tab automatically uses the proxy. This feature is called "proxy per tab".</li>
+	<li>Automatically detect whether to enable or disable proxy for certain sites based on rules.</li>
+	<li>Quickly switch between multiple proxy servers as the active proxy.</li>
+	<li>Enable proxy for the current site with a single click.</li>
+	<li>View resources and requests of the current site and enable proxy for them with one click.</li>
+	<li>Easily switch between proxy modes or enable proxy for all domains.</li>
+	<li>Backup and restore settings and rules.</li>
 </ul>
 <br />
 
@@ -88,6 +85,15 @@
 	<li><strong>Precise (slow) test</strong> – more thorough, takes longer, gives more reliable results (does not work in Firefox).</li>
 	<li><strong>Express test</strong> – fast but may miss some working proxies. Good for a quick overview (does not work in Firefox).</li>
 	<li><strong>Quick tests from the toolbar popup</strong> – test the current site for all proxies or only for subscription proxies.</li>
+</ul>
+
+<h4>🤖 Auto Proxy mode</h4>
+<ul>
+	<li>For sites that are not directly accessible (for example, due to regional restrictions), Auto Proxy automatically creates a rule in the selective profile and selects a working proxy.</li>
+	<li>When you first visit such a site, a dialog appears suggesting you add it to Auto Proxy. You agree – and the system immediately finds the best proxy based on rating, statuses, and priority.</li>
+	<li>After the page loads successfully, you can pin the found proxy for this site (temporarily, until the browser is closed) or continue searching for another.</li>
+	<li>In profile settings, you can disable automatic pinning (off by default) or completely disable proxy change dialogs.</li>
+	<li>Auto Proxy works only in the selective profile and only for rules with the <strong>Auto</strong> mode (you can manually switch any rule).</li>
 </ul>
 
 <p>

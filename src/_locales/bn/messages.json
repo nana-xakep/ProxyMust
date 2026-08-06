@@ -10,7 +10,7 @@
 		"message": "ProxyMust"
 	},
 	"extensionDescription": {
-		"message": "ProxyMust – নির্বাচনী প্রক্সি ব্যবস্থাপক (SmartProxy-এর একটি শাখা)। কাস্টমাইজযোগ্য প্যাটার্নের ভিত্তিতে আপনি যে সাইটগুলি দেখেন সেগুলির জন্য স্বয়ংক্রিয়ভাবে প্রক্সি সক্রিয়/নিষ্ক্রিয় করে।"
+		"message": "ProxyMust – AutoProxy ব্যবস্থাপক (SmartProxy-এর একটি শাখা)। কাস্টমাইজযোগ্য প্যাটার্নের ভিত্তিতে আপনি যে সাইটগুলি দেখেন সেগুলির জন্য স্বয়ংক্রিয়ভাবে প্রক্সি সক্রিয়/নিষ্ক্রিয় করে।"
 	},
 	"toolbarTooltipEffectiveRule": {
 		"message": "মেলে এমন নিয়মের উৎস:"
@@ -31,7 +31,7 @@
 		"message": "সরাসরি (কোন প্রক্সি নেই)"
 	},
 	"popupSmartProxy": {
-		"message": "নির্বাচনী প্রক্সি"
+		"message": "AutoProxy"
 	},
 	"popupAlwaysEnable": {
 		"message": "সর্বদা সক্রিয়"
@@ -1237,7 +1237,7 @@
 		"message": "ProxyMust-এ স্বাগতম"
 	},
 	"settingsWelcomeMessage": {
-		"message": "<p>\n\tProxyMust, প্রক্সি পরীক্ষার ক্ষমতা সহ নির্বাচনী প্রক্সি ব্যবস্থাপক।<br>\n\tশুরু করতে অনুগ্রহ করে এই ধাপগুলি অনুসরণ করুন:\n</p>\n<ol>\n\t<li>\n\t\tএকটি প্রক্সি সার্ভার বা প্রক্সির তালিকা যোগ করুন\n\t\t<br>\n\t\t<small>(প্রক্সি সার্ভার ট্যাবে যান এবং সেখানে যোগ করুন)</small>\n\t</li>\n\t<li>\n\t\tমোডটি নির্বাচনী প্রক্সিতে সেট করুন\n\t\t<br>\n\t\t<small>(সক্রিয় মোডটি নির্বাচনী প্রক্সিতে পরিবর্তন করতে টুলবার পপআপ মেনু ব্যবহার করুন)</small>\n\t</li>\n\t<li>\n\t\tপ্রক্সি নিয়ম সংজ্ঞায়িত করুন\n\t\t<br>\n\t\t<small>(নিয়ম যোগ করতে টুলবার পপআপ মেনু ব্যবহার করুন বা প্রক্সি নিয়ম ট্যাব থেকে নিয়ম যোগ/পরিবর্তন করুন)</small>\n\t</li>\n\t<li>\n\t\tআপনি প্রস্তুত।\n\t</li>\n</ol>"
+		"message": "<p>\n\tProxyMust, প্রক্সি পরীক্ষার ক্ষমতা সহ AutoProxy ব্যবস্থাপক।<br>\n\tশুরু করতে অনুগ্রহ করে এই ধাপগুলি অনুসরণ করুন:\n</p>\n<ol>\n\t<li>\n\t\tএকটি প্রক্সি সার্ভার বা প্রক্সির তালিকা যোগ করুন\n\t\t<br>\n\t\t<small>(প্রক্সি সার্ভার ট্যাবে যান এবং সেখানে যোগ করুন)</small>\n\t</li>\n\t<li>\n\t\tমোডটি AutoProxyতে সেট করুন\n\t\t<br>\n\t\t<small>(সক্রিয় মোডটি AutoProxyতে পরিবর্তন করতে টুলবার পপআপ মেনু ব্যবহার করুন)</small>\n\t</li>\n\t<li>\n\t\tপ্রক্সি নিয়ম সংজ্ঞায়িত করুন\n\t\t<br>\n\t\t<small>(নিয়ম যোগ করতে টুলবার পপআপ মেনু ব্যবহার করুন বা প্রক্সি নিয়ম ট্যাব থেকে নিয়ম যোগ/পরিবর্তন করুন)</small>\n\t</li>\n\t<li>\n\t\tআপনি প্রস্তুত।\n\t</li>\n</ol>"
 	},
 	"settingsWelcomeSkipButton": {
 		"message": "বুঝতে পেরেছি"
@@ -1865,5 +1865,92 @@
 	},
 	"popupProxyPerOriginTooltip": {
 		"message": "প্রতি উৎসে প্রক্সি টগল করুন (শুধু Firefox)"
+	},
+	"settingsAutoProxyTitle": {
+		"message": "অটো প্রক্সি সেটিংস"
+	},
+	"settingsRulesGridColMode": {
+		"message": "মোড"
+	},
+	"settingsAutoProxySelectionMode": {
+		"message": "নির্বাচন মোড:"
+	},
+	"settingsAutoProxyManual": {
+		"message": "ম্যানুয়াল"
+	},
+	"settingsAutoProxyAuto": {
+		"message": "স্বয়ংক্রিয়"
+	},
+	"settingsAutoProxyModeDesc": {
+		"message": "অটো-মোডে, প্রক্সিগুলি স্বয়ংক্রিয়ভাবে পরীক্ষার ফলাফলের ভিত্তিতে নির্বাচিত হবে।"
+	},
+	"settingsAutoProxyMaxFailover": {
+		"message": "সুইচ করার চেষ্টার সংখ্যা:"
+	},
+	"settingsAutoProxyMaxFailoverDesc": {
+		"message": "সম্পূর্ণ প্রক্সি তালিকার পুনরাবৃত্ত সুইচের সংখ্যা (1-10)।"
+	},
+	"settingsAutoProxyShowDialog": {
+		"message": "অটো প্রক্সি পরিবর্তন ডায়ালগ দেখান"
+	},
+	"settingsAutoProxyAutoPin": {
+		"message": "স্বয়ংক্রিয়ভাবে সফল প্রক্সি পিন করুন (নিশ্চিতকরণ ছাড়া)"
+	},
+	"settingsAutoProxyExcludedProxies": {
+		"message": "বাদ দেওয়া প্রক্সি:"
+	},
+	"settingsAutoProxyExcludedProxiesDesc": {
+		"message": "এই প্রক্সিগুলি অটো-মোডে ব্যবহার করা হবে না।"
+	},
+	"dialogPinTitle": {
+		"message": "প্রক্সি পিন করবেন?"
+	},
+	"dialogPinMessage": {
+		"message": "প্রক্সি \"{1}\" সাইট {0} এর জন্য কাজ করছে। এই সাইটের জন্য এটি পিন করবেন?"
+	},
+	"dialogPinConfirm": {
+		"message": "হ্যাঁ, পিন করুন"
+	},
+	"dialogPinCancel": {
+		"message": "অনুসন্ধান চালিয়ে যান"
+	},
+	"dialogPinCheckbox": {
+		"message": "এই সাইটের জন্য আর জিজ্ঞাসা করবেন না"
+	},
+	"dialogChangeTitle": {
+		"message": "প্রক্সি পরিবর্তন করবেন?"
+	},
+	"dialogChangeMessage": {
+		"message": "সাইট {0} এর জন্য নির্ধারিত প্রক্সি পরিবর্তন করবেন?"
+	},
+	"dialogChangeConfirm": {
+		"message": "পরিবর্তন করুন"
+	},
+	"dialogChangeCancel": {
+		"message": "রাখুন"
+	},
+	"dialogChangeCheckbox": {
+		"message": "এই সাইটের জন্য আর জিজ্ঞাসা করবেন না"
+	},
+	"popupNoProxyFound": {
+		"message": "এই সাইটের জন্য কোন প্রক্সি পাওয়া যায়নি।"
+	},
+	"popupAddUnreachableSiteTitle": {
+		"message": "সাইট লোড হচ্ছে না"
+	},
+	"popupAddUnreachableSiteMessage": {
+		"message": "সাইট {0} প্রক্সি ছাড়া লোড হচ্ছে না। এটিকে অটো প্রক্সিতে যোগ করবেন?"
+	},
+	"popupAddUnreachableSiteConfirm": {
+		"message": "যোগ করুন"
+	},
+	"popupAddUnreachableSiteCancel": {
+		"message": "এখন নয়"
+	},
+	"settingsAutoAddUnreachableSites": {
+		"message": "অপ্রাপ্য সাইটগুলি অটো প্রক্সিতে যোগ করার প্রস্তাব দিন"
+	},
+	"settingsAutoAddUnreachableSitesDesc": {
+		"message": "পৃষ্ঠা লোড না হলে, সাইটটিকে অটো প্রক্সিতে যোগ করার প্রস্তাব সহ একটি ডায়ালগ দেখানো হবে।"
 	}	
 }

@@ -5,23 +5,20 @@
 	<em>ProxyMust 是 SmartProxy 扩展的一个分支。我们尊重并感谢原作者 <strong>Salar Khalilzadeh</strong> 的出色工作。
 	原始 SmartProxy 可在 <a href="https://github.com/salarcode/SmartProxy" target="_blank">https://github.com/salarcode/SmartProxy</a> 找到。</em>
 </p>
-<p data-localize="settingsTabAboutDescription">
-	把它看作是一劳永逸的解决方案。通过 ProxyMust，使用代理再简单不过了。
-	有了 ProxyMust，你就无需手动更改代理或开关代理。
-	您所要做的就是告诉 ProxyMust，您想为所需网站启用代理服务器，只需点击一下即可。
-	之后，当你访问那个特定的网站时，ProxyMust 会自动操作，所有你访问该网站的数据都将通过代理传输，而你无需做任何操作。
+<p>
+	ProxyMust 让您完全控制代理连接。您可以手动或通过订阅添加自己的代理服务器，内置的自动测试系统会检查每个代理在您访问的网站上的表现，选出最佳代理，并根据评分、优先级和结果的时效性进行排序。通过这些设置，您可以将代理自动切换的任务交给 ProxyMust —— 自动代理模式会为无法直接打开的网站找到可用的代理并连接您，无需任何额外操作。
 </p>
 <p>
-	ProxyMust 为用户提供了一系列功能，从初学者到高级用户都能受益，其中一些列举如下：
+	ProxyMust 为新手和高级用户提供了多种功能，包括：
 </p>
 <ul>
-	<li>只需在一个标签页上为一个网站启用代理，那里的所有内容都会自动启用代理。该功能称为“按标签页统一代理”。</li>
-	<li>根据规则模式自动检测何时启用或禁用某些网站的代理服务器。</li>
-	<li>轻松切换多个代理服务器，作为您的活动代理服务器设置。</li>
-	<li>一键为当前网站打开代理服务器。</li>
-	<li>查看当前网站项目和请求，并一键决定是否启用代理。</li>
-	<li>轻松切换代理模式或为所有域启用代理。</li>
-	<li>备份/恢复设置和规则。</li>
+	<li>在单个标签页中为某个网站启用代理 – 该标签页中打开的所有内容都会自动使用代理。此功能称为“每个标签页的代理”。</li>
+	<li>根据规则自动检测是否应为某些网站启用或禁用代理。</li>
+	<li>在多个代理服务器之间快速切换活动代理。</li>
+	<li>一键为当前网站启用代理。</li>
+	<li>查看当前网站的资源与请求，并一键为它们启用代理。</li>
+	<li>轻松切换代理模式或为所有域名启用代理。</li>
+	<li>备份和恢复设置与规则。</li>
 </ul>
 <br />
 
@@ -29,7 +26,7 @@
 <p>
 <div class="text-info">
 	<i class="fas fa-info-circle" aria-hidden="true"></i>
-	ProxyMust 不提供任何类型的代理服务器。
+	ProxyMust 不提供任何代理服务器。
 </div>
 <div class="text-danger">
 	<i class="fas fa-eye-slash" aria-hidden="true"></i>
@@ -37,22 +34,22 @@
 </div>
 <div class="text-warning">
 	<i class="fas fa-eye-slash" aria-hidden="true"></i>
-	ProxyMust 无广告，并且不会干扰网页及其内容。
+	ProxyMust 无广告，且不会干扰网页内容。
 </div>
 </p>
 <br />
 
-<h3>您的反馈至关重要</h3>
+<h3>您的反馈非常重要</h3>
 <p>
 <div>
 	<i class="fas fa-star text-warning"></i>
 	如果您 <i class="fas fa-heart text-danger"></i> 喜欢 ProxyMust，请在
-	<a id="linkAddonsMarket" href="#" target="_blank">扩展</a> 页面对其进行评分。
+	<a id="linkAddonsMarket" href="#" target="_blank">扩展页面</a> 上评分。
 </div>
-<div>
+<div class="">
 	<i class="fas fa-question-circle text-primary"></i>
-	如果您有问题或困难，请前往问题页面并打开一个工单。
-	<a href="https://github.com/nana-xakep/ProxyMust/issues" target="_blank">报告问题</a>
+	如果您有任何问题或故障，请访问问题跟踪器并打开一个工单以
+	<a href="https://github.com/nana-xakep/ProxyMust/issues" target="_blank">报告问题</a>。
 </div>
 </p>
 <br />
@@ -63,46 +60,55 @@
 <ul>
 	<li>对于每个代理和每个测试过的网站，会显示状态：
 		<ul>
-			<li>✅ – 对该网站肯定有效（最近的测试成功）</li>
-			<li>☑️ – 可能有效（成功较早或在对其他网站测试时成功）</li>
-			<li>❓ – 无数据（尚未测试该代理对此网站的有效性）</li>
-			<li>⛔ – 无效（最近的测试失败）</li>
+			<li>✅ – 对该网站肯定有效（近期成功）</li>
+			<li>☑️ – 可能有效（成功较旧或从其他网站获得）</li>
+			<li>❓ – 无数据（该代理未对该网站测试）</li>
+			<li>⛔ – 无效（近期失败）</li>
 		</ul>
 	</li>
 	<li>每个代理的评分会根据测试结果自动变化：<strong>成功 +1</strong>，<strong>失败 -1</strong>。</li>
-	<li>您还可以通过右键菜单（在表格中的代理行或工具栏弹窗中的当前代理上右键单击）手动更改评分。</li>
-	<li>状态在可配置的小时数内（默认 6 小时）视为“新鲜”。如果数据过期，会使用间接状态（☑️）。</li>
+	<li>您也可以通过右键菜单（在表格中的代理行或工具栏弹出窗口中的活动代理上右键单击）手动更改评分。</li>
+	<li>状态在可配置的小时数（默认 6 小时）内视为“新鲜”。如果数据过期，会使用间接状态 (☑️)。</li>
 </ul>
 
-<h4>📋 管理代理列表</h4>
+<h4>📋 代理列表管理</h4>
 <ul>
-	<li><strong>代理表格中的右键菜单（右键单击）</strong> – 快速更改评分、优先级（固定、星标）、导出选中、复制地址、删除、清除状态和评分、对选中的代理运行测试。</li>
-	<li><strong>工具栏弹窗中的排序</strong> – 按评分和优先级（📌 固定的在最上面，⭐ 收藏的）排序。</li>
+	<li><strong>代理表格中的右键菜单（右键单击）</strong> – 快速更改评分、优先级（固定、星标）、导出所选、复制地址、删除、清除状态和评分、为所选代理运行测试。</li>
+	<li><strong>工具栏弹出窗口中的排序</strong> – 按评分和优先级排序（📌 固定在顶部，⭐ 收藏）。</li>
 	<li><strong>设置表格中的排序</strong> – 按国家、协议、评分排序。</li>
 </ul>
 
 <h4>🚀 代理测试</h4>
 <ul>
-	<li><strong>循环测试</strong> – 依次切换活动方案和代理，检查网站加载情况。可靠但速度较慢。</li>
-	<li><strong>快速循环测试</strong> – 加速测试，在第一次成功时停止。适合快速评估。</li>
-	<li><strong>精确测试（慢速）</strong> – 更彻底，耗时更长，结果更可靠（在 Firefox 中不可用）。</li>
-	<li><strong>快速测试</strong> – 速度快但可能会遗漏一些有效的代理。适合快速概览（在 Firefox 中不可用）。</li>
-	<li><strong>工具栏弹窗中的快速测试</strong> – 对所有代理或仅对订阅代理测试当前网站。</li>
+	<li><strong>循环测试</strong> – 依次切换活动配置文件和代理，检查网站加载情况。可靠但慢。</li>
+	<li><strong>快速循环测试</strong> – 加速测试，遇到任何成功即停止。适合初步评估。</li>
+	<li><strong>精确（慢速）测试</strong> – 更彻底，耗时更长，结果更可靠（在 Firefox 中无效）。</li>
+	<li><strong>快速测试</strong> – 速度快但可能遗漏一些可用代理。适合初步评估（在 Firefox 中无效）。</li>
+	<li><strong>从工具栏弹出窗口快速测试</strong> – 测试当前网站的所有代理，或仅测试订阅代理。</li>
+</ul>
+
+<h4>🤖 自动代理模式</h4>
+<ul>
+	<li>对于无法直接访问的网站（例如由于区域限制），自动代理会在选择性配置文件中自动创建规则并选择一个可用的代理。</li>
+	<li>当您首次访问此类网站时，会弹出一个对话框建议将其添加到自动代理。您同意后，系统会根据评分、状态和优先级立即找到最佳代理。</li>
+	<li>页面成功加载后，您可以将找到的代理固定到该网站（临时，直到浏览器关闭）或继续搜索其他代理。</li>
+	<li>在配置文件设置中，您可以禁用自动固定（默认关闭）或完全禁用代理更改对话框。</li>
+	<li>自动代理仅在选择性配置文件中有效，并且仅适用于 <strong>Auto</strong> 模式的规则（您可以手动切换任何规则）。</li>
 </ul>
 
 <p>
-	<strong>⚠️ 重要提示：</strong> 测试期间，活动方案和代理会被实际切换。
-	这可能会干扰正常的浏览。请在浏览器未用于其他活动时运行测试。
+	<strong>⚠️ 用户重要提示：</strong> 测试期间，活动配置文件和代理会被实际切换。
+	这可能会干扰正常浏览。请在浏览器未用于其他活动时运行测试。
 </p>
 
 <br />
-<h3>工具栏操作图标图例</h3>
+<h3>工具栏图标图例</h3>
 <p>
-	浏览器工具栏中的图标会根据 ProxyMust 的状态而变化。下面是不同图标的含义：
+	浏览器工具栏中的图标会更改以反映 ProxyMust 的状态。不同图标的含义：
 	<br />
 
 <div class="table-responsive">
-	<table class="table table-sm table-striped caption-top table-borderless align-middle">
+	<table class="table table-sm table table-striped caption-top table-borderless align-middle table-responsive">
 		<caption><b>图标图例（所有浏览器）：</b></caption>
 		<thead>
 			<tr>
@@ -118,37 +124,36 @@
 			<tr>
 				<td class="p-2"><img src="../icons/smartproxy.svg" class=""></td>
 				<td>
-					代理已应用或将应用到与定义的规则匹配的请求。
-					<br /> 或者标签页没有匹配规则。
+					代理已应用或将应用于符合已定义规则的请求。
+					<br /> 或者当前标签页没有匹配的规则。
 					<br />
-					方案：<i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i>
+					配置文件：<i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i>
 					选择性规则
-					nil
+				</td>
 			</tr>
 			<tr>
 				<td class="p-2"><img src="../icons/profile-always.svg" class=""></td>
 				<td>
-					代理适用于当前标签页内的所有请求。（在基于 Chrome 的浏览器中，白名单域名会单独显示。）
+					代理应用于当前标签页中的所有请求。（在基于 Chrome 的浏览器中，白名单域名会单独显示。）
 					<br />
-					方案：<i class="icon fa-sm fas fa-globe-americas text-success" aria-hidden="true"></i>
-					始终开启
-					nil
+					配置文件：<i class="icon fa-sm fas fa-globe-americas text-success" aria-hidden="true"></i>
+					始终启用
+				</td>
 			</tr>
 			<tr>
 				<td class="p-2"><img src="../icons/profile-system.svg" class=""></td>
 				<td>
-					操作系统决定是否使用任何代理。
-					<br />
-					方案：系统代理
-					nil
+					是否使用代理的决定交给操作系统。
+					<br/> 配置文件：系统
+				</td>
 			</tr>
 		</tbody>
 	</table>
 </div>
 
 <div class="table-responsive">
-	<table class="table table-sm table-striped caption-top table-borderless align-middle">
-		<caption><b>图标图例（仅用于 Firefox）：</b></caption>
+	<table class="table table-sm table table-striped caption-top table-borderless align-middle table-responsive">
+		<caption><b>图标图例（仅限 Firefox）：</b></caption>
 		<thead>
 			<tr>
 				<th style="width: 70px;">图标</th>
@@ -159,50 +164,50 @@
 			<tr>
 				<td class="p-2"><img src="../icons/profile-smartrules-green.svg" class=""></td>
 				<td>
-					当前标签页匹配了一个规则。所有后续请求都将通过代理进行。
+					当前标签页匹配到一个规则。所有后续请求都通过代理。
 					<br />
-					方案：<i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> 选择性规则
-					nil
+					配置文件：<i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> 选择性规则
+				</td>
 			</tr>
 			<tr>
 				<td class="p-2"><img src="../icons/profile-smartrules-has-failed.svg" class=""></td>
 				<td>
-					当前标签页匹配了一个规则。至少有一个未响应/失败的请求。
+					当前标签页匹配到一个规则。至少有一个请求失败/无响应。
 					<br />
-					方案：<i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> 选择性规则
-					nil
+					配置文件：<i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> 选择性规则
+				</td>
 			</tr>
 			<tr>
 				<td class="p-2"><img src="../icons/profile-smartrules-has-bypassed.svg" class=""></td>
 				<td>
-					当前标签页匹配了一个规则。至少有一个后续请求通过规则绕过了代理。
+					当前标签页匹配到一个规则。至少有一个后续请求通过某个规则绕过了代理。
 					<br />
-					方案：<i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> 选择性规则
-					nil
+					配置文件：<i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> 选择性规则
+				</td>
 			</tr>
 			<tr>
 				<td class="p-2"><img src="../icons/profile-smartrules-has-unmatched.svg" class=""></td>
 				<td>
-					当前标签页匹配了一个规则。至少有一个后续请求未匹配任何规则，且未经代理。
+					当前标签页匹配到一个规则。至少有一个后续请求不匹配任何规则且未通过代理。
 					<br />
-					方案：<i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> 选择性规则
-					nil
+					配置文件：<i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> 选择性规则
+				</td>
 			</tr>
 			<tr>
 				<td class="p-2"><img src="../icons/profile-smartrules-noproxy-has-matched.svg" class=""></td>
 				<td>
-					当前标签页没有匹配的规则。至少有一个后续请求与规则匹配并且正在通过代理。
+					当前标签页没有匹配的规则。至少有一个后续请求匹配到某个规则并通过代理。
 					<br />
-					方案：<i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> 选择性规则
-					nil
+					配置文件：<i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> 选择性规则
+				</td>
 			</tr>
 			<tr>
 				<td class="p-2"><img src="../icons/profile-always-bypassed.svg" class=""></td>
 				<td>
-					代理适用于当前标签页内的所有请求。至少有一个后续请求通过规则绕过了代理。
+					代理应用于当前标签页中的所有请求。至少有一个后续请求通过某个规则绕过了代理。
 					<br />
-					方案：<i class="icon fa-sm fas fa-globe-americas text-success" aria-hidden="true"></i> 始终开启
-					nil
+					配置文件：<i class="icon fa-sm fas fa-globe-americas text-success" aria-hidden="true"></i> 始终启用
+				</td>
 			</tr>
 		</tbody>
 	</table>

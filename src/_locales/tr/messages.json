@@ -10,7 +10,7 @@
 		"message": "ProxyMust"
 	},
 	"extensionDescription": {
-		"message": "ProxyMust – seçici proxy yöneticisi (SmartProxy çatalı). Ziyaret ettiğiniz siteler için özelleştirilebilir kalıplara dayalı olarak proxy'yi otomatik olarak etkinleştirir/devre dışı bırakır."
+		"message": "ProxyMust – AutoProxy yöneticisi (SmartProxy çatalı). Ziyaret ettiğiniz siteler için özelleştirilebilir kalıplara dayalı olarak proxy'yi otomatik olarak etkinleştirir/devre dışı bırakır."
 	},
 	"toolbarTooltipEffectiveRule": {
 		"message": "Eşleşen kural kaynağı:"
@@ -31,7 +31,7 @@
 		"message": "Doğrudan (Proxy Yok)"
 	},
 	"popupSmartProxy": {
-		"message": "Seçici Proxy"
+		"message": "AutoProxy"
 	},
 	"popupAlwaysEnable": {
 		"message": "Her Zaman Etkin"
@@ -1237,7 +1237,7 @@
 		"message": "ProxyMust'e Hoş Geldiniz"
 	},
 	"settingsWelcomeMessage": {
-		"message": "<p>\n\tProxyMust, proxy test yeteneklerine sahip seçici proxy yöneticisi.<br>\n\tBaşlamak için lütfen şu adımları izleyin:\n</p>\n<ol>\n\t<li>\n\t\tBir proxy sunucusu veya proxy listesi ekleyin\n\t\t<br>\n\t\t<small>(Proxy Sunucuları sekmesine gidin ve oraya ekleyin)</small>\n\t</li>\n\t<li>\n\t\tModu Seçici Proxy olarak ayarlayın\n\t\t<br>\n\t\t<small>(Aktif modu Seçici Proxy olarak değiştirmek için araç çubuğu açılır menüsünü kullanın)</small>\n\t</li>\n\t<li>\n\t\tProxy kurallarını tanımlayın\n\t\t<br>\n\t\t<small>(Kural eklemek için araç çubuğu açılır menüsünü veya kural eklemek/değiştirmek için Proxy Kuralları sekmesini kullanın)</small>\n\t</li>\n\t<li>\n\t\tHazırsınız.\n\t</li>\n</ol>"
+		"message": "<p>ProxyMust — seçici proxy yöneticisi, siteler için otomatik olarak çalışan proxy seçimi ile.<br>Başlamak için lütfen şu adımları izleyin:</p>\n<ol>\n  <li>\n    <strong>Proxy ekleyin</strong><br>\n    <small>Manuel: Proxy Sunucuları sekmesine gidin ve proxy'lerinizi ekleyin.<br>\n    veya<br>\n    Abonelikler yoluyla: Proxy Sunucu Abonelikleri sekmesinde, bir proxy listesinin URL'sini belirtin – uzantı bunları otomatik olarak yükleyip güncelleyecektir.</small>\n  </li>\n  <li>\n    <strong>Proxy testini etkinleştirin</strong><br>\n    <small>Sistemin çalışan proxy'leri belirlemesi için test gereklidir. Bunun için ayarlardaki (Proxy Sunucuları bölümü) \"Proxy puanlamasını etkinleştir\" seçeneğini işaretleyin. Bundan sonra test arayüzü kullanılabilir olacak ve proxy'leri siteleriniz için test edebilirsiniz.</small>\n  </li>\n  <li>\n    <strong>Otomatik Proxy kurallarını yapılandırın</strong><br>\n    <small>Proxy kullanması gereken siteler için, Otomatik Proxy sekmesinde kurallar oluşturun. Her kural için \"Otomatik\" modunu seçebilirsiniz – sistem hata durumunda otomatik olarak çalışan bir proxy'ye geçecektir.<br>\n    Kurallar manuel olarak veya popup'taki \"Site ekle\" düğmesiyle eklenebilir. Bir sayfa proxy olmadan yüklenmiyorsa, uzantı bunu otomatik proxy'ye eklemeyi teklif edecektir (bu işlev profil ayarlarından devre dışı bırakılabilir). Ayrıca, bir site için proxy test edilirken, o site için otomatik olarak bir kural oluşturulacaktır.<br>\n    Veya sadece \"Otomatik Proxy\" modunu açın ve sörf yapmaya başlayın – bölgenizde açılan tüm siteler için herhangi bir proxy uygulanmayacak ve kısıtlı siteler için sistem çalışan bir proxy bulacak ve sizi bağlayacaktır.</small>\n  </li>\n  <li>\n    <strong>Hazır!</strong><br>\n    <small>Otomatik modda kuralları olan siteleri ziyaret ederken, ProxyMust otomatik olarak çalışan bir proxy bulacak ve hata durumunda değiştirecektir. Test sonuçları ve proxy durumları kural tablosunda gösterilir.</small>\n  </li>\n</ol>"
 	},
 	"settingsWelcomeSkipButton": {
 		"message": "Anladım"
@@ -1865,5 +1865,92 @@
 	},
 	"popupProxyPerOriginTooltip": {
 		"message": "Kaynak başına proxy'yi değiştir (yalnızca Firefox)"
+	},
+	"settingsAutoProxyTitle": {
+		"message": "Otomatik proxy ayarları"
+	},
+	"settingsRulesGridColMode": {
+		"message": "Mod"
+	},
+	"settingsAutoProxySelectionMode": {
+		"message": "Seçim modu:"
+	},
+	"settingsAutoProxyManual": {
+		"message": "Manuel"
+	},
+	"settingsAutoProxyAuto": {
+		"message": "Otomatik"
+	},
+	"settingsAutoProxyModeDesc": {
+		"message": "Otomatik modda, proxy'ler test sonuçlarına göre otomatik olarak seçilecektir."
+	},
+	"settingsAutoProxyMaxFailover": {
+		"message": "Geçiş denemesi sayısı:"
+	},
+	"settingsAutoProxyMaxFailoverDesc": {
+		"message": "Tam proxy listesinin tekrarlanan geçiş sayısı (1-10)."
+	},
+	"settingsAutoProxyShowDialog": {
+		"message": "Otomatik proxy değiştirme iletişim kutusunu göster"
+	},
+	"settingsAutoProxyAutoPin": {
+		"message": "Başarılı proxy'yi otomatik olarak sabitle (onay olmadan)"
+	},
+	"settingsAutoProxyExcludedProxies": {
+		"message": "Hariç tutulan proxy'ler:"
+	},
+	"settingsAutoProxyExcludedProxiesDesc": {
+		"message": "Bu proxy'ler otomatik modda kullanılmayacaktır."
+	},
+	"dialogPinTitle": {
+		"message": "Proxy sabitlensin mi?"
+	},
+	"dialogPinMessage": {
+		"message": "Proxy \"{1}\", {0} sitesi için çalışıyor. Bu site için sabitlensin mi?"
+	},
+	"dialogPinConfirm": {
+		"message": "Evet, sabitle"
+	},
+	"dialogPinCancel": {
+		"message": "Aramaya devam et"
+	},
+	"dialogPinCheckbox": {
+		"message": "Bu site için tekrar sorma"
+	},
+	"dialogChangeTitle": {
+		"message": "Proxy değiştirilsin mi?"
+	},
+	"dialogChangeMessage": {
+		"message": "{0} sitesi için belirlenen proxy değiştirilsin mi?"
+	},
+	"dialogChangeConfirm": {
+		"message": "Değiştir"
+	},
+	"dialogChangeCancel": {
+		"message": "Koru"
+	},
+	"dialogChangeCheckbox": {
+		"message": "Bu site için tekrar sorma"
+	},
+	"popupNoProxyFound": {
+		"message": "Bu site için proxy bulunamadı."
+	},
+	"popupAddUnreachableSiteTitle": {
+		"message": "Site yüklenmiyor"
+	},
+	"popupAddUnreachableSiteMessage": {
+		"message": "{0} sitesi proxy olmadan yüklenmiyor. Otomatik proxy'ye eklensin mi?"
+	},
+	"popupAddUnreachableSiteConfirm": {
+		"message": "Ekle"
+	},
+	"popupAddUnreachableSiteCancel": {
+		"message": "Şimdi değil"
+	},
+	"settingsAutoAddUnreachableSites": {
+		"message": "Ulaşılamayan siteleri otomatik proxy'ye eklemeyi öner"
+	},
+	"settingsAutoAddUnreachableSitesDesc": {
+		"message": "Bir sayfa yüklenmediğinde, sitenin otomatik proxy'ye eklenmesini öneren bir iletişim kutusu gösterilecektir."
 	}	
 }

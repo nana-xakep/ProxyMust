@@ -31,7 +31,7 @@
 		"message": "Bezpośrednio (bez proxy)"
 	},
 	"popupSmartProxy": {
-		"message": "Proxy selektywne"
+		"message": "AutoProxy"
 	},
 	"popupAlwaysEnable": {
 		"message": "Zawsze włączone"
@@ -1237,7 +1237,7 @@
 		"message": "Witamy w ProxyMust"
 	},
 	"settingsWelcomeMessage": {
-		"message": "<p>\n\tProxyMust – selektywny menedżer proxy z możliwością testowania proxy.<br>\n\tWykonaj następujące kroki, aby rozpocząć:\n</p>\n<ol>\n\t<li>\n\t\tDodaj serwer proxy lub listę proxy\n\t\t<br>\n\t\t<small>(Przejdź do zakładki Serwery proxy i dodaj tam)</small>\n\t</li>\n\t<li>\n\t\tUstaw tryb na Proxy selektywne\n\t\t<br>\n\t\t<small>(Użyj wyskakującego menu na pasku narzędzi, aby zmienić aktywny tryb na Proxy selektywne)</small>\n\t</li>\n\t<li>\n\t\tZdefiniuj reguły proxy\n\t\t<br>\n\t\t<small>(Użyj wyskakującego menu na pasku narzędzi do dodawania reguł lub zakładki Reguły proxy do dodawania/modyfikowania reguł)</small>\n\t</li>\n\t<li>\n\t\tGotowe.\n\t</li>\n</ol>"
+		"message": "<p>ProxyMust — selektywny menedżer proxy z automatycznym wyborem działających proxy dla stron.<br>Wykonaj następujące kroki, aby rozpocząć:</p>\n<ol>\n  <li>\n    <strong>Dodaj proxy</strong><br>\n    <small>Ręcznie: przejdź do zakładki Serwery proxy i dodaj swoje proxy.<br>\n    lub<br>\n    Przez subskrypcje: w zakładce Subskrypcje serwerów proxy podaj URL listy proxy – rozszerzenie automatycznie je załaduje i zaktualizuje.</small>\n  </li>\n  <li>\n    <strong>Włącz testowanie proxy</strong><br>\n    <small>Testowanie jest niezbędne, aby system mógł identyfikować działające proxy. W tym celu włącz opcję \"Włącz ocenianie proxy\" w ustawieniach (sekcja Serwery proxy). Następnie interfejs testowania stanie się dostępny i będziesz mógł testować proxy dla swoich stron.</small>\n  </li>\n  <li>\n    <strong>Skonfiguruj reguły Autoproxy</strong><br>\n    <small>Dla stron, które powinny używać proxy, utwórz reguły w zakładce Autoproxy. Dla każdej reguły możesz wybrać tryb \"Auto\" – system automatycznie przełączy na działające proxy w razie błędów.<br>\n    Reguły można dodawać ręcznie lub za pomocą przycisku \"Dodaj stronę\" w wyskakującym oknie. Jeśli strona nie ładuje się bez proxy, rozszerzenie zaproponuje automatyczne dodanie jej do autoproxy (tę funkcję można wyłączyć w ustawieniach profilu). Ponadto podczas testowania proxy dla strony, reguła dla niej zostanie utworzona automatycznie.<br>\n    Lub po prostu włącz tryb \"Autoproxy\" i zacznij przeglądać – dla wszystkich stron otwieranych w Twoim regionie nie będzie stosowane żadne proxy, a dla zablokowanych stron system znajdzie działające proxy i połączy Cię.</small>\n  </li>\n  <li>\n    <strong>Gotowe!</strong><br>\n    <small>Podczas odwiedzania stron z regułami w trybie automatycznym, ProxyMust automatycznie znajdzie działające proxy i przełączy je w razie błędów. Wyniki testów i statusy proxy są wyświetlane w tabeli reguł.</small>\n  </li>\n</ol>"
 	},
 	"settingsWelcomeSkipButton": {
 		"message": "Rozumiem"
@@ -1865,5 +1865,92 @@
 	},
 	"popupProxyPerOriginTooltip": {
 		"message": "Przełącz proxy na źródło (tylko Firefox)"
+	},
+	"settingsAutoProxyTitle": {
+		"message": "Ustawienia autoproxy"
+	},
+	"settingsRulesGridColMode": {
+		"message": "Tryb"
+	},
+	"settingsAutoProxySelectionMode": {
+		"message": "Tryb wyboru:"
+	},
+	"settingsAutoProxyManual": {
+		"message": "Ręczny"
+	},
+	"settingsAutoProxyAuto": {
+		"message": "Automatyczny"
+	},
+	"settingsAutoProxyModeDesc": {
+		"message": "W trybie automatycznym proxy będą wybierane automatycznie na podstawie wyników testów."
+	},
+	"settingsAutoProxyMaxFailover": {
+		"message": "Liczba prób przełączania:"
+	},
+	"settingsAutoProxyMaxFailoverDesc": {
+		"message": "Liczba powtórnych przełączeń całej listy proxy (1-10)."
+	},
+	"settingsAutoProxyShowDialog": {
+		"message": "Pokaż okno dialogowe zmiany autoproxy"
+	},
+	"settingsAutoProxyAutoPin": {
+		"message": "Automatycznie przypnij działające proxy (bez potwierdzenia)"
+	},
+	"settingsAutoProxyExcludedProxies": {
+		"message": "Wykluczone proxy:"
+	},
+	"settingsAutoProxyExcludedProxiesDesc": {
+		"message": "Te proxy nie będą używane w trybie automatycznym."
+	},
+	"dialogPinTitle": {
+		"message": "Przypiąć proxy?"
+	},
+	"dialogPinMessage": {
+		"message": "Proxy \"{1}\" działa dla strony {0}. Przypiąć je dla tej strony?"
+	},
+	"dialogPinConfirm": {
+		"message": "Tak, przypnij"
+	},
+	"dialogPinCancel": {
+		"message": "Kontynuuj wyszukiwanie"
+	},
+	"dialogPinCheckbox": {
+		"message": "Nie pytaj ponownie dla tej strony"
+	},
+	"dialogChangeTitle": {
+		"message": "Zmienić proxy?"
+	},
+	"dialogChangeMessage": {
+		"message": "Zmienić ustawione proxy dla strony {0}?"
+	},
+	"dialogChangeConfirm": {
+		"message": "Zmień"
+	},
+	"dialogChangeCancel": {
+		"message": "Zachowaj"
+	},
+	"dialogChangeCheckbox": {
+		"message": "Nie pytaj ponownie dla tej strony"
+	},
+	"popupNoProxyFound": {
+		"message": "Nie znaleziono proxy dla tej strony."
+	},
+	"popupAddUnreachableSiteTitle": {
+		"message": "Strona nie ładuje się"
+	},
+	"popupAddUnreachableSiteMessage": {
+		"message": "Strona {0} nie ładuje się bez proxy. Dodać ją do autoproxy?"
+	},
+	"popupAddUnreachableSiteConfirm": {
+		"message": "Dodaj"
+	},
+	"popupAddUnreachableSiteCancel": {
+		"message": "Nie teraz"
+	},
+	"settingsAutoAddUnreachableSites": {
+		"message": "Proponuj dodawanie niedostępnych stron do autoproxy"
+	},
+	"settingsAutoAddUnreachableSitesDesc": {
+		"message": "Gdy strona nie ładuje się, pojawi się okno dialogowe z propozycją dodania jej do autoproxy."
 	}	
 }

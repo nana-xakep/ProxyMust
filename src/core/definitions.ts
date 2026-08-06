@@ -26,6 +26,7 @@ import { api, environment } from '../lib/environment';
 import { Utils } from '../lib/Utils';
 import { ProfileOperations } from './ProfileOperations';
 
+export const DEFAULT_MAX_FAILOVER_ATTEMPTS = 3;
 export const proxyServerProtocols = ['HTTP', 'HTTPS', 'SOCKS4', 'SOCKS5'];
 export const proxyServerSubscriptionObfuscate = ['None', 'Base64'];
 export const proxyServerSubscriptionFormat = ['PlainText', 'JSON', 'CSV'];
@@ -204,6 +205,17 @@ export class CommandMessages {
     public static PopupRemoveProxyRule = 'Popup_RemoveProxyRule';
     public static PopupDisableProxyRule = 'Popup_DisableProxyRule';
     public static PopupToggleProxyPerOriginForRule = 'Popup_ToggleProxyPerOriginForRule';
+    
+    // English: Show auto-proxy change dialog for a site
+    // Russian: Показать диалог смены автопрокси для сайта
+    public static ShowAutoProxyDialog = 'ShowAutoProxyDialog';
+    // English: User response to auto-proxy dialog (change/keep)
+    // Russian: Ответ пользователя на диалог автопрокси (сменить/оставить)
+    public static AutoProxyDialogResponse = 'AutoProxyDialogResponse';	
+    // English: Dialog response from dialog window
+    // Russian: Ответ диалога из окна диалога
+    public static DialogResponse = 'DIALOG_RESPONSE';
+    public static OpenChangeDialog = 'OPEN_CHANGE_DIALOG';	
 	
 }
 export enum BrowserProxySettingsType {
@@ -504,6 +516,30 @@ export class SmartProfileBase {
 export class SmartProfile extends SmartProfileBase {
 	public proxyRules: ProxyRule[] = [];
 	public rulesSubscriptions: ProxyRulesSubscription[] = [];
+	// English: AutoProxy settings (selection mode, failover attempts, excluded proxies)
+    // Russian: Настройки AutoProxy (режим выбора, попытки failover, исключённые прокси)
+    public selectionMode?: 'manual' | 'auto' = 'manual';
+    public autoProxySettings?: {
+        maxFailoverAttempts?: number;   // по умолчанию 3
+        excludedProxies?: string[];      // глобально исключённые
+        excludedForSite?: { [site: string]: string[] }; // исключения для сайта
+    };
+    // English: Auto-pin on success (without confirmation)
+    // Russian: Автоматически закреплять успешный прокси (без подтверждения)
+    public autoPinSuccess: boolean = false;
+    // English: Show dialog for auto-proxy change
+    // Russian: Показывать диалог смены автопрокси
+    public showAutoDialog: boolean = true;
+    // English: Lists of sites for which pin/change dialogs should be suppressed
+    // Russian: Списки сайтов, для которых диалоги закрепления/смены должны подавляться
+    public suppressPinDialogForSites?: string[] = [];
+    public suppressChangeDialogForSites?: string[] = [];	
+    // English: List of sites for which add-site dialog should be suppressed
+    // Russian: Список сайтов, для которых диалог добавления сайта должен подавляться
+    public suppressAddSiteDialogForSites?: string[] = [];
+    // English: Automatically suggest adding unreachable sites to auto-proxy rules
+    // Russian: Автоматически предлагать добавлять недоступные сайты в правила автопрокси
+    public autoAddUnreachableSites: boolean = true;	
 }
 
 export class SmartProfileCompiled extends SmartProfileBase {
@@ -594,7 +630,10 @@ export function getBuiltinSmartProfiles(): SmartProfile[] {
 			proxyRules: [],
 			enabled: true,
 			rulesSubscriptions: [],
-			profileProxyServerId: null
+			profileProxyServerId: null,
+			autoPinSuccess: false,
+			showAutoDialog: true,
+			autoAddUnreachableSites: true
 		},
 		{
 			profileId: SmartProfileTypeBuiltinIds.SmartRules,
@@ -604,7 +643,10 @@ export function getBuiltinSmartProfiles(): SmartProfile[] {
 			proxyRules: [],
 			enabled: true,
 			rulesSubscriptions: [],
-			profileProxyServerId: null
+			profileProxyServerId: null,
+			autoPinSuccess: false,
+			showAutoDialog: true,
+			autoAddUnreachableSites: true
 		},
 		{
 			profileId: SmartProfileTypeBuiltinIds.AlwaysEnabled,
@@ -640,7 +682,10 @@ export function getBuiltinSmartProfiles(): SmartProfile[] {
 			],
 			enabled: true,
 			rulesSubscriptions: [],
-			profileProxyServerId: null
+			profileProxyServerId: null,
+			autoPinSuccess: false,
+			showAutoDialog: true,
+			autoAddUnreachableSites: true
 		},
 		{
 			profileId: SmartProfileTypeBuiltinIds.SystemProxy,
@@ -650,7 +695,10 @@ export function getBuiltinSmartProfiles(): SmartProfile[] {
 			proxyRules: [],
 			enabled: true,
 			rulesSubscriptions: [],
-			profileProxyServerId: null
+			profileProxyServerId: null,
+			autoPinSuccess: false,
+			showAutoDialog: true,
+			autoAddUnreachableSites: true
 		},
 	];
 }
@@ -967,7 +1015,12 @@ export class ProxyRule implements Cloneable {
 	public proxyServerId: string;
 	public enabled: boolean = true;
 	public whiteList: boolean = false;
+	public isAuto?: boolean = false;
     public enableProxyPerOrigin: boolean = false;
+    // English: AutoProxy mode for this rule: 'auto' or 'manual' (default 'auto')
+    // Russian: Режим AutoProxy для этого правила: 'auto' или 'manual' (по умолчанию 'auto')
+    public mode: 'auto' | 'manual' = 'auto';
+
 	
 	get ruleTypeName(): string {
 		return ProxyRuleType[this.ruleType];
@@ -1051,6 +1104,8 @@ export class ProxyRule implements Cloneable {
 
 		if (source['whiteList'] != null)
 			this.whiteList = source['whiteList'] == true ? true : false;
+		
+		if (source['isAuto'] != null) this.isAuto = source['isAuto'] == true ? true : false;
 
 		if (this.proxy) {
 			if (!Settings.validateProxyServer(this.proxy, false, true).success) {
@@ -1174,8 +1229,9 @@ export enum SpecialRequestApplyProxyMode {
 	SelectedProxy,
 }
 export enum ProxyServerSubscriptionFormat {
-	PlainText,
-	Json,
+    PlainText,
+    Json,
+    Csv,
 }
 
 export class SubscriptionStats {
@@ -1519,6 +1575,9 @@ export interface UserPreferences {
     staleHours: number;
     /** Manually added sites for testing (not from Smart Profiles) */
     manualSites: string[];
+    /** English: Temporarily pinned proxies per site (session-only, cleared on browser restart)
+        Russian: Временно закреплённые прокси для сайтов (на сессию, сбрасываются при перезапуске браузера) */
+    pinnedProxies?: { [site: string]: string };
 }
 // Adding fields to SettingsConfig (will be merged in Settings.ts)
 // Эти поля будут добавлены в класс SettingsConfig (см. Settings.ts)

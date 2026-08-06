@@ -10,7 +10,7 @@
 		"message": "ProxyMust"
 	},
 	"extensionDescription": {
-		"message": "ProxyMust – trình quản lý proxy chọn lọc (phân nhánh từ SmartProxy). Tự động bật/tắt proxy cho các trang bạn truy cập dựa trên các mẫu có thể tùy chỉnh."
+		"message": "ProxyMust – trình quản lý AutoProxy (phân nhánh từ SmartProxy). Tự động bật/tắt proxy cho các trang bạn truy cập dựa trên các mẫu có thể tùy chỉnh."
 	},
 	"toolbarTooltipEffectiveRule": {
 		"message": "Nguồn quy tắc khớp:"
@@ -31,7 +31,7 @@
 		"message": "Trực tiếp (Không proxy)"
 	},
 	"popupSmartProxy": {
-		"message": "Proxy chọn lọc"
+		"message": "AutoProxy"
 	},
 	"popupAlwaysEnable": {
 		"message": "Luôn bật"
@@ -1237,7 +1237,7 @@
 		"message": "Chào mừng bạn đến với ProxyMust"
 	},
 	"settingsWelcomeMessage": {
-		"message": "<p>\n\tProxyMust, trình quản lý proxy chọn lọc với khả năng kiểm tra proxy.<br>\n\tVui lòng làm theo các bước sau để bắt đầu:\n</p>\n<ol>\n\t<li>\n\t\tThêm máy chủ proxy hoặc danh sách proxy\n\t\t<br>\n\t\t<small>(Chuyển đến tab Máy chủ Proxy và thêm tại đó)</small>\n\t</li>\n\t<li>\n\t\tĐặt chế độ thành Proxy chọn lọc\n\t\t<br>\n\t\t<small>(Sử dụng menu bật lên trên thanh công cụ để thay đổi chế độ hoạt động thành Proxy chọn lọc)</small>\n\t</li>\n\t<li>\n\t\tĐịnh nghĩa quy tắc proxy\n\t\t<br>\n\t\t<small>(Sử dụng menu bật lên trên thanh công cụ để thêm quy tắc hoặc tab Quy tắc Proxy để thêm/sửa đổi quy tắc máy chủ proxy)</small>\n\t</li>\n\t<li>\n\t\tBạn đã sẵn sàng.\n\t</li>\n</ol>"
+		"message": "<p>ProxyMust — trình quản lý proxy chọn lọc với khả năng tự động chọn proxy hoạt động cho các trang web.<br>Vui lòng làm theo các bước sau để bắt đầu:</p>\n<ol>\n  <li>\n    <strong>Thêm proxy</strong><br>\n    <small>Thủ công: chuyển đến tab Máy chủ Proxy và thêm proxy của bạn.<br>\n    hoặc<br>\n    Thông qua đăng ký: trên tab Đăng ký Máy chủ Proxy, chỉ định URL của một danh sách proxy – tiện ích sẽ tự động tải và cập nhật chúng.</small>\n  </li>\n  <li>\n    <strong>Bật kiểm tra proxy</strong><br>\n    <small>Kiểm tra là cần thiết để hệ thống xác định proxy hoạt động. Để làm điều này, hãy bật hộp kiểm \"Bật xếp hạng proxy\" trong cài đặt (phần Máy chủ Proxy). Sau đó, giao diện kiểm tra sẽ khả dụng và bạn có thể kiểm tra proxy cho các trang web của mình.</small>\n  </li>\n  <li>\n    <strong>Cấu hình quy tắc Tự động Proxy</strong><br>\n    <small>Đối với các trang web nên sử dụng proxy, hãy tạo quy tắc trong tab Tự động Proxy. Đối với mỗi quy tắc, bạn có thể chọn chế độ \"Tự động\" – hệ thống sẽ tự động chuyển sang proxy hoạt động khi có lỗi.<br>\n    Quy tắc có thể được thêm thủ công hoặc thông qua nút \"Thêm trang\" trong popup. Nếu một trang không tải được mà không có proxy, tiện ích sẽ đề xuất tự động thêm nó vào tự động proxy (tính năng này có thể bị tắt trong cài đặt hồ sơ). Ngoài ra, khi kiểm tra proxy cho một trang, quy tắc cho trang đó sẽ được tạo tự động.<br>\n    Hoặc chỉ cần bật chế độ \"Tự động Proxy\" và bắt đầu duyệt web – đối với tất cả các trang mở trong khu vực của bạn, sẽ không có proxy nào được áp dụng, và đối với các trang bị hạn chế, hệ thống sẽ tìm một proxy hoạt động và kết nối bạn.</small>\n  </li>\n  <li>\n    <strong>Bạn đã sẵn sàng!</strong><br>\n    <small>Khi truy cập các trang có quy tắc ở chế độ tự động, ProxyMust sẽ tự động tìm một proxy hoạt động và chuyển đổi khi có lỗi. Kết quả kiểm tra và trạng thái proxy được hiển thị trong bảng quy tắc.</small>\n  </li>\n</ol>"
 	},
 	"settingsWelcomeSkipButton": {
 		"message": "Đã hiểu"
@@ -1865,5 +1865,92 @@
 	},
 	"popupProxyPerOriginTooltip": {
 		"message": "Chuyển đổi proxy theo nguồn (chỉ Firefox)"
+	},
+	"settingsAutoProxyTitle": {
+		"message": "Cài đặt tự động proxy"
+	},
+	"settingsRulesGridColMode": {
+		"message": "Chế độ"
+	},
+	"settingsAutoProxySelectionMode": {
+		"message": "Chế độ chọn:"
+	},
+	"settingsAutoProxyManual": {
+		"message": "Thủ công"
+	},
+	"settingsAutoProxyAuto": {
+		"message": "Tự động"
+	},
+	"settingsAutoProxyModeDesc": {
+		"message": "Trong chế độ tự động, proxy sẽ được chọn tự động dựa trên kết quả kiểm tra."
+	},
+	"settingsAutoProxyMaxFailover": {
+		"message": "Số lần thử chuyển đổi:"
+	},
+	"settingsAutoProxyMaxFailoverDesc": {
+		"message": "Số lần chuyển đổi lặp lại toàn bộ danh sách proxy (1-10)."
+	},
+	"settingsAutoProxyShowDialog": {
+		"message": "Hiển thị hộp thoại thay đổi tự động proxy"
+	},
+	"settingsAutoProxyAutoPin": {
+		"message": "Tự động ghim proxy thành công (không cần xác nhận)"
+	},
+	"settingsAutoProxyExcludedProxies": {
+		"message": "Proxy bị loại trừ:"
+	},
+	"settingsAutoProxyExcludedProxiesDesc": {
+		"message": "Các proxy này sẽ không được sử dụng trong chế độ tự động."
+	},
+	"dialogPinTitle": {
+		"message": "Ghim proxy?"
+	},
+	"dialogPinMessage": {
+		"message": "Proxy \"{1}\" hoạt động cho trang {0}. Ghim nó cho trang này?"
+	},
+	"dialogPinConfirm": {
+		"message": "Có, ghim"
+	},
+	"dialogPinCancel": {
+		"message": "Tiếp tục tìm kiếm"
+	},
+	"dialogPinCheckbox": {
+		"message": "Không hỏi lại cho trang này"
+	},
+	"dialogChangeTitle": {
+		"message": "Đổi proxy?"
+	},
+	"dialogChangeMessage": {
+		"message": "Đổi proxy đã đặt cho trang {0}?"
+	},
+	"dialogChangeConfirm": {
+		"message": "Đổi"
+	},
+	"dialogChangeCancel": {
+		"message": "Giữ nguyên"
+	},
+	"dialogChangeCheckbox": {
+		"message": "Không hỏi lại cho trang này"
+	},
+	"popupNoProxyFound": {
+		"message": "Không tìm thấy proxy cho trang này."
+	},
+	"popupAddUnreachableSiteTitle": {
+		"message": "Trang không tải được"
+	},
+	"popupAddUnreachableSiteMessage": {
+		"message": "Trang {0} không tải được nếu không có proxy. Thêm vào tự động proxy?"
+	},
+	"popupAddUnreachableSiteConfirm": {
+		"message": "Thêm"
+	},
+	"popupAddUnreachableSiteCancel": {
+		"message": "Không phải bây giờ"
+	},
+	"settingsAutoAddUnreachableSites": {
+		"message": "Đề xuất thêm các trang không truy cập được vào tự động proxy"
+	},
+	"settingsAutoAddUnreachableSitesDesc": {
+		"message": "Khi phát hiện trang không tải, sẽ hiển thị hộp thoại đề xuất thêm trang vào tự động proxy."
 	}	
 }

@@ -10,7 +10,7 @@
 		"message": "ProxyMust"
 	},
 	"extensionDescription": {
-		"message": "ProxyMust – 選択的プロキシマネージャー（SmartProxy のフォーク）。カスタマイズ可能なパターンに基づいて、訪問するサイトのプロキシを自動的に有効/無効にします。"
+		"message": "ProxyMust – AutoProxyマネージャー（SmartProxy のフォーク）。カスタマイズ可能なパターンに基づいて、訪問するサイトのプロキシを自動的に有効/無効にします。"
 	},
 	"toolbarTooltipEffectiveRule": {
 		"message": "一致したルールのソース:"
@@ -31,7 +31,7 @@
 		"message": "直接接続（プロキシなし）"
 	},
 	"popupSmartProxy": {
-		"message": "選択的プロキシ"
+		"message": "AutoProxy"
 	},
 	"popupAlwaysEnable": {
 		"message": "常に有効"
@@ -1237,7 +1237,7 @@
 		"message": "ProxyMust へようこそ"
 	},
 	"settingsWelcomeMessage": {
-		"message": "<p>\n\tProxyMust は、プロキシテスト機能を備えた選択的プロキシマネージャーです。<br>\n\t開始するには、次の手順に従ってください:\n</p>\n<ol>\n\t<li>\n\t\tプロキシサーバーまたはプロキシリストを追加する\n\t\t<br>\n\t\t<small>（[プロキシサーバー] タブに移動して追加してください）</small>\n\t</li>\n\t<li>\n\t\tモードを [選択的プロキシ] に設定する\n\t\t<br>\n\t\t<small>（ツールバーのポップアップメニューを使用して、アクティブモードを [選択的プロキシ] に変更してください）</small>\n\t</li>\n\t<li>\n\t\tプロキシルールを定義する\n\t\t<br>\n\t\t<small>（ツールバーのポップアップメニューを使用してルールを追加するか、[プロキシルール] タブからルールを追加/変更してください）</small>\n\t</li>\n\t<li>\n\t\t準備完了です。\n\t</li>\n</ol>"
+		"message": "<p>ProxyMust — 選択的プロキシマネージャー。サイトに対して自動的に動作するプロキシを選択します。<br>開始するには、次の手順に従ってください:</p>\n<ol>\n  <li>\n    <strong>プロキシを追加</strong><br>\n    <small>手動: [プロキシサーバー] タブに移動し、プロキシを追加します。<br>\n    または<br>\n    サブスクリプション経由: [プロキシサーバーサブスクリプション] タブでプロキシリストのURLを指定すると、拡張機能が自動的にロードして更新します。</small>\n  </li>\n  <li>\n    <strong>プロキシテストを有効にする</strong><br>\n    <small>システムが動作するプロキシを識別するためにテストが必要です。そのためには、設定（プロキシサーバーセクション）の「プロキシ評価を有効にする」チェックボックスをオンにします。その後、テストインターフェースが利用可能になり、サイトのプロキシをテストできます。</small>\n  </li>\n  <li>\n    <strong>オートプロキシルールを設定する</strong><br>\n    <small>プロキシを使用するサイトについては、オートプロキシタブでルールを作成します。各ルールで「オート」モードを選択すると、エラー時にシステムが自動的に動作するプロキシに切り替えます。<br>\n    ルールは手動で、またはポップアップの「サイトを追加」ボタンから追加できます。プロキシなしでページが読み込まれない場合、拡張機能は自動的にオートプロキシに追加することを提案します（この機能はプロファイル設定で無効にできます）。また、サイトのプロキシをテストすると、そのサイトのルールが自動的に作成されます。<br>\n    または、単に「オートプロキシ」モードを有効にしてブラウジングを開始してください – あなたの地域で開くすべてのサイトにはプロキシは適用されず、制限されたサイトに対してはシステムが動作するプロキシを見つけて接続します。</small>\n  </li>\n  <li>\n    <strong>準備完了！</strong><br>\n    <small>オートモードのルールがあるサイトを訪問すると、ProxyMustは自動的に動作するプロキシを見つけ、エラー時に切り替えます。テスト結果とプロキシのステータスはルールテーブルに表示されます。</small>\n  </li>\n</ol>"
 	},
 	"settingsWelcomeSkipButton": {
 		"message": "了解"
@@ -1865,5 +1865,92 @@
 	},
 	"popupProxyPerOriginTooltip": {
 		"message": "オリジンごとのプロキシを切り替え (Firefoxのみ)"
+	},
+	"settingsAutoProxyTitle": {
+		"message": "オートプロキシ設定"
+	},
+	"settingsRulesGridColMode": {
+		"message": "モード"
+	},
+	"settingsAutoProxySelectionMode": {
+		"message": "選択モード:"
+	},
+	"settingsAutoProxyManual": {
+		"message": "手動"
+	},
+	"settingsAutoProxyAuto": {
+		"message": "自動"
+	},
+	"settingsAutoProxyModeDesc": {
+		"message": "オートモードでは、テスト結果に基づいてプロキシが自動的に選択されます。"
+	},
+	"settingsAutoProxyMaxFailover": {
+		"message": "切り替え試行回数:"
+	},
+	"settingsAutoProxyMaxFailoverDesc": {
+		"message": "プロキシリスト全体の繰り返し切り替え回数（1-10）。"
+	},
+	"settingsAutoProxyShowDialog": {
+		"message": "オートプロキシ変更ダイアログを表示"
+	},
+	"settingsAutoProxyAutoPin": {
+		"message": "成功したプロキシを自動的にピン留め（確認なし）"
+	},
+	"settingsAutoProxyExcludedProxies": {
+		"message": "除外するプロキシ:"
+	},
+	"settingsAutoProxyExcludedProxiesDesc": {
+		"message": "これらのプロキシはオートモードで使用されません。"
+	},
+	"dialogPinTitle": {
+		"message": "プロキシをピン留めしますか？"
+	},
+	"dialogPinMessage": {
+		"message": "プロキシ \"{1}\" はサイト {0} で機能しています。このサイトにピン留めしますか？"
+	},
+	"dialogPinConfirm": {
+		"message": "はい、ピン留め"
+	},
+	"dialogPinCancel": {
+		"message": "検索を続ける"
+	},
+	"dialogPinCheckbox": {
+		"message": "このサイトでは今後確認しない"
+	},
+	"dialogChangeTitle": {
+		"message": "プロキシを変更しますか？"
+	},
+	"dialogChangeMessage": {
+		"message": "サイト {0} に設定されたプロキシを変更しますか？"
+	},
+	"dialogChangeConfirm": {
+		"message": "変更"
+	},
+	"dialogChangeCancel": {
+		"message": "維持"
+	},
+	"dialogChangeCheckbox": {
+		"message": "このサイトでは今後確認しない"
+	},
+	"popupNoProxyFound": {
+		"message": "このサイトのプロキシは見つかりませんでした。"
+	},
+	"popupAddUnreachableSiteTitle": {
+		"message": "サイトが読み込まれません"
+	},
+	"popupAddUnreachableSiteMessage": {
+		"message": "サイト {0} はプロキシなしでは読み込まれません。オートプロキシに追加しますか？"
+	},
+	"popupAddUnreachableSiteConfirm": {
+		"message": "追加"
+	},
+	"popupAddUnreachableSiteCancel": {
+		"message": "今はしない"
+	},
+	"settingsAutoAddUnreachableSites": {
+		"message": "到達不能サイトをオートプロキシに追加するよう提案する"
+	},
+	"settingsAutoAddUnreachableSitesDesc": {
+		"message": "ページが読み込まれない場合、サイトをオートプロキシに追加する提案を含むダイアログが表示されます。"
 	}	
 }

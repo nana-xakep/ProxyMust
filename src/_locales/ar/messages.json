@@ -31,7 +31,7 @@
 		"message": "مباشرة (بدون بروكسي)"
 	},
 	"popupSmartProxy": {
-		"message": "البروكسي الانتقائي"
+		"message": "AutoProxy"
 	},
 	"popupAlwaysEnable": {
 		"message": "مفعّل دائمًا"
@@ -1237,7 +1237,7 @@
 		"message": "مرحبًا بك في ProxyMust"
 	},
 	"settingsWelcomeMessage": {
-		"message": "<p>\n\tProxyMust، مدير بروكسي انتقائي مع إمكانية اختبار البروكسيات.<br>\n\tيرجى اتباع الخطوات التالية للبدء:\n</p>\n<ol>\n\t<li>\n\t\tأضف خادم بروكسي أو قائمة بروكسيات\n\t\t<br>\n\t\t<small>(انتقل إلى علامة تبويب خوادم البروكسي وأضف هناك)</small>\n\t</li>\n\t<li>\n\t\tاضبط الوضع على البروكسي الانتقائي\n\t\t<br>\n\t\t<small>(استخدم القائمة المنبثقة في شريط الأدوات لتغيير الوضع النشط إلى البروكسي الانتقائي)</small>\n\t</li>\n\t<li>\n\t\tحدد قواعد البروكسي\n\t\t<br>\n\t\t<small>(استخدم القائمة المنبثقة لشريط الأدوات لإضافة القواعد أو علامة تبويب قواعد البروكسي لإضافة/تعديل قواعد خادم البروكسي)</small>\n\t</li>\n\t<li>\n\t\tأنت الآن جاهز.\n\t</li>\n</ol>"
+		 "message": "<p>ProxyMust — مدير بروكسي انتقائي مع اختيار تلقائي للبروكسيات العاملة للمواقع.<br>يرجى اتباع الخطوات التالية للبدء:</p>\n<ol>\n  <li>\n    <strong>أضف بروكسيات</strong><br>\n    <small>يدوياً: انتقل إلى علامة تبويب خوادم البروكسي وأضف بروكسياتك.<br>\n    أو<br>\n    عبر الاشتراكات: في علامة تبويب اشتراكات خوادم البروكسي، حدد عنوان URL لقائمة بروكسيات – ستقوم الإضافة بتحميلها وتحديثها تلقائياً.</small>\n  </li>\n  <li>\n    <strong>فعّل اختبار البروكسي</strong><br>\n    <small>الاختبار ضروري لكي يتمكن النظام من تحديد البروكسيات العاملة. للقيام بذلك، فعّل خانة الاختيار \"تفعيل تقييم البروكسي\" في الإعدادات (قسم خوادم البروكسي). بعد ذلك، ستكون واجهة الاختبار متاحة ويمكنك اختبار البروكسيات لمواقعك.</small>\n  </li>\n  <li>\n    <strong>قم بتكوين قواعد البروكسي التلقائي</strong><br>\n    <small>للمواقع التي يجب أن تستخدم بروكسي، أنشئ قواعد في علامة تبويب البروكسي التلقائي. لكل قاعدة، يمكنك تحديد وضع \"تلقائي\" – سيقوم النظام تلقائياً بالتبديل إلى بروكسي عامل عند حدوث أخطاء.<br>\n    يمكن إضافة القواعد يدوياً أو عبر زر \"إضافة موقع\" في النافذة المنبثقة. إذا لم يتم تحميل صفحة بدون بروكسي، ستعرض الإضافة إضافتها تلقائياً إلى البروكسي التلقائي (يمكن تعطيل هذه الميزة في إعدادات الملف الشخصي). أيضاً، عند اختبار بروكسي لموقع، سيتم إنشاء قاعدة له تلقائياً.<br>\n    أو ببساطة فعّل وضع \"البروكسي التلقائي\" وابدأ التصفح – بالنسبة لجميع المواقع المفتوحة في منطقتك، لن يتم تطبيق أي بروكسي، وبالنسبة للمواقع المقيدة، سيجد النظام بروكسي عاملاً ويوصلك به.</small>\n  </li>\n  <li>\n    <strong>أنت الآن جاهز!</strong><br>\n    <small>عند زيارة مواقع مع قواعد في الوضع التلقائي، سيجد ProxyMust تلقائياً بروكسي عاملاً ويبدله عند الأخطاء. تظهر نتائج الاختبارات وحالات البروكسيات في جدول القواعد.</small>\n  </li>\n</ol>"
 	},
 	"settingsWelcomeSkipButton": {
 		"message": "حسنًا"
@@ -1865,5 +1865,92 @@
 	},
 	"popupProxyPerOriginTooltip": {
 		"message": "تبديل الوكيل لكل مصدر (فايرفوكس فقط)"
-	}
+	},
+	"settingsAutoProxyTitle": {
+		"message": "إعدادات البروكسي التلقائي"
+	},
+	"settingsRulesGridColMode": {
+		"message": "الوضع"
+	},
+	"settingsAutoProxySelectionMode": {
+		"message": "وضع الاختيار:"
+	},
+	"settingsAutoProxyManual": {
+		"message": "يدوي"
+	},
+	"settingsAutoProxyAuto": {
+		"message": "تلقائي"
+	},
+	"settingsAutoProxyModeDesc": {
+		"message": "في الوضع التلقائي، سيتم اختيار البروكسيات تلقائياً بناءً على نتائج الاختبارات."
+	},
+	"settingsAutoProxyMaxFailover": {
+		"message": "عدد محاولات التبديل:"
+	},
+	"settingsAutoProxyMaxFailoverDesc": {
+		"message": "عدد عمليات التبديل المتكررة لقائمة البروكسيات الكاملة (1-10)."
+	},
+	"settingsAutoProxyShowDialog": {
+		"message": "عرض مربع حوار تغيير البروكسي التلقائي"
+	},
+	"settingsAutoProxyAutoPin": {
+		"message": "تثبيت البروكسي الناجح تلقائياً (بدون تأكيد)"
+	},
+	"settingsAutoProxyExcludedProxies": {
+		"message": "البروكسيات المستثناة:"
+	},
+	"settingsAutoProxyExcludedProxiesDesc": {
+		"message": "لن يتم استخدام هذه البروكسيات في الوضع التلقائي."
+	},
+	"dialogPinTitle": {
+		"message": "هل تريد تثبيت البروكسي؟"
+	},
+	"dialogPinMessage": {
+		"message": "البروكسي \"{1}\" يعمل للموقع {0}. هل تريد تثبيته لهذا الموقع؟"
+	},
+	"dialogPinConfirm": {
+		"message": "نعم، تثبيت"
+	},
+	"dialogPinCancel": {
+		"message": "مواصلة البحث"
+	},
+	"dialogPinCheckbox": {
+		"message": "لا تسأل مرة أخرى لهذا الموقع"
+	},
+	"dialogChangeTitle": {
+		"message": "هل تريد تغيير البروكسي؟"
+	},
+	"dialogChangeMessage": {
+		"message": "هل تريد تغيير البروكسي المحدد للموقع {0}؟"
+	},
+	"dialogChangeConfirm": {
+		"message": "تغيير"
+	},
+	"dialogChangeCancel": {
+		"message": "إبقاء"
+	},
+	"dialogChangeCheckbox": {
+		"message": "لا تسأل مرة أخرى لهذا الموقع"
+	},
+	"popupNoProxyFound": {
+		"message": "لم يتم العثور على بروكسي لهذا الموقع."
+	},
+	"popupAddUnreachableSiteTitle": {
+		"message": "الموقع لا يتم تحميله"
+	},
+	"popupAddUnreachableSiteMessage": {
+		"message": "الموقع {0} لا يتم تحميله بدون بروكسي. هل تريد إضافته إلى البروكسي التلقائي؟"
+	},
+	"popupAddUnreachableSiteConfirm": {
+		"message": "إضافة"
+	},
+	"popupAddUnreachableSiteCancel": {
+		"message": "ليس الآن"
+	},
+	"settingsAutoAddUnreachableSites": {
+		"message": "اقتراح إضافة المواقع غير المتاحة إلى البروكسي التلقائي"
+	},
+	"settingsAutoAddUnreachableSitesDesc": {
+		"message": "عند اكتشاف عدم تحميل الصفحة، سيظهر حوار يقترح إضافة الموقع إلى البروكسي التلقائي."
+	}	
 }

@@ -5,22 +5,19 @@
 	<em>ProxyMust is een fork van de SmartProxy-extensie. We respecteren en bedanken de oorspronkelijke auteur <strong>Salar Khalilzadeh</strong> voor zijn uitstekende werk.
 	De originele SmartProxy is te vinden op <a href="https://github.com/salarcode/SmartProxy" target="_blank">https://github.com/salarcode/SmartProxy</a>.</em>
 </p>
-<p data-localize="settingsTabAboutDescription">
-	Zie het als een eenmalig instellen en vergeten-oplossing. Proxy's gebruiken is nog nooit zo eenvoudig geweest met ProxyMust.
-	Met ProxyMust hoef je je proxy-instellingen niet handmatig te wijzigen of in en uit te schakelen.
-	Vertel ProxyMust eenvoudig om de proxy voor je gewenste website in te schakelen met slechts één klik.
-	Daarna zal ProxyMust, wanneer je die specifieke website bezoekt, automatisch al je gegevens via de proxy routeren zonder dat er verdere actie van jou nodig is.
+<p>
+	ProxyMust geeft u volledige controle over proxy-verbindingen. U voegt uw eigen proxy-servers handmatig of via abonnementen toe, en het ingebouwde automatische testsysteem controleert hun prestaties voor elke website, selecteert de beste en sorteert ze op beoordeling, prioriteit en versheid van de resultaten. Met deze instellingen kunt u ProxyMust het automatisch wisselen van proxies voor sites die niet zonder proxy openen toevertrouwen – de Auto Proxy-modus vindt een werkende proxy en verbindt u met de gewenste site, zonder extra moeite van uw kant.
 </p>
 <p>
 	ProxyMust biedt een verscheidenheid aan functies die geschikt zijn voor zowel beginners als gevorderde gebruikers, waaronder:
 </p>
 <ul>
-	<li>Schakel de proxy in voor één site op een tabblad, en alles op dat tabblad zal automatisch de proxy gebruiken. Deze functie heet proxy-per-tabblad.</li>
-	<li>Detecteer automatisch wanneer de proxy moet worden in- of uitgeschakeld voor bepaalde websites op basis van regelpatronen.</li>
-	<li>Schakel eenvoudig tussen meerdere proxyservers als je actieve proxyserver-instelling.</li>
-	<li>Schakel de proxy in voor de huidige site met slechts één klik.</li>
-	<li>Bekijk de bronnen en verzoeken van de huidige website en beslis of je de proxy ervoor wilt inschakelen met één klik.</li>
-	<li>Schakel eenvoudig tussen proxymodi of schakel de proxy in voor alle domeinen.</li>
+	<li>Proxy inschakelen voor een enkele site in een tabblad – alles wat in dat tabblad wordt geopend, gebruikt automatisch de proxy. Deze functie heet "proxy per tabblad".</li>
+	<li>Automatisch detecteren of proxy moet worden in- of uitgeschakeld voor bepaalde sites op basis van regels.</li>
+	<li>Snel schakelen tussen meerdere proxy-servers als actieve proxy.</li>
+	<li>Proxy inschakelen voor de huidige site met één klik.</li>
+	<li>Resources en aanvragen van de huidige site bekijken en proxy ervoor inschakelen met één klik.</li>
+	<li>Gemakkelijk schakelen tussen proxy-modi of proxy inschakelen voor alle domeinen.</li>
 	<li>Back-up en herstel van instellingen en regels.</li>
 </ul>
 <br />
@@ -29,30 +26,30 @@
 <p>
 <div class="text-info">
 	<i class="fas fa-info-circle" aria-hidden="true"></i>
-	ProxyMust biedt geen enkele vorm van proxyservers aan.
+	ProxyMust biedt geen proxy-servers aan.
 </div>
 <div class="text-danger">
 	<i class="fas fa-eye-slash" aria-hidden="true"></i>
-	ProxyMust volgt je op geen enkele manier.
+	ProxyMust volgt u op geen enkele manier.
 </div>
 <div class="text-warning">
 	<i class="fas fa-eye-slash" aria-hidden="true"></i>
-	ProxyMust is advertentievrij en interfereert niet met webpagina's en inhoud.
+	ProxyMust is advertentievrij en interfereert niet met webpagina-inhoud.
 </div>
 </p>
 <br />
 
-<h3>Je feedback is belangrijk</h3>
+<h3>Uw feedback is belangrijk</h3>
 <p>
 <div>
 	<i class="fas fa-star text-warning"></i>
-	Als je <i class="fas fa-heart text-danger"></i> van ProxyMust houdt, beoordeel het dan op de
-	<a id="linkAddonsMarket" href="#" target="_blank">Extensies</a> pagina.
+	Als u <i class="fas fa-heart text-danger"></i> ProxyMust leuk vindt, beoordeel het dan op de
+	<a id="linkAddonsMarket" href="#" target="_blank">extensiepagina</a>.
 </div>
-<div>
+<div class="">
 	<i class="fas fa-question-circle text-primary"></i>
-	Als je vragen of problemen hebt, bezoek dan de issue-pagina en open een ticket om
-	<a href="https://github.com/nana-xakep/ProxyMust/issues" target="_blank">problemen te melden</a>.
+	Als u vragen of problemen heeft, bezoek dan de issue-tracker en open een ticket om
+	<a href="https://github.com/nana-xakep/ProxyMust/issues" target="_blank">een probleem te melden</a>.
 </div>
 </p>
 <br />
@@ -64,46 +61,55 @@
 	<li>Voor elke proxy en elke geteste site wordt de status weergegeven:
 		<ul>
 			<li>✅ – werkt zeker voor deze site (vers succes)</li>
-			<li>☑️ – werkt waarschijnlijk (succes was eerder of verkregen voor een andere site)</li>
+			<li>☑️ – werkt waarschijnlijk (succes was eerder of voor een andere site)</li>
 			<li>❓ – geen gegevens (proxy niet getest voor deze site)</li>
 			<li>⛔ – werkt niet (verse mislukking)</li>
 		</ul>
 	</li>
 	<li>De beoordeling van elke proxy verandert automatisch op basis van testresultaten: <strong>+1 bij succes</strong>, <strong>-1 bij mislukking</strong>.</li>
-	<li>U kunt de beoordeling ook handmatig wijzigen via het contextmenu (rechtsklik op een proxyrij in de tabel of op de actieve proxy in het werkbalkpop-upmenu).</li>
-	<li>Statussen worden als "vers" beschouwd gedurende een configureerbaar aantal uren (standaard 6). Als gegevens verouderd zijn, wordt een indirecte status (☑️) gebruikt.</li>
+	<li>U kunt de beoordeling ook handmatig wijzigen via het contextmenu (rechtsklik op een proxyrij in de tabel of op de actieve proxy in de toolbarbubble).</li>
+	<li>Statussen worden gedurende een configureerbaar aantal uren als "vers" beschouwd (standaard 6). Als gegevens verouderd zijn, wordt een indirecte status (☑️) gebruikt.</li>
 </ul>
 
-<h4>📋 Beheer van de proxylijst</h4>
+<h4>📋 Beheer van de proxy-lijst</h4>
 <ul>
-	<li><strong>Contextmenu in de proxy-tabel (rechtsklik)</strong> – snel de beoordeling wijzigen, prioriteit (vastzetten, ster), geselecteerde exporteren, adressen kopiëren, verwijderen, statussen en beoordelingen wissen, tests uitvoeren voor geselecteerde proxy's.</li>
-	<li><strong>Sortering in het werkbalk-pop-upmenu</strong> – op beoordeling en prioriteit (📌 vastgezette bovenaan, ⭐ favorieten).</li>
-	<li><strong>Sortering in de instellingentabel</strong> – op land, protocol, beoordeling.</li>
+	<li><strong>Contextmenu in de proxy-tabel (rechtsklik)</strong> – snel beoordeling wijzigen, prioriteit (vastzetten, favoriet), geselecteerde exporteren, adressen kopiëren, verwijderen, statussen en beoordelingen wissen, tests uitvoeren voor geselecteerde proxies.</li>
+	<li><strong>Sorteren in de toolbarbubble</strong> – op beoordeling en prioriteit (📌 vastgezette bovenaan, ⭐ favorieten).</li>
+	<li><strong>Sorteren in de instellingentabel</strong> – op land, protocol, beoordeling.</li>
 </ul>
 
 <h4>🚀 Proxy-testen</h4>
 <ul>
-	<li><strong>Cyclische test</strong> – schakelt sequentieel het actieve profiel en de proxy, test het laden van de site. Betrouwbaar maar traag.</li>
-	<li><strong>Express-cyclische test</strong> – versnelde test die stopt bij het eerste succes. Goed voor een snelle beoordeling.</li>
+	<li><strong>Cyclustest</strong> – sequentieel schakelen van actief profiel en proxy, controleren van het laden van de site. Betrouwbaar maar langzaam.</li>
+	<li><strong>Express-cyclustest</strong> – versnelde test die stopt bij het eerste succes. Goed voor snelle beoordeling.</li>
 	<li><strong>Precieze (langzame) test</strong> – grondiger, duurt langer, geeft betrouwbaardere resultaten (werkt niet in Firefox).</li>
-	<li><strong>Express-test</strong> – snel, kan sommige werkende proxy's overslaan. Goed voor een snel overzicht (werkt niet in Firefox).</li>
-	<li><strong>Snelle tests vanuit het werkbalk-pop-upmenu</strong> – test de huidige site voor alle proxy's of alleen voor abonnementsproxy's.</li>
+	<li><strong>Express-test</strong> – snel, kan sommige werkende proxies overslaan. Goed voor snel overzicht (werkt niet in Firefox).</li>
+	<li><strong>Snelle tests vanuit de toolbarbubble</strong> – test de huidige site voor alle proxies of alleen voor abonnementsproxies.</li>
+</ul>
+
+<h4>🤖 Auto Proxy-modus</h4>
+<ul>
+	<li>Voor sites die niet direct toegankelijk zijn (bijvoorbeeld vanwege regionale beperkingen), maakt Auto Proxy automatisch een regel aan in het selectieve profiel en selecteert een werkende proxy.</li>
+	<li>Bij het eerste bezoek aan zo'n site verschijnt een dialoog die voorstelt deze aan Auto Proxy toe te voegen. U stemt toe – en het systeem vindt onmiddellijk de beste proxy op basis van beoordeling, statussen en prioriteit.</li>
+	<li>Na het succesvol laden van de pagina kunt u de gevonden proxy voor deze site vastzetten (tijdelijk, totdat de browser wordt gesloten) of doorgaan met zoeken naar een andere.</li>
+	<li>In de profielinstellingen kunt u automatisch vastzetten uitschakelen (standaard uit) of dialogen voor proxy-wisseling volledig uitschakelen.</li>
+	<li>Auto Proxy werkt alleen in het selectieve profiel en alleen voor regels met de modus <strong>Auto</strong> (u kunt handmatig elke regel omschakelen).</li>
 </ul>
 
 <p>
 	<strong>⚠️ Belangrijk voor gebruikers:</strong> Tijdens tests worden het actieve profiel en de proxy daadwerkelijk geschakeld.
-	Dit kan de normale browse-activiteit verstoren. Voer tests uit wanneer de browser niet voor andere activiteiten wordt gebruikt.
+	Dit kan normale browsing verstoren. Voer tests uit wanneer de browser niet voor andere activiteiten wordt gebruikt.
 </p>
 
 <br />
-<h3>Werkbalkpictogram Legenda</h3>
+<h3>Legenda van werkbalkpictogrammen</h3>
 <p>
-	Het pictogram in de werkbalk van uw browser verandert om de status van ProxyMust weer te geven. Dit is wat de verschillende pictogrammen betekenen:
+	Het pictogram op uw browserwerkbalk verandert om de status van ProxyMust weer te geven. Dit is wat de verschillende pictogrammen betekenen:
 	<br />
 
 <div class="table-responsive">
-	<table class="table table-sm table-striped caption-top table-borderless align-middle">
-		<caption><b>Pictogram Legenda (alle browsers):</b></caption>
+	<table class="table table-sm table table-striped caption-top table-borderless align-middle table-responsive">
+		<caption><b>Pictogramlegenda (alle browsers):</b></caption>
 		<thead>
 			<tr>
 				<th style="width: 70px;">Pictogram</th>
@@ -113,31 +119,31 @@
 		<tbody>
 			<tr>
 				<td class="p-2"><img src="../icons/profile-disabled.svg" class=""></td>
-				<td>Verzoeken zullen geen proxy's gebruiken.</td>
+				<td>Verzoeken gebruiken geen proxy.</td>
 			</tr>
 			<tr>
 				<td class="p-2"><img src="../icons/smartproxy.svg" class=""></td>
 				<td>
-					De proxy is toegepast of zal worden toegepast op verzoeken die overeenkomen met de gedefinieerde regels.
-					<br /> Of er komt geen regel overeen voor het tabblad.
+					De proxy wordt of is toegepast op verzoeken die overeenkomen met de gedefinieerde regels.
+					<br /> Of geen enkele regel komt overeen met het huidige tabblad.
 					<br />
 					Profiel: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i>
-					Selectieve Regels
+					Selectieve regels
 				</td>
 			</tr>
 			<tr>
 				<td class="p-2"><img src="../icons/profile-always.svg" class=""></td>
 				<td>
-					Proxy wordt toegepast op alle verzoeken in het huidige tabblad. (Witgelijste domeinen worden apart weergegeven in Chrome-gebaseerde browsers.)
+					De proxy wordt toegepast op alle verzoeken in het huidige tabblad. (In Chrome-gebaseerde browsers worden whitelist-domeinen apart weergegeven.)
 					<br />
 					Profiel: <i class="icon fa-sm fas fa-globe-americas text-success" aria-hidden="true"></i>
-					Altijd Ingeschakeld
+					Altijd ingeschakeld
 				</td>
 			</tr>
 			<tr>
 				<td class="p-2"><img src="../icons/profile-system.svg" class=""></td>
 				<td>
-					De beslissing over het gebruik van een proxy wordt doorgegeven aan het besturingssysteem.
+					De beslissing over het gebruik van een proxy wordt aan het besturingssysteem overgelaten.
 					<br/> Profiel: Systeem
 				</td>
 			</tr>
@@ -146,8 +152,8 @@
 </div>
 
 <div class="table-responsive">
-	<table class="table table-sm table-striped caption-top table-borderless align-middle">
-		<caption><b>Pictogram Legenda (alleen Firefox):</b></caption>
+	<table class="table table-sm table table-striped caption-top table-borderless align-middle table-responsive">
+		<caption><b>Pictogramlegenda (alleen Firefox):</b></caption>
 		<thead>
 			<tr>
 				<th style="width: 70px;">Pictogram</th>
@@ -158,49 +164,49 @@
 			<tr>
 				<td class="p-2"><img src="../icons/profile-smartrules-green.svg" class=""></td>
 				<td>
-					Een regel komt overeen voor het huidige tabblad. Alle volgende verzoeken gaan door de proxy.
+					Een regel komt overeen met het huidige tabblad. Alle volgende verzoeken gaan via de proxy.
 					<br />
-					Profiel: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> Selectieve Regels
+					Profiel: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> Selectieve regels
 				</td>
 			</tr>
 			<tr>
 				<td class="p-2"><img src="../icons/profile-smartrules-has-failed.svg" class=""></td>
 				<td>
-					Een regel komt overeen voor het huidige tabblad. Er is minstens één niet-reagerend / mislukt verzoek.
+					Een regel komt overeen met het huidige tabblad. Er is minstens één mislukt / niet-reagerend verzoek.
 					<br />
-					Profiel: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> Selectieve Regels
+					Profiel: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> Selectieve regels
 				</td>
 			</tr>
 			<tr>
 				<td class="p-2"><img src="../icons/profile-smartrules-has-bypassed.svg" class=""></td>
 				<td>
-					Een regel komt overeen voor het huidige tabblad. Minstens één volgend verzoek heeft de proxy omzeild via een regel.
+					Een regel komt overeen met het huidige tabblad. Minstens één volgend verzoek heeft de proxy via een regel omzeild.
 					<br />
-					Profiel: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> Selectieve Regels
+					Profiel: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> Selectieve regels
 				</td>
 			</tr>
 			<tr>
 				<td class="p-2"><img src="../icons/profile-smartrules-has-unmatched.svg" class=""></td>
 				<td>
-					Een regel komt overeen voor het huidige tabblad. Minstens één volgend verzoek komt niet overeen met een regel en gaat niet door de proxy.
+					Een regel komt overeen met het huidige tabblad. Minstens één volgend verzoek komt niet overeen met een regel en gaat niet via de proxy.
 					<br />
-					Profiel: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> Selectieve Regels
+					Profiel: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> Selectieve regels
 				</td>
 			</tr>
 			<tr>
 				<td class="p-2"><img src="../icons/profile-smartrules-noproxy-has-matched.svg" class=""></td>
 				<td>
-					Geen regel komt overeen voor het huidige tabblad. Minstens één volgend verzoek komt overeen met een regel en gaat door een proxy.
+					Geen regel komt overeen met het huidige tabblad. Minstens één volgend verzoek komt overeen met een regel en gaat via de proxy.
 					<br />
-					Profiel: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> Selectieve Regels
+					Profiel: <i class="icon fa-sm fas fa-magic text-primary" aria-hidden="true"></i> Selectieve regels
 				</td>
 			</tr>
 			<tr>
 				<td class="p-2"><img src="../icons/profile-always-bypassed.svg" class=""></td>
 				<td>
-					Proxy wordt toegepast op alle verzoeken in het huidige tabblad. Minstens één volgend verzoek heeft de proxy omzeild via een regel.
+					De proxy wordt toegepast op alle verzoeken in het huidige tabblad. Minstens één volgend verzoek heeft de proxy via een regel omzeild.
 					<br />
-					Profiel: <i class="icon fa-sm fas fa-globe-americas text-success" aria-hidden="true"></i> Altijd Ingeschakeld
+					Profiel: <i class="icon fa-sm fas fa-globe-americas text-success" aria-hidden="true"></i> Altijd ingeschakeld
 				</td>
 			</tr>
 		</tbody>
