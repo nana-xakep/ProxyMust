@@ -24,6 +24,7 @@ import { AutoStatusService } from './AutoStatusService';
 import { SmartProfileType, ProxyRule, ProxyRuleType } from './definitions';
 import { ProxyEngine } from './ProxyEngine';
 import { Core } from "./Core";
+import { CommandMessages } from './definitions';
 
 // ==================== Types ====================
 
@@ -67,8 +68,13 @@ export async function saveResult(
     status: ProxyStatusType,
     timestamp: number = Date.now()
 ): Promise<void> {
-    // Normalize site (remove protocol and trailing slash)
-    const normalizedSite = site.replace(/^https?:\/\//, '').replace(/\/$/, '');
+	console.log(`[ResultSaver] saveResult вызван: proxy=${proxyId}, site=${site}, status=${status}`);
+    // Normalize site using Core.normalizeSite (removes protocol, www., trailing slash)
+    const normalizedSite = Core.normalizeSite(site);
+    if (!normalizedSite) {
+        console.warn(`[ResultSaver] Invalid site: ${site}, skipping save`);
+        return;
+    }
 
     console.log(`[ResultSaver] Сохранение результата для прокси ${proxyId}, сайт ${normalizedSite}, статус: ${status}`);
 
@@ -158,6 +164,12 @@ export async function saveResult(
         site: normalizedSite,
         status: status,
         timestamp: timestamp
+    }).catch(() => { /* ignore */ });
+
+    // Notify popup to refresh data (will update all UI components)
+    api.runtime.sendMessage({
+        command: CommandMessages.PopupActiveTabChanged,
+        tabId: -1
     }).catch(() => { /* ignore */ });
 }
 

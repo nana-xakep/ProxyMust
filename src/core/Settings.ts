@@ -674,55 +674,55 @@ export class Settings {
 		return { success: true };
 	}
 
-	public static updateActiveSettings(fallback: boolean = true) {
-		/** Updating `Settings.active` */
-		let settings = me.current;
-		if (!settings)
-			return;
+    public static updateActiveSettings(fallback: boolean = true) {
+        /** Updating `Settings.active` */
+        let settings = me.current;
+        if (!settings)
+            return;
 
-		let active = me.active ?? (me.active = new SettingsActive());
+        let active = me.active ?? (me.active = new SettingsActive());
 
-		let foundActiveProfile = ProfileOperations.findSmartProfileById(settings.activeProfileId, settings.proxyProfiles);
-		if (!foundActiveProfile && fallback) {
-			foundActiveProfile = ProfileOperations.findSmartProfileById(SmartProfileTypeBuiltinIds.Direct, settings.proxyProfiles);
-		}
+        let foundActiveProfile = ProfileOperations.findSmartProfileById(settings.activeProfileId, settings.proxyProfiles);
+        if (!foundActiveProfile && fallback) {
+            foundActiveProfile = ProfileOperations.findSmartProfileById(SmartProfileTypeBuiltinIds.Direct, settings.proxyProfiles);
+        }
 
-		let activeProfile: SmartProfileCompiled = null;
-		if (foundActiveProfile) {
-			active.activeProfile = ProfileOperations.compileSmartProfile(foundActiveProfile);
-			activeProfile = active.activeProfile;
-		}
+        let activeProfile: SmartProfileCompiled = null;
+        if (foundActiveProfile) {
+            active.activeProfile = ProfileOperations.compileSmartProfile(foundActiveProfile);
+            activeProfile = active.activeProfile;
+        }
 
-		active.currentProxyServer = null;
-		if (activeProfile?.profileProxyServer) {
-			active.currentProxyServer = active.activeProfile.profileProxyServer;
-		}
+        active.currentProxyServer = null;
+        if (activeProfile?.profileProxyServer) {
+            active.currentProxyServer = active.activeProfile.profileProxyServer;
+        }
 
-		if (!active.currentProxyServer) {
-			let foundProxy = SettingsOperation.findProxyServerById(settings.defaultProxyServerId);
-			if (foundProxy) {
-				active.currentProxyServer = foundProxy;
-			}
-		}
+        if (!active.currentProxyServer) {
+            let foundProxy = SettingsOperation.findProxyServerById(settings.defaultProxyServerId);
+            if (foundProxy) {
+                active.currentProxyServer = foundProxy;
+            }
+        }
 
-		let activeIncognitoProfile: SmartProfileCompiled = null;
-		if (settings.options.activeIncognitoProfileId) {
-			if (foundActiveProfile.profileId == settings.options.activeIncognitoProfileId) {
-				activeIncognitoProfile = activeProfile;
-			}
-			else {
-				const incognitoProfile = ProfileOperations.findSmartProfileById(settings.options.activeIncognitoProfileId, settings.proxyProfiles);
-				if (incognitoProfile) {
-					activeIncognitoProfile = ProfileOperations.compileSmartProfile(incognitoProfile);
-				}
-			}
-		}
-		active.activeIncognitoProfile = activeIncognitoProfile;
+        let activeIncognitoProfile: SmartProfileCompiled = null;
+        if (settings.options.activeIncognitoProfileId) {
+            if (foundActiveProfile.profileId == settings.options.activeIncognitoProfileId) {
+                activeIncognitoProfile = activeProfile;
+            }
+            else {
+                const incognitoProfile = ProfileOperations.findSmartProfileById(settings.options.activeIncognitoProfileId, settings.proxyProfiles);
+                if (incognitoProfile) {
+                    activeIncognitoProfile = ProfileOperations.compileSmartProfile(incognitoProfile);
+                }
+            }
+        }
+        active.activeIncognitoProfile = activeIncognitoProfile;
 
-		let profileIgnoreFailureRules = ProfileOperations.getIgnoreFailureRulesProfile();
-		if (profileIgnoreFailureRules)
-			active.currentIgnoreFailureProfile = ProfileOperations.compileSmartProfile(profileIgnoreFailureRules);
-	}
+        let profileIgnoreFailureRules = ProfileOperations.getIgnoreFailureRulesProfile();
+        if (profileIgnoreFailureRules)
+            active.currentIgnoreFailureProfile = ProfileOperations.compileSmartProfile(profileIgnoreFailureRules);
+    }
 }
 
 let me = Settings;

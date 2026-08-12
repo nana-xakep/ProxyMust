@@ -217,15 +217,23 @@ export class ProfileRules {
 			}
 		}
 
-		// Update both proxy server ID and proxy object
-		rule.proxyServerId = proxyServerId;
-		rule.proxy = proxyServer;
+        // Update both proxy server ID and proxy object
+        rule.proxyServerId = proxyServerId;
+        rule.proxy = proxyServer;
 
-		return {
-			success: true,
-			message: null,
-			rule: rule
-		};
+        // English: If user manually selected a specific proxy (not default or profile proxy), switch rule to manual mode
+        // Russian: Если пользователь вручную выбрал конкретный прокси (не по умолчанию и не прокси профиля), переключаем правило в ручной режим
+        if (proxyServerId &&
+            proxyServerId !== ProxyRuleSpecialProxyServer.DefaultGeneral &&
+            proxyServerId !== ProxyRuleSpecialProxyServer.ProfileProxy) {
+            rule.mode = 'manual';
+        }
+
+        return {
+            success: true,
+            message: null,
+            rule: rule
+        };
 	}
 
 	private static enableByHostnameInternal(smartProfile: SmartProfile, hostname: string): {

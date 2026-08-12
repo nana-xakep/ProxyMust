@@ -131,6 +131,42 @@ export class Core {
                 command: CommandMessages.PopupActiveTabChanged,
                 tabId: activeInfo.tabId
             });
+            // English: Check if there is a pending dialog for this tab
+            // Russian: Проверяем, есть ли отложенный диалог для этой вкладки
+            if (Core._pendingDialogs.has(activeInfo.tabId)) {
+                const pending = Core._pendingDialogs.get(activeInfo.tabId);
+                console.log(`[Core] Вкладка ${activeInfo.tabId} активирована, показываем отложенный диалог для ${pending.site}`);
+                // English: Remove from pending before showing to avoid loops
+                // Russian: Удаляем из ожидающих перед показом, чтобы избежать зацикливания
+                Core._pendingDialogs.delete(activeInfo.tabId);
+                // English: Open the dialog
+                // Russian: Открываем диалог
+                Core._createDialogWindow(pending.params.url, pending.params.dialogKey);
+            } else {
+                // English: If no pending dialog, check if there is already an open dialog for this site
+                // Russian: Если нет отложенного диалога, проверяем, есть ли уже открытый диалог для этого сайта
+                const site = Core.getSiteForTab(activeInfo.tabId);
+                if (site) {
+                    const dialogKey = `pin_${site}`;
+                    if (Core._openDialogs.has(dialogKey)) {
+                        const winId = Core._openDialogs.get(dialogKey);
+                        if (winId) {
+                            // English: Focus the existing dialog window
+                            // Russian: Фокусируем существующее окно диалога
+                            api.windows.update(winId, { focused: true });
+                            console.log(`[Core] Focused existing dialog for ${site}`);
+                        }
+                    }
+                }
+            }
+        });
+        // English: Clean up pending dialogs when tab is closed
+        // Russian: Очищаем ожидающие диалоги при закрытии вкладки
+        api.tabs.onRemoved.addListener((tabId: number) => {
+            if (Core._pendingDialogs.has(tabId)) {
+                console.log(`[Core] Вкладка ${tabId} закрыта, удаляем отложенный диалог`);
+                Core._pendingDialogs.delete(tabId);
+            }
         });
         // English: Listen to webNavigation events to detect user-initiated reloads and typed navigations
         // Russian: Слушаем события webNavigation для обнаружения перезагрузок и ввода адреса пользователем
@@ -172,9 +208,13 @@ export class Core {
 		// nothing yet!
 	}
 	
-	// English: Track open dialogs to prevent duplicates (site -> dialog window id)
+    // English: Track open dialogs to prevent duplicates (site -> dialog window id)
     // Russian: Отслеживаем открытые диалоги, чтобы предотвратить дублирование (сайт -> id окна диалога)
     private static _openDialogs: Map<string, number> = new Map();
+
+    // English: Store pending dialogs per tab (site -> dialog data)
+    // Russian: Хранилище ожидающих диалогов для каждой вкладки (сайт -> данные диалога)
+    private static _pendingDialogs: Map<number, { site: string, type: 'pin' | 'change' | 'add_site', proxyId: string, proxyName: string, tabId: number, params: { url: string, dialogKey: string } }> = new Map();
 
 	/**
 	 * Unified message handler with cross-browser support
@@ -1431,6 +1471,10 @@ export class Core {
         // Switch to SmartRules profile if not already
         Core.ChangeActiveProfileId(smartRulesProfile.profileId);
 
+        // English: Reset user-stopped flag so failover can start
+        // Russian: Сбрасываем флаг остановки пользователем, чтобы failover мог запуститься
+        WebFailedRequestMonitor.resetUserStoppedFailover(normalizedSite);
+
         // Trigger failover for this site
         WebFailedRequestMonitor.triggerFailoverForSite(normalizedSite, null, tabId);
 
@@ -1701,6 +1745,18 @@ private static async handleAddSubscriptionProxyToManual(message: any, sendRespon
             return null;
         }
         return normalized;
+    }	
+	
+    /**
+     * English: Gets the site (domain) for a given tab ID
+     * Russian: Возвращает сайт (домен) для заданной вкладки
+     */
+    private static getSiteForTab(tabId: number): string | null {
+        const tabData = TabManager.getTab(tabId);
+        if (!tabData || !tabData.url) return null;
+        const host = Utils.extractHostFromUrl(tabData.url);
+        if (!host) return null;
+        return Core.normalizeSite(host);
     }	
 
 	private static toPort(port: any): number {
@@ -2156,8 +2212,10 @@ private static async handleAddSubscriptionProxyToManual(message: any, sendRespon
 	public static setBrowserActionStatus(tabData?: TabDataType) {
 		if (!settingsLib.active?.activeProfile) return;
 
-		let actionIcon = iconsLib.getBrowserActionIcon(settingsLib.active.activeProfile.profileType, tabData);
-		let actionTitle = iconsLib.getBrowserActionTitle(settingsLib.active.activeProfile.profileType);
+        let actionIcon = iconsLib.getBrowserActionIcon(settingsLib.active.activeProfile.profileType, tabData);
+        let actionTitle = iconsLib.getBrowserActionTitle(settingsLib.active.activeProfile.profileType);
+        console.log('[Core] Setting browser action icon:', actionIcon);
+        console.log('[Core] Setting browser action title:', actionTitle);
 
 		if (!tabData) tabData = TabManager.getCurrentTab();
 
@@ -2207,8 +2265,16 @@ private static async handleAddSubscriptionProxyToManual(message: any, sendRespon
 			actionTitle += `\r\nProxy server: ${activeProxyServer.host} : ${activeProxyServer.port}`;
 		}
 
-		PolyFill.browserActionSetIcon(actionIcon);
-		api.browserAction.setTitle({ title: actionTitle });
+        try {
+            PolyFill.browserActionSetIcon(actionIcon);
+        } catch (e) {
+            console.warn('[Core] Failed to set browser action icon:', e);
+        }
+        try {
+            api.browserAction.setTitle({ title: actionTitle });
+        } catch (e) {
+            console.warn('[Core] Failed to set browser action title:', e);
+        }
 	}
 
 	private static onTabUpdatedUpdateActionStatus(tabData: TabDataType) {
@@ -2838,16 +2904,21 @@ public static sendTestLogStep(data: any): void {
             // English: User responded to "add unreachable site" dialog
             // Russian: Ответ пользователя на диалог добавления недоступного сайта
             if (response === 'yes') {
-                // English: Add site to auto-proxy and trigger failover
-                // Russian: Добавить сайт в автопрокси и запустить failover
+                // English: First, cancel any ongoing failover for this site
+                // Russian: Сначала отменяем любой выполняющийся failover для этого сайта
+                console.log(`[Core] Пользователь подтвердил добавление сайта ${site}, отменяем текущий failover`);
+                WebFailedRequestMonitor.cancelFailoverForSite(site);
+                // English: Also clear the temp skip list to start fresh
+                // Russian: Также очищаем временный список пропуска, чтобы начать заново
+                WebFailedRequestMonitor.clearTempSkipList(site);
+                // English: Now add site to auto-proxy and trigger failover
+                // Russian: Теперь добавляем сайт в автопрокси и запускаем failover
                 const tabId = message.tabId || -1;
-                // Use existing handler to add rule and start failover
-                // Используем существующий обработчик для добавления правила и запуска failover
                 Core.handleAddUnreachableSite({ site: site, tabId: tabId }, () => {});
             } else {
                 // English: User declined – just log
                 // Russian: Пользователь отказался – просто логируем
-//console.log(`[Core] User declined to add site ${site} to auto-proxy`)
+                console.log(`[Core] User declined to add site ${site} to auto-proxy`);
             }
             // English: For add_site we don't have a "dontAsk" checkbox, so ignore the flag
             // Russian: Для add_site у нас нет чекбокса "не спрашивать", поэтому игнорируем флаг
@@ -2933,7 +3004,8 @@ public static sendTestLogStep(data: any): void {
         cancelKey: string,
         checkboxKey: string,
         confirmClass: string = 'btn-primary',
-        tabId: number = -1
+        tabId: number = -1,
+        showCheckbox: boolean = true
     ): void {
         // English: Get localized strings with parameter substitution
         // Russian: Получаем локализованные строки с подстановкой параметров
@@ -2959,7 +3031,7 @@ public static sendTestLogStep(data: any): void {
             cancelText: cancelText,
             checkboxLabel: checkboxLabel,
             confirmClass: confirmClass,
-            showCheckbox: 'true',
+            showCheckbox: String(showCheckbox),
             tabId: String(tabId)
         });
 
@@ -2981,12 +3053,46 @@ public static sendTestLogStep(data: any): void {
                         Core._createDialogWindow(url, dialogKey);
                     }
                 });
-//console.log(`[Core] Dialog already open for ${dialogKey}, focusing existing window`)
                 return;
             }
         }
 
-        Core._createDialogWindow(url, dialogKey);
+        // ========== NEW: Defer dialog if tab is not active ==========
+        // English: If tabId is valid, check if this tab is currently active
+        // Russian: Если tabId корректен, проверяем, активна ли эта вкладка
+        if (tabId > -1) {
+            PolyFill.tabsQuery({ active: true, currentWindow: true }, (tabs: any[]) => {
+                const activeTab = tabs && tabs[0];
+                const isActive = activeTab && activeTab.id === tabId;
+                if (!isActive) {
+                    // English: Tab is not active – store dialog as pending
+                    // Russian: Вкладка не активна – сохраняем диалог как ожидающий
+                    console.log(`[Core] Диалог для вкладки ${tabId} (${site}) отложен, так как вкладка не активна`);
+                    Core._pendingDialogs.set(tabId, {
+                        site,
+                        type,
+                        proxyId,
+                        proxyName,
+                        tabId,
+                        params: { url, dialogKey }
+                    });
+                    // English: Also remove any existing open dialog for this key to avoid duplication
+                    // Russian: Также удаляем существующий открытый диалог для этого ключа, чтобы избежать дублирования
+                    if (Core._openDialogs.has(dialogKey)) {
+                        Core._openDialogs.delete(dialogKey);
+                    }
+                    return;
+                }
+                // English: Tab is active – open immediately
+                // Russian: Вкладка активна – открываем сразу
+                Core._createDialogWindow(url, dialogKey);
+            });
+        } else {
+            // English: No tabId provided – open immediately (fallback)
+            // Russian: tabId не указан – открываем сразу (запасной вариант)
+            Core._createDialogWindow(url, dialogKey);
+        }
+        // ========== END NEW ==========
     }
 
     /**
@@ -3125,31 +3231,38 @@ public static sendTestLogStep(data: any): void {
     private static _createDialogWindow(url: string, dialogKey: string): void {
         const width = 480;
         const height = 320;
-        api.windows.create({
-            url: url,
-            type: 'popup',
-            width: width,
-            height: height,
-            focused: true,
-            state: 'normal'
-        }, (win) => {
-            if (win) {
-                Core._openDialogs.set(dialogKey, win.id);
+        // English: Delay creation to ensure the tab is fully active
+        // Russian: Задержка создания, чтобы убедиться, что вкладка полностью активна
+        setTimeout(() => {
+            api.windows.create({
+                url: url,
+                type: 'popup',
+                width: width,
+                height: height,
+                focused: true,
+                state: 'normal'
+            }, (win) => {
+                if (win) {
+                    Core._openDialogs.set(dialogKey, win.id);
+                    // English: Force focus on the dialog window
+                    // Russian: Принудительно фокусируем окно диалога
+                    api.windows.update(win.id, { focused: true });
 //console.log(`[Core] Dialog window opened (id: ${win.id}) for ${dialogKey}`)
-                // English: Listen for window removal to clean up tracking
-                // Russian: Слушаем удаление окна для очистки отслеживания
-                const removeListener = (windowId: number) => {
-                    if (windowId === win.id) {
-                        Core._openDialogs.delete(dialogKey);
-                        api.windows.onRemoved.removeListener(removeListener);
+                    // English: Listen for window removal to clean up tracking
+                    // Russian: Слушаем удаление окна для очистки отслеживания
+                    const removeListener = (windowId: number) => {
+                        if (windowId === win.id) {
+                            Core._openDialogs.delete(dialogKey);
+                            api.windows.onRemoved.removeListener(removeListener);
 //console.log(`[Core] Dialog window ${windowId} closed, removed from tracking`)
-                    }
-                };
-                api.windows.onRemoved.addListener(removeListener);
-            } else {
-                console.warn('[Core] Failed to open dialog window');
-            }
-        });
+                        }
+                    };
+                    api.windows.onRemoved.addListener(removeListener);
+                } else {
+                    console.warn('[Core] Failed to open dialog window');
+                }
+            });
+        }, 150); // small delay for tab activation
     }
 }
 

@@ -31,8 +31,9 @@ export class ProxyEngine {
     private static _dynamicProxyOverride: { [site: string]: string } = {};
 
     public static setDynamicProxyForSite(site: string, proxyId: string): void {
-//console.log(`[ProxyEngine] setDynamicProxyForSite: site="${site}", proxyId="${proxyId}"`)
+        console.log(`[ProxyEngine] setDynamicProxyForSite: site="${site}", proxyId="${proxyId}"`);
         ProxyEngine._dynamicProxyOverride[site] = proxyId;
+        console.log(`[ProxyEngine] _dynamicProxyOverride сейчас:`, JSON.stringify(ProxyEngine._dynamicProxyOverride));
         ProxyEngine.updateBrowsersProxyConfig();
     }
 

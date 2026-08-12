@@ -36,10 +36,12 @@ import { getProxyStatus, ProxyStatusInfo } from "../../core/statusUtils";
 import { renderLogMessage, t, resetAntiDuplicate } from "./logRenderer";
 import { ProxySelector } from '../../core/ProxySelector';
 import { Settings } from "../../core/Settings";
+//import { ProxyEngine } from "../../core/ProxyEngine";
+//import { AutoStatusService } from '../../core/AutoStatusService';
+//import { WebFailedRequestMonitor } from '../../core/WebFailedRequestMonitor';
 
 //import { AutoStatusService } from '../../core/AutoStatusService';
-//import { ProxyEngine } from "../../core/ProxyEngine";
-//import { Core } from "../../core/Core"; // Удалить, если не используется
+//import { Core } from "../../core/Core";
 //import { ProxyCycleTester } from "../../core/ProxyCycleTester";
 
 const jq = jQuery;
@@ -201,6 +203,9 @@ private static handleMessages(message: any, sender: any, sendResponse: Function)
                     pageProfile.grdRules.clear();
                     pageProfile.grdRules.rows.add(fixedRules);
                     pageProfile.grdRules.draw('full-hold');
+                    // English: Re-apply sorting after data update to reflect new statuses
+                    // Russian: Повторно применяем сортировку после обновления данных для отражения новых статусов
+                    pageProfile.grdRules.order([ ['proxy', 'asc'] ]).draw();
                     // Перепривязываем обработчики (если нужно)
                     settingsPage.refreshRulesGridAllRows(pageProfile);
                 }
@@ -341,14 +346,12 @@ private static handleMessages(message: any, sender: any, sendResponse: Function)
 		settingsPage.settingsLoaded = true;
 		settingsPage.localizeUi();
 
-		CommonUi.applyThemes(dataForSettings.settings.options);
-		CommonUi.onDocumentReady(() =>
-			settingsPage.populateDataForSettings(dataForSettings)
-		);
-		CommonUi.onDocumentReady(() => {
-			settingsPage.showNewUserWelcome();
-			settingsPage.hideLoadingOverlay();
-		});
+        CommonUi.applyThemes(dataForSettings.settings.options);
+        CommonUi.onDocumentReady(() => {
+            settingsPage.populateDataForSettings(dataForSettings);
+            settingsPage.showNewUserWelcome();
+            settingsPage.hideLoadingOverlay();
+        });
 	}
 
 	private static populateDataForSettings(settingsData: SettingsPageInternalDataType) {
@@ -982,7 +985,7 @@ jq("#staleHoursInput").off("change").on("change", function() {
         settingsPage.initCustomRatingSorting();
         settingsPage.grdServers = jq("#grdServers").DataTable({
             "dom": dataTableCustomDom,
-            order: [[0, 'asc']],
+            order: [[6, 'desc']],
             stateSave: false,
             paging: true,
             pageLength: settingsPage.currentSettings?.uiOptions?.proxyServersGridRows || 10,
@@ -1047,7 +1050,12 @@ jq("#staleHoursInput").off("change").on("change", function() {
         const ratingText = rating === 0 ? "(0)" : (rating > 0 ? `(+${rating})` : `(${rating})`);
         
         const siteSelect = document.getElementById("testSiteSelect") as HTMLSelectElement;
-        const site = siteSelect?.value || "";
+        let site = siteSelect?.value || "";
+        if (site) {
+            // English: Normalize site to match keys in autoStatus
+            // Russian: Нормализуем сайт для соответствия ключам в autoStatus
+            site = settingsPage.normalizeHost(site) || site;
+        }
         
         const staleHours = settingsPage.currentSettings.userPrefs?.staleHours ?? 6;
         
@@ -1152,6 +1160,34 @@ jq("#staleHoursInput").off("change").on("change", function() {
             };
         }
     }
+
+    private static initCustomRuleProxySorting(pageProfile: SettingsPageSmartProfile): void {
+        if (jq.fn.dataTable && pageProfile && pageProfile.grdRules) {
+            jq.fn.dataTable.ext.order['rule-proxy-priority'] = function (settings: any, col: number) {
+                return this.api().column(col, { order: 'index' }).nodes().map(function (td: HTMLElement, i: number) {
+                    const row = pageProfile.grdRules?.row(td).data() as ProxyRule;
+                    if (!row) return 0;
+
+                    let proxyId = row.proxyServerId;
+                    if (!proxyId && row.proxy) {
+                        proxyId = row.proxy.id;
+                    }
+                    if (!proxyId) return 0;
+
+                    const proxy = SettingsOperation.findProxyServerById(proxyId);
+                    if (!proxy) return 0;
+
+                    const site = row.hostName || '';
+                    const staleHours = settingsPage.currentSettings?.userPrefs?.staleHours ?? 6;
+                    const autoStatus = settingsPage.currentSettings?.autoStatus || {};
+
+                    const weight = ProxySelector.calculateWeight(proxy, site, autoStatus, staleHours);
+                    return weight;
+                });
+            };
+        }
+    }
+	
 	private static localizeUi() {
 		if (settingsPage.localized)
 			return;
@@ -1215,18 +1251,31 @@ jq("#staleHoursInput").off("change").on("change", function() {
 		}
 	}
 
-	private static showNewUserWelcome() {
-		if (settingsPage.currentSettings.firstEverInstallNotified === true ||
-			(settingsPage.currentSettings.proxyServers != null && settingsPage.currentSettings.proxyServers.length > 0))
-			return;
-		let modal = jq("#modalWelcome");
-		modal.modal("show");
-	}
-
-	private static hideLoadingOverlay() {
-		let overlay = jq("#loadingOverlay");
-		overlay.addClass('d-none');
-	}
+private static showNewUserWelcome() {
+    const settings = settingsPage.currentSettings;
+    if (!settings) {
+        // English: Settings not loaded yet, retry after 100ms
+        // Russian: Настройки ещё не загружены, повторяем через 100 мс
+        setTimeout(() => settingsPage.showNewUserWelcome(), 100);
+        return;
+    }
+    if (settings.firstEverInstallNotified === true ||
+        (settings.proxyServers != null && settings.proxyServers.length > 0))
+        return;
+    let modal = jq("#modalWelcome");
+    modal.modal("show");
+}
+    private static hideLoadingOverlay() {
+        console.log('[ProxyMust] hideLoadingOverlay called');
+        let overlay = jq("#loadingOverlay");
+        if (overlay.length) {
+            overlay.addClass('d-none');
+            overlay.hide();
+            console.log('[ProxyMust] Overlay hidden');
+        } else {
+            console.warn('[ProxyMust] Overlay element not found');
+        }
+    }
 
 	private static hideMenuOffCanvas() {
 		const tabSettingsOffCanvas = bootstrap.Offcanvas.getInstance(jq("#tabSettingsOffCanvas"));
@@ -2534,7 +2583,11 @@ private static loadServersGrid(servers: any[]) {
 
 	private static initializeSmartProfileGrids(pageProfile: SettingsPageSmartProfile) {
 		let dataTableCustomDom = '<t><"row"<"col-sm-12 col-md-5"<"text-left float-left"f>><"col-sm-12 col-md-7"<"text-right"l>>><"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>';
-
+		
+        // English: Register custom sorting for proxy column in rules table
+        // Russian: Регистрируем кастомную сортировку для колонки прокси в таблице правил
+        settingsPage.initCustomRuleProxySorting(pageProfile);
+		
 		let tabContainer = pageProfile.htmlProfileTab;
 
 		let grdRulesColumns = [
@@ -2599,11 +2652,13 @@ private static loadServersGrid(servers: any[]) {
 				},
 				responsivePriority: 4
 			},
-			{
-				name: "proxy",
-				data: "proxyName",
-				title: api.i18n.getMessage("settingsRulesGridColProxy"),
-				render: function(data, type, row: ProxyRule) {
+            {
+                name: "proxy",
+                data: "proxyName",
+                title: api.i18n.getMessage("settingsRulesGridColProxy"),
+                orderDataType: 'rule-proxy-priority',
+                orderable: true,
+                render: function(data, type, row: ProxyRule) {
 					// English: For whitelist rules, show "Exclusion" and no proxy selection
 					// Russian: Для правил-исключений показываем "Исключение" и не даём выбирать прокси
 					if (row.whiteList) {
@@ -2628,6 +2683,7 @@ private static loadServersGrid(servers: any[]) {
 						
 						// English: Add options for each sorted proxy
 						// Russian: Добавляем опции для каждого отсортированного прокси
+						let foundCurrentProxy = false;
 						for (const p of sortedProxies) {
 							const flag = CountryCode.getCountryFlagEmoji(p.countryCode || CountryCode.getCountryCode(p.host));
 							const rating = p.rating ?? 0;
@@ -2638,8 +2694,26 @@ private static loadServersGrid(servers: any[]) {
 							const symbol = statusInfo.symbol;
 							
 							const selected = (p.id === currentProxyId) ? 'selected' : '';
-							const label = `${flag} ${p.name} (${p.protocol}) ${ratingText} ${symbol}`;
+							if (selected) foundCurrentProxy = true;
+							const label = `${flag} ${p.host}:${p.port} (${p.protocol}) ${ratingText} ${symbol}`;
 							optionsHtml += `<option value="${p.id}" ${selected}>${label}</option>`;
+						}
+
+						// English: If the current proxy is not in the sorted list (e.g., because it's disabled or fail), add it manually
+						// Russian: Если текущий прокси отсутствует в отсортированном списке (например, отключён или fail), добавляем его вручную
+						if (!foundCurrentProxy && currentProxyId) {
+							const currentProxy = SettingsOperation.findProxyServerById(currentProxyId);
+							if (currentProxy) {
+								const flag = CountryCode.getCountryFlagEmoji(currentProxy.countryCode || CountryCode.getCountryCode(currentProxy.host));
+								const rating = currentProxy.rating ?? 0;
+								const ratingText = rating === 0 ? "" : (rating > 0 ? `(+${rating})` : `(${rating})`);
+								const staleHours = settingsPage.currentSettings?.userPrefs?.staleHours ?? 6;
+								const autoStatus = settingsPage.currentSettings?.autoStatus || {};
+								const statusInfo = getProxyStatus(currentProxy.id, site, autoStatus, staleHours);
+								const symbol = statusInfo.symbol;
+								const label = `${flag} ${currentProxy.host}:${currentProxy.port} (${currentProxy.protocol}) ${ratingText} ${symbol}`;
+								optionsHtml += `<option value="${currentProxy.id}" selected>${label}</option>`;
+							}
 						}
 						
 						return `<div class="proxy-cell" style="display:flex; align-items:center; gap:4px;">
@@ -2919,17 +2993,21 @@ private static loadServersGrid(servers: any[]) {
 		}
 	}
 
-	private static loadRules(pageProfile: SettingsPageSmartProfile, rules: ProxyRule[]) {
-		console.log(`[loadRules] profile ${pageProfile.smartProfile.profileName}, rules count: ${rules.length}, isAuto count: ${rules.filter(r => r.isAuto).length}`);		
-		if (!pageProfile.grdRules)
-			return;
-		pageProfile.grdRules.clear();
+    private static loadRules(pageProfile: SettingsPageSmartProfile, rules: ProxyRule[]) {
+        console.log(`[loadRules] profile ${pageProfile.smartProfile.profileName}, rules count: ${rules.length}, isAuto count: ${rules.filter(r => r.isAuto).length}`);		
+        if (!pageProfile.grdRules)
+            return;
+        pageProfile.grdRules.clear();
 
-		let fixedRules = ProxyRule.assignArray(rules);
-		pageProfile.grdRules.rows.add(fixedRules).draw('full-hold');
+        let fixedRules = ProxyRule.assignArray(rules);
+        pageProfile.grdRules.rows.add(fixedRules).draw('full-hold');
 
-		this.refreshRulesGridAllRows(pageProfile);
-	}
+        // English: Set default sorting by proxy column (status + rating)
+        // Russian: Устанавливаем сортировку по умолчанию по колонке прокси (статус + рейтинг)
+        pageProfile.grdRules.order([ ['proxy', 'asc'] ]).draw();
+
+        this.refreshRulesGridAllRows(pageProfile);
+    }
 
 	private static readRules(pageProfile: SettingsPageSmartProfile): ProxyRule[] {
 		return pageProfile.grdRules.data().toArray();
@@ -5346,7 +5424,8 @@ private static uiEvents = {
         if (!host) return '';
         let normalized = host.trim().toLowerCase()
             .replace(/^https?:\/\//, '')
-            .replace(/\/$/, '');
+            .replace(/\/$/, '')
+            .replace(/^www\./, '');
         const ipv4Pattern = /^(\d{1,3}\.){3}\d{1,3}$/;
         const ipv6Pattern = /^([0-9a-f]{1,4}:){1,7}[0-9a-f]{1,4}$/i;
         if (ipv4Pattern.test(normalized) || ipv6Pattern.test(normalized)) {
@@ -6256,12 +6335,12 @@ private static uiEvents = {
         setTimeout(() => document.addEventListener("click", closeHandler), 0);
     }
 
-    private static isManualSite(site: string): boolean {
-        if (!settingsPage.currentSettings?.userPrefs?.manualSites) return false;
-        const normalized = settingsPage.normalizeHost(site);
-        if (!normalized) return false;
-        return settingsPage.currentSettings.userPrefs.manualSites.includes(normalized);
-    }
+    // private static isManualSite(site: string): boolean {
+    //     if (!settingsPage.currentSettings?.userPrefs?.manualSites) return false;
+    //     const normalized = settingsPage.normalizeHost(site);
+    //     if (!normalized) return false;
+    //     return settingsPage.currentSettings.userPrefs.manualSites.includes(normalized);
+    // }
 
     private static buildSitesDropdown(): void {
         const $select = jq("#testSiteSelect");
@@ -6366,13 +6445,73 @@ private static uiEvents = {
             return;
         }
 
-        if (!settingsPage.isManualSite(selectedSite)) {
-            messageBox.warning(api.i18n.getMessage("settingsProxyMustCannotRemoveAutoSite") || "This site is from rules and cannot be removed manually.");
+        // Нормализуем сайт для поиска в правилах
+        const normalizedSite = settingsPage.normalizeHost(selectedSite);
+        if (!normalizedSite) {
+            messageBox.error(api.i18n.getMessage("settingsProxyMustInvalidDomain") || "Invalid domain.");
             return;
         }
 
-        const confirmMsg = (api.i18n.getMessage("settingsProxyMustConfirmRemoveSite") || 'Remove "{0}" from test sites?').replace("{0}", selectedSite);
+        // Проверяем, есть ли правило для этого сайта в профиле SmartRules
+        let hasRule = false;
+        const smartRulesProfile = settingsPage.currentSettings?.proxyProfiles?.find(p => p.profileType === SmartProfileType.SmartRules);
+        if (smartRulesProfile) {
+            const rule = smartRulesProfile.proxyRules?.find(r => r.hostName === normalizedSite);
+            if (rule) {
+                hasRule = true;
+            }
+        }
+
+        // Определяем текст подтверждения в зависимости от наличия правила
+        let confirmMsg: string;
+        if (hasRule) {
+            confirmMsg = (api.i18n.getMessage("settingsProxyMustConfirmRemoveSiteWithRule") || 
+                'Remove "{0}" from test sites and delete its AutoProxy rule?').replace("{0}", selectedSite);
+        } else {
+            confirmMsg = (api.i18n.getMessage("settingsProxyMustConfirmRemoveSite") || 
+                'Remove "{0}" from test sites?').replace("{0}", selectedSite);
+        }
+
         messageBox.confirm(confirmMsg, () => {
+            // 1. Если есть правило — удаляем его
+            if (hasRule && smartRulesProfile) {
+                const rule = smartRulesProfile.proxyRules.find(r => r.hostName === normalizedSite);
+                if (rule) {
+                    const ruleIndex = smartRulesProfile.proxyRules.indexOf(rule);
+                    if (ruleIndex !== -1) {
+                        smartRulesProfile.proxyRules.splice(ruleIndex, 1);
+            // Сохраняем профиль
+            SettingsOperation.saveSmartProfiles();
+            SettingsOperation.saveAllSync(false);
+            // Обновляем ProxyEngine через background
+            PolyFill.runtimeSendMessage({
+                command: "SaveProfileAndRefresh",
+                profileId: smartRulesProfile.profileId
+            });
+                        // Перезагружаем таблицы правил
+                        for (const pageProfile of settingsPage.pageSmartProfiles) {
+                            if (pageProfile.grdRules && pageProfile.smartProfile) {
+                                const fixedRules = ProxyRule.assignArray(pageProfile.smartProfile.proxyRules || []);
+                                pageProfile.grdRules.clear();
+                                pageProfile.grdRules.rows.add(fixedRules);
+                                pageProfile.grdRules.draw('full-hold');
+                                settingsPage.refreshRulesGridAllRows(pageProfile);
+                            }
+                        }
+                    }
+                }
+            }
+
+// === ОЧИСТКА ЗАКРЕПЛЕНИЯ И ДИНАМИЧЕСКОГО ПРОКСИ ===
+// English: Clear pinned proxy and dynamic override for this site
+// Russian: Очищаем закреплённый прокси и динамическое переопределение для сайта
+PolyFill.runtimeSendMessage({
+    command: "ClearProxyAutoStatusForSite",
+    site: normalizedSite
+});
+// === КОНЕЦ ОЧИСТКИ ===
+
+            // 2. Удаляем из manualSites, если есть
             if (!settingsPage.currentSettings.userPrefs) {
                 settingsPage.currentSettings.userPrefs = { staleHours: 6, manualSites: [] };
             }
@@ -6384,14 +6523,23 @@ private static uiEvents = {
                         console.error("[ProxyMust] Failed to save userPrefs on removeManualSite:", err);
                     });
                 }
-                settingsPage.buildSitesDropdown();
-                if ($select.val() === selectedSite) {
-                    const newSite = $select.find("option:first").val();
-                    if (newSite) $select.val(newSite);
-                }
-                const successMsg = (api.i18n.getMessage("settingsProxyMustSiteRemoved") || 'Site "{0}" removed.').replace("{0}", selectedSite);
-                messageBox.success(successMsg);
             }
+
+            // 3. Обновляем интерфейс
+            settingsPage.buildSitesDropdown();
+            if ($select.val() === selectedSite) {
+                const newSite = $select.find("option:first").val();
+                if (newSite) $select.val(newSite);
+            }
+
+            // 4. Обновляем таблицу ручных прокси (перерисовать)
+            if (settingsPage.grdServers) {
+                settingsPage.grdServers.draw('full-hold');
+                settingsPage.grdServers.column(6).visible(true);
+            }
+
+            const successMsg = (api.i18n.getMessage("settingsProxyMustSiteRemoved") || 'Site "{0}" removed.').replace("{0}", selectedSite);
+            messageBox.success(successMsg);
         });
     }
 
@@ -6743,9 +6891,40 @@ private static uiEvents = {
         if (!$testSelect.length) return;
 
         settingsPage.buildSitesDropdown();
+        // English: Trigger change event to apply statuses for the initially selected site
+        // Russian: Вызываем событие change, чтобы применить статусы для изначально выбранного сайта
+        $testSelect.trigger('change');
 		// English: Check if express cycle test is already running and update button state
         // Russian: Проверяем, запущен ли экспресс-циклический тест, и обновляем состояние кнопки
         settingsPage.checkAllTestsStatus();
+
+        // === НОВЫЙ ОБРАБОТЧИК ===
+        // English: When site selection changes, refresh the proxy table to show updated statuses
+        // Russian: При смене сайта обновляем таблицу прокси, чтобы показать актуальные статусы
+        $testSelect.off("change").on("change", function() {
+            console.log("[ProxyMust] Сайт изменён, обновляем таблицу прокси");
+            if (settingsPage.grdServers) {
+                // English: Invalidate all rows to force re-render with new site
+                // Russian: Инвалидируем все строки, чтобы принудительно перерисовать с новым сайтом
+                settingsPage.grdServers.rows().invalidate();
+                settingsPage.grdServers.draw('full-hold');
+                // English: Ensure rating column is visible (may be hidden if rating disabled)
+                // Russian: Убеждаемся, что колонка рейтинга видима (может быть скрыта, если рейтинг отключён)
+                settingsPage.grdServers.column(6).visible(true);
+            }
+            // English: Update rules tables for all profiles to reflect statuses for this site
+            // Russian: Обновляем таблицы правил для всех профилей, чтобы отразить статусы для этого сайта
+            for (const pageProfile of settingsPage.pageSmartProfiles) {
+                if (pageProfile.grdRules) {
+                    const fixedRules = ProxyRule.assignArray(pageProfile.smartProfile.proxyRules || []);
+                    pageProfile.grdRules.clear();
+                    pageProfile.grdRules.rows.add(fixedRules);
+                    pageProfile.grdRules.draw('full-hold');
+                    settingsPage.refreshRulesGridAllRows(pageProfile);
+                }
+            }
+        });
+        // === КОНЕЦ НОВОГО ОБРАБОТЧИКА ===
 
         $testBtn.off("click").on("click", async () => {
             // English: if test is already running, cancel it without showing dialog

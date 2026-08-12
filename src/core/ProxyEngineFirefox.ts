@@ -64,50 +64,56 @@ export class ProxyEngineFirefox {
 		return false;
 	}
 
-	public static updateFirefoxProxyConfig() {
-		if (environment.notAllowed.setProxySettings)
-			return;
+    public static updateFirefoxProxyConfig() {
+        if (environment.notAllowed.setProxySettings)
+            return;
 
-		let settingsActive = Settings.active;
+        let settingsActive = Settings.active;
 
-		let proxySettings = {
-			proxyType: FirefoxProxySettingsType.system,
-		};
-		DiagDebug?.trace("Core.updateFirefoxProxyConfig", "proxyType=" + FirefoxProxySettingsType[proxySettings.proxyType]);
+        let proxySettings = {
+            proxyType: FirefoxProxySettingsType.system,
+        };
+        DiagDebug?.trace("Core.updateFirefoxProxyConfig", "proxyType=" + FirefoxProxySettingsType[proxySettings.proxyType]);
 
-		switch (settingsActive.activeProfile.profileType) {
-			case SmartProfileType.Direct:
-			case SmartProfileType.SmartRules:
-			case SmartProfileType.AlwaysEnabledBypassRules:
-			case SmartProfileType.IgnoreFailureRules:
-				proxySettings.proxyType = FirefoxProxySettingsType.none;
-				break;
+        switch (settingsActive.activeProfile.profileType) {
+            case SmartProfileType.Direct:
+            case SmartProfileType.SmartRules:
+            case SmartProfileType.AlwaysEnabledBypassRules:
+            case SmartProfileType.IgnoreFailureRules:
+                proxySettings.proxyType = FirefoxProxySettingsType.none;
+                break;
 
-			case SmartProfileType.SystemProxy:
-				proxySettings.proxyType = FirefoxProxySettingsType.system;
-				break;
-		}
+            case SmartProfileType.SystemProxy:
+                proxySettings.proxyType = FirefoxProxySettingsType.system;
+                break;
+        }
 
-		PolyFill.browserSetProxySettings(
-			{
-				value: proxySettings,
-			},
-			function () {
-				// reset the values
-				environment.notSupported.setProxySettings = false;
-				environment.notAllowed.setProxySettings = false;
-			},
-			function (error: Error) {
-				Debug.error('updateFirefoxProxyConfig failed to set proxy settings', proxySettings, error?.message);
-				if (error && error['message']) {
-					if (error.message.includes('not supported'))
-						environment.notSupported.setProxySettings = true;
-					if (error.message.includes('permission'))
-						environment.notAllowed.setProxySettings = true;
-				}
-			}
-		);
-	}
+        try {
+            PolyFill.browserSetProxySettings(
+                {
+                    value: proxySettings,
+                },
+                function () {
+                    // reset the values
+                    environment.notSupported.setProxySettings = false;
+                    environment.notAllowed.setProxySettings = false;
+                },
+                function (error: Error) {
+                    Debug.error('updateFirefoxProxyConfig failed to set proxy settings', proxySettings, error?.message);
+                    if (error && error['message']) {
+                        if (error.message.includes('not supported'))
+                            environment.notSupported.setProxySettings = true;
+                        if (error.message.includes('permission'))
+                            environment.notAllowed.setProxySettings = true;
+                    }
+                }
+            );
+        } catch (e) {
+            Debug.error('updateFirefoxProxyConfig threw an exception', e);
+            // Mark as not allowed to prevent further attempts
+            environment.notAllowed.setProxySettings = true;
+        }
+    }
 
 	/** When settings are not loaded, registers a listener for LoadComplete event then completes the proxy request */
 	private static waitForSettingsToHandleProxyRequest(requestDetails: any, resolve: Function) {

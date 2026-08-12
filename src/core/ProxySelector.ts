@@ -22,6 +22,7 @@ import { getProxyStatus } from './statusUtils';
 import { AutoStatusService } from './AutoStatusService';
 import { SettingsOperation } from './SettingsOperation';
 
+
 /**
  * English: Options for selecting a proxy.
  * Russian: Опции для выбора прокси.
@@ -223,13 +224,16 @@ export class ProxySelector {
         autoStatus: AutoStatusMap,
         staleHours: number
     ): number {
+        // Нормализуем сайт (удаляем www., протокол, завершающий слэш)
+        const normalizedSite = ProxySelector.normalizeSite(site) || site;
+
         // Приоритет: pin=3, star=2, none=1
         let priorityWeight = 1;
         if (proxy.priority === 'pin') priorityWeight = 3;
         else if (proxy.priority === 'star') priorityWeight = 2;
 
         // Статус: success=5, indirect=4, ip-only=3, unknown=2, fail=1
-        const statusInfo = getProxyStatus(proxy.id, site, autoStatus, staleHours);
+        const statusInfo = getProxyStatus(proxy.id, normalizedSite, autoStatus, staleHours);
         let statusWeight = 3; // unknown by default
         switch (statusInfo.type) {
             case 'direct-success':
@@ -254,7 +258,6 @@ export class ProxySelector {
         const rating = proxy.rating ?? 0;
 
         // Комбинированный вес: приоритет доминирует, затем статус, затем рейтинг
-        // Умножаем на большие числа, чтобы приоритет и статус имели больший вес
         return (priorityWeight * 10000) + (statusWeight * 1000) + rating;
     }
 
@@ -326,6 +329,25 @@ export class ProxySelector {
         }
 
         return result;
+    }
+
+    /**
+     * English: Normalizes site domain (removes protocol, www., trailing slash)
+     * Russian: Нормализует домен сайта (удаляет протокол, www., завершающий слэш)
+     */
+    private static normalizeSite(site: string): string | null {
+        if (!site) return null;
+        let normalized = site.trim().toLowerCase();
+        normalized = normalized.replace(/^https?:\/\//, '');
+        normalized = normalized.replace(/\/$/, '');
+        if (normalized.startsWith('www.')) {
+            normalized = normalized.substring(4);
+        }
+        // Validate that it's a valid domain
+        if (!normalized.includes('.') || normalized.includes('/') || normalized.includes(':')) {
+            return null;
+        }
+        return normalized;
     }
 
     /**

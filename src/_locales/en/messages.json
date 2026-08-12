@@ -1955,5 +1955,15 @@
 	},
 	"settingsAutoAddUnreachableSitesDesc": {
 		"message": "When a page fails to load, a dialog will be shown suggesting to add the site to AutoProxy."
-	}	
+	},
+	"settingsStaleRemaining": {
+    "message": "remaining"
+	},
+	"settingsStaleExpired": {
+		"message": "expired"
+	},
+	"settingsStaleUnknown": {
+		"message": "no data"
+}
+	
 }

@@ -29,7 +29,9 @@ export class WebRequestMonitor {
 	private static debugInfo = false;
 
 	public static startMonitor(callback: Function) {
+		console.log('[WebRequestMonitor] startMonitor вызван');
 		if (WebRequestMonitor.isMonitoring) return;
+		console.log('[WebRequestMonitor] уже запущен, пропускаем');
 
 		api.webRequest.onBeforeRequest.addListener(WebRequestMonitor.events.onBeforeRequest, {
 			urls: monitorUrlsSchemaFilter,
@@ -264,7 +266,17 @@ export class WebRequestMonitor {
 			if (requestDetails.error.indexOf('net::ERR_FILE_') === 0) {
 				return;
 			}
-			if (requestDetails.error.indexOf('NS_ERROR_ABORT') === 0) {
+			if (requestDetails.error.indexOf('NS_ERROR_ABORT') === 0 ||
+			    requestDetails.error.indexOf('NS_BINDING_ABORTED') === 0 ||
+			    requestDetails.error === 'net::ERR_ABORTED') {
+				// English: Abort errors (user stopped loading) – treat as timeout abort
+				// Russian: Ошибки прерывания (пользователь остановил загрузку) – обрабатываем как таймаут-прерывание
+				WebRequestMonitor.raiseCallback(RequestMonitorEvent.RequestTimeoutAborted, requestDetails);
+				if (WebRequestMonitor.debugInfo)
+					WebRequestMonitor.logMessage(
+						RequestMonitorEvent[RequestMonitorEvent.RequestTimeoutAborted],
+						requestDetails,
+					);
 				return;
 			}
 			let checkUrl: string = requestDetails.url.toLowerCase();
@@ -279,20 +291,6 @@ export class WebRequestMonitor {
 				return;
 			}
 			if (checkUrl.includes('://127.0.0.1')) {
-				return;
-			}
-
-			if (requestDetails.error === 'net::ERR_ABORTED') {
-				if (req.timeoutCalled && !req.noTimeout) {
-					// callback request-timeout-aborted
-					WebRequestMonitor.raiseCallback(RequestMonitorEvent.RequestTimeoutAborted, requestDetails);
-
-					if (WebRequestMonitor.debugInfo)
-						WebRequestMonitor.logMessage(
-							RequestMonitorEvent[RequestMonitorEvent.RequestTimeoutAborted],
-							requestDetails,
-						);
-				}
 				return;
 			}
 

@@ -1958,5 +1958,14 @@
     },
     "settingsAutoAddUnreachableSitesDesc": {
         "message": "При обнаружении, что страница не загружается, будет показан диалог с предложением добавить сайт в автопрокси."
-    }	
+    },
+	"settingsStaleRemaining": {
+		"message": "осталось"
+	},
+	"settingsStaleExpired": {
+		"message": "истекло"
+	},
+	"settingsStaleUnknown": {
+		"message": "нет данных"
+	}	
 }

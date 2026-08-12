@@ -329,9 +329,48 @@ export class popup {
                     popup.quickTestProgress.hide();
                     popup.quickTestInProgress = false;
                 }
+
+                // === ОБНОВЛЕНИЕ autoStatus В ПОПАПЕ ===
+                if (message.proxyId && message.site && message.statusType) {
+                    if (!popup.popupData) {
+                        popup.popupData = { autoStatus: {} } as PopupInternalDataType;
+                    }
+                    if (!popup.popupData.autoStatus) {
+                        popup.popupData.autoStatus = {};
+                    }
+                    const site = message.site.replace(/^https?:\/\//, '').replace(/\/$/, '').replace(/^www\./, '');
+                    if (!popup.popupData.autoStatus[message.proxyId]) {
+                        popup.popupData.autoStatus[message.proxyId] = {};
+                    }
+                    const status = message.statusType === 'success' ? 'success' :
+                                   message.statusType === 'indirect' ? 'indirect' :
+                                   message.statusType === 'ip-only' ? 'ip-only' : 'fail';
+                    popup.popupData.autoStatus[message.proxyId][site] = {
+                        status: status,
+                        timestamp: Date.now()
+                    };
+                    // Перерисовать активный прокси
+                    popup.populateActiveProxy(popup.popupData);
+                }
+                // === КОНЕЦ ОБНОВЛЕНИЯ ===
+
                 if (sendResponse) sendResponse(null);
                 return;
             }
+	            if (command === "UPDATE_AUTO_STATUS") {
+                // English: Update autoStatus in popup data when status changes
+                // Russian: Обновляем autoStatus в данных попапа при изменении статуса
+                if (popup.popupData) {
+                    const { proxyId, site, status, timestamp } = message;
+                    const normalizedSite = site.replace(/^https?:\/\//, '').replace(/\/$/, '').replace(/^www\./, '');
+                    if (!popup.popupData.autoStatus) popup.popupData.autoStatus = {};
+                    if (!popup.popupData.autoStatus[proxyId]) popup.popupData.autoStatus[proxyId] = {};
+                    popup.popupData.autoStatus[proxyId][normalizedSite] = { status, timestamp };
+                    popup.populateActiveProxy(popup.popupData);
+                }
+                if (sendResponse) sendResponse(null);
+                return;
+            }		
         }
 
         // English: Default response for unhandled messages
@@ -499,6 +538,10 @@ export class popup {
     }
 
     private static populateDataForPopup(dataForPopup: PopupInternalDataType) {
+        // Normalize current site for consistent status lookup across all components
+        if (dataForPopup.currentSite) {
+            dataForPopup.currentSite = dataForPopup.currentSite.replace(/^https?:\/\//, '').replace(/\/$/, '').replace(/^www\./, '');
+        }
         CommonUi.applyThemes(dataForPopup.themeData);
         CommonUi.applyThemes(dataForPopup.themeData);
         popup.updateActiveProfile(dataForPopup);
@@ -740,8 +783,10 @@ export class popup {
             // Russian: Если выборочный профиль, пытаемся показать прокси для текущего сайта
             const activeProfile = popup.activeProfile;
             if (activeProfile && activeProfile.profileType === SmartProfileType.SmartRules) {
-                const site = dataForPopup.currentSite;
+                let site = dataForPopup.currentSite;
                 if (site) {
+                    // Normalize site (remove www., protocol, trailing slash)
+                    site = site.replace(/^https?:\/\//, '').replace(/\/$/, '').replace(/^www\./, '');
                     // First check pinned proxy (session)
                     const statusService = AutoStatusService.getInstance();
                     const pinnedProxyId = statusService.getPinnedProxy(site);
@@ -2022,6 +2067,10 @@ export class popup {
         PolyFill.runtimeSendMessage(CommandMessages.PopupGetInitialData,
             (dataForPopup: PopupInternalDataType) => {
                 if (dataForPopup) {
+                    // Normalize current site for consistent status lookup
+                    if (dataForPopup.currentSite) {
+                        dataForPopup.currentSite = dataForPopup.currentSite.replace(/^https?:\/\//, '').replace(/\/$/, '').replace(/^www\./, '');
+                    }
                     console.log("[ProxyMust] Получены свежие данные попапа, currentSite =", dataForPopup.currentSite, "staleHours =", dataForPopup.staleHours);
                     console.log("[ProxyMust] autoStatus keys:", Object.keys(dataForPopup.autoStatus || {}));
                     console.log("[ProxyMust] autoStatus sample:", dataForPopup.autoStatus ? JSON.stringify(dataForPopup.autoStatus).substring(0, 500) : 'empty');
@@ -2039,7 +2088,7 @@ export class popup {
                     const isCurrentSiteEmpty = !effectiveSite || effectiveSite === "—";
 
                     if (testSite) {
-                        let normalizedTestSite = testSite.replace(/^https?:\/\//, '').replace(/\/$/, '');
+                        let normalizedTestSite = testSite.replace(/^https?:\/\//, '').replace(/\/$/, '').replace(/^www\./, '');
                         if (isCurrentSiteEmpty) {
                             effectiveSite = normalizedTestSite;
                             dataForPopup.currentSite = normalizedTestSite;
