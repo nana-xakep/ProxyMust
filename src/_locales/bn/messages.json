@@ -1921,7 +1921,7 @@
 		"message": "প্রক্সি পরিবর্তন করবেন?"
 	},
 	"dialogChangeMessage": {
-		"message": "সাইট {0} এর জন্য নির্ধারিত প্রক্সি পরিবর্তন করবেন?"
+		"message": "সাইট {0}-এর জন্য নির্ধারিত প্রক্সি {1} পরিবর্তন করবেন?"
 	},
 	"dialogChangeConfirm": {
 		"message": "পরিবর্তন করুন"
@@ -1952,5 +1952,50 @@
 	},
 	"settingsAutoAddUnreachableSitesDesc": {
 		"message": "পৃষ্ঠা লোড না হলে, সাইটটিকে অটো প্রক্সিতে যোগ করার প্রস্তাব সহ একটি ডায়ালগ দেখানো হবে।"
+	},
+	"settingsStaleRemaining": {
+		"message": "অবশিষ্ট"
+	},
+	"settingsStaleExpired": {
+		"message": "মেয়াদোত্তীর্ণ"
+	},
+	"settingsStaleUnknown": {
+		"message": "কোন ডেটা নেই"
+	},
+	"settingsImportRulesFormatUniversal": {
+		"message": "স্বয়ংক্রিয় বিন্যাস (ডোমেইন ইমপোর্ট)"
+	},
+	"settingsImportRulesUniversalHint": {
+		"message": "যেকোনো টেক্সট পেস্ট করুন – এক্সটেনশন স্বয়ংক্রিয়ভাবে সমস্ত ডোমেইন বের করে তাদের জন্য নিয়ম তৈরি করবে।"
+	},
+	"settingsImportRulesUniversalNoDomains": {
+		"message": "টেক্সট থেকে কোনো ডোমেইন বের করা যায়নি। নিশ্চিত করুন যে টেক্সটে ডোমেইন নাম রয়েছে (যেমন youtube.com)।"
+	},
+	"settingsAutoProxyToggleMode": {
+		"message": "মোড টগল করুন (স্বয়ংক্রিয়/ম্যানুয়াল)"
+	},
+	"settingsRulesGridColSourceRule": {
+		"message": "উৎস/নিয়ম"
+	},
+	"settingsRuleActionBlock": {
+		"message": "🛑 ব্লক (কোন সংযোগ নেই) ❌"
+	},
+	"popupAutoRefreshTitle": {
+		"message": "🔄 অটো প্রক্সি"
+	},
+	"popupAutoRefreshNoRule": {
+		"message": "{0} এর জন্য কোনো নিয়ম নেই – সাইটটি অটো প্রক্সিতে যোগ করুন"
+	},
+	"popupAutoRefreshRuleDisabled": {
+		"message": "{0} এর জন্য নিয়ম নিষ্ক্রিয় – নিয়ম সক্রিয় করুন"
+	},
+	"popupAutoRefreshManual": {
+		"message": "নিয়ম {0} এর জন্য ম্যানুয়াল মোড – অটোতে স্যুইচ করুন"
+	},
+	"popupAutoRefreshAuto": {
+		"message": "অটো মোড – সাইট {0} এর জন্য প্রক্সি রিফ্রেশ করুন"
+	},
+	"popupAutoRefreshPinned": {
+		"message": "সাইট {0} এর জন্য পিন করা প্রক্সি পরিবর্তন করুন"
 	}	
 }

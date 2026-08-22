@@ -1921,7 +1921,7 @@
 		"message": "प्रॉक्सी बदलें?"
 	},
 	"dialogChangeMessage": {
-		"message": "क्या आप साइट {0} के लिए निर्धारित प्रॉक्सी बदलना चाहते हैं?"
+		"message": "साइट {0} के लिए निर्धारित प्रॉक्सी {1} बदलें?"
 	},
 	"dialogChangeConfirm": {
 		"message": "बदलें"
@@ -1952,5 +1952,50 @@
 	},
 	"settingsAutoAddUnreachableSitesDesc": {
 		"message": "जब पृष्ठ लोड नहीं होता है, तो साइट को ऑटो प्रॉक्सी में जोड़ने का सुझाव देने वाला एक डायलॉग दिखाया जाएगा।"
+	},
+	"settingsStaleRemaining": {
+		"message": "शेष"
+	},
+	"settingsStaleExpired": {
+		"message": "समाप्त"
+	},
+	"settingsStaleUnknown": {
+		"message": "कोई डेटा नहीं"
+	},
+	"settingsImportRulesFormatUniversal": {
+		"message": "स्वतः प्रारूप (डोमेन आयात करें)"
+	},
+	"settingsImportRulesUniversalHint": {
+		"message": "कोई भी टेक्स्ट चिपकाएँ – एक्सटेंशन स्वचालित रूप से सभी डोमेन निकालेगा और उनके लिए नियम बनाएगा।"
+	},
+	"settingsImportRulesUniversalNoDomains": {
+		"message": "टेक्स्ट से कोई डोमेन निकाला नहीं जा सका। सुनिश्चित करें कि टेक्स्ट में डोमेन नाम हैं (जैसे youtube.com)।"
+	},
+	"settingsAutoProxyToggleMode": {
+		"message": "मोड टॉगल करें (स्वतः/मैनुअल)"
+	},
+	"settingsRulesGridColSourceRule": {
+		"message": "स्रोत/नियम"
+	},
+	"settingsRuleActionBlock": {
+		"message": "🛑 ब्लॉक करें (कोई कनेक्शन नहीं) ❌"
+	},
+	"popupAutoRefreshTitle": {
+		"message": "🔄 ऑटो प्रॉक्सी"
+	},
+	"popupAutoRefreshNoRule": {
+		"message": "{0} के लिए कोई नियम नहीं – साइट को ऑटो प्रॉक्सी में जोड़ें"
+	},
+	"popupAutoRefreshRuleDisabled": {
+		"message": "{0} के लिए नियम अक्षम है – नियम सक्षम करें"
+	},
+	"popupAutoRefreshManual": {
+		"message": "नियम {0} के लिए मैन्युअल मोड – ऑटो पर स्विच करें"
+	},
+	"popupAutoRefreshAuto": {
+		"message": "ऑटो मोड – साइट {0} के लिए प्रॉक्सी रिफ्रेश करें"
+	},
+	"popupAutoRefreshPinned": {
+		"message": "साइट {0} के लिए पिन की गई प्रॉक्सी बदलें"
 	}	
 }

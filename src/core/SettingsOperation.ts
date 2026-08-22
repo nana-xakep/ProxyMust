@@ -22,10 +22,11 @@
  */
 import { api } from "../lib/environment";
 import { PolyFill } from "../lib/PolyFill";
+import { CountryCode } from '../lib/CountryCode';
 import { Debug } from "../lib/Debug";
 import { Settings } from "./Settings";
 import { Utils } from "../lib/Utils";
-import { GeneralOptions, ProxyServer, ProxyServerFromSubscription, ProxyServerSubscription, SettingsConfig, SmartProfile, UpdateInfo } from "./definitions";
+import { GeneralOptions, ProxyServer, ProxyServerFromSubscription, ProxyServerSubscription, SettingsConfig, SmartProfile, UpdateInfo, BLOCK_PROXY_ID } from "./definitions";
 import { ProxyEngine } from "./ProxyEngine";
 import { ProxyRules } from "./ProxyRules";
 import { SubscriptionUpdater } from "./SubscriptionUpdater";
@@ -299,6 +300,57 @@ public static applySyncSettings(restoredSyncedSettings: SettingsConfig) {
 			return 0;
 		});
 	}
+	
+    /**
+     * English: Formats a proxy for display with flag, country code, host, port and protocol.
+     * If proxy is not found, returns the input string.
+     * Russian: Форматирует прокси для отображения с флагом, кодом страны, хостом, портом и протоколом.
+     * Если прокси не найден, возвращает исходную строку.
+     */
+    public static formatProxyDisplay(proxyIdOrName: string): string {
+        // English: Check if it's the block proxy ID
+        // Russian: Проверяем, является ли это ID блокирующего прокси
+        if (proxyIdOrName === BLOCK_PROXY_ID) {
+            return api.i18n.getMessage("settingsRuleActionBlock") || "Block (no connection)";
+        }
+
+        let proxy: ProxyServer | null = null;
+        // Try to find by ID
+        if (proxyIdOrName) {
+            proxy = this.findProxyServerById(proxyIdOrName);
+        }
+        // If not found, try to extract host:port from the string
+        if (!proxy && proxyIdOrName) {
+            const match = proxyIdOrName.match(/([a-zA-Z0-9.-]+):(\d+)/);
+            if (match) {
+                const host = match[1];
+                const port = parseInt(match[2], 10);
+                proxy = Settings.current.proxyServers.find(p => p.host === host && p.port === port);
+                if (!proxy) {
+                    for (const sub of Settings.current.proxyServerSubscriptions) {
+                        proxy = sub.proxies.find(p => p.host === host && p.port === port);
+                        if (proxy) break;
+                    }
+                }
+            }
+        }
+        // If still not found, try by exact name
+        if (!proxy && proxyIdOrName) {
+            proxy = this.findProxyServerByName(proxyIdOrName);
+        }
+        if (!proxy) {
+            // Return the original string if no proxy found
+            return proxyIdOrName || 'unknown';
+        }
+
+        let countryCode = proxy.countryCode;
+        if (!countryCode && proxy.host) {
+            countryCode = CountryCode.getCountryCode(proxy.host);
+        }
+        const flag = CountryCode.getCountryFlagEmoji(countryCode?.toUpperCase());
+        const code = countryCode ? countryCode.toUpperCase() : '??';
+        return `${flag} ${code} ${proxy.host}:${proxy.port} (${proxy.protocol})`;
+    }
 
 	public static getAllSubscribedProxyServers(): ProxyServerFromSubscription[] {
 

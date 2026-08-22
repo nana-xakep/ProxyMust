@@ -1924,7 +1924,7 @@
         "message": "Change proxy?"
     },
     "dialogChangeMessage": {
-        "message": "Change assigned proxy for site {0}?"
+        "message": "Change assigned proxy {1} for site {0}?"
     },
     "dialogChangeConfirm": {
         "message": "Change"
@@ -1964,6 +1964,41 @@
 	},
 	"settingsStaleUnknown": {
 		"message": "no data"
-}
-	
+	},
+	"settingsImportRulesFormatUniversal": {
+		"message": "Universal (extract domains)"
+	},
+	"settingsImportRulesUniversalHint": {
+		"message": "Paste any text — the extension will automatically extract all domains and create rules for them."
+	},
+	"settingsImportRulesUniversalNoDomains": {
+		"message": "No domains could be extracted from the text. Make sure the text contains domain names (e.g., youtube.com)."
+	},
+	"settingsAutoProxyToggleMode": {
+		  "message": "Toggle mode (Auto/Manual)"
+	},
+	"settingsRulesGridColSourceRule": {
+		"message": "Source/Rule"
+	},
+	"settingsRuleActionBlock": {
+		"message": "🛑Block (no connection)❌"
+	},
+	"popupAutoRefreshTitle": {
+		"message": "🔄 AutoProxy"
+	},
+	"popupAutoRefreshNoRule": {
+		"message": "No rule for {0} – add site to AutoProxy"
+	},
+	"popupAutoRefreshRuleDisabled": {
+		"message": "Rule disabled for {0} – enable rule"
+	},
+	"popupAutoRefreshManual": {
+		"message": "Manual mode for rule {0} – switch to auto"
+	},
+	"popupAutoRefreshAuto": {
+		"message": "Auto mode – refresh proxy for site {0}"
+	},
+	"popupAutoRefreshPinned": {
+		"message": "Change pinned proxy for site {0}"
+	}
 }

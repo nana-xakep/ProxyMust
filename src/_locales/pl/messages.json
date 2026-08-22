@@ -1921,7 +1921,7 @@
 		"message": "Zmienić proxy?"
 	},
 	"dialogChangeMessage": {
-		"message": "Zmienić ustawione proxy dla strony {0}?"
+		"message": "Zmienić ustawione proxy {1} dla strony {0}?"
 	},
 	"dialogChangeConfirm": {
 		"message": "Zmień"
@@ -1952,5 +1952,50 @@
 	},
 	"settingsAutoAddUnreachableSitesDesc": {
 		"message": "Gdy strona nie ładuje się, pojawi się okno dialogowe z propozycją dodania jej do autoproxy."
+	},
+	"settingsStaleRemaining": {
+		"message": "pozostało"
+	},
+	"settingsStaleExpired": {
+		"message": "wygasło"
+	},
+	"settingsStaleUnknown": {
+		"message": "brak danych"
+	},
+	"settingsImportRulesFormatUniversal": {
+		"message": "Automatyczny format (import domen)"
+	},
+	"settingsImportRulesUniversalHint": {
+		"message": "Wklej dowolny tekst – rozszerzenie automatycznie wyodrębni wszystkie domeny i utworzy dla nich reguły."
+	},
+	"settingsImportRulesUniversalNoDomains": {
+		"message": "Nie udało się wyodrębnić żadnej domeny z tekstu. Upewnij się, że tekst zawiera nazwy domen (np. youtube.com)."
+	},
+	"settingsAutoProxyToggleMode": {
+		"message": "Przełącz tryb (Auto/Ręczny)"
+	},
+	"settingsRulesGridColSourceRule": {
+		"message": "Źródło/Reguła"
+	},
+	"settingsRuleActionBlock": {
+		"message": "🛑 Blokuj (bez połączenia) ❌"
+	},
+	"popupAutoRefreshTitle": {
+		"message": "🔄 Autoproxy"
+	},
+	"popupAutoRefreshNoRule": {
+		"message": "Brak reguły dla {0} – dodaj stronę do Autoproxy"
+	},
+	"popupAutoRefreshRuleDisabled": {
+		"message": "Reguła wyłączona dla {0} – włącz regułę"
+	},
+	"popupAutoRefreshManual": {
+		"message": "Tryb ręczny dla reguły {0} – przełącz na automatyczny"
+	},
+	"popupAutoRefreshAuto": {
+		"message": "Tryb automatyczny – odśwież proxy dla strony {0}"
+	},
+	"popupAutoRefreshPinned": {
+		"message": "Zmień przypięte proxy dla strony {0}"
 	}	
 }

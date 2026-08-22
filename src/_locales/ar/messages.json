@@ -1921,7 +1921,7 @@
 		"message": "هل تريد تغيير البروكسي؟"
 	},
 	"dialogChangeMessage": {
-		"message": "هل تريد تغيير البروكسي المحدد للموقع {0}؟"
+		"message": "تغيير البروكسي المخصص {1} للموقع {0}؟"
 	},
 	"dialogChangeConfirm": {
 		"message": "تغيير"
@@ -1952,5 +1952,50 @@
 	},
 	"settingsAutoAddUnreachableSitesDesc": {
 		"message": "عند اكتشاف عدم تحميل الصفحة، سيظهر حوار يقترح إضافة الموقع إلى البروكسي التلقائي."
+	},
+	"settingsStaleRemaining": {
+		"message": "متبقي"
+	},
+	"settingsStaleExpired": {
+		"message": "انتهى"
+	},
+	"settingsStaleUnknown": {
+		"message": "لا توجد بيانات"
+	},
+	"settingsImportRulesFormatUniversal": {
+		"message": "تنسيق تلقائي (استيراد النطاقات)"
+	},
+	"settingsImportRulesUniversalHint": {
+		"message": "ألصق أي نص – سيقوم الملحق باستخراج جميع النطاقات تلقائياً وإنشاء قواعد لها."
+	},
+	"settingsImportRulesUniversalNoDomains": {
+		"message": "تعذر استخراج أي نطاق من النص. تأكد من أن النص يحتوي على أسماء نطاقات (مثل youtube.com)."
+	},
+	"settingsAutoProxyToggleMode": {
+		"message": "تبديل الوضع (تلقائي/يدوي)"
+	},
+	"settingsRulesGridColSourceRule": {
+		"message": "المصدر/القاعدة"
+	},
+	"settingsRuleActionBlock": {
+		"message": "🛑 حظر (بدون اتصال) ❌"
+	},
+	"popupAutoRefreshTitle": {
+		"message": "🔄 البروكسي التلقائي"
+	},
+	"popupAutoRefreshNoRule": {
+		"message": "لا توجد قاعدة لـ {0} – أضف الموقع إلى البروكسي التلقائي"
+	},
+	"popupAutoRefreshRuleDisabled": {
+		"message": "القاعدة معطلة لـ {0} – قم بتفعيل القاعدة"
+	},
+	"popupAutoRefreshManual": {
+		"message": "الوضع اليدوي للقاعدة {0} – قم بالتبديل إلى التلقائي"
+	},
+	"popupAutoRefreshAuto": {
+		"message": "الوضع التلقائي – تحديث البروكسي للموقع {0}"
+	},
+	"popupAutoRefreshPinned": {
+		"message": "تغيير البروكسي المثبت للموقع {0}"
 	}	
 }

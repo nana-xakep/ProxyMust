@@ -1921,7 +1921,7 @@
 		"message": "Proxy değiştirilsin mi?"
 	},
 	"dialogChangeMessage": {
-		"message": "{0} sitesi için belirlenen proxy değiştirilsin mi?"
+		"message": "{0} sitesi için belirlenen proxy {1} değiştirilsin mi?"
 	},
 	"dialogChangeConfirm": {
 		"message": "Değiştir"
@@ -1952,5 +1952,50 @@
 	},
 	"settingsAutoAddUnreachableSitesDesc": {
 		"message": "Bir sayfa yüklenmediğinde, sitenin otomatik proxy'ye eklenmesini öneren bir iletişim kutusu gösterilecektir."
+	},
+	"settingsStaleRemaining": {
+		"message": "kalan"
+	},
+	"settingsStaleExpired": {
+		"message": "süresi doldu"
+	},
+	"settingsStaleUnknown": {
+		"message": "veri yok"
+	},
+	"settingsImportRulesFormatUniversal": {
+		"message": "Otomatik format (alan adlarını içe aktar)"
+	},
+	"settingsImportRulesUniversalHint": {
+		"message": "Herhangi bir metni yapıştırın – uzantı otomatik olarak tüm alan adlarını çıkaracak ve onlar için kurallar oluşturacaktır."
+	},
+	"settingsImportRulesUniversalNoDomains": {
+		"message": "Metinden hiçbir alan adı çıkarılamadı. Metnin alan adları (ör. youtube.com) içerdiğinden emin olun."
+	},
+	"settingsAutoProxyToggleMode": {
+		"message": "Modu değiştir (Otomatik/Manuel)"
+	},
+	"settingsRulesGridColSourceRule": {
+		"message": "Kaynak/Kural"
+	},
+	"settingsRuleActionBlock": {
+		"message": "🛑 Engelle (bağlantı yok) ❌"
+	},
+	"popupAutoRefreshTitle": {
+		"message": "🔄 Otomatik Proxy"
+	},
+	"popupAutoRefreshNoRule": {
+		"message": "{0} için kural yok – siteyi Otomatik Proxy'ye ekle"
+	},
+	"popupAutoRefreshRuleDisabled": {
+		"message": "{0} için kural devre dışı – kuralı etkinleştir"
+	},
+	"popupAutoRefreshManual": {
+		"message": "Kural {0} için manuel mod – otomatiğe geç"
+	},
+	"popupAutoRefreshAuto": {
+		"message": "Otomatik mod – {0} sitesi için proxy'yi yenile"
+	},
+	"popupAutoRefreshPinned": {
+		"message": "{0} sitesi için sabitlenmiş proxy'yi değiştir"
 	}	
 }

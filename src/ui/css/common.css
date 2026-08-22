@@ -1066,3 +1066,59 @@ html.popup.wide-mode-prompt body {
     color: #ff5555 !important;
     font-weight: bold;
 }
+
+/* ============================== */
+/* Compact columns for rules table: Enabled and Mode */
+/* Компактные колонки для таблицы правил: Включено и Режим */
+/* ============================== */
+.column-enabled,
+.column-mode {
+    width: 1% !important;
+    max-width: 80px !important;
+    white-space: nowrap !important;
+}
+
+.column-enabled th,
+.column-mode th,
+.compact-header {
+    max-width: 80px !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+    font-size: 0.8rem !important;
+}
+
+.column-enabled th .dt-column-title,
+.column-mode th .dt-column-title,
+.compact-header .dt-column-title {
+    display: inline-block !important;
+    max-width: 80px !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    vertical-align: middle !important;
+    white-space: nowrap !important;
+}
+
+.column-enabled th.sorting::after,
+.column-mode th.sorting::after,
+.column-enabled th.sorting_asc::after,
+.column-mode th.sorting_asc::after,
+.column-enabled th.sorting_desc::after,
+.column-mode th.sorting_desc::after {
+    margin-left: 4px !important;
+    display: inline-block !important;
+}
+
+.column-enabled .form-check {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+.column-enabled .form-check-input {
+    margin: 0 !important;
+}
+.column-mode .form-select {
+    min-width: 60px !important;
+    width: auto !important;
+    padding: 0.15rem 0.4rem !important;
+    font-size: 0.8rem !important;
+}

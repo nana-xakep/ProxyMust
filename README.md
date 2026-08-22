@@ -1,7 +1,7 @@
 # ProxyMust
 
 **Advanced selective proxy manager with automatic selection of working proxy for sites**  
-Version: 1.0.6 (based on SmartProxy 2.2.1)  
+Version: 1.0.8 (based on SmartProxy 2.2.1)  
 Fork maintainer: nana-xakep  
 Source code: [github.com/nana-xakep/ProxyMust](https://github.com/nana-xakep/ProxyMust)
 
@@ -17,38 +17,34 @@ ProxyMust works on **Chrome, Firefox, Edge, Opera and Firefox for Android** and 
 
 ---
 
-## 🆕 What's new in version 1.0.7
+## 🆕 What's new in version 1.0.8
 
 ### Added
 
-- **Universal success status update** – now, when a page loads successfully, the proxy status is updated to `success` in any active profile (not only in AutoProxy), which allows accumulating performance statistics for proxies across all sites.
-- **Automatic reset of the user‑stop flag when initiating a new search** – if the user clicks "Stop" in the browser and then initiates a new search (via 🔄, F5, or adding a site), the stop flag is reset and the auto‑iteration restarts.
+- **Sorting of AutoProxy rules table columns** – now you can sort by "Filter Type", "Source", "Rule", "Enabled" and "Mode". The "Proxy Server" column is non‑sortable.
+- **Automatic saving of rule changes** – changes (import, toggling, mode switching, proxy selection, deletion) are saved instantly without the need to press a "Save" button.
+- **Context menu in the AutoProxy rules table** – right‑click on a rule to:
+  - Enable/Disable
+  - Toggle mode (Auto/Manual)
+  - Set proxy (choose from available proxies or block)
+  - Delete selected rules
+  - Test the site (with modal for test type selection and options)
+- **Testing from the context menu** – for a single rule, you can run a test (Precise, Quick, Cyclic, Express‑Cyclic) with the same options as on the "Proxy Servers" page.
+- **Delete key support** – use the `Delete` key to remove one or more selected rules.
+- **Improved rule import** – a new universal format (extracts domains from any text) is selected by default; changes are auto‑saved after import.
+- **Traffic blocking (AdBlock‑like functionality)** – a dummy proxy `0.0.0.0:0` named **"🛑Block (no connection)❌"** is now available. When selected for a rule, the rule switches to **Manual** mode and all requests to the specified domains are blocked.
+- **Dynamic tooltip for the AutoProxy button (🔄) in the popup** – the tooltip now reflects the actual state of the rule for the current site (no rule, disabled, manual mode, auto mode with/without pinned proxy), making the button's action predictable.
 
 ### Changed
 
-- **Dialog display logic before failover** – the change dialog is now shown **only** when a site is already pinned to a proxy and the user initiates a change (F5, re‑entering the address, or the 🔄 button).
-- **Default sorting in the "Proxy Servers" table** – the table is now sorted by rating using the custom type `rating-priority`, which ensures that proxies with a "Success" status (✅) are always placed above "Indirect success" (☑️), regardless of their numeric rating.
-- **Display of IP and port for pinned proxies** – when a working proxy is pinned, its IP and port are now shown in the "Proxy Server" column of the rules table for that site, and it becomes the primary one in `auto` mode, giving the user informational control over the AutoProxy selection.
-- **Display of IP and port in the AutoProxy profile** – the "Proxy Server" column now displays IP and port instead of the proxy name, simplifying identification.
-- **Real‑time status updates** – the rules and servers tables are now updated immediately after test results are received, reflecting current statuses and ratings.
-- **Behaviour on successful load in auto mode** – when a page loads successfully through a proxy, failover is completely stopped (all states are reset: `_failoverInProgress`, `_failoverIndex`, `_failoverCycleCount`, `_tempSkipList`), and iteration will not resume until the user makes a decision in the pinning dialog (pin or continue searching). This makes AutoProxy behaviour predictable and manageable.
-- **"Remove Site" button on the proxy settings page** – now displays a dialog "Remove ... site from the AutoProxy check list and rules?" and, on confirmation, removes the site from both rules and the list.
+- **Table layout optimised** – the "Source" and "Rule" columns are merged when they contain the same value; the "Enabled" and "Mode" columns are narrower with truncated headers and hover tooltips.
+- **Proxy display in dialogs** – pin and change dialogs now show full proxy information (flag, country code, host, port, protocol).
+- **Improved user‑stop flag handling** – the `user‑stopped` flag is correctly reset on new navigation, and the system no longer shows the change dialog when clicking links within the same domain.
+- **Settings page auto‑reload** – after changes that require a page refresh (e.g., deleting rules or selecting blocking), the page reloads automatically.
 
 ### Fixed
 
-- **Re‑appearing pinning dialog after refusal** – fixed an issue where, after clicking "Continue searching", the pinning dialog would reopen for the same proxy. Now, after refusal, failover switches to the next proxy and correctly reloads the tab.
-- **Infinite auto‑iteration when closing a tab** – added a tab close handler (`TabManager.TabRemoved`) that clears all failover states for the site and cancels reload timeouts, preventing iteration from continuing after the tab is closed.
-- **Auto‑iteration stopping when "Stop" is pressed in the browser** – the "Stop" button (load cancellation) now fully cancels the current failover and prevents it from restarting automatically. A flag `_userStoppedFailover` has been added to preserve the stopped state until the user initiates a new search (via 🔄, F5, or adding a site). In Firefox, proper handling of the `NS_BINDING_ABORTED` error that occurs when pressing "Stop" has been added.
-- **Automatic reset of the `_userStoppedFailover` flag on successful load** – fixed an issue where, after pressing "Stop" and then successfully loading a page, the flag was automatically reset, allowing failover to resume on the next error. Now the flag persists until the user explicitly initiates a new action.
-- **Incorrect sorting in the servers table** – fixed the initial sorting on the "Rating" column using `orderDataType: 'rating-priority'`; status now takes priority over numeric rating.
-- **Display of statuses in the popup** – the popup now correctly shows green (✅) and blue (☑️) icons based on the actual statuses from `autoStatus`, rather than only blue ones.
-- **Duplicate pinning dialogs** – added a protection mechanism preventing the same dialog from being shown for the same proxy within 10 seconds, eliminating multiple windows with identical messages.
-- **"Remove Site" button on the proxy settings page** – now works again and removes the selected site from both rules and the list.
-
-### Security and performance
-
-- The AutoProxy module has been completely redesigned for better functionality and improved connectivity.
-- Tab existence checks before each failover reload have been optimised, reducing "Invalid tab ID" errors and improving stability when tabs are closed during iteration.
+- Various stability and performance improvements, including better failover state cleanup and accurate sorting by status and rating.
 
 For a detailed list of changes, see [CHANGELOG.md](CHANGELOG.md).
 
@@ -105,6 +101,13 @@ In the profile settings (AutoProxy tab) you have:
 - **Automatically pin successful proxy (without confirmation)** – if enabled, proxy is pinned immediately after successful load without dialog (disabled by default).
 - **Suggest adding unreachable sites to auto‑proxy** – when a page fails to load without proxy, a dialog offers to add the site (enabled by default).
 
+### Managing rules (new in 1.0.8)
+
+- **Context menu** – right‑click any rule to enable/disable, switch mode, set proxy, delete, or run a test.
+- **Instant saving** – all changes are saved automatically.
+- **Blocking** – choose the special "Block" proxy to block access to specific domains.
+- **Keyboard shortcut** – press `Delete` to remove selected rules.
+
 ---
 
 ## 🖥 Managing proxy servers
@@ -151,7 +154,8 @@ Check if a proxy works for the site you need. Select a site from the dropdown (o
 Tests can be run for:
 - all proxies in the table,
 - only selected ones (via context menu),
-- the current site directly from the popup ("Test" button).
+- the current site directly from the popup ("Test" button),
+- **and now from the context menu of a rule in the AutoProxy table**.
 
 **About timeouts:** the test timer is automatically extended on every progress update, so long tests (e.g., hundreds of proxies) are not interrupted prematurely.
 
@@ -209,10 +213,21 @@ Each rule has a mode switch:
 
 When manually changing the proxy via dropdown, the rule automatically switches to **Manual**. When adding a site from the popup (🔄 button), a new rule is created with mode **Auto**.
 
+### Managing rules (new in 1.0.8)
+- **Context menu** – right‑click any rule to:
+  - Enable/Disable
+  - Toggle mode (Auto/Manual)
+  - Set proxy (choose from available proxies or the new **Block** proxy)
+  - Delete selected rules
+  - Test the site (with modal for test type and options)
+- **Instant save** – all changes are automatically saved.
+- **Delete key** – select one or more rules and press `Delete` to remove them.
+- **Blocking** – select the special proxy `0.0.0.0:0` (named "🛑Block (no connection)❌") to block traffic to the specified domains. The rule will automatically switch to Manual mode.
+
 ### Adding rules
-- From popup: click on the domain in the "Proxiable items" list or use the 🔄 button.
+- From popup: click on the domain in the "Proxiable items" list or use the 🔄 button (tooltip now shows current state).
 - Manually: on the settings page in the desired profile, click "Add Rule".
-- Import: from GFWList or SwitchyOmega files.
+- Import: from GFWList or SwitchyOmega files (new universal format available).
 - **Automatic creation** – if a site fails to load without proxy and the corresponding option is enabled, you will be offered to add a rule to AutoProxy. Also, on a successful test for a site, a disabled rule is automatically created.
 
 **Priority:** whitelist rules always have higher priority and disable proxy for the specified sites.
@@ -247,6 +262,7 @@ In addition to basic import/export of proxy lists, the following improvements ar
 - **Automatic mode switching:** when you type in the input field, "Text proxy list" mode is activated; when you select a file, "File proxy list" mode is activated.
 - **Export selected:** in the table context menu, you can export only the selected servers.
 - **CSV import:** supports CSV lists with delimiters (comma, semicolon, tab), with or without headers.
+- **Rule import** – supports universal format (extract domains from any text) and imports from GFWList/SwitchyOmega.
 
 ---
 
@@ -346,6 +362,6 @@ ProxyMust is distributed under the **GNU General Public License v3.0**. The orig
 ---
 
 **ProxyMust** – maintained by [nana-xakep](https://github.com/nana-xakep)  
-License [GPL-3.0](https://www.gnu.org/licenses/gpl-3.0.html). Version 1.0.6 (based on SmartProxy 2.2.1).
+License [GPL-3.0](https://www.gnu.org/licenses/gpl-3.0.html). Version 1.0.8 (based on SmartProxy 2.2.1).
 
-Documentation version: 1.0.6 (2026-08-06)
+Documentation version: 1.0.8 (2026-08-22)

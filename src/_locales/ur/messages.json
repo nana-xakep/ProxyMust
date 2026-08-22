@@ -1921,7 +1921,7 @@
 		"message": "کیا پراکسی تبدیل کریں؟"
 	},
 	"dialogChangeMessage": {
-		"message": "کیا سائٹ {0} کے لیے مقرر کردہ پراکسی تبدیل کریں؟"
+		"message": "سائٹ {0} کے لیے مقرر کردہ پراکسی {1} تبدیل کریں؟"
 	},
 	"dialogChangeConfirm": {
 		"message": "تبدیل کریں"
@@ -1952,5 +1952,50 @@
 	},
 	"settingsAutoAddUnreachableSitesDesc": {
 		"message": "جب صفحہ لوڈ نہ ہو، تو سائٹ کو آٹو پراکسی میں شامل کرنے کا مشورہ دینے والا ڈائیلاگ دکھایا جائے گا۔"
+	},
+	"settingsStaleRemaining": {
+		"message": "باقی"
+	},
+	"settingsStaleExpired": {
+		"message": "میعاد ختم ہوگئی"
+	},
+	"settingsStaleUnknown": {
+		"message": "کوئی ڈیٹا نہیں"
+	},
+	"settingsImportRulesFormatUniversal": {
+		"message": "خودکار فارمیٹ (ڈومینز درآمد کریں)"
+	},
+	"settingsImportRulesUniversalHint": {
+		"message": "کوئی بھی متن چسپاں کریں – ایکسٹینشن خودکار طور پر تمام ڈومینز نکال کر ان کے لیے اصول بنائے گی۔"
+	},
+	"settingsImportRulesUniversalNoDomains": {
+		"message": "متن سے کوئی ڈومین نہیں نکالا جا سکا۔ یقینی بنائیں کہ متن میں ڈومین کے نام ہیں (جیسے youtube.com)۔"
+	},
+	"settingsAutoProxyToggleMode": {
+		"message": "موڈ ٹوگل کریں (خودکار/دستی)"
+	},
+	"settingsRulesGridColSourceRule": {
+		"message": "ماخذ/اصول"
+	},
+	"settingsRuleActionBlock": {
+		"message": "🛑 بلاک کریں (کوئی کنکشن نہیں) ❌"
+	},
+	"popupAutoRefreshTitle": {
+		"message": "🔄 آٹو پراکسی"
+	},
+	"popupAutoRefreshNoRule": {
+		"message": "{0} کے لیے کوئی اصول نہیں – سائٹ کو آٹو پراکسی میں شامل کریں"
+	},
+	"popupAutoRefreshRuleDisabled": {
+		"message": "{0} کے لیے اصول غیر فعال ہے – اصول کو فعال کریں"
+	},
+	"popupAutoRefreshManual": {
+		"message": "اصول {0} کے لیے دستی موڈ – آٹو پر سوئچ کریں"
+	},
+	"popupAutoRefreshAuto": {
+		"message": "آٹو موڈ – سائٹ {0} کے لیے پراکسی ریفریش کریں"
+	},
+	"popupAutoRefreshPinned": {
+		"message": "سائٹ {0} کے لیے پن شدہ پراکسی تبدیل کریں"
 	}	
 }

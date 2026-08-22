@@ -993,8 +993,13 @@ export type RuleId = number;
 
 export enum ProxyRuleSpecialProxyServer {
 	DefaultGeneral = "-1",
-	ProfileProxy = "-2"
+	ProfileProxy = "-2",
+	Block = "-3"
 }
+
+// English: Special proxy ID for the built-in "Block" proxy
+// Russian: Специальный ID для встроенного прокси "Блокировка"
+export const BLOCK_PROXY_ID = "block-proxy-builtin";
 
 export class ProxyRule implements Cloneable {
 
@@ -1066,6 +1071,9 @@ export class ProxyRule implements Cloneable {
 
 			if (this.proxyServerId == ProxyRuleSpecialProxyServer.ProfileProxy)
 				return api.i18n.getMessage("settingsRulesProxyFromProfile");
+
+			if (this.proxyServerId == ProxyRuleSpecialProxyServer.Block)
+				return api.i18n.getMessage("settingsRuleActionBlock");
 
 			return null;
 		}
@@ -1385,6 +1393,9 @@ export class ProxyServerSubscription implements Cloneable {
 export enum ExternalRulesFormat {
 	AutoProxy,
 	SwitchyOmega,
+	Universal, 
+	// English: Extract domains from any text (ignore syntax)
+	// Russian: Извлечь домены из любого текста (игнорировать синтаксис)
 }
 
 export interface IExternalRulesConfig {

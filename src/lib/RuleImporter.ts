@@ -14,6 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with SmartProxy.  If not, see <http://www.gnu.org/licenses/>.
  */
+/*
+ * Modifications for ProxyMust:
+ * Copyright (C) 2026 nana-xakep <xakep.nana@gmail.com>
+ * - Added Universal domain extractor import format.
+ * - Added informative error messages for Universal import.
+ * - Added debug logging.
+ */
 import { Utils } from './Utils';
 import { api } from './environment';
 import {
@@ -26,6 +33,84 @@ import {
 } from '../core/definitions';
 import { ProxyEngineSpecialRequests } from '../core/ProxyEngineSpecialRequests';
 import * as ruleImporterSwitchyScript from './RuleImporterSwitchy';
+
+/**
+ * English: Extracts domains from any text, ignoring syntax and formatting.
+ * Russian: Извлекает домены из любого текста, игнорируя синтаксис и форматирование.
+ */
+function extractDomainsFromText(text: string): string[] {
+    console.log('[RuleImporter] extractDomainsFromText вызван, длина текста:', text.length);
+    const lines = text.split(/\r?\n/);
+    const domains: string[] = [];
+    // English: Regular expression to find domains (at least two levels, without ports and paths).
+    // Russian: Регулярка для поиска доменов (как минимум два уровня, без портов и путей).
+    const domainRegex = /(?:https?:\/\/)?(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(?::\d+)?(?:\/.*)?/g;
+    // English: For strings with || (GFWList style).
+    // Russian: Для строк с || (стиль GFWList).
+    const pipeRegex = /\|\|([a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/;
+
+    for (const line of lines) {
+        const trimmed = line.trim();
+        // English: Skip empty lines and comments.
+        // Russian: Пропускаем пустые строки и комментарии.
+        if (!trimmed || trimmed.startsWith('!') || trimmed.startsWith('#') || trimmed.startsWith('//')) {
+            continue;
+        }
+        let domain: string | null = null;
+        // English: Check for ||domain.com pattern.
+        // Russian: Проверяем на шаблон ||domain.com.
+        const pipeMatch = pipeRegex.exec(trimmed);
+        if (pipeMatch) {
+            domain = pipeMatch[1];
+            // English: Clean domain from www. and validate.
+            // Russian: Очищаем домен от www. и проверяем валидность.
+            if (domain.startsWith('www.')) {
+                domain = domain.substring(4);
+            }
+            if (domain.includes('.') && !/\s/.test(domain)) {
+                domains.push(domain);
+                console.log(`[RuleImporter] Извлечён домен (||): ${domain}`);
+            }
+        } else {
+            // English: Find all domains in the line.
+            // Russian: Ищем все домены в строке.
+            const matches = trimmed.match(domainRegex);
+            if (matches && matches.length > 0) {
+                // English: Process each found domain.
+                // Russian: Обрабатываем каждый найденный домен.
+                for (const match of matches) {
+                    let candidate = match;
+                    // English: Remove protocol.
+                    // Russian: Убираем протокол.
+                    candidate = candidate.replace(/^https?:\/\//, '');
+                    // English: Remove port.
+                    // Russian: Убираем порт.
+                    candidate = candidate.replace(/:\d+/, '');
+                    // English: Remove path.
+                    // Russian: Убираем путь.
+                    candidate = candidate.split('/')[0];
+                    let domain = candidate;
+                    // English: Remove www. prefix.
+                    // Russian: Убираем префикс www.
+                    if (domain.startsWith('www.')) {
+                        domain = domain.substring(4);
+                    }
+                    // English: Validate that the domain looks valid (contains a dot and no spaces).
+                    // Russian: Проверяем, что домен выглядит валидным (содержит точку и не содержит пробелов).
+                    if (domain.includes('.') && !/\s/.test(domain)) {
+                        domains.push(domain);
+                        console.log(`[RuleImporter] Извлечён домен: ${domain}`);
+                    }
+                }
+            }
+        }
+    }
+    // English: Remove duplicates.
+    // Russian: Убираем дубликаты.
+    const unique = Array.from(new Set(domains));
+    console.log(`[RuleImporter] Извлечено ${unique.length} уникальных доменов.`);
+    return unique;
+}
 
 export const RuleImporter = {
 	readFromServerAndImport(rulesConfig: IExternalRulesConfig, success?: Function, fail?: Function) {
@@ -41,8 +126,6 @@ export const RuleImporter = {
 					fail();
 				return;
 			}
-
-			// ----
 			RuleImporter.importRulesBatch(
 				rulesConfig,
 				response,
@@ -69,9 +152,11 @@ export const RuleImporter = {
 			);
 		}
 
-		if (rulesConfig.applyProxy !== null)
-			// mark this request as special
+		if (rulesConfig.applyProxy !== null) {
+			// English: Mark this request as special.
+			// Russian: Отмечаем этот запрос как специальный.
 			ProxyEngineSpecialRequests.setSpecialUrl(rulesConfig.url, rulesConfig.applyProxy);
+		}
 
 		let fetchRequest: RequestInit = {
 			method: 'GET',
@@ -102,9 +187,6 @@ export const RuleImporter = {
 		success: Function,
 		fail?: Function
 	) {
-		/**
-		 * TODO: Remove and replace with generic version
-		 */
 		if (!file && !text) {
 			if (fail) fail();
 			return;
@@ -122,9 +204,7 @@ export const RuleImporter = {
 				if (fail) fail(event);
 			};
 			reader.onload = (event) => {
-				//let textFile = event.target;
 				let fileText = reader.result;
-
 				try {
 					doImport(fileText as string, rulesConfig);
 				} catch (e) {
@@ -135,7 +215,8 @@ export const RuleImporter = {
 		}
 		function doImport(text: string, rulesConfig: IExternalRulesConfig) {
 			if (rulesConfig.obfuscation?.toLowerCase() == 'base64') {
-				// decode base64
+				// English: Decode base64.
+				// Russian: Декодируем base64.
 				text = Utils.b64DecodeUnicode(text);
 			}
 
@@ -144,17 +225,47 @@ export const RuleImporter = {
 				blackList: ImportedProxyRule[];
 			};
 
-			if (rulesConfig && rulesConfig.format == ExternalRulesFormat.AutoProxy) {
+			// English: Universal domain extraction – ignores format and extracts all domains.
+			// Russian: Универсальное извлечение доменов – игнорирует формат и извлекает все домены.
+			if (rulesConfig && rulesConfig.format == ExternalRulesFormat.Universal) {
+				const domains = extractDomainsFromText(text);
+				if (domains.length === 0) {
+					// English: No domains found – inform the user.
+					// Russian: Домены не найдены – сообщаем пользователю.
+					const msg = api.i18n.getMessage('settingsImportRulesUniversalNoDomains') || 'No domains could be extracted from the text.';
+					if (fail) fail(new Error(msg));
+					return;
+				}
+				const blackList: ImportedProxyRule[] = domains.map(d => {
+					const rule = new ImportedProxyRule();
+					rule.search = d;
+					rule.name = d;
+					rule.importedRuleType = CompiledProxyRuleType.SearchDomainSubdomain;
+					return rule;
+				});
+				rules = {
+					whiteList: [],
+					blackList: blackList,
+				};
+				console.log(`[RuleImporter] Универсальный импорт: извлечено ${domains.length} доменов.`);
+			} else if (rulesConfig && rulesConfig.format == ExternalRulesFormat.AutoProxy) {
+				// English: Check GFWList format.
+				// Russian: Проверяем формат GFWList.
 				if (!externalAppRuleParser.GFWList.detect(text, false)) {
-					if (fail) fail();
+					// English: Format not detected – provide hint.
+					// Russian: Формат не распознан – даём подсказку.
+					const msg = api.i18n.getMessage('settingsImportRulesAutoProxyHint') || 'Text must start with "[AutoProxy]" for GFWList format.';
+					if (fail) fail(new Error(msg));
 					return;
 				}
 				rules = externalAppRuleParser.GFWList.parse(text);
 			} else if (rulesConfig && rulesConfig.format == ExternalRulesFormat.SwitchyOmega) {
+				// English: Parse SwitchyOmega format.
+				// Russian: Парсим формат SwitchyOmega.
 				let switchyRules = externalAppRuleParser.Switchy.parseAndCompile(text);
 
 				if (!switchyRules || !switchyRules.compiled) {
-					if (fail) fail();
+					if (fail) fail(new Error('SwitchyOmega format not recognized.'));
 					return;
 				}
 				let blackListRules = externalAppRuleParser.Switchy.convertToProxyRule(switchyRules.compiled);
@@ -163,11 +274,14 @@ export const RuleImporter = {
 					whiteList: [],
 				};
 			} else {
-				if (fail) fail();
+				// English: Unknown format.
+				// Russian: Неизвестный формат.
+				if (fail) fail(new Error('Unknown import format.'));
 				return;
 			}
 
-			// ----
+			// English: Remove duplicates if requested.
+			// Russian: Удаляем дубликаты, если запрошено.
 			if (noDuplicates) {
 				if (!currentRules)
 					currentRules = [];
@@ -175,14 +289,12 @@ export const RuleImporter = {
 				rules.whiteList = rules.whiteList || [];
 
 				function deduplicateRules(importedRules: ImportedProxyRule[], shouldBeWhiteList: boolean = false): ImportedProxyRule[] {
-					// make a copy
 					let uniqueRuleList: ImportedProxyRule[] = [];
 
 					for (let importedRule of importedRules) {
 						let convertedRule = importedRule.getProxyRule();
 
 						let ruleExists = currentRules.some((rule) => 
-							// NOTE: the comparison is limited to these properties because `getProxyRule` only fills these
 							rule.ruleType == convertedRule.ruleType &&
 								rule.ruleSearch == convertedRule.ruleSearch &&
 								rule.ruleRegex == convertedRule.ruleRegex &&
@@ -191,7 +303,6 @@ export const RuleImporter = {
 						if (ruleExists)
 							continue;
 
-						// append imported rule
 						uniqueRuleList.push(importedRule);
 					}
 
@@ -200,21 +311,17 @@ export const RuleImporter = {
 
 				let parsedRulesCount = rules.blackList.length + rules.whiteList.length;
 
-				// ----
 				rules.blackList = deduplicateRules(rules.blackList);
 				rules.whiteList = deduplicateRules(rules.whiteList, true);
 
-				// ----
 				let finalRulesCount = rules.blackList.length + rules.whiteList.length;
 
-				// Total ${appendedRuleCount} out of ${parsedRuleList.length} rules are appended.<br>Don't forget to save the changes.
 				let message = api.i18n
 					.getMessage('importerImportSuccess')
 					.replace('{0}', finalRulesCount.toString())
 					.replace('{1}', parsedRulesCount.toString());
 
 				if (success) {
-					// not need for any check, return straight away
 					success({
 						success: true,
 						message: message,
@@ -223,14 +330,12 @@ export const RuleImporter = {
 				}
 
 			} else {
-				// Total of {0} proxy rules and {1} white listed rules are returned.<br>Don't forget to save the changes.
 				let message = api.i18n
 					.getMessage('importerImportRulesSuccess')
 					.replace('{0}', rules.blackList.length)
 					.replace('{1}', rules.whiteList.length);
 
 				if (success) {
-					// not need for any check, return straight away
 					success({
 						success: true,
 						message: message,
@@ -241,10 +346,6 @@ export const RuleImporter = {
 		}
 	},
 	importAutoProxy(file: any, append: any, currentRules: any, success: Function, fail: Function) {
-		///<summary>
-		/// Parses AutoProxy rules and *JUST* uses it as a way to extract domain list to be proxyfied
-		/// Does not follow the rules of AutoProxy
-		///</summary>
 		if (!file) {
 			if (fail) fail();
 			return;
@@ -255,7 +356,6 @@ export const RuleImporter = {
 			if (fail) fail(event);
 		};
 		reader.onload = (event) => {
-			//let textFile = event.target;
 			let fileText = reader.result;
 
 			try {
@@ -269,21 +369,17 @@ export const RuleImporter = {
 						parsedRule.condition.conditionType,
 					);
 					if (!convertResult.success) {
-						//notImportedRules++;
 						continue;
 					}
 
 					importedRuleList.push({ pattern: convertResult.pattern, source: convertResult.source, enabled: true });
 				}
 
-				// remove the duplicates from imported rules
 				importedRuleList = Utils.removeDuplicates(importedRuleList, 'pattern');
 
-				// rules are ready
 				if (append) {
 					if (!currentRules) currentRules = [];
 
-					// make a copy
 					let appendedRuleList = currentRules.slice();
 					let appendedRuleCount = 0;
 
@@ -293,19 +389,16 @@ export const RuleImporter = {
 						});
 						if (ruleExists) continue;
 
-						// append imported rule
 						appendedRuleList.push(importedRule);
 						appendedRuleCount++;
 					}
 
-					// Total ${appendedRuleCount} out of ${parsedRuleList.length} rules are appended.<br>Don't forget to save the changes.
 					let message = api.i18n
 						.getMessage('importerImportSuccess')
 						.replace('{0}', appendedRuleCount.toString())
 						.replace('{1}', parsedRuleList.length.toString());
 
 					if (success) {
-						// not need for any check, return straight away
 						success({
 							success: true,
 							message: message,
@@ -313,14 +406,12 @@ export const RuleImporter = {
 						});
 					}
 				} else {
-					// Total ${importedRuleList.length} out of ${parsedRuleList.length} rules are imported.<br>Don't forget to save the changes.
 					let message = api.i18n
 						.getMessage('importerImportSuccess')
 						.replace('{0}', importedRuleList.length.toString())
 						.replace('{1}', parsedRuleList.length.toString());
 
 					if (success) {
-						// not need for any check, return straight away
 						success({
 							success: true,
 							message: message,
@@ -336,50 +427,9 @@ export const RuleImporter = {
 	}
 };
 
+// English: External rule parsers for different formats.
+// Russian: Внешние парсеры правил для разных форматов.
 export const externalAppRuleParser = {
-	// -----------------------------------------------
-	/*
-	-----------------------------------------------
-	AutoProxy Rules, from: https://web.archive.org/web/20150318182040/https://autoproxy.org/en/Rules
-	-----------------------------------------------
-	
-	Currently these formats are supported in rules:
-	
-	example.com
-	Matching: http://www.example.com/foo
-	Matching: http://www.google.com/search?q=www.example.com
-	Not match: https://www.example.com/
-	Use when example.com is a URL keyword, any http connection (notincluding https)
-	
-	||example.com
-	Matching: http://example.com/foo
-	Matching: https://subdomain.example.com/bar
-	Not matching: http://www.google.com/search?q=example.com
-	Match the whole domain and second-level domain no matter http or https, used when site's IP is blocked.
-	
-	|https://ssl.example.com
-	Match all address beginning with https://ssl.example.com, used when some IP's HTTPS is specifically blocked.
-	
-	|http://example.com
-	Match all address beginning with http://example.com, used for short domains, like URL shortening services to avoid "slow rules". Also a temporary fix for issue 117.
-	
-	/^https?:\/\/[^\/]+example\.com/
-	Match domain including "example.com" chars, it's a regex, used when the chars are DNS poisoning keyword.
-	
-	@@||example.com
-	The highest privilege rule, all websites matching ||example.com aren't proxied, sometimes used for websites in China mainland.
-	
-	!Foo bar
-	Beginning with !, just for explanation.
-	*/
-	// -----------------------------------------------
-	/*!
-	 * This piece of code is from SwitchyOmega_Firefox <omega_pac.min.js>
-	 * Modified to return the not generalized pattern
-	 *
-	 * @source   https://github.com/FelisCatus/SwitchyOmega
-	 * @license  GPL3
-	 */
 	AutoProxy: {
 		magicPrefix: 'W0F1dG9Qcm94',
 		detect(text: string, acceptBase64: boolean = true): boolean {
@@ -393,7 +443,6 @@ export const externalAppRuleParser = {
 		preprocess(text: any) {
 			if (Utils.strStartsWith(text, externalAppRuleParser['AutoProxy'].magicPrefix)) {
 				text = Utils.b64DecodeUnicode(text);
-				//text = new Buffer(text, "base64").toString("utf8");
 			}
 			return text;
 		},
@@ -454,26 +503,17 @@ export const externalAppRuleParser = {
 			return exclusive_rules.concat(normal_rules);
 		},
 		convertAutoProxyRule(cleanCondition: any, conditionType: any) {
-			/** Converts AutoProxy rule to json rules */
 			let source = '';
 			let pattern = '';
 
 			switch (conditionType) {
 				case 'KeywordCondition':
-					// no (*) character
-
-					// NOTE: keyword type is supported as domain name
-					// it also works for https as well as http
-
 					if (cleanCondition[0] === '.') {
 						cleanCondition = cleanCondition.substring(1);
 					}
 					source = cleanCondition;
-
 					if (cleanCondition.endsWith('/'))
-						// no extra slash
 						source = cleanCondition.substring(0, cleanCondition.length - 2);
-
 					pattern = `*://*.${source}/*`;
 					break;
 
@@ -481,30 +521,19 @@ export const externalAppRuleParser = {
 					if (cleanCondition[0] === '.') {
 						cleanCondition = cleanCondition.substring(1);
 					}
-					// remove (*) chars
 					cleanCondition = cleanCondition.replace(/\*/g, '');
-
-					// remove (.) duplicates
 					cleanCondition = cleanCondition.replace(/([.])\1+/g, '.');
-
 					if (cleanCondition[0] === '.') {
 						cleanCondition = cleanCondition.substring(1);
 					}
-
-					// source
 					source = cleanCondition;
-
 					if (cleanCondition.endsWith('/'))
-						// no extra slash
 						source = cleanCondition.substring(0, cleanCondition.length - 2);
-
 					pattern = `*://*.${source}/*`;
 					break;
 
 				case 'UrlWildcardCondition':
-					// very restricted support
 					if (cleanCondition[0] === '*') {
-						// no problem
 						cleanCondition = cleanCondition.substring(1);
 					}
 					if (cleanCondition[0] === '.') {
@@ -513,24 +542,16 @@ export const externalAppRuleParser = {
 
 					if (cleanCondition.indexOf('*') !== -1) {
 						let cleanConditionRemMiddle = cleanCondition;
-
 						if (cleanConditionRemMiddle.indexOf('://*.') !== -1) {
 							cleanConditionRemMiddle = cleanConditionRemMiddle.replace('//*.', '://');
 						}
-
 						if (cleanConditionRemMiddle.endsWith('*')) {
 							cleanCondition = cleanCondition.substring(0, cleanCondition.length - 2);
 							cleanConditionRemMiddle = cleanConditionRemMiddle.substring(0, cleanCondition.length - 2);
 						}
-
 						if (cleanConditionRemMiddle.indexOf('*') !== -1) {
-							// (/*/) is supported, lets remove them and check again for other rules)
 							cleanConditionRemMiddle = cleanCondition.replace(/\/\*\//g, '/');
-
 							if (cleanConditionRemMiddle.indexOf('*') !== -1) {
-								// still there is some left
-								// * in middle is not supported
-
 								return {
 									success: false,
 								};
@@ -538,11 +559,8 @@ export const externalAppRuleParser = {
 						}
 					}
 
-					// source
 					source = cleanCondition;
-
 					if (cleanCondition.endsWith('/'))
-						// no extra slash
 						source = cleanCondition.substring(0, cleanCondition.length - 2);
 
 					if (source.indexOf('://') !== -1) {
@@ -550,11 +568,9 @@ export const externalAppRuleParser = {
 					} else {
 						pattern = `*://*.${source}/*`;
 					}
-
 					break;
 
 				case 'UrlRegexCondition':
-					// not supported
 					return {
 						success: false,
 					};
@@ -571,118 +587,6 @@ export const externalAppRuleParser = {
 		}
 	},
 	GFWList: {
-		// -----------------------------------------------
-		/*
-		-----------------------------------------------
-		AutoProxy Rules, from: https://github.com/gfwlist/gfwlist/wiki/Syntax
-		-----------------------------------------------
-		
-		 GFWList syntax originated from ABP filters.
-		
-			|: Stands for matching from beginning (In URI, it's scheme): e.g.|http://example.com will match:
-		
-		http://example.com
-		http://example.com/page
-		http://example.com.co
-		
-		It will NOT match (replace www with any subdomain):
-		
-		http://www.example.com
-		https://example.com/page
-		https://example.com
-		https://www.example.com
-		https://example.com.co
-		
-		Same applied to |https://example.com.
-		
-			||: Stands for matching specific URI, in such a case, no need to write down scheme, e.g. ||example.com will match (replace www with any subdomain):
-		
-		http://example.com
-		http://www.example.com
-		https://example.com
-		https://www.example.com
-		
-		It will NOT match:
-		
-		http://anotherexample.com
-		https://anotherexample.com
-		http://example.com.co
-		https://example.com.co
-		
-		Note that ABP supports ||example.com/sample to block ADs in both HTTP and HTTPS, but GFWList doesn't absorb this.
-		
-			!: Stands for comments. Line started with ! means NOTHING. This is often useful for rules which need to be kept for future use, or statements for some purposes, examples:
-		
-		! Checksum: ...
-		!---------
-		!---
-		!###
-		!!
-		
-		Note: Any characters after ! are treated as NOTHING irrespective of how tricky, convoluted and far extended, they will NOT be parsed if in one line, but in order to keep the list sorted and regular, GFWList uses a variety of different comment styles.
-		
-			@@: Stands for whitelist rules. Although GFWList was designed to conform to the GFW mechanisms, it still has consideration of whitelist since sometimes there are some exceptions under special circumstances. Thus take a look at this example:
-		
-		.example.com
-		@@|http://sub.example.com
-		
-		It means example.com is suffering a block while http://sub.example.com is not brought in.
-		
-		Imagine there is a domain example.org, it has 8 subdomains albeit 7 of them are blocked due to whatever reason, only sub.example.org is available. In such a case, rules can be written as:
-		
-		|http://1.example.org
-		|http://2.example.org
-		|http://3.example.org
-		|http://4.example.org
-		|http://5.example.org
-		|http://6.example.org
-		|http://7.example.org
-		
-		Granting that these above is correct, they are still not space saving. A better solution is:
-		
-		.example.org
-		@@|http://8.example.org
-		
-		In stark contrast, the latter one is always better.
-		
-		---------------------------------------------------
-		---------------------------------------------------
-		In addition:
-
-		--------
-		Dot (.):
-		A line starting with a dot (.) should match domain and its subdomains including the path.
-		For example: ".example.com/quiz?no=1" should match the followings:
-		
-		http://example.com/quiz?no=1
-		https://example.com/quiz?no=1&page=2
-		http://www.example.com/quiz?no=1&page=2
-		https://test.example.com/quiz?no=1
-
-		Will not match:
-		
-		http://example.com.au/quiz?no=1
-		https://example.com/quiz
-		https://test.example.com/quiz
-
-		------------
-		Simple line:
-		A line that has not any condition should match domain and its path.
-		For example: "example.com/quiz?no=1" should match the followings:
-		
-		http://example.com/quiz?no=1
-		https://example.com/quiz?no=1&page=2
-
-		Will not match:
-		
-		http://example.com.au/quiz?no=1
-		https://example.com/quiz
-		https://test.example.com/quiz
-		http://www.example.com/quiz?no=1&page=2
-		https://test.example.com/quiz?no=1
-
-		 */
-
 		detect(text: string, acceptBase64: boolean = true): boolean {
 			if (acceptBase64 && Utils.strStartsWith(text, externalAppRuleParser['AutoProxy'].magicPrefix)) {
 				return true;
@@ -725,92 +629,16 @@ export const externalAppRuleParser = {
 				blackList: blackList,
 			};
 		},
-		convertLineRegex_OLD(
-			line: string,
-		): {
-			regex: string;
-			name: string;
-			makeNameRandom: boolean;
-		} {
-			if (line.startsWith('@@'))
-				// white-list is not handled here
-				line = line.substring(2);
-
-			if (line.startsWith('/') && line.endsWith('/')) {
-				line = line.substring(1, line.length - 1);
-				// this is a regex expression, doesn't need processing
-				return {
-					regex: line,
-					name: 'Regex',
-					makeNameRandom: true,
-				};
-			}
-
-			line = line.replace('*', '.+').replace('?', '\\?');
-			line = line.replace('(', '\\(').replace(')', '\\)');
-
-			if (line.startsWith('||')) {
-				line = line.substring(2);
-				line = line.replace('.', '\\.');
-
-				return {
-					regex: `^(?:https?|ftps?|wss?):\\/\\/(?:.+\\.)?${line}(?:[?#\\\/].*)?$`,
-					name: line,
-					makeNameRandom: false,
-				};
-			}
-			if (line.startsWith('|')) {
-				line = line.substring(1);
-				line = line.replace('.', '\\.');
-
-				return {
-					regex: `^${line}.*`,
-					name: line,
-					makeNameRandom: false,
-				};
-			}
-			if (line.startsWith('.')) {
-				line = line.substring(1);
-				line = line.replace('.', '\\.');
-
-				return {
-					regex: `:\/\/(?:.+\\.)?${line}(?:[?#\\\/].*)?$`,
-					name: line,
-					makeNameRandom: false,
-				};
-			}
-			if (line.endsWith('|')) {
-				line = line.substring(0, line.length - 1);
-				line = line.replace('.', '\\.');
-
-				return {
-					regex: `.*${line}$`,
-					name: line,
-					makeNameRandom: false,
-				};
-			} else {
-				line = line.replace('.', '\\.');
-				return {
-					regex: `.*${line}(?:[.?#\\\/].*)?$`,
-					name: line,
-					makeNameRandom: false,
-				};
-			}
-		},
 		convertLineRegex(line: string): SubscriptionProxyRule {
 			if (line.startsWith('@@'))
-				// white-list is not handled here
 				line = line.substring(2);
 
 			if (line.startsWith('/') && line.endsWith('/')) {
 				line = line.substring(1, line.length - 1);
-				// this is a regex expression, doesn't need processing
-
 				let rule = new ImportedProxyRule();
 				rule.regex = line;
-				rule.name = 'Regex-' + line.replace(/[\d\\d]*\W*/g, '') /** keeping only characters */;
+				rule.name = 'Regex-' + line.replace(/[\d\\d]*\W*/g, '');
 				rule.importedRuleType = CompiledProxyRuleType.RegexUrl;
-
 				return rule;
 			}
 
@@ -827,7 +655,6 @@ export const externalAppRuleParser = {
 
 				if (hasSpecialChars) {
 					rectifyRegexChars();
-
 					let rule = new ImportedProxyRule();
 					rule.regex = `^(?:https?|ftps?|wss?):\\/\\/(?:.+\\.)?${line}(?:[?#\\\/].*)?$`;
 					rule.name = line;
@@ -846,7 +673,6 @@ export const externalAppRuleParser = {
 
 				if (hasSpecialChars) {
 					rectifyRegexChars();
-
 					let rule = new ImportedProxyRule();
 					rule.regex = `^${line}.*`;
 					rule.name = line;
@@ -863,7 +689,6 @@ export const externalAppRuleParser = {
 			if (line.endsWith('|')) {
 				line = line.substring(0, line.length - 1);
 				rectifyRegexChars();
-
 				let rule = new ImportedProxyRule();
 				rule.regex = `.*${line}$`;
 				rule.name = line;
@@ -874,7 +699,6 @@ export const externalAppRuleParser = {
 				line = line.substring(1);
 				if (hasSpecialChars) {
 					rectifyRegexChars();
-
 					let rule = new ImportedProxyRule();
 					rule.regex = `:\/\/(?:.+\\.)?${line}(?:[?#\\\/].*)?$`,
 						rule.name = line;
@@ -890,7 +714,6 @@ export const externalAppRuleParser = {
 			} else {
 				if (hasSpecialChars) {
 					rectifyRegexChars();
-
 					let rule = new ImportedProxyRule();
 					rule.regex = `.*${line}(?:[.?#\\\/].*)?$`;
 					rule.name = line;
@@ -932,7 +755,6 @@ export const externalAppRuleParser = {
 			let result: SubscriptionProxyRule[] = [];
 
 			for (const compiled of switchyCompiled) {
-				// no more or less than one args
 				if (!compiled.args || compiled.args.length != 1) continue;
 				let type = compiled.args[0];
 
@@ -967,7 +789,6 @@ export const externalAppRuleParser = {
 			let result: ImportedProxyRule[] = [];
 
 			for (const compiled of switchyCompiled) {
-				// no more or less than one args
 				if (!compiled.args || compiled.args.length != 1) continue;
 				let type = compiled.args[0];
 
@@ -986,7 +807,6 @@ export const externalAppRuleParser = {
 
 				if (type == 'host') {
 					newRule.importedRuleType = CompiledProxyRuleType.RegexHost;
-
 				} else if (type == 'url') {
 					newRule.importedRuleType = CompiledProxyRuleType.RegexUrl;
 				}
@@ -997,6 +817,3 @@ export const externalAppRuleParser = {
 		},
 	},
 };
-// -----------------------------------------------
-// -----------------------------------------------
-// -----------------------------------------------

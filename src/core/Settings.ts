@@ -38,7 +38,8 @@ import {
 	ProxyServerSubscription,
 	ProxyRule,
 	ProxyRulesSubscription,
-	ThemeType
+	ThemeType,
+	BLOCK_PROXY_ID
 } from './definitions';
 import { Debug } from '../lib/Debug';
 import { SettingsOperation } from './SettingsOperation';
@@ -281,6 +282,23 @@ export class Settings {
 	}
 
 	public static ensureIntegrityOfSettings(config: SettingsConfig) {
+		// English: Ensure the block proxy exists
+		// Russian: Убеждаемся, что прокси для блокировки существует
+		const blockProxy = config.proxyServers.find(p => p.id === BLOCK_PROXY_ID);
+		if (!blockProxy) {
+			const block = new ProxyServer();
+			block.id = BLOCK_PROXY_ID;
+			block.name = api.i18n.getMessage("settingsRuleActionBlock") || "Block (no connection)";
+			block.host = "0.0.0.0";
+			block.port = 0;
+			block.protocol = "HTTP";
+			block.order = -1; // всегда в начале списка
+			block.proxyDNS = false;
+			block.countryCode = "XX";
+			block.rating = 0;
+			block.priority = null;
+			config.proxyServers.unshift(block);
+		}	
 		// proxyServers
 		if (config.proxyServers && config.proxyServers.length) {
 			let proxyServers: ProxyServer[] = [];

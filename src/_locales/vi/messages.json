@@ -1921,7 +1921,7 @@
 		"message": "Đổi proxy?"
 	},
 	"dialogChangeMessage": {
-		"message": "Đổi proxy đã đặt cho trang {0}?"
+		"message": "Đổi proxy {1} đã đặt cho trang {0}?"
 	},
 	"dialogChangeConfirm": {
 		"message": "Đổi"
@@ -1952,5 +1952,50 @@
 	},
 	"settingsAutoAddUnreachableSitesDesc": {
 		"message": "Khi phát hiện trang không tải, sẽ hiển thị hộp thoại đề xuất thêm trang vào tự động proxy."
+	},
+	"settingsStaleRemaining": {
+		"message": "còn lại"
+	},
+	"settingsStaleExpired": {
+		"message": "hết hạn"
+	},
+	"settingsStaleUnknown": {
+		"message": "không có dữ liệu"
+	},
+	"settingsImportRulesFormatUniversal": {
+		"message": "Định dạng tự động (nhập tên miền)"
+	},
+	"settingsImportRulesUniversalHint": {
+		"message": "Dán bất kỳ văn bản nào – tiện ích sẽ tự động trích xuất tất cả tên miền và tạo quy tắc cho chúng."
+	},
+	"settingsImportRulesUniversalNoDomains": {
+		"message": "Không thể trích xuất tên miền nào từ văn bản. Đảm bảo văn bản chứa tên miền (ví dụ: youtube.com)."
+	},
+	"settingsAutoProxyToggleMode": {
+		"message": "Chuyển đổi chế độ (Tự động/Thủ công)"
+	},
+	"settingsRulesGridColSourceRule": {
+		"message": "Nguồn/Quy tắc"
+	},
+	"settingsRuleActionBlock": {
+		"message": "🛑 Chặn (không kết nối) ❌"
+	},
+	"popupAutoRefreshTitle": {
+		"message": "🔄 Tự động Proxy"
+	},
+	"popupAutoRefreshNoRule": {
+		"message": "Không có quy tắc cho {0} – thêm trang vào Tự động Proxy"
+	},
+	"popupAutoRefreshRuleDisabled": {
+		"message": "Quy tắc bị vô hiệu cho {0} – bật quy tắc"
+	},
+	"popupAutoRefreshManual": {
+		"message": "Chế độ thủ công cho quy tắc {0} – chuyển sang tự động"
+	},
+	"popupAutoRefreshAuto": {
+		"message": "Chế độ tự động – làm mới proxy cho trang {0}"
+	},
+	"popupAutoRefreshPinned": {
+		"message": "Thay đổi proxy đã ghim cho trang {0}"
 	}	
 }

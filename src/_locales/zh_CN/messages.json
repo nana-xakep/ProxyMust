@@ -1921,7 +1921,7 @@
 		"message": "更换代理？"
 	},
 	"dialogChangeMessage": {
-		"message": "是否更换为网站 {0} 设置的代理？"
+		"message": "更改网站 {0} 的指定代理 {1}？"
 	},
 	"dialogChangeConfirm": {
 		"message": "更换"
@@ -1952,5 +1952,50 @@
 	},
 	"settingsAutoAddUnreachableSitesDesc": {
 		"message": "当检测到页面无法加载时，将显示一个对话框，建议将该网站添加到自动代理。"
+	},
+	"settingsStaleRemaining": {
+		"message": "剩余"
+	},
+	"settingsStaleExpired": {
+		"message": "已过期"
+	},
+	"settingsStaleUnknown": {
+		"message": "无数据"
+	},
+	"settingsImportRulesFormatUniversal": {
+		"message": "自动格式（导入域名）"
+	},
+	"settingsImportRulesUniversalHint": {
+		"message": "粘贴任何文本 – 扩展将自动提取所有域名并为其创建规则。"
+	},
+	"settingsImportRulesUniversalNoDomains": {
+		"message": "无法从文本中提取任何域名。请确保文本包含域名（例如 youtube.com）。"
+	},
+	"settingsAutoProxyToggleMode": {
+		"message": "切换模式（自动/手动）"
+	},
+	"settingsRulesGridColSourceRule": {
+		"message": "来源/规则"
+	},
+	"settingsRuleActionBlock": {
+		"message": "🛑 阻止（无连接） ❌"
+	},
+	"popupAutoRefreshTitle": {
+		"message": "🔄 自动代理"
+	},
+	"popupAutoRefreshNoRule": {
+		"message": "没有 {0} 的规则 – 将网站添加到自动代理"
+	},
+	"popupAutoRefreshRuleDisabled": {
+		"message": "{0} 的规则已禁用 – 启用规则"
+	},
+	"popupAutoRefreshManual": {
+		"message": "规则 {0} 为手动模式 – 切换到自动"
+	},
+	"popupAutoRefreshAuto": {
+		"message": "自动模式 – 刷新网站 {0} 的代理"
+	},
+	"popupAutoRefreshPinned": {
+		"message": "更改网站 {0} 的固定代理"
 	}	
 }

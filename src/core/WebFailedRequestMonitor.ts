@@ -201,6 +201,19 @@ export class WebFailedRequestMonitor {
         if (tabId < 0) return;
         WebFailedRequestMonitor._userInitiatedNavigation.set(tabId, type);
         console.log(`[WebFailedRequestMonitor] Пользователь инициировал навигацию: вкладка ${tabId}, тип ${type}`);
+        // English: When user initiates navigation, reset the user-stopped flag for the site associated with this tab
+        // Russian: Когда пользователь инициирует навигацию, сбрасываем флаг остановки для сайта, связанного с этой вкладкой
+        const tabData = TabManager.getTab(tabId);
+        if (tabData && tabData.url) {
+            const site = Utils.extractHostFromUrl(tabData.url);
+            if (site) {
+                const normalizedSite = WebFailedRequestMonitor.normalizeSite(site);
+                if (normalizedSite) {
+                    WebFailedRequestMonitor._userStoppedFailover.delete(normalizedSite);
+                    console.log(`[WebFailedRequestMonitor] Сброшен флаг остановки для ${normalizedSite} (новая навигация)`);
+                }
+            }
+        }
     }
 
     public static clearUserInitiatedNavigation(tabId: number): void {
@@ -280,6 +293,23 @@ export class WebFailedRequestMonitor {
         let failedRequests = tabData.failedRequests || (tabData.failedRequests = new Map<string, FailedRequestType>());
 
         switch (eventType) {
+            case RequestMonitorEvent.RequestStart:
+                {
+                    // English: Reset user-stopped failover flag on new main_frame request
+                    // Russian: Сбрасываем флаг остановки пользователем при новом запросе основного документа
+                    if (requestDetails.type === 'main_frame') {
+                        const site = requestHost;
+                        if (site) {
+                            const normalizedSite = WebFailedRequestMonitor.normalizeSite(site);
+                            if (normalizedSite) {
+                                WebFailedRequestMonitor._userStoppedFailover.delete(normalizedSite);
+                                console.log(`[WebFailedRequestMonitor] Сброшен флаг остановки для ${normalizedSite} (новый запрос main_frame)`);
+                            }
+                        }
+                    }
+                    break;
+                }
+
             case RequestMonitorEvent.RequestComplete:
             case RequestMonitorEvent.RequestRevertTimeout:
                 {
@@ -506,21 +536,33 @@ export class WebFailedRequestMonitor {
                                             break;
                                         }
                                         WebFailedRequestMonitor._lastPinDialogTime.set(dialogKey, now);
-                                        const proxyDisplayName = proxyServer ? (proxyServer.name || `${proxyServer.host}:${proxyServer.port}`) : currentProxyIdForAuto;
-                                        console.log(`[WebFailedRequestMonitor] Открываем диалог закрепления для сайта ${normalizedSite} (прокси: ${proxyDisplayName})`);
-                                        Core.openDialog(
-                                            'pin',
-                                            normalizedSite,
-                                            currentProxyIdForAuto,
-                                            proxyDisplayName,
-                                            'dialogPinTitle',
-                                            'dialogPinMessage',
-                                            'dialogPinConfirm',
-                                            'dialogPinCancel',
-                                            'dialogPinCheckbox',
-                                            'btn-primary',
-                                            tabId  // передаём tabId для перезагрузки при отказе
-                                        );
+
+                                // English: For pin dialog, try to get the actual proxy ID that is currently applied
+                                // Russian: Для диалога закрепления пытаемся получить актуальный ID прокси, который сейчас применён
+                                let pinProxyId = currentProxyIdForAuto;
+                                const currentAppliedProxy = ProxyEngine.getDynamicProxyForSite(normalizedSite);
+                                if (currentAppliedProxy) {
+                                    pinProxyId = currentAppliedProxy;
+                                }
+                                // Also try to get from rule or default if not set
+                                if (!pinProxyId) {
+                                    pinProxyId = WebFailedRequestMonitor.getProxyForSite(normalizedSite);
+                                }
+                                const proxyDisplayName = pinProxyId ? SettingsOperation.formatProxyDisplay(pinProxyId) : currentProxyIdForAuto || 'unknown';
+                                console.log(`[WebFailedRequestMonitor] Открываем диалог закрепления для сайта ${normalizedSite} (прокси: ${proxyDisplayName})`);
+                                Core.openDialog(
+                                    'pin',
+                                    normalizedSite,
+                                    pinProxyId || currentProxyIdForAuto,
+                                    proxyDisplayName,
+                                    'dialogPinTitle',
+                                    'dialogPinMessage',
+                                    'dialogPinConfirm',
+                                    'dialogPinCancel',
+                                    'dialogPinCheckbox',
+                                    'btn-primary',
+                                    tabId  // передаём tabId для перезагрузки при отказе
+                                );
                                     } else {
                                         console.log(`[WebFailedRequestMonitor] Диалог закрепления для ${normalizedSite} пропущен (showAutoDialog = false)`);
                                     }
@@ -926,8 +968,7 @@ export class WebFailedRequestMonitor {
                             const lastDialogTime = WebFailedRequestMonitor._lastChangeDialogTime.get(normalizedSite) || 0;
                             if (now - lastDialogTime > 5000) { // 5 seconds cooldown
                                 WebFailedRequestMonitor._lastChangeDialogTime.set(normalizedSite, now);
-                                const proxyServer = pinnedProxyId ? SettingsOperation.findProxyServerById(pinnedProxyId) : null;
-                                const proxyDisplayName = proxyServer ? (proxyServer.name || `${proxyServer.host}:${proxyServer.port}`) : pinnedProxyId || 'unknown';
+                                const proxyDisplayName = pinnedProxyId ? SettingsOperation.formatProxyDisplay(pinnedProxyId) : 'unknown';
                                 console.log(`[WebFailedRequestMonitor] Открываем диалог смены для закреплённого сайта ${normalizedSite} (инициация пользователя)`);
                                 Core.openDialog(
                                     'change',
@@ -1252,6 +1293,16 @@ export class WebFailedRequestMonitor {
      * Russian: Запускает failover для сайта, начиная со следующего прокси после currentProxyId.
      */
     public static triggerFailoverForSite(site: string, currentProxyId: string | null, tabId: number): void {
+		 console.log(`[WebFailedRequestMonitor] triggerFailoverForSite вызван для site=${site}, currentProxyId=${currentProxyId}, tabId=${tabId}`);
+        
+        if (!site) return;
+        const normalizedSite = WebFailedRequestMonitor.normalizeSite(site);
+        if (!normalizedSite) return;
+
+        // English: Reset user-stopped flag when we explicitly trigger failover (user wants to continue)
+        // Russian: Сбрасываем флаг остановки пользователем, когда мы явно запускаем failover (пользователь хочет продолжить)
+        WebFailedRequestMonitor._userStoppedFailover.delete(normalizedSite);
+
         // English: Check if failover was cancelled globally or for this site
         // Russian: Проверяем, не была ли отменена операция глобально или для этого сайта
         if (WebFailedRequestMonitor._cancelFailover) {
@@ -1259,10 +1310,6 @@ export class WebFailedRequestMonitor {
             WebFailedRequestMonitor._cancelFailover = false;
             return;
         }
-        if (!site) return;
-
-        const normalizedSite = WebFailedRequestMonitor.normalizeSite(site);
-        if (!normalizedSite) return;
 
         // English: Check if this site was specifically cancelled (user pressed stop)
         // Russian: Проверяем, не был ли этот сайт специально отменён (пользователь нажал стоп)
@@ -1280,11 +1327,21 @@ export class WebFailedRequestMonitor {
             return;
         }
 		
-        // English: If user explicitly stopped failover for this site, do not restart
-        // Russian: Если пользователь явно остановил failover для этого сайта, не перезапускаем
-        if (WebFailedRequestMonitor._userStoppedFailover.has(normalizedSite)) {
+        // English: If user explicitly stopped failover for this site, do not restart,
+        // unless this is a user-initiated navigation (reload or typed)
+        // Russian: Если пользователь явно остановил failover для этого сайта, не перезапускаем,
+        // если только это не навигация, инициированная пользователем (перезагрузка или ввод адреса)
+        const isUserInitiated = WebFailedRequestMonitor._userInitiatedNavigation.has(tabId) ||
+                                WebFailedRequestMonitor._userInitiatedChange.has(normalizedSite);
+        // Note: _userStoppedFailover is already deleted above, so this check is redundant, but keep for safety
+        if (WebFailedRequestMonitor._userStoppedFailover.has(normalizedSite) && !isUserInitiated) {
             console.log(`[WebFailedRequestMonitor] Failover для ${normalizedSite} был остановлен пользователем, пропускаем`);
             return;
+        }
+        // If user initiated, clear the stopped flag to allow failover (already done)
+        if (isUserInitiated && WebFailedRequestMonitor._userStoppedFailover.has(normalizedSite)) {
+            WebFailedRequestMonitor._userStoppedFailover.delete(normalizedSite);
+            console.log(`[WebFailedRequestMonitor] Сброшен флаг остановки для ${normalizedSite} (инициация пользователя)`);
         }		
 
         // English: Check if site is pinned – if so, do nothing (user must initiate change)
@@ -1712,6 +1769,34 @@ export class WebFailedRequestMonitor {
         WebFailedRequestMonitor._userStoppedFailover.delete(normalizedSite);
         console.log(`[WebFailedRequestMonitor] Сброшен флаг остановки пользователем для сайта ${normalizedSite}`);
     }
+
+    /**
+     * English: Resets the user-stopped flag for all sites.
+     * Russian: Сбрасывает флаг остановки пользователем для всех сайтов.
+     */
+    public static resetAllUserStoppedFailovers(): void {
+        WebFailedRequestMonitor._userStoppedFailover.clear();
+        console.log('[WebFailedRequestMonitor] Сброшены флаги остановки пользователем для всех сайтов');
+    }
+	
+    /**
+     * English: Resets user-stopped flag for the site of a given tab.
+     * Russian: Сбрасывает флаг остановки пользователем для сайта, открытого в указанной вкладке.
+     */
+    public static resetUserStoppedFailoverForTab(tabId: number): void {
+        if (tabId < 0) return;
+        const tabData = TabManager.getTab(tabId);
+        if (tabData && tabData.url) {
+            const site = Utils.extractHostFromUrl(tabData.url);
+            if (site) {
+                const normalizedSite = WebFailedRequestMonitor.normalizeSite(site);
+                if (normalizedSite) {
+                    WebFailedRequestMonitor._userStoppedFailover.delete(normalizedSite);
+                    console.log(`[WebFailedRequestMonitor] Сброшен флаг остановки для сайта ${normalizedSite} при активации вкладки ${tabId}`);
+                }
+            }
+        }
+    }	
 
     /**
      * English: Cancels failover for a specific site (user pressed stop in browser)

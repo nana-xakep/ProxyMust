@@ -1921,7 +1921,7 @@
 		"message": "Ganti proxy?"
 	},
 	"dialogChangeMessage": {
-		"message": "Ganti proxy yang ditetapkan untuk situs {0}?"
+		"message": "Ubah proxy yang ditetapkan {1} untuk situs {0}?"
 	},
 	"dialogChangeConfirm": {
 		"message": "Ganti"
@@ -1952,5 +1952,50 @@
 	},
 	"settingsAutoAddUnreachableSitesDesc": {
 		"message": "Saat halaman tidak dimuat, dialog akan muncul dengan saran untuk menambahkan situs ke auto-proxy."
+	},
+	"settingsStaleRemaining": {
+		"message": "tersisa"
+	},
+	"settingsStaleExpired": {
+		"message": "kadaluarsa"
+	},
+	"settingsStaleUnknown": {
+		"message": "tidak ada data"
+	},
+	"settingsImportRulesFormatUniversal": {
+		"message": "Format otomatis (impor domain)"
+	},
+	"settingsImportRulesUniversalHint": {
+		"message": "Tempelkan teks apa pun – ekstensi akan secara otomatis mengekstrak semua domain dan membuat aturan untuk mereka."
+	},
+	"settingsImportRulesUniversalNoDomains": {
+		"message": "Tidak ada domain yang dapat diekstrak dari teks. Pastikan teks berisi nama domain (misalnya youtube.com)."
+	},
+	"settingsAutoProxyToggleMode": {
+		"message": "Alihkan mode (Otomatis/Manual)"
+	},
+	"settingsRulesGridColSourceRule": {
+		"message": "Sumber/Aturan"
+	},
+	"settingsRuleActionBlock": {
+		"message": "🛑 Blokir (tanpa koneksi) ❌"
+	},
+	"popupAutoRefreshTitle": {
+		"message": "🔄 AutoProxy"
+	},
+	"popupAutoRefreshNoRule": {
+		"message": "Tidak ada aturan untuk {0} – tambahkan situs ke AutoProxy"
+	},
+	"popupAutoRefreshRuleDisabled": {
+		"message": "Aturan dinonaktifkan untuk {0} – aktifkan aturan"
+	},
+	"popupAutoRefreshManual": {
+		"message": "Mode manual untuk aturan {0} – beralih ke auto"
+	},
+	"popupAutoRefreshAuto": {
+		"message": "Mode otomatis – segarkan proxy untuk situs {0}"
+	},
+	"popupAutoRefreshPinned": {
+		"message": "Ubah proxy yang disematkan untuk situs {0}"
 	}	
 }

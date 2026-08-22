@@ -1921,7 +1921,7 @@
 		"message": "Changer de proxy ?"
 	},
 	"dialogChangeMessage": {
-		"message": "Changer le proxy défini pour le site {0} ?"
+		"message": "Changer le proxy {1} défini pour le site {0} ?"
 	},
 	"dialogChangeConfirm": {
 		"message": "Changer"
@@ -1952,5 +1952,50 @@
 	},
 	"settingsAutoAddUnreachableSitesDesc": {
 		"message": "Lorsqu'une page ne se charge pas, une boîte de dialogue s'affiche pour suggérer d'ajouter le site à l'auto-proxy."
+	},
+	"settingsStaleRemaining": {
+		"message": "restant"
+	},
+	"settingsStaleExpired": {
+		"message": "expiré"
+	},
+	"settingsStaleUnknown": {
+		"message": "aucune donnée"
+	},
+	"settingsImportRulesFormatUniversal": {
+		"message": "Format automatique (importer des domaines)"
+	},
+	"settingsImportRulesUniversalHint": {
+		"message": "Collez n'importe quel texte – l'extension extraira automatiquement tous les domaines et créera des règles pour eux."
+	},
+	"settingsImportRulesUniversalNoDomains": {
+		"message": "Impossible d'extraire un domaine du texte. Assurez-vous que le texte contient des noms de domaine (par exemple youtube.com)."
+	},
+	"settingsAutoProxyToggleMode": {
+		"message": "Basculer le mode (Auto/Manuel)"
+	},
+	"settingsRulesGridColSourceRule": {
+		"message": "Source/Règle"
+	},
+	"settingsRuleActionBlock": {
+		"message": "🛑 Bloquer (aucune connexion) ❌"
+	},
+	"popupAutoRefreshTitle": {
+		"message": "🔄 AutoProxy"
+	},
+	"popupAutoRefreshNoRule": {
+		"message": "Aucune règle pour {0} – ajouter le site à AutoProxy"
+	},
+	"popupAutoRefreshRuleDisabled": {
+		"message": "Règle désactivée pour {0} – activer la règle"
+	},
+	"popupAutoRefreshManual": {
+		"message": "Mode manuel pour la règle {0} – passer en mode auto"
+	},
+	"popupAutoRefreshAuto": {
+		"message": "Mode auto – actualiser le proxy pour le site {0}"
+	},
+	"popupAutoRefreshPinned": {
+		"message": "Changer le proxy épinglé pour le site {0}"
 	}	
 }

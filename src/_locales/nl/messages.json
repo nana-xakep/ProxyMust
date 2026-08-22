@@ -1921,7 +1921,7 @@
 		"message": "Proxy wijzigen?"
 	},
 	"dialogChangeMessage": {
-		"message": "De ingestelde proxy voor site {0} wijzigen?"
+		"message": "De ingestelde proxy {1} voor site {0} wijzigen?"
 	},
 	"dialogChangeConfirm": {
 		"message": "Wijzigen"
@@ -1952,5 +1952,50 @@
 	},
 	"settingsAutoAddUnreachableSitesDesc": {
 		"message": "Wanneer een pagina niet wordt geladen, wordt een dialoog weergegeven die voorstelt de site aan de auto-proxy toe te voegen."
+	},
+	"settingsStaleRemaining": {
+		"message": "resterend"
+	},
+	"settingsStaleExpired": {
+		"message": "verlopen"
+	},
+	"settingsStaleUnknown": {
+		"message": "geen gegevens"
+	},
+	"settingsImportRulesFormatUniversal": {
+		"message": "Auto-formaat (domeinen importeren)"
+	},
+	"settingsImportRulesUniversalHint": {
+		"message": "Plak alle tekst – de extensie extraheert automatisch alle domeinen en maakt er regels voor aan."
+	},
+	"settingsImportRulesUniversalNoDomains": {
+		"message": "Er konden geen domeinen uit de tekst worden geëxtraheerd. Zorg ervoor dat de tekst domeinnamen bevat (bijv. youtube.com)."
+	},
+	"settingsAutoProxyToggleMode": {
+		"message": "Modus omschakelen (Auto/Handmatig)"
+	},
+	"settingsRulesGridColSourceRule": {
+		"message": "Bron/Regel"
+	},
+	"settingsRuleActionBlock": {
+		"message": "🛑 Blokkeren (geen verbinding) ❌"
+	},
+	"popupAutoRefreshTitle": {
+		"message": "🔄 AutoProxy"
+	},
+	"popupAutoRefreshNoRule": {
+		"message": "Geen regel voor {0} – site toevoegen aan AutoProxy"
+	},
+	"popupAutoRefreshRuleDisabled": {
+		"message": "Regel uitgeschakeld voor {0} – regel inschakelen"
+	},
+	"popupAutoRefreshManual": {
+		"message": "Handmatige modus voor regel {0} – overschakelen naar auto"
+	},
+	"popupAutoRefreshAuto": {
+		"message": "Auto-modus – proxy voor site {0} vernieuwen"
+	},
+	"popupAutoRefreshPinned": {
+		"message": "Vastgezette proxy voor site {0} wijzigen"
 	}	
 }

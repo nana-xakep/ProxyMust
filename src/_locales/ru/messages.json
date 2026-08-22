@@ -1927,7 +1927,7 @@
         "message": "Сменить прокси?"
     },
     "dialogChangeMessage": {
-        "message": "Сменить заданный прокси для сайта {0}?"
+        "message": "Сменить заданный прокси {1} для сайта {0}?"
     },
     "dialogChangeConfirm": {
         "message": "Сменить"
@@ -1967,5 +1967,41 @@
 	},
 	"settingsStaleUnknown": {
 		"message": "нет данных"
-	}	
+	},
+	"settingsImportRulesFormatUniversal": {
+		"message": "Автоформат(импорт доменов)"
+	},
+	"settingsImportRulesUniversalHint": {
+		"message": "Вставляйте любой текст — расширение автоматически извлечёт все домены и создаст правила для них."
+	},
+	"settingsImportRulesUniversalNoDomains": {
+		"message": "Не удалось извлечь ни одного домена из текста. Проверьте, что текст содержит доменные имена (например, youtube.com)."
+	},
+	"settingsAutoProxyToggleMode": {
+		"message": "Переключить режим (Авто/Ручной)"
+	},
+	"settingsRulesGridColSourceRule": {
+		"message": "Источник/Правило"
+	},
+	"settingsRuleActionBlock": {
+		"message": "🛑Блокировка (без соединения)❌"
+	},
+	"popupAutoRefreshTitle": {
+		"message": "🔄 Автопрокси"
+	},
+	"popupAutoRefreshNoRule": {
+		"message": "Нет правила для {0} – добавить сайт в автопрокси"
+	},
+	"popupAutoRefreshRuleDisabled": {
+		"message": "Правило отключено для {0} – включить правило"
+	},
+	"popupAutoRefreshManual": {
+		"message": "Ручной режим для правила {0} – переключить на авто"
+	},
+	"popupAutoRefreshAuto": {
+		"message": "Режим авто – обновить прокси для сайта {0}"
+	},
+	"popupAutoRefreshPinned": {
+		"message": "Сменить закреплённый прокси для сайта {0}"
+	}
 }

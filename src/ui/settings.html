@@ -1322,8 +1322,10 @@
 													id="rbtnImportRulesSelect_Text" class="form-check-input" />
 												<span data-localize="settingsImportRulesText">Rules Backup Text</span>
 											</label>
-											<textarea class="form-control direction-ltr"
-												id="txtImportRulesSelectText" rows="10"></textarea>
+											<textarea class="form-control direction-ltr" id="txtImportRulesSelectText" rows="10" placeholder="[AutoProxy]&#10;||youtube.com&#10;||twitter.com"></textarea>
+											<div id="importRulesHint" class="form-text text-muted small" style="display:none;">
+												<span data-localize="settingsImportRulesUniversalHint">Вставляйте любой текст — расширение автоматически извлечёт все домены и создаст правила для них.</span>
+											</div>
 										</div>
 
 										<div class="form-group mb-3">
@@ -1332,6 +1334,7 @@
 											<select id="cmbImportRulesFormat" class="form-select" placeholder="(Please select)">
 												<option value="0">GFWList/AutoProxy</option>
 												<option value="1">SwitchyOmega (beta)</option>
+												<option value="2" data-localize="settingsImportRulesFormatUniversal">Universal (extract domains)</option>
 											</select>
 										</div>
 

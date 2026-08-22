@@ -553,6 +553,7 @@ export class popup {
         popup.populateFailedRequests(dataForPopup.failedRequests);
         popup.updateCurrentSiteDisplay(dataForPopup.currentSite);
         popup.updateRatingDependentUI(dataForPopup.enableRating);
+        popup.updateAutoRefreshTooltip();
         // English: Update visibility of "Add working" button based on subscription test results
         // Russian: Обновляем видимость кнопки "ДОБАВИТЬ РАБОЧИЕ" на основе результатов тестов подписок
         popup.updateAddAllSuccessfulSubsButtonVisibility();
@@ -637,6 +638,74 @@ export class popup {
         }
     }
 
+    /**
+     * English: Updates tooltip for AutoProxy refresh button based on current site and rule state.
+     * Russian: Обновляет подсказку для кнопки обновления автопрокси в зависимости от текущего сайта и состояния правила.
+     */
+    private static updateAutoRefreshTooltip() {
+        const btn = jQuery("#autoRefreshBtn");
+        if (!btn.length) return;
+
+        const site = popup.popupData?.currentSite;
+        if (!site || site === "—") {
+            btn.attr("title", api.i18n.getMessage("popupAutoRefreshTitle"));
+            return;
+        }
+
+        // English: Find proxyableDomain entry for this site (using proxyableDomains from SmartRules profile)
+        // Russian: Находим запись proxyableDomain для этого сайта (используя proxyableDomains из профиля SmartRules)
+        const proxyableDomain = popup.popupData?.proxyableDomains?.find(pd => pd.domain === site);
+        if (!proxyableDomain || proxyableDomain.ruleId === null) {
+            // English: No rule for this site
+            // Russian: Нет правила для этого сайта
+            btn.attr("title", api.i18n.getMessage("popupAutoRefreshNoRule").replace(/\{0\}/g, site));
+            return;
+        }
+
+        // English: If rule exists but is not matched (disabled or not applicable)
+        // Russian: Если правило существует, но не совпадает (отключено или не применимо)
+        if (!proxyableDomain.ruleMatched) {
+            btn.attr("title", api.i18n.getMessage("popupAutoRefreshRuleDisabled").replace(/\{0\}/g, site));
+            return;
+        }
+
+        // English: Rule is active, check mode and pin status
+        // Russian: Правило активно, проверяем режим и закрепление
+        // English: Find the actual rule in SmartRules profile to get mode
+        // Russian: Находим фактическое правило в профиле SmartRules для получения режима
+        const smartRulesProfile = popup.popupData?.proxyProfiles?.find(
+            p => p.profileType === SmartProfileType.SmartRules
+        ) as SmartProfile;
+        if (!smartRulesProfile || !proxyableDomain.ruleId) {
+            // Fallback: if no rule details, assume auto mode
+            btn.attr("title", api.i18n.getMessage("popupAutoRefreshAuto").replace(/\{0\}/g, site));
+            return;
+        }
+
+        const rule = smartRulesProfile.proxyRules?.find(r => r.ruleId === proxyableDomain.ruleId);
+        if (!rule) {
+            btn.attr("title", api.i18n.getMessage("popupAutoRefreshAuto").replace(/\{0\}/g, site));
+            return;
+        }
+
+        // English: Check if proxy is pinned for this site (via AutoStatusService)
+        // Russian: Проверяем, закреплён ли прокси для этого сайта (через AutoStatusService)
+        const statusService = AutoStatusService.getInstance();
+        const pinnedProxyId = statusService.getPinnedProxy(site);
+
+        let key: string;
+        if (pinnedProxyId) {
+            key = "popupAutoRefreshPinned";
+        } else if (rule.mode === 'manual') {
+            key = "popupAutoRefreshManual";
+        } else {
+            key = "popupAutoRefreshAuto";
+        }
+
+        const tooltip = api.i18n.getMessage(key).replace(/\{0\}/g, site);
+        btn.attr("title", tooltip);
+    }
+	
     /**
      * English: Updates visibility of "Add working" button based on subscription proxies and test results
      * Russian: Обновляет видимость кнопки "ДОБАВИТЬ РАБОЧИЕ" на основе подписочных прокси и результатов тестов
@@ -1222,6 +1291,7 @@ export class popup {
                 messageBox.error(response.error || "Unknown error.");
             }
         });
+        popup.updateAutoRefreshTooltip();
     }
 
     private static resetRating(proxyId: string) {
@@ -2119,6 +2189,7 @@ export class popup {
                     popup.populateActiveProxy(dataForPopup);
                     popup.updateCurrentSiteDisplay(dataForPopup.currentSite || "—");
                     popup.updateAddAllSuccessfulSubsButtonVisibility();
+					popup.updateAutoRefreshTooltip();
                 } else {
                     console.warn("[ProxyMust] refreshPopupData: данные не получены");
                 }

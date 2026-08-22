@@ -5,6 +5,103 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.8] – 2026-08-22
+
+## Added:
+
+** Sorting of AutoProxy rules for the columns "Filter Type", "Source", "Rule", "Enabled", "Mode".
+The "Proxy Server" column is made non‑sortable.
+
+** Automatic saving of changes in the AutoProxy rules table
+Previously, changes (import, toggling checkboxes, mode switching, proxy selection, deletion) were not saved until the "Save Changes" button was clicked.
+
+** Context menu in the AutoProxy rules table
+Added a context menu for the rules table, activated by right‑click.
+All items are now working correctly:
+- Enable/Disable
+- Toggle mode (Auto/Manual)
+- Set proxy
+- Delete selected rules
+- Test (run a test for the site)
+
+** Testing from the AutoProxy rules context menu
+When selecting the "Test" item for a single rule, a modal window opens with test type selection:
+- Precise (slow, accurate) – Chrome browsers only
+- Quick (express)
+- Cyclic (full switching)
+- Express‑cyclic (fast switching, 10s timeout)
+
+The window includes checkboxes:
+- **Enable direct IP detection** – sends the real IP to external services for comparison.
+- **Show log** – automatically opens the built‑in log viewer.
+
+Behaviour is fully unified with the "Test" button on the "Proxy Servers" page.
+
+** Deleting rules with the Delete key
+- Added support for the `Delete` (Del) key to delete one or more selected rules in the AutoProxy rules table (similar to the proxy servers table).
+
+** Import rules
+- A **universal format** (extracting domains from any text) has been created and is selected by default.
+- After a successful import, changes are automatically saved.
+
+** Traffic blocking for rules (AdBlock functionality)
+- A special dummy proxy `0.0.0.0:0` with the name **"🛑Block (no connection)❌"** has been added to the proxy server list.
+- When this proxy is selected for a rule:
+  - the rule automatically switches to **Manual** mode to prevent automatic proxy changes;
+  - all requests to the specified domains are blocked (connection to `0.0.0.0:0` is impossible).
+- The interface (dropdowns and table) shows stop icons: 🛑 before the text and ❌ after.
+
+** Added helper methods
+- `resetAllUserStoppedFailovers()` – resets the stop flag for all sites (when switching profiles).
+- `resetUserStoppedFailoverForTab(tabId)` – resets the flag for the site open in the specified tab (when the tab is activated).
+- Ensured proper cleanup of failover state when a tab is closed.
+
+## Changed:
+
+** In all handlers (the "Enabled" checkbox, switching Auto/Manual mode, proxy selection, context menu, deletion via Delete key) save calls have been replaced with `settingsPage.uiEvents.onClickSaveSmartProfile(pageProfile)`. Now changes are applied instantly.
+
+** Rules table optimisation (AutoProxy page):
+
+** Merging of the "Source" and "Rule" columns
+- If `hostName` (source) matches the content of the "Rule" column – the columns are merged into one with the header **"Source/Rule"**.
+- If there is at least one rule where source and rule differ – both columns are displayed separately.
+
+** Reduced width of the "Enabled" and "Mode" columns
+- Fixed minimum width set (CSS classes `column-enabled` and `column-mode`).
+- If headers are truncated with an ellipsis, the full name appears on hover.
+- Reduced font size for these column headers.
+
+** Improved proxy display in dialogs
+- In pin and change dialogs, **full proxy information** is now displayed: country flag, country code, host, port, and protocol.
+
+** Fixed reset of the user‑stopped flag
+- On new navigation (address entry, page reload), the `user‑stopped` flag for the site is now correctly reset, allowing AutoProxy to restart the search for a working proxy.
+- Removed the `link` transition type from the `webNavigation` handler to prevent the proxy change dialog from appearing when clicking links within the same domain.
+- Added reset of the stop flag on a new `main_frame` request (the `RequestStart` event).
+
+** Navigation after settings page reload
+- After applying changes that require a page reload (e.g., deleting rules, selecting blocking, editing rules), the page automatically reloads, maintaining ease of use.
+
+** Improved tooltips for the AutoProxy button (🔄)
+The **🔄** button in the popup had a static tooltip "AutoProxy action" and did not reflect the actual state of the rule for the current site. Users could not understand what action would occur on click.
+- Removed the static `title` attribute from `popup.html`.
+- In `Core.ts`, the logic for building `proxyableDomains` was changed – they are now always built based on the **AutoProxy** profile, even if another profile is active (Direct, System proxy, Always on). This guarantees access to rule data in any mode.
+- In `popup.ts`, the method `updateAutoRefreshTooltip()` was added, which:
+  - determines whether a rule exists for the current site;
+  - checks its state (enabled/disabled, `auto`/`manual` mode);
+  - checks proxy pinning (via `AutoStatusService`);
+  - selects the appropriate localisation key and substitutes the site name;
+  - sets the button's `title` attribute.
+- New localisation keys were added to `_locales/*/messages.json` for all states (for all localised languages).
+
+** Available tooltip states (with site name substitution)
+- **No rule** → "No rule for {0} – add site to AutoProxy"
+- **Rule disabled** → "Rule disabled for {0} – enable rule"
+- **Manual mode** → "Manual mode for rule {0} – switch to auto"
+- **Auto mode, no pin** → "Auto mode – refresh proxy for site {0}"
+- **Auto mode, proxy pinned** → "Change pinned proxy for site {0}"
+- **Site not detected** → "AutoProxy"
+
 ## [1.0.7] – 2026-08-12
 
 ### Added

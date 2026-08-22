@@ -1921,7 +1921,7 @@
 		"message": "آیا پروکسی را عوض کنید؟"
 	},
 	"dialogChangeMessage": {
-		"message": "آیا پروکسی تعیین شده برای سایت {0} را عوض کنید؟"
+		"message": "پروکسی تعیین شده {1} را برای سایت {0} تغییر دهید؟"
 	},
 	"dialogChangeConfirm": {
 		"message": "تغییر"
@@ -1952,5 +1952,50 @@
 	},
 	"settingsAutoAddUnreachableSitesDesc": {
 		"message": "هنگامی که تشخیص داده شود صفحه بارگذاری نمی‌شود، دیالوگی با پیشنهاد افزودن سایت به پروکسی خودکار نمایش داده می‌شود."
+	},
+	"settingsStaleRemaining": {
+		"message": "باقی‌مانده"
+	},
+	"settingsStaleExpired": {
+		"message": "منقضی شده"
+	},
+	"settingsStaleUnknown": {
+		"message": "بدون داده"
+	},
+	"settingsImportRulesFormatUniversal": {
+		"message": "فرمت خودکار (وارد کردن دامنه‌ها)"
+	},
+	"settingsImportRulesUniversalHint": {
+		"message": "هر متنی را بچسبانید – افزونه به‌طور خودکار تمام دامنه‌ها را استخراج کرده و برای آنها قاعده ایجاد می‌کند."
+	},
+	"settingsImportRulesUniversalNoDomains": {
+		"message": "هیچ دامنه‌ای از متن استخراج نشد. مطمئن شوید که متن شامل نام‌های دامنه است (مانند youtube.com)."
+	},
+	"settingsAutoProxyToggleMode": {
+		"message": "تغییر حالت (خودکار/دستی)"
+	},
+	"settingsRulesGridColSourceRule": {
+		"message": "منبع/قاعده"
+	},
+	"settingsRuleActionBlock": {
+		"message": "🛑 مسدود کردن (بدون اتصال) ❌"
+	},
+	"popupAutoRefreshTitle": {
+		"message": "🔄 پروکسی خودکار"
+	},
+	"popupAutoRefreshNoRule": {
+		"message": "هیچ قاعده‌ای برای {0} وجود ندارد – سایت را به پروکسی خودکار اضافه کنید"
+	},
+	"popupAutoRefreshRuleDisabled": {
+		"message": "قاعده برای {0} غیرفعال است – قاعده را فعال کنید"
+	},
+	"popupAutoRefreshManual": {
+		"message": "حالت دستی برای قاعده {0} – به حالت خودکار تغییر دهید"
+	},
+	"popupAutoRefreshAuto": {
+		"message": "حالت خودکار – پروکسی را برای سایت {0} به‌روزرسانی کنید"
+	},
+	"popupAutoRefreshPinned": {
+		"message": "تغییر پروکسی پین شده برای سایت {0}"
 	}	
 }

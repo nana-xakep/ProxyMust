@@ -1921,7 +1921,7 @@
 		"message": "プロキシを変更しますか？"
 	},
 	"dialogChangeMessage": {
-		"message": "サイト {0} に設定されたプロキシを変更しますか？"
+		"message": "サイト {0} に割り当てられたプロキシ {1} を変更しますか？"
 	},
 	"dialogChangeConfirm": {
 		"message": "変更"
@@ -1952,5 +1952,50 @@
 	},
 	"settingsAutoAddUnreachableSitesDesc": {
 		"message": "ページが読み込まれない場合、サイトをオートプロキシに追加する提案を含むダイアログが表示されます。"
+	},
+	"settingsStaleRemaining": {
+		"message": "残り"
+	},
+	"settingsStaleExpired": {
+		"message": "期限切れ"
+	},
+	"settingsStaleUnknown": {
+		"message": "データなし"
+	},
+	"settingsImportRulesFormatUniversal": {
+		"message": "自動フォーマット（ドメインをインポート）"
+	},
+	"settingsImportRulesUniversalHint": {
+		"message": "任意のテキストを貼り付けると、拡張機能が自動的にすべてのドメインを抽出し、ルールを作成します。"
+	},
+	"settingsImportRulesUniversalNoDomains": {
+		"message": "テキストからドメインを抽出できませんでした。テキストにドメイン名（例：youtube.com）が含まれていることを確認してください。"
+	},
+	"settingsAutoProxyToggleMode": {
+		"message": "モードを切り替え（自動/手動）"
+	},
+	"settingsRulesGridColSourceRule": {
+		"message": "ソース/ルール"
+	},
+	"settingsRuleActionBlock": {
+		"message": "🛑 ブロック（接続なし） ❌"
+	},
+	"popupAutoRefreshTitle": {
+		"message": "🔄 オートプロキシ"
+	},
+	"popupAutoRefreshNoRule": {
+		"message": "{0} のルールがありません – サイトをオートプロキシに追加"
+	},
+	"popupAutoRefreshRuleDisabled": {
+		"message": "{0} のルールは無効です – ルールを有効にしてください"
+	},
+	"popupAutoRefreshManual": {
+		"message": "ルール {0} は手動モード – 自動に切り替え"
+	},
+	"popupAutoRefreshAuto": {
+		"message": "自動モード – サイト {0} のプロキシを更新"
+	},
+	"popupAutoRefreshPinned": {
+		"message": "サイト {0} に固定されたプロキシを変更"
 	}	
 }

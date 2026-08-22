@@ -27,7 +27,7 @@ import { environment, api } from "../../lib/environment";
 import { Utils } from "../../lib/Utils";
 import { ProxyImporter } from "../../lib/ProxyImporter";
 import { RuleImporter } from "../../lib/RuleImporter";
-import { SettingsConfig, CommandMessages, SettingsPageInternalDataType, PopupInternalDataType, proxyServerProtocols, proxyServerSubscriptionObfuscate, ProxyServer, ProxyRule, ProxyRuleType, ProxyServerSubscription, GeneralOptions, UIOptions, ResultHolder, proxyServerSubscriptionFormat, SpecialRequestApplyProxyMode, specialRequestApplyProxyModeKeys, ProxyRulesSubscription, SmartProfile, SettingsPageSmartProfile, SmartProfileType, getSmartProfileTypeIcon, ProxyRuleSpecialProxyServer, getUserSmartProfileTypeConfig, themesCustomType, ThemeType, getSmartProfileTypeConfig, SubscriptionStats, getSmartProfileTypeName, ProxyRulesImportFromUI, ImportedProxyRule, ExternalRulesFormat, SmartProfileTypeBuiltinIds } from "../../core/definitions";
+import { SettingsConfig, CommandMessages, SettingsPageInternalDataType, PopupInternalDataType, proxyServerProtocols, proxyServerSubscriptionObfuscate, ProxyServer, ProxyRule, ProxyRuleType, ProxyServerSubscription, GeneralOptions, UIOptions, ResultHolder, proxyServerSubscriptionFormat, SpecialRequestApplyProxyMode, specialRequestApplyProxyModeKeys, ProxyRulesSubscription, SmartProfile, SettingsPageSmartProfile, SmartProfileType, getSmartProfileTypeIcon, ProxyRuleSpecialProxyServer, getUserSmartProfileTypeConfig, themesCustomType, ThemeType, getSmartProfileTypeConfig, SubscriptionStats, getSmartProfileTypeName, ProxyRulesImportFromUI, ImportedProxyRule, ExternalRulesFormat, SmartProfileTypeBuiltinIds, BLOCK_PROXY_ID } from "../../core/definitions";
 import { Debug } from "../../lib/Debug";
 import { ProfileOperations } from "../../core/ProfileOperations";
 import { SettingsOperation } from "../../core/SettingsOperation";
@@ -285,6 +285,14 @@ private static handleMessages(message: any, sender: any, sendResponse: Function)
             renderLogMessage(container, message.data);
         }
     }
+else if (command === "OPEN_EMBEDDED_LOG") {
+    // English: Show embedded log viewer if hidden, otherwise keep visible
+    // Russian: Показать встроенный просмотрщик лога, если скрыт, иначе оставить видимым
+    const viewer = jq("#testLogViewer");
+    if (!viewer.is(":visible")) {
+        settingsPage.uiEvents.onToggleLogViewer();
+    }
+}
     else if (command === "REFRESH_SETTINGS_PAGE_RELOAD") {
         // English: Reload settings page to reflect changes made in popup
         // Russian: Перезагружаем страницу настроек, чтобы отразить изменения из попапа
@@ -971,6 +979,68 @@ jq("#staleHoursInput").off("change").on("change", function() {
                 }
             }
         });
+
+        // English: Global Delete key handler for rules table
+        // Russian: Глобальный обработчик клавиши Delete для таблицы правил
+        jq(document).on("keydown", function(e) {
+            if (e.key === "Delete" || e.key === "Del" || e.which === 46) {
+                const tagName = (document.activeElement?.tagName || "").toLowerCase();
+                if (tagName === "input" || tagName === "textarea" || tagName === "select") {
+                    return;
+                }
+                // Find which profile's grid is visible or has focus
+                let targetProfile: SettingsPageSmartProfile | null = null;
+                for (const pp of settingsPage.pageSmartProfiles) {
+                    if (pp.grdRules && pp.htmlProfileTab.is(":visible")) {
+                        targetProfile = pp;
+                        break;
+                    }
+                }
+                if (!targetProfile) return;
+                const selectedRows = targetProfile.grdRules.rows({ selected: true });
+                if (!selectedRows || selectedRows.count() === 0) return;
+                e.preventDefault();
+                e.stopPropagation();
+
+                const count = selectedRows.count();
+                const confirmMsg = api.i18n.getMessage("settingsConfirmRemoveMultipleProxyRule") || `Delete ${count} rules?`;
+                if (confirm(confirmMsg)) {
+                    selectedRows.remove().draw('full-hold');
+                    settingsPage.changeTracking.smartProfiles = true;
+                    settingsPage.enableGridMultipleDelete(
+                        targetProfile.htmlProfileTab.find("#btnRemoveMultipleProxyRule"), false);
+                    // Автоматическое сохранение
+                    settingsPage.uiEvents.onClickSaveSmartProfile(targetProfile);
+                }
+            }
+        });
+
+        // English: Context menu for rules table
+        // Russian: Контекстное меню для таблицы правил
+        jq(document).on("contextmenu", "#grdRules tbody tr", function(e) {
+            e.preventDefault();
+            // Find the profile that contains this table
+            let pageProfile: SettingsPageSmartProfile | null = null;
+            const tableElement = this.closest('table');
+            for (const pp of settingsPage.pageSmartProfiles) {
+                if (pp.grdRules && pp.grdRules.table()?.node() === tableElement) {
+                    pageProfile = pp;
+                    break;
+                }
+            }
+            if (!pageProfile) return;
+
+            const row = pageProfile.grdRules.row(this);
+            const clickedRule = row.data();
+            if (!clickedRule) return;
+            // Get selected rows, or select the clicked one if none selected
+            let selectedRules = pageProfile.grdRules.rows({ selected: true }).data().toArray();
+            if (selectedRules.length === 0) {
+                pageProfile.grdRules.row(this).select();
+                selectedRules = [clickedRule];
+            }
+            settingsPage.showRulesContextMenu(e.clientX, e.clientY, selectedRules, pageProfile);
+        });
 	}
     private static initProxyTable(orderingEnabled: boolean): void {
         if (settingsPage.grdServers) {
@@ -1161,32 +1231,32 @@ jq("#staleHoursInput").off("change").on("change", function() {
         }
     }
 
-    private static initCustomRuleProxySorting(pageProfile: SettingsPageSmartProfile): void {
-        if (jq.fn.dataTable && pageProfile && pageProfile.grdRules) {
-            jq.fn.dataTable.ext.order['rule-proxy-priority'] = function (settings: any, col: number) {
-                return this.api().column(col, { order: 'index' }).nodes().map(function (td: HTMLElement, i: number) {
-                    const row = pageProfile.grdRules?.row(td).data() as ProxyRule;
-                    if (!row) return 0;
-
-                    let proxyId = row.proxyServerId;
-                    if (!proxyId && row.proxy) {
-                        proxyId = row.proxy.id;
-                    }
-                    if (!proxyId) return 0;
-
-                    const proxy = SettingsOperation.findProxyServerById(proxyId);
-                    if (!proxy) return 0;
-
-                    const site = row.hostName || '';
-                    const staleHours = settingsPage.currentSettings?.userPrefs?.staleHours ?? 6;
-                    const autoStatus = settingsPage.currentSettings?.autoStatus || {};
-
-                    const weight = ProxySelector.calculateWeight(proxy, site, autoStatus, staleHours);
-                    return weight;
-                });
-            };
-        }
-    }
+    // private static initCustomRuleProxySorting(pageProfile: SettingsPageSmartProfile): void {
+    //     if (jq.fn.dataTable) {
+    //         jq.fn.dataTable.ext.order['rule-proxy-priority'] = function (settings: any, col: number) {
+    //             return this.api().column(col, { order: 'index' }).nodes().map(function (td: HTMLElement, i: number) {
+    //                 const row = pageProfile.grdRules?.row(td).data() as ProxyRule;
+    //                 if (!row) return 0;
+    //
+    //                 let proxyId = row.proxyServerId;
+    //                 if (!proxyId && row.proxy) {
+    //                     proxyId = row.proxy.id;
+    //                 }
+    //                 if (!proxyId) return 0;
+    //
+    //                 const proxy = SettingsOperation.findProxyServerById(proxyId);
+    //                 if (!proxy) return 0;
+    //
+    //                 const site = row.hostName || '';
+    //                 const staleHours = settingsPage.currentSettings?.userPrefs?.staleHours ?? 6;
+    //                 const autoStatus = settingsPage.currentSettings?.autoStatus || {};
+    //
+    //                 const weight = ProxySelector.calculateWeight(proxy, site, autoStatus, staleHours);
+    //                 return weight;
+    //             });
+    //         };
+    //     }
+    // }
 	
 	private static localizeUi() {
 		if (settingsPage.localized)
@@ -1487,6 +1557,10 @@ jq('[data-localize="footerVersionInfo"]').text(t('footerVersionInfo', version));
 			jq("<option>")
 				.attr("value", ProxyRuleSpecialProxyServer.ProfileProxy)
 				.text(api.i18n.getMessage("settingsRulesProxyFromProfile"))
+				.appendTo(cmdRuleProxyServer);
+			jq("<option>")
+				.attr("value", BLOCK_PROXY_ID)
+				.text(api.i18n.getMessage("settingsRuleActionBlock"))
 				.appendTo(cmdRuleProxyServer);
 		}
 
@@ -2584,10 +2658,6 @@ private static loadServersGrid(servers: any[]) {
 	private static initializeSmartProfileGrids(pageProfile: SettingsPageSmartProfile) {
 		let dataTableCustomDom = '<t><"row"<"col-sm-12 col-md-5"<"text-left float-left"f>><"col-sm-12 col-md-7"<"text-right"l>>><"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>';
 		
-        // English: Register custom sorting for proxy column in rules table
-        // Russian: Регистрируем кастомную сортировку для колонки прокси в таблице правил
-        settingsPage.initCustomRuleProxySorting(pageProfile);
-		
 		let tabContainer = pageProfile.htmlProfileTab;
 
 		let grdRulesColumns = [
@@ -2614,50 +2684,63 @@ private static loadServersGrid(servers: any[]) {
 					return data || '';
 				},
 			},
-			{
-				name: "enabled",
-				data: "enabled",
-				title: api.i18n.getMessage("settingsRulesGridColEnabled"),
-				render: function (data, type, row: ProxyRule) {
-					const uniqueId = `ruleToggle_${row.ruleId}_${Utils.getNewUniqueIdString()}`;
-					const checkedAttr = data ? 'checked' : '';
-					const whiteListIcon = row && row.whiteList
-						? ` <i class="far fa-hand-paper ms-2" title="${api.i18n.getMessage("settingsRuleActionWhitelist")}"></i>`
-						: '';
+            {
+                name: "enabled",
+                data: "enabled",
+                title: api.i18n.getMessage("settingsRulesGridColEnabled"),
+                type: 'boolean',
+                className: "column-enabled",
+                orderable: true,
+                render: function (data, type, row: ProxyRule) {
+                    if (type === 'sort') {
+                        return data ? 1 : 0;
+                    }
+                    const uniqueId = `ruleToggle_${row.ruleId}_${Utils.getNewUniqueIdString()}`;
+                    const checkedAttr = data ? 'checked' : '';
+                    const whiteListIcon = row && row.whiteList
+                        ? ` <i class="far fa-hand-paper ms-2" title="${api.i18n.getMessage("settingsRuleActionWhitelist")}"></i>`
+                        : '';
 
-					return `
-						<div class="form-check form-switch d-inline-flex align-items-center">
-							<input class="form-check-input rule-enabled-toggle" type="checkbox" id="${uniqueId}" ${checkedAttr}>
-							<label class="form-check-label" for="${uniqueId}"></label>
-						</div>${whiteListIcon}`;
-				},
-			},
+                    return `
+                        <div class="form-check form-switch d-inline-flex align-items-center">
+                            <input class="form-check-input rule-enabled-toggle" type="checkbox" id="${uniqueId}" ${checkedAttr}>
+                            <label class="form-check-label" for="${uniqueId}"></label>
+                        </div>${whiteListIcon}`;
+                },
+            },
 			// English: New column for rule mode (Auto/Manual)
 			// Russian: Новая колонка для режима правила (Auto/Manual)
-			{
-				name: "mode",
-				data: "mode",
-				title: api.i18n.getMessage("settingsRulesGridColMode"),
-				render: function(data, type, row: ProxyRule) {
-					// English: For whitelist rules, mode is disabled (no proxy applies)
-					// Russian: Для правил-исключений режим отключён (прокси не применяется)
-					if (row.whiteList) {
-						return `<span class="text-muted small">—</span>`;
-					}
-					const mode = data || 'auto';
-					return `<select class="form-select form-select-sm rule-mode-select" data-rule-id="${row.ruleId}">
-								<option value="auto" ${mode === 'auto' ? 'selected' : ''}>Auto</option>
-								<option value="manual" ${mode === 'manual' ? 'selected' : ''}>Manual</option>
-							</select>`;
-				},
-				responsivePriority: 4
-			},
+            {
+                name: "mode",
+                data: "mode",
+                title: api.i18n.getMessage("settingsRulesGridColMode"),
+                type: 'string',
+                className: "column-mode",
+                orderable: true,
+                render: function(data, type, row: ProxyRule) {
+                    if (type === 'sort') {
+                        if (row.whiteList) return 2; // whitelist не имеет режима, помещаем в конец
+                        const mode = data || 'auto';
+                        return mode === 'auto' ? 0 : 1;
+                    }
+                    // English: For whitelist rules, mode is disabled (no proxy applies)
+                    // Russian: Для правил-исключений режим отключён (прокси не применяется)
+                    if (row.whiteList) {
+                        return `<span class="text-muted small">—</span>`;
+                    }
+                    const mode = data || 'auto';
+                    return `<select class="form-select form-select-sm rule-mode-select" data-rule-id="${row.ruleId}">
+                                <option value="auto" ${mode === 'auto' ? 'selected' : ''}>Auto</option>
+                                <option value="manual" ${mode === 'manual' ? 'selected' : ''}>Manual</option>
+                            </select>`;
+                },
+                responsivePriority: 4
+            },
             {
                 name: "proxy",
                 data: "proxyName",
                 title: api.i18n.getMessage("settingsRulesGridColProxy"),
-                orderDataType: 'rule-proxy-priority',
-                orderable: true,
+                orderable: false,
                 render: function(data, type, row: ProxyRule) {
 					// English: For whitelist rules, show "Exclusion" and no proxy selection
 					// Russian: Для правил-исключений показываем "Исключение" и не даём выбирать прокси
@@ -2676,10 +2759,14 @@ private static loadServersGrid(servers: any[]) {
 							currentProxyId = row.proxy.id;
 						}
 						
-						let optionsHtml = '<option value="">' + api.i18n.getMessage("settingsRulesProxyDefault") + '</option>';
-						// English: Add "Whitelist (no proxy)" option
-						// Russian: Добавляем опцию "Whitelist (no proxy)"
-						optionsHtml += `<option value="whitelist">${api.i18n.getMessage("settingsRuleActionWhitelist") || "Whitelist (no proxy)"}</option>`;
+                        let optionsHtml = '<option value="">' + api.i18n.getMessage("settingsRulesProxyDefault") + '</option>';
+                        // English: Add "Whitelist (no proxy)" option
+                        // Russian: Добавляем опцию "Whitelist (no proxy)"
+                        optionsHtml += `<option value="whitelist">${api.i18n.getMessage("settingsRuleActionWhitelist") || "Whitelist (no proxy)"}</option>`;
+                        // English: Add "Block (no connection)" option
+                        // Russian: Добавляем опцию "Блокировка (без соединения)"
+                        const blockSelected = (currentProxyId === BLOCK_PROXY_ID) ? 'selected' : '';
+                        optionsHtml += `<option value="${BLOCK_PROXY_ID}" ${blockSelected}>${api.i18n.getMessage("settingsRuleActionBlock") || "Block (no connection)"}</option>`;
 						
 						// English: Add options for each sorted proxy
 						// Russian: Добавляем опции для каждого отсортированного прокси
@@ -2748,27 +2835,46 @@ private static loadServersGrid(servers: any[]) {
 			grdRulesColumns.splice(index, 1);
 		}
 
-		let grdRules = tabContainer.find("#grdRules").DataTable({
-			"dom": dataTableCustomDom,
-			paging: true,
-			pageLength: settingsPage.currentSettings?.uiOptions?.smartRulesGridRows || 10,
-			select: { style: "os" },
-			scrollY: 460,
-			scrollCollapse: true,
-			responsive: true,
+        let grdRules = tabContainer.find("#grdRules").DataTable({
+            "dom": dataTableCustomDom,
+            paging: true,
+            pageLength: settingsPage.currentSettings?.uiOptions?.smartRulesGridRows || 10,
+            select: { style: "os" },
+            scrollY: 460,
+            scrollCollapse: true,
+            responsive: true,
             lengthMenu: [[10, 25, 50, -1], [10, 25, 50, api.i18n.getMessage("datatablesAll")]],
-			ordering: false,
-			columns: grdRulesColumns,
-			language: {
-				search: api.i18n.getMessage("datatablesSearch"),
-				lengthMenu: api.i18n.getMessage("datatablesShow") + " _MENU_ " + api.i18n.getMessage("datatablesEntries"),
-				info: api.i18n.getMessage("datatablesInfo"),
-				paginate: {
-					previous: api.i18n.getMessage("datatablesPrevious"),
-					next: api.i18n.getMessage("datatablesNext")
-				}
-			}
-		});
+            ordering: true,
+            order: [[1, 'asc']], // сортировка по умолчанию по колонке "Источник" (индекс 1)
+            columnDefs: [
+                // колонки: ruleType(0), hostName(1), rule(2), enabled(3), mode(4) – сортируемые
+                { targets: [0, 1, 2, 3, 4], orderable: true },
+                // колонка proxy (индекс 5) – не сортируемая
+                { targets: [5], orderable: false },
+                // последняя колонка с кнопками (индекс 6) – не сортируемая
+                { targets: [6], orderable: false }
+            ],
+            columns: grdRulesColumns,
+            language: {
+                search: api.i18n.getMessage("datatablesSearch"),
+                lengthMenu: api.i18n.getMessage("datatablesShow") + " _MENU_ " + api.i18n.getMessage("datatablesEntries"),
+                info: api.i18n.getMessage("datatablesInfo"),
+                paginate: {
+                    previous: api.i18n.getMessage("datatablesPrevious"),
+                    next: api.i18n.getMessage("datatablesNext")
+                }
+            },
+            initComplete: function() {
+                // Добавляем класс для компактных заголовков и всплывающую подсказку
+                const enabledHeader = jq(this.api().column('enabled:name').header());
+                enabledHeader.addClass('compact-header');
+                enabledHeader.attr('title', api.i18n.getMessage("settingsRulesGridColEnabled"));
+                
+                const modeHeader = jq(this.api().column('mode:name').header());
+                modeHeader.addClass('compact-header');
+                modeHeader.attr('title', api.i18n.getMessage("settingsRulesGridColMode"));
+            }
+        });
 		grdRules.on('responsive-display',
 			function (e, dataTable, row, showHide, update) {
 				let rowChild = row.child();
@@ -2785,6 +2891,7 @@ private static loadServersGrid(servers: any[]) {
 			settingsPage.saveUiOptions();
 		});
 		grdRules.draw();
+       // settingsPage.initCustomRuleProxySorting(pageProfile);
 		new jq.fn.dataTable.Responsive(grdRules);
 		jq.fn.dataTable.select.init(grdRules);
 		new jq.fn.dataTable.RowReorder(grdRules, {
@@ -2993,21 +3100,50 @@ private static loadServersGrid(servers: any[]) {
 		}
 	}
 
-    private static loadRules(pageProfile: SettingsPageSmartProfile, rules: ProxyRule[]) {
-        console.log(`[loadRules] profile ${pageProfile.smartProfile.profileName}, rules count: ${rules.length}, isAuto count: ${rules.filter(r => r.isAuto).length}`);		
-        if (!pageProfile.grdRules)
-            return;
-        pageProfile.grdRules.clear();
+private static loadRules(pageProfile: SettingsPageSmartProfile, rules: ProxyRule[]) {
+    console.log(`[loadRules] profile ${pageProfile.smartProfile.profileName}, rules count: ${rules.length}, isAuto count: ${rules.filter(r => r.isAuto).length}`);		
+    console.log('[loadRules] rules подробно:', rules.map(r => ({id: r.ruleId, host: r.hostName, enabled: r.enabled, mode: r.mode})));
+    if (!pageProfile.grdRules)
+        return;
+    
+    // Clear table completely and redraw
+    pageProfile.grdRules.clear().draw();
+    
+    let fixedRules = ProxyRule.assignArray(rules);
+    pageProfile.grdRules.rows.add(fixedRules).draw('full-hold');
 
-        let fixedRules = ProxyRule.assignArray(rules);
-        pageProfile.grdRules.rows.add(fixedRules).draw('full-hold');
+    // Force re-draw and re-bind events
+    pageProfile.grdRules.draw('full-hold');
+    this.refreshRulesGridAllRows(pageProfile);
+    console.log('[loadRules] Таблица обновлена');
 
-        // English: Set default sorting by proxy column (status + rating)
-        // Russian: Устанавливаем сортировку по умолчанию по колонке прокси (статус + рейтинг)
-        pageProfile.grdRules.order([ ['proxy', 'asc'] ]).draw();
-
-        this.refreshRulesGridAllRows(pageProfile);
+    // Объединение колонок "Источник" и "Правило"
+    // Проверяем, есть ли хотя бы одно правило, где правило отличается от источника
+    let hasDifferentRule = false;
+    for (const rule of fixedRules) {
+        const ruleText = rule.rule || ''; // используем геттер rule
+        if (rule.hostName && ruleText && rule.hostName !== ruleText) {
+            hasDifferentRule = true;
+            break;
+        }
     }
+
+    const columnHost = pageProfile.grdRules.column('hostName:name');
+    const columnRule = pageProfile.grdRules.column('rule:name');
+    if (hasDifferentRule) {
+        // Показываем обе колонки
+        columnHost.visible(true);
+        columnRule.visible(true);
+        // Заголовки остаются без изменений (берутся из локализации)
+    } else {
+        // Скрываем колонку "Правило" и переименовываем "Источник" в "Источник/Правило"
+        columnRule.visible(false);
+        // Используем составной заголовок (можно добавить новое сообщение в локализацию)
+        jq(columnHost.header()).text(api.i18n.getMessage("settingsRulesGridColSourceRule") || "Источник/Правило");
+    }
+    // Принудительно обновляем заголовки и размеры
+    pageProfile.grdRules.columns.adjust().draw();
+}
 
 	private static readRules(pageProfile: SettingsPageSmartProfile): ProxyRule[] {
 		return pageProfile.grdRules.data().toArray();
@@ -3088,79 +3224,103 @@ private static loadServersGrid(servers: any[]) {
 			rowElement.find("#btnRulesEdit").on("click", (e: any) => settingsPage.uiEvents.onRulesEditClick(pageProfile, e));
 			rowElement.find(".rule-enabled-toggle").on("change", (e: any) => settingsPage.uiEvents.onRuleEnabledToggleChange(pageProfile, e));
 			
-			// English: Handler for mode change
-			// Russian: Обработчик изменения режима
-			rowElement.find(".rule-mode-select").off("change").on("change", function(this: HTMLSelectElement) {
-				// const ruleId = parseInt(this.dataset.ruleId); // not needed;
-				const newMode = this.value as 'auto' | 'manual';
-				const rowData = pageProfile.grdRules.row(jq(this).closest('tr')).data();
-				if (rowData) {
-					rowData.mode = newMode;
-					settingsPage.changeTracking.smartProfiles = true;
-				}
-			});
+            // English: Handler for mode change
+            // Russian: Обработчик изменения режима
+            rowElement.find(".rule-mode-select").off("change").on("change", function(this: HTMLSelectElement) {
+                // const ruleId = parseInt(this.dataset.ruleId); // not needed;
+                const newMode = this.value as 'auto' | 'manual';
+                const rowData = pageProfile.grdRules.row(jq(this).closest('tr')).data();
+                if (rowData) {
+                    rowData.mode = newMode;
+                    settingsPage.changeTracking.smartProfiles = true;
+                    // Автоматическое сохранение
+                    settingsPage.uiEvents.onClickSaveSmartProfile(pageProfile);
+                }
+            });
 			
-			// English: Handler for proxy selection (manual override)
-			// Russian: Обработчик выбора прокси (ручное переопределение)
-			rowElement.find(".proxy-select-for-rule").off("change").on("change", function(this: HTMLSelectElement) {
-				const newValue = this.value;
-				const rowData = pageProfile.grdRules.row(jq(this).closest('tr')).data();
-				if (!rowData) return;
-				
-				if (newValue === "whitelist") {
-					// English: Switch to whitelist (no proxy)
-					// Russian: Переключаем в белый список (без прокси)
-					PolyFill.runtimeSendMessage({
-						command: "PopupSetRuleWhitelist",
-						ruleId: rowData.ruleId,
-						whiteList: true
-					}, (response) => {
-						if (response && response.success) {
-							rowData.whiteList = true;
-							rowData.proxyServerId = null;
-							rowData.proxy = null;
-							settingsPage.changeTracking.smartProfiles = true;
-							settingsPage.refreshRulesGridRow(pageProfile, pageProfile.grdRules.row(jq(this).closest('tr')));
-						} else {
-							console.warn("[Settings] Failed to set whitelist for rule:", rowData.ruleId);
-							// Revert selection
-							jq(this).val(rowData.proxyServerId || '');
-						}
-					});
-				} else if (newValue === "") {
-					// English: Use active proxy
-					// Russian: Использовать активный прокси
-					rowData.proxyServerId = null;
-					if (rowData.whiteList) {
-						// If currently whitelist, switch to normal rule
-						rowData.whiteList = false;
-					}
-					settingsPage.changeTracking.smartProfiles = true;
-					PolyFill.runtimeSendMessage({
-						command: CommandMessages.PopupChangeProxyForRule,
-						ruleId: rowData.ruleId,
-						proxyServerId: null
-					}, () => {
-						settingsPage.refreshRulesGridRow(pageProfile, pageProfile.grdRules.row(jq(this).closest('tr')));
-					});
-				} else {
-					// English: Select a specific proxy
-					// Russian: Выбор конкретного прокси
-					const newProxyId = newValue;
-					rowData.proxyServerId = newProxyId;
-					if (rowData.whiteList) {
-						rowData.whiteList = false;
-					}
-					settingsPage.changeTracking.smartProfiles = true;
-					PolyFill.runtimeSendMessage({
-						command: CommandMessages.PopupChangeProxyForRule,
-						ruleId: rowData.ruleId,
-						proxyServerId: newProxyId
-					}, () => {
-						settingsPage.refreshRulesGridRow(pageProfile, pageProfile.grdRules.row(jq(this).closest('tr')));
-					});
-				}
-			});
+            // English: Handler for proxy selection (manual override)
+            // Russian: Обработчик выбора прокси (ручное переопределение)
+            rowElement.find(".proxy-select-for-rule").off("change").on("change", function(this: HTMLSelectElement) {
+                const newValue = this.value;
+                const rowData = pageProfile.grdRules.row(jq(this).closest('tr')).data();
+                if (!rowData) return;
+                
+                if (newValue === "whitelist") {
+                    // English: Switch to whitelist (no proxy)
+                    // Russian: Переключаем в белый список (без прокси)
+                    PolyFill.runtimeSendMessage({
+                        command: "PopupSetRuleWhitelist",
+                        ruleId: rowData.ruleId,
+                        whiteList: true
+                    }, (response) => {
+                        if (response && response.success) {
+                            rowData.whiteList = true;
+                            rowData.proxyServerId = null;
+                            rowData.proxy = null;
+                            settingsPage.changeTracking.smartProfiles = true;
+                            settingsPage.refreshRulesGridRow(pageProfile, pageProfile.grdRules.row(jq(this).closest('tr')));
+                            // Автоматическое сохранение
+                            settingsPage.uiEvents.onClickSaveSmartProfile(pageProfile);
+                        } else {
+                            console.warn("[Settings] Failed to set whitelist for rule:", rowData.ruleId);
+                            // Revert selection
+                            jq(this).val(rowData.proxyServerId || '');
+                        }
+                    });
+                } else if (newValue === BLOCK_PROXY_ID) {
+                    // English: Switch to block (no connection) - set mode to manual to prevent auto-switching
+                    // Russian: Переключаем на блокировку (без соединения) - устанавливаем режим manual, чтобы предотвратить автоматическое переключение
+                    rowData.proxyServerId = BLOCK_PROXY_ID;
+                    rowData.whiteList = false;
+                    rowData.mode = 'manual'; // Устанавливаем ручной режим
+                    settingsPage.changeTracking.smartProfiles = true;
+                    PolyFill.runtimeSendMessage({
+                        command: CommandMessages.PopupChangeProxyForRule,
+                        ruleId: rowData.ruleId,
+                        proxyServerId: BLOCK_PROXY_ID
+                    }, () => {
+                        settingsPage.refreshRulesGridRow(pageProfile, pageProfile.grdRules.row(jq(this).closest('tr')));
+                        // Автоматическое сохранение
+                        settingsPage.uiEvents.onClickSaveSmartProfile(pageProfile);
+                    });
+                } else if (newValue === "") {
+                    // English: Use active proxy
+                    // Russian: Использовать активный прокси
+                    rowData.proxyServerId = null;
+                    if (rowData.whiteList) {
+                        // If currently whitelist, switch to normal rule
+                        rowData.whiteList = false;
+                    }
+                    settingsPage.changeTracking.smartProfiles = true;
+                    PolyFill.runtimeSendMessage({
+                        command: CommandMessages.PopupChangeProxyForRule,
+                        ruleId: rowData.ruleId,
+                        proxyServerId: null
+                    }, () => {
+                        settingsPage.refreshRulesGridRow(pageProfile, pageProfile.grdRules.row(jq(this).closest('tr')));
+                        // Автоматическое сохранение
+                        settingsPage.uiEvents.onClickSaveSmartProfile(pageProfile);
+                    });
+                } else {
+                    // English: Select a specific proxy
+                    // Russian: Выбор конкретного прокси
+                    const newProxyId = newValue;
+                    rowData.proxyServerId = newProxyId;
+                    if (rowData.whiteList) {
+                        rowData.whiteList = false;
+                    }
+                    settingsPage.changeTracking.smartProfiles = true;
+                    PolyFill.runtimeSendMessage({
+                        command: CommandMessages.PopupChangeProxyForRule,
+                        ruleId: rowData.ruleId,
+                        proxyServerId: newProxyId
+                    }, () => {
+                        settingsPage.refreshRulesGridRow(pageProfile, pageProfile.grdRules.row(jq(this).closest('tr')));
+                        // Автоматическое сохранение
+                        settingsPage.uiEvents.onClickSaveSmartProfile(pageProfile);
+                    });
+                }
+            });
 		}
 	}
 
@@ -3913,6 +4073,8 @@ private static uiEvents = {
                 settingsPage.changeTracking.smartProfiles = true;
                 settingsPage.enableGridMultipleDelete(
                     pageProfile.htmlProfileTab.find("#btnRemoveMultipleProxyRule"), false);
+                // Автоматическое сохранение после удаления
+                settingsPage.uiEvents.onClickSaveSmartProfile(pageProfile);
             });
     },
     onClickSubmitMultipleRule(pageProfile: SettingsPageSmartProfile) {
@@ -4030,6 +4192,24 @@ private static uiEvents = {
 
         resetModal();
 
+        // English: Show/hide hint based on selected format
+        // Russian: Показывать/скрывать подсказку в зависимости от выбранного формата
+        const formatSelect = modal.find("#cmbImportRulesFormat");
+        const hint = modal.find("#importRulesHint");
+        const updateHintVisibility = () => {
+            const format = parseInt(formatSelect.val() as string);
+            if (format === 2) { // Universal
+                hint.show();
+            } else {
+                hint.hide();
+            }
+        };
+        formatSelect.off("change").on("change", updateHintVisibility);
+        // Устанавливаем универсальный формат по умолчанию
+        formatSelect.val('2');
+        // Initial state
+        updateHintVisibility();
+
         function resetModal() {
             var file = modal.find("#rbtnImportRulesSelect_File");
             var text = modal.find("#rbtnImportRulesSelect_Text");
@@ -4072,11 +4252,8 @@ private static uiEvents = {
         let config = new ProxyRulesImportFromUI();
         config.format = sourceType;
 
-        if (sourceType != ExternalRulesFormat.AutoProxy &&
-            sourceType != ExternalRulesFormat.SwitchyOmega) {
-            messageBox.warning(api.i18n.getMessage("settingsSourceTypeNotSelected"));
-            return;
-        }
+        // English: For Universal format, we don't need to check sourceType, it's handled inside RuleImporter
+        // Russian: Для универсального формата не нужно проверять sourceType, он обрабатывается внутри RuleImporter
 
         RuleImporter.importRulesBatch(
             config,
@@ -4113,7 +4290,13 @@ private static uiEvents = {
                 let message = "";
                 if (error && error.message)
                     message = error.message;
-                messageBox.error(api.i18n.getMessage("settingsImportRulesFailed") + " " + message);
+                // English: If error contains "No domains", show a specific message
+                // Russian: Если ошибка содержит "No domains", показываем специальное сообщение
+                if (message.includes("No domains") || message.includes("не удалось извлечь")) {
+                    messageBox.error(api.i18n.getMessage("settingsImportRulesUniversalNoDomains") || "No domains could be extracted.");
+                } else {
+                    messageBox.error(api.i18n.getMessage("settingsImportRulesFailed") + " " + message);
+                }
             });
 
         function doImport(rules: {
@@ -4135,6 +4318,9 @@ private static uiEvents = {
                 finalRules = mappedBlackRules.concat(mappedWhiteRules);
 
             settingsPage.loadRules(pageProfile, finalRules);
+            // Автоматическое сохранение после импорта
+            settingsPage.changeTracking.smartProfiles = true;
+            settingsPage.uiEvents.onClickSaveSmartProfile(pageProfile);
         }
     },
     onChangeRuleGeneratePattern(pageProfile: SettingsPageSmartProfile) {
@@ -4354,6 +4540,12 @@ private static uiEvents = {
             } while (ruleExists);
         }
 
+        // English: If block proxy is selected, set mode to manual
+        // Russian: Если выбран блокирующий прокси, устанавливаем режим manual
+        if (ruleInfo.proxyServerId === BLOCK_PROXY_ID) {
+            ruleInfo.mode = 'manual';
+        }
+
         if (editingModel) {
             jQuery.extend(editingModel, ruleInfo);
             settingsPage.refreshRulesGrid(pageProfile);
@@ -4363,6 +4555,8 @@ private static uiEvents = {
 
         settingsPage.changeTracking.smartProfiles = true;
         modal.modal("hide");
+        // Автоматическое сохранение после добавления/редактирования
+        settingsPage.uiEvents.onClickSaveSmartProfile(pageProfile);
     },
     onRulesEditClick(pageProfile: SettingsPageSmartProfile, e: any) {
         let item = settingsPage.readSelectedRule(pageProfile, e);
@@ -4389,6 +4583,8 @@ private static uiEvents = {
             ruleData.enabled = isEnabled;
             settingsPage.changeTracking.smartProfiles = true;
             settingsPage.refreshRulesGridRow(pageProfile, row);
+            // Автоматическое сохранение
+            settingsPage.uiEvents.onClickSaveSmartProfile(pageProfile);
         }
     },
     onRulesRemoveClick(pageProfile: SettingsPageSmartProfile, e: any) {
@@ -4408,6 +4604,8 @@ private static uiEvents = {
                 settingsPage.loadRules(pageProfile, []);
                 settingsPage.changeTracking.smartProfiles = true;
                 messageBox.info(api.i18n.getMessage("settingsRemoveAllRulesSuccess"));
+                // Автоматическое сохранение после очистки
+                settingsPage.uiEvents.onClickSaveSmartProfile(pageProfile);
             });
     },
     onProfileNameClick(pageProfile: SettingsPageSmartProfile) {
@@ -4437,7 +4635,7 @@ private static uiEvents = {
             },
             (response: any) => {
                 if (!response) return;
-                if (response.success) {
+                    if (response.success) {
                     if (response.message)
                         messageBox.success(response.message);
                     let updatedProfile: SmartProfile = response.smartProfile || smartProfile;
@@ -4451,7 +4649,27 @@ private static uiEvents = {
                     settingsPage.changeTracking.serverSubscriptions = false;
 
                     if (smartProfile.profileId || smartProfile.profileType == SmartProfileType.IgnoreFailureRules) {
+                        // English: Update the page profile with the saved version
+                        // Russian: Обновляем страничный профиль сохранённой версией
+                        pageProfile.smartProfile = updatedProfile;
+
                         settingsPage.updateProfileMenuName(pageProfile);
+                        // English: Refresh rules grid for this profile after saving
+                        // Russian: Обновляем таблицу правил для этого профиля после сохранения
+                        if (pageProfile.grdRules) {
+                            const fixedRules = ProxyRule.assignArray(pageProfile.smartProfile.proxyRules || []);
+                            pageProfile.grdRules.clear();
+                            pageProfile.grdRules.rows.add(fixedRules);
+                            pageProfile.grdRules.draw('full-hold');
+                            settingsPage.refreshRulesGridAllRows(pageProfile);
+                        }
+                        if (pageProfile.grdRulesSubscriptions) {
+                            const subscriptions = pageProfile.smartProfile.rulesSubscriptions || [];
+                            pageProfile.grdRulesSubscriptions.clear();
+                            pageProfile.grdRulesSubscriptions.rows.add(subscriptions);
+                            pageProfile.grdRulesSubscriptions.draw('full-hold');
+                            settingsPage.refreshRulesSubscriptionsGridAllRows(pageProfile);
+                        }
                     }
                     else {
                         settingsPage.currentSettings.proxyProfiles.push(updatedProfile);
@@ -6341,6 +6559,235 @@ private static uiEvents = {
     //     if (!normalized) return false;
     //     return settingsPage.currentSettings.userPrefs.manualSites.includes(normalized);
     // }
+	
+	    /**
+     * English: Shows context menu for rules table
+     * Russian: Показывает контекстное меню для таблицы правил
+     */
+    private static showRulesContextMenu(clientX: number, clientY: number, selectedRules: ProxyRule[], pageProfile: SettingsPageSmartProfile) {
+        const existing = document.getElementById("rulesContextMenu");
+        if (existing) existing.remove();
+
+        let themeClass = "theme-light";
+        if (document.body.classList.contains("theme-dark")) themeClass = "theme-dark";
+        else if (document.body.classList.contains("theme-auto")) {
+            const isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            themeClass = isDark ? "theme-dark" : "theme-light";
+        }
+
+        const menu = document.createElement("div");
+        menu.id = "rulesContextMenu";
+        menu.className = `context-menu ${themeClass}`;
+        menu.style.cssText = "position:fixed; z-index:10000; min-width:200px;";
+
+        const count = selectedRules.length;
+        const isSingle = count === 1;
+        const t = (key: string) => api.i18n.getMessage(key) || key;
+
+        let html = `<div class="context-menu-header">${count} rule(s) selected</div><div class="separator"></div>`;
+
+        // Toggle enabled
+        const allEnabled = selectedRules.every(r => r.enabled);
+        const toggleLabel = allEnabled ? t('proxyableDisableButton') : t('proxyableEnableButton');
+        html += `<div class="context-menu-item" data-action="toggle">${toggleLabel}</div>`;
+
+        // Delete
+        html += `<div class="context-menu-item" data-action="delete">${t('settingsContextMenuDelete')}</div>`;
+
+        // Toggle mode (only if none are whitelist)
+        const hasWhitelist = selectedRules.some(r => r.whiteList);
+        if (!hasWhitelist) {
+            html += `<div class="context-menu-item" data-action="toggleMode">${t('settingsAutoProxyToggleMode')}</div>`;
+        }
+
+        // Set proxy
+        html += `<div class="context-menu-item" data-action="setProxy">${t('settingsRulesProxyServer')}</div>`;
+
+        if (isSingle) {
+            const site = selectedRules[0].hostName;
+            if (site) {
+                html += `<div class="context-menu-item" data-action="testSite" data-site="${site}">${t('settingsProxyMustTestRun')} for ${site}</div>`;
+            }
+        }
+
+        // Export selected
+        html += `<div class="context-menu-item" data-action="export">${t('settingsContextMenuExportSelected')}</div>`;
+
+        menu.innerHTML = html;
+        document.body.appendChild(menu);
+
+        // Positioning
+        let left = clientX, top = clientY;
+        const rect = menu.getBoundingClientRect();
+        if (left + rect.width > window.innerWidth) left = window.innerWidth - rect.width - 10;
+        if (top + rect.height > window.innerHeight) top = window.innerHeight - rect.height - 10;
+        menu.style.left = left + "px";
+        menu.style.top = top + "px";
+
+        // Click handlers
+        menu.querySelectorAll(".context-menu-item").forEach(item => {
+            item.addEventListener("click", (e) => {
+                e.stopPropagation();
+                const action = item.getAttribute("data-action");
+                const site = item.getAttribute("data-site");
+                switch (action) {
+                    case "toggle":
+                        settingsPage.toggleRulesEnabled(selectedRules, pageProfile);
+                        break;
+                    case "delete":
+                        settingsPage.deleteRules(selectedRules, pageProfile);
+                        break;
+                    case "toggleMode":
+                        settingsPage.toggleRulesMode(selectedRules, pageProfile);
+                        break;
+                    case "setProxy":
+                        settingsPage.setProxyForRules(selectedRules, pageProfile);
+                        break;
+                    case "testSite":
+                        if (site) {
+                            const allProxies = settingsPage.readServers();
+                            if (allProxies.length) {
+                                settingsPage.showTestTypeDialog(site, allProxies);
+                            } else {
+                                messageBox.warning(api.i18n.getMessage("settingsProxyMustNoProxies"));
+                            }
+                        }
+                        break;
+                    case "export":
+                        settingsPage.exportRules(selectedRules);
+                        break;
+                }
+                menu.remove();
+            });
+        });
+
+        const closeHandler = (e: MouseEvent) => {
+            if (!menu.contains(e.target as Node)) {
+                menu.remove();
+                document.removeEventListener("click", closeHandler);
+            }
+        };
+        setTimeout(() => document.addEventListener("click", closeHandler), 0);
+    }
+
+    /**
+     * Toggle enabled state for selected rules
+     */
+    private static toggleRulesEnabled(rules: ProxyRule[], pageProfile: SettingsPageSmartProfile) {
+        console.log('[toggleRulesEnabled] Начало, правил:', rules.length);
+        for (const rule of rules) {
+            console.log(`[toggleRulesEnabled] Правило ${rule.ruleId} (${rule.hostName}) было ${rule.enabled}, меняем на ${!rule.enabled}`);
+            rule.enabled = !rule.enabled;
+        }
+        // Обновляем таблицу, чтобы изменения отразились в данных
+        pageProfile.grdRules.rows().invalidate();
+        pageProfile.grdRules.draw('full-hold');
+        console.log('[toggleRulesEnabled] Таблица обновлена, вызываем onClickSaveSmartProfile');
+        settingsPage.uiEvents.onClickSaveSmartProfile(pageProfile);
+    }
+
+    /**
+     * Delete selected rules
+     */
+    private static deleteRules(rules: ProxyRule[], pageProfile: SettingsPageSmartProfile) {
+        console.log('[deleteRules] Начало, правил:', rules.length);
+        const confirmMsg = api.i18n.getMessage("settingsConfirmRemoveMultipleProxyRule") || `Delete ${rules.length} rules?`;
+        if (!confirm(confirmMsg)) return;
+        const ruleIds = new Set(rules.map(r => r.ruleId));
+        console.log('[deleteRules] Удаляем ruleIds:', Array.from(ruleIds));
+        const newRules = pageProfile.smartProfile.proxyRules.filter(r => !ruleIds.has(r.ruleId));
+        console.log('[deleteRules] Новое количество правил:', newRules.length);
+        pageProfile.smartProfile.proxyRules = newRules;
+        settingsPage.loadRules(pageProfile, newRules);
+        settingsPage.changeTracking.smartProfiles = true;
+        console.log('[deleteRules] Вызов saveProfileAndRefresh');
+        settingsPage.uiEvents.onClickSaveSmartProfile(pageProfile);
+    }
+
+    /**
+     * Toggle mode (auto/manual) for selected rules (skip whitelist rules)
+     */
+    private static toggleRulesMode(rules: ProxyRule[], pageProfile: SettingsPageSmartProfile) {
+        console.log('[toggleRulesMode] Начало, правил:', rules.length);
+        for (const rule of rules) {
+            if (rule.whiteList) {
+                console.log(`[toggleRulesMode] Правило ${rule.ruleId} (${rule.hostName}) – whitelist, пропускаем`);
+                continue;
+            }
+            console.log(`[toggleRulesMode] Правило ${rule.ruleId} (${rule.hostName}) было mode=${rule.mode}, меняем на ${rule.mode === 'auto' ? 'manual' : 'auto'}`);
+            rule.mode = rule.mode === 'auto' ? 'manual' : 'auto';
+        }
+        // Обновляем таблицу
+        pageProfile.grdRules.rows().invalidate();
+        pageProfile.grdRules.draw('full-hold');
+        console.log('[toggleRulesMode] Таблица обновлена, вызываем onClickSaveSmartProfile');
+        settingsPage.uiEvents.onClickSaveSmartProfile(pageProfile);
+    }
+
+    /**
+     * Set proxy for selected rules
+     */
+    private static async setProxyForRules(rules: ProxyRule[], pageProfile: SettingsPageSmartProfile) {
+        // Get list of available proxies
+        const proxyList = settingsPage.readServers();
+        if (proxyList.length === 0) {
+            messageBox.warning(api.i18n.getMessage("settingsErrNoServersDescription"));
+            return;
+        }
+        // Build select options
+        let options = '<option value="">' + api.i18n.getMessage("settingsRulesProxyDefault") + '</option>';
+        for (const p of proxyList) {
+            const flag = CountryCode.getCountryFlagEmoji(p.countryCode || CountryCode.getCountryCode(p.host));
+            options += `<option value="${p.id}">${flag} ${p.name}</option>`;
+        }
+        // Show modal with select
+        const html = `<select id="proxySelectForRules" class="form-select has-country-flags">${options}</select>`;
+        messageBox.confirm(html, (result: any) => {
+            if (!result) return;
+            const selectedProxyId = (document.getElementById('proxySelectForRules') as HTMLSelectElement)?.value;
+            if (!selectedProxyId) return;
+            const proxy = SettingsOperation.findProxyServerById(selectedProxyId);
+            for (const rule of rules) {
+                rule.proxyServerId = selectedProxyId;
+                rule.proxy = proxy;
+                rule.whiteList = false;
+                if (selectedProxyId && selectedProxyId !== ProxyRuleSpecialProxyServer.DefaultGeneral && selectedProxyId !== ProxyRuleSpecialProxyServer.ProfileProxy) {
+                    rule.mode = 'manual';
+                }
+            }
+            settingsPage.uiEvents.onClickSaveSmartProfile(pageProfile);
+        }, true);
+    }
+
+    // /**
+    //  * Run test for a single site
+    //  */
+    // private static runTestForSite(site: string) {
+    //     // Use existing test mechanism for proxies
+    //     const proxies = settingsPage.readServers();
+    //     if (!proxies.length) {
+    //         messageBox.warning(api.i18n.getMessage("settingsProxyMustNoProxies"));
+    //         return;
+    //     }
+    //     // Run test for all proxies for this site
+    //     settingsPage.runTestForProxies(proxies, site, false);
+    // }
+
+    /**
+     * Export selected rules as text list of hosts
+     */
+    private static exportRules(rules: ProxyRule[]) {
+        const hosts = rules.map(r => r.hostName).filter(h => h).join('\n');
+        if (!hosts) {
+            messageBox.warning("No valid hosts to export.");
+            return;
+        }
+        CommonUi.downloadData(hosts, "ProxyMust-Rules-export.txt");
+    }
+
+    /**
+     * Helper: save profile and refresh grid
+     */
 
     private static buildSitesDropdown(): void {
         const $select = jq("#testSiteSelect");
@@ -6891,29 +7338,16 @@ PolyFill.runtimeSendMessage({
         if (!$testSelect.length) return;
 
         settingsPage.buildSitesDropdown();
-        // English: Trigger change event to apply statuses for the initially selected site
-        // Russian: Вызываем событие change, чтобы применить статусы для изначально выбранного сайта
         $testSelect.trigger('change');
-		// English: Check if express cycle test is already running and update button state
-        // Russian: Проверяем, запущен ли экспресс-циклический тест, и обновляем состояние кнопки
         settingsPage.checkAllTestsStatus();
 
-        // === НОВЫЙ ОБРАБОТЧИК ===
-        // English: When site selection changes, refresh the proxy table to show updated statuses
-        // Russian: При смене сайта обновляем таблицу прокси, чтобы показать актуальные статусы
         $testSelect.off("change").on("change", function() {
             console.log("[ProxyMust] Сайт изменён, обновляем таблицу прокси");
             if (settingsPage.grdServers) {
-                // English: Invalidate all rows to force re-render with new site
-                // Russian: Инвалидируем все строки, чтобы принудительно перерисовать с новым сайтом
                 settingsPage.grdServers.rows().invalidate();
                 settingsPage.grdServers.draw('full-hold');
-                // English: Ensure rating column is visible (may be hidden if rating disabled)
-                // Russian: Убеждаемся, что колонка рейтинга видима (может быть скрыта, если рейтинг отключён)
                 settingsPage.grdServers.column(6).visible(true);
             }
-            // English: Update rules tables for all profiles to reflect statuses for this site
-            // Russian: Обновляем таблицы правил для всех профилей, чтобы отразить статусы для этого сайта
             for (const pageProfile of settingsPage.pageSmartProfiles) {
                 if (pageProfile.grdRules) {
                     const fixedRules = ProxyRule.assignArray(pageProfile.smartProfile.proxyRules || []);
@@ -6924,21 +7358,18 @@ PolyFill.runtimeSendMessage({
                 }
             }
         });
-        // === КОНЕЦ НОВОГО ОБРАБОТЧИКА ===
 
         $testBtn.off("click").on("click", async () => {
-            // English: if test is already running, cancel it without showing dialog
-            // Russian: если тест уже запущен, отменяем его без показа диалога
             if (settingsPage.isTestingForSite) {
                 settingsPage.cancelCurrentTest();
                 return;
             }
 
             const site = $testSelect.val() as string;
-			if (!site) {
-				messageBox.warning(api.i18n.getMessage("settingsProxyMustNoSiteSelected"));
-				return;
-			}
+            if (!site) {
+                messageBox.warning(api.i18n.getMessage("settingsProxyMustNoSiteSelected"));
+                return;
+            }
 
             let proxies: ProxyServer[];
             const selectedRows = settingsPage.grdServers.rows({ selected: true });
@@ -6953,10 +7384,41 @@ PolyFill.runtimeSendMessage({
                 return;
             }
 
-            // Create modal dialog dynamically
-            const modalId = "testTypeSelectModal";
-            let $modal = jq("#" + modalId);
-            if (!$modal.length) {
+            settingsPage.showTestTypeDialog(site, proxies);
+        });
+
+        $addSiteBtn.off("click").on("click", () => {
+            settingsPage.addManualSite();
+        });
+
+        if ($removeSiteBtn.length) {
+            $removeSiteBtn.off("click").on("click", () => {
+                settingsPage.removeManualSite();
+            });
+        }
+    }
+	
+    /**
+     * English: Shows a modal dialog to select test type, then runs the selected test.
+     * Russian: Показывает модальный диалог выбора типа теста, затем запускает выбранный тест.
+     */
+    private static showTestTypeDialog(site: string, proxies?: ProxyServer[]): void {
+        if (!site) {
+            messageBox.warning(api.i18n.getMessage("settingsProxyMustNoSiteSelected"));
+            return;
+        }
+        if (!proxies) {
+            proxies = settingsPage.readServers();
+        }
+        if (!proxies.length) {
+            messageBox.warning(api.i18n.getMessage("settingsProxyMustNoProxies"));
+            return;
+        }
+
+        // Create or reuse modal dialog
+        const modalId = "testTypeSelectModal";
+        let $modal = jq("#" + modalId);
+        if (!$modal.length) {
             const modalHtml = `
                 <div class="modal fade" id="${modalId}" tabindex="-1" role="dialog" aria-labelledby="${modalId}Label" aria-hidden="true">
                     <div class="modal-dialog" role="document">
@@ -6985,6 +7447,19 @@ PolyFill.runtimeSendMessage({
                                         <br><small class="text-muted">${api.i18n.getMessage("settingsExpressTestDesc") || "Express test, may skip some working proxies, but finds at least one quickly."}</small>
                                     </button>
                                 </div>
+                                <hr class="my-3">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="testDialogEnableDirectIp" ${settingsPage.currentSettings?.options?.enableDirectIpDetection ? 'checked' : ''}>
+                                    <label class="form-check-label" for="testDialogEnableDirectIp">
+                                        ${api.i18n.getMessage("settingsGeneralEnableDirectIpDetection") || "Enable direct IP detection"}
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="testDialogShowLog" checked>
+                                    <label class="form-check-label" for="testDialogShowLog">
+                                        ${api.i18n.getMessage("testLogOpenButton") || "Show test log"}
+                                    </label>
+                                </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">${api.i18n.getMessage("settingsCancelButton") || "Cancel"}</button>
@@ -7003,37 +7478,62 @@ PolyFill.runtimeSendMessage({
                 $modal.find("#preciseTestBtn, #expressTestBtn").hide();
             }
         }
-        $modal.off("click", "#preciseTestBtn");
-            $modal.off("click", "#expressTestBtn");
-            $modal.on("click", "#preciseTestBtn", () => {
-                $modal.modal("hide");
-                settingsPage.runTestForProxies(proxies, site, false);
-            });
-            $modal.on("click", "#expressTestBtn", () => {
-                $modal.modal("hide");
-                settingsPage.runTestForProxies(proxies, site, true);
-            });
-            $modal.on("click", "#cycleTestBtn", () => {
-                $modal.modal("hide");
-                settingsPage.runCycleTestForProxies(proxies, site);
-            });
-            $modal.on("click", "#expressCycleTestBtn", () => {
-                $modal.modal("hide");
-                settingsPage.runExpressCycleTestForProxies(proxies, site);
-            });
-            $modal.modal("show");
+
+        // Remove old event handlers and attach new ones with current proxies
+        // Функция, которая применяет настройки из диалога
+        const applyDialogSettings = () => {
+            // Direct IP detection
+            const enableDirectIp = $modal.find("#testDialogEnableDirectIp").prop("checked");
+            if (settingsPage.currentSettings.options.enableDirectIpDetection !== enableDirectIp) {
+                settingsPage.currentSettings.options.enableDirectIpDetection = enableDirectIp;
+                // Сохраняем опцию
+                PolyFill.runtimeSendMessage({
+                    command: CommandMessages.SettingsPageSaveOptions,
+                    options: settingsPage.currentSettings.options
+                }, (response: ResultHolder) => {
+                    if (response && response.success) {
+                        api.storage.local.set({ options: settingsPage.currentSettings.options }).catch((err: any) => {
+                            console.error("[ProxyMust] Ошибка сохранения options в local storage:", err);
+                        });
+                    }
+                });
+            }
+			// Show log
+			const showLog = $modal.find("#testDialogShowLog").prop("checked");
+			if (showLog) {
+				// Открываем встроенный лог на странице настроек
+				PolyFill.runtimeSendMessage({ command: "OPEN_TEST_LOG", type: 'embedded' }, (response) => {
+					if (!response || !response.success) {
+						console.warn("[ProxyMust] Не удалось открыть лог:", response?.error);
+					}
+				});
+			}
+        };
+
+        $modal.off("click", "#preciseTestBtn, #expressTestBtn, #cycleTestBtn, #expressCycleTestBtn");
+        $modal.on("click", "#preciseTestBtn", () => {
+            $modal.modal("hide");
+            applyDialogSettings();
+            settingsPage.runTestForProxies(proxies, site, false);
+        });
+        $modal.on("click", "#expressTestBtn", () => {
+            $modal.modal("hide");
+            applyDialogSettings();
+            settingsPage.runTestForProxies(proxies, site, true);
+        });
+        $modal.on("click", "#cycleTestBtn", () => {
+            $modal.modal("hide");
+            applyDialogSettings();
+            settingsPage.runCycleTestForProxies(proxies, site);
+        });
+        $modal.on("click", "#expressCycleTestBtn", () => {
+            $modal.modal("hide");
+            applyDialogSettings();
+            settingsPage.runExpressCycleTestForProxies(proxies, site);
         });
 
-        $addSiteBtn.off("click").on("click", () => {
-            settingsPage.addManualSite();
-        });
-
-        if ($removeSiteBtn.length) {
-            $removeSiteBtn.off("click").on("click", () => {
-                settingsPage.removeManualSite();
-            });
-        }
-    }
+        $modal.modal("show");
+    }	
     /**
      * English: Toggles visibility of protocol switch mode selector based on auto-detect checkbox state
      * Russian: Переключает видимость селектора режима перебора протоколов в зависимости от состояния чекбокса автоопределения

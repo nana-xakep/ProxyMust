@@ -1921,7 +1921,7 @@
 		"message": "프록시를 변경하시겠습니까?"
 	},
 	"dialogChangeMessage": {
-		"message": "사이트 {0}에 설정된 프록시를 변경하시겠습니까?"
+		"message": "사이트 {0}에 할당된 프록시 {1}을(를) 변경하시겠습니까?"
 	},
 	"dialogChangeConfirm": {
 		"message": "변경"
@@ -1952,5 +1952,50 @@
 	},
 	"settingsAutoAddUnreachableSitesDesc": {
 		"message": "페이지가 로드되지 않으면 사이트를 자동 프록시에 추가하라는 제안 대화상자가 표시됩니다."
+	},
+	"settingsStaleRemaining": {
+		"message": "남음"
+	},
+	"settingsStaleExpired": {
+		"message": "만료됨"
+	},
+	"settingsStaleUnknown": {
+		"message": "데이터 없음"
+	},
+	"settingsImportRulesFormatUniversal": {
+		"message": "자동 형식 (도메인 가져오기)"
+	},
+	"settingsImportRulesUniversalHint": {
+		"message": "아무 텍스트나 붙여넣기 – 확장 프로그램이 자동으로 모든 도메인을 추출하고 규칙을 생성합니다."
+	},
+	"settingsImportRulesUniversalNoDomains": {
+		"message": "텍스트에서 도메인을 추출할 수 없습니다. 텍스트에 도메인 이름(예: youtube.com)이 포함되어 있는지 확인하세요."
+	},
+	"settingsAutoProxyToggleMode": {
+		"message": "모드 전환 (자동/수동)"
+	},
+	"settingsRulesGridColSourceRule": {
+		"message": "소스/규칙"
+	},
+	"settingsRuleActionBlock": {
+		"message": "🛑 차단 (연결 없음) ❌"
+	},
+	"popupAutoRefreshTitle": {
+		"message": "🔄 오토 프록시"
+	},
+	"popupAutoRefreshNoRule": {
+		"message": "{0}에 대한 규칙 없음 – 사이트를 오토 프록시에 추가"
+	},
+	"popupAutoRefreshRuleDisabled": {
+		"message": "{0}에 대한 규칙이 비활성화됨 – 규칙 활성화"
+	},
+	"popupAutoRefreshManual": {
+		"message": "규칙 {0}에 대한 수동 모드 – 자동으로 전환"
+	},
+	"popupAutoRefreshAuto": {
+		"message": "자동 모드 – 사이트 {0}의 프록시 새로 고침"
+	},
+	"popupAutoRefreshPinned": {
+		"message": "사이트 {0}에 고정된 프록시 변경"
 	}	
 }

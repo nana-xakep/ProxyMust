@@ -1921,7 +1921,7 @@
 		"message": "更換代理？"
 	},
 	"dialogChangeMessage": {
-		"message": "是否更換為網站 {0} 設定的代理？"
+		"message": "變更網站 {0} 的指定代理 {1}？"
 	},
 	"dialogChangeConfirm": {
 		"message": "更換"
@@ -1952,5 +1952,50 @@
 	},
 	"settingsAutoAddUnreachableSitesDesc": {
 		"message": "當偵測到頁面無法載入時，將顯示一個對話框，建議將該網站新增到自動代理。"
+	},
+	"settingsStaleRemaining": {
+		"message": "剩餘"
+	},
+	"settingsStaleExpired": {
+		"message": "已過期"
+	},
+	"settingsStaleUnknown": {
+		"message": "無資料"
+	},
+	"settingsImportRulesFormatUniversal": {
+		"message": "自動格式（匯入網域）"
+	},
+	"settingsImportRulesUniversalHint": {
+		"message": "貼上任何文字 – 擴充功能將自動提取所有網域並為其建立規則。"
+	},
+	"settingsImportRulesUniversalNoDomains": {
+		"message": "無法從文字中提取任何網域。請確保文字包含網域名稱（例如 youtube.com）。"
+	},
+	"settingsAutoProxyToggleMode": {
+		"message": "切換模式（自動/手動）"
+	},
+	"settingsRulesGridColSourceRule": {
+		"message": "來源/規則"
+	},
+	"settingsRuleActionBlock": {
+		"message": "🛑 封鎖（無連線） ❌"
+	},
+	"popupAutoRefreshTitle": {
+		"message": "🔄 自動代理"
+	},
+	"popupAutoRefreshNoRule": {
+		"message": "沒有 {0} 的規則 – 將網站新增到自動代理"
+	},
+	"popupAutoRefreshRuleDisabled": {
+		"message": "{0} 的規則已停用 – 啟用規則"
+	},
+	"popupAutoRefreshManual": {
+		"message": "規則 {0} 為手動模式 – 切換到自動"
+	},
+	"popupAutoRefreshAuto": {
+		"message": "自動模式 – 重新整理網站 {0} 的代理"
+	},
+	"popupAutoRefreshPinned": {
+		"message": "變更網站 {0} 的固定代理"
 	}	
 }

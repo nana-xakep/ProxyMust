@@ -147,15 +147,20 @@ export class Core {
                 // Russian: Если нет отложенного диалога, проверяем, есть ли уже открытый диалог для этого сайта
                 const site = Core.getSiteForTab(activeInfo.tabId);
                 if (site) {
-                    const dialogKey = `pin_${site}`;
-                    if (Core._openDialogs.has(dialogKey)) {
-                        const winId = Core._openDialogs.get(dialogKey);
-                        if (winId) {
-                            // English: Focus the existing dialog window
-                            // Russian: Фокусируем существующее окно диалога
-                            api.windows.update(winId, { focused: true });
-                            console.log(`[Core] Focused existing dialog for ${site}`);
+                    // English: Find any dialog (pin, change, or add_site) for this site
+                    // Russian: Находим любой диалог (pin, change, add_site) для этого сайта
+                    let foundWinId: number | null = null;
+                    for (const [key, winId] of Core._openDialogs) {
+                        if (key.endsWith(`_${site}`)) {
+                            foundWinId = winId;
+                            break;
                         }
+                    }
+                    if (foundWinId) {
+                        // English: Focus the existing dialog window
+                        // Russian: Фокусируем существующее окно диалога
+                        api.windows.update(foundWinId, { focused: true });
+                        console.log(`[Core] Focused existing dialog for ${site}`);
                     }
                 }
             }
@@ -174,8 +179,10 @@ export class Core {
             api.webNavigation.onCommitted.addListener((details: any) => {
                 const tabId = details.tabId;
                 if (tabId < 0) return;
-                // English: Detect reload (F5) or typed (address bar entry)
-                // Russian: Определяем перезагрузку (F5) или ввод адреса
+                // English: Detect reload or typed (user-initiated navigation)
+                // Russian: Определяем перезагрузку или ввод адреса (навигация, инициированная пользователем)
+                // English: We don't include 'link' to avoid showing change dialog on every internal navigation.
+                // Russian: Мы не включаем 'link', чтобы избежать показа диалога смены при каждой внутренней навигации.
                 if (details.transitionType === 'reload' || details.transitionType === 'typed') {
                     WebFailedRequestMonitor.setUserInitiatedNavigation(tabId, details.transitionType);
                 }
@@ -372,11 +379,6 @@ export class Core {
 				// English: Reset the test timeout timer on progress update
 				// Russian: Сбрасываем таймер таймаута теста при обновлении прогресса
 				TestManager.resetTimer();
-				// English: Automatically open test log window when test starts
-				// Russian: Автоматически открываем окно лога при старте теста
-				Core.handleOpenTestLog((response) => {
-					// Ignore response, just ensure window opens
-				});
 				break;
 
 			case "CHECK_PROGRESS":
@@ -436,10 +438,9 @@ export class Core {
 			case "CANCEL_PROXY_TEST_FOR_SITE":
 				return Core.handleCancelProxyTestForSite(message, sendResponse);
 				
-            case "AddSubscriptionProxyToManual":
-                Core.handleAddSubscriptionProxyToManual(message, sendResponse);
-                
-                return true;
+			case "AddSubscriptionProxyToManual":
+				void Core.handleAddSubscriptionProxyToManual(message, sendResponse);
+				return true;
             case "AddSiteToAutoRules":
                 return Core.handleAddSiteToAutoRules(message, sendResponse);
             case "ForceAutoProxyRefresh":
@@ -465,8 +466,8 @@ export class Core {
 			case "CANCEL_EXPRESS_CYCLE_TEST_FOR_SITE":
                 return Core.handleCancelExpressCycleTestForSite(message, sendResponse);	
 			case "OPEN_TEST_LOG":
-				return Core.handleOpenTestLog(sendResponse);
-
+				const logType = message?.type || 'popup';
+				return Core.handleOpenTestLog(sendResponse, logType);
 			case "CLOSE_TEST_LOG":
 				return Core.handleCloseTestLog(sendResponse);
 
@@ -586,9 +587,21 @@ export class Core {
  * English: Opens the test log window.
  * Russian: Открывает окно лога тестирования.
  */
-	private static handleOpenTestLog(sendResponse: Function): boolean {
+	private static handleOpenTestLog(sendResponse: Function, type: string = 'popup'): boolean {
+		if (type === 'embedded') {
+			// English: Send message to settings page to show embedded log
+			// Russian: Отправляем сообщение в страницу настроек для показа встроенного лога
+			PolyFill.runtimeSendMessage({
+				command: "OPEN_EMBEDDED_LOG",
+				success: true
+			});
+			if (sendResponse) sendResponse({ success: true, embedded: true });
+			return false;
+		}
+
+		// English: Original popup logic
 		if (Core._testLogWindowId !== null) {
-			// Check if window still exists
+				// Check if window still exists
 			api.windows.get(Core._testLogWindowId, (win) => {
 				if (api.runtime?.lastError || !win) {
 					Core._testLogWindowId = null;
@@ -878,28 +891,68 @@ export class Core {
 		return true; // Async operation - MUST return true for Chrome
 	}
 
-	private static handleSettingsPageSaveSmartProfile(message: any, sendResponse: Function): boolean {
-		if (!message.smartProfile) return false;
-		
-		const smartProfile: SmartProfile = message.smartProfile;
-		ProfileOperations.addUpdateProfile(smartProfile);
-		
-		settingsOperationLib.saveSmartProfiles();
-		settingsOperationLib.saveAllSync();
-		settingsLib.updateActiveSettings();
-		subscriptionUpdaterLib.setRulesSubscriptionsRefreshTimers();
-		proxyEngineLib.updateBrowsersProxyConfig();
-		
-		if (sendResponse) {
-			sendResponse({
-				success: true,
-				message: api.i18n.getMessage('settingsSaveSmartProfileSuccess'),
-				smartProfile: smartProfile
-			});
-		}
-		return false;
-	}
-
+private static handleSettingsPageSaveSmartProfile(message: any, sendResponse: Function): boolean {
+    if (!message.smartProfile) return false;
+    const smartProfile: SmartProfile = message.smartProfile;
+    console.log('[Core] handleSettingsPageSaveSmartProfile: получен профиль', {
+        profileId: smartProfile.profileId,
+        profileName: smartProfile.profileName,
+        rulesCount: smartProfile.proxyRules?.length,
+        rules: smartProfile.proxyRules?.map(r => ({id: r.ruleId, host: r.hostName, enabled: r.enabled, mode: r.mode}))
+    });
+    
+    // Обновляем существующий профиль (без удаления)
+    const existingProfile = Settings.current.proxyProfiles.find(p => p.profileId === smartProfile.profileId);
+    if (existingProfile) {
+        // Копируем все поля, чтобы сохранить ссылку на массив в Settings.current
+        existingProfile.proxyRules = smartProfile.proxyRules ? smartProfile.proxyRules.slice() : [];
+        existingProfile.profileName = smartProfile.profileName;
+        existingProfile.enabled = smartProfile.enabled;
+        existingProfile.profileProxyServerId = smartProfile.profileProxyServerId;
+        existingProfile.rulesSubscriptions = smartProfile.rulesSubscriptions ? smartProfile.rulesSubscriptions.slice() : [];
+        existingProfile.autoPinSuccess = smartProfile.autoPinSuccess;
+        existingProfile.showAutoDialog = smartProfile.showAutoDialog;
+        existingProfile.autoAddUnreachableSites = smartProfile.autoAddUnreachableSites;
+        // Добавьте другие поля, если они есть
+    } else {
+        Settings.current.proxyProfiles.push(smartProfile);
+    }
+    
+    // Принудительное сохранение в локальное хранилище (обход синхронизации)
+    settingsOperationLib.saveAllLocal(true);
+    settingsOperationLib.saveSmartProfiles(); // дополнительная гарантия
+    settingsOperationLib.saveAllSync();
+    
+    settingsLib.updateActiveSettings();
+    subscriptionUpdaterLib.setRulesSubscriptionsRefreshTimers();
+    proxyEngineLib.updateBrowsersProxyConfig();
+    
+    // Перечитываем профиль из актуальных данных
+    const updatedProfile = ProfileOperations.findSmartProfileById(smartProfile.profileId, Settings.current.proxyProfiles);
+    console.log('[Core] handleSettingsPageSaveSmartProfile: updatedProfile из хранилища', {
+        found: !!updatedProfile,
+        profileId: updatedProfile?.profileId,
+        rulesCount: updatedProfile?.proxyRules?.length,
+        rules: updatedProfile?.proxyRules?.map(r => ({id: r.ruleId, host: r.hostName, enabled: r.enabled, mode: r.mode}))
+    });
+    
+    if (sendResponse) {
+        if (updatedProfile) {
+            sendResponse({
+                success: true,
+                message: api.i18n.getMessage('settingsSaveSmartProfileSuccess'),
+                smartProfile: updatedProfile
+            });
+        } else {
+            sendResponse({
+                success: true,
+                message: api.i18n.getMessage('settingsSaveSmartProfileSuccess'),
+                smartProfile: smartProfile
+            });
+        }
+    }
+    return false;
+}
 	private static handleSettingsPageDeleteSmartProfile(message: any, sendResponse: Function): boolean {
 		if (!message.smartProfileId) return false;
 		
@@ -1859,26 +1912,30 @@ private static async handleAddSubscriptionProxyToManual(message: any, sendRespon
 */
 	// ==================== Public API Methods ====================
 
-	public static ChangeActiveProfileId(profileId: string) {
-		const profile = ProfileOperations.findSmartProfileById(profileId, settingsLib.current.proxyProfiles);
-		if (profile == null) {
-			Debug.warn(`Requested profile id '${profileId}' not found, change tor profile failed`);
-			return;
-		}
+    public static ChangeActiveProfileId(profileId: string) {
+        const profile = ProfileOperations.findSmartProfileById(profileId, settingsLib.current.proxyProfiles);
+        if (profile == null) {
+            Debug.warn(`Requested profile id '${profileId}' not found, change tor profile failed`);
+            return;
+        }
 
-		// Clear all dynamic proxy overrides when switching profiles
-		ProxyEngine.clearAllDynamicProxies();
-		
-		// Clear site lock when switching profiles
-		WebFailedRequestMonitor.clearSiteLock();		
+        // Clear all dynamic proxy overrides when switching profiles
+        ProxyEngine.clearAllDynamicProxies();
+        
+        // Clear site lock when switching profiles
+        WebFailedRequestMonitor.clearSiteLock();
 
-		settingsLib.current.activeProfileId = profileId;
-		settingsOperationLib.saveActiveProfile();
-		settingsOperationLib.saveAllSync();
-		settingsLib.updateActiveSettings();
-		proxyEngineLib.updateBrowsersProxyConfig();
-		Core.setBrowserActionStatus();
-	}
+        // English: Reset user-stopped failover flags for all sites when switching profiles
+        // Russian: Сбрасываем флаги остановки failover для всех сайтов при смене профиля
+        WebFailedRequestMonitor.resetAllUserStoppedFailovers();
+
+        settingsLib.current.activeProfileId = profileId;
+        settingsOperationLib.saveActiveProfile();
+        settingsOperationLib.saveAllSync();
+        settingsLib.updateActiveSettings();
+        proxyEngineLib.updateBrowsersProxyConfig();
+        Core.setBrowserActionStatus();
+    }
 
 	public static ChangeActiveProxy(proxy: ProxyServer) {
 		// Clear dynamic override for all sites when manually changing proxy
@@ -2067,27 +2124,32 @@ private static async handleAddSubscriptionProxyToManual(message: any, sendRespon
 			}
 		}
 
-		// English: If no active profile or profile doesn't support rules, return early (but currentSite is already set)
-		// Russian: Если нет активного профиля или профиль не поддерживает правила, выходим раньше (но currentSite уже установлен)
+		// English: Always build proxyableDomains based on SmartRules profile (if exists)
+		// Russian: Всегда строим proxyableDomains на основе профиля SmartRules (если существует)
+		const smartRulesProfile = settings.proxyProfiles.find(p => p.profileType === SmartProfileType.SmartRules);
+		if (smartRulesProfile) {
+			const urlHost = Utils.extractHostFromUrl(currentTabData.url);
+			if (Utils.isNotInternalHostName(urlHost)) {
+				const proxyableDomainList = Utils.extractSubdomainListFromHost(urlHost);
+				if (proxyableDomainList?.length) {
+					// English: Compile SmartRules profile to get compiled rules
+					// Russian: Компилируем профиль SmartRules для получения скомпилированных правил
+					const compiledSmartProfile = ProfileOperations.compileSmartProfile(smartRulesProfile);
+					dataForPopup.proxyableDomains = Core.buildProxyableDomainsList(
+						proxyableDomainList,
+						compiledSmartProfile,
+						smartRulesProfile
+					);
+				}
+			}
+		}
+
+		// English: If active profile doesn't support rules, return early (but proxyableDomains is already filled)
+		// Russian: Если активный профиль не поддерживает правила, выходим раньше (но proxyableDomains уже заполнен)
 		if (!settingsActive.activeProfile || !ProfileOperations.profileTypeSupportsRules(settingsActive.activeProfile.profileType)) {
 			return dataForPopup;
 		}
 
-		const urlHost = Utils.extractHostFromUrl(currentTabData.url);
-		if (!Utils.isNotInternalHostName(urlHost)) return dataForPopup;
-
-		const proxyableDomainList = Utils.extractSubdomainListFromHost(urlHost);
-		if (!proxyableDomainList?.length) return dataForPopup;
-
-		const activeSmartProfile = settingsActive.activeProfile;
-		const originalSmartProfile = settings.proxyProfiles.find(p => p.profileId === settings.activeProfileId);
-
-		dataForPopup.proxyableDomains = Core.buildProxyableDomainsList(
-			proxyableDomainList, 
-			activeSmartProfile, 
-			originalSmartProfile
-		);
-		
 		// English: Ensure autoStatus and proxyPriority are included (already set above, but keep for clarity)
 		// Russian: Убеждаемся, что autoStatus и proxyPriority включены (уже установлены выше, но оставляем для ясности)
 		dataForPopup.autoStatus = settings.autoStatus || {};
@@ -2855,9 +2917,15 @@ public static sendTestLogStep(data: any): void {
                 // Russian: Пользователь хочет сменить прокси – снимаем закрепление и продолжаем failover со следующего прокси
                 const statusService = AutoStatusService.getInstance();
                 statusService.unpinProxy(site);
-                // English: Mark that user initiated change via 🔄
-                // Russian: Отмечаем, что пользователь инициировал смену через 🔄
+                // English: Mark that user initiated change via 🔄 and clear any leftover stop flags
+                // Russian: Отмечаем, что пользователь инициировал смену через 🔄 и очищаем любые остаточные флаги остановки
                 WebFailedRequestMonitor.setUserInitiatedChange(site);
+                // English: Explicitly clear cancel and user-stopped flags to ensure failover can start
+                // Russian: Явно очищаем флаги отмены и остановки пользователем, чтобы гарантировать запуск failover
+                WebFailedRequestMonitor.resetUserStoppedFailover(site);
+                // Ensure cancel flag is also cleared (setUserInitiatedChange already does this, but double-check)
+                // Убеждаемся, что флаг отмены тоже очищен (setUserInitiatedChange уже делает это, но проверим)
+                // (no additional action needed, but keep for clarity)
 //console.log(`[Core] Unpinned site ${site} before failover`)
 
                 // ===== Сбрасываем proxyServerId в правиле при смене =====
@@ -3018,13 +3086,17 @@ public static sendTestLogStep(data: any): void {
         const cancelText = api.i18n.getMessage(cancelKey) || cancelKey;
         const checkboxLabel = api.i18n.getMessage(checkboxKey) || checkboxKey;
 
-        // English: Build URL parameters
-        // Russian: Формируем параметры URL
+        // English: Format proxy name for display with flag, country code, host, port and protocol
+        // Russian: Форматируем имя прокси для отображения с флагом, кодом страны, хостом, портом и протоколом
+        // formatProxyDisplay will try to find the proxy by ID, host:port, or name.
+        // If not found, it returns the original string.
+        let displayProxyName = SettingsOperation.formatProxyDisplay(proxyId || proxyName || '');
+
         const params = new URLSearchParams({
             type: type,
             site: site,
             proxyId: proxyId,
-            proxyName: proxyName,
+            proxyName: displayProxyName,
             title: title,
             message: message,
             confirmText: confirmText,
